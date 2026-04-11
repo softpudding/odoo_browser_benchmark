@@ -1,0 +1,26 @@
+task_id: website_hr_recruitment.apply_guru_job
+module: website_hr_recruitment
+difficulty: medium
+instruction: >
+  Go to the Jobs page and apply for the "Guru" position.
+  Fill out the application form with the following details:
+    - Name: John Smith
+    - Email: john@smith.com
+    - Phone: 118.218
+    - LinkedIn: linkedin.com/in/john-smith
+    - Short introduction: "### [GURU] HR RECRUITMENT TEST DATA ###"
+  Submit the application and verify you see a confirmation page.
+start_url: /jobs
+login_context:
+  login: null  # public user, no login required
+agent_interface: browser_only
+db_seed:
+  snapshot: website_hr_recruitment_base
+setup_script: seed.py
+time_limit_sec: 180
+step_limit: 50
+metadata:
+  source_test: addons/website_hr_recruitment/tests/test_website_hr_recruitment.py::TestWebsiteHrRecruitmentForm.test_tour
+  source_tour: website_hr_recruitment_tour
+  primary_track: true
+  version: "0.1"

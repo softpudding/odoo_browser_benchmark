@@ -1,0 +1,27 @@
+# Trace oracle — Section 10 of the spec.
+#
+# Defines which backend operations are required, optional, or forbidden
+# for this task.
+
+required_ops:
+  # The website form controller creates the applicant via
+  # request.env['hr.applicant'].create(), which the ORM hook records
+  # as a single custom:/website/form/hr.applicant entry.
+  - custom:/website/form/hr.applicant
+
+optional_ops:
+  - hr.job.search_read
+  - hr.job.read
+  - hr.job.web_search_read
+  - website.page.search_read
+  - ir.ui.view.read
+
+forbidden_ops:
+  - hr.applicant.unlink
+  - hr.applicant.write    # the task only creates, never edits
+  - hr.job.write
+  - hr.job.unlink
+  - hr.job.create
+  - hr.department.write
+  - hr.department.unlink
+  - hr.department.create
