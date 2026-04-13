@@ -1,0 +1,39 @@
+# Trace oracle for sale.find_highest_duplicate
+#
+# WRITE POLICY: strict allowlist. Any write not listed in required_ops
+# or optional_ops is an unauthorized write and fails StrictSuccess.
+#
+# The agent must READ quotations to compare amounts, then DUPLICATE
+# the highest one. It should not confirm, delete, or modify any SO.
+
+required_ops:
+  - sale.order.copy           # must duplicate the chosen SO
+
+optional_ops:
+  # --- Reads (always allowed, listed for documentation) ---
+  - sale.order.read
+  - sale.order.web_read
+  - sale.order.search_read
+  - sale.order.web_search_read
+  - sale.order.name_search
+  - sale.order.onchange
+  - sale.order.line.read
+  - sale.order.line.search_read
+  - sale.order.line.web_search_read
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+  - res.partner.read
+  - res.partner.search_read
+  - product.product.read
+  # --- Writes that are legitimate side-effects of copy ---
+  - mail.message.create        # chatter notification on copy
+  - mail.followers.create      # auto-follow on new record
+  - ir.attachment.create       # potential attachment copy
+  - sale.order.web_save        # save via web client
+  - sale.order.line.web_save   # save via web client
+
+forbidden_ops:
+  - sale.order.action_confirm  # should not confirm any quotation
+  - sale.order.unlink          # should not delete any quotation
+  - sale.order.write           # should not modify existing quotations
+  - sale.order.create          # should only use copy, not create from scratch

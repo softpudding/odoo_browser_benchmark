@@ -1,0 +1,41 @@
+# Trace oracle for project.read_update_status
+#
+# WRITE POLICY: strict allowlist. Any write not listed in required_ops
+# or optional_ops is an unauthorized write and fails StrictSuccess.
+#
+# The agent must READ project tasks to count done/total, then WRITE
+# the project description. It must NOT modify, create, or delete tasks.
+
+required_ops:
+  - project.project.write      # must update the project description
+
+optional_ops:
+  # --- Reads ---
+  - project.project.read
+  - project.project.web_read
+  - project.project.search_read
+  - project.task.read
+  - project.task.web_read
+  - project.task.search_read
+  - project.task.web_search_read
+  - project.task.read_progress_bar
+  - project.task.type.read
+  - project.task.type.search_read
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+  - ir.model.data.search_read
+  # --- Writes that are legitimate side-effects of project.write ---
+  - project.project.web_save   # save via web client
+  - project.project.action_view_tasks  # navigating to task view
+  - project.project.check_features_enabled  # feature check
+  - project.project.get_template_tasks  # template loading
+  - mail.message.create        # chatter message on description change
+  - mail.followers.create      # auto-follow
+  - bus.bus.create             # notification bus
+
+forbidden_ops:
+  - project.task.create        # should not create tasks
+  - project.task.unlink        # should not delete tasks
+  - project.task.write         # should not modify tasks
+  - project.project.unlink     # should not delete the project
+  - project.project.create     # should not create new projects
