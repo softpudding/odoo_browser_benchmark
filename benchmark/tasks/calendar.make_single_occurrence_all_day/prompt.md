@@ -1,0 +1,18 @@
+Open the Calendar app. There is a weekly recurring event named **Warehouse Walkthrough**.
+
+Edit only the occurrence on **May 19, 2026**.
+
+For that single occurrence:
+
+1. Turn on **All Day**
+2. Change **Location** to `Remote Review Hub`
+3. Save the event
+
+When the recurrence dialog appears, choose **This Event** so only the May 19 occurrence is changed.
+
+**Rules:**
+- Only the May 19, 2026 occurrence should become all-day
+- Its location must be `Remote Review Hub`
+- All other Warehouse Walkthrough occurrences must keep location `North Annex`
+- The other occurrences must remain timed events
+- Do not delete any occurrence or apply the change to the whole series
