@@ -1,0 +1,43 @@
+models:
+  project.project:
+    match_key:
+      - name
+    fields:
+      - name
+      - allow_milestones
+      - description
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
+      - __last_update
+
+  project.milestone:
+    match_key:
+      - project_id
+      - name
+    fields:
+      - project_id
+      - name
+      - deadline
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
+      - __last_update
+
+  project.task:
+    match_key:
+      - project_id
+      - name
+    fields:
+      - project_id
+      - name
+      - stage_id
+      - milestone_id
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
+      - __last_update
+

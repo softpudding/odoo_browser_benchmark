@@ -1,4 +1,10 @@
-"""Create two similar quotations for Gemini Furniture."""
+"""Create four quotations — only one has BOTH Standing Desk AND Office Chair.
+
+SO1: Standing Desk only — $450
+SO2: Office Chair only — $450 (3x $150)
+SO3: Standing Desk + Office Chair — $600 (THE ANSWER)
+SO4: Large Desk + Whiteboard — $400
+"""
 
 
 def setup(env):
@@ -6,35 +12,35 @@ def setup(env):
     if not partner:
         partner = env['res.partner'].create({'name': 'Gemini Furniture', 'email': 'gemini@example.com'})
 
-    standing = env['product.product'].search([('name', '=', 'Standing Desk')], limit=1)
-    if not standing:
-        t = env['product.template'].create({'name': 'Standing Desk', 'type': 'consu', 'list_price': 450})
-        standing = t.product_variant_id
+    products = {}
+    for name, price in [('Standing Desk', 450), ('Office Chair', 150),
+                        ('Large Desk', 320), ('Whiteboard', 80)]:
+        p = env['product.product'].search([('name', '=', name)], limit=1)
+        if not p:
+            t = env['product.template'].create({'name': name, 'type': 'consu', 'list_price': price})
+            p = t.product_variant_id
+        products[name] = p
 
-    chair = env['product.product'].search([('name', '=', 'Office Chair')], limit=1)
-    if not chair:
-        t = env['product.template'].create({'name': 'Office Chair', 'type': 'consu', 'list_price': 150})
-        chair = t.product_variant_id
+    env['sale.order'].search([('partner_id', '=', partner.id)]).unlink()
 
-    # Remove existing draft SOs for clean state
-    env['sale.order'].search([
-        ('partner_id', '=', partner.id),
-        ('state', '=', 'draft'),
-    ]).unlink()
+    admin = env.ref('base.user_admin')
 
-    # Create two quotations
-    so_standing = env['sale.order'].create({'partner_id': partner.id})
-    env['sale.order.line'].create({
-        'order_id': so_standing.id,
-        'product_id': standing.id,
-        'product_uom_qty': 2,
-        'price_unit': 450,
-    })
+    def make_so(lines):
+        so = env['sale.order'].create({'partner_id': partner.id, 'user_id': admin.id})
+        for prod_name, qty, price in lines:
+            env['sale.order.line'].create({
+                'order_id': so.id,
+                'product_id': products[prod_name].id,
+                'product_uom_qty': qty,
+                'price_unit': price,
+            })
+        return so
 
-    so_chair = env['sale.order'].create({'partner_id': partner.id})
-    env['sale.order.line'].create({
-        'order_id': so_chair.id,
-        'product_id': chair.id,
-        'product_uom_qty': 3,
-        'price_unit': 150,
-    })
+    # SO1: Standing Desk only
+    make_so([('Standing Desk', 1, 450)])
+    # SO2: Office Chair only (same total as SO1 — can't distinguish by amount!)
+    make_so([('Office Chair', 3, 150)])
+    # SO3: Standing Desk + Office Chair — THE ANSWER
+    make_so([('Standing Desk', 1, 450), ('Office Chair', 1, 150)])
+    # SO4: Large Desk + Whiteboard
+    make_so([('Large Desk', 1, 320), ('Whiteboard', 1, 80)])

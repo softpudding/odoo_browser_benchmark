@@ -15,6 +15,9 @@ def setup(env):
     if not stage_done:
         stage_done = env['project.task.type'].create({'name': 'Done', 'sequence': 20})
 
+    # Ensure Done stage is NOT folded so it's visible in kanban
+    stage_done.write({'fold': False})
+
     # Create or find project
     project = env['project.project'].search([('name', '=', 'Q2 Launch')], limit=1)
     if not project:
@@ -24,6 +27,9 @@ def setup(env):
         })
     else:
         project.type_ids = [(6, 0, [stage_new.id, stage_progress.id, stage_done.id])]
+
+    # Clear description from previous runs
+    project.write({'description': False})
 
     # Remove existing tasks
     env['project.task'].search([('project_id', '=', project.id)]).unlink()

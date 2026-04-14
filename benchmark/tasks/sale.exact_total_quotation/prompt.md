@@ -1,15 +1,11 @@
-Create a new quotation in the Sales app for customer "Deco Addict".
+Go to the Sales app. There is a draft quotation for customer "Deco Addict" with three product lines.
 
-Add products from the catalog so that the **untaxed total** is exactly **$1,000.00**.
+The problem: someone entered **wrong quantities** on all three lines. The correct quantities are written in each product's **Internal Notes** field (visible on the product form, not on the quotation).
 
-Available products and their prices:
-- Large Desk: $320.00
-- Office Chair: $150.00
-- Standing Desk: $450.00
-- Keyboard Tray: $45.00
-- Desk Lamp: $60.00
-- Monitor Arm: $75.00
-- Cable Manager: $25.00
-- Whiteboard: $80.00
+Your job:
+1. For each product on the quotation, go to the Products menu and open that product's form
+2. Read the "Internal Notes" field — it contains the correct quantity (e.g., "Correct qty: 3")
+3. Go back to the quotation and fix each line's quantity to match
+4. Save the quotation (do NOT confirm — leave as draft)
 
-You may use any combination of products and quantities, but the untaxed total must be exactly $1,000.00. Save the quotation when done.
+After fixing all quantities, the untaxed total should change. The oracle will verify the final amounts are correct.

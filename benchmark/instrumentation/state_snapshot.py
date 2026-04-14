@@ -14,6 +14,8 @@ Usage::
 
 from __future__ import annotations
 
+import html
+import re
 from dataclasses import dataclass
 from typing import Any
 
@@ -30,6 +32,8 @@ DEFAULT_IGNORE_MODELS = frozenset({
     "base.registry.signaling",
     "ir.attachment",  # cache entries, unless task-relevant
 })
+
+_HTML_TAG_RE = re.compile(r"</?[A-Za-z][^>]*>")
 
 
 # ---------------------------------------------------------------------------
@@ -66,6 +70,20 @@ def _json_safe(v: Any) -> Any:
     return str(v)
 
 
+def _normalize_text(value: str) -> str:
+    """Normalize rich-text HTML fragments into stable plain text."""
+    if not _HTML_TAG_RE.search(value):
+        return value
+
+    text = re.sub(r"(?i)<\s*br\s*/?\s*>", "\n", value)
+    text = re.sub(r"(?i)</\s*(p|div|li|tr|h[1-6])\s*>", "\n", text)
+    text = re.sub(r"<[^>]+>", "", text)
+    text = html.unescape(text).replace("\xa0", " ")
+    lines = [" ".join(line.split()) for line in text.splitlines()]
+    text = "\n".join(line for line in lines if line)
+    return text.strip()
+
+
 def _normalize_value(val: Any) -> Any:
     """Normalize an ORM field value for comparison."""
     # Check for Odoo recordset first (x2many and m2o) — recordsets have
@@ -87,7 +105,9 @@ def _normalize_value(val: Any) -> Any:
         return tuple(sorted(val))
     if hasattr(val, "id"):
         name = getattr(val, "display_name", None) or getattr(val, "name", str(val.id))
-        return str(name)
+        return _normalize_text(str(name))
+    if isinstance(val, str):
+        return _normalize_text(val)
     if isinstance(val, bytes):
         return val.hex()[:32]
     return val

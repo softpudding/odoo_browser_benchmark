@@ -1,0 +1,18 @@
+task_id: account.repair_and_post_invoice
+module: account
+difficulty: hard
+instruction: see prompt.md
+start_url: /odoo
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 420
+step_limit: 250
+metadata:
+  category: document_lifecycle
+  failure_pattern: "Repair invoice lines on the correct draft document and complete posting"
+  primary_track: false
+  tier: 3

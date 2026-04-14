@@ -1,0 +1,18 @@
+task_id: sale.edit_nested_line_in_long_order
+module: sale
+difficulty: hard
+instruction: see prompt.md
+start_url: /odoo/sales
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 420
+step_limit: 250
+metadata:
+  category: deep_ui_interaction
+  failure_pattern: "Agent must scroll within a nested one2many widget to find and edit a specific line among 20 products, then confirm without corrupting other lines"
+  primary_track: false
+  tier: 3

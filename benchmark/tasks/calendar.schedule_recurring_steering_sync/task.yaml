@@ -1,0 +1,18 @@
+task_id: calendar.schedule_recurring_steering_sync
+module: calendar
+difficulty: hard
+instruction: see prompt.md
+start_url: /odoo/calendar
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 420
+step_limit: 250
+metadata:
+  category: temporal_recurrence_scheduling
+  failure_pattern: "Compose a recurring meeting, then apply a location change to only one occurrence without modifying the rest of the series"
+  primary_track: false
+  tier: 3

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Benchmark evaluation runner — agent-agnostic.
+"""Benchmark evaluation runner — agent-agnostic, parallel-safe.
 
 Supports three evaluation modes:
   - browser-use: automated browser agent
@@ -9,10 +9,20 @@ Supports three evaluation modes:
 The runner handles DB seeding, state capture, and scoring.
 The agent just needs to complete the task in the browser.
 
+**Parallel execution:** By default each ``eval.py run`` auto-isolates — it
+allocates a free port, creates an ephemeral database, and manages its own
+Odoo process.  Multiple runs can execute concurrently with zero coordination.
+Pass ``--no-isolate`` to revert to the legacy shared-DB/port behaviour.
+
 Usage::
 
-    # Automated with browser-use
+    # Automated with browser-use (auto-isolated)
     python benchmark/eval.py run <task_dir> --agent browser-use --provider dashscope
+
+    # Run multiple tasks in parallel (each gets its own DB + port)
+    python benchmark/eval.py run task_a --agent browser-use &
+    python benchmark/eval.py run task_b --agent browser-use &
+    wait
 
     # Human tester
     python benchmark/eval.py run <task_dir> --agent human
@@ -20,18 +30,30 @@ Usage::
     # External agent
     python benchmark/eval.py run <task_dir> --agent command --cmd "python my_agent.py"
 
+    # Legacy single-server mode (shared DB, no isolation)
+    python benchmark/eval.py run <task_dir> --no-isolate
+
     # List all tasks
     python benchmark/eval.py list
 
     # Re-score a completed run
     python benchmark/eval.py score <output_dir> --task <task_dir>
+
+    # Clean up orphan processes / stale DBs after a crash
+    python benchmark/eval.py cleanup
 """
 
 from __future__ import annotations
 
 import argparse
+import atexit
+import configparser
+import html
 import json
 import os
+import re
+import signal
+import socket
 import subprocess
 import sys
 import time
@@ -51,6 +73,113 @@ DEFAULT_BASE_URL = os.getenv("ODOO_BASE_URL", "http://127.0.0.1:8069")
 DEFAULT_DB = os.getenv("ODOO_DB", "benchmark_validate")
 DEFAULT_LOGIN = "admin"
 DEFAULT_PASSWORD = "admin"
+
+
+# ---------------------------------------------------------------------------
+# Per-process isolation helpers
+# ---------------------------------------------------------------------------
+
+def _find_free_port() -> int:
+    """Ask the OS for a free TCP port."""
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.bind(("127.0.0.1", 0))
+        return s.getsockname()[1]
+
+
+def _write_run_config(run_id: str, port: int, db: str) -> Path:
+    """Create a temporary Odoo config with the given port and DB."""
+    config = configparser.ConfigParser()
+    config.read(ODOO_CONF)
+    if not config.has_section("options"):
+        config.add_section("options")
+    config.set("options", "http_port", str(port))
+    config.set("options", "db_name", db)
+    path = Path(f"/tmp/bench_odoo_{run_id}.conf")
+    with open(path, "w") as f:
+        config.write(f)
+    return path
+
+
+class OdooProcess:
+    """Manages a single Odoo server process for one eval run."""
+
+    def __init__(self, db: str, port: int, conf: str, run_id: str):
+        self.db = db
+        self.port = port
+        self.conf = conf
+        self.run_id = run_id
+        self._proc: subprocess.Popen | None = None
+        self._log_path = Path(f"/tmp/bench_odoo_{run_id}.log")
+        self._pid_path = Path(f"/tmp/bench_odoo_{run_id}.pid")
+
+    def start(self) -> None:
+        log_fh = open(self._log_path, "w")
+        self._proc = subprocess.Popen(
+            [ODOO_PYTHON, ODOO_BIN,
+             "-c", self.conf,
+             "-d", self.db,
+             "--http-port", str(self.port),
+             "--no-database-list"],
+            stdout=log_fh,
+            stderr=subprocess.STDOUT,
+        )
+        self._pid_path.write_text(str(self._proc.pid))
+
+    def stop(self) -> None:
+        if self._proc and self._proc.poll() is None:
+            self._proc.terminate()
+            try:
+                self._proc.wait(timeout=10)
+            except subprocess.TimeoutExpired:
+                self._proc.kill()
+                self._proc.wait()
+        self._pid_path.unlink(missing_ok=True)
+
+    def wait_ready(self, timeout: int = 60) -> None:
+        import urllib.request
+        deadline = time.time() + timeout
+        while time.time() < deadline:
+            try:
+                urllib.request.urlopen(
+                    f"http://127.0.0.1:{self.port}/web/login", timeout=2,
+                )
+                return
+            except Exception:
+                if self._proc and self._proc.poll() is not None:
+                    raise RuntimeError(
+                        f"Odoo exited with code {self._proc.returncode}. "
+                        f"See {self._log_path}"
+                    )
+                time.sleep(2)
+        raise RuntimeError(f"Odoo not ready after {timeout}s on port {self.port}")
+
+
+def _cleanup_run(run_id: str, db: str) -> None:
+    """Remove all per-run resources (DB, temp files)."""
+    from benchmark.db import DatabaseManager
+    try:
+        DatabaseManager().drop_database(db)
+    except Exception:
+        pass
+    for suffix in (".conf", ".pid", ".log"):
+        Path(f"/tmp/bench_odoo_{run_id}{suffix}").unlink(missing_ok=True)
+
+
+# Global refs for atexit/signal cleanup
+_active_odoo_proc: OdooProcess | None = None
+_active_run_id: str | None = None
+_active_db: str | None = None
+_active_keep_db: bool = False
+
+
+def _emergency_cleanup() -> None:
+    if _active_odoo_proc:
+        _active_odoo_proc.stop()
+    if _active_run_id and _active_db and not _active_keep_db:
+        _cleanup_run(_active_run_id, _active_db)
+
+
+atexit.register(_emergency_cleanup)
 
 
 # ---------------------------------------------------------------------------
@@ -131,6 +260,23 @@ class OdooRPC:
 # State diff engine (works on plain dicts, no ORM)
 # ---------------------------------------------------------------------------
 
+_HTML_TAG_RE = re.compile(r"</?[A-Za-z][^>]*>")
+
+
+def _normalize_text(value: str) -> str:
+    """Normalize rich-text HTML fragments into stable plain text."""
+    if not _HTML_TAG_RE.search(value):
+        return value
+
+    text = re.sub(r"(?i)<\s*br\s*/?\s*>", "\n", value)
+    text = re.sub(r"(?i)</\s*(p|div|li|tr|h[1-6])\s*>", "\n", text)
+    text = re.sub(r"<[^>]+>", "", text)
+    text = html.unescape(text).replace("\xa0", " ")
+    lines = [" ".join(line.split()) for line in text.splitlines()]
+    text = "\n".join(line for line in lines if line)
+    return text.strip()
+
+
 def normalize_value(val: Any) -> Any:
     """Normalize an XML-RPC value for comparison."""
     if val is False:
@@ -138,9 +284,11 @@ def normalize_value(val: Any) -> Any:
     if isinstance(val, (list, tuple)):
         # Many2one: [id, name] -> name
         if len(val) == 2 and isinstance(val[0], int) and isinstance(val[1], str):
-            return val[1]
+            return _normalize_text(val[1])
         # x2many: list of ids -> sorted tuple
         return tuple(sorted(val))
+    if isinstance(val, str):
+        return _normalize_text(val)
     return val
 
 
@@ -241,62 +389,18 @@ def compute_state_diff(
 # Trace evaluation
 # ---------------------------------------------------------------------------
 
-# Framework write ops that always occur during normal Odoo usage.
-# These are NOT agent actions — they're bootstrap/session/notification
-# operations that fire on every page load. Excluded from write allowlist
-# enforcement to avoid false positives.
-FRAMEWORK_WRITE_OPS = frozenset({
-    # Session / login
-    "custom:/web/login",
-    "custom:/web/session/authenticate",
-    # Navigation / menu loading (POST in Odoo)
-    "custom:/web/action/load",
-    "custom:/web/webclient/load_menus",
-    "custom:/web/webclient/translations",
-    "custom:/website/translations",
-    # Mail / push notifications
-    "custom:/mail/data",
-    "custom:/mail/thread/messages",
-    "custom:/mail/action",
-    "custom:/mail/link_preview",
-    "mail.push.device.register_devices",
-    "mail.push.device.unregister_devices",
-    "mail.push.device.get_web_push_vapid_public_key",
-    # Discuss / presence
-    "custom:/discuss/channel/messages",
-    "custom:/discuss/channel/notify_typing",
-    "bus.bus.create",
-    # Framework internals
-    "custom:/odoo",
-    "custom:/odoo/sales",
-    "custom:/odoo/project",
-    "custom:/odoo/offline",
-})
-
-
 def evaluate_trace(trace: list[dict], trace_spec: dict) -> dict:
     """Evaluate the API trace against trace_spec.
 
-    Write policy (strict): any write operation that is NOT listed in
-    required_ops, optional_ops, or FRAMEWORK_WRITE_OPS is treated as
-    an unauthorized write. Framework noise (login, mail, push
-    notifications) is automatically excluded.
-
-    Read policy (permissive): unlisted reads are allowed. Agents may
-    legitimately load views, search records, and browse data.
-
-    Returns the full trace metric vector per spec Section 11.2.
+    Per the spec, traces are scored by required-op coverage and
+    forbidden-op / forbidden-write occurrence, not by a global write
+    allowlist. Optional ops are diagnostic only.
     """
     required_ops = set(trace_spec.get("required_ops", []))
-    optional_ops = set(trace_spec.get("optional_ops", []))
     forbidden_ops = set(trace_spec.get("forbidden_ops", []))
-
-    # Allowed writes = required + optional + framework noise
-    allowed_write_ops = required_ops | optional_ops | FRAMEWORK_WRITE_OPS
 
     fired_ops = {e["canonical_op"] for e in trace}
     writes = [e for e in trace if e.get("mutation_class") == "write"]
-    write_ops = {e["canonical_op"] for e in writes}
 
     # Required op recall
     if required_ops:
@@ -307,32 +411,22 @@ def evaluate_trace(trace: list[dict], trace_spec: dict) -> dict:
 
     # Explicitly forbidden ops fired
     forbidden_fired = forbidden_ops & fired_ops
-
-    # Unauthorized writes: any write NOT in the allowed set
-    unauthorized_write_ops = write_ops - allowed_write_ops
-    unauthorized_writes = [
-        e for e in writes if e["canonical_op"] not in allowed_write_ops
+    forbidden_write_events = [
+        e for e in writes if e["canonical_op"] in forbidden_ops
     ]
 
-    # Write precision: fraction of write events that are authorized
+    # Write precision: fraction of observed write events that are not forbidden
     if writes:
-        authorized_writes = sum(
-            1 for w in writes if w["canonical_op"] in allowed_write_ops
-        )
-        write_precision = authorized_writes / len(writes)
+        non_forbidden_writes = len(writes) - len(forbidden_write_events)
+        write_precision = non_forbidden_writes / len(writes)
     else:
         write_precision = 1.0
 
-    # Harmful write rate: unauthorized write events / total writes
-    harmful_write_rate = len(unauthorized_writes) / max(1, len(writes))
+    # Harmful write rate: forbidden write events / total writes
+    harmful_write_rate = len(forbidden_write_events) / max(1, len(writes))
 
-    # StrictSuccess requires:
-    # 1. No explicitly forbidden ops fired
-    # 2. No unauthorized writes (write allowlist enforcement)
-    strict_clean = (
-        len(forbidden_fired) == 0
-        and len(unauthorized_write_ops) == 0
-    )
+    # StrictSuccess = OutcomeSuccess AND no forbidden op fired.
+    strict_clean = len(forbidden_fired) == 0
 
     return {
         "required_op_recall": round(required_op_recall, 4),
@@ -342,12 +436,11 @@ def evaluate_trace(trace: list[dict], trace_spec: dict) -> dict:
         "total_api_calls": len(trace),
         "write_calls": len(writes),
         "read_calls": len(trace) - len(writes),
-        "authorized_writes": len(writes) - len(unauthorized_writes),
-        "unauthorized_writes": len(unauthorized_writes),
+        "non_forbidden_writes": len(writes) - len(forbidden_write_events),
+        "forbidden_write_events": len(forbidden_write_events),
         "required_ops_hit": sorted(required_ops & fired_ops),
         "required_ops_missed": sorted(required_ops - fired_ops),
         "forbidden_ops_fired": sorted(forbidden_fired),
-        "unauthorized_write_ops": sorted(unauthorized_write_ops),
     }
 
 
@@ -362,6 +455,7 @@ def score_run(
     agent_steps: int,
     gave_up: bool = False,
     trace_score: dict | None = None,
+    postcondition_failures: list[str] | None = None,
 ) -> dict:
     """Score a benchmark run.
 
@@ -400,6 +494,11 @@ def score_run(
     strict_clean = trace_score.get("strict_clean", True) if trace_score else True
     strict_success = outcome_success and strict_clean
 
+    if postcondition_failures:
+        outcome_success = False
+        strict_success = False
+        precision = recall = f1 = 0.0
+
     return {
         "outcome_success": outcome_success,
         "strict_success": strict_success,
@@ -415,6 +514,38 @@ def score_run(
         "missing_edits": len(expected_set - observed_set),
         "extra_edits": len(observed_set - expected_set),
     }
+
+
+def run_postconditions(task_dir: Path, db: str, conf_path: str = ODOO_CONF) -> list[str]:
+    """Run task-specific postcondition checks from check.py if present."""
+    check_file = task_dir / "check.py"
+    if not check_file.exists():
+        return []
+
+    wrapper = f"""
+import json
+{check_file.read_text()}
+failures = check(self.env)
+if not isinstance(failures, list):
+    failures = [f"check.py returned non-list: {{type(failures).__name__}}"]
+print("CHECK_JSON:" + json.dumps(failures))
+"""
+    result = subprocess.run(
+        [ODOO_PYTHON, ODOO_BIN, "shell", "-c", conf_path, "-d", db, "--no-http"],
+        input=wrapper,
+        capture_output=True,
+        text=True,
+        cwd=str(REPO_ROOT),
+        timeout=120,
+    )
+
+    for line in result.stdout.splitlines():
+        if line.startswith("CHECK_JSON:"):
+            return json.loads(line[len("CHECK_JSON:"):])
+
+    stderr = result.stderr.strip().splitlines()
+    tail = stderr[-3:] if stderr else ["no stderr output"]
+    return [f"Postcondition check failed to return JSON: {' | '.join(tail)}"]
 
 
 # ---------------------------------------------------------------------------
@@ -466,6 +597,7 @@ def run_browser_use(
     provider: str = "browser-use",
     model: str | None = None,
     max_steps: int = 200,
+    time_limit_sec: int = 300,
     headed: bool = True,
 ) -> dict:
     """Run browser-use agent and return result."""
@@ -488,26 +620,47 @@ def run_browser_use(
         bu_args.append("--headed")
 
     t0 = time.time()
-    result = subprocess.run(bu_args, capture_output=True, text=True, cwd=str(REPO_ROOT), timeout=max_steps * 30)
-    wall_clock = time.time() - t0
+    try:
+        result = subprocess.run(
+            bu_args,
+            capture_output=True,
+            text=True,
+            cwd=str(REPO_ROOT),
+            timeout=time_limit_sec,
+        )
+        wall_clock = time.time() - t0
 
-    # Parse result from stdout
-    stdout = result.stdout
-    success = "Task completed successfully" in stdout
-    gave_up = "success: False" in stdout or result.returncode != 0
+        # Parse result from stdout
+        stdout = result.stdout
+        success = "Task completed successfully" in stdout
+        gave_up = "success: False" in stdout or result.returncode != 0
 
-    # Count steps
-    steps = stdout.count("📍 Step")
+        # Count steps
+        steps = stdout.count("📍 Step")
 
-    return {
-        "success": success and not gave_up,
-        "gave_up": gave_up,
-        "wall_clock": wall_clock,
-        "steps": steps,
-        "stdout": stdout,
-        "stderr": result.stderr,
-        "returncode": result.returncode,
-    }
+        return {
+            "success": success and not gave_up,
+            "gave_up": gave_up,
+            "wall_clock": wall_clock,
+            "steps": steps,
+            "stdout": stdout,
+            "stderr": result.stderr,
+            "returncode": result.returncode,
+        }
+    except subprocess.TimeoutExpired as exc:
+        wall_clock = time.time() - t0
+        stdout = exc.stdout.decode() if isinstance(exc.stdout, bytes) else (exc.stdout or "")
+        stderr = exc.stderr.decode() if isinstance(exc.stderr, bytes) else (exc.stderr or "")
+        return {
+            "success": False,
+            "gave_up": True,
+            "wall_clock": wall_clock,
+            "steps": stdout.count("📍 Step"),
+            "stdout": stdout,
+            "stderr": stderr,
+            "returncode": -1,
+            "reason": f"timed out after {time_limit_sec}s",
+        }
 
 
 def run_human(
@@ -515,6 +668,8 @@ def run_human(
     start_url: str,
     *,
     base_url: str,
+    login: str | None = None,
+    password: str | None = None,
     **kwargs: Any,
 ) -> dict:
     """Human evaluation mode. Prints instruction, waits for Enter."""
@@ -525,7 +680,13 @@ def run_human(
     print("  HUMAN EVALUATION MODE")
     print("=" * 70)
     print()
-    print(f"  Open this URL in your browser: {full_url}")
+    print("  TIP: Use Chrome Incognito Mode to avoid stale asset cache.")
+    print()
+    print(f"  URL:      {full_url}")
+    if login:
+        print(f"  Login:    {login}")
+    if password:
+        print(f"  Password: {password}")
     print()
     print("  TASK:")
     print("  " + "-" * 66)
@@ -568,6 +729,7 @@ def run_command(
     login: str | None,
     password: str | None,
     max_steps: int = 200,
+    time_limit_sec: int = 300,
     **kwargs: Any,
 ) -> dict:
     """Run an external agent command."""
@@ -583,36 +745,72 @@ def run_command(
     })
 
     t0 = time.time()
-    result = subprocess.run(
-        cmd, shell=True, env=env,
-        capture_output=True, text=True,
-        cwd=str(REPO_ROOT), timeout=max_steps * 30,
-    )
-    wall_clock = time.time() - t0
+    try:
+        result = subprocess.run(
+            cmd, shell=True, env=env,
+            capture_output=True, text=True,
+            cwd=str(REPO_ROOT), timeout=time_limit_sec,
+        )
+        wall_clock = time.time() - t0
 
-    return {
-        "success": result.returncode == 0,
-        "gave_up": result.returncode != 0,
-        "wall_clock": wall_clock,
-        "steps": 0,
-        "stdout": result.stdout,
-        "stderr": result.stderr,
-        "returncode": result.returncode,
-    }
+        return {
+            "success": result.returncode == 0,
+            "gave_up": result.returncode != 0,
+            "wall_clock": wall_clock,
+            "steps": 0,
+            "stdout": result.stdout,
+            "stderr": result.stderr,
+            "returncode": result.returncode,
+        }
+    except subprocess.TimeoutExpired as exc:
+        wall_clock = time.time() - t0
+        stdout = exc.stdout.decode() if isinstance(exc.stdout, bytes) else (exc.stdout or "")
+        stderr = exc.stderr.decode() if isinstance(exc.stderr, bytes) else (exc.stderr or "")
+        return {
+            "success": False,
+            "gave_up": True,
+            "wall_clock": wall_clock,
+            "steps": 0,
+            "stdout": stdout,
+            "stderr": stderr,
+            "returncode": -1,
+            "reason": f"timed out after {time_limit_sec}s",
+        }
 
 
 # ---------------------------------------------------------------------------
 # Seed runner
 # ---------------------------------------------------------------------------
 
-def run_seed(task_dir: Path, db: str) -> None:
-    """Run the task's seed.py via odoo shell."""
+def run_seed(task_dir: Path, db: str, rpc: OdooRPC | None = None, conf_path: str = ODOO_CONF) -> None:
+    """Run the task's seed.py via odoo shell.
+
+    Also runs cleanup.py first if it exists, to reset state from
+    previous runs.
+    """
+    # Run cleanup first if available
+    cleanup_file = task_dir / "cleanup.py"
+    if cleanup_file.exists():
+        cleanup_code = cleanup_file.read_text()
+        cleanup_wrapper = f"""
+{cleanup_code}
+cleanup(self.env)
+self.env.cr.commit()
+print('CLEANUP_OK')
+"""
+        result = subprocess.run(
+            [ODOO_PYTHON, ODOO_BIN, "shell", "-c", conf_path, "-d", db, "--no-http"],
+            input=cleanup_wrapper, capture_output=True, text=True,
+            cwd=str(REPO_ROOT), timeout=120,
+        )
+        if "CLEANUP_OK" in result.stdout:
+            print("   Cleanup: done")
+
     seed_file = task_dir / "seed.py"
     if not seed_file.exists():
         return
 
     seed_code = seed_file.read_text()
-    # Wrap in a function call pattern that odoo shell expects
     wrapper = f"""
 {seed_code}
 setup(self.env)
@@ -620,7 +818,7 @@ self.env.cr.commit()
 print('SEED_OK')
 """
     result = subprocess.run(
-        [ODOO_PYTHON, ODOO_BIN, "shell", "-c", ODOO_CONF, "-d", db, "--no-http"],
+        [ODOO_PYTHON, ODOO_BIN, "shell", "-c", conf_path, "-d", db, "--no-http"],
         input=wrapper, capture_output=True, text=True,
         cwd=str(REPO_ROOT), timeout=120,
     )
@@ -631,14 +829,156 @@ print('SEED_OK')
 
 
 # ---------------------------------------------------------------------------
+# Episode preparation: clean DB restore + seed + Odoo restart
+# ---------------------------------------------------------------------------
+
+SNAPSHOT_DIR = Path(os.getenv("BENCHMARK_SNAPSHOT_DIR", "/tmp/benchmark_snapshots"))
+BASE_SNAPSHOT = "benchmark_base"
+
+
+def _prepare_episode(
+    db: str,
+    task_dir: Path,
+    base_url: str,
+    *,
+    snapshot_name: str | None = None,
+    odoo_proc: OdooProcess | None = None,
+    conf_path: str = ODOO_CONF,
+) -> None:
+    """Restore a clean database, seed task data, and restart Odoo.
+
+    This ensures every episode starts from identical state per spec §16:
+    'start each episode from a fresh database clone or snapshot restore'.
+
+    When *odoo_proc* is provided (parallel / auto-isolate mode), only
+    that process is stopped and restarted.  Otherwise falls back to the
+    legacy ``pkill -f odoo-bin`` behaviour.
+    """
+    from benchmark.db import DatabaseManager
+    dbm = DatabaseManager()
+    restore_snapshot = snapshot_name or BASE_SNAPSHOT
+
+    # Step 1: Check base snapshot exists
+    if restore_snapshot not in dbm.list_snapshots():
+        if restore_snapshot == BASE_SNAPSHOT:
+            print(f"   No base snapshot '{BASE_SNAPSHOT}' found. Creating from current DB...")
+            _create_base_snapshot(db, dbm)
+        else:
+            raise RuntimeError(
+                f"Task snapshot '{restore_snapshot}' not found in {SNAPSHOT_DIR}"
+            )
+
+    # Step 2: Stop Odoo — only THIS run's process when isolated
+    print("   Stopping Odoo...")
+    if odoo_proc:
+        odoo_proc.stop()
+    else:
+        subprocess.run(["pkill", "-f", "odoo-bin"], capture_output=True)
+        time.sleep(2)
+
+    # Step 3: Restore clean DB from snapshot
+    print(f"   Restoring {db} from snapshot '{restore_snapshot}'...")
+    dbm.restore_snapshot(restore_snapshot, db)
+
+    # Step 3b: Clear compiled asset bundles so Odoo regenerates them.
+    # pg_restore brings ir_attachment records that reference compiled
+    # JS/CSS bundles, but the filestore files don't exist for this DB.
+    # Without this, every page load shows AssetsLoadingError.
+    print("   Clearing asset cache...")
+    subprocess.run(
+        ["psql", "-U", dbm.db_user, db, "-c",
+         "DELETE FROM ir_attachment WHERE res_model='ir.ui.view' OR url LIKE '/web/assets/%';"],
+        capture_output=True, env=dbm._pg_env(),
+    )
+    # Also copy filestore from source if it exists, or just let Odoo rebuild
+    import shutil
+    filestore_dir = Path(ODOO_CONF).parent / ".odoo-data" / "filestore"
+    target_fs = filestore_dir / db
+    if not target_fs.exists():
+        target_fs.mkdir(parents=True, exist_ok=True)
+
+    # Step 4: Run seed.py
+    print("   Running seed script...")
+    run_seed(task_dir, db, conf_path=conf_path)
+
+    # Step 5: Restart Odoo
+    print("   Starting Odoo...")
+    if odoo_proc:
+        odoo_proc.start()
+        odoo_proc.wait_ready()
+        print(f"   Odoo ready on port {odoo_proc.port}")
+    else:
+        subprocess.Popen(
+            [ODOO_PYTHON, ODOO_BIN, "-c", ODOO_CONF, "-d", db],
+            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+        )
+        # Wait for Odoo to be ready
+        import urllib.request
+        for i in range(30):
+            try:
+                urllib.request.urlopen(f"{base_url}/web/login", timeout=2)
+                print(f"   Odoo ready ({i*2}s)")
+                return
+            except Exception:
+                time.sleep(2)
+        print("   WARNING: Odoo may not be ready (timeout)")
+
+
+def _create_base_snapshot(db: str, dbm: Any = None) -> None:
+    """Create the base snapshot from the current database.
+
+    This should be run once after installing all needed modules
+    (sale, project, website_hr_recruitment, benchmark_trace, etc.).
+    """
+    if dbm is None:
+        from benchmark.db import DatabaseManager
+        dbm = DatabaseManager()
+
+    SNAPSHOT_DIR.mkdir(parents=True, exist_ok=True)
+    dbm.create_snapshot(db, BASE_SNAPSHOT)
+    print(f"   Base snapshot created: {SNAPSHOT_DIR / (BASE_SNAPSHOT + '.dump')}")
+
+
+def cmd_prepare_base(args: argparse.Namespace) -> None:
+    """Create the base snapshot from the current database state.
+
+    Run this once after installing all needed modules:
+      python benchmark/eval.py prepare-base --db benchmark_validate
+    """
+    from benchmark.db import DatabaseManager
+    dbm = DatabaseManager()
+    _create_base_snapshot(args.db, dbm)
+    print(f"Done. All future eval runs will restore from this snapshot.")
+
+
+# ---------------------------------------------------------------------------
 # Main evaluation flow
 # ---------------------------------------------------------------------------
 
-def cmd_run(args: argparse.Namespace) -> None:
-    """Run a benchmark task end-to-end with proper instrumentation."""
+def cmd_run(args: argparse.Namespace) -> dict | None:
+    """Run a benchmark task end-to-end with proper instrumentation.
+
+    Returns the score dict on success, or *None* on early error.
+
+    When ``--no-isolate`` is **not** set and the user did not provide
+    explicit ``--db`` / ``--base-url``, the run auto-isolates: it picks
+    a free port, creates an ephemeral database, and manages its own
+    Odoo process.  This lets multiple ``eval.py run`` invocations
+    execute concurrently without collisions.
+    """
+    global _active_odoo_proc, _active_run_id, _active_db, _active_keep_db
+
     task_dir = Path(args.task_dir)
     if not task_dir.is_absolute():
         task_dir = BENCHMARK_DIR / "tasks" / args.task_dir
+
+    if not task_dir.exists():
+        print(f"ERROR: Task directory not found: {task_dir}")
+        print(f"  Available tasks:")
+        for td in sorted((BENCHMARK_DIR / "tasks").iterdir()):
+            if (td / "task.yaml").exists():
+                print(f"    {td.name}")
+        return None
 
     task = load_task(task_dir)
     state_spec = task.get("state_spec", {})
@@ -646,8 +986,71 @@ def cmd_run(args: argparse.Namespace) -> None:
     instruction = task.get("instruction", "")
     start_url = task.get("start_url", "/odoo")
     task_id = task.get("task_id", task_dir.name)
-    login = args.login or (task.get("login_context", {}) or {}).get("login") or DEFAULT_LOGIN
-    password = args.password or DEFAULT_PASSWORD
+    login_context = task.get("login_context", {}) or {}
+    db_seed = task.get("db_seed", {}) or {}
+    snapshot_name = db_seed.get("snapshot")
+
+    if args.login is not None:
+        agent_login = args.login
+    elif "login" in login_context:
+        agent_login = login_context.get("login")
+    else:
+        agent_login = DEFAULT_LOGIN
+
+    if args.password is not None:
+        agent_password = args.password
+    elif "password" in login_context:
+        agent_password = login_context.get("password")
+    elif agent_login is None:
+        agent_password = None
+    else:
+        agent_password = DEFAULT_PASSWORD
+
+    rpc_login = DEFAULT_LOGIN
+    rpc_password = DEFAULT_PASSWORD
+    max_steps = args.max_steps if args.max_steps is not None else task.get("step_limit", 200)
+    time_limit_sec = task.get("time_limit_sec", 300)
+
+    if not instruction:
+        print(f"ERROR: No instruction found for task {task_id}")
+        print(f"  Check that {task_dir}/prompt.md exists")
+        return None
+
+    if not expected_diff and not state_spec.get("models"):
+        print(f"ERROR: No expected state oracle for task {task_id}")
+        print(f"  Need expected_state.json or state_spec.yaml with models")
+        return None
+
+    # --- Auto-isolation setup ---
+    # When the user did not override --db / --base-url AND did not pass
+    # --no-isolate, we spin up an isolated Odoo instance on a free port
+    # with its own ephemeral database.
+    no_isolate = getattr(args, "no_isolate", False)
+    keep_db = getattr(args, "keep_db", False)
+    keep_server = getattr(args, "keep_server", False)
+    explicit_db = (args.db != DEFAULT_DB)
+    explicit_url = (args.base_url != DEFAULT_BASE_URL)
+    auto_isolate = not no_isolate and not explicit_db and not explicit_url
+
+    odoo_proc: OdooProcess | None = None
+    run_id: str | None = None
+    conf_path = ODOO_CONF
+
+    if auto_isolate:
+        run_id = f"{os.getpid()}_{int(time.time()) % 100000}"
+        port = _find_free_port()
+        db = f"benchmark_{task_id}_{run_id}"
+        base_url = f"http://127.0.0.1:{port}"
+        conf_path = str(_write_run_config(run_id, port, db))
+        odoo_proc = OdooProcess(db, port, conf_path, run_id)
+        # Register for emergency cleanup
+        _active_odoo_proc = odoo_proc
+        _active_run_id = run_id
+        _active_db = db
+        _active_keep_db = keep_db
+    else:
+        db = args.db
+        base_url = args.base_url
 
     # Output dir
     output_dir = Path(args.output_dir) if args.output_dir else (
@@ -658,17 +1061,92 @@ def cmd_run(args: argparse.Namespace) -> None:
     print(f"=== Benchmark Evaluation ===")
     print(f"  Task:   {task_id}")
     print(f"  Agent:  {args.agent}")
+    if auto_isolate:
+        print(f"  DB:     {db}  (auto-isolated)")
+        print(f"  URL:    {base_url}")
+    else:
+        print(f"  DB:     {db}")
+        print(f"  URL:    {base_url}")
     print(f"  Output: {output_dir}")
     print()
 
-    # 1. Seed
-    print("1. Seeding database...")
-    run_seed(task_dir, args.db)
+    try:
+        return _run_episode(
+            task_dir=task_dir,
+            task=task,
+            task_id=task_id,
+            state_spec=state_spec,
+            expected_diff=expected_diff,
+            instruction=instruction,
+            start_url=start_url,
+            snapshot_name=snapshot_name,
+            db=db,
+            base_url=base_url,
+            conf_path=conf_path,
+            odoo_proc=odoo_proc,
+            agent=args.agent,
+            agent_login=agent_login,
+            agent_password=agent_password,
+            rpc_login=rpc_login,
+            rpc_password=rpc_password,
+            max_steps=max_steps,
+            time_limit_sec=time_limit_sec,
+            args=args,
+            output_dir=output_dir,
+        )
+    finally:
+        # Cleanup isolated resources
+        if odoo_proc and not keep_server:
+            odoo_proc.stop()
+        if auto_isolate and not keep_db and run_id:
+            _cleanup_run(run_id, db)
+        # Clear global refs
+        _active_odoo_proc = None
+        _active_run_id = None
+        _active_db = None
+
+
+def _run_episode(
+    *,
+    task_dir: Path,
+    task: dict,
+    task_id: str,
+    state_spec: dict,
+    expected_diff: list,
+    instruction: str,
+    start_url: str,
+    snapshot_name: str | None,
+    db: str,
+    base_url: str,
+    conf_path: str,
+    odoo_proc: OdooProcess | None,
+    agent: str,
+    agent_login: str | None,
+    agent_password: str | None,
+    rpc_login: str,
+    rpc_password: str,
+    max_steps: int,
+    time_limit_sec: int,
+    args: argparse.Namespace,
+    output_dir: Path,
+) -> dict:
+    """Core evaluation logic, extracted so cmd_run can wrap it with cleanup."""
+
+    # 1. Restore clean DB, seed, and restart Odoo
+    print("1. Preparing clean database...")
+    _prepare_episode(
+        db,
+        task_dir,
+        base_url,
+        snapshot_name=snapshot_name,
+        odoo_proc=odoo_proc,
+        conf_path=conf_path,
+    )
     print("   Done.")
 
     # 2. Capture before-state and start trace
     print("2. Capturing pre-task state...")
-    rpc = OdooRPC(args.base_url, args.db, login, password)
+    rpc = OdooRPC(base_url, db, rpc_login, rpc_password)
     before_state = rpc.read_state(state_spec)
     print(f"   Captured {sum(len(v) for v in before_state.values())} records across {len(before_state)} models")
 
@@ -680,40 +1158,44 @@ def cmd_run(args: argparse.Namespace) -> None:
         print("   API trace recording: STARTED")
     except Exception as exc:
         print(f"   API trace recording: UNAVAILABLE ({exc})")
-        print(f"   (Install benchmark_trace addon: odoo-bin -d {args.db} -i benchmark_trace --stop-after-init)")
+        print(f"   (Install benchmark_trace addon: odoo-bin -d {db} -i benchmark_trace --stop-after-init)")
 
     # 3. Run agent
-    print(f"3. Running agent ({args.agent})...")
+    print(f"3. Running agent ({agent})...")
     print()
 
-    if args.agent == "browser-use":
+    if agent == "browser-use":
         agent_result = run_browser_use(
             instruction, start_url,
-            base_url=args.base_url, db=args.db,
-            login=login, password=password,
+            base_url=base_url, db=db,
+            login=agent_login, password=agent_password,
             provider=args.provider or "browser-use",
             model=args.model,
-            max_steps=args.max_steps,
+            max_steps=max_steps,
+            time_limit_sec=time_limit_sec,
             headed=args.headed,
         )
-    elif args.agent == "human":
+    elif agent == "human":
         agent_result = run_human(
             instruction, start_url,
-            base_url=args.base_url,
+            base_url=base_url,
+            login=agent_login,
+            password=agent_password,
         )
-    elif args.agent == "command":
+    elif agent == "command":
         if not args.cmd:
             print("ERROR: --cmd required for command agent")
-            return
+            return {}
         agent_result = run_command(
             instruction, start_url,
-            base_url=args.base_url, cmd=args.cmd,
-            db=args.db, login=login, password=password,
-            max_steps=args.max_steps,
+            base_url=base_url, cmd=args.cmd,
+            db=db, login=agent_login, password=agent_password,
+            max_steps=max_steps,
+            time_limit_sec=time_limit_sec,
         )
     else:
-        print(f"ERROR: Unknown agent type: {args.agent}")
-        return
+        print(f"ERROR: Unknown agent type: {agent}")
+        return {}
 
     print()
     print(f"   Agent finished: steps={agent_result['steps']}, "
@@ -722,7 +1204,7 @@ def cmd_run(args: argparse.Namespace) -> None:
 
     # 4. Stop trace and capture after-state
     print("4. Capturing post-task state and API trace...")
-    rpc = OdooRPC(args.base_url, args.db, login, password)
+    rpc = OdooRPC(base_url, db, rpc_login, rpc_password)
 
     # Retrieve API trace
     trace = []
@@ -750,6 +1232,11 @@ def cmd_run(args: argparse.Namespace) -> None:
     trace_spec = task.get("trace_spec", {})
     trace_score = evaluate_trace(trace, trace_spec) if trace else {}
 
+    # 5c. Run task-specific postcondition checks
+    postcondition_failures = run_postconditions(task_dir, db, conf_path=conf_path)
+    if postcondition_failures:
+        print(f"   Postconditions: {len(postcondition_failures)} failure(s)")
+
     # 6. Score
     print("6. Scoring...")
     score = score_run(
@@ -759,6 +1246,7 @@ def cmd_run(args: argparse.Namespace) -> None:
         agent_steps=agent_result["steps"],
         gave_up=agent_result["gave_up"],
         trace_score=trace_score if trace_score else None,
+        postcondition_failures=postcondition_failures,
     )
     # Merge trace metrics into score
     score.update(trace_score)
@@ -769,6 +1257,7 @@ def cmd_run(args: argparse.Namespace) -> None:
     (output_dir / "expected_state.json").write_text(json.dumps(expected_diff, indent=2))
     (output_dir / "trace.json").write_text(json.dumps(trace, indent=2))
     (output_dir / "trace_summary.json").write_text(json.dumps(trace_summary, indent=2, default=str))
+    (output_dir / "postcondition_failures.json").write_text(json.dumps(postcondition_failures, indent=2))
     (output_dir / "before_state.json").write_text(json.dumps(
         {k: v for k, v in before_state.items()}, indent=2, default=str,
     ))
@@ -804,17 +1293,20 @@ def cmd_run(args: argparse.Namespace) -> None:
         print(f"  HarmfulWriteRate:  {score.get('harmful_write_rate', 'N/A')}")
         print(f"  StrictClean:       {score.get('strict_clean', 'N/A')}")
         print(f"  Total API calls:   {score.get('total_api_calls', 0)}")
-        print(f"  Writes:            {score.get('authorized_writes', 0)} authorized, "
-              f"{score.get('unauthorized_writes', 0)} unauthorized")
+        print(f"  Writes:            {score.get('non_forbidden_writes', 0)} non-forbidden, "
+              f"{score.get('forbidden_write_events', 0)} forbidden")
         if score.get("required_ops_missed"):
             print(f"  Required ops MISSED: {score['required_ops_missed']}")
         if score.get("forbidden_ops_fired"):
             print(f"  Forbidden ops FIRED: {score['forbidden_ops_fired']}")
-        if score.get("unauthorized_write_ops"):
-            print(f"  UNAUTHORIZED WRITES: {score['unauthorized_write_ops']}")
     print("=" * 50)
     print(f"  Artifacts: {output_dir}/")
     print()
+
+    if postcondition_failures:
+        print("  Postcondition failures:")
+        for failure in postcondition_failures:
+            print(f"    - {failure}")
 
     if score["missing_edits"] > 0:
         print("  Missing expected edits:")
@@ -831,6 +1323,8 @@ def cmd_run(args: argparse.Namespace) -> None:
             d = json.loads(e)
             print(f"    + {d['model']}.{d['field']} = {d['norm_value']}")
 
+    return score
+
 
 def cmd_list(args: argparse.Namespace) -> None:
     """List all benchmark tasks."""
@@ -843,6 +1337,54 @@ def cmd_list(args: argparse.Namespace) -> None:
             diff = t.get("difficulty", "?")
             has_oracle = (td / "expected_state.json").exists()
             print(f"  {t.get('task_id', td.name):<55s} difficulty={diff:<8s} oracle={'yes' if has_oracle else 'NO'}")
+
+
+def cmd_cleanup(args: argparse.Namespace) -> None:
+    """Kill orphan benchmark Odoo processes and drop stale ephemeral DBs."""
+    from benchmark.db import DatabaseManager
+
+    # Kill orphan Odoo processes via stale PID files
+    killed = 0
+    for pid_file in Path("/tmp").glob("bench_odoo_*.pid"):
+        try:
+            pid = int(pid_file.read_text().strip())
+            os.kill(pid, signal.SIGTERM)
+            print(f"  Killed orphan Odoo (PID {pid})")
+            killed += 1
+        except (ProcessLookupError, ValueError):
+            pass
+        pid_file.unlink(missing_ok=True)
+
+    # Clean up temp config and log files
+    for f in Path("/tmp").glob("bench_odoo_*"):
+        f.unlink(missing_ok=True)
+
+    # Drop stale ephemeral benchmark DBs
+    dbm = DatabaseManager()
+    result = subprocess.run(
+        ["psql", "-tAc",
+         "SELECT datname FROM pg_database WHERE datname LIKE 'benchmark_%_%'",
+         "postgres"],
+        capture_output=True, text=True, env=dbm._pg_env(),
+    )
+    dropped = 0
+    for db_name in result.stdout.strip().splitlines():
+        db_name = db_name.strip()
+        if not db_name or db_name == DEFAULT_DB:
+            continue
+        # Only drop DBs that look like auto-isolated runs (contain PID_timestamp)
+        # Pattern: benchmark_{task_id}_{pid}_{ts}
+        parts = db_name.rsplit("_", 2)
+        if len(parts) >= 3 and parts[-1].isdigit() and parts[-2].isdigit():
+            try:
+                dbm.drop_database(db_name)
+                print(f"  Dropped stale DB: {db_name}")
+                dropped += 1
+            except Exception as exc:
+                print(f"  Failed to drop {db_name}: {exc}")
+
+    if killed == 0 and dropped == 0:
+        print("  No orphan processes or stale databases found.")
 
 
 def cmd_score(args: argparse.Namespace) -> None:
@@ -887,7 +1429,7 @@ def main() -> None:
     run_p.add_argument("--cmd", help="Command for 'command' agent type")
     run_p.add_argument("--provider", help="LLM provider for browser-use")
     run_p.add_argument("--model", help="Model override for browser-use")
-    run_p.add_argument("--max-steps", type=int, default=200)
+    run_p.add_argument("--max-steps", type=int, default=None)
     run_p.add_argument("--headed", action="store_true", default=True)
     run_p.add_argument("--headless", action="store_true")
     run_p.add_argument("--base-url", default=DEFAULT_BASE_URL)
@@ -895,9 +1437,22 @@ def main() -> None:
     run_p.add_argument("--login", default=None)
     run_p.add_argument("--password", default=None)
     run_p.add_argument("--output-dir", help="Custom output directory")
+    run_p.add_argument("--no-isolate", action="store_true",
+                       help="Disable auto-isolation (use shared DB/port, legacy mode)")
+    run_p.add_argument("--keep-db", action="store_true",
+                       help="Don't drop the ephemeral database after completion")
+    run_p.add_argument("--keep-server", action="store_true",
+                       help="Don't stop the Odoo server after completion (for debugging)")
 
     # list
     sub.add_parser("list", help="List benchmark tasks")
+
+    # prepare-base
+    prep_p = sub.add_parser("prepare-base", help="Create base DB snapshot")
+    prep_p.add_argument("--db", default=DEFAULT_DB)
+
+    # cleanup
+    sub.add_parser("cleanup", help="Kill orphan benchmark processes and drop stale DBs")
 
     # score
     score_p = sub.add_parser("score", help="Re-score a completed run")
@@ -912,6 +1467,10 @@ def main() -> None:
         cmd_run(args)
     elif args.command == "list":
         cmd_list(args)
+    elif args.command == "prepare-base":
+        cmd_prepare_base(args)
+    elif args.command == "cleanup":
+        cmd_cleanup(args)
     elif args.command == "score":
         cmd_score(args)
     else:
