@@ -1,0 +1,49 @@
+# Trace oracle for purchase_stock.receive_and_complete_backorder
+#
+# Category 1: Closed-loop cross-module workflow.
+# Agent must handle partial receipt, backorder wizard, and second receipt.
+
+required_ops:
+  - stock.picking.button_validate          # validate both receipts
+  - stock.backorder.confirmation.process   # create backorder from wizard
+
+optional_ops:
+  # --- Reads ---
+  - purchase.order.read
+  - purchase.order.web_read
+  - purchase.order.search_read
+  - purchase.order.web_search_read
+  - purchase.order.line.read
+  - stock.picking.read
+  - stock.picking.web_read
+  - stock.picking.search_read
+  - stock.picking.web_search_read
+  - stock.move.read
+  - stock.move.search_read
+  - stock.move.line.read
+  - stock.move.line.search_read
+  - stock.backorder.confirmation.read
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+  - product.product.read
+  - res.partner.read
+  # --- Writes from receipt validation ---
+  - stock.picking.write
+  - stock.move.write
+  - stock.move.line.write
+  - stock.move.line.create
+  - stock.backorder.confirmation.create
+  - stock.backorder.confirmation.write
+  - purchase.order.write
+  - mail.message.create
+  - mail.followers.create
+  - bus.bus.create
+
+forbidden_ops:
+  - purchase.order.button_cancel
+  - purchase.order.create
+  - purchase.order.unlink
+  - purchase.order.line.create
+  - purchase.order.line.unlink
+  - stock.picking.action_cancel
+  - stock.picking.unlink

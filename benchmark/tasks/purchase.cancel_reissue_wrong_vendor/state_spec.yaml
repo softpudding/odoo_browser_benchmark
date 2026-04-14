@@ -1,0 +1,24 @@
+models:
+  purchase.order:
+    match_key:
+      - partner_id
+    fields:
+      - partner_id
+      - state
+      - origin
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
+  purchase.order.line:
+    match_key:
+      - order_id
+      - product_id
+    fields:
+      - product_id
+      - product_qty
+      - price_unit
+    ignore_fields:
+      - id
+      - create_date
+      - write_date

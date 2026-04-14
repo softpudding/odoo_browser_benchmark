@@ -1,0 +1,35 @@
+# Trace oracle for purchase.cancel_reissue_wrong_vendor
+#
+# Category 4: Recovery and rollback.
+# Agent must cancel the wrong PO and create a replacement.
+
+required_ops:
+  - purchase.order.button_cancel     # cancel the wrong PO
+  - purchase.order.create            # create replacement PO
+  - purchase.order.line.create       # add lines to replacement
+  - purchase.order.button_confirm    # confirm replacement
+
+optional_ops:
+  - purchase.order.read
+  - purchase.order.web_read
+  - purchase.order.search_read
+  - purchase.order.web_search_read
+  - purchase.order.write
+  - purchase.order.web_save
+  - purchase.order.onchange
+  - purchase.order.line.read
+  - purchase.order.line.search_read
+  - purchase.order.line.onchange
+  - product.product.read
+  - product.product.search_read
+  - res.partner.read
+  - res.partner.search_read
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+  - mail.message.create
+  - mail.followers.create
+  - bus.bus.create
+  - stock.picking.action_cancel      # side effect of PO cancel
+
+forbidden_ops:
+  - purchase.order.unlink            # must not delete the cancelled PO
