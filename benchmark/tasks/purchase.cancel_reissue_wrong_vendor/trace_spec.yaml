@@ -5,17 +5,20 @@
 
 required_ops:
   - purchase.order.button_cancel     # cancel the wrong PO
-  - purchase.order.create            # create replacement PO
-  - purchase.order.line.create       # add lines to replacement
   - purchase.order.button_confirm    # confirm replacement
 
 optional_ops:
+  # Replacement creation often lands as a form save instead of explicit create
+  # events in the current trace instrumentation, so the exact line creation is
+  # validated via state + postconditions rather than required trace ops.
+  - purchase.order.create
   - purchase.order.read
   - purchase.order.web_read
   - purchase.order.search_read
   - purchase.order.web_search_read
   - purchase.order.write
   - purchase.order.web_save
+  - purchase.order.line.create
   - purchase.order.onchange
   - purchase.order.line.read
   - purchase.order.line.search_read
