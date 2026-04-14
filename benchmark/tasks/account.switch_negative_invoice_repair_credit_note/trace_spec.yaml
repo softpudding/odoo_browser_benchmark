@@ -1,0 +1,31 @@
+# Trace oracle for account.switch_negative_invoice_repair_credit_note
+#
+# Agent must switch the negative invoice to a credit note, repair line data,
+# update invoice metadata, and post the final document.
+
+required_ops:
+  - account.move.action_switch_move_type
+  - account.move.action_post
+
+optional_ops:
+  - account.move.read
+  - account.move.web_read
+  - account.move.search_read
+  - account.move.web_search_read
+  - account.move.write
+  - account.move.web_save
+  - account.move.onchange
+  - account.move.line.read
+  - account.move.line.search_read
+  - account.move.line.write
+  - account.move.line.onchange
+  - product.product.read
+  - product.product.search_read
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+  - mail.message.create
+  - mail.followers.create
+  - bus.bus.create
+
+forbidden_ops:
+  - account.move.unlink
