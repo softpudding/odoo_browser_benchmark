@@ -14,7 +14,6 @@ from benchmark.oracle_helpers import (
 
 def oracle(page):
     # No login -- this is a public application.
-    # However, we may need to ensure the right DB is selected for multi-DB setups.
 
     # Go to /jobs with db param if needed
     url = "/jobs"
@@ -30,7 +29,6 @@ def oracle(page):
         if DB:
             db_select.select_option(DB)
             page.wait_for_timeout(1000)
-        # Re-navigate after DB selection
         page.goto(full_url(url))
         page.wait_for_load_state("load")
         page.wait_for_timeout(3000)
@@ -42,7 +40,7 @@ def oracle(page):
     page.wait_for_load_state("load")
     page.wait_for_timeout(2000)
 
-    # Click "Apply Now" or similar button to open the application form
+    # Click "Apply Now" button to open the application form
     apply_btn = page.locator(
         "a:has-text('Apply'), "
         "button:has-text('Apply')"
@@ -56,33 +54,23 @@ def oracle(page):
     page.locator("input[name='email_from']").first.fill("john@smith.com")
     page.locator("input[name='partner_phone']").first.fill("118.218")
 
-    # LinkedIn profile -- may be named linkedin_profile or similar
-    linkedin_input = page.locator(
-        "input[name='linkedin_profile'], "
-        "input[name='linkedin']"
-    ).first
-    linkedin_input.fill("linkedin.com/in/john-smith")
+    # LinkedIn profile
+    page.locator("input[name='linkedin_profile']").first.fill(
+        "linkedin.com/in/john-smith"
+    )
 
-    # Short introduction / description (could be textarea)
-    intro_field = page.locator(
-        "textarea[name='description'], "
-        "textarea[name='body']"
-    ).first
-    intro_field.fill("### [GURU] HR RECRUITMENT TEST DATA ###")
+    # Short introduction -- the field name is "short_introduction" (textarea)
+    page.locator("textarea[name='short_introduction']").first.fill(
+        "### [GURU] HR RECRUITMENT TEST DATA ###"
+    )
 
-    # Submit the form
-    submit_btn = page.locator(
-        "button[type='submit'], "
-        "a.btn:has-text('Submit'), "
-        "button:has-text('Submit'), "
-        ".s_website_form_send"
-    ).first
-    submit_btn.click()
+    # Submit the form (button text is "I'm feeling lucky")
+    page.locator(".s_website_form_send").first.click()
     page.wait_for_load_state("load")
     page.wait_for_timeout(5000)
 
-    # Verify confirmation -- look for a success message or thank-you text
-    # The form shows a success message on the same page
+    # Verify confirmation -- the form redirects to /job-thank-you or shows
+    # a success message on the same page.
     page.wait_for_selector(
         ".s_website_form_end_message:visible, "
         "span:has-text('Thank'):visible, "

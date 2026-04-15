@@ -94,7 +94,7 @@ def oracle(page):
         ".o_list_view .o_data_row:has-text('Discovery Workshop')"
     )
     if task_card.count() > 0:
-        task_card.first.click()
+        task_card.first.click(force=True)
         page.wait_for_load_state("load")
         _wait_for_ready(page)
     else:
@@ -108,10 +108,10 @@ def oracle(page):
     page.wait_for_timeout(500)
     _wait_no_loading(page)
 
-    # Go back to task list
+    # Go back to task list via breadcrumb (click the last breadcrumb = Tasks)
     breadcrumb = page.locator(".o_breadcrumb .breadcrumb-item a")
     if breadcrumb.count() > 0:
-        breadcrumb.first.click()
+        breadcrumb.last.click()
         page.wait_for_load_state("load")
         _wait_for_ready(page)
     else:
@@ -126,7 +126,7 @@ def oracle(page):
         ".o_list_view .o_data_row:has-text('Go-Live Review')"
     )
     if task_card.count() > 0:
-        task_card.first.click()
+        task_card.first.click(force=True)
         page.wait_for_load_state("load")
         _wait_for_ready(page)
     else:
@@ -145,22 +145,17 @@ def oracle(page):
     _wait_no_loading(page)
 
     card = page.locator(".o_kanban_record:has-text('Atlas Retail Group')").first
-    kebab = card.locator(
-        ".o_kanban_manage_toggle_button, "
-        "button.dropdown-toggle, "
-        ".o_dropdown_kanban .dropdown-toggle, "
-        ".o_kanban_config_button"
-    )
-    if kebab.count() > 0:
+    # Hover the card to reveal the kebab menu button (hidden until hover)
+    card.hover()
+    page.wait_for_timeout(500)
+    kebab = card.locator(".o_dropdown_kanban .dropdown-toggle")
+    if kebab.count() > 0 and kebab.first.is_visible():
         kebab.first.click()
         page.wait_for_timeout(500)
 
         settings_link = page.locator(
-            ".dropdown-menu a:has-text('Settings'), "
-            ".dropdown-menu a:has-text('Edit'), "
-            ".o_kanban_manage_section a:has-text('Settings'), "
-            ".dropdown-item:has-text('Settings'), "
-            ".dropdown-item:has-text('Edit')"
+            ".dropdown-menu .dropdown-item:has-text('Settings'), "
+            ".dropdown-item:has-text('Settings')"
         )
         if settings_link.count() > 0:
             settings_link.first.click()
@@ -169,11 +164,11 @@ def oracle(page):
         else:
             page.keyboard.press("Escape")
             page.wait_for_timeout(300)
-            card.click()
+            card.click(force=True)
             page.wait_for_load_state("load")
             _wait_for_ready(page)
     else:
-        card.click()
+        card.click(force=True)
         page.wait_for_load_state("load")
         _wait_for_ready(page)
 

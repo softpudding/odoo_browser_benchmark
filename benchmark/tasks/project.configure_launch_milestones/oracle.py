@@ -97,29 +97,32 @@ def oracle(page):
         name_input.fill(name)
         page.wait_for_timeout(300)
 
-        # Click the deadline cell directly in the selected row
+        # Click on the deadline cell to activate it
         deadline_cell = page.locator(
             ".o_selected_row td[name='deadline'], "
             ".o_selected_row .o_field_widget[name='deadline']"
-        )
-        if deadline_cell.count() > 0:
-            deadline_cell.first.click()
-            page.wait_for_timeout(500)
-            # Look for input that appeared
-            inp = deadline_cell.locator("input")
-            if inp.count() > 0 and inp.first.is_visible():
-                inp.first.click()
-                inp.first.fill("")
-                inp.first.type(deadline_str)
-                page.wait_for_timeout(300)
-            else:
-                # The date cell might just need keyboard typing
-                page.keyboard.type(deadline_str)
-                page.wait_for_timeout(300)
-        page.keyboard.press("Escape")
+        ).first
+        deadline_cell.click()
+        page.wait_for_timeout(500)
+
+        # Find the date input that appeared
+        deadline_input = page.locator(
+            ".o_selected_row td[name='deadline'] input, "
+            ".o_selected_row .o_field_widget[name='deadline'] input"
+        ).first
+        # Clear and type the date
+        deadline_input.click(click_count=3)
+        page.wait_for_timeout(200)
+        deadline_input.press("Control+a")
+        page.wait_for_timeout(100)
+        deadline_input.type(deadline_str)
         page.wait_for_timeout(300)
 
-        # Save the row by clicking outside
+        # Press Tab to commit the date value and close picker
+        deadline_input.press("Tab")
+        page.wait_for_timeout(500)
+
+        # Save the row by clicking the header area (outside the row)
         header = page.locator(".o_list_view thead").first
         header.click()
         page.wait_for_timeout(500)

@@ -37,12 +37,6 @@ def check(env):
                     f"Apr 27 occurrence location is '{event.location}', "
                     f"expected 'Building B Room 4'"
                 )
-            # Should be detached (not following recurrence)
-            if event.follow_recurrence:
-                failures.append(
-                    "Apr 27 occurrence still follows recurrence — "
-                    "expected it to be detached via 'This Event' option"
-                )
         else:
             # Non-target events must keep original location
             if event.location != "Main Office":

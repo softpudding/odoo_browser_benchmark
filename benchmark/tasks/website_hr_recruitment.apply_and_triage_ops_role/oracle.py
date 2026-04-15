@@ -25,6 +25,34 @@ from benchmark.oracle_helpers import (
 )
 
 
+def _add_custom_field(page, iframe, label_text):
+    """Click a form field, press '+ Field', and set its label."""
+    # Click an existing form field to ensure the form snippet is selected
+    field = iframe.locator(".s_website_form_field").first
+    field.click()
+    page.wait_for_timeout(1500)
+
+    # Click "+ Field" button in the builder sidebar
+    page.locator("button:has-text('+ Field')").first.click()
+    page.wait_for_timeout(2000)
+
+    # Find the Label row in the sidebar (shows "Custom Text" for new fields)
+    hb_rows = page.locator(".o-website-builder_sidebar .hb-row")
+    for i in range(hb_rows.count()):
+        text = hb_rows.nth(i).inner_text().strip()
+        inp = hb_rows.nth(i).locator("input")
+        if text.startswith("Label") and inp.count() > 0:
+            val = inp.first.input_value()
+            if val == "Custom Text":
+                inp.first.click()
+                inp.first.fill("")
+                inp.first.fill(label_text)
+                inp.first.press("Enter")
+                page.wait_for_timeout(1000)
+                return
+    raise RuntimeError(f"Could not find Label row to set '{label_text}'")
+
+
 def oracle(page):
     login(page)
 
@@ -32,7 +60,7 @@ def oracle(page):
     # Phase 1: Add custom fields to Platform Support Specialist form
     # =====================================================================
 
-    # First, go to /jobs to find Platform Support Specialist
+    # Go to /jobs to find Platform Support Specialist
     page.goto(full_url("/jobs"))
     page.wait_for_load_state("load")
     page.wait_for_timeout(2000)
@@ -43,115 +71,38 @@ def oracle(page):
     page.wait_for_timeout(2000)
 
     # Click "Apply Now" to reach the application form
-    apply_btn = page.locator("a:has-text('Apply'), button:has-text('Apply')").first
-    apply_btn.click()
+    page.locator("a:has-text('Apply'), button:has-text('Apply')").first.click()
     page.wait_for_load_state("load")
     page.wait_for_timeout(2000)
 
-    # Now we're on the public application form page.
-    # We need to enter edit mode. The URL is something like /jobs/.../apply
-    # We need to go through the backend editor to edit this page.
     # Get the current path for the editor
-    current_url = page.url
     from urllib.parse import urlparse, quote
-    parsed = urlparse(current_url)
+    parsed = urlparse(page.url)
     path = parsed.path  # e.g., /jobs/platform-support-specialist-0/apply
 
     # Navigate to the backend website editor for this page
-    editor_url = f"/odoo/action-website.website_preview?path={quote(path, safe='')}&enable_editor=1"
+    editor_url = (
+        f"/odoo/action-website.website_preview"
+        f"?path={quote(path, safe='')}&enable_editor=1"
+    )
     page.goto(full_url(editor_url))
     page.wait_for_load_state("load")
     page.wait_for_timeout(3000)
 
-    # Wait for the builder sidebar to appear
-    page.wait_for_selector(
-        ".o-website-builder_sidebar, .o-snippets-menu, "
-        "[data-action='save']",
-        timeout=30000,
-    )
+    # Wait for the editor save button to appear
+    page.wait_for_selector("[data-action='save']", timeout=30000)
     page.wait_for_timeout(3000)
 
-    # The website form is inside the iframe. Click on the form to select it.
     iframe = page.frame_locator("iframe:not(.o_ignore_in_tour)")
 
-    # Click on a form field to trigger the form builder options
-    form_field = iframe.locator(
-        ".s_website_form_field, "
-        ".s_website_form form .form-group, "
-        "form.s_website_form .form-group"
-    ).first
-    form_field.click()
-    page.wait_for_timeout(1000)
+    # Add "Referral Code" custom field
+    _add_custom_field(page, iframe, "Referral Code")
 
-    # Now the builder sidebar should show the form field options.
-    # Click "+ Field" button in the sidebar to add a new field
-    add_field_btn = page.locator(
-        ".o-website-builder_sidebar button:has-text('+ Field'), "
-        ".o-snippets-menu button:has-text('+ Field'), "
-        "button.btn-success:has-text('+ Field')"
-    ).first
-    add_field_btn.click()
-    page.wait_for_timeout(1000)
-
-    # A new field is added. We need to set its label.
-    # The field options should now show in the sidebar.
-    # Look for the "Label" input in the builder sidebar.
-    # The label is set via BuilderTextInput with action "setLabelText"
-    label_input = page.locator(
-        ".o-website-builder_sidebar input, "
-        ".o-snippets-menu input"
-    )
-    # Find the Label input - it should be near the "Label" text
-    # In the builder, there are multiple inputs. We need the Label field.
-    # Try to find by looking for the row with "Label" heading
-    label_row = page.locator(
-        ".o-website-builder_sidebar .hb-row:has-text('Label'), "
-        ".o-snippets-menu .hb-row:has-text('Label')"
-    ).first
-    label_inp = label_row.locator("input").first
-    label_inp.click()
-    label_inp.fill("")
-    label_inp.fill("Referral Code")
-    label_inp.press("Enter")
-    page.wait_for_timeout(1000)
-
-    # Click the form again to add another field
-    form_field = iframe.locator(
-        ".s_website_form_field, "
-        ".s_website_form form .form-group, "
-        "form.s_website_form .form-group"
-    ).first
-    form_field.click()
-    page.wait_for_timeout(1000)
-
-    # Add second field
-    add_field_btn = page.locator(
-        ".o-website-builder_sidebar button:has-text('+ Field'), "
-        ".o-snippets-menu button:has-text('+ Field'), "
-        "button.btn-success:has-text('+ Field')"
-    ).first
-    add_field_btn.click()
-    page.wait_for_timeout(1000)
-
-    # Set label to "Implementation Notes"
-    label_row = page.locator(
-        ".o-website-builder_sidebar .hb-row:has-text('Label'), "
-        ".o-snippets-menu .hb-row:has-text('Label')"
-    ).first
-    label_inp = label_row.locator("input").first
-    label_inp.click()
-    label_inp.fill("")
-    label_inp.fill("Implementation Notes")
-    label_inp.press("Enter")
-    page.wait_for_timeout(1000)
+    # Add "Implementation Notes" custom field
+    _add_custom_field(page, iframe, "Implementation Notes")
 
     # Save the website editor changes
-    save_btn = page.locator(
-        "button[data-action='save']:visible, "
-        ".o-snippets-top-actions button:has-text('Save'):visible, "
-        "button.btn-success:has-text('Save'):visible"
-    ).first
-    save_btn.click()
+    page.locator("[data-action='save']").first.click()
     page.wait_for_load_state("load")
     page.wait_for_timeout(5000)
     _wait_no_loading(page)
@@ -160,7 +111,7 @@ def oracle(page):
     # Phase 2: Submit application for Customer Success Specialist
     # =====================================================================
 
-    # Go to /jobs as a logged-in user viewing the public page
+    # Go to /jobs
     page.goto(full_url("/jobs"))
     page.wait_for_load_state("load")
     page.wait_for_timeout(2000)
@@ -171,57 +122,33 @@ def oracle(page):
     page.wait_for_timeout(2000)
 
     # Click "Apply Now"
-    apply_btn = page.locator("a:has-text('Apply'), button:has-text('Apply')").first
-    apply_btn.click()
+    page.locator("a:has-text('Apply'), button:has-text('Apply')").first.click()
     page.wait_for_load_state("load")
     page.wait_for_timeout(2000)
 
     # Fill in the application form (public website form, HTML inputs)
-    page.locator("input[name='partner_name']").fill("Jack Doe")
-    page.locator("input[name='email_from']").fill("jack@doe.com")
-    page.locator("input[name='partner_phone']").fill("118.712")
-
-    linkedin_input = page.locator(
-        "input[name='linkedin_profile'], "
-        "input[name='linkedin']"
-    ).first
-    linkedin_input.fill("linkedin.com/in/jack-doe")
+    page.locator("input[name='partner_name']").first.fill("Jack Doe")
+    page.locator("input[name='email_from']").first.fill("jack@doe.com")
+    page.locator("input[name='partner_phone']").first.fill("118.712")
+    page.locator("input[name='linkedin_profile']").first.fill(
+        "linkedin.com/in/jack-doe"
+    )
 
     # Short introduction
-    intro_field = page.locator(
-        "textarea[name='description'], "
-        "textarea[name='body']"
-    ).first
-    intro_field.fill("### [CS-SPECIALIST] HR TEST ###")
+    page.locator("textarea[name='short_introduction']").first.fill(
+        "### [CS-SPECIALIST] HR TEST ###"
+    )
 
-    # Custom fields added in Phase 1
-    # They appear as custom fields with label-based containers
-    referral_input = page.locator(
-        "input[name='Referral Code'], "
-        "input[name='referral_code'], "
-        ".s_website_form_field:has-text('Referral Code') input, "
-        ".s_website_form_field:has-text('Referral Code') textarea"
-    ).first
-    referral_input.fill("CUST-REF-27")
+    # Custom fields added in Phase 1 (name attribute matches the label)
+    page.locator("input[name='Referral Code']").first.fill("CUST-REF-27")
+    page.locator("input[name='Implementation Notes']").first.fill(
+        "Escalate onboarding blockers"
+    )
 
-    impl_input = page.locator(
-        "input[name='Implementation Notes'], "
-        "input[name='implementation_notes'], "
-        ".s_website_form_field:has-text('Implementation Notes') input, "
-        ".s_website_form_field:has-text('Implementation Notes') textarea"
-    ).first
-    impl_input.fill("Escalate onboarding blockers")
-
-    # Submit
-    submit_btn = page.locator(
-        "button[type='submit'], "
-        "a.btn:has-text('Submit'), "
-        "button:has-text('Submit'), "
-        ".s_website_form_send"
-    ).first
-    submit_btn.click()
+    # Submit (button text is "I'm feeling lucky", class s_website_form_send)
+    page.locator(".s_website_form_send").first.click()
     page.wait_for_load_state("load")
-    page.wait_for_timeout(3000)
+    page.wait_for_timeout(5000)
 
     # =====================================================================
     # Phase 3: Backend -- triage Jack Doe's application
@@ -247,11 +174,10 @@ def oracle(page):
     page.wait_for_timeout(1000)
 
     # Set Stage to "Qualification" via the status bar
-    qual_btn = page.locator(
+    page.locator(
         ".o_statusbar_status button:has-text('Qualification'), "
         ".o_statusbar_status .o_arrow_button:has-text('Qualification')"
-    ).first
-    qual_btn.click()
+    ).first.click()
     page.wait_for_timeout(1000)
     _wait_no_loading(page)
 
@@ -261,11 +187,9 @@ def oracle(page):
         ".o_field_widget[name='priority'] .o_priority_star, "
         ".o_field_widget[name='priority'] a"
     )
-    # Click the 3rd star (index 2) for "Excellent"
     if stars.count() >= 3:
         stars.nth(2).click()
     else:
-        # Fallback: click the last star
         stars.last.click()
     page.wait_for_timeout(500)
     _wait_no_loading(page)
