@@ -740,12 +740,11 @@ def modal_set_date(page: Page, field_name: str, date_str: str) -> None:
         page.keyboard.type(date_str)
         page.keyboard.press("Tab")
     page.wait_for_timeout(500)
-    # Close any datepicker
-    try:
+    # Only dismiss a datepicker if one is still open; a bare Escape would
+    # close the modal itself.
+    if page.locator(".o_datetime_picker:visible, .o_date_picker:visible").count() > 0:
         page.press("body", "Escape")
-    except Exception:
-        pass
-    page.wait_for_timeout(300)
+        page.wait_for_timeout(300)
 
 
 def modal_set_selection(page: Page, field_name: str, value: str) -> None:
