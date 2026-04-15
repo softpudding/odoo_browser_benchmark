@@ -300,7 +300,7 @@ def cleanup(env):
 ### Step 4.1: Verify seed works
 
 ```bash
-PYTHONPATH=. python benchmark/eval.py run <task_dir> --agent human
+uv run benchmark-eval run <task_dir> --agent human
 ```
 
 This runs the seed and lets you complete the task manually. Verify:
@@ -311,7 +311,7 @@ This runs the seed and lets you complete the task manually. Verify:
 ### Step 4.2: Run against browser-use
 
 ```bash
-PYTHONPATH=. python benchmark/eval.py run <task_dir> --agent browser-use
+uv run benchmark-eval run <task_dir> --agent browser-use
 ```
 
 **Always use headed mode** (default) — never `--headless`. You need to observe
@@ -397,9 +397,27 @@ If browser-use passes your task, it's too easy. Apply these escalation strategie
 
 ---
 
-## Phase 6: Codex Review
+## Phase 6: Cross-Review (Second Opinion)
 
-Before committing, always run a Codex review. Use this prompt template:
+### Limitation: never self-review
+
+A model reviewing its own work has the same blind spots that produced the bugs
+in the first place. The review **must** come from a different model:
+
+| If you are...     | Ask for review from... | How |
+|-------------------|------------------------|-----|
+| **Claude Code**   | **Codex** (via `codex:rescue` agent) | Spawn a Codex agent with the review prompt below |
+| **Codex**         | **Claude Code** | Hand the task files back to Claude Code and ask it to review |
+| **A human**       | Either model, or another human | Use `--agent human` to test yourself, then ask a model to audit the files |
+
+The point is: **always get a second opinion from a different reviewer**, not
+from the same system that authored the task. Self-review consistently misses
+field-name typos, entity-key format mismatches, and seed-prompt inconsistencies
+because the author "knows what they meant" and reads past errors.
+
+### Review prompt template
+
+Whichever model you ask, use this prompt:
 
 ```
 Review N benchmark tasks for browser agent evaluation.
@@ -410,7 +428,7 @@ User requirements:
 3. Tasks must NOT be undoable
 4. Complex instructions must NOT have only short timeouts
 
-For each task evaluate:
+For each task, read ALL files and evaluate:
 A. Instruction clarity
 B. Doability in Odoo 19
 C. Timeout adequacy
@@ -418,16 +436,25 @@ D. Seed-prompt consistency
 E. Expected state correctness (entity_keys match diff engine)
 F. check.py correctness
 G. trace_spec correctness
+
+Give a structured per-task verdict: PASS or ISSUE with specific actionable findings.
 ```
 
-### Common issues Codex finds:
+### What cross-review catches that self-review misses
 
-- **Field names wrong** (Odoo 19 renames) — `tax_id` → `tax_ids`, `groups_id` → `group_ids`
+From empirical experience building the first 5 tasks, every single task had
+issues that the authoring model missed but the cross-reviewer caught:
+
+- **Field names wrong** (Odoo 19 renames) — `tax_id` → `tax_ids`, `groups_id` → `group_ids`, `ref` → `memo`
 - **Feature not enabled in seed** — credit limits, discount groups need explicit activation
 - **Entity key format mismatch** — Many2one fields normalize differently than expected
 - **Prompt button labels wrong** — "Post" vs "Confirm" on invoices
 - **check.py logic bugs** — wrong count expectations after record creation/deletion
 - **trace_spec too strict** — `create` in required_ops but agent uses `web_save`
+- **Prompt references don't match seed** — prompt says "PO-PARTIAL-01" but seed uses "BENCH-PARTIAL"
+
+These are exactly the kind of errors where a fresh pair of eyes (a different
+model) catches what the author glosses over.
 
 ---
 
@@ -492,23 +519,26 @@ overlap.
 
 ## Appendix: Running Tasks
 
+All commands assume you are in the repo root and have [uv](https://docs.astral.sh/uv/) installed.
+`uv run` automatically installs dependencies from `pyproject.toml` / `uv.lock`.
+
 ```bash
 # Run single task against browser-use (always headed)
-PYTHONPATH=. python benchmark/eval.py run <task_dir> --agent browser-use
+uv run benchmark-eval run <task_dir> --agent browser-use
 
 # Run as human tester
-PYTHONPATH=. python benchmark/eval.py run <task_dir> --agent human
+uv run benchmark-eval run <task_dir> --agent human
 
 # List all tasks
-PYTHONPATH=. python benchmark/eval.py list
+uv run benchmark-eval list
 
 # Clean up orphan processes after a crash
-PYTHONPATH=. python benchmark/eval.py cleanup
+uv run benchmark-eval cleanup
 
 # Re-score a completed run
-PYTHONPATH=. python benchmark/eval.py score <output_dir> --task <task_dir>
+uv run benchmark-eval score <output_dir> --task <task_dir>
 
 # Install new modules in benchmark DB + rebuild snapshot
 .venv/bin/python3 odoo-bin -d benchmark_validate -i module1,module2 -c .odoorc.local --stop-after-init
-PYTHONPATH=. python benchmark/eval.py prepare-base --db benchmark_validate
+uv run benchmark-eval prepare-base --db benchmark_validate
 ```

@@ -2,10 +2,10 @@
 
 Usage::
 
-    python -m benchmark list                         # list all tasks
-    python -m benchmark show <task_id>               # show task details
-    python -m benchmark score <run_dir>              # re-score a completed run
-    python -m benchmark run <task_dir> [--output-dir DIR]  # run a task (requires agent + Odoo)
+    uv run benchmark-eval list                         # list all tasks
+    uv run benchmark-eval run <task_dir> --agent human # human tester
+    uv run benchmark-eval run <task_dir> --agent browser-use  # automated agent
+    uv run benchmark-eval score <output_dir> --task <task_id> # re-score a run
 """
 
 from __future__ import annotations

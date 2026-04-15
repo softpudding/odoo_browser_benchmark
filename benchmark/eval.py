@@ -14,33 +14,33 @@ allocates a free port, creates an ephemeral database, and manages its own
 Odoo process.  Multiple runs can execute concurrently with zero coordination.
 Pass ``--no-isolate`` to revert to the legacy shared-DB/port behaviour.
 
-Usage::
+Usage (with uv — recommended)::
 
     # Automated with browser-use (auto-isolated)
-    python benchmark/eval.py run <task_dir> --agent browser-use --provider dashscope
+    uv run benchmark-eval run <task_dir> --agent browser-use --provider dashscope
 
     # Run multiple tasks in parallel (each gets its own DB + port)
-    python benchmark/eval.py run task_a --agent browser-use &
-    python benchmark/eval.py run task_b --agent browser-use &
+    uv run benchmark-eval run task_a --agent browser-use &
+    uv run benchmark-eval run task_b --agent browser-use &
     wait
 
     # Human tester
-    python benchmark/eval.py run <task_dir> --agent human
+    uv run benchmark-eval run <task_dir> --agent human
 
     # External agent
-    python benchmark/eval.py run <task_dir> --agent command --cmd "python my_agent.py"
+    uv run benchmark-eval run <task_dir> --agent command --cmd "python my_agent.py"
 
     # Legacy single-server mode (shared DB, no isolation)
-    python benchmark/eval.py run <task_dir> --no-isolate
+    uv run benchmark-eval run <task_dir> --no-isolate
 
     # List all tasks
-    python benchmark/eval.py list
+    uv run benchmark-eval list
 
     # Re-score a completed run
-    python benchmark/eval.py score <output_dir> --task <task_dir>
+    uv run benchmark-eval score <output_dir> --task <task_dir>
 
     # Clean up orphan processes / stale DBs after a crash
-    python benchmark/eval.py cleanup
+    uv run benchmark-eval cleanup
 """
 
 from __future__ import annotations
@@ -943,7 +943,7 @@ def cmd_prepare_base(args: argparse.Namespace) -> None:
     """Create the base snapshot from the current database state.
 
     Run this once after installing all needed modules:
-      python benchmark/eval.py prepare-base --db benchmark_validate
+      uv run benchmark-eval prepare-base --db benchmark_validate
     """
     from benchmark.db import DatabaseManager
     dbm = DatabaseManager()
