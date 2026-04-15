@@ -13,7 +13,38 @@ from benchmark.oracle_helpers import (
     navigate,
     run_oracle,
     _wait_no_loading,
+    _wait_for_ready,
 )
+
+
+def _click_action_menu_item(page, text):
+    """Click an item in the Action menu (gear/cog icon).
+
+    In Odoo 19, the dropdown items are NOT inside .o_cp_action_menus .dropdown-menu
+    but appear as a general .dropdown-menu:visible attached to the body.
+    """
+    # Click the gear/cog toggle button
+    toggle = page.locator(".o_cp_action_menus .dropdown-toggle:visible")
+    if toggle.count() == 0:
+        raise RuntimeError("Action menu toggle not found")
+
+    toggle.first.click()
+    page.wait_for_timeout(500)
+
+    # Items appear in a generic .dropdown-menu:visible (NOT inside .o_cp_action_menus)
+    items = page.locator(".dropdown-menu:visible .dropdown-item")
+    for i in range(items.count()):
+        item_text = items.nth(i).inner_text().strip()
+        if text.lower() in item_text.lower():
+            items.nth(i).click()
+            page.wait_for_timeout(1000)
+            _wait_no_loading(page)
+            return True
+
+    # Close the menu
+    page.press("body", "Escape")
+    page.wait_for_timeout(300)
+    raise RuntimeError(f"Action menu item '{text}' not found")
 
 
 def oracle(page):
@@ -25,12 +56,17 @@ def oracle(page):
     click_list_row(page, "RET-204")
     page.wait_for_timeout(1000)
 
-    # Use Action menu to switch to credit note
-    page.locator(".o_cp_action_menus .dropdown-toggle").first.click()
-    page.wait_for_timeout(500)
-    page.locator(
-        ".o_cp_action_menus .dropdown-menu .dropdown-item"
-    ).filter(has_text="Credit Note").first.click()
+    # Use Action menu to switch to credit note.
+    # In Odoo 19, the item is "Switch into invoice/credit note"
+    for label in ["Switch into", "Credit Note", "Switch to Credit Note", "Refund"]:
+        try:
+            _click_action_menu_item(page, label)
+            break
+        except RuntimeError:
+            continue
+    else:
+        raise RuntimeError("Could not find credit note action in Action menu")
+
     page.wait_for_timeout(1500)
     _wait_no_loading(page)
 

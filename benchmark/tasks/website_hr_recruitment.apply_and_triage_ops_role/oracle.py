@@ -32,6 +32,7 @@ def oracle(page):
     # Phase 1: Add custom fields to Platform Support Specialist form
     # =====================================================================
 
+    # First, go to /jobs to find Platform Support Specialist
     page.goto(full_url("/jobs"))
     page.wait_for_load_state("load")
     page.wait_for_timeout(2000)
@@ -42,132 +43,124 @@ def oracle(page):
     page.wait_for_timeout(2000)
 
     # Click "Apply Now" to reach the application form
-    page.locator("a:has-text('Apply'), button:has-text('Apply')").first.click()
+    apply_btn = page.locator("a:has-text('Apply'), button:has-text('Apply')").first
+    apply_btn.click()
     page.wait_for_load_state("load")
     page.wait_for_timeout(2000)
 
-    # Enter edit mode on the form page
-    # Look for the "Edit" pencil/button in the website top bar
-    edit_btn = page.locator(
-        "a[data-action='edit']:visible, "
-        "button[data-action='edit']:visible, "
-        ".o_edit_website_container a:visible, "
-        "a.btn:has-text('Edit'):visible"
-    ).first
-    edit_btn.click()
+    # Now we're on the public application form page.
+    # We need to enter edit mode. The URL is something like /jobs/.../apply
+    # We need to go through the backend editor to edit this page.
+    # Get the current path for the editor
+    current_url = page.url
+    from urllib.parse import urlparse, quote
+    parsed = urlparse(current_url)
+    path = parsed.path  # e.g., /jobs/platform-support-specialist-0/apply
+
+    # Navigate to the backend website editor for this page
+    editor_url = f"/odoo/action-website.website_preview?path={quote(path, safe='')}&enable_editor=1"
+    page.goto(full_url(editor_url))
+    page.wait_for_load_state("load")
     page.wait_for_timeout(3000)
-    # Wait for editor to load
-    page.wait_for_selector("#oe_snippets, .o_we_website_top_actions", timeout=20000)
-    page.wait_for_timeout(2000)
 
-    # -----------------------------------------------------------------
-    # Add custom fields via the form builder
-    # In the Odoo website form editor, we need to add fields.
-    # Click on the form to select it, then use the "Add a field" option
-    # from the right-side snippet options panel.
-    # -----------------------------------------------------------------
+    # Wait for the builder sidebar to appear
+    page.wait_for_selector(
+        ".o-website-builder_sidebar, .o-snippets-menu, "
+        "[data-action='save']",
+        timeout=30000,
+    )
+    page.wait_for_timeout(3000)
 
-    # Click on the form element to select it in the editor
-    form_el = page.locator(
-        ".s_website_form form, "
-        "form.o_mark_required, "
-        ".s_website_form"
+    # The website form is inside the iframe. Click on the form to select it.
+    iframe = page.frame_locator("iframe:not(.o_ignore_in_tour)")
+
+    # Click on a form field to trigger the form builder options
+    form_field = iframe.locator(
+        ".s_website_form_field, "
+        ".s_website_form form .form-group, "
+        "form.s_website_form .form-group"
     ).first
-    form_el.click()
+    form_field.click()
     page.wait_for_timeout(1000)
 
-    # Look for "Add a field" or the field addition mechanism in the editor panel
-    # The website form builder has a "+" or "Add a field" button in the
-    # customize panel on the right side
+    # Now the builder sidebar should show the form field options.
+    # Click "+ Field" button in the sidebar to add a new field
     add_field_btn = page.locator(
-        "we-button:has-text('Add a field'), "
-        ".o_we_customize_panel button:has-text('Add'), "
-        "we-button[data-add-field], "
-        ".snippet-option-WebsiteFormEditor we-button:has-text('Field'), "
-        "we-button:has-text('+ Field')"
+        ".o-website-builder_sidebar button:has-text('+ Field'), "
+        ".o-snippets-menu button:has-text('+ Field'), "
+        "button.btn-success:has-text('+ Field')"
     ).first
     add_field_btn.click()
     page.wait_for_timeout(1000)
 
-    # A modal or panel should appear to configure the new field
-    # Set the field label to "Referral Code"
-    # The exact UI depends on Odoo version -- typically a modal with label input
+    # A new field is added. We need to set its label.
+    # The field options should now show in the sidebar.
+    # Look for the "Label" input in the builder sidebar.
+    # The label is set via BuilderTextInput with action "setLabelText"
     label_input = page.locator(
-        ".modal:visible input[name='label'], "
-        ".modal:visible input.o_we_field_label, "
-        ".o_we_customize_panel input[data-set-label], "
-        ".modal:visible input"
-    ).first
-    label_input.fill("")
-    label_input.fill("Referral Code")
-    page.wait_for_timeout(500)
-
-    # Confirm the field addition
-    confirm_btn = page.locator(
-        ".modal:visible button.btn-primary, "
-        ".modal:visible button:has-text('Save'), "
-        ".modal:visible button:has-text('Add'), "
-        ".modal:visible button:has-text('Confirm')"
+        ".o-website-builder_sidebar input, "
+        ".o-snippets-menu input"
     )
-    if confirm_btn.count() > 0:
-        confirm_btn.first.click()
-        page.wait_for_timeout(1000)
-
-    # Now add the second field: "Implementation Notes"
-    # Re-click form and add another field
-    form_el = page.locator(
-        ".s_website_form form, "
-        "form.o_mark_required, "
-        ".s_website_form"
+    # Find the Label input - it should be near the "Label" text
+    # In the builder, there are multiple inputs. We need the Label field.
+    # Try to find by looking for the row with "Label" heading
+    label_row = page.locator(
+        ".o-website-builder_sidebar .hb-row:has-text('Label'), "
+        ".o-snippets-menu .hb-row:has-text('Label')"
     ).first
-    form_el.click()
-    page.wait_for_timeout(500)
+    label_inp = label_row.locator("input").first
+    label_inp.click()
+    label_inp.fill("")
+    label_inp.fill("Referral Code")
+    label_inp.press("Enter")
+    page.wait_for_timeout(1000)
 
+    # Click the form again to add another field
+    form_field = iframe.locator(
+        ".s_website_form_field, "
+        ".s_website_form form .form-group, "
+        "form.s_website_form .form-group"
+    ).first
+    form_field.click()
+    page.wait_for_timeout(1000)
+
+    # Add second field
     add_field_btn = page.locator(
-        "we-button:has-text('Add a field'), "
-        ".o_we_customize_panel button:has-text('Add'), "
-        "we-button[data-add-field], "
-        ".snippet-option-WebsiteFormEditor we-button:has-text('Field'), "
-        "we-button:has-text('+ Field')"
+        ".o-website-builder_sidebar button:has-text('+ Field'), "
+        ".o-snippets-menu button:has-text('+ Field'), "
+        "button.btn-success:has-text('+ Field')"
     ).first
     add_field_btn.click()
     page.wait_for_timeout(1000)
 
-    label_input = page.locator(
-        ".modal:visible input[name='label'], "
-        ".modal:visible input.o_we_field_label, "
-        ".o_we_customize_panel input[data-set-label], "
-        ".modal:visible input"
+    # Set label to "Implementation Notes"
+    label_row = page.locator(
+        ".o-website-builder_sidebar .hb-row:has-text('Label'), "
+        ".o-snippets-menu .hb-row:has-text('Label')"
     ).first
-    label_input.fill("")
-    label_input.fill("Implementation Notes")
-    page.wait_for_timeout(500)
-
-    confirm_btn = page.locator(
-        ".modal:visible button.btn-primary, "
-        ".modal:visible button:has-text('Save'), "
-        ".modal:visible button:has-text('Add'), "
-        ".modal:visible button:has-text('Confirm')"
-    )
-    if confirm_btn.count() > 0:
-        confirm_btn.first.click()
-        page.wait_for_timeout(1000)
+    label_inp = label_row.locator("input").first
+    label_inp.click()
+    label_inp.fill("")
+    label_inp.fill("Implementation Notes")
+    label_inp.press("Enter")
+    page.wait_for_timeout(1000)
 
     # Save the website editor changes
-    save_page = page.locator(
+    save_btn = page.locator(
         "button[data-action='save']:visible, "
-        ".o_we_website_top_actions button:has-text('Save'):visible, "
-        "button.btn-primary:has-text('Save'):visible"
+        ".o-snippets-top-actions button:has-text('Save'):visible, "
+        "button.btn-success:has-text('Save'):visible"
     ).first
-    save_page.click()
+    save_btn.click()
     page.wait_for_load_state("load")
-    page.wait_for_timeout(3000)
+    page.wait_for_timeout(5000)
     _wait_no_loading(page)
 
     # =====================================================================
     # Phase 2: Submit application for Customer Success Specialist
     # =====================================================================
 
+    # Go to /jobs as a logged-in user viewing the public page
     page.goto(full_url("/jobs"))
     page.wait_for_load_state("load")
     page.wait_for_timeout(2000)
@@ -178,7 +171,8 @@ def oracle(page):
     page.wait_for_timeout(2000)
 
     # Click "Apply Now"
-    page.locator("a:has-text('Apply'), button:has-text('Apply')").first.click()
+    apply_btn = page.locator("a:has-text('Apply'), button:has-text('Apply')").first
+    apply_btn.click()
     page.wait_for_load_state("load")
     page.wait_for_timeout(2000)
 
@@ -201,11 +195,10 @@ def oracle(page):
     intro_field.fill("### [CS-SPECIALIST] HR TEST ###")
 
     # Custom fields added in Phase 1
-    # They may appear as inputs with the label text or a slugified name
+    # They appear as custom fields with label-based containers
     referral_input = page.locator(
         "input[name='Referral Code'], "
         "input[name='referral_code'], "
-        "input[name='Referral code'], "
         ".s_website_form_field:has-text('Referral Code') input, "
         ".s_website_form_field:has-text('Referral Code') textarea"
     ).first
@@ -214,7 +207,6 @@ def oracle(page):
     impl_input = page.locator(
         "input[name='Implementation Notes'], "
         "input[name='implementation_notes'], "
-        "input[name='Implementation notes'], "
         ".s_website_form_field:has-text('Implementation Notes') input, "
         ".s_website_form_field:has-text('Implementation Notes') textarea"
     ).first
@@ -263,15 +255,18 @@ def oracle(page):
     page.wait_for_timeout(1000)
     _wait_no_loading(page)
 
-    # Set Evaluation to "Excellent" (priority field = 3 stars)
-    # In Odoo, the priority widget uses star icons. "Excellent" = 3 stars.
+    # Set Evaluation to "Excellent" (priority field = 3 stars).
     # Click the 3rd star in the priority widget.
     stars = page.locator(
         ".o_field_widget[name='priority'] .o_priority_star, "
         ".o_field_widget[name='priority'] a"
     )
     # Click the 3rd star (index 2) for "Excellent"
-    stars.nth(2).click()
+    if stars.count() >= 3:
+        stars.nth(2).click()
+    else:
+        # Fallback: click the last star
+        stars.last.click()
     page.wait_for_timeout(500)
     _wait_no_loading(page)
 

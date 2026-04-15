@@ -9,7 +9,7 @@ Return to sales order, change Customer Reference to SERV-PROJ-17-LIVE.
 """
 
 from benchmark.oracle_helpers import (
-    click_breadcrumb,
+    click_kanban_card,
     click_list_row,
     click_stat_button,
     click_status_button,
@@ -22,6 +22,43 @@ from benchmark.oracle_helpers import (
     _wait_no_loading,
     _wait_for_ready,
 )
+
+
+def _fill_task_name(page, value):
+    """Fill the task name field which uses widget='text' (textarea)."""
+    widget = page.locator(".o_field_widget[name='name']").first
+    widget.click()
+    page.wait_for_timeout(500)
+
+    inp = widget.locator("textarea.o_input, textarea, input")
+    if inp.count() > 0 and inp.first.is_visible():
+        inp.first.click()
+        inp.first.fill("")
+        inp.first.fill(value)
+        inp.first.press("Tab")
+    else:
+        # Select all text and replace
+        widget.click(click_count=3)
+        page.wait_for_timeout(200)
+        page.keyboard.press("Control+a")
+        page.keyboard.type(value)
+        page.keyboard.press("Tab")
+    page.wait_for_timeout(500)
+    _wait_no_loading(page)
+
+
+def _click_stage_if_exists(page, stage_name):
+    """Try to click a stage button in the statusbar. Returns True if found."""
+    btn = page.locator(
+        f".o_statusbar_status button:has-text('{stage_name}'), "
+        f".o_statusbar_status .o_arrow_button:has-text('{stage_name}')"
+    )
+    if btn.count() > 0:
+        btn.first.click()
+        page.wait_for_timeout(500)
+        _wait_no_loading(page)
+        return True
+    return False
 
 
 def oracle(page):
@@ -52,77 +89,126 @@ def oracle(page):
     page.wait_for_timeout(1500)
     _wait_for_ready(page)
 
-    # We should now be in the project's task list/kanban.
-    # Switch to list view for easier task editing
-    list_btn = page.locator("button.o_switch_view.o_list:visible, .o_cp_switch_buttons button.o_list:visible")
-    if list_btn.count() > 0:
-        list_btn.first.click()
-        page.wait_for_timeout(1000)
-        _wait_no_loading(page)
-
-    # Open "Implementation stream" task and rename it
-    click_list_row(page, "Implementation stream")
+    # We are now in the project's task kanban/list view.
+    # Open "Implementation stream" task - try kanban card or list row
+    task_card = page.locator(
+        ".o_kanban_record:has-text('Implementation stream'), "
+        ".o_list_view .o_data_row:has-text('Implementation stream')"
+    )
+    if task_card.count() > 0:
+        task_card.first.click()
+        page.wait_for_load_state("load")
+        _wait_for_ready(page)
+    else:
+        click_list_row(page, "Implementation stream")
     page.wait_for_timeout(1000)
 
-    fill_field(page, "name", "Bluebird Sprint Kickoff")
-    page.wait_for_timeout(500)
-
-    # Move to In Progress stage
-    stage_btn = page.locator(".o_statusbar_status button:has-text('In Progress')").first
-    stage_btn.click()
-    page.wait_for_timeout(500)
-    _wait_no_loading(page)
+    _fill_task_name(page, "Bluebird Sprint Kickoff")
+    _click_stage_if_exists(page, "In Progress")
 
     save_form(page)
     page.wait_for_timeout(500)
     _wait_no_loading(page)
 
-    # Go back to task list
-    click_breadcrumb(page, "Bluebird Labs")
+    # Go back to task list via breadcrumb
+    breadcrumb = page.locator(".o_breadcrumb .breadcrumb-item a")
+    if breadcrumb.count() > 0:
+        breadcrumb.first.click()
+        page.wait_for_load_state("load")
+        _wait_for_ready(page)
+    else:
+        page.go_back()
+        page.wait_for_load_state("load")
+        _wait_for_ready(page)
     page.wait_for_timeout(1000)
 
-    # Open "Training stream" task and rename it
-    click_list_row(page, "Training stream")
+    # Open "Training stream" task
+    task_card = page.locator(
+        ".o_kanban_record:has-text('Training stream'), "
+        ".o_list_view .o_data_row:has-text('Training stream')"
+    )
+    if task_card.count() > 0:
+        task_card.first.click()
+        page.wait_for_load_state("load")
+        _wait_for_ready(page)
+    else:
+        click_list_row(page, "Training stream")
     page.wait_for_timeout(1000)
 
-    fill_field(page, "name", "Bluebird Training Review")
-    page.wait_for_timeout(500)
-
-    # Move to Done stage
-    stage_btn = page.locator(".o_statusbar_status button:has-text('Done')").first
-    stage_btn.click()
-    page.wait_for_timeout(500)
-    _wait_no_loading(page)
+    _fill_task_name(page, "Bluebird Training Review")
+    _click_stage_if_exists(page, "Done")
 
     save_form(page)
     page.wait_for_timeout(500)
     _wait_no_loading(page)
 
-    # Set project description - go to project settings
+    # Set project description via project settings
     navigate(page, "/odoo/project")
     _wait_no_loading(page)
 
-    # Open the project settings via kebab menu
+    # Open the project settings via kebab/dropdown menu on kanban card
     card = page.locator(".o_kanban_record:has-text('Bluebird Labs')").first
-    kebab = card.locator(".o_kanban_manage_toggle_button, button.dropdown-toggle").first
-    kebab.click()
-    page.wait_for_timeout(500)
-
-    page.locator(".dropdown-menu a:has-text('Settings'), .o_kanban_manage_section a:has-text('Settings')").first.click()
-    page.wait_for_load_state("load")
-    _wait_for_ready(page)
-
-    # Click Description tab
-    click_tab(page, "Description")
-    page.wait_for_timeout(500)
-
-    desc_field = page.locator(
-        ".o_field_widget[name='description'] textarea, "
-        ".o_field_widget[name='description'] .note-editable, "
-        ".o_field_widget[name='description'] .odoo-editor-editable"
+    # In Odoo 19, the kebab menu might use different selectors
+    kebab = card.locator(
+        ".o_kanban_manage_toggle_button, "
+        "button.dropdown-toggle, "
+        ".o_dropdown_kanban .dropdown-toggle, "
+        ".o_kanban_config_button"
     )
-    desc_field.first.click()
-    desc_field.first.fill("2 service tasks generated from SERV-PROJ-17")
+    if kebab.count() > 0:
+        kebab.first.click()
+        page.wait_for_timeout(500)
+
+        # Look for Settings/Edit in the dropdown
+        settings_link = page.locator(
+            ".dropdown-menu a:has-text('Settings'), "
+            ".dropdown-menu a:has-text('Edit'), "
+            ".o_kanban_manage_section a:has-text('Settings'), "
+            ".o_kanban_manage_section a:has-text('Edit'), "
+            ".dropdown-item:has-text('Settings'), "
+            ".dropdown-item:has-text('Edit')"
+        )
+        if settings_link.count() > 0:
+            settings_link.first.click()
+            page.wait_for_load_state("load")
+            _wait_for_ready(page)
+        else:
+            # Close dropdown and try clicking the card directly
+            page.keyboard.press("Escape")
+            page.wait_for_timeout(300)
+            card.click()
+            page.wait_for_load_state("load")
+            _wait_for_ready(page)
+    else:
+        # No kebab - click the card directly
+        card.click()
+        page.wait_for_load_state("load")
+        _wait_for_ready(page)
+
+    # Now we should be on the project form. Look for Description tab.
+    desc_tab = page.locator(".o_notebook .nav-link:has-text('Description')")
+    if desc_tab.count() > 0:
+        desc_tab.first.click()
+        page.wait_for_timeout(500)
+
+    # Set project description
+    desc_widget = page.locator(".o_field_widget[name='description']").first
+    desc_widget.click()
+    page.wait_for_timeout(500)
+
+    # Find the editable element
+    editable = desc_widget.locator(
+        "textarea, .note-editable, .odoo-editor-editable, [contenteditable='true']"
+    )
+    if editable.count() > 0:
+        el = editable.first
+        tag = el.evaluate("el => el.tagName.toLowerCase()")
+        if tag == "textarea":
+            el.fill("2 service tasks generated from SERV-PROJ-17")
+        else:
+            el.click()
+            page.keyboard.press("Control+a")
+            page.keyboard.type("2 service tasks generated from SERV-PROJ-17")
     page.wait_for_timeout(500)
 
     save_form(page)
@@ -131,14 +217,6 @@ def oracle(page):
 
     # Return to the sales order and change Customer Reference
     navigate(page, "/odoo/sales")
-    _wait_no_loading(page)
-
-    # Remove filters to see all orders
-    filter_tags = page.locator(".o_searchview .o_facet_remove, .o_searchview_facet .o_facet_remove")
-    while filter_tags.count() > 0:
-        filter_tags.first.click()
-        page.wait_for_timeout(500)
-        filter_tags = page.locator(".o_searchview .o_facet_remove, .o_searchview_facet .o_facet_remove")
     _wait_no_loading(page)
 
     click_list_row(page, "SERV-PROJ-17")

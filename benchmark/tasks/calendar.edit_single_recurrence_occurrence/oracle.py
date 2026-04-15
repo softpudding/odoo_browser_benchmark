@@ -2,7 +2,8 @@
 
 Navigate to Calendar week view for Apr 27 2026, click the "Ops Standup"
 occurrence, change Location from "Main Office" to "Building B Room 4",
-choose "This Event" in the recurrence dialog, and save.
+choose "This Event" via the recurrence_update radio in the form, and save
+by navigating back.
 """
 
 from benchmark.oracle_helpers import (
@@ -10,7 +11,6 @@ from benchmark.oracle_helpers import (
     login,
     navigate,
     run_oracle,
-    save_form,
     _wait_no_loading,
     _wait_for_ready,
 )
@@ -45,27 +45,24 @@ def oracle(page):
     event.click()
     page.wait_for_timeout(500)
 
-    # A popover appears — click Edit to open the form
-    page.locator(".o_cw_popover button:has-text('Edit')").first.click()
+    # A popover appears — click Edit (it's an <a> link, not a button)
+    page.locator(".o_cw_popover_edit").first.click()
     page.wait_for_timeout(1000)
     _wait_for_ready(page)
+
+    # In Odoo 19, the calendar form has inline radio buttons for
+    # recurrence_update: self_only / future_events / all_events.
+    # Select "This event" (self_only) before making changes.
+    page.locator('input[data-value="self_only"]').first.click()
+    page.wait_for_timeout(500)
 
     # Change location
     fill_field(page, "location", "Building B Room 4")
     page.wait_for_timeout(500)
 
-    # Save the form
-    save_form(page)
+    # Save by navigating back via breadcrumb (calendar form auto-saves)
+    page.locator(".o_breadcrumb a").first.click()
     page.wait_for_timeout(1000)
-
-    # Recurrence dialog appears — choose "This Event"
-    modal = page.locator(".modal:visible").last
-    modal.locator("input[value='self']").first.click()
-    page.wait_for_timeout(300)
-
-    # Confirm
-    modal.locator("button.btn-primary").first.click()
-    page.wait_for_load_state("load")
     _wait_no_loading(page)
 
 

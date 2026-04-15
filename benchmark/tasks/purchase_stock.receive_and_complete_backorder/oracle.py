@@ -22,8 +22,12 @@ from benchmark.oracle_helpers import (
 
 
 def _set_done_qty(page, row_index, value):
-    """Set the Done quantity on a stock move line row."""
-    row = page.locator(".o_list_view .o_data_row").nth(row_index)
+    """Set the Done quantity on a stock move line row inside a picking form."""
+    # Use the form's list renderer (not top-level list view)
+    row = page.locator(
+        ".o_form_view .o_list_renderer .o_data_row, "
+        ".o_list_view .o_data_row"
+    ).nth(row_index)
     # The done quantity field is named 'quantity' in stock.move
     cell = row.locator("td[name='quantity'], .o_field_widget[name='quantity']").first
     cell.click()
@@ -45,8 +49,13 @@ def oracle(page):
     click_list_row(page, "BENCH-PARTIAL")
     page.wait_for_timeout(1000)
 
-    # Click "Receive Products" to open the receipt
-    click_status_button(page, "Receive Products")
+    # Click "Receive" to open the receipt (button string is "Receive", not "Receive Products")
+    receive_btn = page.locator(
+        ".o_statusbar_buttons button:visible:has-text('Receive'), "
+        "button[name='action_view_picking']:visible"
+    ).first
+    receive_btn.click()
+    page.wait_for_load_state("load")
     page.wait_for_timeout(1000)
     _wait_no_loading(page)
     _wait_for_ready(page)
@@ -62,17 +71,18 @@ def oracle(page):
 
     # Validate the receipt
     click_button(page, "Validate")
-    page.wait_for_timeout(1000)
+    page.wait_for_timeout(1500)
     _wait_no_loading(page)
 
     # In the backorder dialog, click "Create Backorder"
-    modal_click_button(page, "Create Backorder")
-    page.wait_for_timeout(1000)
-    _wait_no_loading(page)
-    _wait_for_ready(page)
+    modal = page.locator(".modal:visible")
+    if modal.count() > 0:
+        modal.last.locator("button:has-text('Create Backorder')").first.click()
+        page.wait_for_timeout(1500)
+        _wait_no_loading(page)
+        _wait_for_ready(page)
 
     # Navigate back to the PO to find the backorder receipt
-    # Use breadcrumb or navigate back to purchase
     navigate(page, "/odoo/purchase")
     _wait_no_loading(page)
 
@@ -87,9 +97,19 @@ def oracle(page):
     _wait_for_ready(page)
 
     # Find the backorder (the one that is not done - should be in "Ready" or "Assigned" state)
-    # Click the row that shows Ready/Assigned status (the pending one)
-    ready_row = page.locator(".o_list_view .o_data_row:has-text('Ready'), .o_list_view .o_data_row:has-text('Assigned')").first
-    ready_row.click()
+    ready_row = page.locator(
+        ".o_list_view .o_data_row:has-text('Ready'), "
+        ".o_list_view .o_data_row:has-text('Assigned')"
+    )
+    if ready_row.count() > 0:
+        ready_row.first.click()
+    else:
+        # Try clicking the second row (first is Done, second is the backorder)
+        rows = page.locator(".o_list_view .o_data_row")
+        if rows.count() > 1:
+            rows.nth(1).click()
+        else:
+            rows.first.click()
     page.wait_for_load_state("load")
     _wait_for_ready(page)
     page.wait_for_timeout(1000)
@@ -107,6 +127,15 @@ def oracle(page):
     click_button(page, "Validate")
     page.wait_for_timeout(1000)
     _wait_no_loading(page)
+
+    # Handle any dialog that appears
+    modal = page.locator(".modal:visible")
+    if modal.count() > 0:
+        modal.last.locator(
+            "button:has-text('Ok'), button.btn-primary"
+        ).first.click()
+        page.wait_for_timeout(1000)
+        _wait_no_loading(page)
 
 
 run_oracle(oracle)

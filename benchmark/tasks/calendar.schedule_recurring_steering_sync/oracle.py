@@ -7,18 +7,61 @@ change location to "War Room C", choosing "This Event".
 """
 
 from benchmark.oracle_helpers import (
+    add_many2many_tag,
+    click_tab,
     fill_field,
-    fill_text_field,
     login,
     navigate,
     run_oracle,
-    save_form,
     set_boolean,
-    set_many2one,
-    add_many2many_tag,
     _wait_no_loading,
     _wait_for_ready,
 )
+
+
+def _select_menu(page, field_name, label):
+    """Select a value from an Odoo 19 SelectMenu widget."""
+    widget = page.locator(f'.o_field_widget[name="{field_name}"]').first
+    inp = widget.locator("input")
+    if inp.count() > 0 and inp.first.is_visible():
+        # Check if already showing the right value
+        current = inp.first.input_value()
+        if current.strip() == label:
+            return
+        inp.first.click()
+        page.wait_for_timeout(300)
+        inp.first.fill("")
+        inp.first.fill(label)
+        page.wait_for_timeout(500)
+    else:
+        btn = widget.locator("button, .dropdown-toggle")
+        btn.first.click()
+        page.wait_for_timeout(500)
+
+    items = page.locator(
+        ".dropdown-menu:visible .o-dropdown-item, "
+        ".o_select_menu_menu:visible .o_select_menu_item"
+    )
+    item = items.filter(has_text=label)
+    if item.count() > 0:
+        item.first.click()
+    page.wait_for_timeout(500)
+    _wait_no_loading(page)
+
+
+def _set_week_day(page, day_index, active):
+    """Toggle a day in the calendar_week_days widget.
+
+    day_index: 0-based, starting from the locale's week start.
+    For US locale (weekStart=0/Sunday): 0=Sun,1=Mon,2=Tue,3=Wed,4=Thu,5=Fri,6=Sat
+    """
+    container = page.locator(".o_recurrent_weekdays").first
+    day_buttons = container.locator(".o_calendar_week_days_rounded")
+    btn = day_buttons.nth(day_index)
+    is_active = "text-bg-action" in (btn.get_attribute("class") or "")
+    if is_active != active:
+        btn.click()
+        page.wait_for_timeout(300)
 
 
 def oracle(page):
@@ -26,72 +69,49 @@ def oracle(page):
     navigate(page, "/odoo/calendar")
     _wait_no_loading(page)
 
-    # Click New to create a new event
-    page.locator(".o_control_panel button:has-text('New'):visible").first.click()
-    page.wait_for_timeout(1000)
+    # ---------------------------------------------------------------
+    # Part 1: Create the recurring event
+    # ---------------------------------------------------------------
+    page.locator('.o_control_panel button:has-text("New"):visible').first.click()
+    page.wait_for_timeout(1500)
     _wait_for_ready(page)
 
-    # Set the title
+    # Set title
     fill_field(page, "name", "Northwind Steering Sync")
     page.wait_for_timeout(500)
 
-    # Set start datetime: 05/07/2026 14:30:00
-    # Odoo 19 datetime fields use button-based pickers. Use JS to set the value
-    # directly via the OWL component, then trigger the field's onchange.
-    page.evaluate("""() => {
-        // Find the start datetime field widget and set its value
-        const startWidget = document.querySelector('.o_field_widget[name="start"]');
-        const startInput = startWidget && startWidget.querySelector('input');
-        if (startInput) {
-            // If there's an input, use it directly
-            startInput.value = '';
-            startInput.dispatchEvent(new Event('input', { bubbles: true }));
-            startInput.value = '05/07/2026 14:30:00';
-            startInput.dispatchEvent(new Event('input', { bubbles: true }));
-            startInput.dispatchEvent(new Event('change', { bubbles: true }));
-        }
-    }""")
-    # Fallback: try clicking and typing into the field
-    start_widget = page.locator(".o_field_widget[name='start']").first
-    start_input = start_widget.locator("input")
-    if start_input.count() > 0 and start_input.first.is_visible():
-        start_input.first.click()
-        start_input.first.fill("")
-        start_input.first.type("05/07/2026 14:30:00")
-        start_input.first.press("Tab")
-    else:
-        # Button-based picker: click to open, then navigate
-        start_btn = start_widget.locator("button, .o_input, .o_datetime_button").first
-        start_btn.click()
-        page.wait_for_timeout(500)
-        # Type the date directly if a text input appeared in the picker
-        picker_input = page.locator(".o_datetime_picker input:visible")
-        if picker_input.count() > 0:
-            picker_input.first.fill("05/07/2026 14:30:00")
-            picker_input.first.press("Enter")
+    # Set start datetime -- for a new event the start field renders as <input>
+    start_input = page.locator('.o_field_widget[name="start"] input').first
+    start_input.click()
+    start_input.fill("")
+    start_input.type("05/07/2026 02:30:00 PM")
+    start_input.press("Tab")
+    page.wait_for_timeout(1000)
+
+    # Close any datetime picker that opened
+    picker = page.locator(".o_datetime_picker:visible")
+    if picker.count() > 0:
         page.keyboard.press("Escape")
+        page.wait_for_timeout(500)
+
+    # Set end time via the daterange picker
+    stop_btn = page.locator(".o_daterange_end").first
+    stop_btn.click()
+    page.wait_for_timeout(1000)
+
+    # The picker has two time inputs: start time and end time
+    time_inputs = page.locator(".o_datetime_picker:visible .o_time_picker_input")
+    if time_inputs.count() >= 2:
+        end_time_input = time_inputs.nth(1)
+        end_time_input.click(click_count=3)
+        end_time_input.fill("3:15pm")
+        end_time_input.press("Tab")
+        page.wait_for_timeout(500)
+
+    page.keyboard.press("Escape")
     page.wait_for_timeout(500)
 
-    # Set stop datetime: 05/07/2026 15:15:00
-    stop_widget = page.locator(".o_field_widget[name='stop']").first
-    stop_input = stop_widget.locator("input")
-    if stop_input.count() > 0 and stop_input.first.is_visible():
-        stop_input.first.click()
-        stop_input.first.fill("")
-        stop_input.first.type("05/07/2026 15:15:00")
-        stop_input.first.press("Tab")
-    else:
-        stop_btn = stop_widget.locator("button, .o_input, .o_datetime_button").first
-        stop_btn.click()
-        page.wait_for_timeout(500)
-        picker_input = page.locator(".o_datetime_picker input:visible")
-        if picker_input.count() > 0:
-            picker_input.first.fill("05/07/2026 15:15:00")
-            picker_input.first.press("Enter")
-        page.keyboard.press("Escape")
-    page.wait_for_timeout(500)
-
-    # Add attendee Avery Stone (partner_ids is many2many)
+    # Add attendee Avery Stone
     add_many2many_tag(page, "partner_ids", "Avery Stone")
     page.wait_for_timeout(500)
 
@@ -99,103 +119,108 @@ def oracle(page):
     fill_field(page, "location", "War Room B")
     page.wait_for_timeout(500)
 
-    # Set description - try textarea first, then HTML editor
-    desc_widget = page.locator(".o_field_widget[name='description']").first
-    desc_textarea = desc_widget.locator("textarea")
-    desc_editable = desc_widget.locator(".note-editable, .odoo-editor-editable, .o_wysiwyg_wrapper [contenteditable='true']")
-    if desc_textarea.count() > 0 and desc_textarea.first.is_visible():
-        desc_textarea.first.click()
-        desc_textarea.first.fill("Escalate blockers before launch freeze.")
-    elif desc_editable.count() > 0:
-        desc_editable.first.click()
-        desc_editable.first.fill("Escalate blockers before launch freeze.")
-    else:
-        # Try clicking the widget itself and typing
-        desc_widget.click()
-        page.keyboard.type("Escalate blockers before launch freeze.")
+    # Switch to Options tab
+    click_tab(page, "Options")
+    page.wait_for_timeout(500)
+
+    # Set description (HTML contenteditable field)
+    desc_editable = page.locator(
+        '.o_field_widget[name="description"] .note-editable, '
+        '.o_field_widget[name="description"] .odoo-editor-editable, '
+        '.o_field_widget[name="description"] [contenteditable="true"]'
+    ).first
+    desc_editable.click()
+    page.keyboard.type("Escalate blockers before launch freeze.")
     page.wait_for_timeout(500)
 
     # Enable recurrence
     set_boolean(page, "recurrency", True)
+    page.wait_for_timeout(1500)
+
+    # The default recurrence type is "Weekly" -- verify and set if needed
+    _select_menu(page, "rrule_type_ui", "Weekly")
     page.wait_for_timeout(500)
 
-    # Set recurrence to weekly
-    page.locator(".o_field_widget[name='rrule_type'] select").select_option(label="Weekly")
-    page.wait_for_timeout(300)
+    # Set the day of week using the calendar_week_days widget.
+    # The widget shows round buttons for each day. Order depends on locale.
+    # For the default US locale: Sun(0), Mon(1), Tue(2), Wed(3), Thu(4), Fri(5), Sat(6)
+    # We need Thursday active and all others inactive.
+    # The current day is Wed (today is Apr 15 2026, a Wednesday), so
+    # Wed might be pre-selected. Let me deactivate all except Thu.
 
-    # Ensure Thursday is selected
-    thu_cb = page.locator(".o_field_widget[name='thu'] input[type='checkbox']").first
-    if not thu_cb.is_checked():
-        thu_cb.click()
-    page.wait_for_timeout(300)
+    # Wait for the week days widget to appear
+    page.wait_for_selector(".o_recurrent_weekdays", timeout=5000)
+    page.wait_for_timeout(500)
 
-    # Uncheck other days if checked
-    for day in ["mon", "tue", "wed", "fri", "sat", "sun"]:
-        cb = page.locator(f".o_field_widget[name='{day}'] input[type='checkbox']")
-        if cb.count() > 0 and cb.first.is_checked():
-            cb.first.click()
-            page.wait_for_timeout(200)
+    # Deactivate all days except Thursday (index 4)
+    for i in range(7):
+        if i == 4:  # Thursday
+            _set_week_day(page, i, True)
+        else:
+            _set_week_day(page, i, False)
+    page.wait_for_timeout(500)
 
-    # Set end type to "Number of repetitions" and count to 3
-    page.locator(".o_field_widget[name='end_type'] select").select_option(label="Number of repetitions")
-    page.wait_for_timeout(300)
+    # Set end type to "Number of repetitions"
+    _select_menu(page, "end_type", "Number of repetitions")
+    page.wait_for_timeout(500)
 
+    # Set count to 3
     fill_field(page, "count", "3")
     page.wait_for_timeout(500)
 
-    # Save the event
-    save_form(page)
-    page.wait_for_timeout(1000)
+    # Save by navigating back via breadcrumb
+    page.locator(".o_breadcrumb a").first.click()
+    page.wait_for_timeout(2000)
     _wait_no_loading(page)
 
-    # Now navigate to week of May 14 to edit the 2nd occurrence
+    # ---------------------------------------------------------------
+    # Part 2: Edit the 2nd occurrence (May 14) location
+    # ---------------------------------------------------------------
     navigate(page, "/odoo/calendar")
     _wait_no_loading(page)
 
-    # Switch to week view via scale dropdown
+    # Switch to week view
     page.locator(".scale_button_selection").first.click()
     page.wait_for_timeout(500)
     page.locator(".dropdown-menu:visible .dropdown-item:has-text('Week')").first.click()
     page.wait_for_timeout(1000)
     _wait_no_loading(page)
 
-    # Navigate to the week containing May 14, 2026
+    # Navigate to the week of May 14, 2026
     for _ in range(30):
-        headers = page.locator(".fc-col-header-cell").all_inner_texts()
-        header_text = " ".join(headers)
-        if "14" in header_text:
-            break
+        events = page.locator(".fc-event:has-text('Northwind Steering Sync')")
+        if events.count() > 0:
+            headers = page.locator(".fc-col-header-cell").all_inner_texts()
+            header_text = " ".join(headers)
+            if "14" in header_text:
+                break
         page.locator(".o_calendar_button_next").first.click()
         page.wait_for_timeout(500)
         _wait_no_loading(page)
 
     page.wait_for_timeout(500)
 
-    # Click the "Northwind Steering Sync" event on May 14
+    # Click the event on May 14
     event = page.locator(".fc-event:has-text('Northwind Steering Sync')").first
     event.click()
     page.wait_for_timeout(500)
 
     # Click Edit
-    page.locator(".o_cw_popover button:has-text('Edit')").first.click()
+    page.locator(".o_cw_popover_edit").first.click()
     page.wait_for_timeout(1000)
     _wait_for_ready(page)
 
-    # Change location to "War Room C"
+    # Select "This event" radio
+    page.locator('input[data-value="self_only"]').first.click()
+    page.wait_for_timeout(500)
+
+    # Change location
     fill_field(page, "location", "War Room C")
     page.wait_for_timeout(500)
 
-    # Save
-    save_form(page)
+    # Save by navigating back via breadcrumb
+    page.locator(".o_breadcrumb a").first.click()
     page.wait_for_timeout(1000)
-
-    # Recurrence dialog — choose "This Event"
-    modal = page.locator(".modal:visible").last
-    modal.locator("input[value='self']").first.click()
-    page.wait_for_timeout(300)
-
-    modal.locator("button.btn-primary").first.click()
-    page.wait_for_load_state("load")
     _wait_no_loading(page)
 
 

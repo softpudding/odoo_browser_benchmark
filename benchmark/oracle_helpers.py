@@ -122,7 +122,17 @@ def _wait_no_loading(page: Page, timeout: int = 10000) -> None:
         )
     except Exception:
         pass
+    # Dismiss any tooltip overlays that can intercept pointer events
+    _dismiss_tooltips(page)
     page.wait_for_timeout(300)
+
+
+def _dismiss_tooltips(page: Page) -> None:
+    """Remove tooltip overlays that block click events in Odoo."""
+    page.evaluate("""
+        document.querySelectorAll('.o-tooltip, .tooltip').forEach(el => el.remove());
+    """)
+    page.mouse.move(0, 0)
 
 
 # ---------------------------------------------------------------------------
@@ -241,15 +251,17 @@ def click_list_row(page: Page, text: str) -> None:
         # may not be in a visible column, so click the first result.
         search_for(page, text)
         page.wait_for_timeout(500)
+        _dismiss_tooltips(page)
         row = page.locator(".o_list_view .o_data_row")
         if row.count() > 0:
-            row.first.click()
+            row.first.click(force=True)
             page.wait_for_load_state("load")
             _wait_for_ready(page)
             return
 
+    _dismiss_tooltips(page)
     row = page.locator(f".o_list_view .o_data_row:has-text('{text}')").first
-    row.click()
+    row.click(force=True)
     page.wait_for_load_state("load")
     _wait_for_ready(page)
 
@@ -362,6 +374,69 @@ def set_many2one_dialog(page: Page, field_name: str, search_text: str) -> None:
     _wait_no_loading(page)
 
 
+def open_many2one_record(page: Page, field_name: str) -> None:
+    """Open the record linked by a many2one field.
+
+    In readonly mode: clicks the <a> link.
+    In edit mode: clicks the external button (arrow icon).
+    """
+    widget = page.locator(f".o_field_widget[name='{field_name}']").first
+
+    # Try the readonly link first (most reliable)
+    link = widget.locator("a.o_form_uri")
+    if link.count() > 0 and link.first.is_visible():
+        link.first.click()
+        page.wait_for_load_state("load")
+        _wait_for_ready(page)
+        return
+
+    # Try any <a> tag in the widget (Odoo 19 may not use o_form_uri class)
+    any_link = widget.locator("a[href]")
+    if any_link.count() > 0 and any_link.first.is_visible():
+        any_link.first.click()
+        page.wait_for_load_state("load")
+        _wait_for_ready(page)
+        return
+
+    # Try external button (edit mode) — multiple possible selectors
+    ext_btn = widget.locator(
+        "button.o_external_button, "
+        ".o_external_button, "
+        "button.fa-external-link, "
+        "button:has(.fa-external-link), "
+        "button:has(.fa-arrow-right), "
+        "a.o_external_button"
+    )
+    if ext_btn.count() > 0 and ext_btn.first.is_visible():
+        ext_btn.first.click()
+        page.wait_for_load_state("load")
+        _wait_for_ready(page)
+        return
+
+    # In Odoo 19, the field might need to be focused first to show the button.
+    # Click the input to focus, then look for the external button.
+    inp = widget.locator("input")
+    if inp.count() > 0:
+        inp.first.click()
+        page.wait_for_timeout(500)
+        ext_btn = widget.locator(
+            "button.o_external_button, .o_external_button, "
+            "button:has(.fa-external-link), button:has(.fa-arrow-right)"
+        )
+        if ext_btn.count() > 0 and ext_btn.first.is_visible():
+            ext_btn.first.click()
+            page.wait_for_load_state("load")
+            _wait_for_ready(page)
+            return
+
+    # Click on the field value to try to trigger navigation
+    # In some widgets the value itself is clickable
+    clickable = widget.locator("a, button, span.o_form_uri").first
+    clickable.click()
+    page.wait_for_load_state("load")
+    _wait_for_ready(page)
+
+
 def set_selection(page: Page, field_name: str, value: str) -> None:
     """Set a selection field by its visible value text."""
     page.locator(f".o_field_widget[name='{field_name}'] select").select_option(label=value)
@@ -451,6 +526,45 @@ def remove_many2many_tag(page: Page, field_name: str, tag_text: str) -> None:
 # Inline tree (one2many) editing
 # ---------------------------------------------------------------------------
 
+def enable_optional_column(page: Page, column_label: str) -> None:
+    """Enable an optional column in a one2many list view (e.g. 'Disc.%').
+
+    Clicks the settings-adjust gear icon in the list renderer header,
+    then toggles the checkbox for the given column label.
+    """
+    opt_btn = page.locator(
+        ".o_form_view .o_list_renderer .o_optional_columns_dropdown_toggle:visible"
+    )
+    if opt_btn.count() == 0:
+        return  # No optional columns dropdown
+    opt_btn.first.click()
+    page.wait_for_timeout(500)
+
+    # Find the dropdown item with the column label
+    items = page.locator(".dropdown-menu:visible .dropdown-item")
+    for i in range(items.count()):
+        item_text = items.nth(i).inner_text().strip()
+        if column_label.lower() in item_text.lower():
+            # Check if it's already enabled (has a checkmark/checked state)
+            checkbox = items.nth(i).locator("input[type='checkbox']")
+            if checkbox.count() > 0 and checkbox.first.is_checked():
+                # Already enabled, close dropdown
+                page.press("body", "Escape")
+                page.wait_for_timeout(300)
+                return
+            items.nth(i).click()
+            page.wait_for_timeout(500)
+            _wait_no_loading(page)
+            # Close the dropdown by clicking elsewhere
+            page.press("body", "Escape")
+            page.wait_for_timeout(300)
+            return
+
+    # Close the dropdown if column not found
+    page.press("body", "Escape")
+    page.wait_for_timeout(300)
+
+
 def click_add_a_line(page: Page) -> None:
     """Click 'Add a line' / 'Add a product' in a one2many field."""
     add_link = page.locator(
@@ -467,8 +581,16 @@ def click_add_a_line(page: Page) -> None:
 
 
 def set_o2m_field(page: Page, row_index: int, field_name: str, value: str) -> None:
-    """Set a field value in a one2many row (0-indexed)."""
-    row = page.locator(f".o_list_view .o_data_row").nth(row_index)
+    """Set a field value in a one2many row (0-indexed).
+
+    Looks for data rows inside the form's one2many list renderer first,
+    then falls back to a top-level list view.
+    """
+    # Prefer rows inside a form's one2many (o_list_renderer inside o_form_view)
+    row = page.locator(
+        ".o_form_view .o_list_renderer .o_data_row, "
+        ".o_list_view .o_data_row"
+    ).nth(row_index)
     cell = row.locator(f"td[name='{field_name}'], .o_field_widget[name='{field_name}']").first
     cell.click()
     page.wait_for_timeout(300)
@@ -483,7 +605,10 @@ def set_o2m_field(page: Page, row_index: int, field_name: str, value: str) -> No
 
 def set_o2m_many2one(page: Page, row_index: int, field_name: str, search_text: str) -> None:
     """Set a many2one field within a one2many row."""
-    row = page.locator(f".o_list_view .o_data_row").nth(row_index)
+    row = page.locator(
+        ".o_form_view .o_list_renderer .o_data_row, "
+        ".o_list_view .o_data_row"
+    ).nth(row_index)
     cell = row.locator(f"td[name='{field_name}'], .o_field_widget[name='{field_name}']").first
     cell.click()
     page.wait_for_timeout(300)
@@ -577,6 +702,52 @@ def modal_set_many2one(page: Page, field_name: str, search_text: str) -> None:
     _wait_no_loading(page)
 
 
+def modal_set_date(page: Page, field_name: str, date_str: str) -> None:
+    """Set a date field inside a modal.
+
+    In Odoo 19, date fields with a value render as a <button> initially.
+    Clicking the button focuses the field and switches it to an <input>.
+    date_str should be in MM/DD/YYYY format.
+    """
+    modal = page.locator(".modal:visible").last
+    widget = modal.locator(f".o_field_widget[name='{field_name}']").first
+
+    # Check if there's already an input visible
+    inp = widget.locator("input:visible")
+    if inp.count() == 0:
+        # Try clicking the button/span to switch to input mode
+        clickable = widget.locator("button, span, div.o_input, .o_datepicker_button")
+        if clickable.count() > 0:
+            clickable.first.click()
+            page.wait_for_timeout(500)
+        else:
+            widget.click()
+            page.wait_for_timeout(500)
+        inp = widget.locator("input:visible")
+
+    if inp.count() == 0:
+        # Try looking for the input inside the whole widget again (not just visible)
+        inp = widget.locator("input")
+
+    if inp.count() > 0:
+        inp.first.click()
+        inp.first.fill("")
+        inp.first.type(date_str)
+        inp.first.press("Tab")
+    else:
+        # Last resort: triple-click and type
+        widget.click(click_count=3)
+        page.keyboard.type(date_str)
+        page.keyboard.press("Tab")
+    page.wait_for_timeout(500)
+    # Close any datepicker
+    try:
+        page.press("body", "Escape")
+    except Exception:
+        pass
+    page.wait_for_timeout(300)
+
+
 def modal_set_selection(page: Page, field_name: str, value: str) -> None:
     """Set a selection field in the current modal."""
     modal = page.locator(".modal:visible").last
@@ -610,45 +781,99 @@ def schedule_activity(
     note: str = "",
 ) -> None:
     """Schedule an activity via the chatter."""
-    # Click the activity button in chatter — try multiple selectors
-    activity_btn = page.locator(
-        ".o_ChatterTopbar button:has-text('Activities'), "
-        ".o-mail-Chatter button:has-text('Activities'), "
-        ".o_Chatter button:has-text('Activities'), "
-        "button:has-text('Schedule Activity'), "
-        "button.o_ChatterTopbar_activityBtn"
-    ).first
-    activity_btn.click()
-    page.wait_for_timeout(1000)
+    # Scroll down to make the chatter visible
+    chatter = page.locator(".o-mail-Chatter, .o_chatter")
+    if chatter.count() > 0:
+        chatter.first.scroll_into_view_if_needed()
+        page.wait_for_timeout(500)
 
-    # Click 'Schedule an activity' link/button if a dropdown appeared
+    # Click the activity button in chatter — try multiple selectors
+    # Odoo 19: various button classes and text patterns
+    activity_btn = page.locator(
+        "button.o-mail-Chatter-activity:visible, "
+        ".o-mail-Chatter button:has-text('Activities'):visible, "
+        ".o-mail-Chatter button:has-text('Activity'):visible, "
+        ".o_ChatterTopbar button:has-text('Activities'):visible, "
+        ".o_ChatterTopbar button:has-text('Activity'):visible, "
+        "button:has-text('Schedule Activity'):visible, "
+        "button.o_ChatterTopbar_activityBtn:visible"
+    )
+    if activity_btn.count() == 0:
+        # Try without :visible filter as a fallback
+        activity_btn = page.locator(
+            "button.o-mail-Chatter-activity, "
+            ".o-mail-Chatter button:has-text('Activities'), "
+            ".o-mail-Chatter button:has-text('Activity'), "
+            "button:has-text('Schedule Activity')"
+        )
+    activity_btn.first.click()
+    page.wait_for_timeout(1500)
+
+    # In Odoo 19 clicking the activity button directly opens the schedule
+    # activity modal. If a dropdown appeared instead, click the link.
     schedule_link = page.locator(
         "button:has-text('Schedule an activity'), "
         "a:has-text('Schedule an activity'), "
         ".o_activity_btn:has-text('Schedule')"
     )
-    if schedule_link.count() > 0:
+    if schedule_link.count() > 0 and page.locator(".modal:visible").count() == 0:
         schedule_link.first.click()
-        page.wait_for_timeout(500)
+        page.wait_for_timeout(1000)
 
+    # Wait for the modal to be visible
+    page.wait_for_selector(".modal:visible", timeout=10000)
+    page.wait_for_timeout(500)
     modal = page.locator(".modal:visible").last
 
     if activity_type:
-        modal_set_many2one(page, "activity_type_id", activity_type)
+        # In Odoo 19, activity_type_id may be rendered as selection badges
+        # (clickable buttons) instead of a many2one dropdown.
+        badge = modal.locator(
+            f".o_field_widget[name='activity_type_id'] .o_selection_badge:has-text('{activity_type}')"
+        )
+        if badge.count() > 0:
+            badge.first.click()
+            page.wait_for_timeout(500)
+        else:
+            # Fall back to many2one approach
+            modal_set_many2one(page, "activity_type_id", activity_type)
 
     if summary:
         modal_fill_field(page, "summary", summary)
 
     if due_date:
-        inp = modal.locator(".o_field_widget[name='date_deadline'] input").first
-        inp.click()
-        inp.fill("")
-        inp.type(due_date)
-        inp.press("Tab")
+        # In Odoo 19, date_deadline may render as a <button> initially.
+        # Click it to get an input, then type the date.
+        deadline_widget = modal.locator(".o_field_widget[name='date_deadline']").first
+        inp = deadline_widget.locator("input:visible")
+        if inp.count() == 0:
+            # Click the button to switch to input
+            btn = deadline_widget.locator("button")
+            if btn.count() > 0:
+                btn.first.click()
+                page.wait_for_timeout(500)
+            else:
+                deadline_widget.click()
+                page.wait_for_timeout(500)
+            inp = deadline_widget.locator("input:visible")
+        if inp.count() > 0:
+            inp.first.click()
+            inp.first.fill("")
+            inp.first.type(due_date)
+            inp.first.press("Tab")
+        else:
+            deadline_widget.click(click_count=3)
+            page.keyboard.type(due_date)
+            page.keyboard.press("Tab")
         page.wait_for_timeout(500)
+        try:
+            page.press("body", "Escape")
+        except Exception:
+            pass
+        page.wait_for_timeout(300)
 
     if assigned_to:
-        modal_set_many2one(page, "user_id", assigned_to)
+        modal_set_many2one(page, "activity_user_id", assigned_to)
 
     if note:
         # Note field is usually a textarea or HTML field
@@ -657,8 +882,17 @@ def schedule_activity(
             note_field.first.click()
             note_field.first.fill(note)
 
-    # Click Schedule
-    modal.locator("button:has-text('Schedule')").first.click()
+    # Click Schedule / Save to save the activity.
+    # Re-locate the modal to get the freshest reference.
+    page.wait_for_timeout(500)
+    current_modal = page.locator(".modal:visible").last
+    save_btn = current_modal.locator(
+        ".modal-footer button:has-text('Schedule'), "
+        ".modal-footer button:has-text('Save'), "
+        "button:has-text('Schedule'), "
+        "button:has-text('Save')"
+    )
+    save_btn.first.click()
     page.wait_for_load_state("load")
     _wait_no_loading(page)
 

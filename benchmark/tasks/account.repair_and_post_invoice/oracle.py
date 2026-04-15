@@ -14,12 +14,14 @@ from benchmark.oracle_helpers import (
     click_list_row,
     click_tab,
     click_status_button,
+    enable_optional_column,
     fill_field,
     login,
     navigate,
     run_oracle,
     set_o2m_field,
     _wait_no_loading,
+    _wait_for_ready,
 )
 
 
@@ -28,9 +30,16 @@ def oracle(page):
     navigate(page, "/odoo/accounting/customer-invoices")
     _wait_no_loading(page)
 
-    # Click the draft invoice by its origin
+    # Click the draft invoice by its origin.
+    # APR-OPS is in the invoice_origin field, which may not be a visible column
+    # in the default list view. click_list_row handles search fallback.
     click_list_row(page, "APR-OPS")
     page.wait_for_timeout(1000)
+    _wait_for_ready(page)
+
+    # Enable the Disc.% optional column so we can edit discounts
+    enable_optional_column(page, "Disc")
+    page.wait_for_timeout(500)
 
     # Fix line 0: Acoustic Panel - Qty=2, Discount=5
     set_o2m_field(page, 0, "quantity", "2")

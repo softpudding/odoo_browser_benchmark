@@ -9,7 +9,7 @@ Return to sales order, change Customer Reference to ROLL-PROJ-31-LIVE.
 """
 
 from benchmark.oracle_helpers import (
-    click_breadcrumb,
+    click_kanban_card,
     click_list_row,
     click_stat_button,
     click_status_button,
@@ -22,6 +22,42 @@ from benchmark.oracle_helpers import (
     _wait_no_loading,
     _wait_for_ready,
 )
+
+
+def _fill_task_name(page, value):
+    """Fill the task name field which uses widget='text' (textarea)."""
+    widget = page.locator(".o_field_widget[name='name']").first
+    widget.click()
+    page.wait_for_timeout(500)
+
+    inp = widget.locator("textarea.o_input, textarea, input")
+    if inp.count() > 0 and inp.first.is_visible():
+        inp.first.click()
+        inp.first.fill("")
+        inp.first.fill(value)
+        inp.first.press("Tab")
+    else:
+        widget.click(click_count=3)
+        page.wait_for_timeout(200)
+        page.keyboard.press("Control+a")
+        page.keyboard.type(value)
+        page.keyboard.press("Tab")
+    page.wait_for_timeout(500)
+    _wait_no_loading(page)
+
+
+def _click_stage_if_exists(page, stage_name):
+    """Try to click a stage button in the statusbar. Returns True if found."""
+    btn = page.locator(
+        f".o_statusbar_status button:has-text('{stage_name}'), "
+        f".o_statusbar_status .o_arrow_button:has-text('{stage_name}')"
+    )
+    if btn.count() > 0:
+        btn.first.click()
+        page.wait_for_timeout(500)
+        _wait_no_loading(page)
+        return True
+    return False
 
 
 def oracle(page):
@@ -52,76 +88,116 @@ def oracle(page):
     page.wait_for_timeout(1500)
     _wait_for_ready(page)
 
-    # Switch to list view for easier task editing
-    list_btn = page.locator("button.o_switch_view.o_list:visible, .o_cp_switch_buttons button.o_list:visible")
-    if list_btn.count() > 0:
-        list_btn.first.click()
-        page.wait_for_timeout(1000)
-        _wait_no_loading(page)
-
-    # Open "Discovery Workshop" task and rename it
-    click_list_row(page, "Discovery Workshop")
+    # Open "Discovery Workshop" task
+    task_card = page.locator(
+        ".o_kanban_record:has-text('Discovery Workshop'), "
+        ".o_list_view .o_data_row:has-text('Discovery Workshop')"
+    )
+    if task_card.count() > 0:
+        task_card.first.click()
+        page.wait_for_load_state("load")
+        _wait_for_ready(page)
+    else:
+        click_list_row(page, "Discovery Workshop")
     page.wait_for_timeout(1000)
 
-    fill_field(page, "name", "Atlas Rollout Kickoff")
-    page.wait_for_timeout(500)
-
-    # Move to In Progress stage
-    stage_btn = page.locator(".o_statusbar_status button:has-text('In Progress')").first
-    stage_btn.click()
-    page.wait_for_timeout(500)
-    _wait_no_loading(page)
+    _fill_task_name(page, "Atlas Rollout Kickoff")
+    _click_stage_if_exists(page, "In Progress")
 
     save_form(page)
     page.wait_for_timeout(500)
     _wait_no_loading(page)
 
     # Go back to task list
-    click_breadcrumb(page, "Atlas Retail Group")
+    breadcrumb = page.locator(".o_breadcrumb .breadcrumb-item a")
+    if breadcrumb.count() > 0:
+        breadcrumb.first.click()
+        page.wait_for_load_state("load")
+        _wait_for_ready(page)
+    else:
+        page.go_back()
+        page.wait_for_load_state("load")
+        _wait_for_ready(page)
     page.wait_for_timeout(1000)
 
-    # Open "Go-Live Review" task and rename it
-    click_list_row(page, "Go-Live Review")
+    # Open "Go-Live Review" task
+    task_card = page.locator(
+        ".o_kanban_record:has-text('Go-Live Review'), "
+        ".o_list_view .o_data_row:has-text('Go-Live Review')"
+    )
+    if task_card.count() > 0:
+        task_card.first.click()
+        page.wait_for_load_state("load")
+        _wait_for_ready(page)
+    else:
+        click_list_row(page, "Go-Live Review")
     page.wait_for_timeout(1000)
 
-    fill_field(page, "name", "Atlas Go-Live Signoff")
-    page.wait_for_timeout(500)
-
-    # Move to Done stage
-    stage_btn = page.locator(".o_statusbar_status button:has-text('Done')").first
-    stage_btn.click()
-    page.wait_for_timeout(500)
-    _wait_no_loading(page)
+    _fill_task_name(page, "Atlas Go-Live Signoff")
+    _click_stage_if_exists(page, "Done")
 
     save_form(page)
     page.wait_for_timeout(500)
     _wait_no_loading(page)
 
-    # Set project description - go to project settings
+    # Set project description
     navigate(page, "/odoo/project")
     _wait_no_loading(page)
 
-    # Open the project settings via kebab menu
     card = page.locator(".o_kanban_record:has-text('Atlas Retail Group')").first
-    kebab = card.locator(".o_kanban_manage_toggle_button, button.dropdown-toggle").first
-    kebab.click()
-    page.wait_for_timeout(500)
-
-    page.locator(".dropdown-menu a:has-text('Settings'), .o_kanban_manage_section a:has-text('Settings')").first.click()
-    page.wait_for_load_state("load")
-    _wait_for_ready(page)
-
-    # Click Description tab
-    click_tab(page, "Description")
-    page.wait_for_timeout(500)
-
-    desc_field = page.locator(
-        ".o_field_widget[name='description'] textarea, "
-        ".o_field_widget[name='description'] .note-editable, "
-        ".o_field_widget[name='description'] .odoo-editor-editable"
+    kebab = card.locator(
+        ".o_kanban_manage_toggle_button, "
+        "button.dropdown-toggle, "
+        ".o_dropdown_kanban .dropdown-toggle, "
+        ".o_kanban_config_button"
     )
-    desc_field.first.click()
-    desc_field.first.fill("2 rollout tasks generated from ROLL-PROJ-31")
+    if kebab.count() > 0:
+        kebab.first.click()
+        page.wait_for_timeout(500)
+
+        settings_link = page.locator(
+            ".dropdown-menu a:has-text('Settings'), "
+            ".dropdown-menu a:has-text('Edit'), "
+            ".o_kanban_manage_section a:has-text('Settings'), "
+            ".dropdown-item:has-text('Settings'), "
+            ".dropdown-item:has-text('Edit')"
+        )
+        if settings_link.count() > 0:
+            settings_link.first.click()
+            page.wait_for_load_state("load")
+            _wait_for_ready(page)
+        else:
+            page.keyboard.press("Escape")
+            page.wait_for_timeout(300)
+            card.click()
+            page.wait_for_load_state("load")
+            _wait_for_ready(page)
+    else:
+        card.click()
+        page.wait_for_load_state("load")
+        _wait_for_ready(page)
+
+    desc_tab = page.locator(".o_notebook .nav-link:has-text('Description')")
+    if desc_tab.count() > 0:
+        desc_tab.first.click()
+        page.wait_for_timeout(500)
+
+    desc_widget = page.locator(".o_field_widget[name='description']").first
+    desc_widget.click()
+    page.wait_for_timeout(500)
+
+    editable = desc_widget.locator(
+        "textarea, .note-editable, .odoo-editor-editable, [contenteditable='true']"
+    )
+    if editable.count() > 0:
+        el = editable.first
+        tag = el.evaluate("el => el.tagName.toLowerCase()")
+        if tag == "textarea":
+            el.fill("2 rollout tasks generated from ROLL-PROJ-31")
+        else:
+            el.click()
+            page.keyboard.press("Control+a")
+            page.keyboard.type("2 rollout tasks generated from ROLL-PROJ-31")
     page.wait_for_timeout(500)
 
     save_form(page)
@@ -132,18 +208,9 @@ def oracle(page):
     navigate(page, "/odoo/sales")
     _wait_no_loading(page)
 
-    # Remove filters to see all orders
-    filter_tags = page.locator(".o_searchview .o_facet_remove, .o_searchview_facet .o_facet_remove")
-    while filter_tags.count() > 0:
-        filter_tags.first.click()
-        page.wait_for_timeout(500)
-        filter_tags = page.locator(".o_searchview .o_facet_remove, .o_searchview_facet .o_facet_remove")
-    _wait_no_loading(page)
-
     click_list_row(page, "ROLL-PROJ-31")
     page.wait_for_timeout(1000)
 
-    # Update Customer Reference
     click_tab(page, "Other Info")
     page.wait_for_timeout(500)
     fill_field(page, "client_order_ref", "ROLL-PROJ-31-LIVE")

@@ -19,8 +19,11 @@ from benchmark.oracle_helpers import (
 
 
 def _set_done_qty(page, row_index, value):
-    """Set the Done quantity on a stock move line row."""
-    row = page.locator(".o_list_view .o_data_row").nth(row_index)
+    """Set the Done quantity on a stock move line row inside a picking form."""
+    row = page.locator(
+        ".o_form_view .o_list_renderer .o_data_row, "
+        ".o_list_view .o_data_row"
+    ).nth(row_index)
     cell = row.locator("td[name='quantity'], .o_field_widget[name='quantity']").first
     cell.click()
     page.wait_for_timeout(300)
@@ -41,8 +44,13 @@ def oracle(page):
     click_list_row(page, "NOBACK-04")
     page.wait_for_timeout(1000)
 
-    # Click "Receive Products" to open the receipt
-    click_status_button(page, "Receive Products")
+    # Click "Receive" to open the receipt (button text is "Receive", not "Receive Products")
+    receive_btn = page.locator(
+        ".o_statusbar_buttons button:visible:has-text('Receive'), "
+        "button[name='action_view_picking']:visible"
+    ).first
+    receive_btn.click()
+    page.wait_for_load_state("load")
     page.wait_for_timeout(1000)
     _wait_no_loading(page)
     _wait_for_ready(page)
@@ -58,13 +66,15 @@ def oracle(page):
 
     # Validate the receipt
     click_button(page, "Validate")
-    page.wait_for_timeout(1000)
+    page.wait_for_timeout(1500)
     _wait_no_loading(page)
 
     # In the backorder dialog, choose "No Backorder"
-    modal_click_button(page, "No Backorder")
-    page.wait_for_timeout(1000)
-    _wait_no_loading(page)
+    modal = page.locator(".modal:visible")
+    if modal.count() > 0:
+        modal.last.locator("button:has-text('No Backorder')").first.click()
+        page.wait_for_timeout(1000)
+        _wait_no_loading(page)
 
 
 run_oracle(oracle)

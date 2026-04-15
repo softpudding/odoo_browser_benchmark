@@ -18,9 +18,11 @@ from benchmark.oracle_helpers import (
     login,
     navigate,
     run_oracle,
+    save_form,
     set_many2one,
     set_o2m_field,
     set_o2m_many2one,
+    modal_click_button,
     _wait_no_loading,
     _wait_for_ready,
 )
@@ -35,18 +37,37 @@ def oracle(page):
     click_list_row(page, "SALE-FIX-12")
     page.wait_for_timeout(1000)
 
-    # Cancel the SO via statusbar
-    click_status_button(page, "Cancel")
-    page.wait_for_timeout(1000)
+    # If the SO is locked, we need to unlock it first.
+    unlock_btn = page.locator(
+        "button[name='action_unlock']:visible, "
+        "button:visible:has-text('Unlock')"
+    )
+    if unlock_btn.count() > 0:
+        unlock_btn.first.click()
+        page.wait_for_timeout(1000)
+        _wait_no_loading(page)
+
+    # Cancel the SO. The Cancel button has a `confirm` attribute which
+    # triggers an Odoo ConfirmationDialog (NOT a native browser dialog).
+    # We click Cancel, then confirm in the modal.
+    cancel_btn = page.locator(
+        "button[name='action_cancel']:visible, "
+        ".o_statusbar_buttons button:visible:has-text('Cancel')"
+    ).first
+    cancel_btn.click()
+    page.wait_for_timeout(1500)
     _wait_no_loading(page)
 
-    # Confirm cancellation if a dialog appears
+    # Confirm the cancellation in the Odoo confirmation dialog
     modal = page.locator(".modal:visible")
     if modal.count() > 0:
+        # Click Ok/Confirm button in the dialog
         modal.last.locator(
-            "button:has-text('Ok'), button:has-text('Confirm'), button.btn-primary"
+            "button:has-text('Ok'), "
+            "button:has-text('Confirm'), "
+            "button.btn-primary"
         ).first.click()
-        page.wait_for_timeout(1000)
+        page.wait_for_timeout(2000)
         _wait_no_loading(page)
 
     # Go back to sales list
@@ -81,7 +102,7 @@ def oracle(page):
     set_o2m_field(page, 1, "price_unit", "48")
     page.wait_for_timeout(500)
 
-    # Set Customer Reference
+    # Set Customer Reference in Other Info tab
     click_tab(page, "Other Info")
     page.wait_for_timeout(500)
     fill_field(page, "client_order_ref", "SALE-FIX-12-WEST")
@@ -92,11 +113,11 @@ def oracle(page):
     page.wait_for_timeout(1000)
     _wait_no_loading(page)
 
-    # Handle any confirmation dialog
+    # Handle any confirmation dialog (e.g. "no email" warning)
     modal = page.locator(".modal:visible")
     if modal.count() > 0:
         modal.last.locator(
-            "button:has-text('Ok'), button.btn-primary"
+            "button:has-text('Ok'), button:has-text('Confirm'), button.btn-primary"
         ).first.click()
         page.wait_for_timeout(1000)
         _wait_no_loading(page)

@@ -2,7 +2,7 @@
 
 Navigate to Calendar week containing May 19 2026, click the "Warehouse
 Walkthrough" occurrence on May 19, turn on All Day, change Location to
-"Remote Review Hub", choose "This Event" in recurrence dialog.
+"Remote Review Hub", choose "This Event" via recurrence_update radio.
 """
 
 from benchmark.oracle_helpers import (
@@ -10,7 +10,6 @@ from benchmark.oracle_helpers import (
     login,
     navigate,
     run_oracle,
-    save_form,
     set_boolean,
     _wait_no_loading,
     _wait_for_ready,
@@ -29,12 +28,23 @@ def oracle(page):
     page.wait_for_timeout(1000)
     _wait_no_loading(page)
 
-    # Navigate forward until we reach the week containing May 19, 2026
+    # Navigate forward until we see the "Warehouse Walkthrough" event.
+    # The event repeats on Tuesdays starting May 5, so the first occurrence
+    # visible in week view will appear in the week of May 3-9.
+    # We want the May 19 occurrence specifically.
+    # Strategy: keep navigating until we see the event, then check if the
+    # week contains the 19th. If not, advance to the next occurrence.
+    found_target_week = False
     for _ in range(30):
-        headers = page.locator(".fc-col-header-cell").all_inner_texts()
-        header_text = " ".join(headers)
-        if "19" in header_text:
-            break
+        events = page.locator(".fc-event:has-text('Warehouse Walkthrough')")
+        if events.count() > 0:
+            # Check if this is the week containing the 19th
+            headers = page.locator(".fc-col-header-cell").all_inner_texts()
+            header_text = " ".join(headers)
+            # The Tue column should show "19"
+            if "19" in header_text:
+                found_target_week = True
+                break
         page.locator(".o_calendar_button_next").first.click()
         page.wait_for_timeout(500)
         _wait_no_loading(page)
@@ -46,10 +56,14 @@ def oracle(page):
     event.click()
     page.wait_for_timeout(500)
 
-    # Click Edit in the popover
-    page.locator(".o_cw_popover button:has-text('Edit')").first.click()
+    # Click Edit (it's an <a> link in Odoo 19)
+    page.locator(".o_cw_popover_edit").first.click()
     page.wait_for_timeout(1000)
     _wait_for_ready(page)
+
+    # Select "This event" (self_only) via the inline radio
+    page.locator('input[data-value="self_only"]').first.click()
+    page.wait_for_timeout(500)
 
     # Turn on All Day
     set_boolean(page, "allday", True)
@@ -59,17 +73,9 @@ def oracle(page):
     fill_field(page, "location", "Remote Review Hub")
     page.wait_for_timeout(500)
 
-    # Save
-    save_form(page)
+    # Save by navigating back via breadcrumb
+    page.locator(".o_breadcrumb a").first.click()
     page.wait_for_timeout(1000)
-
-    # Recurrence dialog — choose "This Event"
-    modal = page.locator(".modal:visible").last
-    modal.locator("input[value='self']").first.click()
-    page.wait_for_timeout(300)
-
-    modal.locator("button.btn-primary").first.click()
-    page.wait_for_load_state("load")
     _wait_no_loading(page)
 
 
