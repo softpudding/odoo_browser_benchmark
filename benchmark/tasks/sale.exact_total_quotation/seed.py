@@ -6,7 +6,9 @@ Starting state: 3 lines with wrong prices
 - Whiteboard: qty 1, price $80 (should be $90)
 
 Current total: 2*450 + 3*150 + 1*80 = $1430
-Target total:  2*400 + 3*175 + 1*90 = $1330
+Target total:  2*400 + 3*175 + 1*90 = $1415
+
+Each product's Internal Notes field contains the correct unit price.
 """
 
 
@@ -19,12 +21,22 @@ def setup(env):
         ('partner_id', '=', partner.id), ('state', '=', 'draft')
     ]).unlink()
 
+    product_specs = [
+        ('Standing Desk', 450, 'Correct price: 400'),
+        ('Office Chair', 150, 'Correct price: 175'),
+        ('Whiteboard', 80, 'Correct price: 90'),
+    ]
     products = {}
-    for name, price in [('Standing Desk', 450), ('Office Chair', 150), ('Whiteboard', 80)]:
+    for name, price, note in product_specs:
         p = env['product.product'].search([('name', '=', name)], limit=1)
         if not p:
-            t = env['product.template'].create({'name': name, 'type': 'consu', 'list_price': price})
+            t = env['product.template'].create({
+                'name': name, 'type': 'consu', 'list_price': price,
+                'description': note,
+            })
             p = t.product_variant_id
+        else:
+            p.product_tmpl_id.write({'description': note})
         products[name] = p
 
     admin = env.ref('base.user_admin')

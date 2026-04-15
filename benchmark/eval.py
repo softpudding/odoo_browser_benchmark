@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Benchmark evaluation runner — agent-agnostic, parallel-safe.
 
-Supports three evaluation modes:
+Supports four evaluation modes:
   - browser-use: automated browser agent
+  - oracle: Playwright gold-standard script (proves task is solvable)
   - human: manual testing (prints instruction, waits for Enter)
   - command: any external agent via shell command
 
@@ -778,6 +779,77 @@ def run_command(
         }
 
 
+def run_oracle(
+    instruction: str,
+    start_url: str,
+    *,
+    base_url: str,
+    task_dir: Path,
+    db: str,
+    login: str | None,
+    password: str | None,
+    time_limit_sec: int = 300,
+    headed: bool = True,
+    **kwargs: Any,
+) -> dict:
+    """Run a Playwright oracle script from task_dir/oracle.py."""
+    oracle_file = task_dir / "oracle.py"
+    if not oracle_file.exists():
+        return {
+            "success": False,
+            "gave_up": True,
+            "wall_clock": 0,
+            "steps": 0,
+            "stdout": "",
+            "stderr": f"Oracle script not found: {oracle_file}",
+            "returncode": 1,
+        }
+
+    env = dict(os.environ)
+    env.update({
+        "BENCHMARK_BASE_URL": base_url,
+        "BENCHMARK_START_URL": start_url,
+        "BENCHMARK_DB": db or "",
+        "BENCHMARK_LOGIN": login or "",
+        "BENCHMARK_PASSWORD": password or "",
+        "BENCHMARK_HEADED": "1" if headed else "",
+    })
+
+    t0 = time.time()
+    try:
+        result = subprocess.run(
+            [ODOO_PYTHON, str(oracle_file)],
+            capture_output=True, text=True,
+            cwd=str(REPO_ROOT), timeout=time_limit_sec,
+            env=env,
+        )
+        wall_clock = time.time() - t0
+
+        return {
+            "success": result.returncode == 0,
+            "gave_up": result.returncode != 0,
+            "wall_clock": wall_clock,
+            "steps": 0,
+            "stdout": result.stdout,
+            "stderr": result.stderr,
+            "returncode": result.returncode,
+        }
+    except subprocess.TimeoutExpired as exc:
+        wall_clock = time.time() - t0
+        stdout = exc.stdout.decode() if isinstance(exc.stdout, bytes) else (exc.stdout or "")
+        stderr = exc.stderr.decode() if isinstance(exc.stderr, bytes) else (exc.stderr or "")
+        return {
+            "success": False,
+            "gave_up": True,
+            "wall_clock": wall_clock,
+            "steps": 0,
+            "stdout": stdout,
+            "stderr": stderr,
+            "returncode": -1,
+            "reason": f"timed out after {time_limit_sec}s",
+        }
+
+
 # ---------------------------------------------------------------------------
 # Seed runner
 # ---------------------------------------------------------------------------
@@ -1182,6 +1254,14 @@ def _run_episode(
             login=agent_login,
             password=agent_password,
         )
+    elif agent == "oracle":
+        agent_result = run_oracle(
+            instruction, start_url,
+            base_url=base_url, task_dir=task_dir,
+            db=db, login=agent_login, password=agent_password,
+            time_limit_sec=time_limit_sec,
+            headed=args.headed,
+        )
     elif agent == "command":
         if not args.cmd:
             print("ERROR: --cmd required for command agent")
@@ -1424,7 +1504,7 @@ def main() -> None:
     # run
     run_p = sub.add_parser("run", help="Run a benchmark task")
     run_p.add_argument("task_dir", help="Task directory (name or path)")
-    run_p.add_argument("--agent", choices=("browser-use", "human", "command"),
+    run_p.add_argument("--agent", choices=("browser-use", "human", "command", "oracle"),
                        default="browser-use", help="Agent type")
     run_p.add_argument("--cmd", help="Command for 'command' agent type")
     run_p.add_argument("--provider", help="LLM provider for browser-use")
