@@ -4,6 +4,7 @@ import argparse
 import asyncio
 import json
 import os
+import random
 import sys
 import tempfile
 from pathlib import Path
@@ -176,6 +177,33 @@ def first_env(*names):
     return None, None
 
 
+def pick_browser_use_api_key():
+    pool_names = []
+    explicit_pool = os.getenv("BROWSER_USE_API_KEY_POOL", "")
+    if explicit_pool:
+        pool_names.extend(name for name in explicit_pool.split() if name)
+
+    if not pool_names:
+        pool_names.extend(
+            sorted(
+                name
+                for name in os.environ
+                if name.startswith("BROWSER_USE_API_KEY_")
+            )
+        )
+
+    candidates = []
+    for name in pool_names:
+        value = os.getenv(name)
+        if value:
+            candidates.append((name, value))
+
+    if candidates:
+        return random.SystemRandom().choice(candidates)
+
+    return "BROWSER_USE_API_KEY", os.getenv("BROWSER_USE_API_KEY")
+
+
 def resolve_provider(args):
     provider = args.provider
     model = args.model or ""
@@ -193,13 +221,17 @@ def resolve_llm_config(args):
     provider = resolve_provider(args)
 
     if provider == "browser-use":
-        api_key_var = args.api_key_var or "BROWSER_USE_API_KEY"
+        if args.api_key_var:
+            api_key_var = args.api_key_var
+            api_key = os.getenv(api_key_var)
+        else:
+            api_key_var, api_key = pick_browser_use_api_key()
         return {
             "provider": provider,
             "model": args.model or "bu-latest",
             "base_url": None,
             "api_key_var": api_key_var,
-            "api_key": os.getenv(api_key_var),
+            "api_key": api_key,
         }
 
     if provider == "dashscope":
