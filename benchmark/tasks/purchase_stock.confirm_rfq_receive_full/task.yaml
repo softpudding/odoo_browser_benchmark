@@ -1,0 +1,20 @@
+task_id: purchase_stock.confirm_rfq_receive_full
+module: purchase_stock
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/purchase
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 330
+step_limit: 200
+metadata:
+  category: closed_loop_cross_module
+  difficulty_level: medium
+  agent_interaction: "Open the correct RFQ in Purchase, confirm it, jump to the generated receipt, and complete one full incoming transfer without changing the order lines."
+  checks_verify: "The target RFQ becomes a purchase order and its receipt is fully validated with the exact received quantities while the distractor RFQ remains unconfirmed."
+  primary_track: true
+  tier: 2

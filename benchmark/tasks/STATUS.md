@@ -83,11 +83,11 @@ Last eval: 2026-04-16 | Oracle: 71/71 (100%) | Browser-Use: 31/71 (43.7%) | New 
 | 71 | hr.update_employee_department [easy] | WIP | — | — | — |
 | 72 | sale.add_discount_line [easy] | WIP | — | — | — |
 | 73 | project.add_task_subtask [easy] | WIP | — | — | — |
-| 74 | account.update_customer_invoice_terms_post [medium] | WIP | — | — | — |
-| 75 | crm.update_opportunity_revenue_priority_won [medium] | WIP | — | — | — |
-| 76 | hr.update_work_location_schedule_activity [medium] | WIP | — | — | — |
-| 77 | purchase.update_rfq_reference_deadline_confirm [medium] | WIP | — | — | — |
-| 78 | contacts.create_linked_contact_add_finance_tag [medium] | WIP | — | — | — |
+| 74 | account.update_customer_invoice_terms_post [medium] | Update a draft customer invoice's date, payment terms, reference, and one existing line quantity before posting | Done | PASS | PASS/PASS | 1.0 |
+| 75 | crm.update_opportunity_revenue_priority_won [medium] | Update an opportunity's expected revenue, set medium priority with the star widget, and mark it Won | Done | PASS | FAIL/FAIL | 0.0 |
+| 76 | hr.update_work_location_schedule_activity [medium] | Update an employee's phone and work location, then schedule a Call activity | Done | PASS | PASS/FAIL | 1.0 |
+| 77 | purchase.update_rfq_reference_deadline_confirm [medium] | Update an RFQ vendor reference and order deadline, adjust one line quantity, and confirm it | Done | PASS | PASS/PASS | 1.0 |
+| 78 | contacts.create_linked_contact_add_finance_tag [medium] | Create a linked person contact with exact address fields and the Finance tag | Done | PASS | FAIL/PASS | 1.0 |
 | 79 | account.pay_invoice_with_memo [medium] | WIP | — | — | — |
 | 80 | project.set_project_deadline_tags [medium] | WIP | — | — | — |
 | 81 | sale.set_commitment_date [medium] | WIP | — | — | — |
@@ -1005,10 +1005,10 @@ Last eval: 2026-04-16 | Oracle: 71/71 (100%) | Browser-Use: 31/71 (43.7%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS/PASS |
+| **F1** | 1.0 |
 | **Odoo modules** | Accounting — Customer Invoices |
 | **Workflow** | Open draft customer invoice `MED-CINV-01` for Brightstar Labs. Update invoice date, payment terms, customer reference, and one existing line quantity, then post. |
 | **Capability tested** | Existing-record edit inside Accounting with one header many2one, one date picker, one inline line change, and a distractor invoice that must stay untouched. |
@@ -1019,12 +1019,12 @@ Last eval: 2026-04-16 | Oracle: 71/71 (100%) | Browser-Use: 31/71 (43.7%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL/FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | CRM — Pipeline |
-| **Workflow** | Open opportunity `Northwind Renewal Review`, update Expected Revenue, set Priority to High with the star widget, and click Won. |
+| **Workflow** | Open opportunity `Northwind Renewal Review`, update Expected Revenue, set Priority to Medium with the star widget, and click Won. |
 | **Capability tested** | Existing-record CRM editing with a star-priority control plus an explicit header workflow action, while a similarly named distractor must remain untouched. |
 
 ---
@@ -1033,12 +1033,12 @@ Last eval: 2026-04-16 | Oracle: 71/71 (100%) | Browser-Use: 31/71 (43.7%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS/FAIL |
+| **F1** | 1.0 |
 | **Odoo modules** | Employees (hr) |
-| **Workflow** | Open employee `Avery Collins`, change Work Phone, switch to Work Information to set Work Location to Home, save, then schedule a Call activity with an exact summary and due date. |
+| **Workflow** | Open employee `Avery Collins`, change Work Phone, switch to the Work tab to set Work Location to Home, save, then schedule a Call activity with an exact summary and due date. |
 | **Capability tested** | Multi-area employee editing plus chatter activity scheduling in one flow, without changing the employee's job or department. |
 
 ---
@@ -1047,10 +1047,10 @@ Last eval: 2026-04-16 | Oracle: 71/71 (100%) | Browser-Use: 31/71 (43.7%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS/PASS |
+| **F1** | 1.0 |
 | **Odoo modules** | Purchase — RFQs |
 | **Workflow** | Open draft RFQ `MED-RFQ-REF-01` for North Coast Components. Update vendor reference, change the order deadline, adjust one existing line quantity, and confirm the order. |
 | **Capability tested** | Purchase form editing that mixes header fields and inline line changes, plus a distractor RFQ that must remain in draft. |
@@ -1061,10 +1061,10 @@ Last eval: 2026-04-16 | Oracle: 71/71 (100%) | Browser-Use: 31/71 (43.7%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL/PASS |
+| **F1** | 1.0 |
 | **Odoo modules** | Contacts |
 | **Workflow** | Create a new child contact `Dana Patel` under `Lakeshore Manufacturing`, fill contact details and address, add the Finance tag, and save. |
 | **Capability tested** | Contact creation with parent-company selection, address fields, and tag entry while avoiding a similarly named distractor company. |
