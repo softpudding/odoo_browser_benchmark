@@ -4,7 +4,7 @@ Tracks all benchmark tasks. Update when adding new tasks or running evaluations.
 
 **Status values:** `WIP` — oracle or eval incomplete | `Done` — oracle passes, eval recorded
 
-Last eval: 2026-04-16 | Oracle: 81/81 (100%) | Browser-Use: 38/81 (46.9%) | New WIP: 30 (25 medium + 5 easy)
+Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New WIP: 30 (20 medium + 10 easy)
 
 ## Summary
 
@@ -48,16 +48,16 @@ Last eval: 2026-04-16 | Oracle: 81/81 (100%) | Browser-Use: 38/81 (46.9%) | New 
 | 36 | crm.move_opportunity_stage [easy] | Done | PASS | PASS | 1.0 |
 | 37 | purchase.reset_draft_edit_reconfirm [easy] | Done | PASS | PASS | 1.0 |
 | 38 | project.post_chatter_message [easy] | Done | PASS | PASS | 1.0 |
-| 39 | sale.set_payment_terms_confirm [medium] | WIP | PASS | — | — |
-| 40 | account.create_vendor_bill_confirm [medium] | WIP | PASS | — | — |
-| 41 | crm.edit_opportunity_schedule_call [medium] | WIP | PASS | — | — |
-| 42 | hr.update_work_information [medium] | WIP | PASS | — | — |
-| 43 | project.create_task_assign_stage [medium] | WIP | PASS | — | — |
-| 44 | stock.confirm_and_validate_receipt [medium] | WIP | PASS | — | — |
-| 45 | purchase.update_rfq_add_line_confirm [medium] | WIP | PASS | — | — |
-| 46 | contacts.update_address_add_tag [medium] | WIP | PASS | — | — |
-| 47 | calendar.create_single_event [medium] | WIP | PASS | — | — |
-| 48 | hr_recruitment.advance_applicant_stage [medium] | WIP | PASS | — | — |
+| 39 | sale.set_payment_terms_confirm [medium] | Done | PASS | FAIL | 0.0 |
+| 40 | account.create_vendor_bill_confirm [medium] | Done | PASS | FAIL | 0.0 |
+| 41 | crm.edit_opportunity_schedule_call [medium] | Done | PASS | PASS | 1.0 |
+| 42 | hr.update_work_information [medium] | Done | PASS | PASS | 1.0 |
+| 43 | project.create_task_assign_stage [medium] | Done | PASS | FAIL | 0.0 |
+| 44 | stock.confirm_and_validate_receipt [medium] | Done | PASS | PASS | 1.0 |
+| 45 | purchase.update_rfq_add_line_confirm [medium] | Done | PASS | FAIL | 0.0 |
+| 46 | contacts.update_address_add_tag [medium] | Done | PASS | PASS | 1.0 |
+| 47 | calendar.create_single_event [medium] | Done | PASS | FAIL | 0.0 |
+| 48 | hr_recruitment.advance_applicant_stage [medium] | Done | PASS | PASS | 1.0 |
 | 49 | account.send_invoice_with_extra_recipient [hard] | Done | PASS | PASS | 1.0 |
 | 50 | crm.batch_mark_lost_with_reason [hard] | Done | PASS | FAIL | 1.0 |
 | 51 | hr_recruitment.refuse_duplicate_applications [hard] | Done | PASS | FAIL | 0.0 |
@@ -126,6 +126,11 @@ Last eval: 2026-04-16 | Oracle: 81/81 (100%) | Browser-Use: 38/81 (46.9%) | New 
 | 114 | hr.add_resume_line_update_location [medium] | Done | PASS | FAIL | 0.0 |
 | 115 | hr_recruitment.add_skill_move_stage [medium] | Done | PASS | FAIL/FAIL | 0.0 |
 | 116 | contacts.create_company_set_supplier_tag [medium] | Done | PASS | PASS* | — |
+| 117 | account.update_invoice_reference [easy] | WIP | — | — | — |
+| 118 | contacts.update_contact_phone [easy] | WIP | — | — | — |
+| 119 | crm.update_opportunity_revenue [easy] | WIP | — | — | — |
+| 120 | hr.update_employee_job_title [easy] | WIP | — | — | — |
+| 121 | purchase.update_rfq_source [easy] | WIP | — | — | — |
 
 ---
 
@@ -1558,9 +1563,3 @@ Before creating a new task, read all entries above and check for overlap on thre
 **A new task must be distinct in at least two of the three dimensions.**
 
 When adding a new task, append a form block (same format as above) with `Status: WIP` and dashes for test results, then commit and push immediately — this is the team's duplicate-prevention signal.
-
-| 117 | account.update_invoice_reference [easy] | WIP | — | — | — |
-| 118 | contacts.update_contact_phone [easy] | WIP | — | — | — |
-| 119 | crm.update_opportunity_revenue [easy] | WIP | — | — | — |
-| 120 | hr.update_employee_job_title [easy] | WIP | — | — | — |
-| 121 | purchase.update_rfq_source [easy] | WIP | — | — | — |

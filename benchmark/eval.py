@@ -863,6 +863,8 @@ def run_seed(task_dir: Path, db: str, rpc: OdooRPC | None = None, conf_path: str
     Also runs cleanup.py first if it exists, to reset state from
     previous runs.
     """
+    shell_conf = conf_path if Path(conf_path).exists() else ODOO_CONF
+
     # Run cleanup first if available
     cleanup_file = task_dir / "cleanup.py"
     if cleanup_file.exists():
@@ -874,7 +876,7 @@ self.env.cr.commit()
 print('CLEANUP_OK')
 """
         result = subprocess.run(
-            [ODOO_PYTHON, ODOO_BIN, "shell", "-c", conf_path, "-d", db, "--no-http"],
+            [ODOO_PYTHON, ODOO_BIN, "shell", "-c", shell_conf, "-d", db, "--no-http"],
             input=cleanup_wrapper, capture_output=True, text=True,
             cwd=str(REPO_ROOT), timeout=120,
         )
@@ -893,7 +895,7 @@ self.env.cr.commit()
 print('SEED_OK')
 """
     result = subprocess.run(
-        [ODOO_PYTHON, ODOO_BIN, "shell", "-c", conf_path, "-d", db, "--no-http"],
+        [ODOO_PYTHON, ODOO_BIN, "shell", "-c", shell_conf, "-d", db, "--no-http"],
         input=wrapper, capture_output=True, text=True,
         cwd=str(REPO_ROOT), timeout=120,
     )
@@ -1000,6 +1002,8 @@ def _prepare_episode(
     # Step 5: Restart Odoo
     print("   Starting Odoo...")
     if odoo_proc:
+        if not Path(odoo_proc.conf).exists():
+            odoo_proc.conf = ODOO_CONF
         odoo_proc.start()
         odoo_proc.wait_ready()
         print(f"   Odoo ready on port {odoo_proc.port}")
