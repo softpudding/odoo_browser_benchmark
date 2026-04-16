@@ -1,0 +1,20 @@
+task_id: crm.move_opportunity_stage
+module: crm
+difficulty: easy
+instruction: see prompt.md
+start_url: /odoo/crm
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 180
+step_limit: 120
+metadata:
+  category: deep_ui_interaction
+  agent_interaction: "Find a single opportunity by name in CRM kanban view, drag or select to move to Qualified stage"
+  checks_verify: "Single opportunity stage changed from New to Qualified"
+  failure_pattern: "Agent fails to locate the opportunity or does not change the stage to Qualified"
+  primary_track: true
+  tier: 1

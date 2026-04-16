@@ -4,7 +4,7 @@ Tracks all benchmark tasks. Update when adding new tasks or running evaluations.
 
 **Status values:** `WIP` — oracle or eval incomplete | `Done` — oracle passes, eval recorded
 
-Last eval: 2026-04-16 | Oracle: 28/28 (100%) | Browser-Use: 11/28 (39%) | New WIP: 5
+Last eval: 2026-04-16 | Oracle: 28/28 (100%) | Browser-Use: 11/28 (39%) | New WIP: 10 (5 hard + 5 easy)
 
 ## Summary
 
@@ -43,6 +43,11 @@ Last eval: 2026-04-16 | Oracle: 28/28 (100%) | Browser-Use: 11/28 (39%) | New WI
 | 31 | purchase.new_rfq_three_lines_date | WIP | — | — | — |
 | 32 | project.complete_task_log_note | WIP | — | — | — |
 | 33 | contacts.create_company_with_contacts | WIP | — | — | — |
+| 34 | sale.change_validity_date [easy] | Change expiration date on draft quotation | WIP | — | — | — |
+| 35 | account.register_payment_defaults [easy] | Register payment on invoice with accept-defaults wizard | WIP | — | — | — |
+| 36 | crm.move_opportunity_stage [easy] | Move single opportunity from New to Qualified stage | WIP | — | — | — |
+| 37 | purchase.reset_draft_edit_reconfirm [easy] | Reset PO to draft, change notes, re-confirm | WIP | — | — | — |
+| 38 | project.post_chatter_message [easy] | Post a regular message in task chatter | WIP | — | — | — |
 
 ---
 
@@ -505,6 +510,76 @@ Last eval: 2026-04-16 | Oracle: 28/28 (100%) | Browser-Use: 11/28 (39%) | New WI
 | **Odoo modules** | Contacts |
 | **Workflow** | Create company "Vantage Industrial Group" with full address details. Then create two individual contacts (Patricia Drum — Procurement Manager, Steven Okafor — Logistics Coordinator) both linked to the company with exact emails and mobile numbers. |
 | **Capability tested** | Multi-record create sequence with company linkage — agent correctly creates the company and first contact, but leaves missing or incorrect fields on the second contact, or fails to link one contact to the parent company. |
+
+---
+
+## sale.change_validity_date
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Sales — Quotations |
+| **Workflow** | Open draft quotation BENCH-VALID-01 for Lakeview Partners. Change the Expiration date to May 15, 2026. Click Save. |
+| **Capability tested** | Simple field edit + save — single date field change on a clearly identified draft quotation via date picker. |
+
+---
+
+## account.register_payment_defaults
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Accounting — Invoices |
+| **Workflow** | Open posted invoice BENCH-PAY-01 for Lakeview Partners. Click Pay button. Accept all defaults in the Register Payment wizard. Click Create Payment. Verify invoice shows "Paid" status. |
+| **Capability tested** | Accept-defaults wizard — open payment registration dialog, click Create Payment without changing any fields, verify payment registered. |
+
+---
+
+## crm.move_opportunity_stage
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | CRM — Pipeline |
+| **Workflow** | Find the "Acme Corporation" opportunity in the CRM pipeline. Move it from the "New" stage to the "Qualified" stage. |
+| **Capability tested** | Kanban stage change — direct drag or selector change on a single clearly identified opportunity. |
+
+---
+
+## purchase.reset_draft_edit_reconfirm
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Purchase — Orders |
+| **Workflow** | Open confirmed PO BENCH-PO-RESET for Meridian Supply Co. Reset to Draft. Change Terms & Conditions to "Updated via browser". Click Confirm Order. |
+| **Capability tested** | Reset-to-draft → edit → re-confirm — linear 3-step sequence with single text field change. |
+
+---
+
+## project.post_chatter_message
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Project — Tasks |
+| **Workflow** | Open task "Write API integration spec" in project "Omega Platform Launch". Post a message in the chatter with exact text: "Backend team has reviewed the spec. Moving forward with implementation." |
+| **Capability tested** | Chatter message posting — type text in the chatter composer and click Send. Simple send message (not log note distinction). |
 
 ---
 

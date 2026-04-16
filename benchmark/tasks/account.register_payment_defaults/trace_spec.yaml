@@ -1,0 +1,41 @@
+# Trace oracle for account.register_payment_defaults
+#
+# Category 1: Accept-defaults wizard (EASY).
+# Agent must open the Register Payment wizard from a posted invoice,
+# accept all defaults, and click Create Payment.
+
+required_ops:
+  - account.payment.register.action_create_payments
+
+optional_ops:
+  - account.payment.register.read
+  - account.payment.register.write
+  - account.payment.register.web_save
+  - account.payment.register.default_get
+  - account.payment.read
+  - account.payment.write
+  - account.payment.web_save
+  - account.payment.create
+  - account.move.read
+  - account.move.write
+  - account.move.search_read
+  - account.move.web_search_read
+  - account.move.line.read
+  - account.move.line.search_read
+  - account.journal.read
+  - account.journal.search_read
+  - account.payment.method.line.read
+  - res.partner.read
+  - res.partner.search_read
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+  - mail.message.create
+  - mail.followers.create
+  - bus.bus.create
+  - account.payment.register.action_open_untrusted_bank_accounts
+  - account.payment.register.action_open_missing_account_partners
+
+forbidden_ops:
+  - account.move.unlink
+  - account.payment.unlink
+  - account.move.cancel

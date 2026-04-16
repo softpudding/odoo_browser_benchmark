@@ -1,0 +1,34 @@
+# Trace oracle for sale.change_validity_date
+#
+# Category: deep_ui_interaction (EASY).
+# Agent navigates to a single draft quotation, changes the Expiration date
+# via the date picker, and saves. No wizard interactions required.
+
+required_ops: []  # State diff + check.py validate the validity_date change
+
+optional_ops:
+  # --- Reads ---
+  - sale.order.read
+  - sale.order.web_read
+  - sale.order.search_read
+  - sale.order.web_search_read
+  - sale.order.name_search
+  - sale.order.line.read
+  - sale.order.line.search_read
+  - res.partner.search_read
+  - res.partner.name_search
+  - res.partner.read
+  - res.partner.web_name_search
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+  - ir.model.data.search_read
+  # --- Writes ---
+  - sale.order.write           # saving the validity_date change
+  - sale.order.web_save        # save via web client
+  - mail.message.create        # chatter auto-messages
+  - mail.followers.create      # auto-follow
+  - bus.bus.create             # notification bus
+
+forbidden_ops:
+  - sale.order.unlink          # should not delete the quotation
+  - sale.order.action_confirm  # must NOT confirm, only save

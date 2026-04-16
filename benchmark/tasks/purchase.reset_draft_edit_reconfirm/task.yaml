@@ -1,0 +1,21 @@
+task_id: purchase.reset_draft_edit_reconfirm
+module: purchase
+difficulty: easy
+instruction: see prompt.md
+start_url: /odoo/purchase
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 180
+step_limit: 120
+metadata:
+  category: recovery_rollback
+  difficulty_level: easy
+  agent_interaction: "Reset confirmed PO to draft, change one text field, re-confirm order"
+  checks_verify: "PO re-confirmed with updated memo/reference field after reset-to-draft workflow"
+  failure_pattern: "Agent fails to reset the PO to draft, or changes vendor/product details instead of the memo field, or forgets to re-confirm after editing"
+  primary_track: true
+  tier: 1

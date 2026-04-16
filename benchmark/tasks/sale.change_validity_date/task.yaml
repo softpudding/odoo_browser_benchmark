@@ -1,0 +1,20 @@
+task_id: sale.change_validity_date
+module: sale
+difficulty: easy
+instruction: see prompt.md
+start_url: /odoo/sales
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 180
+step_limit: 120
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: easy
+  agent_interaction: "Direct navigation to a single draft quotation, change one date field via date picker, and save"
+  checks_verify: "Single field value changed (validity_date) on one draft quotation record"
+  primary_track: true
+  tier: 1
