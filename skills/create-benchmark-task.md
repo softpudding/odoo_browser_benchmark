@@ -26,6 +26,12 @@ proceeding. The three levels are:
 | medium | ~ 60 %                       | 2    | 300 – 360 s  |
 | easy   | ~ 80 %                       | 1    | 180 – 240 s  |
 
+**Difficulty asymmetry: too hard is acceptable, too easy is not.** If a task
+turns out harder than its intended tier (e.g., an easy task that browser-use
+fails), that is acceptable — the benchmark still measures real capability.
+A task that ends up easier than intended is NOT acceptable, because it inflates
+agent scores. When in doubt, keep requirements strict rather than relaxing them.
+
 The sections below describe each level in detail so you can pick the right
 interaction pattern and write the right checks.
 
@@ -291,14 +297,47 @@ Interpret the result against the target pass rate for the difficulty:
 
 | Result | Hard | Medium | Easy |
 |--------|------|--------|------|
-| `FAIL + postcondition failures` | Good (expected) | Good | Task may be too hard — review |
+| `FAIL + postcondition failures` | Good (expected) | Good | Acceptable — task is harder than intended, keep it |
 | `PASS` | Too easy — add harder pattern | Expected ~60% | Expected ~80% |
 | `FAIL + empty postconditions` | Diff engine mismatch — fix entity keys | Same | Same |
 | `seed may have failed` | Fix field names in seed.py | Same | Same |
 
 Run at least **twice** to confirm consistency. If a hard task passes consistently,
 go back to Step 0 and reconsider the difficulty level or add a harder interaction
-pattern. If an easy task fails consistently, simplify the prompt or seed.
+pattern. If an easy or medium task fails consistently, that is acceptable —
+**do not simplify the task to make it pass**. A task harder than its tier is
+fine; a task easier than its tier is not.
+
+### Diagnosing failures: agent capability vs. task design
+
+A `FAIL` result can mean two very different things. You must distinguish them
+before deciding whether to fix anything:
+
+**Agent capability failure** — the agent understood the task and attempted the
+right workflow, but made a mistake (wrong record, bad field value, missed a
+wizard step). This is expected and desirable for hard tasks.
+
+Signs: agent navigated to the right module, took plausible actions, but
+postconditions failed on a specific value or state.
+
+**Task design failure** — the task itself is broken, so even a capable agent
+could not succeed. These MUST be fixed regardless of difficulty tier.
+
+Signs and fixes:
+
+| Symptom | Root cause | Fix |
+|---------|-----------|-----|
+| Agent never finds the right record | Prompt names don't match seed data | Align prompt and seed |
+| Agent follows prompt exactly but postconditions fail | `expected_state.json` wrong | Fix expected values |
+| Agent tries a workflow the UI doesn't support | Prompt describes non-existent button/flow | Fix prompt to match real UI |
+| Agent succeeds but check.py fails | `check.py` checks wrong model/field | Fix check.py |
+| Seed error in logs | Incorrect field names in seed.py | Fix seed field names |
+| Agent skips a required step | Prompt is ambiguous — step not clearly required | Clarify prompt |
+
+**How to tell them apart**: watch the browser-use recording. If the agent
+clearly attempted the correct workflow and was defeated by Odoo's complexity,
+that is capability. If the agent was confused about what to do or where to go,
+that is task design.
 
 ---
 
