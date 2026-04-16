@@ -53,6 +53,7 @@ def setup(env):
             tmpl = env["product.template"].create({
                 "name": name,
                 "type": "consu",
+                "is_storable": True,  # Odoo 19: storable = consu + is_storable=True
                 "list_price": 10.0,
             })
             product = tmpl.product_variant_id

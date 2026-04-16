@@ -28,7 +28,7 @@ Create a first individual contact:
 - **Company**: Vantage Industrial Group (the one you just created)
 - **Job Position**: Procurement Manager
 - **Email**: p.drum@vantage-industrial.example.com
-- **Mobile**: +1 (312) 555-0191
+- **Phone**: +1 (312) 555-0191
 
 Save this contact.
 
@@ -38,7 +38,7 @@ Create a second individual contact:
 - **Company**: Vantage Industrial Group
 - **Job Position**: Logistics Coordinator
 - **Email**: s.okafor@vantage-industrial.example.com
-- **Mobile**: +1 (312) 555-0192
+- **Phone**: +1 (312) 555-0192
 
 Save this contact.
 

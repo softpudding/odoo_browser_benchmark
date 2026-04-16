@@ -63,9 +63,9 @@ def check(env):
             failures.append(
                 f"Patricia Drum's email: expected 'p.drum@vantage-industrial.example.com', got '{patricia.email}'"
             )
-        if patricia.mobile != "+1 (312) 555-0191":
+        if patricia.phone != "+1 (312) 555-0191":
             failures.append(
-                f"Patricia Drum's mobile: expected '+1 (312) 555-0191', got '{patricia.mobile}'"
+                f"Patricia Drum's phone: expected '+1 (312) 555-0191', got '{patricia.phone}'"
             )
 
     # --- Individual contact: Steven Okafor ---
@@ -88,9 +88,9 @@ def check(env):
             failures.append(
                 f"Steven Okafor's email: expected 's.okafor@vantage-industrial.example.com', got '{steven.email}'"
             )
-        if steven.mobile != "+1 (312) 555-0192":
+        if steven.phone != "+1 (312) 555-0192":
             failures.append(
-                f"Steven Okafor's mobile: expected '+1 (312) 555-0192', got '{steven.mobile}'"
+                f"Steven Okafor's phone: expected '+1 (312) 555-0192', got '{steven.phone}'"
             )
 
     return failures
