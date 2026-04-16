@@ -47,7 +47,7 @@ def _ensure_skill_level(env, skill_type, name, progress):
         level = env["hr.skill.level"].create({
             "skill_type_id": skill_type.id,
             "name": name,
-            "progress": progress,
+            "level_progress": progress,
         })
     return level
 

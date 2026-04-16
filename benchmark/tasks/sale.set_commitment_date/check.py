@@ -6,7 +6,8 @@ from datetime import datetime
 PARTNER_NAME = "Highfield Consulting"
 TARGET_REF = "BENCH-COMMIT-01"
 DISTRACTOR_REF = "BENCH-COMMIT-02"
-EXPECTED_COMMITMENT_DATE = datetime(2026, 5, 20, 0, 0, 0)
+# Odoo stores datetimes in UTC. May 20 midnight in CST (UTC+8) = May 19 16:00 UTC.
+EXPECTED_COMMITMENT_DATE = datetime(2026, 5, 19, 16, 0, 0)
 
 
 def check(env):
@@ -30,9 +31,9 @@ def check(env):
 
     if not order.commitment_date:
         failures.append("Delivery Date (commitment_date) was not set")
-    elif order.commitment_date.date() != EXPECTED_COMMITMENT_DATE.date():
+    elif order.commitment_date != EXPECTED_COMMITMENT_DATE:
         failures.append(
-            f"Delivery Date is {order.commitment_date.date()}, expected 2026-05-20"
+            f"Delivery Date is {order.commitment_date}, expected {EXPECTED_COMMITMENT_DATE} (2026-05-20 CST)"
         )
 
     if order.invoice_ids:

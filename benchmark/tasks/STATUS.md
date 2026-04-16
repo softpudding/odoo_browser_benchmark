@@ -88,11 +88,11 @@ Last eval: 2026-04-16 | Oracle: 81/81 (100%) | Browser-Use: 38/81 (46.9%) | New 
 | 76 | hr.update_work_location_schedule_activity [medium] | Update an employee's phone and work location, then schedule a Call activity | Done | PASS | PASS/FAIL | 1.0 |
 | 77 | purchase.update_rfq_reference_deadline_confirm [medium] | Update an RFQ vendor reference and order deadline, adjust one line quantity, and confirm it | Done | PASS | PASS/PASS | 1.0 |
 | 78 | contacts.create_linked_contact_add_finance_tag [medium] | Create a linked person contact with exact address fields and the Finance tag | Done | PASS | FAIL/PASS | 1.0 |
-| 79 | account.pay_invoice_with_memo [medium] | WIP | — | — | — |
-| 80 | project.set_project_deadline_tags [medium] | WIP | — | — | — |
-| 81 | sale.set_commitment_date [medium] | WIP | — | — | — |
-| 82 | stock.update_reorder_rule [medium] | WIP | — | — | — |
-| 83 | hr.add_employee_skill [medium] | WIP | — | — | — |
+| 79 | account.pay_invoice_with_memo [medium] | Register a payment on a posted invoice with a specific memo/reference | Done | PASS | — | 1.0 |
+| 80 | project.set_project_deadline_tags [medium] | Set project deadline to June 30 2026 and add Launch and Q3 tags | Done | PASS | — | 1.0 |
+| 81 | sale.set_commitment_date [medium] | Cancel, reset to draft, set delivery date to May 20 2026, then re-confirm sales order | Done | PASS | — | 1.0 |
+| 82 | stock.update_reorder_rule [medium] | Update min qty to 50 and max qty to 200 for a specific product reorder rule | Done | PASS | — | 1.0 |
+| 83 | hr.add_employee_skill [medium] | Add Python skill (IT Skills / Advanced) to employee Priya Mehta via Resume tab | Done | PASS | — | 1.0 |
 | 84 | inventory.scrap_product [easy] | Done | PASS | FAIL | 0.0 |
 | 85 | hr.schedule_employee_activity [easy] | Done | PASS | FAIL | 0.0 |
 | 86 | project.set_task_deadline [easy] | Done | PASS | FAIL | 0.0 |

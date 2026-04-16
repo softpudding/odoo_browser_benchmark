@@ -35,9 +35,12 @@ def setup(env):
     _ensure_tag(env, "Q3")
     _ensure_tag(env, "Q2")  # distractor tag that should NOT be added
 
-    # Target project — no deadline, no tags
+    # Target project — start date pre-set to June 1 so the form's
+    # required="date_start or date" validation passes when agent sets
+    # only the deadline (end date). No tags, no deadline yet.
     env["project.project"].create({
         "name": PROJECT_NAME,
+        "date_start": "2026-06-01",
     })
 
     # Distractor project — should not be modified
