@@ -4,7 +4,7 @@ Tracks all benchmark tasks. Update when adding new tasks or running evaluations.
 
 **Status values:** `WIP` — oracle or eval incomplete | `Done` — oracle passes, eval recorded
 
-Last eval: 2026-04-16 | Oracle: 28/28 (100%) | Browser-Use: 11/28 (39%) | New WIP: 20 (5 hard + 5 easy + 10 medium)
+Last eval: 2026-04-16 | Oracle: 33/38 (87%) | Browser-Use: 11/28 (39%) | New WIP: 15 (5 hard + 5 easy + 5 medium)
 
 ## Summary
 
@@ -43,11 +43,11 @@ Last eval: 2026-04-16 | Oracle: 28/28 (100%) | Browser-Use: 11/28 (39%) | New WI
 | 31 | purchase.new_rfq_three_lines_date | Done | PASS | FAIL | 0.0 |
 | 32 | project.complete_task_log_note | Done | PASS | FAIL | 0.0 |
 | 33 | contacts.create_company_with_contacts | Done | PASS | FAIL | 0.0 |
-| 34 | sale.change_validity_date [easy] | WIP | — | — | — |
-| 35 | account.register_payment_defaults [easy] | WIP | — | — | — |
-| 36 | crm.move_opportunity_stage [easy] | WIP | — | — | — |
-| 37 | purchase.reset_draft_edit_reconfirm [easy] | WIP | — | — | — |
-| 38 | project.post_chatter_message [easy] | WIP | — | — | — |
+| 34 | sale.change_validity_date [easy] | WIP | PASS | — | — |
+| 35 | account.register_payment_defaults [easy] | WIP | PASS | — | — |
+| 36 | crm.move_opportunity_stage [easy] | WIP | PASS | — | — |
+| 37 | purchase.reset_draft_edit_reconfirm [easy] | WIP | PASS | — | — |
+| 38 | project.post_chatter_message [easy] | WIP | PASS | — | — |
 | 39 | sale.set_payment_terms_confirm [medium] | WIP | — | — | — |
 | 40 | account.create_vendor_bill_confirm [medium] | WIP | — | — | — |
 | 41 | crm.edit_opportunity_schedule_call [medium] | WIP | — | — | — |
