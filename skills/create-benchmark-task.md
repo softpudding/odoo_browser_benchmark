@@ -26,6 +26,14 @@ Check that the task doesn't already exist:
 ls benchmark/tasks/$ARGUMENTS/ 2>/dev/null
 ```
 
+**Check STATUS.md for existing and in-progress tasks to avoid duplicates:**
+```
+grep "$ARGUMENTS" benchmark/tasks/STATUS.md
+```
+
+Also skim the full table in `benchmark/tasks/STATUS.md` to make sure no
+existing task covers the same workflow, even under a different name.
+
 Check existing tasks to avoid duplication:
 ```
 PYTHONPATH=. python benchmark/eval.py list
@@ -145,6 +153,30 @@ This is the most important validation file. Validate:
 
 ---
 
+## Step 4b: Register in STATUS.md and push immediately
+
+**Do this as soon as all 8 files are created** — before any testing. This
+prevents teammates from creating a duplicate task while yours is in progress.
+
+Add a row to the table in `benchmark/tasks/STATUS.md`:
+
+```markdown
+| N | $ARGUMENTS | <one-line description of what the agent must do> | WIP | — | — | — |
+```
+
+Use `WIP` as the status, dashes for the test columns. Then commit and push:
+
+```bash
+git add benchmark/tasks/$ARGUMENTS/ benchmark/tasks/STATUS.md
+git commit -m "[WIP] benchmark: add $ARGUMENTS task"
+git push upstream 19.0
+```
+
+This push is the team's "claimed" signal — if two people created the same
+task, the second push will conflict and one can be dropped.
+
+---
+
 ## Step 5: Check if required modules are installed
 
 Verify the module is in the base snapshot:
@@ -208,12 +240,26 @@ Fix any blocking issues the reviewer finds, then re-run against browser-use.
 
 ---
 
-## Step 9: Commit
+## Step 9: Update STATUS.md and commit
 
-Only commit if ALL of these are true:
+Update the task's row in `benchmark/tasks/STATUS.md` from `WIP` to `Done`
+and fill in the test results:
+
+```markdown
+| N | $ARGUMENTS | <description> | Done | PASS | FAIL | <F1> |
+```
+
+Only mark `Done` if ALL of these are true:
 - [ ] Seed runs without errors
-- [ ] Human can complete the task
+- [ ] Human can complete the task (oracle passes)
 - [ ] Browser-use fails consistently (2+ runs)
 - [ ] Failure is genuine (postcondition failures, not just diff mismatch)
 - [ ] Codex review passed (no blocking issues)
 - [ ] Task doesn't duplicate an existing task's workflow
+
+Then commit and push:
+```bash
+git add benchmark/tasks/$ARGUMENTS/ benchmark/tasks/STATUS.md
+git commit -m "[ADD] benchmark: $ARGUMENTS task"
+git push upstream 19.0
+```
