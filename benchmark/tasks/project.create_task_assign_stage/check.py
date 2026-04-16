@@ -2,7 +2,7 @@
 
 Validates:
 1. Task "Design Landing Page Mockup" exists in "Omega Platform Launch"
-2. Assignee includes Mitchell Admin
+2. Assignee includes Administrator
 3. Deadline is 2026-05-15
 4. Priority is "1" (urgent/starred)
 5. Description contains expected text
@@ -41,15 +41,30 @@ def check(env):
     if admin not in task.user_ids:
         assigned = ", ".join(task.user_ids.mapped("name")) or "nobody"
         failures.append(
-            f"Assignees: {assigned}; expected Mitchell Admin"
+            f"Assignees: {assigned}; expected Administrator"
         )
 
-    # Check deadline
+    # Check deadline — project.task.date_deadline is Datetime in Odoo 19.
+    # Convert UTC to admin's local tz before comparing dates.
     expected_deadline = date(2026, 5, 15)
-    if task.date_deadline != expected_deadline:
-        failures.append(
-            f"Deadline is {task.date_deadline}, expected {expected_deadline}"
-        )
+    if task.date_deadline:
+        actual = task.date_deadline
+        # Handle both Datetime and Date fields
+        if hasattr(actual, "hour"):
+            import pytz
+            admin_user = env["res.users"].search([("login", "=", "admin")], limit=1)
+            tz_name = (admin_user.tz if admin_user else None) or "UTC"
+            try:
+                tz = pytz.timezone(tz_name)
+            except Exception:
+                tz = pytz.UTC
+            actual = pytz.UTC.localize(actual).astimezone(tz).date()
+        if actual != expected_deadline:
+            failures.append(
+                f"Deadline is {actual}, expected {expected_deadline}"
+            )
+    else:
+        failures.append("Deadline not set")
 
     # Check priority
     if task.priority != "1":

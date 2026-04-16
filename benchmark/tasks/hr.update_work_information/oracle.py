@@ -1,8 +1,8 @@
 """Oracle for hr.update_work_information.
 
-Find employee "Sofia Chen", update Work Location to "Home" and Timezone
-to "America/New_York" in Work Information tab, then update Certificate
-Level to "Master" in Private Information tab. Save.
+Find employee "Sofia Chen", update Work Location to "Home" (Work tab) and
+Timezone to "America/New_York" (Settings tab), then update Certificate Level
+to "Master" (Personal tab). Save.
 """
 
 from benchmark.oracle_helpers import (
@@ -13,9 +13,41 @@ from benchmark.oracle_helpers import (
     run_oracle,
     save_form,
     set_many2one,
-    set_selection,
     _wait_no_loading,
 )
+
+
+def _select_menu(page, field_name, label):
+    """Select a value from Odoo 19 SelectMenu / searchable selection."""
+    widget = page.locator(f".o_field_widget[name='{field_name}']").first
+    # Try a plain <select> first
+    sel = widget.locator("select")
+    if sel.count() > 0 and sel.first.is_visible():
+        sel.first.select_option(label=label)
+        page.wait_for_timeout(300)
+        return
+    # Otherwise: searchable dropdown (input)
+    inp = widget.locator("input")
+    if inp.count() > 0 and inp.first.is_visible():
+        inp.first.click()
+        page.wait_for_timeout(300)
+        inp.first.fill("")
+        inp.first.fill(label)
+        page.wait_for_timeout(600)
+    else:
+        btn = widget.locator("button, .dropdown-toggle").first
+        btn.click()
+        page.wait_for_timeout(500)
+    items = page.locator(
+        ".dropdown-menu:visible .o-dropdown-item, "
+        ".o_select_menu_menu:visible .o_select_menu_item, "
+        ".dropdown-menu:visible .dropdown-item"
+    )
+    item = items.filter(has_text=label).first
+    if item.count() > 0:
+        item.click()
+    page.wait_for_timeout(500)
+    _wait_no_loading(page)
 
 
 def oracle(page):
@@ -27,24 +59,22 @@ def oracle(page):
     click_list_row(page, "Sofia Chen")
     page.wait_for_timeout(500)
 
-    # Go to Work Information tab
-    click_tab(page, "Work Information")
+    # Work tab — work_location_id
+    click_tab(page, "Work")
     page.wait_for_timeout(500)
-
-    # Set work location to Home
     set_many2one(page, "work_location_id", "Home")
     page.wait_for_timeout(500)
 
-    # Set timezone — this is a selection field in Odoo
-    set_selection(page, "tz", "America/New_York")
+    # Settings tab — tz
+    click_tab(page, "Settings")
+    page.wait_for_timeout(500)
+    _select_menu(page, "tz", "America/New_York")
     page.wait_for_timeout(500)
 
-    # Go to Private Information tab
-    click_tab(page, "Private Information")
+    # Personal tab — certificate
+    click_tab(page, "Personal")
     page.wait_for_timeout(500)
-
-    # Set certificate level to Master
-    set_selection(page, "certificate", "Master")
+    _select_menu(page, "certificate", "Master")
     page.wait_for_timeout(500)
 
     # Save

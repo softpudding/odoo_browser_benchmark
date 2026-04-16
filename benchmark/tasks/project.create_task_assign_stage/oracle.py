@@ -7,8 +7,10 @@ and description.
 
 from benchmark.oracle_helpers import (
     add_many2many_tag,
+    click_breadcrumb,
     click_kanban_card,
-    fill_field,
+    ensure_list_view,
+    fill_text_field,
     login,
     navigate,
     run_oracle,
@@ -17,6 +19,9 @@ from benchmark.oracle_helpers import (
     _wait_no_loading,
     _wait_for_ready,
 )
+
+
+TASK_NAME = "Design Landing Page Mockup"
 
 
 def oracle(page):
@@ -29,101 +34,92 @@ def oracle(page):
     page.wait_for_timeout(1000)
     _wait_no_loading(page)
 
-    # We're now in the project's task kanban view.
-    # Find the "In Progress" column and click the "+" button to create
-    # a new task in that column, or click "New" and set the stage.
-
-    # Look for the "In Progress" column and its quick-add button
-    in_progress_col = page.locator(
-        ".o_kanban_group:has(.o_column_title:has-text('In Progress'))"
-    )
-
-    if in_progress_col.count() > 0:
-        # Click the "+" quick create in the In Progress column
-        add_btn = in_progress_col.first.locator(
-            ".o_kanban_quick_add, button.o_quick_add, "
-            ".o_kanban_header button:visible"
-        )
-        if add_btn.count() > 0:
-            add_btn.first.click()
-            page.wait_for_timeout(500)
-            # Quick create: type title and open the form
-            quick_input = page.locator(
-                ".o_kanban_quick_create input[type='text']:visible"
-            )
-            if quick_input.count() > 0:
-                quick_input.first.fill("Design Landing Page Mockup")
-                # Click "Add" then "Edit"
-                add_btn2 = page.locator(
-                    ".o_kanban_quick_create button:has-text('Add'):visible"
-                )
-                if add_btn2.count() > 0:
-                    add_btn2.first.click()
-                    page.wait_for_timeout(500)
-                    _wait_no_loading(page)
-                    # Now open the created card
-                    click_kanban_card(page, "Design Landing Page Mockup")
-                    page.wait_for_timeout(500)
-            else:
-                # Column add button opened form directly
-                pass
-        else:
-            # No quick-add, use the "New" button and set stage later
-            page.locator(
-                "button.o_list_button_add:visible, "
-                ".o_control_panel button:has-text('New'):visible"
-            ).first.click()
-            page.wait_for_timeout(500)
-            _wait_no_loading(page)
-            fill_field(page, "name", "Design Landing Page Mockup")
-    else:
-        # Fallback: use the New button
-        page.locator(
-            "button.o_list_button_add:visible, "
-            ".o_control_panel button:has-text('New'):visible"
-        ).first.click()
-        page.wait_for_timeout(500)
-        _wait_no_loading(page)
-        fill_field(page, "name", "Design Landing Page Mockup")
-
-    # Now we should be on the task form
-    # Set title if not already set
-    name_input = page.locator(".o_field_widget[name='name'] input")
-    if name_input.count() > 0:
-        current = name_input.first.input_value()
-        if not current or "Design Landing" not in current:
-            fill_field(page, "name", "Design Landing Page Mockup")
-
-    # Set assignee (user_ids is a many2many)
-    add_many2many_tag(page, "user_ids", "Mitchell Admin")
+    # Switch to list view so "New" either opens a form or an inline row
+    ensure_list_view(page)
     page.wait_for_timeout(500)
+
+    # Click New
+    new_btn = page.locator(
+        "button.o_list_button_add:visible, "
+        ".o_control_panel button:has-text('New'):visible"
+    ).first
+    new_btn.click()
+    page.wait_for_timeout(1000)
+    _wait_for_ready(page)
+
+    form = page.locator(".o_form_view").first
+
+    # Task name — textarea widget in form view, input in inline list
+    if form.count() > 0 and form.is_visible():
+        fill_text_field(page, "name", TASK_NAME)
+    else:
+        name_input = page.locator(
+            ".o_selected_row .o_field_widget[name='name'] input, "
+            ".o_selected_row .o_field_widget[name='name'] textarea, "
+            ".o_selected_row input[name='display_name']"
+        ).first
+        name_input.fill(TASK_NAME)
+        page.wait_for_timeout(400)
+        # Save the inline row then open it
+        page.keyboard.press("Enter")
+        page.wait_for_timeout(800)
+        _wait_no_loading(page)
+        page.locator(f".o_data_row:has-text('{TASK_NAME}')").first.click()
+        page.wait_for_timeout(1000)
+        _wait_for_ready(page)
+
+    # Set assignee (user_ids is a many2many).
+    # Inline picker — avoid the "Create 'Administrator'" quick-create option.
+    user_input = page.locator(
+        ".o_field_widget[name='user_ids'] input"
+    ).first
+    user_input.click()
+    user_input.fill("Administrator")
+    page.wait_for_timeout(800)
+    # Pick the existing user (first dropdown-item without "Create")
+    items = page.locator(
+        ".o-autocomplete--dropdown-menu:visible .o-autocomplete--dropdown-item, "
+        ".dropdown-menu:visible .dropdown-item"
+    )
+    picked = False
+    for i in range(items.count()):
+        txt = items.nth(i).inner_text().strip()
+        if "Create" in txt or "create" in txt:
+            continue
+        if "Administrator" in txt:
+            items.nth(i).click()
+            picked = True
+            break
+    if not picked:
+        items.first.click()
+    page.wait_for_timeout(500)
+    _wait_no_loading(page)
 
     # Set deadline
     set_date(page, "date_deadline", "05/15/2026")
     page.wait_for_timeout(500)
 
-    # Set priority to Urgent (1 star) — click the first star
+    # Set priority to Urgent (1 star)
     priority_widget = page.locator(".o_field_widget[name='priority']").first
     stars = priority_widget.locator(".o_priority_star, .fa-star, .fa-star-o")
     if stars.count() > 0:
         stars.first.click()
         page.wait_for_timeout(300)
 
-    # Set description
+    # Set description — Odoo 19 HTML editor
     desc_field = page.locator(
         ".o_field_widget[name='description'] .note-editable, "
-        ".o_field_widget[name='description'] textarea, "
-        ".o_field_widget[name='description'] .odoo-editor-editable"
+        ".o_field_widget[name='description'] .odoo-editor-editable, "
+        ".o_field_widget[name='description'] [contenteditable='true']"
     )
     if desc_field.count() > 0:
         desc_field.first.click()
-        desc_field.first.fill(
+        page.keyboard.type(
             "Create wireframes for the new landing page including hero section and feature grid."
         )
-    page.wait_for_timeout(500)
+        page.wait_for_timeout(500)
 
-    # Set stage to "In Progress" if not already there
-    # Check the status bar for stage buttons
+    # Set stage to "In Progress" via the status bar
     stage_btn = page.locator(
         ".o_statusbar_status button:has-text('In Progress')"
     )
@@ -132,9 +128,10 @@ def oracle(page):
         page.wait_for_timeout(500)
         _wait_no_loading(page)
 
-    # Save
+    # Save the form
     save_form(page)
-    page.wait_for_timeout(500)
+    page.wait_for_timeout(800)
+    _wait_no_loading(page)
 
 
 run_oracle(oracle)

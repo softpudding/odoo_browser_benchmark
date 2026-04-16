@@ -33,13 +33,13 @@ def check(env):
             f"Appreciation/priority is '{app.priority}', expected '1' (In Progress)"
         )
 
-    # Check description/summary
-    desc = app.description or ""
+    # Check applicant notes / summary
+    notes = app.applicant_notes or ""
     import re
-    desc_text = re.sub(r"<[^>]+>", "", desc).strip().lower()
-    if "technical" not in desc_text or "interview" not in desc_text:
+    notes_text = re.sub(r"<[^>]+>", "", notes).strip().lower()
+    if "technical" not in notes_text or "interview" not in notes_text:
         failures.append(
-            "Application summary does not contain expected text about "
+            "Applicant notes do not contain expected text about "
             "technical background and interview"
         )
 

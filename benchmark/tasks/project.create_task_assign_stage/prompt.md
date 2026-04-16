@@ -5,7 +5,7 @@ Open the project **"Omega Platform Launch"**.
 Create a new task with the following details:
 
 1. **Title**: "Design Landing Page Mockup"
-2. **Assignees**: Add **Mitchell Admin** as the assignee
+2. **Assignees**: Add **Administrator** as the assignee
 3. **Deadline**: **05/15/2026** (May 15, 2026)
 4. **Priority**: Set to **Urgent** (one star)
 5. **Description**: Type the following text in the description field:

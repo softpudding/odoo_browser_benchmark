@@ -47,8 +47,8 @@ def oracle(page):
     add_many2many_tag(page, "category_id", "Supplier")
     page.wait_for_timeout(300)
 
-    # Set job position
-    fill_field(page, "function", "Procurement Partner")
+    # Set website
+    fill_field(page, "website", "https://brookfielddynamics.com")
     page.wait_for_timeout(300)
 
     # Save

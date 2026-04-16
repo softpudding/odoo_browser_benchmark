@@ -58,6 +58,7 @@ def setup(env):
     # --- Create the draft quotation ---
     admin = env.ref("base.user_admin")
     so = env["sale.order"].create({
+        "name": "BENCH-SO-PMT",
         "partner_id": partner.id,
         "user_id": admin.id,
         "client_order_ref": "BENCH-PMT-01",

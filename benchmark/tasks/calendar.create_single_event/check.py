@@ -22,20 +22,30 @@ def check(env):
     if not event:
         return ["Event 'Q2 Strategy Review' not found"]
 
-    # Check date
+    # Check date and time in the admin user's timezone.
+    # event.start is stored in UTC; convert to admin's tz (the user who created the event).
+    import pytz
+    admin_user = env["res.users"].search([("login", "=", "admin")], limit=1)
+    user_tz_name = (admin_user.tz if admin_user else None) or env.user.tz or "UTC"
+    try:
+        user_tz = pytz.timezone(user_tz_name)
+    except Exception:
+        user_tz = pytz.UTC
+
     if event.start:
-        event_date = event.start.date()
+        local_dt = pytz.UTC.localize(event.start).astimezone(user_tz)
+        event_date = local_dt.date()
         expected_date = date(2026, 5, 8)
         if event_date != expected_date:
             failures.append(
                 f"Event date is {event_date}, expected {expected_date}"
             )
 
-        # Check approximate start time (14:00 UTC or local)
-        start_hour = event.start.hour
-        if start_hour < 12 or start_hour > 22:
+        # Check approximate local start time (14:00 ±1h)
+        start_hour = local_dt.hour
+        if start_hour < 13 or start_hour > 15:
             failures.append(
-                f"Start time hour is {start_hour}, expected around 14 (2 PM)"
+                f"Local start hour is {start_hour}, expected 14 (2 PM)"
             )
     else:
         failures.append("Event has no start date/time")

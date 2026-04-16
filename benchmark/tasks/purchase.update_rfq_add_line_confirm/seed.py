@@ -29,7 +29,10 @@ def setup(env):
     for po in old_pos:
         if po.state in ("purchase", "done"):
             po.button_cancel()
-        po.unlink()
+        if po.state == "cancel":
+            po.unlink()
+        elif po.state in ("draft", "sent"):
+            po.unlink()
 
     # Also clean by origin
     old_pos2 = env["purchase.order"].search([
@@ -38,7 +41,10 @@ def setup(env):
     for po in old_pos2:
         if po.state in ("purchase", "done"):
             po.button_cancel()
-        po.unlink()
+        if po.state == "cancel":
+            po.unlink()
+        elif po.state in ("draft", "sent"):
+            po.unlink()
 
     # --- Ensure products exist ---
     products = {}

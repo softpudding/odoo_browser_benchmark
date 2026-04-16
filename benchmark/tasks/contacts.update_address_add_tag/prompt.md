@@ -11,7 +11,7 @@ Make the following changes:
    - **ZIP**: 97201
    - **Country**: United States
 2. Add the tag **"Supplier"** (use the Tags field).
-3. Set the **Job Position** field to **"Procurement Partner"**.
+3. Set the **Website** field to **https://brookfielddynamics.com**.
 4. Save the record.
 
 **Rules:**

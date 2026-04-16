@@ -14,7 +14,6 @@ from benchmark.oracle_helpers import (
     run_oracle,
     set_o2m_field,
     _wait_no_loading,
-    _wait_for_ready,
 )
 
 
@@ -22,32 +21,38 @@ def oracle(page):
     login(page)
     navigate(page, "/odoo/inventory")
     _wait_no_loading(page)
+    page.wait_for_timeout(800)
 
-    # Navigate to Operations > Transfers
-    # Try the menu path or direct URL
-    navigate(page, "/odoo/inventory/picking-type-all")
-    _wait_no_loading(page)
-    page.wait_for_timeout(500)
-
-    # If that didn't work, try through the menu
-    rows = page.locator(".o_list_view .o_data_row, .o_kanban_view .o_kanban_record")
-    if rows.count() == 0:
+    # Click the "Receipts" operation tile on the inventory dashboard
+    receipts_btn = page.locator(
+        ".o_kanban_primary_bottom button:has-text('Receipts'), "
+        "a:has-text('Receipts'):visible, "
+        ".o_kanban_record:has(.o_kanban_primary_left:has-text('Receipts'))"
+    ).first
+    # fallback - click via card header
+    cards = page.locator(".o_kanban_record:visible")
+    opened = False
+    for i in range(cards.count()):
+        card = cards.nth(i)
+        if "Receipts" in card.inner_text():
+            card.click()
+            opened = True
+            break
+    if not opened:
+        # Fallback: try direct URL with picking_type incoming
         navigate(page, "/odoo/inventory")
         _wait_no_loading(page)
-        # Try clicking Operations > Transfers in the menu
-        menu = page.locator("button.dropdown-toggle:has-text('Operations'):visible")
-        if menu.count() > 0:
-            menu.first.click()
-            page.wait_for_timeout(500)
-            page.locator(".dropdown-menu:visible .dropdown-item:has-text('Transfers')").first.click()
-            page.wait_for_timeout(1000)
-            _wait_no_loading(page)
+        page.wait_for_timeout(1000)
 
-    # Find the receipt by its origin reference
+    _wait_no_loading(page)
+    page.wait_for_timeout(1000)
+
+    # Now we should be in the Receipts list. Find BENCH-RCV-01 by origin
     clear_search_filters(page)
     ensure_list_view(page)
+    page.wait_for_timeout(400)
     click_list_row(page, "BENCH-RCV-01")
-    page.wait_for_timeout(500)
+    page.wait_for_timeout(800)
 
     # Set done quantities for each move line
     # Steel Bracket 12" -> 20, Copper Wire 100m -> 10
@@ -65,7 +70,7 @@ def oracle(page):
 
     # Click Validate
     click_status_button(page, "Validate")
-    page.wait_for_timeout(1000)
+    page.wait_for_timeout(1500)
     _wait_no_loading(page)
 
     # If a confirmation dialog appears (immediate transfer), click Apply/OK

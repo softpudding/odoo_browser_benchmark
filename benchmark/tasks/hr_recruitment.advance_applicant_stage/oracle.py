@@ -48,15 +48,15 @@ def oracle(page):
         stars.first.click()
         page.wait_for_timeout(300)
 
-    # Write application summary/description
+    # Write application summary (applicant_notes is an HTML field)
     desc_field = page.locator(
-        ".o_field_widget[name='description'] .note-editable, "
-        ".o_field_widget[name='description'] textarea, "
-        ".o_field_widget[name='description'] .odoo-editor-editable"
+        ".o_field_widget[name='applicant_notes'] .note-editable, "
+        ".o_field_widget[name='applicant_notes'] .odoo-editor-editable, "
+        ".o_field_widget[name='applicant_notes'] [contenteditable='true']"
     )
     if desc_field.count() > 0:
         desc_field.first.click()
-        desc_field.first.fill(
+        page.keyboard.type(
             "Strong technical background. Schedule technical interview next week."
         )
     page.wait_for_timeout(500)

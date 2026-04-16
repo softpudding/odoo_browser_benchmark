@@ -68,9 +68,9 @@ def setup(env):
 
     for prod_name, qty in [("Steel Bracket 12\"", 20.0), ("Copper Wire 100m", 10.0)]:
         env["stock.move"].create({
-            "name": prod_name,
             "product_id": products[prod_name].id,
             "product_uom_qty": qty,
+            "product_uom": products[prod_name].uom_id.id,
             "picking_id": picking.id,
             "location_id": location_supplier.id,
             "location_dest_id": location_stock.id,

@@ -50,10 +50,10 @@ def check(env):
             f"Tags are {tag_names}, expected 'Supplier' to be present"
         )
 
-    # Check job position
-    if partner.function != "Procurement Partner":
+    # Check website
+    if partner.website != "https://brookfielddynamics.com":
         failures.append(
-            f"Job position is '{partner.function}', expected 'Procurement Partner'"
+            f"Website is '{partner.website}', expected 'https://brookfielddynamics.com'"
         )
 
     # Check unchanged fields

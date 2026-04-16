@@ -11,9 +11,9 @@ Make the following changes:
    **"First Interview"** stage. You can do this by dragging the card or
    by opening the applicant and changing the stage.
 2. Open the applicant form and set the **Appreciation** field to
-   **"In Progress"** (two stars in Odoo 19, or the equivalent medium rating).
-3. In the **Application Summary** field (or the Description/Notes area),
-   type: "Strong technical background. Schedule technical interview next week."
+   **1 star ("Good")** by clicking the first star in the rating widget.
+3. In the **Applicant Notes** field, type:
+   "Strong technical background. Schedule technical interview next week."
 4. Save the record.
 
 **Rules:**

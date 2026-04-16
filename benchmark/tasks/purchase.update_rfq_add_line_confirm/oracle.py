@@ -40,9 +40,32 @@ def oracle(page):
     set_o2m_field(page, 2, "price_unit", "15.00")
     page.wait_for_timeout(500)
 
-    # Change order deadline
-    set_date(page, "date_order", "05/20/2026")
+    # Change order deadline — date_order is a calendar datetime button in
+    # Odoo 19. Open the picker, navigate to May 2026, click day 20.
+    date_widget = page.locator(".o_field_widget[name='date_order']").first
+    date_btn = date_widget.locator("button").first
+    date_btn.click()
+    page.wait_for_timeout(600)
+    for _ in range(15):
+        header = page.locator(
+            ".o_datetime_picker:visible .o_header_part"
+        ).first
+        try:
+            if "May 2026" in header.inner_text():
+                break
+        except Exception:
+            pass
+        nxt = page.locator(".o_datetime_picker:visible .o_next").first
+        nxt.click()
+        page.wait_for_timeout(200)
+    cell_20 = page.locator(
+        ".o_datetime_picker:visible .o_date_item_cell:not(.o_out_of_range)"
+    ).filter(has_text="20")
+    cell_20.first.click()
     page.wait_for_timeout(500)
+    page.keyboard.press("Escape")
+    page.wait_for_timeout(300)
+    _wait_no_loading(page)
 
     # Confirm the order
     click_status_button(page, "Confirm Order")
