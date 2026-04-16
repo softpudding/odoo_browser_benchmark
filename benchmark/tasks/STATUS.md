@@ -4,7 +4,7 @@ Tracks all benchmark tasks. Update when adding new tasks or running evaluations.
 
 **Status values:** `WIP` — oracle or eval incomplete | `Done` — oracle passes, eval recorded
 
-Last eval: 2026-04-16 | Oracle: 48/48 (100%) | Browser-Use: 24/48 (50%) | New WIP: 15 (10 medium + 5 easy)
+Last eval: 2026-04-16 | Oracle: 48/48 (100%) | Browser-Use: 24/48 (50%) | New WIP: 20 (15 medium + 5 easy)
 
 ## Summary
 
@@ -73,6 +73,11 @@ Last eval: 2026-04-16 | Oracle: 48/48 (100%) | Browser-Use: 24/48 (50%) | New WI
 | 61 | sale.add_note_to_quotation [easy] | WIP | — | — | — |
 | 62 | crm.set_priority_on_opportunity [easy] | WIP | — | — | — |
 | 63 | project.set_task_deadline [easy] | WIP | — | — | — |
+| 64 | account.update_vendor_bill_reference_post [medium] | WIP | — | — | — |
+| 65 | contacts.create_company_with_supplier_tag [medium] | WIP | — | — | — |
+| 66 | crm.create_opportunity_tag_schedule_call [medium] | WIP | — | — | — |
+| 67 | project.duplicate_task_assign_deadline [medium] | WIP | — | — | — |
+| 68 | purchase.set_order_deadline_schedule_call_confirm [medium] | WIP | — | — | — |
 
 ---
 

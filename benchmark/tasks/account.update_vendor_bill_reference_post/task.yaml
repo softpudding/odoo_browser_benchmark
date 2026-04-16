@@ -1,0 +1,20 @@
+task_id: account.update_vendor_bill_reference_post
+module: account
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/accounting/vendor-bills
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 300
+step_limit: 200
+metadata:
+  category: side_effect_trap
+  difficulty_level: medium
+  agent_interaction: "Open the right draft vendor bill, edit two header fields and one invoice-line quantity, then confirm it."
+  checks_verify: "The target bill is posted with the requested date, updated reference, and corrected Cable Tray quantity while the distractor bill stays untouched."
+  primary_track: true
+  tier: 2
