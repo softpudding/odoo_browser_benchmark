@@ -1,84 +1,142 @@
 ---
 name: create-benchmark-task
-description: Create a new hard benchmark task for browser agent evaluation. Generates all required files (prompt.md, seed.py, task.yaml, expected_state.json, check.py, trace_spec.yaml, state_spec.yaml, cleanup.py), validates against known difficulty patterns, and runs against browser-use. Use when adding new tasks to the benchmark suite.
+description: Create a new benchmark task (hard, medium, or easy) for browser agent evaluation. Generates all required files (prompt.md, seed.py, task.yaml, expected_state.json, check.py, trace_spec.yaml, state_spec.yaml, cleanup.py), validates against difficulty patterns, and runs against browser-use. Use when adding new tasks to the benchmark suite.
 user-invocable: true
-argument-hint: [module.task_name]
+argument-hint: [module.task_name] [hard|medium|easy]
 ---
 
-# Create a Hard Benchmark Task
+# Create a Benchmark Task
 
 You are creating a new benchmark task named `$ARGUMENTS` for evaluating browser
-agents on Odoo ERP workflows. The task MUST reliably fail browser-use while
-being completable by an instructed human.
+agents on Odoo ERP workflows.
 
 **Read the full guide first:** `benchmark/TASK_CREATION_GUIDE.md`
 
 ---
 
+## Step 0: Determine the target difficulty
+
+The argument `$ARGUMENTS` may include a difficulty hint (e.g.
+`sale.confirm_order easy`). If no difficulty was specified, ask the user before
+proceeding. The three levels are:
+
+| Level  | Target browser-use pass rate | Tier | Time limit   |
+|--------|------------------------------|------|--------------|
+| hard   | ≤ 40 %                       | 3    | 420 – 480 s  |
+| medium | ~ 60 %                       | 2    | 300 – 360 s  |
+| easy   | ~ 80 %                       | 1    | 180 – 240 s  |
+
+The sections below describe each level in detail so you can pick the right
+interaction pattern and write the right checks.
+
+---
+
+## Difficulty reference
+
+### Hard (tier 3) — browser-use should fail 60 %+ of runs
+
+**How the agent must interact with Odoo:**
+- Navigates across two or more modules (e.g. Sales → Contacts → back)
+- Encounters at least one dialog or wizard where the correct option is *not*
+  the default
+- Must carry a value read in one place and apply it somewhere else (memory)
+- Distractors: two or more records look similar; wrong record choice silently
+  passes surface checks
+
+**What the checks actually verify:**
+- Exact line-item fields (product, quantity, price, discount) on the final record
+- That distractor records were *not* modified
+- The specific wizard option that was chosen (e.g., "This Event" vs "All
+  Events", "Create Backorder" vs "No Backorder")
+- Multi-record state after a cancel-and-reissue or rollback workflow
+
+**Proven hard patterns (use at least one):**
+1. Wizard with non-default radio button — agent must select a specific option
+2. Create-from-scratch with exact fields — browser-use leaves phantom empty lines
+3. Multi-field wizard — date pickers, text fields, not just click OK
+4. Cross-module round-trip — agent navigates away, loses context, must return
+5. Complex compose/email wizard — template, recipients, subject, body fields
+
+---
+
+### Medium (tier 2) — browser-use should pass ~60 % of runs
+
+**How the agent must interact with Odoo:**
+- Stays in one or two related modules without a full context switch
+- May encounter a single wizard, but the default option is usually correct
+- Needs to find the right record (one level of filtering), then make a targeted
+  edit or trigger a workflow step
+- At most one piece of information must be carried from one screen to another
+
+**What the checks actually verify:**
+- Primary record reaches the expected state (confirmed, posted, done, etc.)
+- One or two key field values (memo text, a date, a partner name)
+- No extra or missing records (count check)
+- A single workflow action completed (email sent, payment registered, etc.)
+
+**Suitable medium patterns:**
+- Single-step wizard with at most one non-default field
+- Form edit requiring navigation to the right record but no cross-module hop
+- Sequential action on one record: open → edit → trigger button → verify
+- Lookup-and-apply where both the lookup and the apply are in the same module
+
+---
+
+### Easy (tier 1) — browser-use should pass ~80 % of runs
+
+**How the agent must interact with Odoo:**
+- Direct navigation to a single, clearly identified record
+- Basic form editing: fill a field, flip a toggle, or click a single button
+- Accept-defaults dialogs where clicking OK or Confirm is sufficient
+- No distractors; the record can be found by a unique name or reference
+
+**What the checks actually verify:**
+- A single field value changed on one record
+- Workflow state after a single button click (e.g., draft → confirmed)
+- Optional: a simple linked record created (e.g., a chatter message posted)
+
+**Suitable easy patterns:**
+- Simple field edit + save (change a date, a partner, a quantity)
+- Accept-defaults wizard (open dialog, click OK, verify result)
+- Reset to draft → change one field → re-confirm
+- Add a note / log a message in the chatter
+
+**Note:** If the task concept is interesting but trivially easy, consider
+combining two easy steps (e.g., edit a field *and* confirm) to push it to
+medium rather than discarding it.
+
+---
+
 ## Step 1: Validate the task name and check for duplicates
 
-The argument `$ARGUMENTS` should follow the pattern `module.descriptive_name`
+The argument should follow the pattern `module.descriptive_name`
 (e.g., `crm.convert_lead_to_opportunity`). If no argument was given, ask the
 user what workflow they want to target.
 
-Check the task doesn't already exist by name:
+Check the task doesn't already exist:
 ```
-ls benchmark/tasks/$ARGUMENTS/ 2>/dev/null
+ls benchmark/tasks/<task_name>/ 2>/dev/null
 ```
 
-**Read the full STATUS.md to check for conceptual duplicates:**
+**Read STATUS.md to check for conceptual duplicates:**
 ```
 cat benchmark/tasks/STATUS.md
 ```
 
 For each existing task, compare along three dimensions:
-1. **Odoo modules** — does the new task use the same module(s)?
-2. **Workflow type** — is the agent doing the same kind of action (cancel+reissue, cross-module lookup, wizard interaction, etc.)?
-3. **Capability tested** — does the failure pattern overlap (e.g., "recurrence dialog" is already covered twice)?
+1. **Odoo modules** — same module(s)?
+2. **Workflow type** — same kind of action (cancel+reissue, cross-module lookup,
+   wizard interaction, etc.)?
+3. **Capability tested** — same failure/success pattern?
 
 **A new task must be distinct in at least two of the three dimensions.**
 
-Examples of tasks that would be rejected as too similar:
-- Another "cancel confirmed SO and reissue to correct customer" — same module, workflow, and capability as `sale.cancel_reissue_wrong_customer`
-- Another "read product field and update quotation line" — same cross-module lookup pattern as `sale.exact_total_quotation` and `sale.revise_target_quote_lines`
-- A third recurrence dialog task — same Calendar + "This Event" dialog pattern already in two tasks
-
-If the task is a duplicate, stop and tell the user which existing task covers the same ground.
+If the task is a duplicate, stop and tell the user which existing task covers
+the same ground.
 
 ---
 
-## Step 2: Choose a difficulty pattern
-
-The task MUST use at least one of these **proven failure patterns** — tasks
-built around other patterns will likely be too easy:
-
-1. **Wizard with non-default radio buttons** — Agent must select a specific
-   non-default option in a dialog (e.g., "This Event" in recurrence, "Create
-   Backorder" in stock receipt)
-
-2. **Create-from-scratch with exact fields** — Agent must create a new record
-   and fill exact product lines, quantities, prices (browser-use leaves phantom
-   empty lines)
-
-3. **Multi-step wizard with field entry** — Agent must fill multiple fields in
-   a wizard modal (date pickers, text fields, not just click OK)
-
-4. **Cross-module round-trip** — Agent must navigate away to another module
-   and come back (loses context)
-
-5. **Complex compose/email wizard** — The "Send by Email" compose wizard has
-   template, recipients, subject, body fields
-
-**DO NOT use these patterns alone** (browser-use solves them easily):
-- Simple form edits (change field, save)
-- Accept-defaults wizards (open wizard, click OK)
-- Reset-to-draft → edit → re-post cycles
-- Scrolling in long lists
-- Find-correct-record-and-click-confirm
-
----
-
-## Step 3: Design the prompt
+## Step 2: Design the prompt
 
 Write `prompt.md` FIRST, before any code. Rules:
 - Name every entity explicitly (customer name, reference, product names)
@@ -87,15 +145,15 @@ Write `prompt.md` FIRST, before any code. Rules:
 - Mention wizard interactions explicitly
 - Add a **Rules** section listing what NOT to do
 - **Verify button labels** — Odoo 19 uses "Confirm" not "Post" for invoices
+- Adjust prompt complexity to match the chosen difficulty: hard prompts may
+  describe a multi-step workflow; easy prompts describe one clear action
 
 ---
 
-## Step 4: Create all 8 files
-
-Create the directory and all files:
+## Step 3: Create all 8 files
 
 ```
-benchmark/tasks/$ARGUMENTS/
+benchmark/tasks/<task_name>/
 ├── task.yaml
 ├── prompt.md
 ├── seed.py
@@ -107,10 +165,11 @@ benchmark/tasks/$ARGUMENTS/
 ```
 
 ### task.yaml template
+
 ```yaml
-task_id: $ARGUMENTS
+task_id: <module.task_name>
 module: <module_name>
-difficulty: hard
+difficulty: <hard|medium|easy>
 instruction: see prompt.md
 start_url: /odoo/<module_name>
 login_context:
@@ -119,47 +178,60 @@ agent_interface: browser_only
 db_seed:
   snapshot: benchmark_base
 setup_script: seed.py
-time_limit_sec: 480        # 420-480 for hard tasks, NEVER < 300
-step_limit: 300
+time_limit_sec: <420-480 hard | 300-360 medium | 180-240 easy>
+step_limit: <300 hard | 200 medium | 120 easy>
 metadata:
-  category: <one of: closed_loop_cross_module, policy_trap, side_effect_trap, recovery_rollback, deep_ui_interaction>
-  failure_pattern: "One sentence: what browser-use will get wrong"
+  category: <closed_loop_cross_module | policy_trap | side_effect_trap | recovery_rollback | deep_ui_interaction>
+  difficulty_level: <hard|medium|easy>
+  agent_interaction: "<one sentence: how the agent must navigate/interact>"
+  checks_verify: "<one sentence: what check.py is actually asserting>"
+  failure_pattern: "<hard only: one sentence explaining what browser-use gets wrong>"
   primary_track: true
-  tier: 3
+  tier: <3 hard | 2 medium | 1 easy>
 ```
+
+The `agent_interaction` and `checks_verify` fields document *why* the task
+belongs at its difficulty level — fill them in thoughtfully.
 
 ### seed.py critical rules
 - **Always cleanup prior runs first**
-- Use correct Odoo 19 field names: `tax_ids` (not `tax_id`), `group_ids` (not `groups_id`), `memo` (not `ref` on payment), `product_qty` (not `quantity` on PO line)
-- Enable required features: credit limits via `ir.config_parameter`, discount groups via `sale.group_discount_per_so_line`
+- Use correct Odoo 19 field names: `tax_ids` (not `tax_id`), `group_ids` (not
+  `groups_id`), `memo` (not `ref` on payment), `product_qty` (not `quantity`
+  on PO line)
+- Enable required features: credit limits via `ir.config_parameter`, discount
+  groups via `sale.group_discount_per_so_line`
 - Clear taxes with `"tax_ids": [(5, 0, 0)]` if prompt quotes exact untaxed totals
 - Set `invoice_policy: "order"` on products for invoicing tasks
 - Use `supplier_rank: 1` for vendor partners
 
 ### expected_state.json rules
 - Only include **actual state changes** (not unchanged values)
-- Entity keys come from state_spec match_key fields, normalized: Many2one → display name, False → null
+- Entity keys come from state_spec match_key fields, normalized: Many2one →
+  display name, False → null
 - Use `"op": "set"` for changes, `"op": "create"` for new records
 - **Never use `"op": "eq"`, `"domain"`, or `"__count__"`** — unsupported
 - Keep it minimal — validate details in check.py instead
 - **Pro tip**: Run once, check `state_diff.json` artifact for real entity keys
 
 ### check.py rules
-This is the most important validation file. Validate:
-- Final record state (confirmed, posted, paid, etc.)
-- Unchanged/distractor records weren't modified
-- Line-level details (quantities, prices, discounts, dates)
-- Record counts (no extra records, no deletions)
-- Specific field values (memo text, dates, reasons)
+This is the most important validation file. Validate according to difficulty:
+
+- **Hard**: exact line-item values, distractor records untouched, wizard choice
+  implicit in final state, record counts, specific field values across records
+- **Medium**: primary record state, 1-2 key fields, no extra/missing records,
+  one workflow action completed
+- **Easy**: single field value or state change; optionally a linked record
 
 ### trace_spec.yaml rules
-- Put wizard action methods in `required_ops` (e.g., `refund_moves`, `action_create_payments`)
-- Put `create`/`write`/`web_save` in `optional_ops` (browser uses `web_save` instead of ORM methods)
+- Put wizard action methods in `required_ops` (e.g., `refund_moves`,
+  `action_create_payments`)
+- Put `create`/`write`/`web_save` in `optional_ops` (browser uses `web_save`
+  instead of ORM methods)
 - Put destructive operations in `forbidden_ops` (`unlink`, `button_cancel`, etc.)
 
 ---
 
-## Step 4b: Register in STATUS.md and push immediately
+## Step 3b: Register in STATUS.md and push immediately
 
 **Do this as soon as all 8 files are created** — before any testing. This
 prevents teammates from creating a duplicate task while yours is in progress.
@@ -167,25 +239,21 @@ prevents teammates from creating a duplicate task while yours is in progress.
 Add a row to the table in `benchmark/tasks/STATUS.md`:
 
 ```markdown
-| N | $ARGUMENTS | <one-line description of what the agent must do> | WIP | — | — | — |
+| N | <task_name> [<difficulty>] | <one-line description> | WIP | — | — | — |
 ```
 
 Use `WIP` as the status, dashes for the test columns. Then commit and push:
 
 ```bash
-git add benchmark/tasks/$ARGUMENTS/ benchmark/tasks/STATUS.md
-git commit -m "[WIP] benchmark: add $ARGUMENTS task"
+git add benchmark/tasks/<task_name>/ benchmark/tasks/STATUS.md
+git commit -m "[WIP] benchmark: add <task_name> task"
 git push upstream 19.0
 ```
 
-This push is the team's "claimed" signal — if two people created the same
-task, the second push will conflict and one can be dropped.
-
 ---
 
-## Step 5: Check if required modules are installed
+## Step 4: Check if required modules are installed
 
-Verify the module is in the base snapshot:
 ```bash
 psql -tAc "SELECT name FROM ir_module_module WHERE state='installed' AND name='<module>'" benchmark_validate
 ```
@@ -198,10 +266,10 @@ PYTHONPATH=. python benchmark/eval.py prepare-base --db benchmark_validate
 
 ---
 
-## Step 6: Test as human first
+## Step 5: Test as human first
 
 ```bash
-PYTHONPATH=. python benchmark/eval.py run $ARGUMENTS --agent human
+PYTHONPATH=. python benchmark/eval.py run <task_name> --agent human
 ```
 
 Verify:
@@ -211,61 +279,66 @@ Verify:
 
 ---
 
-## Step 7: Run against browser-use
+## Step 6: Run against browser-use
 
 ```bash
-PYTHONPATH=. python benchmark/eval.py run $ARGUMENTS --agent browser-use
+PYTHONPATH=. python benchmark/eval.py run <task_name> --agent browser-use
 ```
 
 **Always headed mode** (default). Never `--headless`.
 
-Interpret the result:
-- `FAIL + postcondition failures` → Task works! Genuine agent failure.
-- `FAIL + empty postconditions` → Diff engine mismatch. Check `state_diff.json`, fix entity keys.
-- `PASS` → Task too easy. Go back to Step 2, add a harder pattern.
-- `seed may have failed` → Fix field names in seed.py.
+Interpret the result against the target pass rate for the difficulty:
 
-If it FAILS, run a second time to verify consistency.
+| Result | Hard | Medium | Easy |
+|--------|------|--------|------|
+| `FAIL + postcondition failures` | Good (expected) | Good | Task may be too hard — review |
+| `PASS` | Too easy — add harder pattern | Expected ~60% | Expected ~80% |
+| `FAIL + empty postconditions` | Diff engine mismatch — fix entity keys | Same | Same |
+| `seed may have failed` | Fix field names in seed.py | Same | Same |
+
+Run at least **twice** to confirm consistency. If a hard task passes consistently,
+go back to Step 0 and reconsider the difficulty level or add a harder interaction
+pattern. If an easy task fails consistently, simplify the prompt or seed.
 
 ---
 
-## Step 8: Cross-review (MANDATORY — never self-review)
+## Step 7: Cross-review (MANDATORY — never self-review)
 
 **You must get a second opinion from a DIFFERENT model.** Self-review misses
-the same blind spots that produced the bugs. Every task in the original suite
-had issues caught only by cross-review.
+the same blind spots that produced the bugs.
 
 - **If you are Claude Code**: delegate the review to Codex via `codex:rescue` agent
 - **If you are Codex**: hand the files back to Claude Code for review
 
-The reviewer should check: A. Instruction clarity, B. Doability, C. Timeout
-adequacy, D. Seed-prompt consistency, E. Expected state correctness, F. check.py
-correctness, G. trace_spec correctness.
+The reviewer checks: A. Instruction clarity, B. Doability, C. Timeout adequacy,
+D. Seed-prompt consistency, E. Expected state correctness, F. check.py
+correctness, G. trace_spec correctness, **H. Difficulty calibration** — does
+the task actually require the interactions its difficulty level implies?
 
-Fix any blocking issues the reviewer finds, then re-run against browser-use.
+Fix any blocking issues, then re-run against browser-use.
 
 ---
 
-## Step 9: Update STATUS.md and commit
+## Step 8: Update STATUS.md and commit
 
-Update the task's row in `benchmark/tasks/STATUS.md` from `WIP` to `Done`
-and fill in the test results:
+Update the task's row from `WIP` to `Done` and fill in the test results.
+Include difficulty in the description column so the table is self-documenting:
 
 ```markdown
-| N | $ARGUMENTS | <description> | Done | PASS | FAIL | <F1> |
+| N | <task_name> [<difficulty>] | <description> | Done | PASS | FAIL/PASS | <F1> |
 ```
 
 Only mark `Done` if ALL of these are true:
 - [ ] Seed runs without errors
 - [ ] Human can complete the task (oracle passes)
-- [ ] Browser-use fails consistently (2+ runs)
-- [ ] Failure is genuine (postcondition failures, not just diff mismatch)
-- [ ] Codex review passed (no blocking issues)
+- [ ] Browser-use result is consistent with the target pass rate for the level
+- [ ] Failure (hard) or pass (easy) is genuine, not a diff-engine mismatch
+- [ ] Cross-review passed (no blocking issues)
 - [ ] Task doesn't duplicate an existing task's workflow
 
 Then commit and push:
 ```bash
-git add benchmark/tasks/$ARGUMENTS/ benchmark/tasks/STATUS.md
-git commit -m "[ADD] benchmark: $ARGUMENTS task"
+git add benchmark/tasks/<task_name>/ benchmark/tasks/STATUS.md
+git commit -m "[ADD] benchmark: <task_name> task (<difficulty>)"
 git push upstream 19.0
 ```
