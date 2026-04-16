@@ -4,7 +4,7 @@ Tracks all benchmark tasks. Update when adding new tasks or running evaluations.
 
 **Status values:** `WIP` — oracle or eval incomplete | `Done` — oracle passes, eval recorded
 
-Last eval: 2026-04-16 | Oracle: 48/48 (100%) | Browser-Use: 23/48 (48%) | New WIP: 35 (25 medium + 10 easy)
+Last eval: 2026-04-16 | Oracle: 58/58 (100%) | Browser-Use: 23/58 (40%) | New WIP: 25 (15 medium + 10 easy, browser-use pending)
 
 ## Summary
 
@@ -48,16 +48,16 @@ Last eval: 2026-04-16 | Oracle: 48/48 (100%) | Browser-Use: 23/48 (48%) | New WI
 | 36 | crm.move_opportunity_stage [easy] | Done | PASS | PASS | 1.0 |
 | 37 | purchase.reset_draft_edit_reconfirm [easy] | Done | PASS | PASS | 1.0 |
 | 38 | project.post_chatter_message [easy] | Done | PASS | PASS | 1.0 |
-| 39 | sale.set_payment_terms_confirm [medium] | WIP | — | — | — |
-| 40 | account.create_vendor_bill_confirm [medium] | WIP | — | — | — |
-| 41 | crm.edit_opportunity_schedule_call [medium] | WIP | — | — | — |
-| 42 | hr.update_work_information [medium] | WIP | — | — | — |
-| 43 | project.create_task_assign_stage [medium] | WIP | — | — | — |
-| 44 | stock.confirm_and_validate_receipt [medium] | WIP | — | — | — |
-| 45 | purchase.update_rfq_add_line_confirm [medium] | WIP | — | — | — |
-| 46 | contacts.update_address_add_tag [medium] | WIP | — | — | — |
-| 47 | calendar.create_single_event [medium] | WIP | — | — | — |
-| 48 | hr_recruitment.advance_applicant_stage [medium] | WIP | — | — | — |
+| 39 | sale.set_payment_terms_confirm [medium] | WIP | PASS | — | — |
+| 40 | account.create_vendor_bill_confirm [medium] | WIP | PASS | — | — |
+| 41 | crm.edit_opportunity_schedule_call [medium] | WIP | PASS | — | — |
+| 42 | hr.update_work_information [medium] | WIP | PASS | — | — |
+| 43 | project.create_task_assign_stage [medium] | WIP | PASS | — | — |
+| 44 | stock.confirm_and_validate_receipt [medium] | WIP | PASS | — | — |
+| 45 | purchase.update_rfq_add_line_confirm [medium] | WIP | PASS | — | — |
+| 46 | contacts.update_address_add_tag [medium] | WIP | PASS | — | — |
+| 47 | calendar.create_single_event [medium] | WIP | PASS | — | — |
+| 48 | hr_recruitment.advance_applicant_stage [medium] | WIP | PASS | — | — |
 | 49 | account.send_invoice_with_extra_recipient [hard] | Done | PASS | PASS | 1.0 |
 | 50 | crm.batch_mark_lost_with_reason [hard] | Done | PASS | FAIL | 1.0 |
 | 51 | hr_recruitment.refuse_duplicate_applications [hard] | Done | PASS | FAIL | 0.0 |
