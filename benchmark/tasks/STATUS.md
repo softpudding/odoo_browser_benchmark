@@ -4,7 +4,7 @@ Tracks all benchmark tasks. Update when adding new tasks or running evaluations.
 
 **Status values:** `WIP` — oracle or eval incomplete | `Done` — oracle passes, eval recorded
 
-Last eval: 2026-04-16 | Oracle: 68/68 (100%) | Browser-Use: 31/68 (45.6%) | New WIP: 15 (10 medium + 5 easy)
+Last eval: 2026-04-16 | Oracle: 71/71 (100%) | Browser-Use: 31/71 (43.7%) | New WIP: 15 (10 medium + 5 easy)
 
 ## Summary
 
@@ -87,12 +87,15 @@ Last eval: 2026-04-16 | Oracle: 68/68 (100%) | Browser-Use: 31/68 (45.6%) | New 
 | 75 | crm.update_opportunity_revenue_priority_won [medium] | WIP | — | — | — |
 | 76 | hr.update_work_location_schedule_activity [medium] | WIP | — | — | — |
 | 77 | purchase.update_rfq_reference_deadline_confirm [medium] | WIP | — | — | — |
-| 78 | contacts.create_invoice_contact_add_finance_tag [medium] | WIP | — | — | — |
+| 78 | contacts.create_linked_contact_add_finance_tag [medium] | WIP | — | — | — |
 | 79 | account.pay_invoice_with_memo [medium] | WIP | — | — | — |
 | 80 | project.set_project_deadline_tags [medium] | WIP | — | — | — |
 | 81 | sale.set_commitment_date [medium] | WIP | — | — | — |
 | 82 | stock.update_reorder_rule [medium] | WIP | — | — | — |
 | 83 | hr.add_employee_skill [medium] | WIP | — | — | — |
+| 84 | inventory.scrap_product [easy] | Done | PASS | FAIL | 0.0 |
+| 85 | hr.schedule_employee_activity [easy] | Done | PASS | FAIL | 0.0 |
+| 86 | project.set_task_deadline [easy] | Done | PASS | FAIL | 0.0 |
 
 ---
 
@@ -1034,7 +1037,7 @@ Last eval: 2026-04-16 | Oracle: 68/68 (100%) | Browser-Use: 31/68 (45.6%) | New 
 
 ---
 
-## contacts.create_invoice_contact_add_finance_tag
+## contacts.create_linked_contact_add_finance_tag
 
 | Field | Value |
 |---|---|
@@ -1043,8 +1046,50 @@ Last eval: 2026-04-16 | Oracle: 68/68 (100%) | Browser-Use: 31/68 (45.6%) | New 
 | **Browser-Use** | — |
 | **F1** | — |
 | **Odoo modules** | Contacts |
-| **Workflow** | Create a new child contact `Dana Patel` under `Lakeshore Manufacturing`, set Address Type to Invoice Address, fill contact details and address, add the Finance tag, and save. |
-| **Capability tested** | Contact creation with parent-company selection, address-type selection, location fields, and tag entry while avoiding a similarly named distractor company. |
+| **Workflow** | Create a new child contact `Dana Patel` under `Lakeshore Manufacturing`, fill contact details and address, add the Finance tag, and save. |
+| **Capability tested** | Contact creation with parent-company selection, address fields, and tag entry while avoiding a similarly named distractor company. |
+
+---
+
+## inventory.scrap_product
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
+| **Odoo modules** | Inventory (stock) |
+| **Workflow** | Navigate to product `Steel Bracket 12` from the Products list. Click the Scrap button. In the Scrap dialog, set Quantity to `5` and accept the defaults. Click **Scrap** to confirm. |
+| **Capability tested** | Accept-defaults wizard flow in Inventory: open the scrap dialog, enter one quantity, and confirm without changing other product data. |
+
+---
+
+## hr.schedule_employee_activity
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
+| **Odoo modules** | Employees (hr) |
+| **Workflow** | Find employee `Sofia Chen`. Click **Schedule Activity** in the chatter. Set Activity Type to `Call`, Due Date to `May 10, 2026`, Summary to `Annual review discussion`, then click **Schedule Activity**. |
+| **Capability tested** | Activity scheduling through the chatter modal with multiple fields in a compact dialog, distinct from simple employee form edits. |
+
+---
+
+## project.set_task_deadline
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
+| **Odoo modules** | Project — Tasks |
+| **Workflow** | Open project `Omega Platform Launch`, find task `Design Landing Page Mockup`, change the Deadline to `May 20, 2026` via the date picker, and save. |
+| **Capability tested** | Existing-task date edit through the Project UI, focused on date-picker interaction without additional chatter or stage changes. |
 
 ---
 
