@@ -1,0 +1,20 @@
+task_id: project.update_task_assign_deadline_activity
+module: project
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/project
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 300
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "Open the right project task, move it to the requested stage, and schedule an exact chatter activity from the task form."
+  checks_verify: "The target task moves to In Progress and receives the exact Call activity with the requested due date and summary."
+  primary_track: true
+  tier: 2

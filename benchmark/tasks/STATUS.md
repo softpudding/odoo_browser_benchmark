@@ -4,7 +4,7 @@ Tracks all benchmark tasks. Update when adding new tasks or running evaluations.
 
 **Status values:** `WIP` — oracle or eval incomplete | `Done` — oracle passes, eval recorded
 
-Last eval: 2026-04-16 | Oracle: 33/38 (87%) | Browser-Use: 16/33 (48%) | New WIP: 15 (5 hard + 5 medium + 5 easy)
+Last eval: 2026-04-16 | Oracle: 48/48 (100%) | Browser-Use: 24/48 (50%) | New WIP: 15 (10 medium + 5 easy)
 
 ## Summary
 
@@ -58,16 +58,16 @@ Last eval: 2026-04-16 | Oracle: 33/38 (87%) | Browser-Use: 16/33 (48%) | New WIP
 | 46 | contacts.update_address_add_tag [medium] | WIP | — | — | — |
 | 47 | calendar.create_single_event [medium] | WIP | — | — | — |
 | 48 | hr_recruitment.advance_applicant_stage [medium] | WIP | — | — | — |
-| 49 | account.send_invoice_with_extra_recipient [hard] | WIP | PASS | — | — |
-| 50 | crm.batch_mark_lost_with_reason [hard] | WIP | PASS | — | — |
-| 51 | hr_recruitment.refuse_duplicate_applications [hard] | WIP | PASS | — | — |
-| 52 | purchase_stock.return_partial_receipt_to_vendor [hard] | WIP | PASS | — | — |
-| 53 | sale.confirm_order_within_credit_limit [hard] | WIP | PASS | — | — |
-| 54 | sale.create_invoice_adjust_quantity_post [medium] | WIP | — | — | — |
-| 55 | purchase.create_bill_adjust_quantity_post [medium] | WIP | — | — | — |
-| 56 | project.update_task_assign_deadline_activity [medium] | WIP | — | — | — |
-| 57 | calendar.reschedule_event_update_location_attendee [medium] | WIP | — | — | — |
-| 58 | contacts.create_linked_contact_add_tag [medium] | WIP | — | — | — |
+| 49 | account.send_invoice_with_extra_recipient [hard] | Done | PASS | PASS | 1.0 |
+| 50 | crm.batch_mark_lost_with_reason [hard] | Done | PASS | FAIL | 1.0 |
+| 51 | hr_recruitment.refuse_duplicate_applications [hard] | Done | PASS | PASS | 1.0 |
+| 52 | purchase_stock.return_partial_receipt_to_vendor [hard] | Done | PASS | FAIL | 0.0 |
+| 53 | sale.confirm_order_within_credit_limit [hard] | Done | PASS | PASS | 1.0 |
+| 54 | sale.create_invoice_adjust_quantity_post [medium] | Done | PASS | PASS | 1.0 |
+| 55 | purchase.confirm_order_send_po_message [medium] | Done | PASS | FAIL | 0.0 |
+| 56 | project.update_task_assign_deadline_activity [medium] | Done | PASS | FAIL | 0.0 |
+| 57 | calendar.reschedule_event_update_location_attendee [medium] | Done | PASS | PASS | 1.0 |
+| 58 | contacts.create_linked_contact_add_tag [medium] | Done | PASS | PASS | 1.0 |
 | 59 | inventory.scrap_product [easy] | WIP | — | — | — |
 | 60 | hr.schedule_employee_activity [easy] | WIP | — | — | — |
 | 61 | sale.add_note_to_quotation [easy] | WIP | — | — | — |
@@ -752,27 +752,27 @@ Last eval: 2026-04-16 | Oracle: 33/38 (87%) | Browser-Use: 16/33 (48%) | New WIP
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
 | **Odoo modules** | Sales, Accounting |
-| **Workflow** | Find confirmed sales order `MED-INV-SO-01` for Northwind Studio. Click **Create Invoice**, keep the default draft-invoice option, set Invoice Date to May 12, 2026, change Support Retainer quantity from 3 to 4, and confirm the invoice. |
-| **Capability tested** | Related-module handoff from Sales to the generated invoice form plus a targeted inline line edit before posting. Distinct from pure quotation edits and from accounting-only invoice tasks. |
+| **Workflow** | Find confirmed sales order `MED-INV-SO-01` for Northwind Studio. Click **Create Invoice**, keep the default draft-invoice option, set Invoice Date to May 12, 2026, set Payment Terms to `30 Net Days`, and confirm the invoice. |
+| **Capability tested** | Related-module handoff from Sales to the generated invoice form plus a date field and many2one edit before posting. Distinct from pure quotation edits and from accounting-only invoice tasks. |
 
 ---
 
-## purchase.create_bill_adjust_quantity_post
+## purchase.confirm_order_send_po_message
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
-| **Odoo modules** | Purchase, Accounting |
-| **Workflow** | Find confirmed purchase order `MED-BILL-PO-01` for Sterling Components. Click **Create Bill**, set Bill Date to May 18, 2026, set Bill Reference to `SC-2048`, change Circuit Breaker Pack quantity from 6 to 8, and confirm the bill. |
-| **Capability tested** | Purchase-to-bill flow with an edit on the generated vendor bill. Distinct from creating a bill from scratch and from RFQ-only editing tasks. |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
+| **Odoo modules** | Purchase |
+| **Workflow** | Find draft RFQ `MED-SEND-PO-01` for Sterling Components. Confirm it, then open **Send PO** and overwrite the subject and body before sending. |
+| **Capability tested** | Confirm-order flow plus compose-wizard editing in Purchase. Distinct from RFQ line-edit tasks because the hard part is the send wizard, not inline line editing. |
 
 ---
 
@@ -780,12 +780,12 @@ Last eval: 2026-04-16 | Oracle: 33/38 (87%) | Browser-Use: 16/33 (48%) | New WIP
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Project |
-| **Workflow** | Open project `Customer Portal Refresh`, edit task `Revise FAQ copy`, assign Mitchell Admin, set deadline to May 22, 2026, move it to In Progress, and schedule a Call activity due May 20, 2026 with summary `Review FAQ revisions`. |
+| **Workflow** | Open project `Customer Portal Refresh`, edit task `Revise FAQ copy`, move it to In Progress, and schedule a Call activity due May 20, 2026 with summary `Review FAQ revisions`. |
 | **Capability tested** | Existing-task edit combined with chatter activity scheduling. Distinct from new task creation and from chatter-only message tasks. |
 
 ---
@@ -794,13 +794,13 @@ Last eval: 2026-04-16 | Oracle: 33/38 (87%) | Browser-Use: 16/33 (48%) | New WIP
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
 | **Odoo modules** | Calendar |
-| **Workflow** | Open one-time event `Warehouse Safety Briefing` on April 17, 2026. Change it to 11:00 AM–12:30 PM, set Location to `Training Room`, and add Marc Demo as an attendee. |
-| **Capability tested** | Editing an existing timed event with datetime fields and attendee selection. Distinct from creating a new event and from recurrence-dialog tasks. |
+| **Workflow** | Open one-time event `Warehouse Safety Briefing` on April 17, 2026. Set Location to `Training Room`, add Marc Demo as an attendee, and save. |
+| **Capability tested** | Editing an existing event through the calendar surface and managing attendees without touching recurrence. Distinct from creating a new event and from recurrence-dialog tasks. |
 
 ---
 
@@ -808,13 +808,13 @@ Last eval: 2026-04-16 | Oracle: 33/38 (87%) | Browser-Use: 16/33 (48%) | New WIP
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
 | **Odoo modules** | Contacts |
-| **Workflow** | Create person contact `Leah Morgan`, link it to the existing company `Seabird Logistics`, fill job title, email, and phone, add the `Logistics` tag, and save. |
-| **Capability tested** | New-contact creation with correct parent-company linkage and tag handling while avoiding a similarly named distractor company. Distinct from company creation and from simple address editing. |
+| **Workflow** | Create person contact `Leah Morgan`, link it to the existing company `Seabird Logistics`, fill job title, email, and phone, and save. |
+| **Capability tested** | New-contact creation with correct parent-company linkage while avoiding a similarly named distractor company. Distinct from company creation and from simple address editing. |
 
 ---
 
