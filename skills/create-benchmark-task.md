@@ -15,29 +15,35 @@ being completable by an instructed human.
 
 ---
 
-## Step 1: Validate the task name
+## Step 1: Validate the task name and check for duplicates
 
 The argument `$ARGUMENTS` should follow the pattern `module.descriptive_name`
 (e.g., `crm.convert_lead_to_opportunity`). If no argument was given, ask the
 user what workflow they want to target.
 
-Check that the task doesn't already exist:
+Check the task doesn't already exist by name:
 ```
 ls benchmark/tasks/$ARGUMENTS/ 2>/dev/null
 ```
 
-**Check STATUS.md for existing and in-progress tasks to avoid duplicates:**
+**Read the full STATUS.md to check for conceptual duplicates:**
 ```
-grep "$ARGUMENTS" benchmark/tasks/STATUS.md
+cat benchmark/tasks/STATUS.md
 ```
 
-Also skim the full table in `benchmark/tasks/STATUS.md` to make sure no
-existing task covers the same workflow, even under a different name.
+For each existing task, compare along three dimensions:
+1. **Odoo modules** — does the new task use the same module(s)?
+2. **Workflow type** — is the agent doing the same kind of action (cancel+reissue, cross-module lookup, wizard interaction, etc.)?
+3. **Capability tested** — does the failure pattern overlap (e.g., "recurrence dialog" is already covered twice)?
 
-Check existing tasks to avoid duplication:
-```
-PYTHONPATH=. python benchmark/eval.py list
-```
+**A new task must be distinct in at least two of the three dimensions.**
+
+Examples of tasks that would be rejected as too similar:
+- Another "cancel confirmed SO and reissue to correct customer" — same module, workflow, and capability as `sale.cancel_reissue_wrong_customer`
+- Another "read product field and update quotation line" — same cross-module lookup pattern as `sale.exact_total_quotation` and `sale.revise_target_quote_lines`
+- A third recurrence dialog task — same Calendar + "This Event" dialog pattern already in two tasks
+
+If the task is a duplicate, stop and tell the user which existing task covers the same ground.
 
 ---
 
