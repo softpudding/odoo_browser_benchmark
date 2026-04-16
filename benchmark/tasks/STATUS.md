@@ -4,7 +4,7 @@ Tracks all benchmark tasks. Update when adding new tasks or running evaluations.
 
 **Status values:** `WIP` — oracle or eval incomplete | `Done` — oracle passes, eval recorded
 
-Last eval: 2026-04-16 | Oracle: 28/28 (100%) | Browser-Use: 11/28 (39%)
+Last eval: 2026-04-16 | Oracle: 28/28 (100%) | Browser-Use: 11/28 (39%) | New WIP: 5
 
 ## Summary
 
@@ -38,6 +38,11 @@ Last eval: 2026-04-16 | Oracle: 28/28 (100%) | Browser-Use: 11/28 (39%)
 | 26 | website.edit_careers_spotlight | Done | PASS | PASS | 1.0 |
 | 27 | website_hr_recruitment.apply_and_triage_ops_role | Done | PASS | PASS | 1.0 |
 | 28 | website_hr_recruitment.apply_guru_job | Done | PASS | PASS | 1.0 |
+| 29 | stock.adjust_inventory_quantities | WIP | — | — | — |
+| 30 | hr.create_employee_complete_profile | WIP | — | — | — |
+| 31 | purchase.new_rfq_three_lines_date | WIP | — | — | — |
+| 32 | project.complete_task_log_note | WIP | — | — | — |
+| 33 | contacts.create_company_with_contacts | WIP | — | — | — |
 
 ---
 
@@ -430,6 +435,76 @@ Last eval: 2026-04-16 | Oracle: 28/28 (100%) | Browser-Use: 11/28 (39%)
 | **Odoo modules** | Website, Recruitment |
 | **Workflow** | Navigate to public Jobs page, find the "Guru" position, fill out the application form with exact personal details, and submit. |
 | **Capability tested** | Public website navigation; job application form submission. Simpler variant of `apply_and_triage_ops_role` — no backend triage, no custom fields. |
+
+---
+
+## stock.adjust_inventory_quantities
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Inventory (stock) |
+| **Workflow** | Navigate to Operations > Physical Inventory. Set on-hand quantities for 3 specific products (Steel Bracket 12", Copper Wire 100m, Safety Harness XL) to exact target values while leaving 2 distractor products unchanged. Click Apply All. |
+| **Capability tested** | Inline tree editing — agent must click into quantity cells in a list view and type values; fails by entering wrong row or not interacting with inline-editable cells correctly. |
+
+---
+
+## hr.create_employee_complete_profile
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Employees (hr) |
+| **Workflow** | Create a new employee "Jordan Mercer" filling fields across three areas: main form (name, job position, work phone), Work Information tab (work location, working hours), and Private Information tab (certificate level, marital status). |
+| **Capability tested** | Create-from-scratch with multi-tab form — agent typically fills only the main form and saves without visiting Work Information or Private Information tabs. |
+
+---
+
+## purchase.new_rfq_three_lines_date
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Purchase |
+| **Workflow** | Create a new RFQ for vendor Meridian Supply Co with exactly 3 product lines (Rubber Gasket 200×$1.50, Stainless Bolt M8 500×$0.75, Hex Nut M8 500×$0.40) and set Order Deadline to May 30, 2026 via the date picker. Confirm. |
+| **Capability tested** | Create-from-scratch with exact lines + date picker manipulation — agent leaves a phantom empty 4th line after entering the 3rd product, and/or sets wrong date via date picker widget. |
+
+---
+
+## project.complete_task_log_note
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Project |
+| **Workflow** | In project "Omega Platform Launch", find task "Write API integration spec" in In Progress stage. Move it to Done stage. Then post an internal log note (not a regular message) with exact text via the chatter. |
+| **Capability tested** | Chatter "Log note" vs "Send message" distinction (unexploited pattern) — agent uses wrong chatter button or skips the note step after moving the stage. |
+
+---
+
+## contacts.create_company_with_contacts
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Contacts |
+| **Workflow** | Create company "Vantage Industrial Group" with full address details. Then create two individual contacts (Patricia Drum — Procurement Manager, Steven Okafor — Logistics Coordinator) both linked to the company with exact emails and mobile numbers. |
+| **Capability tested** | Multi-record create sequence with company linkage — agent correctly creates the company and first contact, but leaves missing or incorrect fields on the second contact, or fails to link one contact to the parent company. |
 
 ---
 

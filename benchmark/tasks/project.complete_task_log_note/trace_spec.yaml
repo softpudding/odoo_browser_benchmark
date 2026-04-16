@@ -1,0 +1,29 @@
+# Trace oracle for project.complete_task_log_note
+#
+# Category 5: Deep UI interaction.
+# Agent must move a task to Done stage AND post an internal log note.
+
+required_ops: []  # Both stage change and log note validated via state diff + check.py
+
+optional_ops:
+  - project.task.read
+  - project.task.write
+  - project.task.web_save
+  - project.task.search_read
+  - project.task.web_search_read
+  - project.project.read
+  - project.project.search_read
+  - project.task.type.read
+  - project.task.type.search_read
+  - mail.message.create
+  - mail.message.read
+  - mail.message.search_read
+  - mail.thread.message_post
+  - mail.followers.create
+  - bus.bus.create
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+
+forbidden_ops:
+  - project.task.unlink
+  - project.project.unlink

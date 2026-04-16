@@ -1,0 +1,34 @@
+# Trace oracle for purchase.new_rfq_three_lines_date
+#
+# Category 5: Deep UI interaction.
+# Agent must create RFQ with 3 exact lines, set a date, and confirm.
+
+required_ops:
+  - purchase.order.button_confirm    # Must confirm the RFQ
+
+optional_ops:
+  - purchase.order.create
+  - purchase.order.read
+  - purchase.order.write
+  - purchase.order.web_save
+  - purchase.order.search_read
+  - purchase.order.web_search_read
+  - purchase.order.onchange
+  - purchase.order.line.create
+  - purchase.order.line.read
+  - purchase.order.line.write
+  - purchase.order.line.web_save
+  - purchase.order.line.search_read
+  - purchase.order.line.onchange
+  - product.product.read
+  - product.product.search_read
+  - res.partner.read
+  - res.partner.search_read
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+  - mail.message.create
+  - mail.followers.create
+
+forbidden_ops:
+  - purchase.order.unlink
+  - purchase.order.button_cancel

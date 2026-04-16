@@ -1,0 +1,18 @@
+task_id: contacts.create_company_with_contacts
+module: contacts
+difficulty: hard
+instruction: see prompt.md
+start_url: /odoo/contacts
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 480
+step_limit: 300
+metadata:
+  category: deep_ui_interaction
+  failure_pattern: "Agent creates the company and first contact correctly but leaves missing or wrong fields on the second contact, or fails to link contacts to the parent company"
+  primary_track: true
+  tier: 3

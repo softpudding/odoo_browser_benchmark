@@ -1,0 +1,18 @@
+task_id: hr.create_employee_complete_profile
+module: hr
+difficulty: hard
+instruction: see prompt.md
+start_url: /odoo/employees
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 420
+step_limit: 300
+metadata:
+  category: deep_ui_interaction
+  failure_pattern: "Agent creates employee with main-form fields only and never visits Work Information or Private Information tabs, leaving required fields blank"
+  primary_track: true
+  tier: 3

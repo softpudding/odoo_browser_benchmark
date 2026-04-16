@@ -1,0 +1,28 @@
+# Trace oracle for stock.adjust_inventory_quantities
+#
+# Category 5: Deep UI interaction.
+# Agent must edit quantity cells inline in the Physical Inventory tree view
+# and click Apply All.
+
+required_ops: []  # Validate via state diff and check.py instead of trace ops
+
+optional_ops:
+  - stock.quant.read
+  - stock.quant.search_read
+  - stock.quant.web_search_read
+  - stock.quant.write
+  - stock.quant.web_save
+  - stock.quant.action_apply_all
+  - stock.quant.action_apply_inventory
+  - stock.move.create
+  - stock.move.line.create
+  - product.product.read
+  - product.product.search_read
+  - stock.location.read
+  - stock.location.search_read
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+
+forbidden_ops:
+  - stock.quant.unlink
+  - product.product.unlink

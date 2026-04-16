@@ -1,0 +1,27 @@
+# Trace oracle for contacts.create_company_with_contacts
+#
+# Category 5: Deep UI interaction.
+# Agent must create 3 contacts in sequence: company + 2 linked individuals.
+
+required_ops: []  # Validated via state diff and check.py
+
+optional_ops:
+  - res.partner.create
+  - res.partner.read
+  - res.partner.write
+  - res.partner.web_save
+  - res.partner.search_read
+  - res.partner.web_search_read
+  - res.partner.onchange
+  - res.country.read
+  - res.country.search_read
+  - res.country.state.read
+  - res.country.state.search_read
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+  - mail.message.create
+  - mail.followers.create
+  - bus.bus.create
+
+forbidden_ops:
+  - res.partner.unlink
