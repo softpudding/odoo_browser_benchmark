@@ -1,8 +1,8 @@
-"""Seed a confirmed purchase order for the reset-to-draft edit re-confirm task.
+"""Seed a draft purchase order for the note edit + confirm task.
 
 Category 4: Recovery and rollback (EASY difficulty).
-The PO is confirmed (state='purchase'). The agent must reset it to draft,
-change the Terms and Conditions field, and re-confirm.
+The PO is in draft state. The agent must edit the Terms and Conditions
+field and confirm the order.
 """
 
 
@@ -12,7 +12,6 @@ def setup(env):
     if vendor:
         old_pos = env["purchase.order"].search([
             ("partner_id", "=", vendor.id),
-            ("name", "=", "BENCH-PO-RESET"),
         ])
         for po in old_pos:
             for pick in po.picking_ids.filtered(lambda p: p.state not in ("done", "cancel")):
@@ -44,10 +43,9 @@ def setup(env):
         })
         product = tmpl.product_variant_id
 
-    # --- Create confirmed PO with reference BENCH-PO-RESET ---
+    # --- Create draft PO ---
     po = env["purchase.order"].create({
         "partner_id": vendor.id,
-        "name": "BENCH-PO-RESET",
     })
     env["purchase.order.line"].create({
         "order_id": po.id,
@@ -56,4 +54,3 @@ def setup(env):
         "price_unit": 1.50,
         "name": "Rubber Gasket",
     })
-    po.button_confirm()

@@ -58,6 +58,11 @@ Last eval: 2026-04-16 | Oracle: 28/28 (100%) | Browser-Use: 11/28 (39%) | New WI
 | 46 | contacts.update_address_add_tag [medium] | WIP | — | — | — |
 | 47 | calendar.create_single_event [medium] | WIP | — | — | — |
 | 48 | hr_recruitment.advance_applicant_stage [medium] | WIP | — | — | — |
+| 49 | account.send_invoice_with_extra_recipient [hard] | Done | — | — | — |
+| 50 | crm.batch_mark_lost_with_reason [hard] | Done | — | — | — |
+| 51 | hr_recruitment.refuse_duplicate_applications [hard] | Done | — | — | — |
+| 52 | purchase_stock.return_partial_receipt_to_vendor [hard] | Done | — | — | — |
+| 53 | sale.confirm_order_within_credit_limit [hard] | Done | — | — | — |
 
 ---
 
