@@ -4,7 +4,7 @@ Tracks all benchmark tasks. Update when adding new tasks or running evaluations.
 
 **Status values:** `WIP` — oracle or eval incomplete | `Done` — oracle passes, eval recorded
 
-Last eval: 2026-04-16 | Oracle: 58/58 (100%) | Browser-Use: 23/58 (40%) | New WIP: 25 (15 medium + 10 easy, browser-use pending)
+Last eval: 2026-04-16 | Oracle: 63/63 (100%) | Browser-Use: 27/63 (43%) | New WIP: 20 (15 medium + 5 easy, browser-use pending)
 
 ## Summary
 
@@ -68,15 +68,15 @@ Last eval: 2026-04-16 | Oracle: 58/58 (100%) | Browser-Use: 23/58 (40%) | New WI
 | 56 | project.update_task_assign_deadline_activity [medium] | Done | PASS | FAIL | 0.0 |
 | 57 | calendar.reschedule_event_update_location_attendee [medium] | Done | PASS | PASS | 1.0 |
 | 58 | contacts.create_linked_contact_add_tag [medium] | Done | PASS | PASS | 1.0 |
-| 59 | inventory.scrap_product [easy] | WIP | — | — | — |
-| 60 | hr.schedule_employee_activity [easy] | WIP | — | — | — |
-| 61 | sale.add_note_to_quotation [easy] | WIP | — | — | — |
-| 62 | crm.set_priority_on_opportunity [easy] | WIP | — | — | — |
-| 63 | project.set_task_deadline [easy] | WIP | — | — | — |
+| 59 | purchase.confirm_rfq [easy] | Done | PASS | PASS | 1.0 |
+| 60 | hr.update_employee_work_phone [easy] | Done | PASS | PASS | 1.0 |
+| 61 | sale.add_note_to_quotation [easy] | Done | PASS | PASS | 1.0 |
+| 62 | crm.set_priority_on_opportunity [easy] | Done | PASS | FAIL | 1.0 |
+| 63 | contacts.update_contact_email [easy] | Done | PASS | PASS | 1.0 |
 | 64 | account.update_vendor_bill_reference_post [medium] | WIP | — | — | — |
-| 65 | contacts.create_company_with_supplier_tag [medium] | WIP | — | — | — |
+| 65 | contacts.update_company_with_supplier_tag [medium] | WIP | — | — | — |
 | 66 | crm.create_opportunity_tag_schedule_call [medium] | WIP | — | — | — |
-| 67 | project.duplicate_task_assign_deadline [medium] | WIP | — | — | — |
+| 67 | project.rename_task_assign_deadline [medium] | WIP | — | — | — |
 | 68 | purchase.set_order_deadline_schedule_call_confirm [medium] | WIP | — | — | — |
 | 69 | website.update_contact_info [easy] | WIP | — | — | — |
 | 70 | stock.update_product_internal_reference [easy] | WIP | — | — | — |
@@ -84,7 +84,7 @@ Last eval: 2026-04-16 | Oracle: 58/58 (100%) | Browser-Use: 23/58 (40%) | New WI
 | 72 | sale.add_discount_line [easy] | WIP | — | — | — |
 | 73 | project.add_task_subtask [easy] | WIP | — | — | — |
 | 74 | account.update_customer_invoice_terms_post [medium] | WIP | — | — | — |
-| 75 | crm.mark_opportunity_lost_with_note [medium] | WIP | — | — | — |
+| 75 | crm.update_opportunity_revenue_priority_won [medium] | WIP | — | — | — |
 | 76 | hr.update_work_location_schedule_activity [medium] | WIP | — | — | — |
 | 77 | purchase.update_rfq_reference_deadline_confirm [medium] | WIP | — | — | — |
 | 78 | contacts.create_invoice_contact_add_finance_tag [medium] | WIP | — | — | — |
@@ -838,31 +838,31 @@ Last eval: 2026-04-16 | Oracle: 58/58 (100%) | Browser-Use: 23/58 (40%) | New WI
 
 ---
 
-## inventory.scrap_product
+## purchase.confirm_rfq
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
-| **Odoo modules** | Inventory (stock) |
-| **Workflow** | Navigate to product "Steel Bracket 12"" from the Products list. Click the Scrap button. In the Scrap dialog, set Quantity to 5 and accept all defaults. Click Scrap to confirm. |
-| **Capability tested** | Accept-defaults wizard — open scrap wizard, enter a quantity, and confirm. Different from stock.adjust_inventory (physical inventory inline editing) and stock.confirm_and_validate_receipt (receipt validation). |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
+| **Odoo modules** | Purchase |
+| **Workflow** | Open draft RFQ `BENCH-CONFIRM-01` for vendor `Nimbus Industrial Supply` and click **Confirm Order** to convert it into a Purchase Order. |
+| **Capability tested** | Single-record confirmation of an existing RFQ with no wizard choices or line edits. Distinct from purchase.reset_draft_edit_reconfirm (rollback + edit + confirm) and purchase.new_rfq_three_lines_date (record creation). |
 
 ---
 
-## hr.schedule_employee_activity
+## hr.update_employee_work_phone
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
 | **Odoo modules** | Employees (hr) |
-| **Workflow** | Find employee "Sofia Chen". Click Schedule Activity in the chatter. Set Activity Type to Call, Due Date to May 10, 2026, Summary to "Annual review discussion". Click Schedule Activity. |
-| **Capability tested** | Activity scheduling via chatter dialog — multiple fields (type, date, summary) in a compact modal. Different from hr.create_employee (multi-tab form creation) and hr.update_work_information (tab navigation). |
+| **Workflow** | Open employee `Sofia Chen`, change **Work Phone** to `+1 555 0211`, and save. |
+| **Capability tested** | Simple single-field update on an existing employee record. Distinct from hr.update_work_information (multi-tab editing) and hr.schedule_employee_activity (activity modal). |
 
 ---
 
@@ -870,10 +870,10 @@ Last eval: 2026-04-16 | Oracle: 58/58 (100%) | Browser-Use: 23/58 (40%) | New WI
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
 | **Odoo modules** | Sales — Quotations |
 | **Workflow** | Open draft quotation BENCH-NOTE-01 for Azure Interior. Click Log note in the chatter (NOT Send message). Type exact text and click Log. |
 | **Capability tested** | Chatter "Log note" vs "Send message" distinction — agent must select the correct chatter tab and post an internal note. Different from project.post_chatter_message (Send message) and project.complete_task_log_note (stage change + log note). |
@@ -884,27 +884,27 @@ Last eval: 2026-04-16 | Oracle: 58/58 (100%) | Browser-Use: 23/58 (40%) | New WI
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 1.0 |
 | **Odoo modules** | CRM — Pipeline |
-| **Workflow** | Find opportunity "Beacon Analytics Deal". Set Priority to 3 stars (High) using the star widget. Click Save. |
+| **Workflow** | Find opportunity `Beacon Analytics Deal`. Set Priority to **2 stars** using the star widget and save. |
 | **Capability tested** | Star widget interaction for priority setting — different from crm.move_opportunity_stage (kanban stage change) and crm.edit_opportunity_schedule_call (multi-field edit + activity). |
 
 ---
 
-## project.set_task_deadline
+## contacts.update_contact_email
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
-| **Odoo modules** | Project — Tasks |
-| **Workflow** | Open project "Omega Platform Launch", find task "Design Landing Page Mockup". Change Deadline to May 20, 2026 via date picker. Click Save. |
-| **Capability tested** | Date picker field edit on an existing task — different from project.post_chatter_message (chatter interaction), project.create_task_assign_stage (task creation), and project.complete_task_log_note (stage change + note). |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
+| **Odoo modules** | Contacts |
+| **Workflow** | Open contact `Avery Dalton`, change **Email** to `avery.dalton+ops@example.com`, and save. |
+| **Capability tested** | Simple single-field update on an existing contact record. Distinct from contacts.update_address_add_tag (multi-field edit + tag) and contacts.create_linked_contact_add_tag (new-record creation). |
 
 ---
 
@@ -992,7 +992,7 @@ Last eval: 2026-04-16 | Oracle: 58/58 (100%) | Browser-Use: 23/58 (40%) | New WI
 
 ---
 
-## crm.mark_opportunity_lost_with_note
+## crm.update_opportunity_revenue_priority_won
 
 | Field | Value |
 |---|---|
@@ -1001,8 +1001,8 @@ Last eval: 2026-04-16 | Oracle: 58/58 (100%) | Browser-Use: 23/58 (40%) | New WI
 | **Browser-Use** | — |
 | **F1** | — |
 | **Odoo modules** | CRM — Pipeline |
-| **Workflow** | Open opportunity `Northwind Renewal Review`, click Lost, select the existing lost reason `Budget On Hold`, add an exact note, and confirm the wizard. |
-| **Capability tested** | Single-record wizard interaction with a non-default reason and exact note entry while a similarly named opportunity must remain active. |
+| **Workflow** | Open opportunity `Northwind Renewal Review`, update Expected Revenue, set Priority to High with the star widget, and click Won. |
+| **Capability tested** | Existing-record CRM editing with a star-priority control plus an explicit header workflow action, while a similarly named distractor must remain untouched. |
 
 ---
 

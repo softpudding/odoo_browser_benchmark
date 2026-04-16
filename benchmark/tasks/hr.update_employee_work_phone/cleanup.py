@@ -4,7 +4,4 @@
 def cleanup(env):
     employee = env["hr.employee"].search([("name", "=", "Sofia Chen")], limit=1)
     if employee:
-        env["mail.activity"].search([
-            ("res_model", "=", "hr.employee"),
-            ("res_id", "=", employee.id),
-        ]).unlink()
+        employee.write({"work_phone": "+1 555 0200"})

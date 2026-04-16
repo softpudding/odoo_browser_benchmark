@@ -20,7 +20,7 @@ def check(env):
 
     # Find log notes on this quotation
     messages = env["mail.message"].search([
-        ("res_model", "=", "sale.order"),
+        ("model", "=", "sale.order"),
         ("res_id", "=", so.id),
         ("subtype_id.name", "=", "Note"),
     ])

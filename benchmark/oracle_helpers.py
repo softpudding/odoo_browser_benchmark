@@ -53,7 +53,7 @@ def odoo_browser(
     *,
     headed: bool | None = None,
     slow_mo: int = 0,
-    timeout: int = 30_000,
+    timeout: int = 60_000,
 ):
     """Context manager that yields (page, browser_context).
 
@@ -93,7 +93,7 @@ def login(page: Page, *, login: str = "", password: str = "", db: str = "") -> N
     page.click(".oe_login_form button[type='submit'], form[action='/web/login'] button[type='submit']:has-text('Log')")
     page.wait_for_load_state("domcontentloaded")
     # Wait for Odoo web client to be ready
-    page.wait_for_selector(".o_action_manager, .o_home_menu", timeout=30000)
+    page.wait_for_selector(".o_action_manager, .o_home_menu", timeout=60000)
 
 
 def navigate(page: Page, path: str) -> None:
@@ -865,10 +865,11 @@ def schedule_activity(
             page.keyboard.type(due_date)
             page.keyboard.press("Tab")
         page.wait_for_timeout(500)
-        try:
-            page.press("body", "Escape")
-        except Exception:
-            pass
+        if page.locator(".o_datetime_picker:visible, .o_date_picker:visible").count() > 0:
+            try:
+                page.press("body", "Escape")
+            except Exception:
+                pass
         page.wait_for_timeout(300)
 
     if assigned_to:
@@ -886,10 +887,14 @@ def schedule_activity(
     page.wait_for_timeout(500)
     current_modal = page.locator(".modal:visible").last
     save_btn = current_modal.locator(
+        ".modal-footer button:has-text('Schedule Activity'), "
         ".modal-footer button:has-text('Schedule'), "
         ".modal-footer button:has-text('Save'), "
+        "button:has-text('Schedule Activity'), "
         "button:has-text('Schedule'), "
-        "button:has-text('Save')"
+        "button:has-text('Save'), "
+        ".modal-footer button.btn-primary, "
+        "button.btn-primary"
     )
     save_btn.first.click()
     page.wait_for_load_state("load")

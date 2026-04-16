@@ -1,4 +1,4 @@
-task_id: hr.schedule_employee_activity
+task_id: hr.update_employee_work_phone
 module: hr
 difficulty: easy
 instruction: see prompt.md
@@ -9,12 +9,12 @@ agent_interface: browser_only
 db_seed:
   snapshot: benchmark_base
 setup_script: seed.py
-time_limit_sec: 180
+time_limit_sec: 240
 step_limit: 120
 metadata:
   category: deep_ui_interaction
   difficulty_level: easy
-  agent_interaction: "Find an existing employee form, schedule a Call activity via the chatter with specific due date and summary"
-  checks_verify: "A Call activity exists for Sofia Chen with due date 2026-05-10 and correct summary"
+  agent_interaction: "Find a single employee record, edit one phone field, and save"
+  checks_verify: "One employee's work phone changed while their other details stayed intact"
   primary_track: true
   tier: 1

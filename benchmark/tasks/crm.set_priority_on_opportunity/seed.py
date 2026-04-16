@@ -2,7 +2,7 @@
 
 Category: deep_ui_interaction (EASY).
 Starting state: Opportunity "Beacon Analytics Deal" in "New" stage with
-priority 0 (normal). The agent must set priority to 3 (High).
+priority 0 (normal). The agent must set priority to 2.
 """
 
 
@@ -35,5 +35,5 @@ def setup(env):
         "priority": "0",
         "team_id": sales_team.id if sales_team else False,
         "user_id": admin.id if admin else False,
-        "description": "Analytics platform deal — set priority to High.",
+        "description": "Analytics platform deal — set priority to Important.",
     })

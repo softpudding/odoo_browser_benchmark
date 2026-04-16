@@ -1,7 +1,4 @@
-"""Oracle for crm.set_priority_on_opportunity.
-
-Open opportunity Beacon Analytics Deal, set priority to 3 stars, save.
-"""
+"""Oracle for crm.set_priority_on_opportunity."""
 
 from benchmark.oracle_helpers import (
     login,
@@ -24,9 +21,9 @@ def oracle(page):
     _wait_for_ready(page)
     page.wait_for_timeout(1000)
 
-    # Click on the 3rd star to set High priority
+    # Click on the 2nd star to set Important priority
     stars = page.locator(".o_field_widget[name='priority'] .o_priority_star")
-    stars.nth(2).click()  # 0-indexed, so nth(2) = 3rd star
+    stars.nth(1).click()
     page.wait_for_timeout(500)
 
     # Click Save

@@ -12,7 +12,7 @@ def setup(env):
     existing = env["sale.order"].search([("client_order_ref", "=", "BENCH-NOTE-01")])
     for so in existing:
         env["mail.message"].search([
-            ("res_model", "=", "sale.order"),
+            ("model", "=", "sale.order"),
             ("res_id", "=", so.id),
             ("subtype_id.name", "=", "Note"),
         ]).unlink()
@@ -31,7 +31,8 @@ def setup(env):
     if not product:
         tmpl = env["product.template"].create({
             "name": "Corner Desk Right Pedestal",
-            "type": "product",
+            "type": "consu",
+            "is_storable": True,
             "list_price": 120.0,
         })
         product = tmpl.product_variant_id
