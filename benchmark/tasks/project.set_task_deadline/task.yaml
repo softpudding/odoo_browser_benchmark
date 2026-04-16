@@ -1,0 +1,20 @@
+task_id: project.set_task_deadline
+module: project
+difficulty: easy
+instruction: see prompt.md
+start_url: /odoo/project
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 180
+step_limit: 120
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: easy
+  agent_interaction: "Find a task by name in a project, change its deadline via date picker, and save"
+  checks_verify: "Task deadline field set to 2026-05-20"
+  primary_track: true
+  tier: 1

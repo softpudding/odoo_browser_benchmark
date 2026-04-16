@@ -1,0 +1,20 @@
+task_id: inventory.scrap_product
+module: stock
+difficulty: easy
+instruction: see prompt.md
+start_url: /odoo/inventory
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 180
+step_limit: 120
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: easy
+  agent_interaction: "Navigate to a product form, open the Scrap action wizard, enter quantity 5, and confirm the scrap"
+  checks_verify: "Scrap order exists with quantity 5 for the target product"
+  primary_track: true
+  tier: 1

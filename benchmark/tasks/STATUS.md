@@ -4,7 +4,7 @@ Tracks all benchmark tasks. Update when adding new tasks or running evaluations.
 
 **Status values:** `WIP` — oracle or eval incomplete | `Done` — oracle passes, eval recorded
 
-Last eval: 2026-04-16 | Oracle: 33/38 (87%) | Browser-Use: 16/33 (48%) | New WIP: 10 (5 hard + 5 medium)
+Last eval: 2026-04-16 | Oracle: 33/38 (87%) | Browser-Use: 16/33 (48%) | New WIP: 15 (5 hard + 5 medium + 5 easy)
 
 ## Summary
 
@@ -63,6 +63,16 @@ Last eval: 2026-04-16 | Oracle: 33/38 (87%) | Browser-Use: 16/33 (48%) | New WIP
 | 51 | hr_recruitment.refuse_duplicate_applications [hard] | WIP | PASS | — | — |
 | 52 | purchase_stock.return_partial_receipt_to_vendor [hard] | WIP | PASS | — | — |
 | 53 | sale.confirm_order_within_credit_limit [hard] | WIP | PASS | — | — |
+| 54 | sale.create_invoice_adjust_quantity_post [medium] | WIP | — | — | — |
+| 55 | purchase.create_bill_adjust_quantity_post [medium] | WIP | — | — | — |
+| 56 | project.update_task_assign_deadline_activity [medium] | WIP | — | — | — |
+| 57 | calendar.reschedule_event_update_location_attendee [medium] | WIP | — | — | — |
+| 58 | contacts.create_linked_contact_add_tag [medium] | WIP | — | — | — |
+| 59 | inventory.scrap_product [easy] | WIP | — | — | — |
+| 60 | hr.schedule_employee_activity [easy] | WIP | — | — | — |
+| 61 | sale.add_note_to_quotation [easy] | WIP | — | — | — |
+| 62 | crm.set_priority_on_opportunity [easy] | WIP | — | — | — |
+| 63 | project.set_task_deadline [easy] | WIP | — | — | — |
 
 ---
 
@@ -735,6 +745,146 @@ Last eval: 2026-04-16 | Oracle: 33/38 (87%) | Browser-Use: 16/33 (48%) | New WIP
 | **Odoo modules** | Recruitment |
 | **Workflow** | In "Experienced Developer" job, find applicant "Taylor Kim". Move from "Initial Qualification" to "First Interview" stage. Set Appreciation to "In Progress". Write application summary text. Save. |
 | **Capability tested** | Kanban stage change + appreciation rating + description text. Different from hr_recruitment.new_applicant_schedule_interview (advancing existing vs creating new; no activity scheduling). |
+
+---
+
+## sale.create_invoice_adjust_quantity_post
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Sales, Accounting |
+| **Workflow** | Find confirmed sales order `MED-INV-SO-01` for Northwind Studio. Click **Create Invoice**, keep the default draft-invoice option, set Invoice Date to May 12, 2026, change Support Retainer quantity from 3 to 4, and confirm the invoice. |
+| **Capability tested** | Related-module handoff from Sales to the generated invoice form plus a targeted inline line edit before posting. Distinct from pure quotation edits and from accounting-only invoice tasks. |
+
+---
+
+## purchase.create_bill_adjust_quantity_post
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Purchase, Accounting |
+| **Workflow** | Find confirmed purchase order `MED-BILL-PO-01` for Sterling Components. Click **Create Bill**, set Bill Date to May 18, 2026, set Bill Reference to `SC-2048`, change Circuit Breaker Pack quantity from 6 to 8, and confirm the bill. |
+| **Capability tested** | Purchase-to-bill flow with an edit on the generated vendor bill. Distinct from creating a bill from scratch and from RFQ-only editing tasks. |
+
+---
+
+## project.update_task_assign_deadline_activity
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Project |
+| **Workflow** | Open project `Customer Portal Refresh`, edit task `Revise FAQ copy`, assign Mitchell Admin, set deadline to May 22, 2026, move it to In Progress, and schedule a Call activity due May 20, 2026 with summary `Review FAQ revisions`. |
+| **Capability tested** | Existing-task edit combined with chatter activity scheduling. Distinct from new task creation and from chatter-only message tasks. |
+
+---
+
+## calendar.reschedule_event_update_location_attendee
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Calendar |
+| **Workflow** | Open one-time event `Warehouse Safety Briefing` on April 17, 2026. Change it to 11:00 AM–12:30 PM, set Location to `Training Room`, and add Marc Demo as an attendee. |
+| **Capability tested** | Editing an existing timed event with datetime fields and attendee selection. Distinct from creating a new event and from recurrence-dialog tasks. |
+
+---
+
+## contacts.create_linked_contact_add_tag
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Contacts |
+| **Workflow** | Create person contact `Leah Morgan`, link it to the existing company `Seabird Logistics`, fill job title, email, and phone, add the `Logistics` tag, and save. |
+| **Capability tested** | New-contact creation with correct parent-company linkage and tag handling while avoiding a similarly named distractor company. Distinct from company creation and from simple address editing. |
+
+---
+
+## inventory.scrap_product
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Inventory (stock) |
+| **Workflow** | Navigate to product "Steel Bracket 12"" from the Products list. Click the Scrap button. In the Scrap dialog, set Quantity to 5 and accept all defaults. Click Scrap to confirm. |
+| **Capability tested** | Accept-defaults wizard — open scrap wizard, enter a quantity, and confirm. Different from stock.adjust_inventory (physical inventory inline editing) and stock.confirm_and_validate_receipt (receipt validation). |
+
+---
+
+## hr.schedule_employee_activity
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Employees (hr) |
+| **Workflow** | Find employee "Sofia Chen". Click Schedule Activity in the chatter. Set Activity Type to Call, Due Date to May 10, 2026, Summary to "Annual review discussion". Click Schedule Activity. |
+| **Capability tested** | Activity scheduling via chatter dialog — multiple fields (type, date, summary) in a compact modal. Different from hr.create_employee (multi-tab form creation) and hr.update_work_information (tab navigation). |
+
+---
+
+## sale.add_note_to_quotation
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Sales — Quotations |
+| **Workflow** | Open draft quotation BENCH-NOTE-01 for Azure Interior. Click Log note in the chatter (NOT Send message). Type exact text and click Log. |
+| **Capability tested** | Chatter "Log note" vs "Send message" distinction — agent must select the correct chatter tab and post an internal note. Different from project.post_chatter_message (Send message) and project.complete_task_log_note (stage change + log note). |
+
+---
+
+## crm.set_priority_on_opportunity
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | CRM — Pipeline |
+| **Workflow** | Find opportunity "Beacon Analytics Deal". Set Priority to 3 stars (High) using the star widget. Click Save. |
+| **Capability tested** | Star widget interaction for priority setting — different from crm.move_opportunity_stage (kanban stage change) and crm.edit_opportunity_schedule_call (multi-field edit + activity). |
+
+---
+
+## project.set_task_deadline
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Project — Tasks |
+| **Workflow** | Open project "Omega Platform Launch", find task "Design Landing Page Mockup". Change Deadline to May 20, 2026 via date picker. Click Save. |
+| **Capability tested** | Date picker field edit on an existing task — different from project.post_chatter_message (chatter interaction), project.create_task_assign_stage (task creation), and project.complete_task_log_note (stage change + note). |
 
 ---
 
