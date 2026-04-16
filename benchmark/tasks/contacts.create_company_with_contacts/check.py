@@ -21,9 +21,9 @@ def check(env):
         failures.append(
             f"Company phone: expected '+1 (312) 555-0190', got '{company.phone}'"
         )
-    if company.website and "vantage-industrial" not in (company.website or ""):
+    if not company.website or "vantage-industrial" not in company.website:
         failures.append(
-            f"Company website: expected 'vantage-industrial.example.com', got '{company.website}'"
+            f"Company website: expected 'vantage-industrial.example.com', got '{company.website or '(none)'}'"
         )
     if company.street != "4400 Commerce Drive":
         failures.append(

@@ -58,7 +58,7 @@ def check(env):
             plain = re.sub(r"<[^>]+>", "", body_text).strip()
             # Normalize whitespace
             plain = " ".join(plain.split())
-            if EXPECTED_NOTE in plain or plain in EXPECTED_NOTE:
+            if EXPECTED_NOTE in plain:
                 found_note = True
                 break
 
