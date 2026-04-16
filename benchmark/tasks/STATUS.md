@@ -4,7 +4,7 @@ Tracks all benchmark tasks. Update when adding new tasks or running evaluations.
 
 **Status values:** `WIP` — oracle or eval incomplete | `Done` — oracle passes, eval recorded
 
-Last eval: 2026-04-16 | Oracle: 71/71 (100%) | Browser-Use: 31/71 (43.7%) | New WIP: 15 (10 medium + 5 easy)
+Last eval: 2026-04-16 | Oracle: 71/71 (100%) | Browser-Use: 31/71 (43.7%) | New WIP: 25 (20 medium + 5 easy)
 
 ## Summary
 
@@ -106,6 +106,16 @@ Last eval: 2026-04-16 | Oracle: 71/71 (100%) | Browser-Use: 31/71 (43.7%) | New 
 | 94 | sale.cancel_quotation_log_reason [medium] | WIP | — | — | — |
 | 95 | hr_recruitment.refuse_applicant_with_reason [medium] | WIP | — | — | — |
 | 96 | crm.mark_opportunity_won_update_revenue [medium] | WIP | — | — | — |
+| 97 | account.create_customer_invoice_post [medium] | WIP | — | — | — |
+| 98 | account.partial_pay_vendor_bill_with_memo [medium] | WIP | — | — | — |
+| 99 | calendar.create_all_day_event_with_attendee [medium] | WIP | — | — | — |
+| 100 | contacts.create_company_add_supplier_tag [medium] | WIP | — | — | — |
+| 101 | crm.create_lead_priority_schedule_call [medium] | WIP | — | — | — |
+| 102 | hr.assign_manager_set_work_location [medium] | WIP | — | — | — |
+| 103 | hr_recruitment.schedule_interview_for_applicant [medium] | WIP | — | — | — |
+| 104 | project.duplicate_task_assign_deadline [medium] | WIP | — | — | — |
+| 105 | purchase.cancel_rfq_log_note [medium] | WIP | — | — | — |
+| 106 | sale.update_salesperson_validity_confirm [medium] | WIP | — | — | — |
 
 ---
 
@@ -1240,6 +1250,146 @@ Last eval: 2026-04-16 | Oracle: 71/71 (100%) | Browser-Use: 31/71 (43.7%) | New 
 | **Odoo modules** | CRM — Pipeline |
 | **Workflow** | Open opportunity `Crestline Networks - Managed VPN` among similarly-named distractors, update expected revenue to 52000, then click the Won status-bar button. |
 | **Capability tested** | Field edit + state-bar Won action on a single opportunity among look-alike distractors, distinct from lost/schedule-call CRM tasks. |
+
+---
+
+## account.create_customer_invoice_post
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Accounting — Customer Invoices |
+| **Workflow** | Create a new customer invoice for `Northwind Advisory`, set invoice date `2026-06-10`, set customer reference `NWA-AR-220`, add two exact product lines, then confirm it. |
+| **Capability tested** | Accounting create-from-scratch flow on the customer-invoice form with multiple exact fields, distinct from vendor-bill creation and from edit-an-existing-invoice tasks. |
+
+---
+
+## account.partial_pay_vendor_bill_with_memo
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Accounting — Vendor Bills |
+| **Workflow** | Open posted vendor bill `VB-PARTIAL-01`, register a payment, change the amount to a partial value, set memo `PARTIAL-JUN-600`, set payment date `2026-06-12`, and create the payment. |
+| **Capability tested** | Payment wizard interaction with a non-default amount plus memo/date edits, distinct from the existing full-payment customer-invoice task. |
+
+---
+
+## calendar.create_all_day_event_with_attendee
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Calendar |
+| **Workflow** | Create all-day event `Operations Offsite` on `2026-06-18`, set location and description, add `Marc Demo` as attendee, and save it as a one-time event. |
+| **Capability tested** | Calendar creation flow using the all-day toggle plus attendee selection, distinct from timed event creation and from editing existing events. |
+
+---
+
+## contacts.create_company_add_supplier_tag
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Contacts |
+| **Workflow** | Create company `North Coast Fabrication`, fill address and communication fields, add the `Supplier` tag, and save. |
+| **Capability tested** | New-company creation with several address fields and a tag widget, distinct from editing an existing company and from creating a linked child contact. |
+
+---
+
+## crm.create_lead_priority_schedule_call
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | CRM — Leads |
+| **Workflow** | Create lead `Apex Warehouse Expansion`, set expected revenue and 2-star priority, then schedule a Call activity with exact summary and due date. |
+| **Capability tested** | Lead creation plus star-priority control and activity scheduling, distinct from opportunity editing and from lead-conversion tasks. |
+
+---
+
+## hr.assign_manager_set_work_location
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Employees (hr) |
+| **Workflow** | Open employee `Maya Ortiz`, set manager `Nadia Reyes`, set work location `HQ Annex`, update work phone, and save. |
+| **Capability tested** | Multi-field employee edit centered on reporting-line and location fields, distinct from the repo's timezone/certificate and activity-scheduling HR tasks. |
+
+---
+
+## hr_recruitment.schedule_interview_for_applicant
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Recruitment |
+| **Workflow** | Open applicant `Riley Mercer` under `Operations Analyst` and schedule a Call activity due `2026-06-17` with summary `Schedule first interview`. |
+| **Capability tested** | Applicant-form activity scheduling without creation or stage movement, distinct from applicant creation, refusal, and stage-advance flows. |
+
+---
+
+## project.duplicate_task_assign_deadline
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Project |
+| **Workflow** | Open task `Prepare webinar outline`, duplicate it from the Action menu, rename the copy to `Prepare webinar outline - APAC`, set a deadline, and move it to `In Progress`. |
+| **Capability tested** | Project-task duplication followed by edits on the copy only, distinct from fresh task creation, subtask creation, and archive/log-note tasks. |
+
+---
+
+## purchase.cancel_rfq_log_note
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Purchase — RFQs |
+| **Workflow** | Open draft RFQ `P-RFQ-CANCEL-01`, post an internal log note with exact text, then cancel the RFQ. |
+| **Capability tested** | RFQ cancellation paired with chatter log-note usage, distinct from purchase confirmation, duplicate-copy, and line-edit confirmation workflows. |
+
+---
+
+## sale.update_salesperson_validity_confirm
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Sales — Quotations |
+| **Workflow** | Open quotation `S-QUOTE-VAL-01`, set salesperson `Marc Demo`, set expiration date `2026-06-25`, add customer reference `CGS-JUNE`, and confirm it. |
+| **Capability tested** | Header-field edit plus confirmation without touching line items, distinct from discount-line editing, cancel/log-note flows, and duplicate-quotation tasks. |
 
 ---
 

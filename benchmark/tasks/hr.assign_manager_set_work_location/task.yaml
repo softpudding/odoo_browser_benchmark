@@ -1,0 +1,20 @@
+task_id: hr.assign_manager_set_work_location
+module: hr
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/employees
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 300
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "Open an existing employee, update manager and work location, and save a phone change on the same form."
+  checks_verify: "The target employee now reports to the requested manager with the requested work location and phone number, while role fields stay unchanged."
+  primary_track: true
+  tier: 2

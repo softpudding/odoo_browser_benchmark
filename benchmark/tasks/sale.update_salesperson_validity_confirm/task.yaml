@@ -1,0 +1,20 @@
+task_id: sale.update_salesperson_validity_confirm
+module: sale
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/sales
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 300
+step_limit: 200
+metadata:
+  category: side_effect_trap
+  difficulty_level: medium
+  agent_interaction: "Open the right draft quotation, update salesperson and validity date, add a customer reference, and confirm without changing line items."
+  checks_verify: "The target quotation is confirmed with the requested salesperson, validity date, and customer reference while both product lines and the distractor quotation stay unchanged."
+  primary_track: true
+  tier: 2

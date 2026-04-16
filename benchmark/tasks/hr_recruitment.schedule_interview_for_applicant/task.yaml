@@ -1,0 +1,20 @@
+task_id: hr_recruitment.schedule_interview_for_applicant
+module: hr_recruitment
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/recruitment
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 300
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "Open a specific applicant record and schedule a Call activity with an exact summary and due date."
+  checks_verify: "The target applicant has the requested interview-planning activity while staying in the original stage and the distractor applicant remains untouched."
+  primary_track: true
+  tier: 2
