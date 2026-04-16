@@ -1,0 +1,27 @@
+# Canonical module list for the benchmark base snapshot.
+#
+# These are the *root* modules — everything else (account, sale, mail,
+# calendar, hr, contacts, ...) is pulled in transitively by Odoo's
+# dependency resolution.  Auto-installed glue modules
+# (sale_project, project_purchase_stock, spreadsheet_dashboard_*, ...)
+# are activated automatically when their parents are present.
+#
+# Adding a module here means: "the benchmark needs this app's models
+# and UI to exist in the base DB before any task seed runs."  After
+# editing, regenerate the snapshot with:
+#
+#     uv run benchmark-eval bootstrap-base --rebuild
+#
+# Lines starting with '#' and blank lines are ignored.
+
+benchmark_trace
+crm
+hr_recruitment
+payment
+project
+purchase
+sale_service
+spreadsheet_dashboard
+stock
+web_hierarchy
+website

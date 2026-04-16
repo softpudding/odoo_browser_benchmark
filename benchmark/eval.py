@@ -42,6 +42,9 @@ Usage (with uv — recommended)::
 
     # Clean up orphan processes / stale DBs after a crash
     uv run benchmark-eval cleanup
+
+    # First-time setup on a new machine: build the base DB + snapshot
+    uv run benchmark-eval bootstrap-base
 """
 
 from __future__ import annotations
@@ -906,6 +909,27 @@ print('SEED_OK')
 
 SNAPSHOT_DIR = Path(os.getenv("BENCHMARK_SNAPSHOT_DIR", "/tmp/benchmark_snapshots"))
 BASE_SNAPSHOT = "benchmark_base"
+BASE_MODULES_FILE = BENCHMARK_DIR / "base_modules.txt"
+
+
+def _load_base_modules() -> list[str]:
+    """Read the pinned root-module list for the base snapshot.
+
+    Comments (``# ...``) and blank lines are ignored.
+    """
+    if not BASE_MODULES_FILE.exists():
+        raise FileNotFoundError(
+            f"Base module list not found: {BASE_MODULES_FILE}. "
+            f"This file pins the modules installed in the benchmark base DB."
+        )
+    modules = []
+    for line in BASE_MODULES_FILE.read_text().splitlines():
+        line = line.split("#", 1)[0].strip()
+        if line:
+            modules.append(line)
+    if not modules:
+        raise RuntimeError(f"No modules listed in {BASE_MODULES_FILE}")
+    return modules
 
 
 def _prepare_episode(
@@ -1020,6 +1044,90 @@ def cmd_prepare_base(args: argparse.Namespace) -> None:
     from benchmark.db import DatabaseManager
     dbm = DatabaseManager()
     _create_base_snapshot(args.db, dbm)
+    print(f"Done. All future eval runs will restore from this snapshot.")
+
+
+def cmd_bootstrap_base(args: argparse.Namespace) -> None:
+    """Build the benchmark base DB and snapshot from scratch.
+
+    Reads the pinned root-module list from ``benchmark/base_modules.txt``,
+    installs them into a freshly-created database via ``odoo-bin -i``, then
+    dumps the snapshot to ``BENCHMARK_SNAPSHOT_DIR``.  Idempotent in the
+    sense that re-running with ``--rebuild`` always produces a snapshot
+    matching the current pinned module list.
+
+    Use this on a new machine, or after editing ``base_modules.txt``::
+
+        uv run benchmark-eval bootstrap-base                # safe: refuses if DB exists
+        uv run benchmark-eval bootstrap-base --rebuild      # drop + recreate
+    """
+    from benchmark.db import DatabaseManager
+
+    db = args.db
+    modules = _load_base_modules()
+    dbm = DatabaseManager()
+
+    print(f"=== Bootstrap benchmark base DB ===")
+    print(f"  DB:       {db}")
+    print(f"  Modules:  {len(modules)} root ({', '.join(modules)})")
+    print(f"  Snapshot: {SNAPSHOT_DIR / (BASE_SNAPSHOT + '.dump')}")
+    print()
+
+    # 1. Handle existing DB
+    if dbm.database_exists(db):
+        if not args.rebuild:
+            print(
+                f"ERROR: Database '{db}' already exists. "
+                f"Pass --rebuild to drop and recreate it, "
+                f"or run 'prepare-base --db {db}' to snapshot it as-is."
+            )
+            sys.exit(1)
+        print(f"  Dropping existing '{db}'...")
+        dbm.drop_database(db)
+
+    # 2. Create empty DB
+    print(f"  Creating '{db}'...")
+    result = subprocess.run(
+        ["createdb", db], env=dbm._pg_env(), capture_output=True, text=True,
+    )
+    if result.returncode != 0:
+        raise RuntimeError(f"createdb failed: {result.stderr}")
+
+    # 3. Install modules via odoo-bin
+    print(f"  Installing modules (this takes a few minutes)...")
+    log_path = Path(f"/tmp/bench_bootstrap_{db}.log")
+    with open(log_path, "w") as log_fh:
+        result = subprocess.run(
+            [ODOO_PYTHON, ODOO_BIN,
+             "-c", ODOO_CONF, "-d", db,
+             "-i", ",".join(modules),
+             "--stop-after-init", "--no-http"],
+            stdout=log_fh, stderr=subprocess.STDOUT,
+            cwd=str(REPO_ROOT),
+        )
+    if result.returncode != 0:
+        print(f"ERROR: odoo-bin -i failed (exit {result.returncode}). See {log_path}")
+        sys.exit(1)
+    print(f"  Module install log: {log_path}")
+
+    # 4. Verify benchmark_trace landed (it gates trace recording)
+    check = subprocess.run(
+        ["psql", "-U", dbm.db_user, "-d", db, "-tAc",
+         "SELECT count(*) FROM ir_module_module "
+         "WHERE name='benchmark_trace' AND state='installed'"],
+        env=dbm._pg_env(), capture_output=True, text=True,
+    )
+    if check.stdout.strip() != "1":
+        print(
+            f"ERROR: benchmark_trace did not install. "
+            f"API trace recording will be unavailable. See {log_path}"
+        )
+        sys.exit(1)
+
+    # 5. Snapshot
+    print(f"  Dumping snapshot...")
+    _create_base_snapshot(db, dbm)
+    print()
     print(f"Done. All future eval runs will restore from this snapshot.")
 
 
@@ -1531,6 +1639,16 @@ def main() -> None:
     prep_p = sub.add_parser("prepare-base", help="Create base DB snapshot")
     prep_p.add_argument("--db", default=DEFAULT_DB)
 
+    # bootstrap-base
+    boot_p = sub.add_parser(
+        "bootstrap-base",
+        help="Build the benchmark base DB from scratch and snapshot it",
+    )
+    boot_p.add_argument("--db", default=DEFAULT_DB,
+                        help=f"DB name to create (default: {DEFAULT_DB})")
+    boot_p.add_argument("--rebuild", action="store_true",
+                        help="Drop the DB if it already exists")
+
     # cleanup
     sub.add_parser("cleanup", help="Kill orphan benchmark processes and drop stale DBs")
 
@@ -1549,6 +1667,8 @@ def main() -> None:
         cmd_list(args)
     elif args.command == "prepare-base":
         cmd_prepare_base(args)
+    elif args.command == "bootstrap-base":
+        cmd_bootstrap_base(args)
     elif args.command == "cleanup":
         cmd_cleanup(args)
     elif args.command == "score":

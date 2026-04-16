@@ -538,7 +538,12 @@ uv run benchmark-eval cleanup
 # Re-score a completed run
 uv run benchmark-eval score <output_dir> --task <task_dir>
 
-# Install new modules in benchmark DB + rebuild snapshot
-.venv/bin/python3 odoo-bin -d benchmark_validate -i module1,module2 -c .odoorc.local --stop-after-init
+# First-time setup on a fresh machine: build the base DB + snapshot
+uv run benchmark-eval bootstrap-base
+
+# Add a module to the benchmark base: edit benchmark/base_modules.txt, then
+uv run benchmark-eval bootstrap-base --rebuild
+
+# Snapshot the current state of an arbitrary DB (advanced)
 uv run benchmark-eval prepare-base --db benchmark_validate
 ```
