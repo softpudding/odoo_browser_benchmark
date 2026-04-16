@@ -38,16 +38,16 @@ Last eval: 2026-04-16 | Oracle: 28/28 (100%) | Browser-Use: 11/28 (39%) | New WI
 | 26 | website.edit_careers_spotlight | Done | PASS | PASS | 1.0 |
 | 27 | website_hr_recruitment.apply_and_triage_ops_role | Done | PASS | PASS | 1.0 |
 | 28 | website_hr_recruitment.apply_guru_job | Done | PASS | PASS | 1.0 |
-| 29 | stock.adjust_inventory_quantities | WIP | — | — | — |
-| 30 | hr.create_employee_complete_profile | WIP | — | — | — |
-| 31 | purchase.new_rfq_three_lines_date | WIP | — | — | — |
-| 32 | project.complete_task_log_note | WIP | — | — | — |
-| 33 | contacts.create_company_with_contacts | WIP | — | — | — |
-| 34 | sale.change_validity_date [easy] | Change expiration date on draft quotation | WIP | — | — | — |
-| 35 | account.register_payment_defaults [easy] | Register payment on invoice with accept-defaults wizard | WIP | — | — | — |
-| 36 | crm.move_opportunity_stage [easy] | Move single opportunity from New to Qualified stage | WIP | — | — | — |
-| 37 | purchase.reset_draft_edit_reconfirm [easy] | Reset PO to draft, change notes, re-confirm | WIP | — | — | — |
-| 38 | project.post_chatter_message [easy] | Post a regular message in task chatter | WIP | — | — | — |
+| 29 | stock.adjust_inventory_quantities | Done | PASS | FAIL | 0.0 |
+| 30 | hr.create_employee_complete_profile | Done | PASS | FAIL | 0.0 |
+| 31 | purchase.new_rfq_three_lines_date | Done | PASS | FAIL | 0.0 |
+| 32 | project.complete_task_log_note | Done | PASS | FAIL | 0.0 |
+| 33 | contacts.create_company_with_contacts | Done | PASS | FAIL | 0.0 |
+| 34 | sale.change_validity_date [easy] | WIP | — | — | — |
+| 35 | account.register_payment_defaults [easy] | WIP | — | — | — |
+| 36 | crm.move_opportunity_stage [easy] | WIP | — | — | — |
+| 37 | purchase.reset_draft_edit_reconfirm [easy] | WIP | — | — | — |
+| 38 | project.post_chatter_message [easy] | WIP | — | — | — |
 
 ---
 
