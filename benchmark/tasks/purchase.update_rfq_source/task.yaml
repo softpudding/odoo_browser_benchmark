@@ -1,0 +1,20 @@
+task_id: purchase.update_rfq_source
+difficulty: easy
+module: purchase
+instruction: see prompt.md
+start_url: /odoo/purchase
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 180
+step_limit: 120
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: easy
+  agent_interaction: "Open one RFQ and edit a single header field"
+  checks_verify: "RFQ source document is changed from BENCH-SRC-01 to BENCH-SRC-01-UPDATED"
+  primary_track: true
+  tier: 1

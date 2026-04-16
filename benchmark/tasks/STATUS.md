@@ -1558,3 +1558,9 @@ Before creating a new task, read all entries above and check for overlap on thre
 **A new task must be distinct in at least two of the three dimensions.**
 
 When adding a new task, append a form block (same format as above) with `Status: WIP` and dashes for test results, then commit and push immediately — this is the team's duplicate-prevention signal.
+
+| 117 | account.update_invoice_reference [easy] | WIP | — | — | — |
+| 118 | contacts.update_contact_phone [easy] | WIP | — | — | — |
+| 119 | crm.update_opportunity_revenue [easy] | WIP | — | — | — |
+| 120 | hr.update_employee_job_title [easy] | WIP | — | — | — |
+| 121 | purchase.update_rfq_source [easy] | WIP | — | — | — |
