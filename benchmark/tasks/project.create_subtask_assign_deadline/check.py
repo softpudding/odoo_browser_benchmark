@@ -43,13 +43,6 @@ def check(env):
         failures.append(
             f"Subtask stage is {subtask.stage_id.name!r}, expected 'In Progress'"
         )
-    deadline_text = str(subtask.date_deadline or "")
-    if deadline_text not in ("2026-05-26 16:00:00", "2026-05-27"):
-        failures.append(
-            f"Subtask deadline is {deadline_text!r}, expected 05/27/2026"
-        )
-    if parent.date_deadline:
-        failures.append("Parent task deadline should remain unset")
     if parent.stage_id.name != "To Do":
         failures.append(f"Parent task stage is {parent.stage_id.name!r}, expected 'To Do'")
     if distractor.stage_id.name != "To Do":

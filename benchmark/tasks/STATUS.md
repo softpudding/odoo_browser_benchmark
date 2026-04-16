@@ -4,7 +4,7 @@ Tracks all benchmark tasks. Update when adding new tasks or running evaluations.
 
 **Status values:** `WIP` — oracle or eval incomplete | `Done` — oracle passes, eval recorded
 
-Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 35/76 (46.1%) | New WIP: 30 (25 medium + 5 easy)
+Last eval: 2026-04-16 | Oracle: 81/81 (100%) | Browser-Use: 38/81 (46.9%) | New WIP: 30 (25 medium + 5 easy)
 
 ## Summary
 
@@ -116,6 +116,11 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 35/76 (46.1%) | New 
 | 104 | project.duplicate_task_assign_deadline [medium] | WIP | — | — | — |
 | 105 | purchase.cancel_rfq_log_note [medium] | WIP | — | — | — |
 | 106 | sale.update_salesperson_validity_confirm [medium] | WIP | — | — | — |
+| 107 | crm.convert_lead_link_customer_schedule_call [medium] | Done | PASS | FAIL | 0.0 |
+| 108 | purchase_stock.confirm_rfq_receive_full [medium] | Done | PASS | FAIL | 0.0 |
+| 109 | sale.create_invoice_register_payment_memo [medium] | Done | PASS | PASS | 1.0 |
+| 110 | contacts.create_company_add_supplier_finance_tags [medium] | Done | PASS | PASS | 1.0 |
+| 111 | project.create_subtask_assign_deadline [medium] | Done | PASS | PASS | 1.0 |
 
 ---
 
@@ -1390,6 +1395,76 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 35/76 (46.1%) | New 
 | **Odoo modules** | Sales — Quotations |
 | **Workflow** | Open quotation `S-QUOTE-VAL-01`, set salesperson `Marc Demo`, set expiration date `2026-06-25`, add customer reference `CGS-JUNE`, and confirm it. |
 | **Capability tested** | Header-field edit plus confirmation without touching line items, distinct from discount-line editing, cancel/log-note flows, and duplicate-quotation tasks. |
+
+---
+
+## crm.convert_lead_link_customer_schedule_call
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
+| **Odoo modules** | CRM — Leads |
+| **Workflow** | Find lead `Summit Ridge Support Rollout`, convert it with the opportunity wizard by linking existing customer `Summit Ridge Manufacturing`, set the stage to `Qualified`, and save if needed. |
+| **Capability tested** | Lead-to-opportunity conversion through a wizard with existing-customer selection, distinct from simple opportunity edits and from win/loss stage tasks. |
+
+---
+
+## purchase_stock.confirm_rfq_receive_full
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
+| **Odoo modules** | Purchase, Inventory |
+| **Workflow** | Open RFQ `MED-RECV-PO-01`, confirm it, follow the generated receipt, set Done quantities for both lines to the ordered amounts, and validate without creating a backorder. |
+| **Capability tested** | Cross-app RFQ-to-receipt handoff plus exact stock receipt validation across multiple lines, distinct from simple purchase confirmation or single-form edits. |
+
+---
+
+## sale.create_invoice_register_payment_memo
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
+| **Odoo modules** | Sales, Accounting |
+| **Workflow** | Open confirmed sales order `PAYFLOW-01`, create the draft invoice, confirm it, then register payment with the exact date `05/21/2026` and memo `PAYFLOW-MAY-SETTLEMENT`. |
+| **Capability tested** | Sales-to-accounting document handoff with sequential invoice and payment wizards, distinct from quote confirmation and invoice line-adjustment tasks. |
+
+---
+
+## contacts.create_company_add_supplier_finance_tags
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
+| **Odoo modules** | Contacts |
+| **Workflow** | Create company `Harborview Components`, set the exact phone and website, add the `Supplier` tag, and save while leaving the similarly named distractor company unchanged. |
+| **Capability tested** | Fresh company creation with company/person mode selection, tag autocomplete, and duplicate avoidance, distinct from the repo's address-heavy company-creation and linked-contact tasks. |
+
+---
+
+## project.create_subtask_assign_deadline
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
+| **Odoo modules** | Project |
+| **Workflow** | Open task `Prepare onboarding checklist`, create subtask `Draft kickoff agenda` from the Sub-tasks tab, assign it to `Administrator`, move it to `In Progress`, and save. |
+| **Capability tested** | Inline one2many subtask creation with assignee and stage updates on the child task only, distinct from top-level task editing, duplication, or chatter-note project flows. |
 
 ---
 

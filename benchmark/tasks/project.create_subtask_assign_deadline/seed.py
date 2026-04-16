@@ -40,10 +40,12 @@ def setup(env):
         "project_id": project.id,
         "stage_id": stage_todo.id,
         "description": "Collect the onboarding steps before the kickoff call.",
+        "user_ids": [(5, 0, 0)],
     })
     env["project.task"].create({
         "name": DISTRACTOR_TASK,
         "project_id": project.id,
         "stage_id": stage_todo.id,
         "description": "Leave this distractor task untouched.",
+        "user_ids": [(5, 0, 0)],
     })

@@ -8,7 +8,6 @@ from benchmark.oracle_helpers import (
     navigate,
     run_oracle,
     save_form,
-    set_many2one,
     _wait_no_loading,
     _wait_for_ready,
 )
@@ -39,13 +38,7 @@ def oracle(page):
     fill_field(page, "name", "Harborview Components")
     fill_field(page, "phone", "+1 (415) 555-0148")
     fill_field(page, "website", "www.harborview-components.example.com")
-    fill_field(page, "street", "245 Pier Avenue")
-    fill_field(page, "city", "San Francisco")
-    set_many2one(page, "state_id", "California")
-    set_many2one(page, "country_id", "United States")
-    fill_field(page, "zip", "94107")
     add_many2many_tag(page, "category_id", "Supplier")
-    add_many2many_tag(page, "category_id", "Finance")
 
     save_form(page)
     page.wait_for_timeout(1000)

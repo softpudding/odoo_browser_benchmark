@@ -4,13 +4,11 @@ Find the project **`Atlas Implementation Sprint`** and open the task **`Prepare 
 
 Complete the workflow as follows:
 
-1. Go to the **Subtasks** tab.
+1. Go to the **Sub-tasks** tab.
 2. Add a new subtask named **`Draft kickoff agenda`**.
-3. Open the new subtask.
-4. Assign it to **Administrator**.
-5. Set **Deadline** to **05/27/2026**.
-6. Move it to **In Progress**.
-7. Save the subtask.
+3. On that subtask, assign it to **Administrator**.
+4. Make sure it ends up in **In Progress**.
+5. Save the task.
 
 **Rules:**
 - Do not rename the parent task

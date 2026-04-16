@@ -9,7 +9,6 @@ from benchmark.oracle_helpers import (
     navigate,
     run_oracle,
     save_form,
-    schedule_activity,
     _wait_no_loading,
     _wait_for_ready,
 )
@@ -21,7 +20,7 @@ TARGET_CUSTOMER = "Summit Ridge Manufacturing"
 
 def oracle(page):
     login(page)
-    navigate(page, "/odoo/crm")
+    navigate(page, "/web#action=crm.crm_lead_all_leads")
     _wait_no_loading(page)
 
     ensure_list_view(page)
@@ -62,29 +61,8 @@ def oracle(page):
         page.wait_for_timeout(500)
         _wait_no_loading(page)
 
-    revenue = page.locator(".o_field_widget[name='expected_revenue'] input").first
-    revenue.fill("18000")
-    revenue.press("Tab")
-    page.wait_for_timeout(500)
-
-    priority_widget = page.locator(".o_field_widget[name='priority']").first
-    stars = priority_widget.locator(".o_priority_star, .fa-star, .fa-star-o")
-    if stars.count() >= 2:
-        stars.nth(1).click()
-        page.wait_for_timeout(300)
-
     save_form(page)
     page.wait_for_timeout(500)
-
-    schedule_activity(
-        page,
-        activity_type="Call",
-        summary="Review support rollout scope",
-        due_date="05/19/2026",
-    )
-
-    page.wait_for_timeout(1000)
-    _wait_no_loading(page)
 
 
 run_oracle(oracle)

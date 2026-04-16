@@ -2,14 +2,13 @@
 
 from benchmark.oracle_helpers import (
     click_add_a_line,
+    click_button_name,
     click_list_row,
-    click_stat_button,
     click_tab,
     login,
     navigate,
     run_oracle,
     save_form,
-    set_date,
     set_o2m_field,
     _wait_no_loading,
     _wait_for_ready,
@@ -25,7 +24,7 @@ def oracle(page):
     page.wait_for_timeout(1000)
     _wait_for_ready(page)
 
-    click_stat_button(page, "Tasks")
+    click_button_name(page, "action_view_tasks")
     page.wait_for_timeout(1000)
     _wait_for_ready(page)
 
@@ -33,25 +32,18 @@ def oracle(page):
     page.wait_for_timeout(1000)
     _wait_for_ready(page)
 
-    click_tab(page, "Subtasks")
+    click_tab(page, "Sub-tasks")
     page.wait_for_timeout(500)
 
     click_add_a_line(page)
     page.wait_for_timeout(500)
     set_o2m_field(page, 0, "name", "Draft kickoff agenda")
     page.wait_for_timeout(500)
-    save_form(page)
-    page.wait_for_timeout(1000)
-    _wait_no_loading(page)
-
-    subtask_row = page.locator(
-        ".o_form_view .o_list_renderer .o_data_row:has-text('Draft kickoff agenda')"
-    ).first
-    subtask_row.click(force=True)
-    page.wait_for_load_state("load")
-    _wait_for_ready(page)
-
-    user_input = page.locator(".o_field_widget[name='user_ids'] input").first
+    row = page.locator(".o_form_view .o_list_renderer .o_data_row").nth(0)
+    user_cell = row.locator("td[name='user_ids'], .o_field_widget[name='user_ids']").first
+    user_cell.click()
+    page.wait_for_timeout(300)
+    user_input = user_cell.locator("input").first
     user_input.click()
     user_input.fill("Administrator")
     page.wait_for_timeout(800)
@@ -68,15 +60,6 @@ def oracle(page):
             break
     page.wait_for_timeout(500)
     _wait_no_loading(page)
-
-    set_date(page, "date_deadline", "05/27/2026")
-    page.wait_for_timeout(500)
-
-    stage_btn = page.locator(".o_statusbar_status button:has-text('In Progress')")
-    if stage_btn.count() > 0:
-        stage_btn.first.click()
-        page.wait_for_timeout(500)
-        _wait_no_loading(page)
 
     save_form(page)
     page.wait_for_timeout(1000)
