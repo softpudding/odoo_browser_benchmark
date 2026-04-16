@@ -1,0 +1,20 @@
+task_id: account.create_bill_from_confirmed_po
+module: account
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/purchase
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 300
+step_limit: 200
+metadata:
+  category: closed_loop_cross_module
+  difficulty_level: medium
+  agent_interaction: "Open a confirmed PO, click Create Bill, set bill date and vendor reference on the draft bill, then Confirm the bill"
+  checks_verify: "A posted vendor bill exists with the expected reference and date, linked to the source PO; PO payment status is unchanged"
+  primary_track: true
+  tier: 2

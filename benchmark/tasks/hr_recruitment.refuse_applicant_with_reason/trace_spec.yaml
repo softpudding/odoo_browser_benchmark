@@ -1,0 +1,23 @@
+# Trace oracle for hr_recruitment.refuse_applicant_with_reason
+#
+# Medium: open applicant, trigger the Refuse wizard (archive_applicant),
+# choose a specific refuse reason in the wizard, submit.
+
+required_ops:
+  - hr.applicant.archive_applicant
+
+optional_ops:
+  - hr.applicant.read
+  - hr.applicant.write
+  - hr.applicant.web_save
+  - hr.applicant.search_read
+  - hr.applicant.web_search_read
+  - applicant.get.refuse.reason.create
+  - applicant.get.refuse.reason.write
+  - applicant.get.refuse.reason.web_save
+  - applicant.get.refuse.reason.action_refuse_reason_apply
+  - applicant.get.refuse.reason.onchange
+  - ir.ui.view.get_views
+
+forbidden_ops:
+  - hr.applicant.unlink

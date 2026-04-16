@@ -96,6 +96,16 @@ Last eval: 2026-04-16 | Oracle: 71/71 (100%) | Browser-Use: 31/71 (43.7%) | New 
 | 84 | inventory.scrap_product [easy] | Done | PASS | FAIL | 0.0 |
 | 85 | hr.schedule_employee_activity [easy] | Done | PASS | FAIL | 0.0 |
 | 86 | project.set_task_deadline [easy] | Done | PASS | FAIL | 0.0 |
+| 87 | sale.duplicate_quotation_change_customer [medium] | WIP | — | — | — |
+| 88 | purchase.duplicate_rfq_change_vendor_confirm [medium] | WIP | — | — | — |
+| 89 | project.archive_task_with_log_note [medium] | WIP | — | — | — |
+| 90 | crm.convert_lead_to_opportunity_simple [medium] | WIP | — | — | — |
+| 91 | hr.unarchive_employee_update_department [medium] | WIP | — | — | — |
+| 92 | stock.validate_delivery_shipment [medium] | WIP | — | — | — |
+| 93 | account.create_bill_from_confirmed_po [medium] | WIP | — | — | — |
+| 94 | sale.cancel_quotation_log_reason [medium] | WIP | — | — | — |
+| 95 | hr_recruitment.refuse_applicant_with_reason [medium] | WIP | — | — | — |
+| 96 | crm.mark_opportunity_won_update_revenue [medium] | WIP | — | — | — |
 
 ---
 
@@ -1090,6 +1100,146 @@ Last eval: 2026-04-16 | Oracle: 71/71 (100%) | Browser-Use: 31/71 (43.7%) | New 
 | **Odoo modules** | Project — Tasks |
 | **Workflow** | Open project `Omega Platform Launch`, find task `Design Landing Page Mockup`, change the Deadline to `May 20, 2026` via the date picker, and save. |
 | **Capability tested** | Existing-task date edit through the Project UI, focused on date-picker interaction without additional chatter or stage changes. |
+
+---
+
+## sale.duplicate_quotation_change_customer
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Sales — Quotations |
+| **Workflow** | Open draft quotation `BENCH-DUP-01`, duplicate it via the Action menu, change the customer on the copy to a different partner, set a new customer reference, and save the duplicate in draft. |
+| **Capability tested** | Action-menu Duplicate flow combined with swapping a many2one field on the copy while leaving the original untouched. |
+
+---
+
+## purchase.duplicate_rfq_change_vendor_confirm
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Purchase — RFQs |
+| **Workflow** | Duplicate draft RFQ `BENCH-RFQ-DUP` (Meridian Supply Co), change vendor on the copy to Pinnacle Hardware, set vendor reference `PH-REISSUE-77`, then click Confirm Order. |
+| **Capability tested** | Duplicate-and-reassign on purchase module followed by confirmation, testing whether the agent edits the copy (not the original) and confirms only the copy. |
+
+---
+
+## project.archive_task_with_log_note
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Project |
+| **Workflow** | Open project `Nexus Platform Launch`, open the task `Retire beta build`, post a specific internal log note, then archive via the Action menu. |
+| **Capability tested** | Combined chatter Log-note posting and Action-menu Archive on a project task with another task on the same project as distractor. |
+
+---
+
+## crm.convert_lead_to_opportunity_simple
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | CRM — Leads/Pipeline |
+| **Workflow** | Enable Leads setting, open lead `Spark Innovations - Pager SaaS`, click Convert to Opportunity, link to existing customer `Spark Innovations`, submit the wizard. |
+| **Capability tested** | Lead-to-opportunity conversion wizard with existing-partner selection, distinct from scheduling or tagging flows. |
+
+---
+
+## hr.unarchive_employee_update_department
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | HR — Employees |
+| **Workflow** | Apply the Archived filter, open employee `Avery Collins`, use Action menu Unarchive, then set Department to Engineering and save. |
+| **Capability tested** | Filter toggle + Action-menu Unarchive + subsequent field edit, distinct from other hr tasks that only edit an active employee. |
+
+---
+
+## stock.validate_delivery_shipment
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Inventory — Transfers |
+| **Workflow** | Open outgoing delivery `BENCH-DEL-01`, set done quantities on each move line to the planned values, click Validate. |
+| **Capability tested** | Operations on outgoing delivery move lines with a distractor delivery that must stay in pending state. |
+
+---
+
+## account.create_bill_from_confirmed_po
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Purchase → Accounting |
+| **Workflow** | Open confirmed PO `BENCH-BILL-PO`, click the Create Bill stat button, set bill date and vendor reference on the draft bill, and Confirm (post) it. |
+| **Capability tested** | Cross-module stat-button navigation from Purchase to Accounting, followed by filling bill-specific fields and posting. |
+
+---
+
+## sale.cancel_quotation_log_reason
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Sales — Quotations |
+| **Workflow** | Open draft quotation `BENCH-CANCEL-01` among two distractors, post a specific internal log note, then click Cancel and confirm the dialog. |
+| **Capability tested** | Chatter Log-note posting combined with a state-changing Cancel action while keeping distractor quotations untouched. |
+
+---
+
+## hr_recruitment.refuse_applicant_with_reason
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Recruitment |
+| **Workflow** | Open job `Senior Platform Engineer`, open applicant `Marcus Whitfield`, click Refuse, set Refuse Reason to `Does not fit the job requirements` in the wizard, uncheck Send Email, apply. |
+| **Capability tested** | Refuse-wizard interaction with a non-default many2one and an explicit email-off toggle, distinct from applicant-creation and stage-move tasks. |
+
+---
+
+## crm.mark_opportunity_won_update_revenue
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | CRM — Pipeline |
+| **Workflow** | Open opportunity `Crestline Networks - Managed VPN` among similarly-named distractors, update expected revenue to 52000, then click the Won status-bar button. |
+| **Capability tested** | Field edit + state-bar Won action on a single opportunity among look-alike distractors, distinct from lost/schedule-call CRM tasks. |
 
 ---
 

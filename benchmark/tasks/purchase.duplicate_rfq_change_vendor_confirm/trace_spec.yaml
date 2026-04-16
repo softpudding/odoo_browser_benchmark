@@ -1,0 +1,28 @@
+# Trace oracle for purchase.duplicate_rfq_change_vendor_confirm
+#
+# Medium: duplicate an RFQ via Action menu, swap vendor, confirm.
+
+required_ops:
+  - purchase.order.button_confirm
+
+optional_ops:
+  - purchase.order.read
+  - purchase.order.write
+  - purchase.order.create
+  - purchase.order.copy
+  - purchase.order.web_save
+  - purchase.order.search_read
+  - purchase.order.web_search_read
+  - purchase.order.line.read
+  - purchase.order.line.write
+  - purchase.order.line.create
+  - purchase.order.line.web_save
+  - res.partner.read
+  - res.partner.search_read
+  - ir.ui.view.get_views
+  - mail.message.create
+
+forbidden_ops:
+  - purchase.order.unlink
+  - purchase.order.line.unlink
+  - purchase.order.button_cancel

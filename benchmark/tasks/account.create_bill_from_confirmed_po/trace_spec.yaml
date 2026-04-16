@@ -1,0 +1,29 @@
+# Trace oracle for account.create_bill_from_confirmed_po
+#
+# Medium: from a confirmed PO click Create Bill, set date + ref,
+# confirm the bill.
+
+required_ops:
+  - account.move.action_post
+
+optional_ops:
+  - purchase.order.read
+  - purchase.order.action_create_invoice
+  - purchase.order.search_read
+  - purchase.order.web_search_read
+  - account.move.read
+  - account.move.write
+  - account.move.create
+  - account.move.web_save
+  - account.move.search_read
+  - account.move.web_search_read
+  - account.move.line.read
+  - account.move.line.web_save
+  - ir.ui.view.get_views
+  - mail.message.create
+
+forbidden_ops:
+  - purchase.order.unlink
+  - purchase.order.button_cancel
+  - account.move.unlink
+  - account.move.button_draft

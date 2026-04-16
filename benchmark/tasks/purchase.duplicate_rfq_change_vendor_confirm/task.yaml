@@ -1,0 +1,20 @@
+task_id: purchase.duplicate_rfq_change_vendor_confirm
+module: purchase
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/purchase
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 300
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "Find draft RFQ, duplicate via Action menu, swap vendor on the copy, set vendor reference, confirm the new order"
+  checks_verify: "Original RFQ still draft and untouched; duplicate RFQ for different vendor is confirmed with new vendor reference and same product lines"
+  primary_track: true
+  tier: 2

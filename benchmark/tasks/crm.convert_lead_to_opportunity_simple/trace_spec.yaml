@@ -1,0 +1,27 @@
+# Trace oracle for crm.convert_lead_to_opportunity_simple
+#
+# Medium: convert a lead into an opportunity via the conversion wizard,
+# linking to an existing partner.
+
+required_ops: []
+
+optional_ops:
+  - crm.lead.read
+  - crm.lead.write
+  - crm.lead.web_save
+  - crm.lead.search_read
+  - crm.lead.web_search_read
+  - crm.lead.convert_opportunity
+  - crm.lead2opportunity.partner.read
+  - crm.lead2opportunity.partner.create
+  - crm.lead2opportunity.partner.write
+  - crm.lead2opportunity.partner.action_apply
+  - res.partner.read
+  - res.partner.search_read
+  - ir.ui.view.get_views
+  - mail.message.create
+
+forbidden_ops:
+  - crm.lead.unlink
+  - res.partner.unlink
+  - res.partner.create
