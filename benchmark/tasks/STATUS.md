@@ -4,7 +4,7 @@ Tracks all benchmark tasks. Update when adding new tasks or running evaluations.
 
 **Status values:** `WIP` — oracle or eval incomplete | `Done` — oracle passes, eval recorded
 
-Last eval: 2026-04-16 | Oracle: 48/48 (100%) | Browser-Use: 23/48 (48%) | New WIP: 25 (15 medium + 10 easy)
+Last eval: 2026-04-16 | Oracle: 48/48 (100%) | Browser-Use: 23/48 (48%) | New WIP: 35 (25 medium + 10 easy)
 
 ## Summary
 
@@ -83,6 +83,16 @@ Last eval: 2026-04-16 | Oracle: 48/48 (100%) | Browser-Use: 23/48 (48%) | New WI
 | 71 | hr.update_employee_department [easy] | WIP | — | — | — |
 | 72 | sale.add_discount_line [easy] | WIP | — | — | — |
 | 73 | project.add_task_subtask [easy] | WIP | — | — | — |
+| 74 | account.update_customer_invoice_terms_post [medium] | WIP | — | — | — |
+| 75 | crm.mark_opportunity_lost_with_note [medium] | WIP | — | — | — |
+| 76 | hr.update_work_location_schedule_activity [medium] | WIP | — | — | — |
+| 77 | purchase.update_rfq_reference_deadline_confirm [medium] | WIP | — | — | — |
+| 78 | contacts.create_invoice_contact_add_finance_tag [medium] | WIP | — | — | — |
+| 79 | account.pay_invoice_with_memo [medium] | WIP | — | — | — |
+| 80 | project.set_project_deadline_tags [medium] | WIP | — | — | — |
+| 81 | sale.set_commitment_date [medium] | WIP | — | — | — |
+| 82 | stock.update_reorder_rule [medium] | WIP | — | — | — |
+| 83 | hr.add_employee_skill [medium] | WIP | — | — | — |
 
 ---
 
@@ -965,6 +975,76 @@ Last eval: 2026-04-16 | Oracle: 48/48 (100%) | Browser-Use: 23/48 (48%) | New WI
 | **Odoo modules** | Project — Tasks |
 | **Workflow** | Go to Project app. Open project "Omega Platform Launch". Find task "Design Landing Page Mockup". In the Subtasks tab, add a new subtask titled "Create Wireframes". Save. |
 | **Capability tested** | Subtask creation on existing task via subtasks tab. Different from project.post_chatter_message (chatter interaction), project.create_task_assign_stage (task creation), project.set_task_deadline (date edit), and project.complete_task_log_note (stage change + note). |
+
+---
+
+## account.update_customer_invoice_terms_post
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Accounting — Customer Invoices |
+| **Workflow** | Open draft customer invoice `MED-CINV-01` for Brightstar Labs. Update invoice date, payment terms, customer reference, and one existing line quantity, then post. |
+| **Capability tested** | Existing-record edit inside Accounting with one header many2one, one date picker, one inline line change, and a distractor invoice that must stay untouched. |
+
+---
+
+## crm.mark_opportunity_lost_with_note
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | CRM — Pipeline |
+| **Workflow** | Open opportunity `Northwind Renewal Review`, click Lost, select the existing lost reason `Budget On Hold`, add an exact note, and confirm the wizard. |
+| **Capability tested** | Single-record wizard interaction with a non-default reason and exact note entry while a similarly named opportunity must remain active. |
+
+---
+
+## hr.update_work_location_schedule_activity
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Employees (hr) |
+| **Workflow** | Open employee `Avery Collins`, change Work Phone, switch to Work Information to set Work Location to Home, save, then schedule a Call activity with an exact summary and due date. |
+| **Capability tested** | Multi-area employee editing plus chatter activity scheduling in one flow, without changing the employee's job or department. |
+
+---
+
+## purchase.update_rfq_reference_deadline_confirm
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Purchase — RFQs |
+| **Workflow** | Open draft RFQ `MED-RFQ-REF-01` for North Coast Components. Update vendor reference, change the order deadline, adjust one existing line quantity, and confirm the order. |
+| **Capability tested** | Purchase form editing that mixes header fields and inline line changes, plus a distractor RFQ that must remain in draft. |
+
+---
+
+## contacts.create_invoice_contact_add_finance_tag
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Contacts |
+| **Workflow** | Create a new child contact `Dana Patel` under `Lakeshore Manufacturing`, set Address Type to Invoice Address, fill contact details and address, add the Finance tag, and save. |
+| **Capability tested** | Contact creation with parent-company selection, address-type selection, location fields, and tag entry while avoiding a similarly named distractor company. |
 
 ---
 
