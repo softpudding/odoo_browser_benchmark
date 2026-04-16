@@ -1,23 +1,51 @@
 """Oracle for hr_recruitment.refuse_duplicate_applications.
 
 Open the Priya Nair applicant, use the Refuse dialog, enable duplicate
-handling, and send the customized refusal email.
+handling, and send the customized refusal email after creating the exact
+refuse reason in Recruitment configuration.
 """
 
 from benchmark.oracle_helpers import (
+    click_create,
     click_kanban_card,
     click_button_name,
+    fill_field,
     login,
     modal_fill_field,
+    set_many2one,
     navigate,
     run_oracle,
     _wait_no_loading,
 )
 
 
+EXPECTED_REASON = "Candidate withdrew after final review"
+EXPECTED_TEMPLATE = "Benchmark Applicant Withdrawal Template"
 EXPECTED_BODY = (
     "We are closing your Operations Analyst applications after your withdrawal request."
 )
+
+
+def _open_refuse_reasons(page):
+    navigate(page, "/odoo/action-hr_recruitment.hr_applicant_refuse_reason_action")
+    page.wait_for_timeout(1500)
+    _wait_no_loading(page)
+
+
+def _create_refuse_reason(page):
+    click_create(page)
+    page.wait_for_timeout(800)
+    fill_field(page, "name", EXPECTED_REASON)
+    page.wait_for_timeout(300)
+    set_many2one(page, "template_id", EXPECTED_TEMPLATE)
+    page.wait_for_timeout(300)
+    page.keyboard.press("Enter")
+    page.wait_for_timeout(1200)
+    _wait_no_loading(page)
+
+    row = page.locator(f".o_list_view .o_data_row:has-text('{EXPECTED_REASON}')")
+    if row.count() == 0:
+        raise RuntimeError(f"Failed to create refuse reason {EXPECTED_REASON!r}")
 
 
 def oracle(page):
@@ -25,6 +53,11 @@ def oracle(page):
     navigate(page, "/odoo/recruitment")
     _wait_no_loading(page)
 
+    _open_refuse_reasons(page)
+    _create_refuse_reason(page)
+
+    navigate(page, "/odoo/recruitment")
+    _wait_no_loading(page)
     click_kanban_card(page, "Operations Analyst")
     page.wait_for_timeout(1000)
     _wait_no_loading(page)
@@ -44,7 +77,7 @@ def oracle(page):
     modal.locator(
         ".o_field_selection_badge[name='refuse_reason_id'] .o_selection_badge, "
         ".o_field_widget[name='refuse_reason_id'] .o_selection_badge"
-    ).filter(has_text="Candidate withdrew").first.click()
+    ).filter(has_text=EXPECTED_REASON).first.click()
     page.wait_for_timeout(500)
 
     duplicates = modal.locator(

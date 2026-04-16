@@ -1,10 +1,11 @@
 # Trace oracle for hr_recruitment.refuse_duplicate_applications
 #
-# Category 2: Policy trap (wizard).
-# Agent must use the refusal wizard, enable duplicate handling, and edit the
-# outgoing email before confirming.
+# Category 1 + 2: closed-loop configuration plus policy trap.
+# Agent must create an exact refuse reason in configuration, then use the
+# refusal wizard, enable duplicate handling, and edit the outgoing email.
 
 required_ops:
+  - hr.applicant.refuse.reason.web_save
   - applicant.get.refuse.reason.action_refuse_reason_apply
 
 optional_ops:
@@ -12,14 +13,16 @@ optional_ops:
   - hr.applicant.search_read
   - hr.applicant.web_search_read
   - hr.applicant.write
-  - applicant.get.refuse.reason.create
   - applicant.get.refuse.reason.read
   - applicant.get.refuse.reason.write
   - applicant.get.refuse.reason.web_save
   - applicant.get.refuse.reason.onchange
+  - hr.applicant.refuse.reason.web_save
   - hr.applicant.refuse.reason.read
   - hr.applicant.refuse.reason.search_read
+  - hr.applicant.refuse.reason.write
   - mail.template.read
+  - mail.template.search_read
   - mail.message.create
   - mail.followers.create
   - ir.ui.view.get_views

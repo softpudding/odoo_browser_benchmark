@@ -1,9 +1,9 @@
 """Seed opportunities for the CRM batch mark-lost wizard task.
 
-Category 2: Policy trap (wizard).
-The agent must leave the default kanban view, switch to list view, select the
-correct pair of rows, and complete the Mark Lost wizard with an explicit loss
-reason and closing note. Browser-use often mis-selects rows or skips the note.
+Category 1: Closed-loop workflow.
+The agent must leave the pipeline, create a new lost reason in configuration,
+return to the list view, and then apply that exact reason in the batch Mark
+Lost wizard.
 """
 
 
@@ -25,9 +25,10 @@ def setup(env):
     if old:
         old.unlink()
 
-    reason = env["crm.lost.reason"].search([("name", "=", "Price too high")], limit=1)
-    if not reason:
-        env["crm.lost.reason"].create({"name": "Price too high"})
+    env["crm.lost.reason"].search(
+        [("name", "in", ["Deferred to FY27 budget", "Deferred to next budget cycle"])]
+    ).unlink()
+    env["crm.lost.reason"].create({"name": "Deferred to next budget cycle"})
 
     admin = env.ref("base.user_admin")
     team = env["crm.team"].search([], limit=1)

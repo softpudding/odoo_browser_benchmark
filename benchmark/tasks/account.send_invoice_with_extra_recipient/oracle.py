@@ -1,26 +1,55 @@
 """Oracle for account.send_invoice_with_extra_recipient.
 
-Open the posted invoice SEND-APR-17, add the controller as an extra recipient
-in the Send wizard, overwrite subject and body, and send the email.
+Create the offshore approvals contact, then send invoice SEND-APR-17 with the
+new contact as the extra recipient.
 """
 
 from benchmark.oracle_helpers import (
+    click_create,
     click_list_row,
     click_status_button,
+    fill_field,
     login,
     navigate,
     run_oracle,
+    save_form,
+    set_many2one,
     _wait_no_loading,
+    _wait_for_ready,
 )
 
 
 TARGET_BODY = (
-    "Please review the April service invoice and reply with any approval notes by Friday."
+    "Please review the April service invoice and route any approval comments through the offshore billing desk."
 )
 
 
 def oracle(page):
     login(page)
+    navigate(page, "/odoo/contacts")
+    _wait_no_loading(page)
+
+    click_create(page)
+    page.wait_for_timeout(800)
+    _wait_for_ready(page)
+
+    person_radio = page.locator("input[data-value='person']").first
+    if person_radio.count() > 0 and not person_radio.is_checked():
+        person_radio.click()
+        page.wait_for_timeout(300)
+
+    fill_field(page, "name", "Beacon Offshore Approvals")
+    page.wait_for_timeout(300)
+    set_many2one(page, "parent_id", "Beacon Offshore Ltd.")
+    page.wait_for_timeout(400)
+    fill_field(page, "function", "Finance Controller")
+    page.wait_for_timeout(300)
+    fill_field(page, "email", "approvals@beacon-offshore.example.com")
+    page.wait_for_timeout(300)
+    save_form(page)
+    page.wait_for_timeout(800)
+    _wait_no_loading(page)
+
     navigate(page, "/odoo/accounting/customer-invoices")
     _wait_no_loading(page)
 
@@ -39,11 +68,11 @@ def oracle(page):
         ".o_field_widget[name='mail_partner_ids'] input"
     ).last
     recipient_input.click()
-    recipient_input.fill("controller@beacon-offshore.example.com")
+    recipient_input.fill("approvals@beacon-offshore.example.com")
     page.wait_for_timeout(1000)
     recipient_item = page.locator(
         ".dropdown-menu .dropdown-item, .ui-autocomplete .ui-menu-item"
-    ).filter(has_text="controller@beacon-offshore.example.com").first
+    ).filter(has_text="approvals@beacon-offshore.example.com").first
     recipient_item.click()
     page.wait_for_timeout(500)
 

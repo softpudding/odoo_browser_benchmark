@@ -7,11 +7,11 @@ TARGET_REF = "SEND-APR-17"
 DISTRACTOR_REF = "SEND-APR-18"
 TARGET_SUBJECT = "Beacon Offshore invoice review"
 TARGET_BODY = (
-    "Please review the April service invoice and reply with any approval notes by Friday."
+    "Please review the April service invoice and route any approval comments through the offshore billing desk."
 )
 REQUIRED_RECIPIENTS = {
     "finance@beacon-offshore.example.com",
-    "controller@beacon-offshore.example.com",
+    "approvals@beacon-offshore.example.com",
 }
 
 
@@ -20,11 +20,29 @@ def check(env):
 
     target = env["account.move"].search([("ref", "=", TARGET_REF)], limit=1)
     distractor = env["account.move"].search([("ref", "=", DISTRACTOR_REF)], limit=1)
+    contact = env["res.partner"].search(
+        [("name", "=", "Beacon Offshore Approvals")], limit=1
+    )
 
     if not target:
         return [f"Target invoice {TARGET_REF!r} not found"]
     if not distractor:
         return [f"Distractor invoice {DISTRACTOR_REF!r} not found"]
+    if not contact:
+        return ["Required contact 'Beacon Offshore Approvals' was not created"]
+
+    if contact.parent_id.name != "Beacon Offshore Ltd.":
+        failures.append(
+            f"Created contact parent is {contact.parent_id.name!r}, expected 'Beacon Offshore Ltd.'"
+        )
+    if contact.email != "approvals@beacon-offshore.example.com":
+        failures.append(
+            f"Created contact email is {contact.email!r}, expected 'approvals@beacon-offshore.example.com'"
+        )
+    if contact.function != "Finance Controller":
+        failures.append(
+            f"Created contact job position is {contact.function!r}, expected 'Finance Controller'"
+        )
 
     if target.state != "posted":
         failures.append(f"Target invoice state is {target.state!r}, expected 'posted'")
@@ -53,8 +71,15 @@ def check(env):
             failures.append(
                 f"Sent invoice recipients missing expected email(s): {sorted(missing)}"
             )
+        extra = recipient_emails - REQUIRED_RECIPIENTS
+        if extra:
+            failures.append(
+                f"Sent invoice recipients include unexpected email(s): {sorted(extra)}"
+            )
         if "finance@beacon-onshore.example.com" in recipient_emails:
             failures.append("Distractor recipient was included on the sent target invoice")
+        if "approvals@beacon-onshore.example.com" in recipient_emails:
+            failures.append("Distractor onshore approvals contact was included on the sent target invoice")
 
     if distractor.is_move_sent:
         failures.append("Distractor invoice was marked sent")

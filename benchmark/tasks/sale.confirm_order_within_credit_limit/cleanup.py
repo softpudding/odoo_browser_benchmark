@@ -1,11 +1,14 @@
 """Clean up artifacts from previous runs."""
 
 
-ORDER_REFS = ["CREDIT-OPS-07", "CREDIT-OPS-08"]
-INVOICE_REF = "CREDIT-LIMIT-OPEN-07"
+ORDER_REFS = ["CREDIT-OPS-07", "CREDIT-OPS-08", "CREDIT-OPS-09"]
+INVOICE_REF = "CREDIT-LIMIT-OPEN-09"
+CONTACT_NAMES = ["Atlas Credit Desk", "Atlas Fleet Credit Desk"]
 
 
 def cleanup(env):
+    env["res.partner"].search([("name", "in", CONTACT_NAMES)]).unlink()
+
     orders = env["sale.order"].search([("client_order_ref", "in", ORDER_REFS)])
     for order in orders:
         if order.state == "sale":

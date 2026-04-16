@@ -6,8 +6,8 @@ TARGETS = {
     "Blue Canyon Power Expansion",
 }
 DISTRACTOR = "Blue Canyon Logistics Renewal"
-EXPECTED_REASON = "Price too high"
-EXPECTED_NOTE = "Budget frozen until Q4 review."
+EXPECTED_REASON = "Deferred to FY27 budget"
+EXPECTED_NOTE = "Budget release moved to the FY27 planning cycle."
 
 
 def check(env):
@@ -16,11 +16,16 @@ def check(env):
     lead_env = env["crm.lead"].with_context(active_test=False)
     targets = lead_env.search([("name", "in", list(TARGETS))])
     distractor = lead_env.search([("name", "=", DISTRACTOR)], limit=1)
+    reason = env["crm.lost.reason"].search([("name", "=", EXPECTED_REASON)])
 
     if len(targets) != 2:
         return [f"Expected 2 target opportunities, found {len(targets)}"]
     if not distractor:
         return [f"Distractor opportunity {DISTRACTOR!r} not found"]
+    if len(reason) != 1:
+        failures.append(
+            f"Expected exactly 1 lost reason named {EXPECTED_REASON!r}, found {len(reason)}"
+        )
 
     for lead in targets:
         if lead.active:

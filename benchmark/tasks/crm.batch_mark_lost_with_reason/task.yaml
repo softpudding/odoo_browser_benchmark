@@ -9,13 +9,13 @@ agent_interface: browser_only
 db_seed:
   snapshot: benchmark_base
 setup_script: seed.py
-time_limit_sec: 420
+time_limit_sec: 600
 step_limit: 300
 metadata:
-  category: policy_trap
+  category: closed_loop_workflow
   difficulty_level: hard
-  agent_interaction: "Switch to list view, select the exact two target opportunities, and complete the Mark Lost wizard with a specific reason and closing note."
-  checks_verify: "Both target opportunities were archived with the correct loss reason and note while the distractor opportunity stayed active."
-  failure_pattern: "Agent selects the wrong rows from the list or accepts the wizard without setting the specific loss reason and closing note."
+  agent_interaction: "Leave the pipeline, create an exact lost reason in CRM configuration, return to list view, and then batch-apply that reason and note to the correct opportunities."
+  checks_verify: "The exact new lost reason was created and both target opportunities were archived with that reason and closing note while the distractor opportunity stayed active."
+  failure_pattern: "Agent uses the similarly named existing reason, fails to return from configuration cleanly, or batch-updates the wrong rows in the Mark Lost wizard."
   primary_track: true
   tier: 3

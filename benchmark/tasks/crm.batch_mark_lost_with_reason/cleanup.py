@@ -18,3 +18,6 @@ def cleanup(env):
     )
     if leads:
         leads.unlink()
+    env["crm.lost.reason"].search(
+        [("name", "in", ["Deferred to FY27 budget", "Deferred to next budget cycle"])]
+    ).unlink()

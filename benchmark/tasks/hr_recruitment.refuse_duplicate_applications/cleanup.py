@@ -6,6 +6,11 @@ APPLICANT_NAMES = [
     "Priya Nair (Referral)",
     "Priya Narayan",
 ]
+REASON_NAMES = [
+    "Candidate withdrew after final review",
+    "Candidate withdrew after phone review",
+    "Candidate withdrew",
+]
 
 
 def cleanup(env):
@@ -14,3 +19,6 @@ def cleanup(env):
     )
     if applicants:
         applicants.unlink()
+    env["hr.applicant.refuse.reason"].with_context(active_test=False).search(
+        [("name", "in", REASON_NAMES)]
+    ).unlink()

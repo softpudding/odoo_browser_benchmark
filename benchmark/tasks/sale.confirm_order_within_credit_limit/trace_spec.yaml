@@ -1,29 +1,47 @@
 # Trace oracle for sale.confirm_order_within_credit_limit
 #
-# Category 2: Policy trap.
-# Agent must reduce the allowed line quantity to satisfy the credit limit and
-# then confirm the sales order.
+# Category 2: Policy trap (create-from-scratch + compose wizard).
+# Agent must create a new quotation, set the exact reference and expiration,
+# keep the final total inside the customer's remaining credit, send the
+# quotation email with exact content and recipients, and then confirm it.
 
 required_ops:
+  - mail.compose.message.action_send_mail
   - sale.order.action_confirm
 
 optional_ops:
+  - sale.order.create
   - sale.order.read
   - sale.order.web_read
   - sale.order.search_read
   - sale.order.web_search_read
   - sale.order.write
   - sale.order.web_save
+  - sale.order.onchange
+  - sale.order.line.create
   - sale.order.line.read
   - sale.order.line.write
+  - sale.order.line.onchange
+  - mail.compose.message.create
+  - mail.compose.message.read
+  - mail.compose.message.write
+  - mail.compose.message.web_save
+  - mail.compose.message.onchange
   - account.move.read
   - account.move.search_read
   - res.partner.read
   - res.partner.search_read
+  - res.partner.web_name_search
   - product.product.read
+  - product.product.search_read
+  - product.template.read
+  - product.template.search_read
+  - product.template.web_name_search
+  - product.template.get_single_product_variant
   - ir.ui.view.get_views
   - ir.ui.view.read
   - mail.message.create
+  - mail.mail.create
   - mail.followers.create
   - bus.bus.create
 

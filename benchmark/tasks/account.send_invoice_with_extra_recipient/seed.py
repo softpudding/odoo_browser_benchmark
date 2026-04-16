@@ -1,10 +1,9 @@
 """Seed posted invoices for the invoice-send compose wizard task.
 
-Category 5: Deep UI interaction.
-The agent must find the right posted invoice, open the Send wizard, add a
-non-default recipient, and overwrite both the subject and the HTML body before
-submitting. Browser-use often leaves default recipients untouched or only
-partially edits the compose modal.
+Category 5: Deep UI interaction (cross-module).
+The agent must create a linked contact in Contacts, return to Accounting, and
+then complete a multi-recipient send wizard without touching the distractor
+company or invoice.
 """
 
 
@@ -31,6 +30,16 @@ def setup(env):
     for ref in ["SEND-APR-17", "SEND-APR-18"]:
         _cleanup_invoice(env, ref)
 
+    env["res.partner"].search(
+        [
+            (
+                "name",
+                "in",
+                ["Beacon Offshore Approvals", "Beacon Offshore Controller"],
+            )
+        ]
+    ).unlink()
+
     offshore = env["res.partner"].search(
         [("name", "=", "Beacon Offshore Ltd.")], limit=1
     )
@@ -50,27 +59,6 @@ def setup(env):
             }
         )
 
-    controller = env["res.partner"].search(
-        [("name", "=", "Beacon Offshore Controller")], limit=1
-    )
-    if not controller:
-        controller = env["res.partner"].create(
-            {
-                "name": "Beacon Offshore Controller",
-                "parent_id": offshore.id,
-                "type": "contact",
-                "email": "controller@beacon-offshore.example.com",
-            }
-        )
-    else:
-        controller.write(
-            {
-                "parent_id": offshore.id,
-                "type": "contact",
-                "email": "controller@beacon-offshore.example.com",
-            }
-        )
-
     onshore = env["res.partner"].search(
         [("name", "=", "Beacon Onshore Ltd.")], limit=1
     )
@@ -87,6 +75,29 @@ def setup(env):
             {
                 "is_company": True,
                 "email": "finance@beacon-onshore.example.com",
+            }
+        )
+
+    onshore_contact = env["res.partner"].search(
+        [("name", "=", "Beacon Onshore Approvals")], limit=1
+    )
+    if not onshore_contact:
+        env["res.partner"].create(
+            {
+                "name": "Beacon Onshore Approvals",
+                "parent_id": onshore.id,
+                "type": "contact",
+                "function": "Finance Controller",
+                "email": "approvals@beacon-onshore.example.com",
+            }
+        )
+    else:
+        onshore_contact.write(
+            {
+                "parent_id": onshore.id,
+                "type": "contact",
+                "function": "Finance Controller",
+                "email": "approvals@beacon-onshore.example.com",
             }
         )
 

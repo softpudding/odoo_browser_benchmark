@@ -1,12 +1,14 @@
 """Oracle for crm.batch_mark_lost_with_reason.
 
-Select the two Blue Canyon Power opportunities in list view and use the Mark
-Lost wizard with a specific reason and closing note.
+Create a new lost reason, then batch-select the two target opportunities and
+use the Mark Lost wizard with that exact reason and note.
 """
 
 from benchmark.oracle_helpers import (
     clear_search_filters,
+    click_create,
     ensure_list_view,
+    fill_field,
     login,
     navigate,
     run_oracle,
@@ -14,7 +16,25 @@ from benchmark.oracle_helpers import (
 )
 
 
-EXPECTED_NOTE = "Budget frozen until Q4 review."
+EXPECTED_REASON = "Deferred to FY27 budget"
+EXPECTED_NOTE = "Budget release moved to the FY27 planning cycle."
+
+
+def _open_lost_reasons(page):
+    config = page.locator("a, button").filter(has_text="Configuration")
+    if config.count() > 0:
+        config.first.click()
+        page.wait_for_timeout(1000)
+        _wait_no_loading(page)
+    pipeline = page.locator("a, button").filter(has_text="Pipeline")
+    if pipeline.count() > 0:
+        pipeline.first.click()
+        page.wait_for_timeout(500)
+        _wait_no_loading(page)
+    lost_reasons = page.locator("a, button, span").filter(has_text="Lost Reasons")
+    lost_reasons.first.click()
+    page.wait_for_timeout(1500)
+    _wait_no_loading(page)
 
 
 def oracle(page):
@@ -22,6 +42,21 @@ def oracle(page):
     navigate(page, "/odoo/crm")
     _wait_no_loading(page)
 
+    _open_lost_reasons(page)
+    click_create(page)
+    page.wait_for_timeout(800)
+    fill_field(page, "name", EXPECTED_REASON)
+    page.wait_for_timeout(500)
+    save_btn = page.locator("button.o_form_button_save:visible, button:has-text('Save'):visible")
+    if save_btn.count() > 0:
+        save_btn.first.click()
+    else:
+        page.keyboard.press("Enter")
+    page.wait_for_timeout(1000)
+    _wait_no_loading(page)
+
+    navigate(page, "/odoo/crm")
+    _wait_no_loading(page)
     ensure_list_view(page)
     page.wait_for_timeout(1000)
     clear_search_filters(page)
@@ -58,8 +93,9 @@ def oracle(page):
 
     modal = page.locator(".modal:visible").last
     modal.locator(
-        ".o_field_widget[name='lost_reason_id'] :text('Price too high')"
-    ).first.click()
+        ".o_field_selection_badge[name='lost_reason_id'] .o_selection_badge, "
+        ".o_field_widget[name='lost_reason_id'] .o_selection_badge"
+    ).filter(has_text=EXPECTED_REASON).first.click()
     page.wait_for_timeout(500)
 
     note = modal.locator(

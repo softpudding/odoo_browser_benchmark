@@ -4,7 +4,7 @@ Tracks all benchmark tasks. Update when adding new tasks or running evaluations.
 
 **Status values:** `WIP` — oracle or eval incomplete | `Done` — oracle passes, eval recorded
 
-Last eval: 2026-04-16 | Oracle: 48/48 (100%) | Browser-Use: 24/48 (50%) | New WIP: 20 (15 medium + 5 easy)
+Last eval: 2026-04-16 | Oracle: 48/48 (100%) | Browser-Use: 23/48 (48%) | New WIP: 20 (15 medium + 5 easy)
 
 ## Summary
 
@@ -60,7 +60,7 @@ Last eval: 2026-04-16 | Oracle: 48/48 (100%) | Browser-Use: 24/48 (50%) | New WI
 | 48 | hr_recruitment.advance_applicant_stage [medium] | WIP | — | — | — |
 | 49 | account.send_invoice_with_extra_recipient [hard] | Done | PASS | PASS | 1.0 |
 | 50 | crm.batch_mark_lost_with_reason [hard] | Done | PASS | FAIL | 1.0 |
-| 51 | hr_recruitment.refuse_duplicate_applications [hard] | Done | PASS | PASS | 1.0 |
+| 51 | hr_recruitment.refuse_duplicate_applications [hard] | Done | PASS | FAIL | 0.0 |
 | 52 | purchase_stock.return_partial_receipt_to_vendor [hard] | Done | PASS | FAIL | 0.0 |
 | 53 | sale.confirm_order_within_credit_limit [hard] | Done | PASS | PASS | 1.0 |
 | 54 | sale.create_invoice_adjust_quantity_post [medium] | Done | PASS | PASS | 1.0 |

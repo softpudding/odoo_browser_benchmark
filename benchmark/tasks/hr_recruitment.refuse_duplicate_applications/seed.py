@@ -13,6 +13,9 @@ APPLICANT_NAMES = [
     "Priya Nair (Referral)",
     "Priya Narayan",
 ]
+TARGET_REASON = "Candidate withdrew after final review"
+DISTRACTOR_REASON = "Candidate withdrew after phone review"
+TEMPLATE_NAME = "Benchmark Applicant Withdrawal Template"
 
 
 def setup(env):
@@ -23,12 +26,12 @@ def setup(env):
         applicants.unlink()
 
     template = env["mail.template"].search(
-        [("name", "=", "Benchmark Applicant Withdrawal Template")], limit=1
+        [("name", "=", TEMPLATE_NAME)], limit=1
     )
     if not template:
         template = env["mail.template"].create(
             {
-                "name": "Benchmark Applicant Withdrawal Template",
+                "name": TEMPLATE_NAME,
                 "model_id": env.ref("hr_recruitment.model_hr_applicant").id,
                 "subject": "Default withdrawal subject",
                 "body_html": "<p>Default withdrawal body.</p>",
@@ -36,18 +39,25 @@ def setup(env):
             }
         )
 
-    reason = env["hr.applicant.refuse.reason"].search(
-        [("name", "=", "Candidate withdrew")], limit=1
+    env["hr.applicant.refuse.reason"].with_context(active_test=False).search(
+        [
+            (
+                "name",
+                "in",
+                [
+                    TARGET_REASON,
+                    DISTRACTOR_REASON,
+                    "Candidate withdrew",
+                ],
+            )
+        ]
+    ).unlink()
+    env["hr.applicant.refuse.reason"].create(
+        {
+            "name": DISTRACTOR_REASON,
+            "template_id": template.id,
+        }
     )
-    if not reason:
-        reason = env["hr.applicant.refuse.reason"].create(
-            {
-                "name": "Candidate withdrew",
-                "template_id": template.id,
-            }
-        )
-    else:
-        reason.write({"template_id": template.id})
 
     dept = env["hr.department"].search([("name", "=", "Operations")], limit=1)
     if not dept:

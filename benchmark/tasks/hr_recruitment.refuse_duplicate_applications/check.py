@@ -3,7 +3,8 @@
 
 TARGET_EMAIL = "priya.nair@example.com"
 DISTRACTOR_NAME = "Priya Narayan"
-EXPECTED_REASON = "Candidate withdrew"
+EXPECTED_REASON = "Candidate withdrew after final review"
+EXPECTED_TEMPLATE = "Benchmark Applicant Withdrawal Template"
 EXPECTED_SUBJECT = "Operations Analyst application update"
 EXPECTED_BODY = (
     "We are closing your Operations Analyst applications after your withdrawal request."
@@ -20,11 +21,22 @@ def check(env):
     distractor = env["hr.applicant"].with_context(active_test=False).search(
         [("partner_name", "=", DISTRACTOR_NAME)], limit=1
     )
+    reasons = env["hr.applicant.refuse.reason"].with_context(active_test=False).search(
+        [("name", "=", EXPECTED_REASON)]
+    )
 
     if len(applicants) != 2:
         return [f"Expected 2 refused target applicants, found {len(applicants)}"]
     if not distractor:
         return [f"Distractor applicant {DISTRACTOR_NAME!r} not found"]
+    if len(reasons) != 1:
+        failures.append(
+            f"Expected exactly 1 refuse reason named {EXPECTED_REASON!r}, found {len(reasons)}"
+        )
+    elif reasons.template_id.name != EXPECTED_TEMPLATE:
+        failures.append(
+            f"Refuse reason {EXPECTED_REASON!r} uses template {reasons.template_id.name!r}, expected {EXPECTED_TEMPLATE!r}"
+        )
 
     for applicant in applicants:
         if applicant.active:

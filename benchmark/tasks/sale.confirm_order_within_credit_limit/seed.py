@@ -1,14 +1,14 @@
-"""Seed quotations for the sales credit-limit policy task.
+"""Seed quotations for the sales credit-limit creation task.
 
-Category 2: Policy trap.
-The target quotation looks confirmable, but the customer already has an open
-balance. The agent must reduce only one line quantity so the order fits within
-the remaining credit before confirming.
+Category 2: Policy trap (create-from-scratch + date field).
+The agent must create a new quotation with exact fields, preserve a distractor
+quote, and still reason about the remaining customer credit before confirming.
 """
 
 
-ORDER_REFS = ["CREDIT-OPS-07", "CREDIT-OPS-08"]
-INVOICE_REF = "CREDIT-LIMIT-OPEN-07"
+ORDER_REFS = ["CREDIT-OPS-07", "CREDIT-OPS-08", "CREDIT-OPS-09"]
+INVOICE_REF = "CREDIT-LIMIT-OPEN-09"
+CONTACT_NAMES = ["Atlas Credit Desk", "Atlas Fleet Credit Desk"]
 
 
 def _cleanup_invoice(env, ref):
@@ -27,6 +27,8 @@ def _cleanup_invoice(env, ref):
 def setup(env):
     env.company.account_use_credit_limit = True
 
+    env["res.partner"].search([("name", "in", CONTACT_NAMES)]).unlink()
+
     target_partner = env["res.partner"].search(
         [("name", "=", "Atlas Field Systems")], limit=1
     )
@@ -43,6 +45,29 @@ def setup(env):
             {
                 "email": "billing@atlas-field.example.com",
                 "credit_limit": 4000.0,
+            }
+        )
+
+    target_contact = env["res.partner"].search(
+        [("name", "=", "Atlas Credit Desk")], limit=1
+    )
+    if not target_contact:
+        env["res.partner"].create(
+            {
+                "name": "Atlas Credit Desk",
+                "parent_id": target_partner.id,
+                "type": "contact",
+                "function": "Credit Controller",
+                "email": "creditdesk@atlas-field.example.com",
+            }
+        )
+    else:
+        target_contact.write(
+            {
+                "parent_id": target_partner.id,
+                "type": "contact",
+                "function": "Credit Controller",
+                "email": "creditdesk@atlas-field.example.com",
             }
         )
 
@@ -65,6 +90,29 @@ def setup(env):
             }
         )
 
+    fleet_contact = env["res.partner"].search(
+        [("name", "=", "Atlas Fleet Credit Desk")], limit=1
+    )
+    if not fleet_contact:
+        env["res.partner"].create(
+            {
+                "name": "Atlas Fleet Credit Desk",
+                "parent_id": distractor_partner.id,
+                "type": "contact",
+                "function": "Credit Controller",
+                "email": "creditdesk@atlas-fleet.example.com",
+            }
+        )
+    else:
+        fleet_contact.write(
+            {
+                "parent_id": distractor_partner.id,
+                "type": "contact",
+                "function": "Credit Controller",
+                "email": "creditdesk@atlas-fleet.example.com",
+            }
+        )
+
     for ref in ORDER_REFS:
         orders = env["sale.order"].search([("client_order_ref", "=", ref)])
         for order in orders:
@@ -82,9 +130,12 @@ def setup(env):
                 "name": "Field Router Kit",
                 "type": "consu",
                 "list_price": 400.0,
+                "taxes_id": [(5, 0, 0)],
             }
         )
         router = tmpl.product_variant_id
+    else:
+        router.product_tmpl_id.write({"list_price": 400.0, "taxes_id": [(5, 0, 0)]})
 
     commissioning = env["product.product"].search(
         [("name", "=", "On-site Commissioning")], limit=1
@@ -96,9 +147,18 @@ def setup(env):
                 "type": "service",
                 "list_price": 1100.0,
                 "invoice_policy": "order",
+                "taxes_id": [(5, 0, 0)],
             }
         )
         commissioning = tmpl.product_variant_id
+    else:
+        commissioning.product_tmpl_id.write(
+            {
+                "list_price": 1100.0,
+                "invoice_policy": "order",
+                "taxes_id": [(5, 0, 0)],
+            }
+        )
 
     invoice = env["account.move"].create(
         {
@@ -127,39 +187,10 @@ def setup(env):
 
     env["sale.order"].create(
         {
-            "partner_id": target_partner.id,
-            "user_id": admin.id,
-            "client_order_ref": "CREDIT-OPS-07",
-            "order_line": [
-                (
-                    0,
-                    0,
-                    {
-                        "product_id": router.id,
-                        "product_uom_qty": 4,
-                        "price_unit": 400.0,
-                        "tax_ids": [(5, 0, 0)],
-                    },
-                ),
-                (
-                    0,
-                    0,
-                    {
-                        "product_id": commissioning.id,
-                        "product_uom_qty": 1,
-                        "price_unit": 1100.0,
-                        "tax_ids": [(5, 0, 0)],
-                    },
-                ),
-            ],
-        }
-    )
-
-    env["sale.order"].create(
-        {
             "partner_id": distractor_partner.id,
             "user_id": admin.id,
             "client_order_ref": "CREDIT-OPS-08",
+            "validity_date": "2026-05-22",
             "order_line": [
                 (
                     0,

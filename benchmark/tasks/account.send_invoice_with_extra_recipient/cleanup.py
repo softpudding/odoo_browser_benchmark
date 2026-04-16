@@ -23,3 +23,16 @@ def _cleanup_invoice(env, ref):
 def cleanup(env):
     for ref in ["SEND-APR-17", "SEND-APR-18"]:
         _cleanup_invoice(env, ref)
+    env["res.partner"].search(
+        [
+            (
+                "name",
+                "in",
+                [
+                    "Beacon Offshore Approvals",
+                    "Beacon Offshore Controller",
+                    "Beacon Onshore Approvals",
+                ],
+            )
+        ]
+    ).unlink()
