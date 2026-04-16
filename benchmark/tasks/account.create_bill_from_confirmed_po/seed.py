@@ -69,7 +69,7 @@ def setup(env):
         "product_qty": 50,
         "price_unit": 12.50,
         "name": "Cable Tray",
-        "taxes_id": [(5, 0, 0)],
+        "tax_ids": [(5, 0, 0)],
     })
     env["purchase.order.line"].create({
         "order_id": po.id,
@@ -77,6 +77,6 @@ def setup(env):
         "product_qty": 40,
         "price_unit": 8.00,
         "name": "Junction Box",
-        "taxes_id": [(5, 0, 0)],
+        "tax_ids": [(5, 0, 0)],
     })
     po.button_confirm()

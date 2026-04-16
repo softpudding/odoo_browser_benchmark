@@ -6,7 +6,7 @@ def cleanup(env):
     orders = env["sale.order"].search([("client_order_ref", "in", refs)])
     for so in orders:
         env["mail.message"].search([
-            ("res_model", "=", "sale.order"),
+            ("model", "=", "sale.order"),
             ("res_id", "=", so.id),
             ("subtype_id.name", "=", "Note"),
         ]).unlink()

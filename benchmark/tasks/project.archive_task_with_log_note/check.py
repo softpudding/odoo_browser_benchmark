@@ -36,7 +36,7 @@ def check(env):
                 "Task 'Retire beta build' is still active, expected archived"
             )
         notes = env["mail.message"].search([
-            ("res_model", "=", "project.task"),
+            ("model", "=", "project.task"),
             ("res_id", "=", target.id),
             ("subtype_id.name", "=", "Note"),
         ])

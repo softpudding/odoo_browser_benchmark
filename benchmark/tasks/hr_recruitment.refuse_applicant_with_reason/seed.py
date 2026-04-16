@@ -21,7 +21,7 @@ def setup(env):
     )
     for app in existing:
         env["mail.message"].search([
-            ("res_model", "=", "hr.applicant"),
+            ("model", "=", "hr.applicant"),
             ("res_id", "=", app.id),
         ]).unlink()
         app.unlink()

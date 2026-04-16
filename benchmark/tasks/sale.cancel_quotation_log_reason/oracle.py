@@ -28,50 +28,57 @@ def oracle(page):
     _wait_for_ready(page)
     page.wait_for_timeout(500)
 
-    # Post log note
-    chatter = page.locator("#chatter, .o-mail-Chatter").first
-    chatter.scroll_into_view_if_needed()
+    # Post log note via chatter
+    page.locator(".o-mail-Chatter, .o_chatter").first.scroll_into_view_if_needed()
     page.wait_for_timeout(500)
-    page.get_by_role("tab", name="Log note").click()
-    page.wait_for_timeout(500)
-    composer = chatter.locator(".o-mail-Chatter-composer").first
-    composer.fill(EXPECTED_NOTE)
-    page.wait_for_timeout(500)
-    page.get_by_role("button", name="Log").click()
-    page.wait_for_timeout(1200)
-    _wait_no_loading(page)
 
-    # Click Cancel — may be in status bar or Action menu
-    cancel_btn = page.locator(
-        ".o_statusbar_buttons button:visible:has-text('Cancel'), "
-        ".o_control_panel button:visible:has-text('Cancel')"
+    log_note_btn = page.locator(
+        "button.o-mail-Chatter-logNote, "
+        "button:has-text('Log note'), "
+        ".o-mail-Chatter button:has-text('Log note')"
     ).first
-    if cancel_btn.count() > 0:
-        cancel_btn.click()
-    else:
-        # Fall back to Action menu Cancel
-        cog = page.locator(
-            ".o_cp_action_menus button:visible, "
-            ".o_control_panel button.dropdown-toggle:has-text('Actions'):visible"
-        ).first
-        cog.click()
-        page.wait_for_timeout(300)
-        page.locator(
-            ".dropdown-menu:visible .dropdown-item:has-text('Cancel'), "
-            ".o-dropdown--menu:visible .dropdown-item:has-text('Cancel')"
-        ).first.click()
+    log_note_btn.click()
     page.wait_for_timeout(800)
 
-    # Confirmation dialog — click OK/Cancel inside modal
+    note_input = page.locator(
+        ".o-mail-Composer .o-mail-Composer-input, "
+        ".o-mail-composer [contenteditable='true'], "
+        ".o_mail_composer_input textarea, "
+        "div[contenteditable='true'].odoo-editor-editable"
+    ).last
+    note_input.click()
+    page.wait_for_timeout(300)
+    note_input.fill(EXPECTED_NOTE)
+    page.wait_for_timeout(300)
+
+    add_btn = page.locator(
+        "button.o-mail-Composer-send, "
+        "button:has-text('Add'), "
+        ".o-mail-Composer button[type='submit']"
+    ).first
+    add_btn.click()
+    page.wait_for_timeout(1500)
+    _wait_no_loading(page)
+
+    # Click the Cancel header button on the SO form (name=action_cancel)
+    cancel_btn = page.locator(
+        ".o_form_view .o_form_statusbar button[data-hotkey='x']:visible, "
+        ".o_form_view header button[name='action_cancel']:visible, "
+        ".o_form_view .o_statusbar_buttons button:visible:has-text('Cancel')"
+    ).first
+    cancel_btn.click()
+    page.wait_for_timeout(800)
+
+    # Confirmation dialog — click the primary OK/Confirm button
     modal = page.locator(".modal:visible")
     if modal.count() > 0:
         modal.last.locator(
-            "button:has-text('Ok'), "
-            "button:has-text('OK'), "
-            "button:has-text('Confirm'), "
-            "button:has-text('Cancel')"
-        ).last.click()
-    page.wait_for_timeout(800)
+            "button.btn-primary:visible, "
+            "button:has-text('Ok'):visible, "
+            "button:has-text('OK'):visible, "
+            "button:has-text('Confirm'):visible"
+        ).first.click()
+    page.wait_for_timeout(1000)
     _wait_no_loading(page)
 
 

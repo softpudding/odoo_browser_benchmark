@@ -10,7 +10,7 @@ def cleanup(env):
     )
     for app in apps:
         env["mail.message"].search([
-            ("res_model", "=", "hr.applicant"),
+            ("model", "=", "hr.applicant"),
             ("res_id", "=", app.id),
         ]).unlink()
         app.unlink()

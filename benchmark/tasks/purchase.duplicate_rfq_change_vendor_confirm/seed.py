@@ -58,9 +58,12 @@ def setup(env):
         products[name] = p
 
     # --- Create the source draft RFQ ---
+    # Also set `origin` so the identifier shows up as Source Document in
+    # the default list view; search can also match it via partner_ref.
     po = env["purchase.order"].create({
         "partner_id": meridian.id,
         "partner_ref": "BENCH-RFQ-DUP",
+        "origin": "BENCH-RFQ-DUP",
     })
 
     env["purchase.order.line"].create({
@@ -69,7 +72,7 @@ def setup(env):
         "product_qty": 200,
         "price_unit": 1.50,
         "name": "Rubber Gasket",
-        "taxes_id": [(5, 0, 0)],
+        "tax_ids": [(5, 0, 0)],
     })
     env["purchase.order.line"].create({
         "order_id": po.id,
@@ -77,5 +80,5 @@ def setup(env):
         "product_qty": 500,
         "price_unit": 0.75,
         "name": "Stainless Bolt M8",
-        "taxes_id": [(5, 0, 0)],
+        "tax_ids": [(5, 0, 0)],
     })

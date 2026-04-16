@@ -21,17 +21,27 @@ def oracle(page):
     navigate(page, "/odoo/employees")
     _wait_no_loading(page)
 
-    # Apply Archived filter via Filters dropdown
-    filters_btn = page.locator(
-        ".o_searchview_dropdown_toggler:has-text('Filters'):visible, "
-        ".o_search_panel .o_filter_toggle:visible, "
-        ".o_control_panel button:has-text('Filters'):visible"
+    # Switch to list view for reliable row clicks
+    list_switch = page.locator(
+        ".o_switch_view.o_list:visible, "
+        "button[data-tooltip='List']:visible, "
+        ".o_cp_switch_buttons button:has-text('List')"
     ).first
-    filters_btn.click()
+    if list_switch.count() > 0:
+        list_switch.click()
+        _wait_no_loading(page)
+        page.wait_for_timeout(500)
+
+    # Open the search panel dropdown (has Filters/Group By/Favorites)
+    toggler = page.locator(
+        ".o_searchview_dropdown_toggler:visible"
+    ).first
+    toggler.click()
     page.wait_for_timeout(500)
     archived = page.locator(
-        ".o-dropdown--menu:visible .dropdown-item:has-text('Archived'), "
-        ".dropdown-menu:visible .dropdown-item:has-text('Archived')"
+        ".o_search_bar_menu .o_filter_menu .o_menu_item:has-text('Archived'), "
+        ".o_search_bar_menu .dropdown-item:has-text('Archived'), "
+        ".o-dropdown--menu:visible .o_menu_item:has-text('Archived')"
     ).first
     archived.click()
     page.wait_for_timeout(500)

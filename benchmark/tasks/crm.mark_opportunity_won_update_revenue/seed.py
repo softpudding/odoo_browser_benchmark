@@ -22,7 +22,7 @@ def setup(env):
     )
     if prior:
         env["mail.message"].search([
-            ("res_model", "=", "crm.lead"),
+            ("model", "=", "crm.lead"),
             ("res_id", "in", prior.ids),
         ]).unlink()
         prior.unlink()

@@ -27,7 +27,7 @@ def check(env):
         )
 
     notes = env["mail.message"].search([
-        ("res_model", "=", "sale.order"),
+        ("model", "=", "sale.order"),
         ("res_id", "=", target.id),
         ("subtype_id.name", "=", "Note"),
     ])

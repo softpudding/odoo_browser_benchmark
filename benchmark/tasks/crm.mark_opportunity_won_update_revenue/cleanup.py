@@ -14,7 +14,7 @@ def cleanup(env):
     )
     if leads:
         env["mail.message"].search([
-            ("res_model", "=", "crm.lead"),
+            ("model", "=", "crm.lead"),
             ("res_id", "in", leads.ids),
         ]).unlink()
         leads.unlink()

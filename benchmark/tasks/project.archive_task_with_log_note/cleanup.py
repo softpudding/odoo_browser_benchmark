@@ -12,7 +12,7 @@ def cleanup(env):
     ])
     for task in tasks:
         env["mail.message"].search([
-            ("res_model", "=", "project.task"),
+            ("model", "=", "project.task"),
             ("res_id", "=", task.id),
             ("subtype_id.name", "=", "Note"),
         ]).unlink()

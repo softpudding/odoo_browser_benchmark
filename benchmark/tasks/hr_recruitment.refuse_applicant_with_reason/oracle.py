@@ -10,7 +10,6 @@ from benchmark.oracle_helpers import (
     login,
     navigate,
     run_oracle,
-    modal_set_many2one,
     _wait_no_loading,
     _wait_for_ready,
 )
@@ -52,8 +51,11 @@ def oracle(page):
     modal.wait_for(state="visible", timeout=10_000)
     page.wait_for_timeout(500)
 
-    # Set refuse_reason_id on the wizard
-    modal_set_many2one(page, "refuse_reason_id", EXPECTED_REASON)
+    # Set refuse_reason_id on the wizard (selection_badge widget — click badge)
+    modal.locator(
+        ".o_field_selection_badge[name='refuse_reason_id'] .o_selection_badge, "
+        ".o_field_widget[name='refuse_reason_id'] .o_selection_badge"
+    ).filter(has_text=EXPECTED_REASON).first.click()
     page.wait_for_timeout(400)
 
     # Untick Send Email if checked

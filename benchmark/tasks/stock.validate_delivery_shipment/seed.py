@@ -72,7 +72,6 @@ def setup(env):
         "origin": "BENCH-DEL-01",
     })
     env["stock.move"].create({
-        "name": "Steel Bracket 12\"",
         "product_id": products["Steel Bracket 12\""].id,
         "product_uom_qty": 20,
         "product_uom": products["Steel Bracket 12\""].uom_id.id,
@@ -81,7 +80,6 @@ def setup(env):
         "location_dest_id": customer_loc.id,
     })
     env["stock.move"].create({
-        "name": "Copper Wire 100m",
         "product_id": products["Copper Wire 100m"].id,
         "product_uom_qty": 8,
         "product_uom": products["Copper Wire 100m"].uom_id.id,
@@ -101,7 +99,6 @@ def setup(env):
         "origin": "BENCH-DEL-OTHER",
     })
     env["stock.move"].create({
-        "name": "Steel Bracket 12\"",
         "product_id": products["Steel Bracket 12\""].id,
         "product_uom_qty": 5,
         "product_uom": products["Steel Bracket 12\""].uom_id.id,
