@@ -4,7 +4,7 @@ Tracks all benchmark tasks. Update when adding new tasks or running evaluations.
 
 **Status values:** `WIP` — oracle or eval incomplete | `Done` — oracle passes, eval recorded
 
-Last eval: 2026-04-16 | Oracle: 28/28 (100%) | Browser-Use: 11/28 (39%) | New WIP: 10 (5 hard + 5 easy)
+Last eval: 2026-04-16 | Oracle: 28/28 (100%) | Browser-Use: 11/28 (39%) | New WIP: 20 (5 hard + 5 easy + 10 medium)
 
 ## Summary
 
@@ -48,6 +48,16 @@ Last eval: 2026-04-16 | Oracle: 28/28 (100%) | Browser-Use: 11/28 (39%) | New WI
 | 36 | crm.move_opportunity_stage [easy] | WIP | — | — | — |
 | 37 | purchase.reset_draft_edit_reconfirm [easy] | WIP | — | — | — |
 | 38 | project.post_chatter_message [easy] | WIP | — | — | — |
+| 39 | sale.set_payment_terms_confirm [medium] | WIP | — | — | — |
+| 40 | account.create_vendor_bill_confirm [medium] | WIP | — | — | — |
+| 41 | crm.edit_opportunity_schedule_call [medium] | WIP | — | — | — |
+| 42 | hr.update_work_information [medium] | WIP | — | — | — |
+| 43 | project.create_task_assign_stage [medium] | WIP | — | — | — |
+| 44 | stock.confirm_and_validate_receipt [medium] | WIP | — | — | — |
+| 45 | purchase.update_rfq_add_line_confirm [medium] | WIP | — | — | — |
+| 46 | contacts.update_address_add_tag [medium] | WIP | — | — | — |
+| 47 | calendar.create_single_event [medium] | WIP | — | — | — |
+| 48 | hr_recruitment.advance_applicant_stage [medium] | WIP | — | — | — |
 
 ---
 
@@ -580,6 +590,146 @@ Last eval: 2026-04-16 | Oracle: 28/28 (100%) | Browser-Use: 11/28 (39%) | New WI
 | **Odoo modules** | Project — Tasks |
 | **Workflow** | Open task "Write API integration spec" in project "Omega Platform Launch". Post a message in the chatter with exact text: "Backend team has reviewed the spec. Moving forward with implementation." |
 | **Capability tested** | Chatter message posting — type text in the chatter composer and click Send. Simple send message (not log note distinction). |
+
+---
+
+## sale.set_payment_terms_confirm
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Sales — Quotations |
+| **Workflow** | Find draft quotation BENCH-PMT-01 for Azure Interior. Set Payment Terms to "30 Net Days", change Desk Organizer line quantity from 5 to 12, update Customer Reference to "AZ-2026-Q2", and click Confirm. |
+| **Capability tested** | Multi-field form edit (relational field + inline line qty + text field) followed by confirmation action. No cross-module hop, but requires correct interaction with payment terms dropdown and order line editing. |
+
+---
+
+## account.create_vendor_bill_confirm
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Accounting — Vendor Bills |
+| **Workflow** | Navigate to Vendor Bills, create new bill for Meridian Supply Co with 2 product lines (Cable Tray ×100 @ $12.50, Junction Box ×50 @ $8.00), set Bill Date to May 1, 2026, set reference MSC-INV-4421, and Confirm. |
+| **Capability tested** | Create-from-scratch in accounting module with date picker and 2 product lines. Fewer lines than hard-level create tasks but the accounting form layout differs from sales. |
+
+---
+
+## crm.edit_opportunity_schedule_call
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | CRM — Pipeline |
+| **Workflow** | Find opportunity "Beacon Analytics Deal", update Expected Revenue to 75000 and Probability to 60%, then schedule a Call activity for May 10, 2026 with summary "Follow up on proposal". |
+| **Capability tested** | Multi-field edit on opportunity form plus activity scheduling via the popover widget. The activity popover has multiple fields (type, date, summary) in a compact UI. |
+
+---
+
+## hr.update_work_information
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Employees (hr) |
+| **Workflow** | Find employee "Sofia Chen". Navigate to Work Information tab, set Work Location to "Home" and Timezone to "America/New_York". Navigate to Private Information tab, set Certificate Level to "Master". Save. |
+| **Capability tested** | Multi-tab form navigation — agent must visit two different tabs and update fields on each before saving. Different from hr.create_employee (editing existing vs creating new). |
+
+---
+
+## project.create_task_assign_stage
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Project |
+| **Workflow** | In "Omega Platform Launch" project, create task "Design Landing Page Mockup" with assignee Mitchell Admin, deadline May 15, 2026, priority Urgent, and description text. Place in "In Progress" stage. |
+| **Capability tested** | Multi-field task creation with stage placement — agent must fill 5+ fields and ensure the task ends up in the correct kanban column. |
+
+---
+
+## stock.confirm_and_validate_receipt
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Inventory (stock) |
+| **Workflow** | Find receipt BENCH-RCV-01 in transfers. Set Done quantities for Steel Bracket 12" (20) and Copper Wire 100m (10) to match demand. Click Validate. |
+| **Capability tested** | Inline quantity editing on stock move lines followed by validation. Different from stock.adjust_inventory (receipt validation vs physical inventory; different UI for setting quantities). |
+
+---
+
+## purchase.update_rfq_add_line_confirm
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Purchase |
+| **Workflow** | Open draft RFQ BENCH-RFQ-UPD for Pinnacle Hardware. Add new line (Hex Wrench Set ×25 @ $15.00). Change Order Deadline to May 20, 2026. Confirm Order. |
+| **Capability tested** | Add product line to existing record + date picker + confirm. Different from purchase.new_rfq_three_lines_date (edit existing vs create from scratch) and purchase.cancel_reissue_wrong_vendor (no cancel/reissue). |
+
+---
+
+## contacts.update_address_add_tag
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Contacts |
+| **Workflow** | Find company "Brookfield Dynamics". Update address (street, city, state, ZIP), add "Supplier" tag, set Job Position to "Procurement Partner". Save. |
+| **Capability tested** | Multi-field address update + tag addition (many2many widget) + text field. Different from contacts.create_company_with_contacts (editing existing vs multi-record creation). |
+
+---
+
+## calendar.create_single_event
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Calendar |
+| **Workflow** | Create one-time event "Q2 Strategy Review" on May 8, 2026, 2-4 PM, location "Conference Room A", with description and Marc Demo as attendee. |
+| **Capability tested** | Multi-field event creation with date/time pickers and attendee selection. Different from calendar.schedule_recurring_steering_sync (one-time vs recurring, no recurrence dialog) and calendar.edit_single_recurrence_occurrence (create vs edit). |
+
+---
+
+## hr_recruitment.advance_applicant_stage
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Recruitment |
+| **Workflow** | In "Experienced Developer" job, find applicant "Taylor Kim". Move from "Initial Qualification" to "First Interview" stage. Set Appreciation to "In Progress". Write application summary text. Save. |
+| **Capability tested** | Kanban stage change + appreciation rating + description text. Different from hr_recruitment.new_applicant_schedule_interview (advancing existing vs creating new; no activity scheduling). |
 
 ---
 

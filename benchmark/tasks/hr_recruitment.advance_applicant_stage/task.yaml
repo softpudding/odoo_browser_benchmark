@@ -1,0 +1,20 @@
+task_id: hr_recruitment.advance_applicant_stage
+module: hr_recruitment
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/recruitment
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 300
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "Navigate to job position, find applicant in kanban, move to next stage, set appreciation rating and summary text"
+  checks_verify: "Applicant moved to First Interview stage with correct appreciation and summary text"
+  primary_track: true
+  tier: 2

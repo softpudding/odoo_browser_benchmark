@@ -1,0 +1,26 @@
+# Trace oracle for purchase.update_rfq_add_line_confirm
+#
+# Medium: add line to existing RFQ + change deadline + confirm.
+
+required_ops:
+  - purchase.order.button_confirm
+
+optional_ops:
+  - purchase.order.read
+  - purchase.order.write
+  - purchase.order.web_save
+  - purchase.order.search_read
+  - purchase.order.web_search_read
+  - purchase.order.line.create
+  - purchase.order.line.read
+  - purchase.order.line.write
+  - purchase.order.line.web_save
+  - product.product.read
+  - product.product.search_read
+  - ir.ui.view.get_views
+  - mail.message.create
+
+forbidden_ops:
+  - purchase.order.unlink
+  - purchase.order.button_cancel
+  - purchase.order.line.unlink
