@@ -1,0 +1,21 @@
+task_id: purchase_stock.return_partial_receipt_to_vendor
+module: purchase_stock
+difficulty: hard
+instruction: see prompt.md
+start_url: /odoo/purchase
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 420
+step_limit: 300
+metadata:
+  category: side_effect_trap
+  difficulty_level: hard
+  agent_interaction: "Open the done receipt from a purchase order, use the Return wizard to enter exact product quantities, then validate the generated return transfer."
+  checks_verify: "The purchase order's received quantities were reduced only on the specified products and the return picking was validated with the exact quantities."
+  failure_pattern: "Agent uses Return All, leaves non-target rows populated in the return wizard, or validates a return with the wrong quantities."
+  primary_track: true
+  tier: 3

@@ -1,0 +1,29 @@
+# Trace oracle for crm.batch_mark_lost_with_reason
+#
+# Category 2: Policy trap (wizard).
+# Agent must batch-select the correct opportunities and complete the mark-lost
+# wizard with a specific reason and note.
+
+required_ops:
+  - crm.lead.lost.action_lost_reason_apply
+
+optional_ops:
+  - crm.lead.action_set_lost
+  - crm.lead.read
+  - crm.lead.search_read
+  - crm.lead.web_search_read
+  - crm.lead.write
+  - crm.lead.lost.create
+  - crm.lead.lost.read
+  - crm.lead.lost.write
+  - crm.lost.reason.read
+  - crm.lost.reason.search_read
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+  - mail.message.create
+  - mail.followers.create
+  - bus.bus.create
+
+forbidden_ops:
+  - crm.merge.opportunity.action_merge
+  - crm.lead.unlink

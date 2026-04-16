@@ -1,0 +1,32 @@
+# Trace oracle for sale.confirm_order_within_credit_limit
+#
+# Category 2: Policy trap.
+# Agent must reduce the allowed line quantity to satisfy the credit limit and
+# then confirm the sales order.
+
+required_ops:
+  - sale.order.action_confirm
+
+optional_ops:
+  - sale.order.read
+  - sale.order.web_read
+  - sale.order.search_read
+  - sale.order.web_search_read
+  - sale.order.write
+  - sale.order.web_save
+  - sale.order.line.read
+  - sale.order.line.write
+  - account.move.read
+  - account.move.search_read
+  - res.partner.read
+  - res.partner.search_read
+  - product.product.read
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+  - mail.message.create
+  - mail.followers.create
+  - bus.bus.create
+
+forbidden_ops:
+  - sale.order.unlink
+  - sale.order.action_cancel

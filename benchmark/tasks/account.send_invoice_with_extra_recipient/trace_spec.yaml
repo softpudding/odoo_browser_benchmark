@@ -1,0 +1,34 @@
+# Trace oracle for account.send_invoice_with_extra_recipient
+#
+# Category 5: Deep UI interaction.
+# Agent must complete the invoice send wizard with an extra recipient and
+# custom subject/body values.
+
+required_ops:
+  - account.move.send.wizard.action_send_and_print
+
+optional_ops:
+  - account.move.read
+  - account.move.web_read
+  - account.move.search_read
+  - account.move.web_search_read
+  - account.move.send.wizard.create
+  - account.move.send.wizard.read
+  - account.move.send.wizard.write
+  - account.move.send.wizard.web_save
+  - account.move.send.wizard.onchange
+  - account.move.send.wizard.search_read
+  - res.partner.read
+  - res.partner.search_read
+  - res.partner.web_name_search
+  - mail.message.create
+  - mail.mail.create
+  - mail.followers.create
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+  - bus.bus.create
+
+forbidden_ops:
+  - account.move.button_draft
+  - account.move.button_cancel
+  - account.move.unlink
