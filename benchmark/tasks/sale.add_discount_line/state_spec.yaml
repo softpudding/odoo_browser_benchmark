@@ -1,0 +1,29 @@
+models:
+  sale.order:
+    match_key:
+      - client_order_ref
+    fields:
+      - client_order_ref
+      - partner_id
+      - state
+      - user_id
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
+      - name
+  sale.order.line:
+    match_key:
+      - order_id
+      - name
+    fields:
+      - name
+      - product_id
+      - product_uom_qty
+      - price_unit
+      - discount
+      - order_id
+    ignore_fields:
+      - id
+      - create_date
+      - write_date

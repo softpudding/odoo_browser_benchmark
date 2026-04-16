@@ -1,0 +1,20 @@
+task_id: website.update_contact_info
+module: website
+difficulty: easy
+instruction: see prompt.md
+start_url: /odoo/website
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 180
+step_limit: 120
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: easy
+  agent_interaction: "Navigate to Website app, open About Us page in editor, find contact info section, change phone number, save"
+  checks_verify: "About Us page contains updated phone number +1 555 987 6543"
+  primary_track: true
+  tier: 1

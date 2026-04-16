@@ -1,0 +1,20 @@
+task_id: hr.update_employee_department
+module: hr
+difficulty: easy
+instruction: see prompt.md
+start_url: /odoo/employees
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 180
+step_limit: 120
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: easy
+  agent_interaction: "Navigate to Employees app, find employee by name, open form, change Department dropdown field, save"
+  checks_verify: "Employee Department field set to Engineering"
+  primary_track: true
+  tier: 1

@@ -4,7 +4,7 @@ Tracks all benchmark tasks. Update when adding new tasks or running evaluations.
 
 **Status values:** `WIP` — oracle or eval incomplete | `Done` — oracle passes, eval recorded
 
-Last eval: 2026-04-16 | Oracle: 48/48 (100%) | Browser-Use: 23/48 (48%) | New WIP: 20 (15 medium + 5 easy)
+Last eval: 2026-04-16 | Oracle: 48/48 (100%) | Browser-Use: 23/48 (48%) | New WIP: 25 (15 medium + 10 easy)
 
 ## Summary
 
@@ -78,6 +78,11 @@ Last eval: 2026-04-16 | Oracle: 48/48 (100%) | Browser-Use: 23/48 (48%) | New WI
 | 66 | crm.create_opportunity_tag_schedule_call [medium] | WIP | — | — | — |
 | 67 | project.duplicate_task_assign_deadline [medium] | WIP | — | — | — |
 | 68 | purchase.set_order_deadline_schedule_call_confirm [medium] | WIP | — | — | — |
+| 69 | website.update_contact_info [easy] | WIP | — | — | — |
+| 70 | stock.update_product_internal_reference [easy] | WIP | — | — | — |
+| 71 | hr.update_employee_department [easy] | WIP | — | — | — |
+| 72 | sale.add_discount_line [easy] | WIP | — | — | — |
+| 73 | project.add_task_subtask [easy] | WIP | — | — | — |
 
 ---
 
@@ -890,6 +895,76 @@ Last eval: 2026-04-16 | Oracle: 48/48 (100%) | Browser-Use: 23/48 (48%) | New WI
 | **Odoo modules** | Project — Tasks |
 | **Workflow** | Open project "Omega Platform Launch", find task "Design Landing Page Mockup". Change Deadline to May 20, 2026 via date picker. Click Save. |
 | **Capability tested** | Date picker field edit on an existing task — different from project.post_chatter_message (chatter interaction), project.create_task_assign_stage (task creation), and project.complete_task_log_note (stage change + note). |
+
+---
+
+## website.update_contact_info
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Website — Pages |
+| **Workflow** | Go to Website app, open the "About Us" page in the editor. Find the contact information section and change the phone number to "+1 555 987 6543". Save the page. |
+| **Capability tested** | Website inline editor — find and edit a specific text field within page content. Different from website.edit_careers_spotlight (card editing on careers page). |
+
+---
+
+## stock.update_product_internal_reference
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Inventory — Products |
+| **Workflow** | Go to Inventory app. Open product "Steel Bracket 12" from the Products list. Change the Internal Reference field to "SB-12-BENCH". Click Save. |
+| **Capability tested** | Simple text field edit on product form. Different from stock.adjust_inventory_quantities (inline tree editing) and inventory.scrap_product (wizard). |
+
+---
+
+## hr.update_employee_department
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Employees (hr) |
+| **Workflow** | Go to Employees app. Find employee "Sofia Chen". Change the Department field to "Engineering". Click Save. |
+| **Capability tested** | Simple dropdown field edit on existing employee form. Different from hr.create_employee_complete_profile (multi-tab creation), hr.update_work_information (multi-tab editing), and hr.schedule_employee_activity (chatter dialog). |
+
+---
+
+## sale.add_discount_line
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Sales — Quotations |
+| **Workflow** | Go to Sales app. Open draft quotation BENCH-DISC-01 for customer "Azure Interior". On the "Desk Organizer" line, set the Discount field to 10%. Click Save. |
+| **Capability tested** | Inline order line editing with discount percentage field. Different from sale.change_validity_date (date field edit), sale.set_payment_terms_confirm (multi-field header edit), and sale.add_note_to_quotation (chatter interaction). |
+
+---
+
+## project.add_task_subtask
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Project — Tasks |
+| **Workflow** | Go to Project app. Open project "Omega Platform Launch". Find task "Design Landing Page Mockup". In the Subtasks tab, add a new subtask titled "Create Wireframes". Save. |
+| **Capability tested** | Subtask creation on existing task via subtasks tab. Different from project.post_chatter_message (chatter interaction), project.create_task_assign_stage (task creation), project.set_task_deadline (date edit), and project.complete_task_log_note (stage change + note). |
 
 ---
 
