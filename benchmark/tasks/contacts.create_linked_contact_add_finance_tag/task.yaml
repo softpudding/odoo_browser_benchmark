@@ -1,0 +1,20 @@
+task_id: contacts.create_linked_contact_add_finance_tag
+module: contacts
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/contacts
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 300
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "Create a new person contact, link it to the correct existing company, fill several address fields, and add a tag without creating a new company."
+  checks_verify: "Exactly one linked contact is created under the correct parent company with the required tag and contact details."
+  primary_track: true
+  tier: 2

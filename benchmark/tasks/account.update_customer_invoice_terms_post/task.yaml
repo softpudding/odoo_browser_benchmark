@@ -1,0 +1,20 @@
+task_id: account.update_customer_invoice_terms_post
+module: account
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/accounting/customer-invoices
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 300
+step_limit: 200
+metadata:
+  category: side_effect_trap
+  difficulty_level: medium
+  agent_interaction: "Open the correct draft customer invoice, edit header fields and one invoice-line quantity, then post it."
+  checks_verify: "The target invoice is posted with the requested date, payment terms, reference, and Support Review quantity while the distractor invoice stays unchanged."
+  primary_track: true
+  tier: 2

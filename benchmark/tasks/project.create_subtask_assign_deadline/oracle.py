@@ -3,6 +3,7 @@
 from benchmark.oracle_helpers import (
     click_add_a_line,
     click_list_row,
+    click_stat_button,
     click_tab,
     login,
     navigate,
@@ -21,6 +22,10 @@ def oracle(page):
     _wait_no_loading(page)
 
     click_list_row(page, "Atlas Implementation Sprint")
+    page.wait_for_timeout(1000)
+    _wait_for_ready(page)
+
+    click_stat_button(page, "Tasks")
     page.wait_for_timeout(1000)
     _wait_for_ready(page)
 

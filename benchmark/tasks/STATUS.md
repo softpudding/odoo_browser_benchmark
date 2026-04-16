@@ -4,7 +4,7 @@ Tracks all benchmark tasks. Update when adding new tasks or running evaluations.
 
 **Status values:** `WIP` — oracle or eval incomplete | `Done` — oracle passes, eval recorded
 
-Last eval: 2026-04-16 | Oracle: 71/71 (100%) | Browser-Use: 31/71 (43.7%) | New WIP: 25 (20 medium + 5 easy)
+Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 35/76 (46.1%) | New WIP: 30 (25 medium + 5 easy)
 
 ## Summary
 
@@ -1010,8 +1010,8 @@ Last eval: 2026-04-16 | Oracle: 71/71 (100%) | Browser-Use: 31/71 (43.7%) | New 
 | **Browser-Use** | PASS/PASS |
 | **F1** | 1.0 |
 | **Odoo modules** | Accounting — Customer Invoices |
-| **Workflow** | Open draft customer invoice `MED-CINV-01` for Brightstar Labs. Update invoice date, payment terms, customer reference, and one existing line quantity, then post. |
-| **Capability tested** | Existing-record edit inside Accounting with one header many2one, one date picker, one inline line change, and a distractor invoice that must stay untouched. |
+| **Workflow** | Open draft customer invoice `MED-CINV-01` for Brightstar Labs. Update invoice date, payment terms, customer reference, and the existing Support Review quantity, then post. |
+| **Capability tested** | Existing-record edit inside Accounting with a header many2one, a date picker, one inline line change, and a distractor invoice that must stay untouched. |
 
 ---
 
@@ -1052,7 +1052,7 @@ Last eval: 2026-04-16 | Oracle: 71/71 (100%) | Browser-Use: 31/71 (43.7%) | New 
 | **Browser-Use** | PASS/PASS |
 | **F1** | 1.0 |
 | **Odoo modules** | Purchase — RFQs |
-| **Workflow** | Open draft RFQ `MED-RFQ-REF-01` for North Coast Components. Update vendor reference, change the order deadline, adjust one existing line quantity, and confirm the order. |
+| **Workflow** | Open draft RFQ `MED-RFQ-REF-01` for North Coast Components. Update vendor reference, change the order deadline, adjust the existing Dock Seal Kit quantity, and confirm the order. |
 | **Capability tested** | Purchase form editing that mixes header fields and inline line changes, plus a distractor RFQ that must remain in draft. |
 
 ---
