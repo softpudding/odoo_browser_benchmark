@@ -633,7 +633,7 @@ Last eval: 2026-04-16 | Oracle: 58/58 (100%) | Browser-Use: 23/58 (40%) | New WI
 | Field | Value |
 |---|---|
 | **Status** | WIP |
-| **Oracle** | — |
+| **Oracle** | PASS |
 | **Browser-Use** | — |
 | **F1** | — |
 | **Odoo modules** | Sales — Quotations |
@@ -647,7 +647,7 @@ Last eval: 2026-04-16 | Oracle: 58/58 (100%) | Browser-Use: 23/58 (40%) | New WI
 | Field | Value |
 |---|---|
 | **Status** | WIP |
-| **Oracle** | — |
+| **Oracle** | PASS |
 | **Browser-Use** | — |
 | **F1** | — |
 | **Odoo modules** | Accounting — Vendor Bills |
@@ -661,7 +661,7 @@ Last eval: 2026-04-16 | Oracle: 58/58 (100%) | Browser-Use: 23/58 (40%) | New WI
 | Field | Value |
 |---|---|
 | **Status** | WIP |
-| **Oracle** | — |
+| **Oracle** | PASS |
 | **Browser-Use** | — |
 | **F1** | — |
 | **Odoo modules** | CRM — Pipeline |
@@ -675,11 +675,11 @@ Last eval: 2026-04-16 | Oracle: 58/58 (100%) | Browser-Use: 23/58 (40%) | New WI
 | Field | Value |
 |---|---|
 | **Status** | WIP |
-| **Oracle** | — |
+| **Oracle** | PASS |
 | **Browser-Use** | — |
 | **F1** | — |
 | **Odoo modules** | Employees (hr) |
-| **Workflow** | Find employee "Sofia Chen". Navigate to Work Information tab, set Work Location to "Home" and Timezone to "America/New_York". Navigate to Private Information tab, set Certificate Level to "Master". Save. |
+| **Workflow** | Find employee "Sofia Chen". On the Work tab set Work Location to "Home"; on the Settings tab set Timezone to "America/New_York"; on the Personal tab set Certificate Level to "Master". Save. |
 | **Capability tested** | Multi-tab form navigation — agent must visit two different tabs and update fields on each before saving. Different from hr.create_employee (editing existing vs creating new). |
 
 ---
@@ -689,11 +689,11 @@ Last eval: 2026-04-16 | Oracle: 58/58 (100%) | Browser-Use: 23/58 (40%) | New WI
 | Field | Value |
 |---|---|
 | **Status** | WIP |
-| **Oracle** | — |
+| **Oracle** | PASS |
 | **Browser-Use** | — |
 | **F1** | — |
 | **Odoo modules** | Project |
-| **Workflow** | In "Omega Platform Launch" project, create task "Design Landing Page Mockup" with assignee Mitchell Admin, deadline May 15, 2026, priority Urgent, and description text. Place in "In Progress" stage. |
+| **Workflow** | In "Omega Platform Launch" project, create task "Design Landing Page Mockup" with assignee Administrator, deadline May 15, 2026, priority Urgent, and description text. Place in "In Progress" stage. |
 | **Capability tested** | Multi-field task creation with stage placement — agent must fill 5+ fields and ensure the task ends up in the correct kanban column. |
 
 ---
@@ -703,7 +703,7 @@ Last eval: 2026-04-16 | Oracle: 58/58 (100%) | Browser-Use: 23/58 (40%) | New WI
 | Field | Value |
 |---|---|
 | **Status** | WIP |
-| **Oracle** | — |
+| **Oracle** | PASS |
 | **Browser-Use** | — |
 | **F1** | — |
 | **Odoo modules** | Inventory (stock) |
@@ -717,7 +717,7 @@ Last eval: 2026-04-16 | Oracle: 58/58 (100%) | Browser-Use: 23/58 (40%) | New WI
 | Field | Value |
 |---|---|
 | **Status** | WIP |
-| **Oracle** | — |
+| **Oracle** | PASS |
 | **Browser-Use** | — |
 | **F1** | — |
 | **Odoo modules** | Purchase |
@@ -731,11 +731,11 @@ Last eval: 2026-04-16 | Oracle: 58/58 (100%) | Browser-Use: 23/58 (40%) | New WI
 | Field | Value |
 |---|---|
 | **Status** | WIP |
-| **Oracle** | — |
+| **Oracle** | PASS |
 | **Browser-Use** | — |
 | **F1** | — |
 | **Odoo modules** | Contacts |
-| **Workflow** | Find company "Brookfield Dynamics". Update address (street, city, state, ZIP), add "Supplier" tag, set Job Position to "Procurement Partner". Save. |
+| **Workflow** | Find company "Brookfield Dynamics". Update address (street, city, state, ZIP), add "Supplier" tag, set Website to "https://brookfielddynamics.com". Save. |
 | **Capability tested** | Multi-field address update + tag addition (many2many widget) + text field. Different from contacts.create_company_with_contacts (editing existing vs multi-record creation). |
 
 ---
@@ -745,7 +745,7 @@ Last eval: 2026-04-16 | Oracle: 58/58 (100%) | Browser-Use: 23/58 (40%) | New WI
 | Field | Value |
 |---|---|
 | **Status** | WIP |
-| **Oracle** | — |
+| **Oracle** | PASS |
 | **Browser-Use** | — |
 | **F1** | — |
 | **Odoo modules** | Calendar |
@@ -759,7 +759,7 @@ Last eval: 2026-04-16 | Oracle: 58/58 (100%) | Browser-Use: 23/58 (40%) | New WI
 | Field | Value |
 |---|---|
 | **Status** | WIP |
-| **Oracle** | — |
+| **Oracle** | PASS |
 | **Browser-Use** | — |
 | **F1** | — |
 | **Odoo modules** | Recruitment |
