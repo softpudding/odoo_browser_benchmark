@@ -6,6 +6,39 @@ Tracks all benchmark tasks. Update when adding new tasks or running evaluations.
 
 Last eval: 2026-04-16 | Oracle: 28/28 (100%) | Browser-Use: 11/28 (39%)
 
+## Summary
+
+| # | Task | Status | Oracle | Browser-Use | F1 |
+|---|------|--------|--------|-------------|-----|
+| 1 | account.complete_customer_tax_id_then_post | Done | PASS | FAIL | 0.0 |
+| 2 | account.create_credit_note_and_reconcile | Done | PASS | PASS | 1.0 |
+| 3 | account.partial_refund_service_credit_note | Done | PASS | FAIL | 0.0 |
+| 4 | account.repair_and_post_invoice | Done | PASS | FAIL | 0.0 |
+| 5 | account.switch_negative_invoice_repair_credit_note | Done | PASS | FAIL | 0.0 |
+| 6 | account.switch_negative_invoice_to_credit_note | Done | PASS | FAIL | 0.0 |
+| 7 | calendar.edit_single_recurrence_occurrence | Done | PASS | FAIL | 0.0 |
+| 8 | calendar.make_single_occurrence_all_day | Done | PASS | FAIL | 0.0 |
+| 9 | calendar.schedule_recurring_steering_sync | Done | PASS | PASS | 1.0 |
+| 10 | crm.merge_duplicate_opportunities_cleanup | Done | PASS | PASS | 1.0 |
+| 11 | crm.qualify_lead_and_prepare_quote | Done | PASS | PASS | 1.0 |
+| 12 | hr_recruitment.new_applicant_schedule_interview | Done | PASS | FAIL | 0.0 |
+| 13 | project.configure_launch_milestones | Done | PASS | FAIL | 0.71 |
+| 14 | project.read_update_status | Done | PASS | PASS | 1.0 |
+| 15 | purchase.cancel_reissue_wrong_vendor | Done | PASS | FAIL | 0.33 |
+| 16 | purchase_stock.receive_and_complete_backorder | Done | PASS | PASS | 1.0 |
+| 17 | purchase_stock.receive_partial_without_backorder | Done | PASS | PASS | 1.0 |
+| 18 | sale.cancel_reissue_wrong_customer | Done | PASS | FAIL | 0.0 |
+| 19 | sale.confirm_correct_order | Done | PASS | PASS | 1.0 |
+| 20 | sale.create_quotation_and_send_email | Done | PASS | FAIL | 1.0 |
+| 21 | sale.exact_total_quotation | Done | PASS | FAIL | 0.5 |
+| 22 | sale.find_highest_duplicate | Done | PASS | FAIL | 0.0 |
+| 23 | sale.revise_target_quote_lines | Done | PASS | FAIL | 0.0 |
+| 24 | sale_project.confirm_quote_and_update_generated_project | Done | PASS | PASS | 1.0 |
+| 25 | sale_project.confirm_rollout_quote_update_generated_project | Done | PASS | PASS | 1.0 |
+| 26 | website.edit_careers_spotlight | Done | PASS | PASS | 1.0 |
+| 27 | website_hr_recruitment.apply_and_triage_ops_role | Done | PASS | PASS | 1.0 |
+| 28 | website_hr_recruitment.apply_guru_job | Done | PASS | PASS | 1.0 |
+
 ---
 
 ## account.complete_customer_tax_id_then_post
