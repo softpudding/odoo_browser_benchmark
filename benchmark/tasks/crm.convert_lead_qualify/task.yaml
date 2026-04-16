@@ -1,0 +1,20 @@
+task_id: crm.convert_lead_qualify
+module: crm
+difficulty: medium
+instruction: see prompt.md
+start_url: /web#action=crm.crm_lead_all_leads
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 300
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "Open the CRM Leads list, convert the correct lead with the default wizard flow, then move it to the Qualified stage without touching any other lead."
+  checks_verify: "The target lead becomes an opportunity in Qualified and the distractor lead stays untouched."
+  primary_track: true
+  tier: 2

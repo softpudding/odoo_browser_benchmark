@@ -1,0 +1,20 @@
+task_id: contacts.create_company_set_supplier_tag
+module: contacts
+difficulty: medium
+instruction: see prompt.md
+start_url: /web/login
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 300
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "Create one new company contact from scratch, set three basic fields plus a website, and apply one tag without touching existing contacts."
+  checks_verify: "Exactly one company contact with the requested name exists and it carries the requested email, phone, website, and Supplier tag."
+  primary_track: true
+  tier: 2

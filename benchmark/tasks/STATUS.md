@@ -121,6 +121,11 @@ Last eval: 2026-04-16 | Oracle: 81/81 (100%) | Browser-Use: 38/81 (46.9%) | New 
 | 109 | sale.create_invoice_register_payment_memo [medium] | Done | PASS | PASS | 1.0 |
 | 110 | contacts.create_company_add_supplier_finance_tags [medium] | Done | PASS | PASS | 1.0 |
 | 111 | project.create_subtask_assign_deadline [medium] | Done | PASS | PASS | 1.0 |
+| 112 | crm.convert_lead_qualify [medium] | Done | PASS | PASS | 1.0 |
+| 113 | project.convert_task_to_subtask [medium] | Done | PASS | PASS/PASS | 1.0 |
+| 114 | hr.add_resume_line_update_location [medium] | Done | PASS | FAIL | 0.0 |
+| 115 | hr_recruitment.add_skill_move_stage [medium] | Done | PASS | FAIL/FAIL | 0.0 |
+| 116 | contacts.create_company_set_supplier_tag [medium] | Done | PASS | PASS* | — |
 
 ---
 
@@ -1465,6 +1470,78 @@ Last eval: 2026-04-16 | Oracle: 81/81 (100%) | Browser-Use: 38/81 (46.9%) | New 
 | **Odoo modules** | Project |
 | **Workflow** | Open task `Prepare onboarding checklist`, create subtask `Draft kickoff agenda` from the Sub-tasks tab, assign it to `Administrator`, move it to `In Progress`, and save. |
 | **Capability tested** | Inline one2many subtask creation with assignee and stage updates on the child task only, distinct from top-level task editing, duplication, or chatter-note project flows. |
+
+---
+
+## crm.convert_lead_qualify
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
+| **Odoo modules** | CRM — Leads |
+| **Workflow** | Open CRM Leads, find `Silver Maple Network Refresh`, convert it with the default opportunity wizard, then move it to `Qualified` without creating a quotation. |
+| **Capability tested** | Lead-conversion wizard followed by a stage transition on the same record, distinct from customer-link conversion and from won/lost opportunity tasks. |
+
+---
+
+## project.convert_task_to_subtask
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS/PASS |
+| **F1** | 1.0 |
+| **Odoo modules** | Project |
+| **Workflow** | Open project `Atlas Support Rollout`, convert task `Vendor readiness checklist` into a sub-task, and set parent task `Launch coordination`. |
+| **Capability tested** | Task action-menu conversion into a sub-task with exact parent assignment, distinct from duplicate-task and subtask-creation workflows. |
+
+---
+
+## hr.add_resume_line_update_location
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
+| **Odoo modules** | Employees |
+| **Workflow** | Open employee `Marina Ortega`, change Work Location to `Home`, add one Resume entry in the `Certification` section, and save. |
+| **Capability tested** | Cross-tab employee editing plus resume-widget creation with exact dates, distinct from simpler work-information and activity-scheduling employee tasks. |
+
+---
+
+## hr_recruitment.add_skill_move_stage
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL/FAIL |
+| **F1** | 0.0 |
+| **Odoo modules** | Recruitment |
+| **Workflow** | Open applicant `Jordan Park`, move them to `First Interview`, add one `Python` skill at `Advanced`, and save. |
+| **Capability tested** | Applicant-stage transition plus skill-widget entry on the same form, distinct from stage-only recruitment tasks and interview-scheduling flows. |
+
+---
+
+## contacts.create_company_set_supplier_tag
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS* |
+| **F1** | — |
+| **Odoo modules** | Contacts |
+| **Workflow** | Create company `Harborview Fabrication`, set email, phone, website, add the `Supplier` tag, and save. |
+| **Capability tested** | Fresh company creation with core-field entry, tag autocomplete, and explicit company/person mode handling, distinct from address-heavy company creation and linked-contact tasks. |
+
+Note: difficulty calibration used a shared-port browser-use validation on `benchmark_validate` / `127.0.0.1:8069`. Isolated-port runs were contaminated by the agent drifting to the shared `8069` server, so they were not used for the final medium-tier judgment.
 
 ---
 
