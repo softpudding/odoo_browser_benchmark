@@ -1,14 +1,13 @@
-"""Seed a project task for the duplicate-task-assign-deadline task.
+"""Seed a project task for the rename-task-assign-deadline task.
 
-Category 2 (MEDIUM): use the Action menu on a task form to duplicate one task,
-then adjust a few fields on the duplicated record without touching the
-original or the distractor task.
+Category 2 (MEDIUM): open one existing project task, rename it, assign a user,
+set a deadline, and move the stage while leaving the distractor task alone.
 """
 
 PROJECT_NAME = "Operations Knowledge Base"
 TARGET_TASK = "Draft launch checklist"
 COPY_TASK = "Draft launch checklist follow-up"
-DISTRACTOR_TASK = "Draft launch checklist mobile"
+DISTRACTOR_TASK = "Review mobile checklist"
 
 
 def _ensure_stage(env, name, sequence):
@@ -44,10 +43,12 @@ def setup(env):
         "project_id": project.id,
         "stage_id": stage_todo.id,
         "description": "Review the launch checklist before the support handoff.",
+        "user_ids": [(5, 0, 0)],
     })
     env["project.task"].create({
         "name": DISTRACTOR_TASK,
         "project_id": project.id,
         "stage_id": stage_todo.id,
-        "description": "Keep the mobile notes separate from the main checklist.",
+        "description": "Keep the mobile notes separate from the launch checklist.",
+        "user_ids": [(5, 0, 0)],
     })

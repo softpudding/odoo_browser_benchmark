@@ -29,13 +29,8 @@ def check(env):
         failures.append(
             f"Expected revenue is {lead.expected_revenue}, expected 42000"
         )
-    if float(lead.probability or 0.0) != 55.0:
-        failures.append(
-            f"Probability is {lead.probability}, expected 55"
-        )
-    if "Upsell" not in lead.tag_ids.mapped("name"):
-        failures.append("Upsell tag was not added to the opportunity")
-
+    if lead.priority != "3":
+        failures.append(f"Priority is '{lead.priority}', expected '3'")
     activities = env["mail.activity"].search([
         ("res_model", "=", "crm.lead"),
         ("res_id", "=", lead.id),

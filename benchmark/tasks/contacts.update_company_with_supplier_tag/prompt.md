@@ -1,8 +1,9 @@
 Go to the **Contacts** app.
 
-Create a new **company contact** with the following details:
+Find the existing **company contact** named **North Coast Fabrication**.
 
-1. **Company Name**: North Coast Fabrication
+Update that company with the following details:
+
 2. **Phone**: `+1 (206) 555-0184`
 3. **Website**: `www.northcoastfab.example.com`
 4. **Street**: `85 Harbor Way`
@@ -15,7 +16,7 @@ Create a new **company contact** with the following details:
 Save the contact.
 
 **Rules:**
-- Create a company, not an individual contact
+- Do not create a new contact
 - Do not edit the existing company **North Coast Fabricators**
 - Do not create any linked child contacts
-- Create only one company contact with the target name
+- Keep the contact as a company

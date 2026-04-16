@@ -45,6 +45,7 @@ def _make_bill(env, vendor, ref, cable, junction, cable_qty):
         "move_type": "in_invoice",
         "partner_id": vendor.id,
         "ref": ref,
+        "invoice_origin": ref,
         "invoice_date": "2026-04-29",
         "invoice_line_ids": [
             (0, 0, {

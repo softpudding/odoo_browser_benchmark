@@ -1,7 +1,7 @@
 """Oracle for crm.create_opportunity_tag_schedule_call."""
 
 from benchmark.oracle_helpers import (
-    add_many2many_tag,
+    click_kanban_card,
     click_create,
     fill_field,
     login,
@@ -30,12 +30,16 @@ def oracle(page):
     page.wait_for_timeout(400)
     fill_field(page, "expected_revenue", "42000")
     page.wait_for_timeout(300)
-    fill_field(page, "probability", "55")
-    page.wait_for_timeout(300)
-    add_many2many_tag(page, "tag_ids", "Upsell")
-    page.wait_for_timeout(400)
+    stars = page.locator(".o_field_widget[name='priority'] .o_priority_star")
+    if stars.count() >= 3:
+        stars.nth(2).click()
+        page.wait_for_timeout(300)
 
     save_form(page)
+    page.wait_for_timeout(500)
+    navigate(page, "/odoo/crm")
+    _wait_no_loading(page)
+    click_kanban_card(page, "Vertex Renewal Expansion")
     page.wait_for_timeout(500)
 
     schedule_activity(

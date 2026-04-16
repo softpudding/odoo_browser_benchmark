@@ -1,6 +1,6 @@
 """Postcondition checks for purchase.set_order_deadline_schedule_call_confirm."""
 
-from datetime import date, datetime
+from datetime import date
 
 
 def check(env):
@@ -15,18 +15,16 @@ def check(env):
 
     po = env["purchase.order"].search([
         ("partner_id", "=", vendor.id),
-        ("partner_ref", "=", "MED-RFQ-ACT-01"),
+        ("origin", "=", "MED-RFQ-ACT-01"),
     ], limit=1)
     if not po:
         return ["Target RFQ 'MED-RFQ-ACT-01' not found"]
 
     if po.state != "purchase":
         failures.append(f"PO state is '{po.state}', expected 'purchase'")
-
-    actual_date = po.date_order.date() if isinstance(po.date_order, datetime) else po.date_order
-    if actual_date != date(2026, 5, 21):
+    if po.partner_ref != "BPI-DOCK-05":
         failures.append(
-            f"Order deadline is {actual_date}, expected 2026-05-21"
+            f"Vendor Reference is '{po.partner_ref}', expected 'BPI-DOCK-05'"
         )
 
     activities = env["mail.activity"].search([
@@ -59,7 +57,7 @@ def check(env):
 
     distractor = env["purchase.order"].search([
         ("partner_id", "=", vendor.id),
-        ("partner_ref", "=", "MED-RFQ-ACT-02"),
+        ("origin", "=", "MED-RFQ-ACT-02"),
     ], limit=1)
     if not distractor:
         failures.append("Distractor RFQ 'MED-RFQ-ACT-02' not found")
@@ -67,6 +65,10 @@ def check(env):
         if distractor.state != "draft":
             failures.append(
                 f"Distractor RFQ state is '{distractor.state}', expected 'draft'"
+            )
+        if distractor.partner_ref != "MED-RFQ-ACT-02":
+            failures.append(
+                f"Distractor Vendor Reference is '{distractor.partner_ref}', expected 'MED-RFQ-ACT-02'"
             )
         if env["mail.activity"].search_count([
             ("res_model", "=", "purchase.order"),

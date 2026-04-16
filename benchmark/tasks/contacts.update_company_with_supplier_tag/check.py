@@ -1,4 +1,4 @@
-"""Postcondition checks for contacts.create_company_with_supplier_tag."""
+"""Postcondition checks for contacts.update_company_with_supplier_tag."""
 
 
 def check(env):
@@ -9,9 +9,7 @@ def check(env):
         ("is_company", "=", True),
     ])
     if len(companies) != 1:
-        return [
-            f"Expected exactly 1 company named 'North Coast Fabrication', found {len(companies)}"
-        ]
+        return [f"Expected exactly 1 company named 'North Coast Fabrication', found {len(companies)}"]
 
     company = companies[0]
     if company.phone != "+1 (206) 555-0184":

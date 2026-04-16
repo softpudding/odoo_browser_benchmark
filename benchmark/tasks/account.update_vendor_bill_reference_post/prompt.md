@@ -7,8 +7,7 @@ Update that bill as follows:
 
 1. Set **Bill Date** to **05/06/2026**.
 2. Change **Bill Reference** to **`MSC-8841`**.
-3. On the **Cable Tray** line, change **Quantity** from **40** to **60**.
-4. Click **Confirm** to post the bill.
+3. Click **Confirm** to post the bill.
 
 **Rules:**
 - Do not add or remove any bill lines

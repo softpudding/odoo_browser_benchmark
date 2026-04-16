@@ -1,15 +1,14 @@
-"""Oracle for contacts.create_company_with_supplier_tag."""
+"""Oracle for contacts.update_company_with_supplier_tag."""
 
 from benchmark.oracle_helpers import (
     add_many2many_tag,
-    click_create,
+    click_list_row,
     fill_field,
     login,
     navigate,
     run_oracle,
     save_form,
     set_many2one,
-    _wait_for_ready,
     _wait_no_loading,
 )
 
@@ -19,27 +18,7 @@ def oracle(page):
     navigate(page, "/odoo/contacts")
     _wait_no_loading(page)
 
-    click_create(page)
-    page.wait_for_timeout(800)
-    _wait_for_ready(page)
-
-    company_radio = page.locator(
-        "div.o_field_radio[name='company_type'] .o_radio_item:has-text('Company') input, "
-        "input[value='company'], "
-        ".o_field_widget[name='is_company'] input[type='checkbox']"
-    ).first
-    if company_radio.count() > 0:
-        try:
-            if not company_radio.is_checked():
-                company_radio.click()
-        except Exception:
-            company_radio.click()
-        page.wait_for_timeout(300)
-    else:
-        page.locator("label:has-text('Company'), .o_radio_item:has-text('Company')").first.click()
-        page.wait_for_timeout(300)
-
-    fill_field(page, "name", "North Coast Fabrication")
+    click_list_row(page, "North Coast Fabrication")
     page.wait_for_timeout(300)
     fill_field(page, "phone", "+1 (206) 555-0184")
     page.wait_for_timeout(300)

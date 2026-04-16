@@ -41,9 +41,9 @@ def check(env):
     if not cable:
         failures.append("Cable Tray line not found")
     else:
-        if cable.quantity != 60:
+        if cable.quantity != 40:
             failures.append(
-                f"Cable Tray quantity is {cable.quantity}, expected 60"
+                f"Cable Tray quantity is {cable.quantity}, expected 40"
             )
         if cable.price_unit != 12.5:
             failures.append(

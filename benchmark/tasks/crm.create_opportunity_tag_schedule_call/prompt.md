@@ -5,9 +5,8 @@ Create a new **opportunity** with the following details:
 1. **Opportunity**: `Vertex Renewal Expansion`
 2. **Customer**: `Azure Interior`
 3. **Expected Revenue**: `42000`
-4. **Probability**: `55`
-5. Add the tag **Upsell**
-6. Save the opportunity
+4. Set **Priority** to **High** (**3 stars**)
+5. Save the opportunity
 
 After saving, schedule a new activity:
 

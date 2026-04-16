@@ -4,7 +4,7 @@ Tracks all benchmark tasks. Update when adding new tasks or running evaluations.
 
 **Status values:** `WIP` — oracle or eval incomplete | `Done` — oracle passes, eval recorded
 
-Last eval: 2026-04-16 | Oracle: 63/63 (100%) | Browser-Use: 27/63 (43%) | New WIP: 20 (15 medium + 5 easy, browser-use pending)
+Last eval: 2026-04-16 | Oracle: 68/68 (100%) | Browser-Use: 31/68 (45.6%) | New WIP: 15 (10 medium + 5 easy)
 
 ## Summary
 
@@ -73,11 +73,11 @@ Last eval: 2026-04-16 | Oracle: 63/63 (100%) | Browser-Use: 27/63 (43%) | New WI
 | 61 | sale.add_note_to_quotation [easy] | Done | PASS | PASS | 1.0 |
 | 62 | crm.set_priority_on_opportunity [easy] | Done | PASS | FAIL | 1.0 |
 | 63 | contacts.update_contact_email [easy] | Done | PASS | PASS | 1.0 |
-| 64 | account.update_vendor_bill_reference_post [medium] | WIP | — | — | — |
-| 65 | contacts.update_company_with_supplier_tag [medium] | WIP | — | — | — |
-| 66 | crm.create_opportunity_tag_schedule_call [medium] | WIP | — | — | — |
-| 67 | project.rename_task_assign_deadline [medium] | WIP | — | — | — |
-| 68 | purchase.set_order_deadline_schedule_call_confirm [medium] | WIP | — | — | — |
+| 64 | account.update_vendor_bill_reference_post [medium] | Update a draft vendor bill's date and reference, then confirm it | Done | PASS | PASS | 1.0 |
+| 65 | contacts.update_company_with_supplier_tag [medium] | Update an existing company contact's address, website, and Supplier tag | Done | PASS | FAIL | 0.0 |
+| 66 | crm.create_opportunity_tag_schedule_call [medium] | Create a CRM opportunity, set revenue and priority, then schedule a call | Done | PASS | FAIL/PASS | 1.0 |
+| 67 | project.rename_task_assign_deadline [medium] | Rename a project task, set its deadline, and move it to In Progress | Done | PASS | PASS | 1.0 |
+| 68 | purchase.set_order_deadline_schedule_call_confirm [medium] | Update an RFQ vendor reference, schedule a call, and confirm the order | Done | PASS | PASS | 1.0 |
 | 69 | website.update_contact_info [easy] | WIP | — | — | — |
 | 70 | stock.update_product_internal_reference [easy] | WIP | — | — | — |
 | 71 | hr.update_employee_department [easy] | WIP | — | — | — |

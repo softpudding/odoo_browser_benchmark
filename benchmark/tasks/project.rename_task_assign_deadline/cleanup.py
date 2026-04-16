@@ -14,6 +14,6 @@ def cleanup(env):
         ("name", "in", [
             "Draft launch checklist",
             "Draft launch checklist follow-up",
-            "Draft launch checklist mobile",
+            "Review mobile checklist",
         ]),
     ]).unlink()

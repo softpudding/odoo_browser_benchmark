@@ -3,12 +3,12 @@
 from benchmark.oracle_helpers import (
     click_list_row,
     click_status_button,
+    fill_field,
     login,
     navigate,
     run_oracle,
     save_form,
     schedule_activity,
-    set_date,
     _wait_no_loading,
 )
 
@@ -21,7 +21,7 @@ def oracle(page):
     click_list_row(page, "MED-RFQ-ACT-01")
     page.wait_for_timeout(800)
 
-    set_date(page, "date_order", "05/21/2026")
+    fill_field(page, "partner_ref", "BPI-DOCK-05")
     page.wait_for_timeout(400)
     save_form(page)
     page.wait_for_timeout(400)

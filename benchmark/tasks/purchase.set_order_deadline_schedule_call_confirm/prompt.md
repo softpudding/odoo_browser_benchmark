@@ -5,7 +5,7 @@ Vendor Reference **`MED-RFQ-ACT-01`**.
 
 Update that RFQ as follows:
 
-1. Set **Order Deadline** to **05/21/2026**.
+1. Change **Vendor Reference** to **`BPI-DOCK-05`**.
 2. Schedule a new activity:
    - **Activity Type**: Call
    - **Due Date**: **05/18/2026**

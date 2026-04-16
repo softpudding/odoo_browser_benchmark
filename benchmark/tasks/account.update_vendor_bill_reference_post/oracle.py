@@ -9,7 +9,6 @@ from benchmark.oracle_helpers import (
     run_oracle,
     save_form,
     set_date,
-    set_o2m_field,
     _wait_no_loading,
     _wait_for_ready,
 )
@@ -28,8 +27,6 @@ def oracle(page):
     page.wait_for_timeout(400)
     fill_field(page, "ref", "MSC-8841")
     page.wait_for_timeout(400)
-    set_o2m_field(page, 0, "quantity", "60")
-    page.wait_for_timeout(500)
 
     save_form(page)
     page.wait_for_timeout(600)
