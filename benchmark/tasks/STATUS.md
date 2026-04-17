@@ -156,6 +156,7 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 | 144 | hr_holidays.refuse_leave_request [medium] | Refuse a pending time-off request as manager | WIP | — | — | — |
 | 145 | hr_holidays.create_leave_type [medium] | Create a new Time Off Type with manager approval | WIP | — | — | — |
 | 146 | hr_holidays.cancel_approved_leave [medium] | Cancel an approved leave request via cancel wizard | WIP | — | — | — |
+| 147 | mrp.create_bom_confirm_mo [medium] | Create a Bill of Materials with 3 components, then create and confirm a Manufacturing Order for 10 units | WIP | — | — | — |
 
 ---
 
