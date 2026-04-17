@@ -43,7 +43,7 @@ def _make_rfq(env, vendor, product, name):
         "name": product.name,
         "product_qty": 10,
         "price_unit": 42.0,
-        "taxes_id": [(5, 0, 0)],
+        "tax_ids": [(5, 0, 0)],
     })
 
 
