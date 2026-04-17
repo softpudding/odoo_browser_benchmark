@@ -1,5 +1,7 @@
 Go to the **Sales** app.
 
+If you first land on the public website instead of the backend, click **Sign in** and log in before continuing.
+
 Find the draft quotation with reference **BENCH-DISC-01** for customer **"Azure Interior"**.
 
 Open the quotation.

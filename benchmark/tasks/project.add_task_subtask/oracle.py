@@ -10,6 +10,7 @@ from benchmark.oracle_helpers import (
     run_oracle,
     _wait_no_loading,
     _wait_for_ready,
+    click_button_name,
     click_list_row,
     click_tab,
     click_add_a_line,
@@ -28,13 +29,17 @@ def oracle(page):
     page.wait_for_timeout(1000)
     _wait_for_ready(page)
 
+    click_button_name(page, "action_view_tasks")
+    page.wait_for_timeout(1000)
+    _wait_for_ready(page)
+
     # Find and open the task
     click_list_row(page, "Design Landing Page Mockup")
     page.wait_for_timeout(1000)
     _wait_for_ready(page)
 
     # Go to Subtasks tab
-    click_tab(page, "Subtasks")
+    click_tab(page, "Sub-tasks")
     page.wait_for_timeout(500)
 
     # Add a new subtask

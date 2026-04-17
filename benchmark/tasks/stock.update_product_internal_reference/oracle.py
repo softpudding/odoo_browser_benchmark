@@ -5,26 +5,23 @@ Reference to SB-12-BENCH, and click Save.
 """
 
 from benchmark.oracle_helpers import (
+    click_list_row,
+    ensure_list_view,
+    fill_field,
     login,
     navigate,
     run_oracle,
-    _wait_no_loading,
     _wait_for_ready,
-    click_list_row,
-    fill_field,
     save_form,
+    _wait_no_loading,
 )
 
 
 def oracle(page):
     login(page)
-    navigate(page, "/odoo/inventory")
+    navigate(page, "/odoo/action-stock.product_template_action_product")
     _wait_no_loading(page)
-
-    # Navigate to Products list
-    page.click('a:has-text("Products")')
-    page.wait_for_timeout(1000)
-    _wait_no_loading(page)
+    ensure_list_view(page)
 
     # Find and open the product
     click_list_row(page, "Steel Bracket 12")

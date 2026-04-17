@@ -3,12 +3,13 @@
 PARTNER_NAME = "Asterline Consulting"
 INVOICE_REF = "BENCH-INV-REF-01"
 NEW_REF = "BENCH-INV-REF-01-UPDATED"
+MARKER = "BENCH-INV-REF-TASK"
 
 
 def setup(env):
     # Cleanup
     env["account.move"].search([
-        ("partner_id.name", "=", PARTNER_NAME),
+        ("invoice_origin", "=", MARKER),
         "|",
         ("ref", "=", INVOICE_REF),
         ("ref", "=", NEW_REF),
@@ -35,6 +36,7 @@ def setup(env):
         "move_type": "out_invoice",
         "partner_id": partner.id,
         "ref": INVOICE_REF,
+        "invoice_origin": MARKER,
         "invoice_date": "2026-04-16",
         "invoice_line_ids": [
             (0, 0, {
