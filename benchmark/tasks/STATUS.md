@@ -1966,6 +1966,146 @@ Note: difficulty calibration used a shared-port browser-use validation on `bench
 
 ---
 
+## appointment.book_round_robin_reschedule_slot
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Appointments, Calendar, Website |
+| **Workflow** | Create a round-robin appointment type, book a slot from the public page, then reschedule the booking to a different slot. |
+| **Capability tested** | Backend appointment configuration, public booking flow, and portal reschedule handling across backend/public contexts. |
+
+---
+
+## helpdesk.escalate_ticket_apply_sla_close
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Helpdesk |
+| **Workflow** | Create or open a helpdesk ticket, assign it to the right team and priority, move it through escalation stages, then close it under SLA. |
+| **Capability tested** | Helpdesk pipeline navigation, SLA-aware ticket updates, and multi-step state transitions on a single record. |
+
+---
+
+## survey.create_quiz_collect_response_review_scoring
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Survey, Website |
+| **Workflow** | Create a scored quiz survey, publish it, submit one public response, then review the scored attempt in the backend. |
+| **Capability tested** | Survey form authoring, publish/share flow, public submission, and backend review of scored responses. |
+
+---
+
+## project_todo.convert_note_to_task_assign_deadline
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | To-Do, Project |
+| **Workflow** | Create a to-do note, convert it into a task, assign it, and set a deadline. |
+| **Capability tested** | Cross-app conversion from note to task plus task assignment and deadline editing. |
+
+---
+
+## point_of_sale.apply_pricelist_split_tender_payment
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Point of Sale |
+| **Workflow** | Open a POS session, attach the right customer and pricelist, ring up products, and complete the sale with split tender payment. |
+| **Capability tested** | Full-screen POS interaction, contextual customer/pricelist selection, and non-trivial checkout payment flow. |
+
+---
+
+## im_livechat.accept_widget_chat_use_canned_reply
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Live Chat, Website |
+| **Workflow** | Configure live chat, open the website widget as a visitor, accept the chat as an operator, and respond with a canned answer. |
+| **Capability tested** | Realtime chat handoff across public and backend contexts, operator inbox handling, and canned response usage. |
+
+---
+
+## website_sale.configure_optional_products_verify_storefront
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Website, eCommerce |
+| **Workflow** | Configure optional products for a shop item, publish it, and verify the upsell appears on the storefront. |
+| **Capability tested** | Backend merchandising setup plus storefront verification of optional-product upsell behavior. |
+
+---
+
+## event.duplicate_event_shift_dates_republish
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Events |
+| **Workflow** | Duplicate an event, shift its schedule, and republish the copy with registration reopened. |
+| **Capability tested** | Event duplication, datetime editing, and publish/unpublish lifecycle management. |
+
+---
+
+## fleet.renew_contract_schedule_service_activity
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Fleet |
+| **Workflow** | Update a vehicle contract to a renewed term, adjust dates and costs, and schedule a follow-up service activity. |
+| **Capability tested** | Fleet contract record editing plus activity scheduling on the vehicle form. |
+
+---
+
+## hr_expense.create_mileage_expense_submit_report
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Expenses |
+| **Workflow** | Create a mileage expense, add it to a report, and submit it for approval. |
+| **Capability tested** | Specialized expense entry, computed amount verification, report assembly, and submission flow. |
+
+---
+
 ## Adding New Tasks
 
 Before creating a new task, read all entries above and check for overlap on three dimensions:
