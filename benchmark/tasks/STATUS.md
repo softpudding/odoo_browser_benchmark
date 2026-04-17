@@ -225,7 +225,7 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 | 213 | account.lock_books_set_period_lock_date [medium] | Set the Non-Advisors Lock Date in accounting settings | WIP | — | — | — |
 | 214 | crm.set_lost_reason_reassign_salesperson [medium] | Mark opportunity Lost with specific reason then reassign salesperson | WIP | — | — | — |
 | 215 | crm.pivot_view_opportunities_by_stage_revenue [easy] | Switch CRM pipeline to Pivot view, group by stage, measure expected revenue | WIP | — | — | — |
-| 216 | project.kanban_drag_task_between_stages [easy] | Drag a task kanban card from one stage to another | WIP | — | — | — |
+| 216 | project.kanban_drag_task_between_stages [easy] | Drag a task kanban card from one stage to another | Done | PASS | FAIL | 0.0 |
 | 217 | project.create_project_from_template_duplicate [medium] | Duplicate an existing project keeping its tasks | WIP | — | — | — |
 | 218 | project.recurring_task_configure_frequency [medium] | Configure an existing task as recurring with weekly frequency | WIP | — | — | — |
 | 219 | contacts.add_bank_account_to_partner [easy] | Add an IBAN bank account to an existing partner via Accounting tab | WIP | — | — | — |

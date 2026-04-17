@@ -1,0 +1,20 @@
+task_id: project.kanban_drag_task_between_stages
+module: project
+difficulty: easy
+instruction: see prompt.md
+start_url: /odoo/project
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 240
+step_limit: 120
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: easy
+  agent_interaction: "Open project kanban view, drag task card 'Benchmark Card Alpha' from 'To Do' stage column into 'In Progress' stage column."
+  checks_verify: "Alpha task stage_id.name == 'In Progress' and Beta task untouched in 'To Do'."
+  primary_track: true
+  tier: 1

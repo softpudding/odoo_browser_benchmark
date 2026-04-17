@@ -906,11 +906,71 @@ def schedule_activity(
 # ---------------------------------------------------------------------------
 
 def drag_to_stage(page: Page, card_text: str, stage_name: str) -> None:
-    """Drag a kanban card to a different stage column."""
+    """Drag a kanban card to a different stage column.
+
+    Odoo 19's kanban uses the native HTML5 drag API wired through Owl.
+    Playwright's built-in ``Locator.drag_to`` often fires only the initial
+    synthesised pointer event and does not trigger the real ``dragstart``
+    handler, so the card never moves.  We emulate a slow human-like drag
+    using explicit ``mouse.move``/``mouse.down``/``mouse.up`` with several
+    intermediate move events — this reliably triggers the drag handlers.
+    """
     card = page.locator(f".o_kanban_record:has-text('{card_text}')").first
-    target_col = page.locator(f".o_kanban_group:has(.o_column_title:has-text('{stage_name}'))").first
-    card.drag_to(target_col)
-    page.wait_for_timeout(500)
+    card.scroll_into_view_if_needed()
+    card.wait_for(state="visible")
+
+    # Try several selectors for the destination column header.
+    target_col = page.locator(
+        f".o_kanban_group:has(.o_column_title:has-text('{stage_name}'))"
+    ).first
+    if target_col.count() == 0:
+        target_col = page.locator(
+            f".o_kanban_group:has(.o_kanban_header:has-text('{stage_name}'))"
+        ).first
+    if target_col.count() == 0:
+        target_col = page.locator(
+            f".o_kanban_group:has-text('{stage_name}')"
+        ).first
+    target_col.scroll_into_view_if_needed()
+    target_col.wait_for(state="visible")
+
+    card_box = card.bounding_box()
+    col_box = target_col.bounding_box()
+    if not card_box or not col_box:
+        raise RuntimeError(
+            f"drag_to_stage: missing bounding box for card='{card_text}' "
+            f"or column='{stage_name}'"
+        )
+
+    start_x = card_box["x"] + card_box["width"] / 2
+    start_y = card_box["y"] + card_box["height"] / 2
+    # Aim for an empty area near the top of the column body, below the
+    # column header.
+    end_x = col_box["x"] + col_box["width"] / 2
+    end_y = col_box["y"] + min(col_box["height"] - 20, 120)
+
+    # Hover then press on the card
+    page.mouse.move(start_x, start_y)
+    page.wait_for_timeout(100)
+    page.mouse.down()
+    page.wait_for_timeout(150)
+    # Small nudge to trigger dragstart
+    page.mouse.move(start_x + 5, start_y + 5, steps=3)
+    page.wait_for_timeout(100)
+
+    # Walk across to the target column in several steps
+    steps = 20
+    for i in range(1, steps + 1):
+        x = start_x + (end_x - start_x) * (i / steps)
+        y = start_y + (end_y - start_y) * (i / steps)
+        page.mouse.move(x, y, steps=2)
+        page.wait_for_timeout(20)
+
+    # Final hover over target before release
+    page.mouse.move(end_x, end_y, steps=5)
+    page.wait_for_timeout(200)
+    page.mouse.up()
+    page.wait_for_timeout(800)
     _wait_no_loading(page)
 
 
