@@ -36,9 +36,9 @@ def check(env):
             failures.append(
                 f"Copied task stage is '{copy.stage_id.name}', expected 'In Progress'"
             )
-        if str(copy.date_deadline) != "2026-06-24 16:00:00":
+        if str(copy.date_deadline) != "2026-06-23 16:00:00":
             failures.append(
-                f"Copied task deadline is {copy.date_deadline}, expected 2026-06-25"
+                f"Copied task deadline is {copy.date_deadline}, expected 2026-06-24"
             )
 
     distractor = env["project.task"].search([

@@ -43,8 +43,26 @@ def _ensure_product(env, name, price):
 
 
 def _ensure_salesperson(env):
+    internal_group = env.ref("base.group_user")
+    salesperson_group = env.ref("sales_team.group_sale_salesman")
+    company = env.company
     user = env["res.users"].search([("login", "=", "marc.demo")], limit=1)
     if user:
+        vals = {}
+        missing_groups = []
+        if internal_group not in user.group_ids:
+            missing_groups.append(internal_group.id)
+        if salesperson_group not in user.group_ids:
+            missing_groups.append(salesperson_group.id)
+        if missing_groups:
+            vals["group_ids"] = [(4, group_id) for group_id in missing_groups]
+        if company not in user.company_ids:
+            vals.setdefault("company_ids", [])
+            vals["company_ids"].append((4, company.id))
+        if user.company_id != company:
+            vals["company_id"] = company.id
+        if vals:
+            user.write(vals)
         return user
 
     partner = env["res.partner"].search([("name", "=", "Marc Demo")], limit=1)
@@ -57,6 +75,9 @@ def _ensure_salesperson(env):
         "name": "Marc Demo",
         "login": "marc.demo",
         "partner_id": partner.id,
+        "group_ids": [(6, 0, [internal_group.id, salesperson_group.id])],
+        "company_ids": [(6, 0, company.ids)],
+        "company_id": company.id,
     })
 
 

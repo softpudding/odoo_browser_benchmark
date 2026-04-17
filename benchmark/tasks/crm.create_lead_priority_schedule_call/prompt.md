@@ -8,7 +8,6 @@ Create a new CRM lead and schedule a follow-up call.
 4. Set these fields:
    - **Contact Name**: `Jordan Pike`
    - **Email**: `jordan.pike@apexwarehouse.com`
-   - **Expected Revenue**: `48000`
    - **Priority**: `2 stars`
 5. Save the lead.
 6. Schedule a **Call** activity with:

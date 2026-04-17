@@ -13,11 +13,12 @@ def check(env):
     if target.state != "cancel":
         failures.append(f"Target RFQ state is '{target.state}', expected 'cancel'")
 
-    note = env["mail.message"].search([
+    notes = env["mail.message"].search([
         ("model", "=", "purchase.order"),
         ("res_id", "=", target.id),
+        ("subtype_id.name", "=", "Note"),
     ], order="id desc")
-    if not any(NOTE_TEXT in (msg.body or "") for msg in note):
+    if not any(NOTE_TEXT in (note.body or "") for note in notes):
         failures.append("Expected internal note not found on target RFQ")
 
     distractor = env["purchase.order"].search([("name", "=", "P-RFQ-CANCEL-02")], limit=1)

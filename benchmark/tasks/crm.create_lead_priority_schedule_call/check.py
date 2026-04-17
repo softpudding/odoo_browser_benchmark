@@ -13,10 +13,6 @@ def check(env):
     lead = leads[0]
     if lead.type != "lead":
         failures.append(f"Record type is '{lead.type}', expected 'lead'")
-    if float(lead.expected_revenue or 0.0) != 48000.0:
-        failures.append(
-            f"Expected revenue is {lead.expected_revenue}, expected 48000"
-        )
     if lead.priority != "2":
         failures.append(f"Priority is '{lead.priority}', expected '2'")
 

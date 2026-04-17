@@ -4,7 +4,7 @@ Tracks all benchmark tasks. Update when adding new tasks or running evaluations.
 
 **Status values:** `WIP` — oracle or eval incomplete | `Done` — oracle passes, eval recorded
 
-Last eval: 2026-04-17 | Oracle: 86/86 (100%) | Browser-Use: 38/76 (50.0%) | New WIP: 30 (20 medium + 10 easy)
+Last eval: 2026-04-17 | Oracle: 96/96 (100%) | Browser-Use: 38/76 (50.0%) | New WIP: 30 (20 medium + 10 easy)
 
 ## Summary
 
@@ -106,16 +106,16 @@ Last eval: 2026-04-17 | Oracle: 86/86 (100%) | Browser-Use: 38/76 (50.0%) | New 
 | 94 | sale.cancel_quotation_log_reason [medium] | Done | PASS | PASS/FAIL | 1.0/0.0 |
 | 95 | hr_recruitment.refuse_applicant_with_reason [medium] | Done | PASS | PASS/PASS | 1.0 |
 | 96 | crm.mark_opportunity_won_update_revenue [medium] | WIP | PASS | — | — |
-| 97 | account.create_customer_invoice_post [medium] | WIP | — | — | — |
-| 98 | account.partial_pay_vendor_bill_with_memo [medium] | WIP | — | — | — |
-| 99 | calendar.create_all_day_event_with_attendee [medium] | WIP | — | — | — |
-| 100 | contacts.create_company_add_supplier_tag [medium] | Create a company contact with address details and the Supplier tag | Done | PASS | FAIL | 0.0 |
-| 101 | crm.create_lead_priority_schedule_call [medium] | WIP | — | — | — |
-| 102 | hr.assign_manager_set_work_location [medium] | Update an employee's manager, work location, and work phone | Done | PASS | PASS/PASS | 1.0 |
-| 103 | hr_recruitment.schedule_interview_for_applicant [medium] | WIP | — | — | — |
-| 104 | project.duplicate_task_assign_deadline [medium] | WIP | — | — | — |
-| 105 | purchase.cancel_rfq_log_note [medium] | Log an internal note on an RFQ, then cancel it | Done | PASS | PASS | 1.0 |
-| 106 | sale.update_salesperson_validity_confirm [medium] | WIP | — | — | — |
+| 97 | account.create_customer_invoice_post [medium] | WIP | PASS | — | — |
+| 98 | account.partial_pay_vendor_bill_with_memo [medium] | WIP | PASS | — | — |
+| 99 | calendar.create_all_day_event_with_attendee [medium] | WIP | PASS | — | — |
+| 100 | contacts.create_company_add_supplier_tag [medium] | Done | PASS | FAIL | 0.0 |
+| 101 | crm.create_lead_priority_schedule_call [medium] | WIP | PASS | — | — |
+| 102 | hr.assign_manager_set_work_location [medium] | Done | PASS | PASS/PASS | 1.0 |
+| 103 | hr_recruitment.schedule_interview_for_applicant [medium] | WIP | PASS | — | — |
+| 104 | project.duplicate_task_assign_deadline [medium] | WIP | PASS | — | — |
+| 105 | purchase.cancel_rfq_log_note [medium] | Done | PASS | PASS | 1.0 |
+| 106 | sale.update_salesperson_validity_confirm [medium] | WIP | PASS | — | — |
 | 107 | crm.convert_lead_link_customer_schedule_call [medium] | Done | PASS | FAIL | 0.0 |
 | 108 | purchase_stock.confirm_rfq_receive_full [medium] | Done | PASS | FAIL | 0.0 |
 | 109 | sale.create_invoice_register_payment_memo [medium] | Done | PASS | PASS | 1.0 |
@@ -1293,7 +1293,7 @@ Last eval: 2026-04-17 | Oracle: 86/86 (100%) | Browser-Use: 38/76 (50.0%) | New 
 | Field | Value |
 |---|---|
 | **Status** | WIP |
-| **Oracle** | — |
+| **Oracle** | PASS |
 | **Browser-Use** | — |
 | **F1** | — |
 | **Odoo modules** | Accounting — Customer Invoices |
@@ -1307,7 +1307,7 @@ Last eval: 2026-04-17 | Oracle: 86/86 (100%) | Browser-Use: 38/76 (50.0%) | New 
 | Field | Value |
 |---|---|
 | **Status** | WIP |
-| **Oracle** | — |
+| **Oracle** | PASS |
 | **Browser-Use** | — |
 | **F1** | — |
 | **Odoo modules** | Accounting — Vendor Bills |
@@ -1321,7 +1321,7 @@ Last eval: 2026-04-17 | Oracle: 86/86 (100%) | Browser-Use: 38/76 (50.0%) | New 
 | Field | Value |
 |---|---|
 | **Status** | WIP |
-| **Oracle** | — |
+| **Oracle** | PASS |
 | **Browser-Use** | — |
 | **F1** | — |
 | **Odoo modules** | Calendar |
@@ -1349,11 +1349,11 @@ Last eval: 2026-04-17 | Oracle: 86/86 (100%) | Browser-Use: 38/76 (50.0%) | New 
 | Field | Value |
 |---|---|
 | **Status** | WIP |
-| **Oracle** | — |
+| **Oracle** | PASS |
 | **Browser-Use** | — |
 | **F1** | — |
 | **Odoo modules** | CRM — Leads |
-| **Workflow** | Create lead `Apex Warehouse Expansion`, set expected revenue and 2-star priority, then schedule a Call activity with exact summary and due date. |
+| **Workflow** | Create lead `Apex Warehouse Expansion`, set 2-star priority, then schedule a Call activity with exact summary and due date. |
 | **Capability tested** | Lead creation plus star-priority control and activity scheduling, distinct from opportunity editing and from lead-conversion tasks. |
 
 ---
@@ -1377,7 +1377,7 @@ Last eval: 2026-04-17 | Oracle: 86/86 (100%) | Browser-Use: 38/76 (50.0%) | New 
 | Field | Value |
 |---|---|
 | **Status** | WIP |
-| **Oracle** | — |
+| **Oracle** | PASS |
 | **Browser-Use** | — |
 | **F1** | — |
 | **Odoo modules** | Recruitment |
@@ -1391,7 +1391,7 @@ Last eval: 2026-04-17 | Oracle: 86/86 (100%) | Browser-Use: 38/76 (50.0%) | New 
 | Field | Value |
 |---|---|
 | **Status** | WIP |
-| **Oracle** | — |
+| **Oracle** | PASS |
 | **Browser-Use** | — |
 | **F1** | — |
 | **Odoo modules** | Project |
@@ -1419,7 +1419,7 @@ Last eval: 2026-04-17 | Oracle: 86/86 (100%) | Browser-Use: 38/76 (50.0%) | New 
 | Field | Value |
 |---|---|
 | **Status** | WIP |
-| **Oracle** | — |
+| **Oracle** | PASS |
 | **Browser-Use** | — |
 | **F1** | — |
 | **Odoo modules** | Sales — Quotations |
