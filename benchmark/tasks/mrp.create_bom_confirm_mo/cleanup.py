@@ -1,27 +1,15 @@
-"""Clean up artifacts from previous runs."""
-
-PRODUCT_NAME = "Bench Assembly Table"
+"""Cleanup for mrp.create_bom_confirm_mo."""
 
 
 def cleanup(env):
-    product = env["product.product"].search(
-        [("name", "=", PRODUCT_NAME)], limit=1
-    )
-    if not product:
-        return
-
-    # Delete MOs first
-    mos = env["mrp.production"].search([("product_id", "=", product.id)])
-    for mo in mos:
-        if mo.state not in ("cancel", "draft"):
-            try:
-                mo.action_cancel()
-            except Exception:
-                pass
-    mos.unlink()
-
-    # Delete BOMs
-    boms = env["mrp.bom"].search([
-        ("product_tmpl_id", "=", product.product_tmpl_id.id)
-    ])
-    boms.unlink()
+    names = [
+        "BenchMaster Assembly Kit",
+        "BenchMaster Frame",
+        "BenchMaster Panel",
+        "BenchMaster Fastener Pack",
+    ]
+    products = env["product.template"].search([("name", "in", names)])
+    variants = products.mapped("product_variant_id")
+    env["mrp.production"].search([("product_id", "in", variants.ids)]).unlink()
+    env["mrp.bom"].search([("product_tmpl_id", "in", products.ids)]).unlink()
+    products.unlink()

@@ -1,27 +1,15 @@
-# Create an expense and submit it for approval
+Go to the **Expenses** app.
 
-You are in the Odoo 19 **Expenses** app logged in as **Administrator**.
+Create a new expense with these exact values:
 
-## What to do
+- **Expense Description**: `Summit hotel stay`
+- **Category**: `Hotel Stay`
+- **Total**: `245.00`
+- **Expense Date**: `07/02/2026`
 
-1. Click **New** to create a new expense.
-2. Fill in the expense details:
-   - **Description**: **Hotel stay - Berlin conference**
-   - **Category** (or **Product**): Leave as default or select an appropriate
-     expense category if available.
-   - **Total**: **385.00** (this is the total amount in company currency)
-   - **Paid By**: **Employee (to reimburse)**
-   - **Expense Date**: **06/15/2026**
-3. In the **Notes** field (if visible), type: **3 nights at Hotel Adlon**
-4. **Save** the expense.
-5. Click **Submit Report** (or **Create Report**) to submit this expense
-   for manager approval.
+Save the expense and then click **Submit**.
 
-After submission the expense should be in **Submitted** (or **Reported**) status.
-
-## Rules
-
-- Create exactly **one** expense line.
-- The total amount must be exactly **385.00**.
-- Do **not** approve the expense — only submit it.
-- Do **not** delete or modify any other expenses.
+**Rules:**
+- Do not submit any other expense
+- Do not change the employee on the expense
+- Do not edit the expense after submitting it

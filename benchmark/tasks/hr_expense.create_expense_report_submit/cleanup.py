@@ -1,17 +1,7 @@
-"""Clean up artifacts from previous runs."""
+"""Cleanup for hr_expense.create_expense_report_submit."""
 
 
 def cleanup(env):
-    expenses = env["hr.expense"].search([
-        ("name", "=", "Hotel stay - Berlin conference"),
-    ])
-    for exp in expenses:
-        if exp.state in ("approved", "submitted"):
-            try:
-                exp.action_refuse()
-            except Exception:
-                pass
-        try:
-            exp.unlink()
-        except Exception:
-            pass
+    env["hr.expense"].search([("name", "=", "Summit hotel stay")]).unlink()
+    env["hr.employee"].search([("name", "=", "Benchmark Expense Admin")]).unlink()
+    env["product.template"].search([("name", "=", "Hotel Stay")]).unlink()

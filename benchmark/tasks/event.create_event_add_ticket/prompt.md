@@ -1,25 +1,21 @@
-# Create an event with a paid ticket
+Go to the **Events** app.
 
-You are in the Odoo 19 **Events** app logged in as **Administrator**.
+Create a new event with these exact values:
 
-## What to do
+- **Event**: `Operations Leadership Summit 2026`
+- **Start**: `07/10/2026 09:00`
+- **End**: `07/10/2026 17:00`
+- Turn on **Limit Attendees** and set the maximum to **`60`**
 
-1. Click **New** to create a new event.
-2. Fill in the event details:
-   - **Event Name**: **Odoo Community Days 2026**
-   - **Date**: starts **07/15/2026 09:00:00 AM** and ends **07/17/2026 05:00:00 PM**
-   - **Venue** (or **Location**): set to **YourCompany** (or leave default if
-     it auto-fills)
-3. In the **Registration** tab, add a ticket type:
-   - **Name**: **Standard Pass**
-   - **Price**: **75.00**
-   - **Maximum Attendees**: **200**
-4. **Save** the event.
+On the **Tickets** tab, add one ticket:
 
-## Rules
+- **Ticket Type**: `Standard Pass`
+- **Price**: `199`
+- Turn on the ticket seat limit and set it to **`50`**
 
-- The event name must be exactly **Odoo Community Days 2026**.
-- The ticket name must be exactly **Standard Pass** with price **75.00**.
-- Do **not** create more than one event.
-- Do **not** delete or modify any existing events.
-- Do **not** change the event stage or kanban state.
+Save the event.
+
+**Rules:**
+- Do not create more than one ticket
+- Do not change the event name after saving
+- Do not create any registrations

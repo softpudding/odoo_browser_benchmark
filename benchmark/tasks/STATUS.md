@@ -156,13 +156,13 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 | 144 | hr_holidays.refuse_leave_request [medium] | Refuse a pending time-off request as manager | WIP | — | — | — |
 | 145 | hr_holidays.create_leave_type [medium] | Create a new Time Off Type with manager approval | WIP | — | — | — |
 | 146 | hr_holidays.cancel_approved_leave [medium] | Cancel an approved leave request via cancel wizard | WIP | — | — | — |
-| 147 | mrp.create_bom_confirm_mo [medium] | Create a Bill of Materials with 3 components, then create and confirm a Manufacturing Order for 10 units | WIP | — | — | — |
-| 148 | hr_expense.create_expense_report_submit [easy] | Create expense with product/amount/employee, submit, and approve | Done | PASS | PASS/PASS | 1.0 |
-| 149 | event.create_event_add_ticket [easy] | Create event with dates/tickets/seat limit and advance stage to Booked | Done | PASS | PASS/PASS | 1.0 |
-| 150 | fleet.create_vehicle_log_odometer [medium] | Create vehicle with Toyota/Corolla model, plate, driver, and 15000km odometer | Done | PASS | FAIL/FAIL | 1.0 |
-| 151 | website_sale.publish_product_set_price [medium] | Publish a product to the website shop and set its sales price and description | WIP | — | — | — |
-| 152 | point_of_sale.open_session_sell_product_cash [medium] | Open a POS session, ring up one product, and complete a cash payment | WIP | — | — | — |
-| 153 | im_livechat.create_channel_add_canned_response [medium] | Create a live chat channel, add an operator and canned response, and publish the widget | WIP | — | — | — |
+| 147 | mrp.create_bom_confirm_mo [medium] | Create a Bill of Materials with 3 components, then create and confirm a Manufacturing Order for 10 units | Done | PASS | FAIL | 0.0 |
+| 148 | hr_expense.create_expense_report_submit [medium] | Create an expense line, attach it to a new expense report, and submit it for approval | Done | PASS | PASS | 1.0 |
+| 149 | event.create_event_add_ticket [medium] | Create an event with one paid ticket and attendee limits | Done | PASS | FAIL | 0.0 |
+| 150 | fleet.create_vehicle_log_odometer [medium] | Add a vehicle, record its odometer reading, and save the vehicle in service | Done | PASS | FAIL | 0.0 |
+| 151 | website_sale.publish_product_set_price [medium] | Publish a product to the website shop and set its sales price and description | Done | PASS | PASS | 1.0 |
+| 152 | point_of_sale.open_session_sell_product_cash [medium] | Open a POS session, ring up one product, and complete a cash payment | Done | PASS | PASS | 1.0 |
+| 153 | im_livechat.create_channel_add_canned_response [medium] | Create a live chat channel and canned response from the Live Chat app | Done | PASS | PASS | 1.0 |
 | 154 | website.create_blog_post_publish [medium] | Create and publish a blog post with title, cover image, and body content | WIP | — | — | — |
 | 155 | website.add_menu_item_reorder [medium] | Add a website menu item and reorder it within the navigation hierarchy | WIP | — | — | — |
 | 156 | website.create_contact_form_block [hard] | Edit a website page to add and configure a contact form block | WIP | — | — | — |

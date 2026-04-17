@@ -1,39 +1,22 @@
-"""Seed for fleet.create_vehicle_log_odometer.
+"""Seed a brand and model for the fleet odometer task."""
 
-Category 2 (MEDIUM): Create a vehicle and log an odometer reading.
-The agent must navigate the Fleet UI, create a vehicle with specific details,
-then find and use the odometer logging feature.
-"""
 
-LICENSE_PLATE = "BENCH-FL-01"
+BRAND_NAME = "Raven Motors"
+MODEL_NAME = "Falcon X"
+PLATE = "OPS-7421"
 
 
 def setup(env):
-    # Cleanup prior runs
-    old_vehicles = env["fleet.vehicle"].search([
-        ("license_plate", "=", LICENSE_PLATE),
-    ])
-    if old_vehicles:
-        # Delete odometer entries first
-        env["fleet.vehicle.odometer"].search([
-            ("vehicle_id", "in", old_vehicles.ids),
-        ]).unlink()
-        old_vehicles.unlink()
+    env["fleet.vehicle.odometer"].search([("vehicle_id.license_plate", "=", PLATE)]).unlink()
+    env["fleet.vehicle"].search([("license_plate", "=", PLATE)]).unlink()
 
-    # Ensure Audi brand exists (should be pre-installed)
-    brand = env["fleet.vehicle.model.brand"].search(
-        [("name", "=", "Audi")], limit=1
-    )
-    if not brand:
-        brand = env["fleet.vehicle.model.brand"].create({"name": "Audi"})
+    models = env["fleet.vehicle.model"].search([("name", "=", MODEL_NAME), ("brand_id.name", "=", BRAND_NAME)])
+    models.unlink()
+    env["fleet.vehicle.model.brand"].search([("name", "=", BRAND_NAME)]).unlink()
 
-    # Ensure A4 model exists under Audi
-    model = env["fleet.vehicle.model"].search([
-        ("name", "=", "A4"),
-        ("brand_id", "=", brand.id),
-    ], limit=1)
-    if not model:
-        env["fleet.vehicle.model"].create({
-            "name": "A4",
-            "brand_id": brand.id,
-        })
+    brand = env["fleet.vehicle.model.brand"].create({"name": BRAND_NAME})
+    env["fleet.vehicle.model"].create({
+        "name": MODEL_NAME,
+        "brand_id": brand.id,
+        "vehicle_type": "car",
+    })

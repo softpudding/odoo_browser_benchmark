@@ -1,0 +1,20 @@
+task_id: website_sale.publish_product_set_price
+module: website_sale
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/ecommerce-products
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 360
+step_limit: 220
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "Open the seeded eCommerce product in the backend, update the sales price and website description, and publish it to the website."
+  checks_verify: "The target product is website-published with the exact price and required description text."
+  primary_track: true
+  tier: 2

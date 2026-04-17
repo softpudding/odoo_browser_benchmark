@@ -1,12 +1,7 @@
-"""Clean up artifacts from previous runs."""
-
-EVENT_NAME = "Odoo Community Days 2026"
+"""Cleanup for event.create_event_add_ticket."""
 
 
 def cleanup(env):
-    events = env["event.event"].search([("name", "=", EVENT_NAME)])
-    if events:
-        env["event.registration"].search([
-            ("event_id", "in", events.ids),
-        ]).unlink()
-        events.unlink()
+    events = env["event.event"].search([("name", "=", "Operations Leadership Summit 2026")])
+    events.mapped("event_ticket_ids").unlink()
+    events.unlink()

@@ -1,14 +1,8 @@
-"""Clean up artifacts from previous runs."""
-
-LICENSE_PLATE = "BENCH-FL-01"
+"""Cleanup for fleet.create_vehicle_log_odometer."""
 
 
 def cleanup(env):
-    vehicles = env["fleet.vehicle"].search([
-        ("license_plate", "=", LICENSE_PLATE),
-    ])
-    if vehicles:
-        env["fleet.vehicle.odometer"].search([
-            ("vehicle_id", "in", vehicles.ids),
-        ]).unlink()
-        vehicles.unlink()
+    env["fleet.vehicle.odometer"].search([("vehicle_id.license_plate", "=", "OPS-7421")]).unlink()
+    env["fleet.vehicle"].search([("license_plate", "=", "OPS-7421")]).unlink()
+    env["fleet.vehicle.model"].search([("name", "=", "Falcon X"), ("brand_id.name", "=", "Raven Motors")]).unlink()
+    env["fleet.vehicle.model.brand"].search([("name", "=", "Raven Motors")]).unlink()
