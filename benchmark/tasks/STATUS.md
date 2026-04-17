@@ -126,11 +126,11 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 114 | hr.add_resume_line_update_location [medium] | Done | PASS | FAIL | 0.0 |
 | 115 | hr_recruitment.add_skill_move_stage [medium] | Done | PASS | FAIL/FAIL | 0.0 |
 | 116 | contacts.create_company_set_supplier_tag [medium] | Done | PASS | PASS* | — |
-| 117 | account.update_invoice_reference [easy] | WIP | — | — | — |
-| 118 | contacts.update_contact_phone [easy] | WIP | — | — | — |
-| 119 | crm.update_opportunity_revenue [easy] | WIP | — | — | — |
-| 120 | hr.update_employee_job_title [easy] | WIP | — | — | — |
-| 121 | purchase.update_rfq_source [easy] | WIP | — | — | — |
+| 117 | account.update_invoice_reference [easy] | Done | PASS | PASS | 1.0 |
+| 118 | contacts.update_contact_phone [easy] | Done | PASS | PASS | 1.0 |
+| 119 | crm.update_opportunity_revenue [easy] | Done | PASS | PASS | 1.0 |
+| 120 | hr.update_employee_job_title [easy] | Done | PASS | PASS | 1.0 |
+| 121 | purchase.update_rfq_source [easy] | Done | PASS | PASS | 1.0 |
 | 122 | sale.create_quotation_down_payment_invoice [hard] | Down payment wizard with non-default % option, navigate to invoice, edit, confirm | Done | PASS | — | — |
 | 123 | account.create_refund_modify_reissue [hard] | Credit note "Reverse and Create Invoice" button, edit new draft lines, post | Done | PASS | — | — |
 | 124 | purchase.create_rfq_confirm_receive_backorder [hard] | Create PO with exact lines, confirm, partial receive, Create Backorder dialog | Done | PASS | — | — |
@@ -172,9 +172,9 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 160 | mrp.update_bom_component_quantity [medium] | Update one component quantity on an existing bill of materials and save it | WIP | — | — | — |
 | 161 | mrp.create_mo_consume_produce_done [hard] | Create a manufacturing order, record component consumption, and mark production done | WIP | — | — | — |
 | 162 | mrp.unbuild_product_partial [hard] | Unbuild part of a manufactured product quantity and verify the resulting stock moves | WIP | — | — | — |
-| 163 | hr_expense.submit_report_with_receipt_approve [medium] | Create an expense with a receipt, submit it in a report, then approve it | WIP | — | — | — |
+| 163 | hr_expense.submit_report_with_receipt_approve [medium] | Create an expense with a receipt, submit it in a report, then approve it | Done | PASS | FAIL | 0.0 |
 | 164 | website_sale.configure_variant_publish_product [medium] | Configure website product variants, publish the product, and verify it on the shop | Done | PASS | PASS | 1.0 |
-| 165 | event.publish_event_register_attendee [hard] | Publish an event, register a public attendee, and verify the backend registration | WIP | — | — | — |
+| 165 | event.publish_event_register_attendee [hard] | Publish an event, register a public attendee, and verify the backend registration | Done | PASS | FAIL | 0.0 |
 | 166 | fleet.create_vehicle_assign_driver_contract [medium] | Create a vehicle, assign a driver, and add a dated contract record | Done | PASS | FAIL | 0.0 |
 | 167 | mail.create_channel_pin_message_invite_member [medium] | Create a private channel, invite a member, post a message, and pin the conversation | Done | PASS | FAIL | 0.0 |
 | 168 | mrp.produce_and_close_mo [easy] | Open a confirmed MO, click Produce All to complete production | Done | PASS | PASS/PASS | 1.0 |

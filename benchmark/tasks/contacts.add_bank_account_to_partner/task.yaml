@@ -1,0 +1,20 @@
+task_id: contacts.add_bank_account_to_partner
+module: contacts
+difficulty: easy
+instruction: see prompt.md
+start_url: /odoo/contacts
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 240
+step_limit: 120
+metadata:
+  category: simple_edit
+  difficulty_level: easy
+  agent_interaction: "Open a specific company partner and add an IBAN bank account in the Accounting tab"
+  checks_verify: "A res.partner.bank record exists linked to the partner with the exact IBAN"
+  primary_track: true
+  tier: 1

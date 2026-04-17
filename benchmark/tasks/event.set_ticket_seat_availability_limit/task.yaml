@@ -1,0 +1,20 @@
+task_id: event.set_ticket_seat_availability_limit
+module: event
+difficulty: easy
+instruction: see prompt.md
+start_url: /odoo/events
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 240
+step_limit: 120
+metadata:
+  category: simple_edit
+  difficulty_level: easy
+  agent_interaction: "Open an event's Tickets tab and update the seats_max on one specific ticket"
+  checks_verify: "The target event.event.ticket has seats_max updated to the new value"
+  primary_track: true
+  tier: 1
