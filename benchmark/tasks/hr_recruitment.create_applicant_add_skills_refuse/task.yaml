@@ -1,0 +1,21 @@
+task_id: hr_recruitment.create_applicant_add_skills_refuse
+module: hr_recruitment
+difficulty: hard
+instruction: see prompt.md
+start_url: /odoo/recruitment
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 480
+step_limit: 300
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: hard
+  agent_interaction: "Create applicant with exact details and skills, then refuse via wizard with specific reason"
+  checks_verify: "Applicant created with correct fields and skills, applicant refused with correct reason"
+  failure_pattern: "Agent cannot interact with skill widget cascading selects, or uses wrong refuse reason"
+  primary_track: true
+  tier: 3

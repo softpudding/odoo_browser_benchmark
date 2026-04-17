@@ -1,0 +1,21 @@
+task_id: sale_stock.confirm_order_deliver_partial_backorder
+module: sale_stock
+difficulty: hard
+instruction: see prompt.md
+start_url: /odoo/sales
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 480
+step_limit: 300
+metadata:
+  category: closed_loop_cross_module
+  difficulty_level: hard
+  agent_interaction: "Confirm draft SO, navigate to delivery via smart button, set partial done quantities, validate with Create Backorder dialog"
+  checks_verify: "SO confirmed, delivery partially validated, backorder created with remaining quantities"
+  failure_pattern: "Agent chooses No Backorder instead of Create Backorder, or sets wrong done quantities, or cannot navigate to delivery"
+  primary_track: true
+  tier: 3

@@ -1,0 +1,30 @@
+models:
+  sale.order:
+    match_key:
+      - partner_id
+      - client_order_ref
+    fields:
+      - partner_id
+      - client_order_ref
+      - state
+      - amount_total
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
+      - name
+  account.move:
+    match_key:
+      - move_type
+      - partner_id
+    fields:
+      - partner_id
+      - move_type
+      - state
+      - amount_total
+      - invoice_date
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
+      - name

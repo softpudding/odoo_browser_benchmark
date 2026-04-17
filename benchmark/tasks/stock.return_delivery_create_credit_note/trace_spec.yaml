@@ -1,0 +1,43 @@
+# Trace oracle for stock.return_delivery_create_credit_note
+#
+# Hard: open done delivery, create partial return via wizard, validate return,
+# navigate to SO invoice, create credit note wizard, confirm credit note.
+
+required_ops:
+  - stock.return.picking.action_create_returns
+
+optional_ops:
+  - stock.picking.read
+  - stock.picking.write
+  - stock.picking.web_save
+  - stock.picking.search_read
+  - stock.picking.web_search_read
+  - stock.picking.button_validate
+  - stock.move.read
+  - stock.move.write
+  - stock.move.web_save
+  - stock.return.picking.create
+  - stock.return.picking.read
+  - stock.return.picking.write
+  - stock.return.picking.web_save
+  - stock.return.picking.line.read
+  - stock.return.picking.line.write
+  - stock.return.picking.line.web_save
+  - account.move.action_reverse
+  - account.move.action_post
+  - account.move.read
+  - account.move.write
+  - account.move.web_save
+  - account.move.reversal.create
+  - account.move.reversal.reverse_moves
+  - account.move.reversal.refund_moves
+  - sale.order.read
+  - sale.order.web_read
+  - ir.ui.view.get_views
+  - mail.message.create
+
+forbidden_ops:
+  - stock.picking.unlink
+  - stock.picking.action_cancel
+  - sale.order.action_cancel
+  - account.move.unlink

@@ -1,0 +1,26 @@
+[
+  {
+    "model": "stock.picking",
+    "entity_key": ["BENCH-DEL-RET"],
+    "field": "state",
+    "op": "set",
+    "norm_value": "done",
+    "note": "Original delivery must remain done"
+  },
+  {
+    "model": "stock.picking",
+    "entity_key": ["return"],
+    "field": "state",
+    "op": "set",
+    "norm_value": "done",
+    "note": "Return picking must be validated (done)"
+  },
+  {
+    "model": "account.move",
+    "entity_key": ["credit_note"],
+    "field": "state",
+    "op": "set",
+    "norm_value": "posted",
+    "note": "Credit note must be posted"
+  }
+]

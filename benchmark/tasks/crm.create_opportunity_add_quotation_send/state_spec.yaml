@@ -1,0 +1,29 @@
+models:
+  crm.lead:
+    match_key:
+      - partner_id
+    fields:
+      - name
+      - stage_id
+      - expected_revenue
+      - contact_name
+      - email_from
+      - type
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
+      - date_last_stage_update
+  sale.order:
+    match_key:
+      - client_order_ref
+    fields:
+      - partner_id
+      - state
+      - client_order_ref
+      - validity_date
+      - opportunity_id
+    ignore_fields:
+      - id
+      - create_date
+      - write_date

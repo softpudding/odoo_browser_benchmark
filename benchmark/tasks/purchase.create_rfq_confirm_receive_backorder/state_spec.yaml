@@ -1,0 +1,26 @@
+models:
+  purchase.order:
+    match_key:
+      - partner_ref
+    fields:
+      - partner_ref
+      - partner_id
+      - state
+      - date_order
+    ignore_fields:
+      - id
+      - name
+      - create_date
+      - write_date
+  stock.picking:
+    match_key:
+      - origin
+    fields:
+      - state
+      - origin
+      - backorder_id
+    ignore_fields:
+      - id
+      - name
+      - create_date
+      - write_date
