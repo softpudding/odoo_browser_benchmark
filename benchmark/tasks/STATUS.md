@@ -78,11 +78,11 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 | 66 | crm.create_opportunity_tag_schedule_call [medium] | Create a CRM opportunity, set revenue and priority, then schedule a call | Done | PASS | FAIL/PASS | 1.0 |
 | 67 | project.rename_task_assign_deadline [medium] | Rename a project task, set its deadline, and move it to In Progress | Done | PASS | PASS | 1.0 |
 | 68 | purchase.set_order_deadline_schedule_call_confirm [medium] | Update an RFQ vendor reference, schedule a call, and confirm the order | Done | PASS | PASS | 1.0 |
-| 69 | website.update_contact_info [easy] | WIP | — | — | — |
-| 70 | stock.update_product_internal_reference [easy] | WIP | — | — | — |
-| 71 | hr.update_employee_department [easy] | WIP | — | — | — |
-| 72 | sale.add_discount_line [easy] | WIP | — | — | — |
-| 73 | project.add_task_subtask [easy] | WIP | — | — | — |
+| 69 | website.update_contact_info [easy] | Done | PASS | FAIL | 0.0 |
+| 70 | stock.update_product_internal_reference [easy] | Done | PASS | FAIL | 0.0 |
+| 71 | hr.update_employee_department [easy] | Done | PASS | PASS | 1.0 |
+| 72 | sale.add_discount_line [easy] | Done | PASS | FAIL | 0.0 |
+| 73 | project.add_task_subtask [easy] | Done | PASS | PASS | 1.0 |
 | 74 | account.update_customer_invoice_terms_post [medium] | Update a draft customer invoice's date, payment terms, reference, and one existing line quantity before posting | Done | PASS | PASS/PASS | 1.0 |
 | 75 | crm.update_opportunity_revenue_priority_won [medium] | Update an opportunity's expected revenue, set medium priority with the star widget, and mark it Won | Done | PASS | FAIL/FAIL | 0.0 |
 | 76 | hr.update_work_location_schedule_activity [medium] | Update an employee's phone and work location, then schedule a Call activity | Done | PASS | PASS/FAIL | 1.0 |
