@@ -1,0 +1,20 @@
+task_id: hr_holidays.request_annual_leave
+module: hr_holidays
+difficulty: easy
+instruction: see prompt.md
+start_url: /odoo/time-off
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 240
+step_limit: 120
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: easy
+  agent_interaction: "From the employee Time Off view, click New and create a Paid Time Off request with the specified dates and description."
+  checks_verify: "A confirmed hr.leave record exists for admin with the correct leave type, dates, and description."
+  primary_track: true
+  tier: 1
