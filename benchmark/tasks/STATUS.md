@@ -152,14 +152,14 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 | 140 | sale.update_quote_payment_terms_validity_confirm [medium] | Set payment terms, validity, and quantity before confirmation | Done | PASS | FAIL | 0.0 |
 | 141 | stock.update_delivery_scheduled_date_validate [medium] | Change a delivery scheduled date, then validate it | Done | PASS | PASS | 1.0 |
 | 142 | hr_holidays.allocate_leave_days [easy] | Allocate 15 days of Sick Time Off to an employee | WIP | — | — | — |
-| 143 | hr_holidays.request_time_off_approve [medium] | Request 3 days Annual Leave then approve as manager | WIP | — | — | — |
+| 143 | hr_holidays.request_time_off_approve [medium] | Create Sick Time Off for employee, fill dates, save, and validate | Done | PASS | FAIL/PASS | 1.0 |
 | 144 | hr_holidays.refuse_leave_request [medium] | Refuse a pending time-off request as manager | WIP | — | — | — |
 | 145 | hr_holidays.create_leave_type [medium] | Create a new Time Off Type with manager approval | WIP | — | — | — |
 | 146 | hr_holidays.cancel_approved_leave [medium] | Cancel an approved leave request via cancel wizard | WIP | — | — | — |
 | 147 | mrp.create_bom_confirm_mo [medium] | Create a Bill of Materials with 3 components, then create and confirm a Manufacturing Order for 10 units | WIP | — | — | — |
-| 148 | hr_expense.create_expense_report_submit [medium] | Create an expense line, attach it to a new expense report, and submit it for approval | WIP | — | — | — |
-| 149 | event.create_event_add_ticket [medium] | Create an event with one paid ticket, publish it, and keep the event open for registrations | WIP | — | — | — |
-| 150 | fleet.create_vehicle_log_odometer [medium] | Add a vehicle, record its odometer reading, and save the vehicle in service | WIP | — | — | — |
+| 148 | hr_expense.create_expense_report_submit [easy] | Create expense with product/amount/employee, submit, and approve | Done | PASS | PASS/PASS | 1.0 |
+| 149 | event.create_event_add_ticket [easy] | Create event with dates/tickets/seat limit and advance stage to Booked | Done | PASS | PASS/PASS | 1.0 |
+| 150 | fleet.create_vehicle_log_odometer [medium] | Create vehicle with Toyota/Corolla model, plate, driver, and 15000km odometer | Done | PASS | FAIL/FAIL | 1.0 |
 | 151 | website_sale.publish_product_set_price [medium] | Publish a product to the website shop and set its sales price and description | WIP | — | — | — |
 | 152 | point_of_sale.open_session_sell_product_cash [medium] | Open a POS session, ring up one product, and complete a cash payment | WIP | — | — | — |
 | 153 | im_livechat.create_channel_add_canned_response [medium] | Create a live chat channel, add an operator and canned response, and publish the widget | WIP | — | — | — |
@@ -177,6 +177,7 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 | 165 | event.publish_event_register_attendee [hard] | Publish an event, register a public attendee, and verify the backend registration | WIP | — | — | — |
 | 166 | fleet.create_vehicle_assign_driver_contract [medium] | Create a vehicle, assign a driver, and add a dated contract record | Done | PASS | FAIL | 0.0 |
 | 167 | mail.create_channel_pin_message_invite_member [medium] | Create a private channel, invite a member, post a message, and pin the conversation | Done | PASS | FAIL | 0.0 |
+| 168 | mrp.produce_and_close_mo [easy] | Open a confirmed MO, click Produce All to complete production | Done | PASS | PASS/PASS | 1.0 |
 
 ---
 

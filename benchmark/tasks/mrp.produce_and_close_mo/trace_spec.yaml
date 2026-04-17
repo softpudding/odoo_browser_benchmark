@@ -1,0 +1,21 @@
+# Trace oracle for mrp.produce_and_close_mo
+#
+# Medium: open confirmed MO, click Produce All, handle wizard if any.
+
+required_ops: []
+
+optional_ops:
+  - mrp.production.read
+  - mrp.production.write
+  - mrp.production.web_save
+  - mrp.production.button_mark_done
+  - mrp.production.pre_button_mark_done
+  - mrp.production.search_read
+  - mrp.production.web_search_read
+  - stock.move.read
+  - stock.move.write
+  - ir.ui.view.get_views
+
+forbidden_ops:
+  - mrp.production.unlink
+  - mrp.production.action_cancel

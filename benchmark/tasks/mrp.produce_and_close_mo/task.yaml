@@ -1,0 +1,20 @@
+task_id: mrp.produce_and_close_mo
+module: mrp
+difficulty: easy
+instruction: see prompt.md
+start_url: /odoo/manufacturing
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 240
+step_limit: 120
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "Navigate to a confirmed manufacturing order, click Produce All to complete production, handle any wizard"
+  checks_verify: "Manufacturing order is in done state with correct quantities produced"
+  primary_track: true
+  tier: 1
