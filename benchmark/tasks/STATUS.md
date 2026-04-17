@@ -209,7 +209,7 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 | 197 | mail.mark_message_done_archive_notification [easy] | Mark Done on an inbox notification to remove it from Inbox | WIP | — | — | — |
 | 198 | mail.create_group_channel_upload_attachment [medium] | Create a private channel, invite a member, and upload a file attachment | WIP | — | — | — |
 | 199 | im_livechat.add_canned_response_send_in_chat [medium] | Create a canned response shortcut and send it in an operator chat | WIP | — | — | — |
-| 200 | fleet.log_service_cost_record [easy] | Add a service cost record (oil change) to an existing vehicle | WIP | — | — | — |
+| 200 | fleet.log_service_cost_record [easy] | Add a service cost record (oil change) to an existing vehicle | Done | PASS (32.1s) | FAIL (142.4s) | 0.00 |
 | 201 | fleet.assign_vehicle_tags_category [easy] | Add two tags and set a category on a vehicle | WIP | — | — | — |
 | 202 | fleet.transfer_vehicle_new_driver [medium] | Change a vehicle's driver and set the new assignment date | WIP | — | — | — |
 | 203 | event.add_event_questions_to_registration [medium] | Add two custom questions to an existing event registration form | WIP | — | — | — |
