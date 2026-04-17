@@ -1,0 +1,20 @@
+task_id: mrp.convert_bom_to_kit_type
+module: mrp
+difficulty: easy
+instruction: see prompt.md
+start_url: /odoo/manufacturing
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 240
+step_limit: 120
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: easy
+  agent_interaction: "Navigate to Bills of Materials, open the seeded BOM, change its BOM Type field from 'Manufacture this Product' to 'Kit', save."
+  checks_verify: "The BOM for the seeded product has type='phantom' (Kit) and is unchanged otherwise."
+  primary_track: true
+  tier: 1
