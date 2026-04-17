@@ -1,0 +1,26 @@
+# Trace oracle for contacts.merge_duplicate_contacts
+#
+# Category 5: Deep UI interaction (HARD).
+# Agent must select exactly two 'Globex Corporation' duplicates, launch the
+# merge wizard from the Actions menu, pick the correct master, and confirm.
+
+required_ops:
+  - base.partner.merge.automatic.wizard.action_merge
+
+optional_ops:
+  - base.partner.merge.automatic.wizard.create
+  - base.partner.merge.automatic.wizard.write
+  - base.partner.merge.automatic.wizard.read
+  - base.partner.merge.automatic.wizard.onchange
+  - base.partner.merge.automatic.wizard.web_save
+  - res.partner.read
+  - res.partner.search_read
+  - res.partner.web_search_read
+  - res.partner.web_save
+  - res.partner.write
+  - res.partner.unlink
+  - ir.ui.view.get_views
+  - ir.actions.act_window.read
+
+forbidden_ops:
+  - res.partner.toggle_active
