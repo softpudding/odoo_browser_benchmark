@@ -4,7 +4,7 @@ Tracks all benchmark tasks. Update when adding new tasks or running evaluations.
 
 **Status values:** `WIP` — oracle or eval incomplete | `Done` — oracle passes, eval recorded
 
-Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New WIP: 30 (20 medium + 10 easy)
+Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | New WIP: 88 (45 medium + 24 easy + 19 hard)
 
 ## Summary
 
@@ -268,6 +268,12 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 | 256 | mrp.unbuild_finished_goods_to_recover_components [medium] | WIP | — | — | — |
 | 257 | mrp.surgical_bom_component_qty_edit [medium] | WIP | — | — | — |
 | 258 | stock.internal_transfer_between_locations [medium] | WIP | — | — | — |
+| 259 | calendar.create_private_meeting_with_video_link [medium] | Create a private meeting with attendees and an exact video call link | Done | PASS | FAIL | 0.0 |
+| 260 | fleet.create_contract_set_renewal_activity [medium] | Create a vehicle contract with renewal dates, then schedule a follow-up activity | Done | PASS | FAIL | 0.0 |
+| 261 | hr_expense.create_mileage_expense_submit_report [medium] | Create a mileage expense, add it to a report, and submit the report | Done | PASS | FAIL | 0.0 |
+| 262 | mail.create_channel_set_description_pin_welcome [medium] | Create a private Discuss channel, set its description, and pin a welcome message | Done | PASS | FAIL | 0.0 |
+| 263 | hr_holidays.allocate_leave_then_request_against_balance [hard] | Allocate sick leave to Marc Demo, then create and approve a request against that balance | Done | PASS | FAIL | 0.0 |
+| 264 | contacts.create_company_with_invoice_and_delivery_addresses [medium] | Create a company with linked invoice and delivery child addresses | Done | PASS | FAIL | 0.0 |
 
 ---
 
@@ -2130,13 +2136,14 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Discuss |
 | **Workflow** | Create a discussion channel, set its description, post a welcome message, and pin that message. |
 | **Capability tested** | Discuss channel creation plus channel-settings edit and in-thread message pinning. |
+| **Notes** | Oracle passes. Browser-use gave up immediately with zero steps in this environment. |
 
 ---
 
@@ -2159,13 +2166,14 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Time Off |
 | **Workflow** | Allocate leave days to an employee, then switch context and request time off against that new balance. |
 | **Capability tested** | Manager-to-employee workflow handoff combining allocation and subsequent request creation. |
+| **Notes** | Oracle passes. Browser-use gave up immediately with zero steps in this environment. |
 
 ---
 
@@ -2173,13 +2181,14 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Contacts |
 | **Workflow** | Create a company contact and add distinct invoice and delivery child addresses beneath it. |
 | **Capability tested** | Parent-company creation with multiple child-contact address types and nested save flow. |
+| **Notes** | Oracle passes. Browser-use gave up immediately with zero steps in this environment. |
 
 ---
 
