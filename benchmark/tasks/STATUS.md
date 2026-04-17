@@ -2331,3 +2331,73 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Odoo modules** | eLearning, Website |
 | **Workflow** | Create an eLearning course, add a lesson, and publish the course. |
 | **Capability tested** | Structured course authoring with nested content creation and publication state management. |
+
+---
+
+## event.create_event_add_ticket_publish [medium]
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Events |
+| **Workflow** | Create an event with a specific date, add a paid ticket type, and set it to published. |
+| **Capability tested** | Event form creation with nested ticket line and publication toggle. |
+
+---
+
+## fleet.add_vehicle_log_odometer [easy]
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Fleet |
+| **Workflow** | Create a new vehicle record, then log an odometer reading via the dedicated odometer action. |
+| **Capability tested** | Multi-step vehicle setup plus smart-button odometer logging action. |
+
+---
+
+## mrp.create_bom_with_components [medium]
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Manufacturing |
+| **Workflow** | Create a Bill of Materials for a product with three specific components and quantities. |
+| **Capability tested** | BOM form creation with multiple component lines and exact quantity values. |
+
+---
+
+## website_sale.publish_product_shop [easy]
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | eCommerce |
+| **Workflow** | Find an unpublished product in the backend, set its sales price and publish it to the shop. |
+| **Capability tested** | Backend product form edit with price field plus website publication toggle. |
+
+---
+
+## hr_holidays.allocate_leave_days [easy]
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Time Off |
+| **Workflow** | Create a leave allocation for a specific employee for Annual Leave and approve it. |
+| **Capability tested** | Leave allocation form creation and manager approval action. |
