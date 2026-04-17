@@ -4,7 +4,7 @@ Tracks all benchmark tasks. Update when adding new tasks or running evaluations.
 
 **Status values:** `WIP` — oracle or eval incomplete | `Done` — oracle passes, eval recorded
 
-Last eval: 2026-04-17 | Oracle: 131/131 (100%) | Browser-Use: 57/104 (54.8%) | New WIP: 22 (12 medium + 10 easy)
+Last eval: 2026-04-17 | Oracle: 131/131 (100%) | Browser-Use: 57/104 (54.8%) | New WIP: 42 (expansion batch: 13 ready + 7 needs-install)
 
 ## Summary
 
@@ -151,6 +151,26 @@ Last eval: 2026-04-17 | Oracle: 131/131 (100%) | Browser-Use: 57/104 (54.8%) | N
 | 139 | purchase.update_rfq_note_quantity_confirm [medium] | Edit an RFQ note and quantity, then confirm it | Done | PASS | PASS | 1.0 |
 | 140 | sale.update_quote_payment_terms_validity_confirm [medium] | Set payment terms, validity, and quantity before confirmation | Done | PASS | FAIL | 0.0 |
 | 141 | stock.update_delivery_scheduled_date_validate [medium] | Change a delivery scheduled date, then validate it | Done | PASS | PASS | 1.0 |
+| 142 | hr_holidays.request_annual_leave [easy] | WIP | — | — | — |
+| 143 | hr_holidays.approve_leave_as_manager [medium] | WIP | — | — | — |
+| 144 | hr_holidays.refuse_leave_with_reason [medium] | WIP | — | — | — |
+| 145 | hr_expense.create_expense_with_receipt [medium] | WIP | — | — | — |
+| 146 | hr_expense.submit_report_for_approval [medium] | WIP | — | — | — |
+| 147 | mail.create_channel_invite_members [easy] | WIP | — | — | — |
+| 148 | mail.pin_and_reply_in_chatter [easy] | WIP | — | — | — |
+| 149 | contacts.merge_duplicate_contacts [hard] | WIP | — | — | — |
+| 150 | contacts.archive_then_unarchive [easy] | WIP | — | — | — |
+| 151 | website.create_blog_post_publish [medium] | WIP | — | — | — |
+| 152 | website.edit_menu_add_page_link [medium] | WIP | — | — | — |
+| 153 | stock.create_putaway_rule [hard] | WIP | — | — | — |
+| 154 | stock.transfer_lot_tracked_product [hard] | WIP | — | — | — |
+| 155 | mrp.create_bom_three_components [medium] | WIP | — | — | — |
+| 156 | mrp.confirm_produce_close_mo [hard] | WIP | — | — | — |
+| 157 | website_sale.publish_shop_product [medium] | WIP | — | — | — |
+| 158 | appointment.create_type_set_slots [medium] | WIP | — | — | — |
+| 159 | event.create_event_configure_ticket [medium] | WIP | — | — | — |
+| 160 | helpdesk.create_ticket_assign_priority [medium] | WIP | — | — | — |
+| 161 | fleet.register_vehicle_log_odometer [easy] | WIP | — | — | — |
 
 ---
 
