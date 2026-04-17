@@ -28,13 +28,13 @@ def oracle(page):
 
     fill_field(page, "name", "Conference Attendance")
 
-    # Select 'By Time Off Officer' on leave_validation_type radio.
+    # Select "By Employee's Approver" on leave_validation_type radio
+    # (backend value 'manager').
     try:
-        set_selection(page, "leave_validation_type", "By Time Off Officer")
+        set_selection(page, "leave_validation_type", "By Employee's Approver")
     except Exception:
-        # Fallback: click the radio label.
         lab = page.locator(
-            "label:has-text('By Time Off Officer'):visible, "
+            "label:has-text(\"By Employee's Approver\"):visible, "
             "input[type='radio'][value='manager']:visible"
         ).first
         try:

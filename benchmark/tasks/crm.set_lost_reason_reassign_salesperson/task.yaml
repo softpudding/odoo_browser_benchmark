@@ -1,0 +1,20 @@
+task_id: crm.set_lost_reason_reassign_salesperson
+module: crm
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/crm
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 300
+step_limit: 180
+metadata:
+  category: simple_edit
+  difficulty_level: medium
+  agent_interaction: "Open a specific opportunity, mark it Lost with a specific lost reason, and reassign the salesperson"
+  checks_verify: "The opportunity has active=False, lost_reason_id set, and user_id reassigned"
+  primary_track: true
+  tier: 2

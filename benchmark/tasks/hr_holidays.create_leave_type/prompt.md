@@ -12,11 +12,9 @@ Create a new **Time Off Type** with manager-level approval.
 3. Click **New** to create a new type.
 4. Fill in exactly these fields:
    - **Time Off Type Name**: `Conference Attendance`
-   - **Approval**: `By Time Off Officer` (so `leave_validation_type`
-     becomes `manager` in the backend — this matches the
-     "By Time Off Officer" label in the Approval radio selector).
-   - **Requires allocation**: `No Limit` (so the type does not require
-     a pre-allocation; backend `requires_allocation = 'no'`).
+   - **Approval**: `By Employee's Approver` (so `leave_validation_type`
+     becomes `manager` in the backend). This is the radio option
+     labelled "By Employee's Approver".
 5. Save the record.
 
 ## Rules
