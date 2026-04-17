@@ -32,8 +32,13 @@ def oracle(page):
         page.wait_for_timeout(500)
 
     click_list_row(page, "Acme – Q3 renewal")
-    page.wait_for_timeout(800)
+    page.wait_for_timeout(2000)
     _wait_no_loading(page)
+    # Wait for the form to fully render user_id field.
+    page.locator(
+        ".o_field_widget[name='user_id']"
+    ).first.wait_for(state="visible", timeout=15000)
+    page.wait_for_timeout(500)
 
     # Reassign salesperson.
     set_many2one(page, "user_id", "Mitchell Admin")
