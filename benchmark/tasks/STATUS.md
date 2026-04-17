@@ -4,7 +4,7 @@ Tracks all benchmark tasks. Update when adding new tasks or running evaluations.
 
 **Status values:** `WIP` — oracle or eval incomplete | `Done` — oracle passes, eval recorded
 
-Last eval: 2026-04-17 | Oracle: 96/96 (100%) | Browser-Use: 38/76 (50.0%) | New WIP: 30 (20 medium + 10 easy)
+Last eval: 2026-04-17 | Oracle: 131/131 (100%) | Browser-Use: 57/104 (54.8%) | New WIP: 22 (12 medium + 10 easy)
 
 ## Summary
 
