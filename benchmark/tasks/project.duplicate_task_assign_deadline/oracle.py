@@ -2,7 +2,6 @@
 
 from benchmark.oracle_helpers import (
     click_kanban_card,
-    fill_field,
     login,
     navigate,
     run_oracle,
@@ -11,6 +10,26 @@ from benchmark.oracle_helpers import (
     _wait_no_loading,
     _wait_for_ready,
 )
+
+
+def _fill_task_name(page, value: str) -> None:
+    widget = page.locator(".o_field_widget[name='name']").first
+    widget.click()
+    page.wait_for_timeout(300)
+    editor = widget.locator("input:visible, textarea:visible, [contenteditable='true']:visible").first
+    editor.click()
+    tag_name = editor.evaluate("el => el.tagName.toLowerCase()")
+    if tag_name in {"input", "textarea"}:
+        editor.fill("")
+        editor.fill(value)
+        editor.press("Tab")
+    else:
+        page.keyboard.press("Control+A")
+        page.keyboard.press("Backspace")
+        page.keyboard.insert_text(value)
+        editor.press("Tab")
+    page.wait_for_timeout(400)
+    _wait_no_loading(page)
 
 
 def oracle(page):
@@ -23,52 +42,39 @@ def oracle(page):
     _wait_no_loading(page)
 
     click_kanban_card(page, "Prepare webinar outline")
-    page.wait_for_timeout(1000)
+    page.wait_for_timeout(800)
     _wait_for_ready(page)
 
-    page.locator(".o_cp_action_menus .dropdown-toggle").first.click()
-    page.wait_for_timeout(500)
-    page.locator(".dropdown-menu:visible .dropdown-item").filter(
-        has_text="Duplicate"
-    ).first.click()
-    page.wait_for_timeout(1200)
-    _wait_no_loading(page)
-    _wait_for_ready(page)
-
-    edit_btn = page.locator(
-        ".o_control_panel button:has-text('Edit'):visible, button.o_form_button_edit:visible"
-    )
-    if edit_btn.count() > 0:
-        edit_btn.first.click()
-        page.wait_for_timeout(600)
-        _wait_no_loading(page)
-
-    name_widget = page.locator(".o_field_widget[name='name']").first
-    name_widget.click()
-    page.wait_for_timeout(300)
-    name_input = name_widget.locator(
-        "input:visible, textarea:visible, [contenteditable='true']:visible"
+    actions = page.locator(
+        ".o_cp_action_menus button:visible, "
+        ".o_control_panel button.dropdown-toggle:has-text('Actions'):visible, "
+        ".o_control_panel .fa-cog:visible"
     ).first
-    name_input.click()
-    try:
-        name_input.fill("Prepare webinar outline - APAC")
-    except Exception:
-        name_input.press("Control+A")
-        page.keyboard.type("Prepare webinar outline - APAC")
-    page.wait_for_timeout(300)
-    set_date(page, "date_deadline", "06/24/2026")
-    page.wait_for_timeout(300)
+    actions.click()
+    page.wait_for_timeout(500)
+    page.locator(
+        ".dropdown-menu:visible .dropdown-item:has-text('Duplicate'), "
+        ".o-dropdown--menu:visible .dropdown-item:has-text('Duplicate')"
+    ).first.click()
+    page.wait_for_timeout(1000)
+    _wait_no_loading(page)
 
-    progress_btn = page.locator(
+    _fill_task_name(page, "Prepare webinar outline - APAC")
+    page.wait_for_timeout(400)
+    set_date(page, "date_deadline", "06/24/2026")
+    page.wait_for_timeout(400)
+
+    stage_btn = page.locator(
         ".o_statusbar_status button:has-text('In Progress'), "
         ".o_field_widget[name='stage_id'] button:has-text('In Progress')"
     )
-    if progress_btn.count() > 0:
-        progress_btn.first.click()
-    page.wait_for_timeout(500)
+    if stage_btn.count() > 0:
+        stage_btn.first.click()
+        page.wait_for_timeout(500)
+        _wait_no_loading(page)
 
     save_form(page)
-    page.wait_for_timeout(1200)
+    page.wait_for_timeout(1000)
     _wait_no_loading(page)
 
 

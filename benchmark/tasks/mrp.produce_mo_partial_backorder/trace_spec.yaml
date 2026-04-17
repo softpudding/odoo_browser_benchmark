@@ -1,0 +1,28 @@
+# Trace oracle for mrp.produce_mo_partial_backorder.
+# Medium: change Quantity Producing, click Produce All, choose Create
+# Backorder in the wizard.
+
+required_ops: []
+
+optional_ops:
+  - mrp.production.read
+  - mrp.production.write
+  - mrp.production.web_save
+  - mrp.production.button_mark_done
+  - mrp.production.pre_button_mark_done
+  - mrp.production.search_read
+  - mrp.production.web_search_read
+  - mrp.production.action_backorder
+  - mrp.production.backorder_split_multi
+  - mrp.production.backorder
+  - mrp.production.action_generate_backorder
+  - mrp.production.backorder_confirmation_dialog
+  - stock.move.read
+  - stock.move.write
+  - stock.move.line.read
+  - stock.move.line.write
+  - ir.ui.view.get_views
+
+forbidden_ops:
+  - mrp.production.unlink
+  - mrp.production.action_cancel

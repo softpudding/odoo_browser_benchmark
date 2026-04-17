@@ -4,7 +4,7 @@ Tracks all benchmark tasks. Update when adding new tasks or running evaluations.
 
 **Status values:** `WIP` — oracle or eval incomplete | `Done` — oracle passes, eval recorded
 
-Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New WIP: 30 (20 medium + 10 easy)
+Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | New WIP: 88 (45 medium + 24 easy + 19 hard)
 
 ## Summary
 
@@ -178,11 +178,11 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 | 166 | fleet.create_vehicle_assign_driver_contract [medium] | Create a vehicle, assign a driver, and add a dated contract record | Done | PASS | FAIL | 0.0 |
 | 167 | mail.create_channel_pin_message_invite_member [medium] | Create a private channel, invite a member, post a message, and pin the conversation | Done | PASS | FAIL | 0.0 |
 | 168 | mrp.produce_and_close_mo [easy] | Open a confirmed MO, click Produce All to complete production | Done | PASS | PASS/PASS | 1.0 |
-| 169 | mrp.produce_mo_partial_backorder [medium] | Produce partial qty on a confirmed MO and split the remainder into a backorder | WIP | — | — | — |
-| 170 | hr_holidays.request_half_day_afternoon [medium] | Request a half-day afternoon time-off via the conditional half-day toggle | WIP | — | — | — |
-| 171 | hr_expense.approve_submitted_report [medium] | Manager opens a pending submitted expense report among distractors and approves it | WIP | — | — | — |
-| 172 | stock.receive_lot_tracked_product [hard] | Receive a lot-tracked product and enter exact lot number and qty in the detail popup | WIP | — | — | — |
-| 173 | contacts.merge_duplicate_partners [hard] | Select two duplicate partners and merge them via the Merge Contacts wizard | WIP | — | — | — |
+| 169 | mrp.produce_mo_partial_backorder [medium] | Produce partial qty on a confirmed MO and split the remainder into a backorder | Done | PASS | PASS/FAIL | 1.0/0.0 |
+| 170 | contacts.add_bank_account_iban [medium] | Open a partner, add a bank account with a specific IBAN via the Invoicing tab, and save | Done | PASS | PASS/PASS | 1.0 |
+| 171 | hr_expense.approve_submitted_report [medium] | Manager opens a submitted expense among a distractor and approves only the target | Done | PASS | PASS/PASS | 1.0 |
+| 172 | stock.receive_lot_tracked_product [hard] | Open a receipt for a lot-tracked product, enter the exact lot in the Details popup, then Validate | Done | PASS | FAIL/FAIL | 0.0 |
+| 173 | contacts.archive_duplicate_transfer_fields [medium] | Copy phone and email from a duplicate partner to the primary, then archive the duplicate via the Actions menu | Done | PASS | PASS/PASS | 1.0 |
 | 174 | mrp.create_routing_set_workcenter [medium] | Create a workcenter and link it as an operation on an existing BOM | Done | PASS | PASS | 1.0 |
 | 175 | mrp.scrap_component_during_production [hard] | Scrap one consumed component from a running MO via the component action menu | WIP | — | — | — |
 | 176 | mrp.convert_bom_to_kit_type [easy] | Change an existing BOM's type from Manufacture This Product to Kit | Done | PASS | PASS | 1.0 |
@@ -210,7 +210,7 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 | 198 | mail.create_group_channel_upload_attachment [medium] | Create a private channel, invite a member, and upload a file attachment | WIP | — | — | — |
 | 199 | im_livechat.add_canned_response_send_in_chat [medium] | Create a canned response shortcut and send it in an operator chat | WIP | — | — | — |
 | 200 | fleet.log_service_cost_record [easy] | Add a service cost record (oil change) to an existing vehicle | Done | PASS (32.1s) | FAIL (142.4s) | 0.00 |
-| 201 | fleet.assign_vehicle_tags_category [easy] | Add two tags and set a category on a vehicle | WIP | — | — | — |
+| 201 | fleet.assign_vehicle_tags_category [easy] | Add two tags and set a category on a vehicle | Done | PASS | PASS | 1.0 |
 | 202 | fleet.transfer_vehicle_new_driver [medium] | Change a vehicle's driver and set the new assignment date | WIP | — | — | — |
 | 203 | event.add_event_questions_to_registration [medium] | Add two custom questions to an existing event registration form | WIP | — | — | — |
 | 204 | event.create_event_tracks_session_schedule [hard] | Add two conference tracks with times to a published event | WIP | — | — | — |
@@ -230,29 +230,29 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 | 218 | project.recurring_task_configure_frequency [medium] | Configure an existing task as recurring with weekly frequency | WIP | — | — | — |
 | 219 | contacts.add_bank_account_to_partner [easy] | Add an IBAN bank account to an existing partner via Accounting tab | WIP | — | — | — |
 | 220 | contacts.archive_partner_then_unarchive_filter [easy] | Archive a contact then unarchive it via the Archived search filter | WIP | — | — | — |
-| 221 | calendar.invite_external_attendee_by_email [easy] | Create a calendar event inviting an external email address not in partners | WIP | — | — | — |
+| 221 | calendar.invite_external_attendee_by_email [easy] | Create a calendar event inviting an external email address not in partners | Done | PASS | PASS | 1.0 |
 | 222 | survey.create_survey_one_page_publish_share [medium] | Create a 3-question survey, publish it, and copy the share link | WIP | — | — | — |
 | 223 | project_todo.create_note_add_tag_checklist [easy] | In the To-Do app, create a note with a tag and a checklist item | WIP | — | — | — |
 | 224 | hr_holidays.request_annual_leave [easy] | WIP | — | — | — |
-| 225 | hr_holidays.approve_leave_as_manager [medium] | WIP | — | — | — |
+| 225 | hr_holidays.approve_leave_as_manager [medium] | N/A | — | — | — |
 | 226 | hr_holidays.refuse_leave_with_reason [medium] | WIP | — | — | — |
 | 227 | hr_expense.create_expense_with_receipt [medium] | WIP | — | — | — |
-| 228 | hr_expense.submit_report_for_approval [medium] | WIP | — | — | — |
-| 229 | mail.create_channel_invite_members [easy] | WIP | — | — | — |
+| 228 | hr_expense.submit_report_for_approval [medium] | N/A | — | — | — |
+| 229 | mail.create_channel_invite_members [easy] | N/A | — | — | — |
 | 230 | mail.pin_and_reply_in_chatter [easy] | WIP | — | — | — |
 | 231 | contacts.merge_duplicate_contacts [hard] | WIP | — | — | — |
-| 232 | contacts.archive_then_unarchive [easy] | WIP | — | — | — |
+| 232 | contacts.archive_then_unarchive [easy] | Done | PASS | FAIL | 0.00 |
 | 233 | website.create_blog_post_publish [medium] | WIP | — | — | — |
 | 234 | website.edit_menu_add_page_link [medium] | WIP | — | — | — |
 | 235 | stock.create_putaway_rule [hard] | WIP | — | — | — |
 | 236 | stock.transfer_lot_tracked_product [hard] | WIP | — | — | — |
-| 237 | mrp.create_bom_three_components [medium] | WIP | — | — | — |
-| 238 | mrp.confirm_produce_close_mo [hard] | WIP | — | — | — |
-| 239 | website_sale.publish_shop_product [medium] | WIP | — | — | — |
-| 240 | appointment.create_type_set_slots [medium] | WIP | — | — | — |
-| 241 | event.create_event_configure_ticket [medium] | WIP | — | — | — |
-| 242 | helpdesk.create_ticket_assign_priority [medium] | WIP | — | — | — |
-| 243 | fleet.register_vehicle_log_odometer [easy] | WIP | — | — | — |
+| 237 | mrp.create_bom_three_components [medium] | N/A | — | — | — |
+| 238 | mrp.confirm_produce_close_mo [hard] | N/A | — | — | — |
+| 239 | website_sale.publish_shop_product [medium] | N/A | — | — | — |
+| 240 | appointment.create_type_set_slots [medium] | N/A | — | — | — |
+| 241 | event.create_event_configure_ticket [medium] | N/A | — | — | — |
+| 242 | helpdesk.create_ticket_assign_priority [medium] | N/A | — | — | — |
+| 243 | fleet.register_vehicle_log_odometer [easy] | N/A | — | — | — |
 | 244 | hr_holidays.allocate_sick_leave_to_employee [easy] | WIP | — | — | — |
 | 245 | hr_holidays.request_half_day_morning [easy] | WIP | — | — | — |
 | 246 | hr_holidays.cancel_approved_leave_and_reallocate [hard] | WIP | — | — | — |
@@ -268,6 +268,12 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 | 256 | mrp.unbuild_finished_goods_to_recover_components [medium] | WIP | — | — | — |
 | 257 | mrp.surgical_bom_component_qty_edit [medium] | WIP | — | — | — |
 | 258 | stock.internal_transfer_between_locations [medium] | WIP | — | — | — |
+| 259 | calendar.create_private_meeting_with_video_link [medium] | Create a private meeting with attendees and an exact video call link | Done | PASS | FAIL | 0.0 |
+| 260 | fleet.create_contract_set_renewal_activity [medium] | Create a vehicle contract with renewal dates, then schedule a follow-up activity | Done | PASS | FAIL | 0.0 |
+| 261 | hr_expense.create_mileage_expense_submit_report [medium] | Create a mileage expense, add it to a report, and submit the report | Done | PASS | FAIL | 0.0 |
+| 262 | mail.create_channel_set_description_pin_welcome [medium] | Create a private Discuss channel, set its description, and pin a welcome message | Done | PASS | FAIL | 0.0 |
+| 263 | hr_holidays.allocate_leave_then_request_against_balance [hard] | Allocate sick leave to Marc Demo, then create and approve a request against that balance | Done | PASS | FAIL | 0.0 |
+| 264 | contacts.create_company_with_invoice_and_delivery_addresses [medium] | Create a company with linked invoice and delivery child addresses | Done | PASS | FAIL | 0.0 |
 
 ---
 
@@ -1979,3 +1985,431 @@ Before creating a new task, read all entries above and check for overlap on thre
 **A new task must be distinct in at least two of the three dimensions.**
 
 When adding a new task, append a form block (same format as above) with `Status: WIP` and dashes for test results, then commit and push immediately — this is the team's duplicate-prevention signal.
+
+---
+
+## appointment.portal_reschedule_and_cancel_booking
+
+| Field | Value |
+|---|---|
+| **Status** | Removed |
+| **Oracle** | FAIL (module unavailable) |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Notes** | Removed because the `appointment` addon is not present in this checkout, so the workflow cannot be implemented or validated on branch `odoo_benchmark` in the current environment. |
+| **Odoo modules** | Appointments, Website/Portal |
+| **Workflow** | Create an appointment configuration, book a portal slot, then reschedule and cancel the booking from the portal. |
+| **Capability tested** | Backend-to-portal handoff with public booking plus portal reschedule/cancel actions. |
+
+---
+
+## helpdesk.create_ticket_tag_schedule_activity_resolve
+
+| Field | Value |
+|---|---|
+| **Status** | Removed |
+| **Oracle** | FAIL (module unavailable) |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Notes** | Removed because the `helpdesk` addon is not present in this checkout, so the workflow cannot be implemented or validated on branch `odoo_benchmark` in the current environment. |
+| **Odoo modules** | Helpdesk |
+| **Workflow** | Create a helpdesk ticket, apply a tag, schedule a follow-up activity, and resolve the ticket. |
+| **Capability tested** | Ticket lifecycle edits combining tagging, activity scheduling, and resolution state change. |
+
+---
+
+## survey.branching_quiz_publish_share_link
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Survey |
+| **Workflow** | Create a survey with branching or scoring behavior, publish it, and copy the share link. |
+| **Capability tested** | Survey builder navigation with multi-step question setup, logic/scoring configuration, publication, and link retrieval. |
+
+---
+
+## project_todo.duplicate_note_retag_archive_original
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | To-Do |
+| **Workflow** | Duplicate an existing To-Do note, retag the duplicate, and archive the original note only. |
+| **Capability tested** | Action-menu duplication plus selective archive and tag editing across original vs duplicate records. |
+
+---
+
+## im_livechat.configure_offline_form_and_test_widget
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Live Chat, Website |
+| **Workflow** | Configure a live chat channel's offline behavior, then verify the website widget shows the offline contact form path. |
+| **Capability tested** | Backend chat-channel settings plus public website widget verification across two UI surfaces. |
+
+---
+
+## point_of_sale.split_payment_email_receipt
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Point of Sale |
+| **Workflow** | Open a POS session, ring up a sale, split the payment across two methods, and email the receipt to the customer. |
+| **Capability tested** | Full-screen kiosk interaction, keypad payment entry, multi-payment flow, and receipt-delivery workflow. |
+
+---
+
+## website_sale.configure_optional_products_add_upsell_to_cart
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Website Sale, Website |
+| **Workflow** | Configure optional products for a webshop item, publish it, and add the upsell combination to the storefront cart. |
+| **Capability tested** | Backend ecommerce configuration followed by public storefront add-to-cart with optional-product selection. |
+
+---
+
+## fleet.create_contract_set_renewal_activity
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
+| **Odoo modules** | Fleet |
+| **Workflow** | Create or update a vehicle contract, set renewal metadata, and schedule a renewal reminder activity. |
+| **Capability tested** | Fleet contract management with date fields and chatter activity scheduling on the same vehicle record. |
+| **Notes** | Oracle passes. Browser-use gave up immediately with zero steps in this environment, so the task needs cross-review before being marked Done. |
+
+---
+
+## hr_recruitment.schedule_second_interview_with_feedback
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Recruitment |
+| **Workflow** | Move a target applicant forward, schedule a second interview, and record the requested interviewer feedback. |
+| **Capability tested** | Recruitment stage progression combined with interview planning and evaluation note handling. |
+
+---
+
+## calendar.create_private_meeting_with_video_link
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
+| **Odoo modules** | Calendar |
+| **Workflow** | Create a private calendar meeting with attendees and an exact video-call link. |
+| **Capability tested** | Event creation using privacy controls, attendee selection, and conferencing metadata. |
+| **Notes** | Oracle passes. Browser-use gave up immediately with zero steps in this environment, so the task needs cross-review before being marked Done. |
+
+---
+
+## mail.create_channel_set_description_pin_welcome
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
+| **Odoo modules** | Discuss |
+| **Workflow** | Create a discussion channel, set its description, post a welcome message, and pin that message. |
+| **Capability tested** | Discuss channel creation plus channel-settings edit and in-thread message pinning. |
+| **Notes** | Oracle passes. Browser-use gave up immediately with zero steps in this environment. |
+
+---
+
+## hr_expense.create_mileage_expense_submit_report
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
+| **Odoo modules** | Expenses |
+| **Workflow** | Create a mileage-based expense entry, attach it to an expense report, and submit it for approval. |
+| **Capability tested** | Expense form creation with mileage-specific fields and report-submission workflow. |
+| **Notes** | Oracle passes. Browser-use gave up immediately with zero steps in this environment, so the task needs cross-review before being marked Done. |
+
+---
+
+## hr_holidays.allocate_leave_then_request_against_balance
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
+| **Odoo modules** | Time Off |
+| **Workflow** | Allocate leave days to an employee, then switch context and request time off against that new balance. |
+| **Capability tested** | Manager-to-employee workflow handoff combining allocation and subsequent request creation. |
+| **Notes** | Oracle passes. Browser-use gave up immediately with zero steps in this environment. |
+
+---
+
+## contacts.create_company_with_invoice_and_delivery_addresses
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
+| **Odoo modules** | Contacts |
+| **Workflow** | Create a company contact and add distinct invoice and delivery child addresses beneath it. |
+| **Capability tested** | Parent-company creation with multiple child-contact address types and nested save flow. |
+| **Notes** | Oracle passes. Browser-use gave up immediately with zero steps in this environment. |
+
+---
+
+## mrp.plan_workorder_block_resume_finish_mo
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Manufacturing |
+| **Workflow** | Confirm a manufacturing order, start a work order, block it with a reason, resume it, and finish production. |
+| **Capability tested** | Work-order execution controls with state transitions beyond BOM or MO creation alone. |
+
+---
+
+## stock.package_products_validate_delivery
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Inventory |
+| **Workflow** | Open an outgoing delivery, package the products into a package, and validate the shipment. |
+| **Capability tested** | Delivery operation handling with package creation and final stock validation. |
+
+---
+
+## barcodes.receive_product_via_scan_validate
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Barcode, Inventory |
+| **Workflow** | Open a barcode receipt flow, scan or enter the target product, and validate the received quantity. |
+| **Capability tested** | Scanner-style inventory interaction rather than standard backend list/form editing. |
+
+---
+
+## delivery.configure_fixed_rate_carrier_confirm_sale
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Delivery, Sales |
+| **Workflow** | Configure a fixed-price delivery method, apply it on a sales order, and confirm the quotation. |
+| **Capability tested** | Shipping-method configuration followed by sales-order fulfillment setup on a quotation. |
+
+---
+
+## hr_attendance.check_in_break_resume_check_out
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Attendances |
+| **Workflow** | Check in, start a break, resume work, and check out in the attendance interface. |
+| **Capability tested** | Time-clock style attendance interactions with sequential status transitions. |
+
+---
+
+## maintenance.create_request_assign_technician_mark_repaired
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Maintenance |
+| **Workflow** | Create a maintenance request, assign the technician, and mark the request repaired. |
+| **Capability tested** | Service-ticket style workflow with assignment and repair-state progression. |
+
+---
+
+## repair.create_repair_order_add_parts_complete_invoice
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Repairs |
+| **Workflow** | Create a repair order, add repair parts, complete the repair, and create the resulting invoice. |
+| **Capability tested** | Repair-order lifecycle with part lines and downstream accounting side effect. |
+
+---
+
+## mass_mailing.build_campaign_send_test_schedule
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Email Marketing |
+| **Workflow** | Build an email campaign, send a test email, and schedule the campaign for later delivery. |
+| **Capability tested** | Campaign composer plus test-send and schedule actions in email marketing. |
+
+---
+
+## sale_loyalty.create_program_apply_reward_on_quotation
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Sales, Loyalty |
+| **Workflow** | Create a loyalty or coupon program, then apply the reward on a target quotation. |
+| **Capability tested** | Cross-configuration from loyalty setup into quotation-side reward application. |
+
+---
+
+## website_blog.create_post_with_cover_tag_publish
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Blog, Website |
+| **Workflow** | Create a blog post with a cover image and tag, then publish it on the website. |
+| **Capability tested** | Blog content authoring with metadata and website publication. |
+
+---
+
+## website_slides.create_course_add_lesson_publish
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | eLearning, Website |
+| **Workflow** | Create an eLearning course, add a lesson, and publish the course. |
+| **Capability tested** | Structured course authoring with nested content creation and publication state management. |
+
+---
+
+## event.create_event_add_ticket_publish [medium]
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Events |
+| **Workflow** | Create an event with a specific date, add a paid ticket type, and set it to published. |
+| **Capability tested** | Event form creation with nested ticket line and publication toggle. |
+
+---
+
+## fleet.add_vehicle_log_odometer [easy]
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Fleet |
+| **Workflow** | Create a new vehicle record, then log an odometer reading via the dedicated odometer action. |
+| **Capability tested** | Multi-step vehicle setup plus smart-button odometer logging action. |
+
+---
+
+## mrp.create_bom_with_components [medium]
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Manufacturing |
+| **Workflow** | Create a Bill of Materials for a product with three specific components and quantities. |
+| **Capability tested** | BOM form creation with multiple component lines and exact quantity values. |
+
+---
+
+## website_sale.publish_product_shop [easy]
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | eCommerce |
+| **Workflow** | Find an unpublished product in the backend, set its sales price and publish it to the shop. |
+| **Capability tested** | Backend product form edit with price field plus website publication toggle. |
+
+---
+
+## hr_holidays.allocate_leave_days [easy]
+
+| Field | Value |
+|---|---|
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Time Off |
+| **Workflow** | Create a leave allocation for a specific employee for Annual Leave and approve it. |
+| **Capability tested** | Leave allocation form creation and manager approval action. |

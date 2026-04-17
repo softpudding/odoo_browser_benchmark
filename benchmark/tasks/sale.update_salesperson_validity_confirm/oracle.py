@@ -8,12 +8,25 @@ from benchmark.oracle_helpers import (
     login,
     navigate,
     run_oracle,
-    save_form,
     set_date,
     set_many2one,
     _wait_no_loading,
     _wait_for_ready,
 )
+
+
+def _set_many2one_any(page, field_name: str, search_text: str) -> None:
+    widget = page.locator(f".o_field_widget[name='{field_name}']").first
+    inp = widget.locator("input:visible, .o-autocomplete--input:visible").first
+    inp.click()
+    inp.fill("")
+    inp.fill(search_text)
+    page.wait_for_timeout(800)
+    page.locator(
+        ".dropdown-menu:visible .dropdown-item, .ui-autocomplete .ui-menu-item"
+    ).filter(has_text=search_text).first.click()
+    page.wait_for_timeout(500)
+    _wait_no_loading(page)
 
 
 def oracle(page):
@@ -22,38 +35,20 @@ def oracle(page):
     _wait_no_loading(page)
 
     click_list_row(page, "S-QUOTE-VAL-01")
-    page.wait_for_timeout(1000)
     _wait_for_ready(page)
-
-    edit_btn = page.locator(
-        ".o_control_panel button:has-text('Edit'):visible, button.o_form_button_edit:visible"
-    )
-    if edit_btn.count() > 0:
-        edit_btn.first.click()
-        page.wait_for_timeout(600)
-        _wait_no_loading(page)
+    page.wait_for_timeout(500)
 
     set_date(page, "validity_date", "06/25/2026")
-    page.wait_for_timeout(300)
-
+    page.wait_for_timeout(500)
     click_tab(page, "Other Info")
     page.wait_for_timeout(400)
-
+    _set_many2one_any(page, "user_id", "Marc Demo")
+    page.wait_for_timeout(500)
     fill_field(page, "client_order_ref", "CGS-JUNE")
-    page.wait_for_timeout(300)
-    set_many2one(page, "user_id", "Marc Demo")
-    page.wait_for_timeout(400)
-    modal = page.locator(".modal:visible, .o_technical_modal:visible")
-    if modal.count() > 0:
-        page.keyboard.press("Escape")
-        page.wait_for_timeout(500)
-
-    save_form(page)
-    page.wait_for_timeout(1000)
-    _wait_no_loading(page)
+    page.wait_for_timeout(500)
 
     click_status_button(page, "Confirm")
-    page.wait_for_timeout(1500)
+    page.wait_for_timeout(1200)
     _wait_no_loading(page)
 
 

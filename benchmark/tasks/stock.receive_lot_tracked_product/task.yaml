@@ -1,0 +1,21 @@
+task_id: stock.receive_lot_tracked_product
+module: stock
+difficulty: hard
+instruction: see prompt.md
+start_url: /odoo/inventory
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 480
+step_limit: 300
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: hard
+  agent_interaction: "Open a receipt for a lot-tracked product, open the detail-operations popup on the line, enter the exact lot number and done quantity, close, then Validate."
+  checks_verify: "Receipt is 'done', a stock.lot was created with the exact lot name tied to the tracked product, and 20 units of the product are in stock."
+  failure_pattern: "Agents often click Validate without assigning a lot, triggering the 'You need to supply a lot/serial number' error and abandoning the task; or they enter a lot but skip the done quantity."
+  primary_track: true
+  tier: 3

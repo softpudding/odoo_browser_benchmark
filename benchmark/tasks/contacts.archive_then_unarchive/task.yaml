@@ -1,0 +1,20 @@
+task_id: contacts.archive_then_unarchive
+module: contacts
+difficulty: easy
+instruction: see prompt.md
+start_url: /odoo/contacts
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 240
+step_limit: 120
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: easy
+  agent_interaction: "Archive one active contact via the action menu, then toggle the Archived filter to locate and unarchive a pre-archived contact."
+  checks_verify: "The originally-active target becomes archived and the originally-archived target becomes active; no other contacts change."
+  primary_track: true
+  tier: 1
