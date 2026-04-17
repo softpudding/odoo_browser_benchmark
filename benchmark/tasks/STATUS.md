@@ -233,15 +233,15 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 | 221 | calendar.invite_external_attendee_by_email [easy] | Create a calendar event inviting an external email address not in partners | WIP | — | — | — |
 | 222 | survey.create_survey_one_page_publish_share [medium] | Create a 3-question survey, publish it, and copy the share link | WIP | — | — | — |
 | 223 | project_todo.create_note_add_tag_checklist [easy] | In the To-Do app, create a note with a tag and a checklist item | WIP | — | — | — |
-| 224 | hr_holidays.request_annual_leave [easy] | WIP | — | — | — |
+| 224 | hr_holidays.request_annual_leave [easy] | Done | PASS | PASS | 1.0 |
 | 225 | hr_holidays.approve_leave_as_manager [medium] | WIP | — | — | — |
-| 226 | hr_holidays.refuse_leave_with_reason [medium] | WIP | — | — | — |
-| 227 | hr_expense.create_expense_with_receipt [medium] | WIP | — | — | — |
+| 226 | hr_holidays.refuse_leave_with_reason [medium] | Done | PASS | PASS | 1.0 |
+| 227 | hr_expense.create_expense_with_receipt [medium] | Done | PASS | PASS | 1.0 |
 | 228 | hr_expense.submit_report_for_approval [medium] | WIP | — | — | — |
 | 229 | mail.create_channel_invite_members [easy] | WIP | — | — | — |
-| 230 | mail.pin_and_reply_in_chatter [easy] | WIP | — | — | — |
-| 231 | contacts.merge_duplicate_contacts [hard] | WIP | — | — | — |
-| 232 | contacts.archive_then_unarchive [easy] | WIP | — | — | — |
+| 230 | mail.pin_and_reply_in_chatter [easy] | Done | PASS | PASS | 1.0 |
+| 231 | contacts.merge_duplicate_contacts [hard] | Done | PASS | PASS | 1.0 |
+| 232 | contacts.archive_then_unarchive [easy] | Done | PASS | PASS | 1.0 |
 | 233 | website.create_blog_post_publish [medium] | WIP | — | — | — |
 | 234 | website.edit_menu_add_page_link [medium] | WIP | — | — | — |
 | 235 | stock.create_putaway_rule [hard] | WIP | — | — | — |
