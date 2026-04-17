@@ -11,10 +11,12 @@ from benchmark.oracle_helpers import (
     add_many2many_tag,
     click_tab,
     fill_field,
+    full_url,
     login,
     navigate,
     run_oracle,
     set_boolean,
+    save_form,
     _wait_no_loading,
     _wait_for_ready,
 )
@@ -34,7 +36,7 @@ def _select_menu(page, field_name, label):
         inp.first.fill(label)
         page.wait_for_timeout(500)
     else:
-        btn = widget.locator("button, .dropdown-toggle")
+        btn = widget.locator("button, .dropdown-toggle, .o_select_menu_toggler")
         btn.first.click()
         page.wait_for_timeout(500)
 
@@ -65,11 +67,7 @@ def _set_week_day(page, day_index, active):
 
 
 def _navigate_to_week_containing(page, target_day_str):
-    """Navigate the calendar week view until the column headers contain target_day_str.
-
-    target_day_str should be something like "4" for June 4.
-    We look at the column header cells to determine current week.
-    """
+    """Navigate the calendar week view until the column headers contain target_day_str."""
     for _ in range(30):
         headers = page.locator(".fc-col-header-cell").all_inner_texts()
         header_text = " ".join(headers)
@@ -80,39 +78,22 @@ def _navigate_to_week_containing(page, target_day_str):
         _wait_no_loading(page)
 
 
-def _click_event_on_date(page, event_title, day_number):
-    """Click a specific event occurrence that appears on a given day number in week view.
-
-    In the week calendar, events are positioned inside day columns. We find
-    the event by title, then pick the one in the correct column.
-    """
-    events = page.locator(f".fc-event:has-text('{event_title}')")
-    count = events.count()
-    for i in range(count):
-        ev = events.nth(i)
-        # Get the bounding box to determine which column it's in
-        ev.click()
-        page.wait_for_timeout(500)
-        return
-    # Fallback: click first matching
-    events.first.click()
-    page.wait_for_timeout(500)
-
-
-def _edit_occurrence_location(page, event_title, target_day, new_location):
+def _edit_occurrence_location(page, event_title, new_location):
     """Open an occurrence from the popover, edit its location, save with 'This Event'."""
     # Click the event in the calendar
     event = page.locator(f".fc-event:has-text('{event_title}')").first
     event.click()
-    page.wait_for_timeout(500)
+    page.wait_for_timeout(800)
 
     # Click Edit in the popover
-    page.locator(".o_cw_popover_edit").first.click()
-    page.wait_for_timeout(1000)
+    edit_btn = page.locator(".o_cw_popover_edit, .o_cw_popover .o_cw_popover_edit")
+    edit_btn.first.click()
+    page.wait_for_timeout(1500)
     _wait_for_ready(page)
 
-    # Odoo may show a recurrence choice dialog when opening a recurring event
-    # for editing: "This event" / "This and following events" / "All events"
+    # In Odoo 19, the calendar form has inline radio buttons for
+    # recurrence_update: self_only / future_events / all_events.
+    # Select "This event" (self_only) before making changes.
     self_only = page.locator('input[data-value="self_only"]')
     if self_only.count() > 0 and self_only.first.is_visible():
         self_only.first.click()
@@ -122,58 +103,86 @@ def _edit_occurrence_location(page, event_title, target_day, new_location):
     fill_field(page, "location", new_location)
     page.wait_for_timeout(500)
 
-    # Save by clicking breadcrumb back link
+    # Save by navigating back via breadcrumb (calendar form auto-saves)
     page.locator(".o_breadcrumb a").first.click()
-    page.wait_for_timeout(1000)
+    page.wait_for_timeout(1500)
     _wait_no_loading(page)
 
 
 def oracle(page):
     login(page)
-    navigate(page, "/odoo/calendar")
-    _wait_no_loading(page)
+
+    # Navigate directly to the calendar event form view (new record)
+    page.goto(full_url("/odoo/calendar/new"), timeout=120000)
+    page.wait_for_load_state("load")
+    page.wait_for_timeout(3000)
+    _wait_for_ready(page)
 
     # ---------------------------------------------------------------
-    # Part 1: Create the recurring event
+    # Part 1: Create the recurring event in the full form
     # ---------------------------------------------------------------
-    page.locator('.o_control_panel button:has-text("New"):visible').first.click()
-    page.wait_for_timeout(1500)
-    _wait_for_ready(page)
+    # Wait for the form to load
+    page.wait_for_selector(".o_form_view", timeout=30000)
+    page.wait_for_timeout(1000)
 
     # Set title
     fill_field(page, "name", "Cross-Team Sync")
     page.wait_for_timeout(500)
 
-    # Set start datetime
-    start_input = page.locator('.o_field_widget[name="start"] input').first
-    start_input.click()
-    start_input.fill("")
-    start_input.type("06/04/2026 10:00:00 AM")
-    start_input.press("Tab")
-    page.wait_for_timeout(1000)
+    # Set start datetime using the daterange widget.
+    # Debug: dump the widget HTML to understand what's rendered
+    start_widget = page.locator('.o_field_widget[name="start"]').first
+    start_widget.wait_for(timeout=10000)
+    html = start_widget.evaluate("el => el.outerHTML")
+    print(f"DEBUG START WIDGET: {html[:800]}")
 
-    # Close any datetime picker that opened
-    picker = page.locator(".o_datetime_picker:visible")
-    if picker.count() > 0:
-        page.keyboard.press("Escape")
+    # The daterange widget renders values as <button> initially.
+    # Click the button to switch to <input>.
+    btn = start_widget.locator("button").first
+    if btn.count() > 0:
+        print(f"DEBUG: clicking button, text='{btn.inner_text()}'")
+        btn.click(force=True)
+        page.wait_for_timeout(1000)
+
+    html2 = start_widget.evaluate("el => el.outerHTML")
+    print(f"DEBUG START WIDGET AFTER CLICK: {html2[:800]}")
+
+    # Try to find input now
+    inp = start_widget.locator("input")
+    print(f"DEBUG: input count after click = {inp.count()}")
+
+    if inp.count() == 0:
+        # Maybe the input appeared outside the widget (in a picker overlay)
+        # Try finding the start input by ID or data-field
+        all_inputs = page.locator("input[data-field='start'], input#start_0")
+        print(f"DEBUG: fallback input count = {all_inputs.count()}")
+        if all_inputs.count() > 0:
+            inp = all_inputs
+
+    if inp.count() > 0:
+        inp.first.click()
+        page.wait_for_timeout(300)
+        inp.first.fill("")
+        inp.first.type("06/04/2026 10:00:00 AM")
         page.wait_for_timeout(500)
+    else:
+        raise Exception("Could not find start datetime input")
 
-    # Set end time via the daterange picker
-    stop_btn = page.locator(".o_daterange_end").first
-    stop_btn.click()
-    page.wait_for_timeout(1000)
-
-    # The picker has two time inputs: start time and end time
-    time_inputs = page.locator(".o_datetime_picker:visible .o_time_picker_input")
-    if time_inputs.count() >= 2:
-        end_time_input = time_inputs.nth(1)
-        end_time_input.click(click_count=3)
-        end_time_input.fill("11:00am")
-        end_time_input.press("Tab")
-        page.wait_for_timeout(500)
-
-    page.keyboard.press("Escape")
+    # Close any picker
+    for _ in range(5):
+        if page.locator(".o_datetime_picker:visible").count() > 0:
+            page.keyboard.press("Escape")
+            page.wait_for_timeout(300)
+        else:
+            break
+    inp.first.press("Tab")
     page.wait_for_timeout(500)
+    for _ in range(5):
+        if page.locator(".o_datetime_picker:visible").count() > 0:
+            page.keyboard.press("Escape")
+            page.wait_for_timeout(300)
+        else:
+            break
 
     # Set location
     fill_field(page, "location", "Main Conference Room")
@@ -218,7 +227,7 @@ def oracle(page):
     _wait_no_loading(page)
 
     # ---------------------------------------------------------------
-    # Part 2: Edit the June 11 occurrence — location → "Virtual - Zoom"
+    # Part 2: Edit the June 11 occurrence — location -> "Virtual - Zoom"
     # ---------------------------------------------------------------
     navigate(page, "/odoo/calendar")
     _wait_no_loading(page)
@@ -234,11 +243,10 @@ def oracle(page):
     _navigate_to_week_containing(page, "11")
     page.wait_for_timeout(500)
 
-    # Edit the occurrence
-    _edit_occurrence_location(page, "Cross-Team Sync", "11", "Virtual - Zoom")
+    _edit_occurrence_location(page, "Cross-Team Sync", "Virtual - Zoom")
 
     # ---------------------------------------------------------------
-    # Part 3: Edit the June 25 occurrence — location → "Building B Room 201"
+    # Part 3: Edit the June 25 occurrence — location -> "Building B Room 201"
     # ---------------------------------------------------------------
     navigate(page, "/odoo/calendar")
     _wait_no_loading(page)
@@ -254,8 +262,7 @@ def oracle(page):
     _navigate_to_week_containing(page, "25")
     page.wait_for_timeout(500)
 
-    # Edit the occurrence
-    _edit_occurrence_location(page, "Cross-Team Sync", "25", "Building B Room 201")
+    _edit_occurrence_location(page, "Cross-Team Sync", "Building B Room 201")
 
 
 run_oracle(oracle)

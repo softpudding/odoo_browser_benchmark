@@ -17,7 +17,6 @@ from benchmark.oracle_helpers import (
     clear_search_filters,
     fill_field,
     login,
-    modal_click_button,
     navigate,
     run_oracle,
     save_form,
@@ -123,11 +122,26 @@ def oracle(page):
     page.wait_for_timeout(2500)
     _wait_no_loading(page)
 
-    # In the email compose wizard, set subject and send
+    # Handle the "Configure your document layout" dialog if it appears
+    layout_modal = page.locator(".modal:visible:has-text('Configure your document layout')")
+    if layout_modal.count() > 0:
+        # Click Continue/Save to dismiss the layout configuration
+        continue_btn = layout_modal.last.locator(
+            "button:has-text('Continue'), "
+            "button:has-text('Save'), "
+            ".modal-footer button.btn-primary"
+        ).first
+        continue_btn.click()
+        page.wait_for_timeout(2000)
+        _wait_no_loading(page)
+
+    # Now we should see the email compose wizard
     modal = page.locator(".modal:visible")
     if modal.count() > 0:
+        m = modal.last
+
         # Set the subject
-        subject = modal.last.locator(
+        subject = m.locator(
             ".o_field_widget[name='subject'] input"
         ).first
         subject.click()
@@ -137,7 +151,7 @@ def oracle(page):
         page.wait_for_timeout(1000)
 
         # Click Send in the modal
-        modal.last.locator("button:has-text('Send')").first.click()
+        m.locator("button:has-text('Send')").first.click()
         page.wait_for_timeout(2000)
         _wait_no_loading(page)
 

@@ -255,7 +255,9 @@ class OdooRPC:
             read_fields = [f for f in fields if f not in ignore]
             if not read_fields:
                 continue
-            records = self.search_read(model_name, [], read_fields)
+            records = self.search_read(
+                model_name, [], read_fields, context={"active_test": False},
+            )
             result[model_name] = records
         return result
 

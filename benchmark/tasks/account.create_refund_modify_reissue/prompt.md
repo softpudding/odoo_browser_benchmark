@@ -13,7 +13,7 @@ Your job:
 2. Click the **Credit Note** button.
 3. In the reversal wizard:
    - Set the **Reason** to exactly: `Quantity correction for project phase 2`
-   - Set the **Reversal date** to **06/05/2026**
+   - Set the **Reversal date** to **04/10/2026**
    - Click the **"Reverse and Create Invoice"** button (NOT the default "Reverse" button)
 4. After the wizard completes, you will be redirected to a new **draft** invoice that is a copy of the original. This is the replacement invoice.
 5. On this new draft invoice, change the **Technical Audit** line quantity from **8** to **5**. Do not change the Site Inspection line or any prices.

@@ -45,7 +45,7 @@ def check(env):
                 f"Credit note state is '{cn.state}', expected 'posted'"
             )
         # Credit note date should be 2026-06-05
-        expected_cn_date = date(2026, 6, 5)
+        expected_cn_date = date(2026, 4, 10)
         if cn.date != expected_cn_date:
             failures.append(
                 f"Credit note date is '{cn.date}', expected '{expected_cn_date}'"

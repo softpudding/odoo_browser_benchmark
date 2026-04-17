@@ -37,7 +37,7 @@ def oracle(page):
     modal_fill_field(page, "reason", "Quantity correction for project phase 2")
     page.wait_for_timeout(500)
 
-    modal_set_date(page, "date", "06/05/2026")
+    modal_set_date(page, "date", "04/10/2026")
     page.wait_for_timeout(500)
 
     # Click "Reverse and Create Invoice" (NOT the default "Reverse" button)
@@ -46,29 +46,6 @@ def oracle(page):
     _wait_no_loading(page)
 
     # We are now on the new draft invoice (copy of original).
-    # The draft may have auto_post set due to future date; fix if needed.
-    click_tab(page, "Other Info")
-    page.wait_for_timeout(500)
-
-    auto_post_widget = page.locator(".o_field_widget[name='auto_post']").first
-    if auto_post_widget.count() > 0:
-        select_trigger = auto_post_widget.locator(
-            ".o_select_menu, .dropdown-toggle"
-        ).first
-        if select_trigger.count() > 0:
-            select_trigger.click()
-            page.wait_for_timeout(500)
-            options = page.locator(
-                ".dropdown-menu:visible .o_select_menu_item, "
-                ".dropdown-menu:visible .dropdown-item"
-            )
-            for i in range(options.count()):
-                if options.nth(i).inner_text().strip() == "No":
-                    options.nth(i).click()
-                    break
-            page.wait_for_timeout(500)
-            _wait_no_loading(page)
-
     # Go to Invoice Lines tab to edit the Technical Audit quantity
     click_tab(page, "Invoice Lines")
     page.wait_for_timeout(500)
@@ -95,15 +72,34 @@ def oracle(page):
             _wait_no_loading(page)
             break
 
-    # Set the invoice date to 06/10/2026
-    set_date(page, "invoice_date", "06/10/2026")
+    # Click outside the o2m to deselect, then set the invoice date
+    page.locator(".o_form_view .o_form_sheet").first.click(position={"x": 10, "y": 10})
     page.wait_for_timeout(500)
-    _wait_no_loading(page)
 
+    # Set the invoice date to 06/10/2026 using direct input interaction
+    date_widget = page.locator(".o_field_widget[name='invoice_date']").first
+    date_widget.scroll_into_view_if_needed()
+    date_inp = date_widget.locator("input")
+    if date_inp.count() == 0:
+        # In Odoo 19, date fields may render as buttons when they have a value
+        clickable = date_widget.locator("button, span, div.o_input")
+        if clickable.count() > 0:
+            clickable.first.click()
+            page.wait_for_timeout(500)
+        date_inp = date_widget.locator("input")
+    if date_inp.count() > 0:
+        date_inp.first.click()
+        page.wait_for_timeout(300)
+        date_inp.first.press("Control+a")
+        page.wait_for_timeout(100)
+        date_inp.first.type("06/10/2026")
+        date_inp.first.press("Tab")
+    page.wait_for_timeout(500)
     # Dismiss any datepicker that may still be open
     if page.locator(".o_datetime_picker:visible, .o_date_picker:visible").count() > 0:
         page.press("body", "Escape")
-        page.wait_for_timeout(500)
+        page.wait_for_timeout(300)
+    _wait_no_loading(page)
 
     # Confirm / post the new invoice
     click_status_button(page, "Confirm")
