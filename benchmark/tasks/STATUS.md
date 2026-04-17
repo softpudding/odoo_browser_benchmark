@@ -274,6 +274,15 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 262 | mail.create_channel_set_description_pin_welcome [medium] | Create a private Discuss channel, set its description, and pin a welcome message | Done | PASS | FAIL | 0.0 |
 | 263 | hr_holidays.allocate_leave_then_request_against_balance [hard] | Allocate sick leave to Marc Demo, then create and approve a request against that balance | Done | PASS | FAIL | 0.0 |
 | 264 | contacts.create_company_with_invoice_and_delivery_addresses [medium] | Create a company with linked invoice and delivery child addresses | Done | PASS | FAIL | 0.0 |
+| 265 | survey.branching_quiz_publish_share_link [hard] | Create a branching one-page quiz survey and leave it ready for public sharing | Done | PASS | FAIL | 0.0 |
+| 266 | project_todo.duplicate_note_retag_archive_original [easy] | Duplicate the seeded To-Do note, retag the copy, and archive the original | Done | PASS | FAIL | 0.0 |
+| 267 | website_sale.configure_optional_products_add_upsell_to_cart [medium] | Configure an optional webshop product, publish the upsell item, and add both to a website cart | Done | PASS | FAIL | 0.0 |
+| 268 | hr_recruitment.schedule_second_interview_with_feedback [medium] | Move an applicant to Second Interview, schedule the meeting, and save the requested feedback | Done | PASS | FAIL | 0.0 |
+| 269 | delivery.configure_fixed_rate_carrier_confirm_sale [medium] | Create a fixed-price delivery method, apply it to the target quotation, and confirm the order | Done | PASS | FAIL | 0.0 |
+| 270 | hr_attendance.check_in_break_resume_check_out [medium] | Check in, take a break, resume, and check out from Attendances | Removed | FAIL (spec) | — | — |
+| 271 | maintenance.create_request_assign_technician_mark_repaired [medium] | Create a maintenance request, assign the technician, and mark it repaired | Done | PASS | FAIL | 0.0 |
+| 272 | website_blog.create_post_with_cover_tag_publish [medium] | Create a tagged blog post with a cover image and publish it | Done | PASS | FAIL | 0.0 |
+| 273 | website_slides.create_course_add_lesson_publish [medium] | Create an eLearning course, add a lesson, and publish the course | Done | PASS | FAIL | 0.0 |
 
 ---
 
@@ -2022,13 +2031,14 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Survey |
 | **Workflow** | Create a survey with branching or scoring behavior, publish it, and copy the share link. |
 | **Capability tested** | Survey builder navigation with multi-step question setup, logic/scoring configuration, publication, and link retrieval. |
+| **Notes** | Oracle passes. Browser-use gave up immediately with zero steps in this environment. |
 
 ---
 
@@ -2036,13 +2046,14 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | To-Do |
 | **Workflow** | Duplicate an existing To-Do note, retag the duplicate, and archive the original note only. |
 | **Capability tested** | Action-menu duplication plus selective archive and tag editing across original vs duplicate records. |
+| **Notes** | Oracle passes. Browser-use gave up immediately with zero steps in this environment. |
 
 ---
 
@@ -2078,13 +2089,14 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Website Sale, Website |
 | **Workflow** | Configure optional products for a webshop item, publish it, and add the upsell combination to the storefront cart. |
 | **Capability tested** | Backend ecommerce configuration followed by public storefront add-to-cart with optional-product selection. |
+| **Notes** | Oracle passes. Browser-use gave up immediately with zero steps in this environment. |
 
 ---
 
@@ -2107,13 +2119,14 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Recruitment |
 | **Workflow** | Move a target applicant forward, schedule a second interview, and record the requested interviewer feedback. |
 | **Capability tested** | Recruitment stage progression combined with interview planning and evaluation note handling. |
+| **Notes** | Oracle passes. Browser-use gave up immediately with zero steps in this environment. |
 
 ---
 
@@ -2238,13 +2251,14 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Delivery, Sales |
 | **Workflow** | Configure a fixed-price delivery method, apply it on a sales order, and confirm the quotation. |
 | **Capability tested** | Shipping-method configuration followed by sales-order fulfillment setup on a quotation. |
+| **Notes** | Oracle passes. Browser-use gave up immediately with zero steps in this environment. |
 
 ---
 
@@ -2252,13 +2266,14 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
+| **Status** | Removed |
+| **Oracle** | FAIL (spec) |
 | **Browser-Use** | — |
 | **F1** | — |
 | **Odoo modules** | Attendances |
 | **Workflow** | Check in, start a break, resume work, and check out in the attendance interface. |
 | **Capability tested** | Time-clock style attendance interactions with sequential status transitions. |
+| **Notes** | Removed because this checkout's `hr_attendance` addon does not expose a break/resume workflow to implement or validate. |
 
 ---
 
@@ -2266,13 +2281,14 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Maintenance |
 | **Workflow** | Create a maintenance request, assign the technician, and mark the request repaired. |
 | **Capability tested** | Service-ticket style workflow with assignment and repair-state progression. |
+| **Notes** | Oracle passes. Browser-use gave up immediately with zero steps in this environment. |
 
 ---
 
@@ -2322,13 +2338,14 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Blog, Website |
 | **Workflow** | Create a blog post with a cover image and tag, then publish it on the website. |
 | **Capability tested** | Blog content authoring with metadata and website publication. |
+| **Notes** | Oracle passes. Browser-use gave up immediately with zero steps in this environment. |
 
 ---
 
@@ -2336,13 +2353,14 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | eLearning, Website |
 | **Workflow** | Create an eLearning course, add a lesson, and publish the course. |
 | **Capability tested** | Structured course authoring with nested content creation and publication state management. |
+| **Notes** | Oracle passes. Browser-use gave up immediately with zero steps in this environment. |
 
 ---
 

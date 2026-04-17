@@ -1,0 +1,20 @@
+task_id: project_todo.duplicate_note_retag_archive_original
+module: project_todo
+difficulty: easy
+instruction: see prompt.md
+start_url: /odoo/to-do
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 240
+step_limit: 160
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: easy
+  agent_interaction: "Duplicate a seeded To-Do note, retag the duplicate, and archive the original note."
+  checks_verify: "The original note is archived and an active follow-up copy exists with the exact replacement tag."
+  primary_track: true
+  tier: 1
