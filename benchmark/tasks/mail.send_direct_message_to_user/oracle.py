@@ -22,22 +22,19 @@ def oracle(page):
     _wait_no_loading(page)
     page.wait_for_timeout(1500)
 
-    # In Discuss sidebar, find the Direct Messages section "+" button.
+    # The Discuss sidebar shows a Direct Messages category. Hover it to
+    # reveal the '+' button and click it.
+    dm_header = page.locator(
+        ".o-mail-DiscussSidebarCategory:has-text('Direct messages')"
+    ).first
+    dm_header.wait_for(state="visible", timeout=15000)
+    dm_header.hover()
+    page.wait_for_timeout(500)
     add_dm = page.locator(
-        "button[title*='direct message' i]:visible, "
-        "button[title*='Start a conversation' i]:visible, "
-        ".o-mail-DiscussSidebarCategory-add:visible"
-    )
-    if add_dm.count() == 0:
-        # Fallback: hover the Direct Messages header to reveal the button.
-        dm_header = page.locator(
-            ".o-mail-DiscussSidebarCategory:has-text('Direct messages'):visible"
-        )
-        if dm_header.count() > 0:
-            dm_header.first.hover()
-            page.wait_for_timeout(400)
-            add_dm = page.locator(".o-mail-DiscussSidebarCategory-add:visible")
-    add_dm.first.click()
+        ".o-mail-DiscussSidebarCategory:has-text('Direct messages') "
+        ".o-mail-DiscussSidebarCategory-actions button"
+    ).first
+    add_dm.click()
     page.wait_for_timeout(800)
 
     # A popup/autocomplete appears asking who to DM. Type Priya.

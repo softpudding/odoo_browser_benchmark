@@ -14,13 +14,24 @@ DISTRACTOR_SUBJECTS = [
 def setup(env):
     admin = env.ref("base.user_admin")
 
+    # Ensure a distinct author user exists (OdooBot or demo) to post from.
+    author = env["res.users"].search([("login", "=", "marc.demo")], limit=1)
+    if not author:
+        author = env["res.users"].create({
+            "name": "Marc Demo",
+            "login": "marc.demo",
+            "email": "marc.demo@example.com",
+            "group_ids": [(6, 0, [env.ref("base.group_user").id])],
+        })
+
     # Remove prior instances of our test messages.
     for subj in [TARGET_SUBJECT] + DISTRACTOR_SUBJECTS:
         env["mail.message"].search([("subject", "=", subj)]).unlink()
 
-    # Post messages on the admin partner so they show up in admin's Inbox.
+    # Post messages from Marc Demo addressed to admin — creates
+    # needaction notifications that land in admin's Inbox.
     for subj in DISTRACTOR_SUBJECTS + [TARGET_SUBJECT]:
-        admin.partner_id.message_post(
+        admin.partner_id.with_user(author).message_post(
             body=f"<p>{subj}</p>",
             subject=subj,
             message_type="comment",

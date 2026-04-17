@@ -18,10 +18,10 @@ def oracle(page):
     _wait_no_loading(page)
     page.wait_for_timeout(1200)
 
-    # Go to My Expense Reports.
-    navigate(page, "/odoo/action-hr_expense.action_hr_expense_sheet_my_all")
+    # Odoo 19: hr.expense direct action (no more hr.expense.sheet).
+    navigate(page, "/odoo/action-hr_expense.hr_expense_actions_my_all")
     _wait_no_loading(page)
-    page.wait_for_timeout(1000)
+    page.wait_for_timeout(1200)
 
     # Clear filters.
     for _ in range(5):
@@ -41,7 +41,7 @@ def oracle(page):
 
     # 1. Submit.
     submit_btn = page.locator(
-        ".o_form_statusbar button[name='action_submit_sheet']:visible, "
+        ".o_form_statusbar button[name='action_submit']:visible, "
         ".o_form_statusbar button:has-text('Submit'):visible"
     )
     submit_btn.first.click()
@@ -50,17 +50,17 @@ def oracle(page):
 
     # 2. Approve.
     approve_btn = page.locator(
-        ".o_form_statusbar button[name='action_approve_expense_sheets']:visible, "
+        ".o_form_statusbar button[name='action_approve']:visible, "
         ".o_form_statusbar button:has-text('Approve'):visible"
     )
     approve_btn.first.click()
     page.wait_for_timeout(1200)
     _wait_no_loading(page)
 
-    # 3. Post to accounting — button may be 'Post Journal Entries'.
+    # 3. Post to accounting.
     post_btn = page.locator(
-        ".o_form_statusbar button[name='action_sheet_move_post']:visible, "
-        ".o_form_statusbar button[name='action_sheet_move_create']:visible, "
+        ".o_form_statusbar button[name='action_post']:visible, "
+        ".o_form_statusbar button[name='action_move_create']:visible, "
         ".o_form_statusbar button:has-text('Post Journal Entries'):visible, "
         ".o_form_statusbar button:has-text('Post'):visible"
     )

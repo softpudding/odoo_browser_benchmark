@@ -35,22 +35,32 @@ def oracle(page):
     page.wait_for_timeout(800)
     _wait_no_loading(page)
 
-    # Find the Gamma Bolt M6 row in the bom_line_ids o2m and click its
-    # product_qty cell to enter edit mode.
+    # Find the Gamma Bolt M6 row. Click its qty cell to enter edit mode
+    # then fill via the input that appears.
     row = page.locator(
         "tr.o_data_row:has-text('Gamma Bolt M6')"
     ).first
     row.wait_for(state="visible", timeout=15000)
-    # Click the cell with field name product_qty.
     qty_cell = row.locator("td[name='product_qty']").first
     qty_cell.click()
-    page.wait_for_timeout(400)
-    # Now an input should be focused in that cell.
-    qty_input = row.locator("td[name='product_qty'] input").first
-    qty_input.fill("")
-    qty_input.fill("6")
-    page.keyboard.press("Tab")
-    page.wait_for_timeout(400)
+    page.wait_for_timeout(300)
+    # Try to locate the input that becomes active.
+    qty_input = page.locator(
+        "tr.o_data_row:has-text('Gamma Bolt M6') td[name='product_qty'] input, "
+        "tr.o_data_row.o_selected_row td[name='product_qty'] input"
+    ).first
+    try:
+        qty_input.wait_for(state="visible", timeout=5000)
+        qty_input.fill("6")
+        page.keyboard.press("Tab")
+    except Exception:
+        # Fallback: dblclick, then use keyboard.
+        qty_cell.dblclick()
+        page.wait_for_timeout(300)
+        page.keyboard.press("Meta+a")
+        page.keyboard.type("6")
+        page.keyboard.press("Tab")
+    page.wait_for_timeout(600)
 
     save_form(page)
     page.wait_for_timeout(1000)

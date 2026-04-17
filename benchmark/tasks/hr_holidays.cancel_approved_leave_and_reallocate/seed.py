@@ -72,6 +72,7 @@ def setup(env):
         ptype.write({
             "requires_allocation": False,
             "leave_validation_type": "manager",
+            "request_unit": "day",
         })
 
     # Create the already-approved "tentative" leave (July 6-10, 2026).
@@ -85,5 +86,5 @@ def setup(env):
     if leave.state == "draft":
         leave.action_confirm()
     if leave.state == "confirm":
-        leave.sudo().action_validate()
+        leave.sudo().action_approve()
     # leave.state should now be 'validate'.

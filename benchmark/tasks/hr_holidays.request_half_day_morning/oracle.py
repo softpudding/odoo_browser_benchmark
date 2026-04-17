@@ -50,16 +50,11 @@ def oracle(page):
     page.wait_for_timeout(800)
     _wait_no_loading(page)
 
-    # Set the single date field using the robust set_date helper.
+    # Set both date fields (half-day uses request_date_from as the day
+    # and request_date_to stays equal to it — set both explicitly).
     set_date(page, "request_date_from", "06/15/2026")
-
-    # Morning ('am') is the default when Half Day is toggled on — no action
-    # needed; but attempt a best-effort select if the control is a plain
-    # <select> and the current value is 'pm'.
     try:
-        select = page.locator("div[name='request_date_from_period'] select:visible")
-        if select.count() > 0:
-            select.first.select_option("am")
+        set_date(page, "request_date_to", "06/15/2026")
     except Exception:
         pass
 
@@ -67,7 +62,19 @@ def oracle(page):
     fill_text_field(page, "name", "Doctor appointment")
 
     save_form(page)
-    page.wait_for_timeout(1500)
+    page.wait_for_timeout(2000)
+    _wait_no_loading(page)
+    # Accept any modal dialog that might pop up (leave-overlap warning etc).
+    ok_btn = page.locator(
+        ".modal button.btn-primary:visible, "
+        ".modal button:has-text('Ok'):visible"
+    )
+    if ok_btn.count() > 0:
+        try:
+            ok_btn.first.click()
+            page.wait_for_timeout(800)
+        except Exception:
+            pass
     _wait_no_loading(page)
 
 

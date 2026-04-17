@@ -32,12 +32,10 @@ def setup(env):
             "name": EMPLOYEE_NAME,
             "work_email": "bob.benchmark@example.com",
             "expense_manager_id": admin.id,
-            "user_id": admin.id,
         })
     else:
         emp.write({
             "expense_manager_id": admin.id,
-            "user_id": admin.id,
         })
 
     products = env["product.template"].search([("name", "=", PRODUCT_NAME)])

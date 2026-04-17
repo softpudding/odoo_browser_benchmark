@@ -262,7 +262,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 250 | mail.star_message_filter_starred [easy] | WIP | — | — | — |
 | 251 | mail.mark_message_as_todo_and_resolve [medium] | Done | PASS | FAIL | 0.67 |
 | 252 | fleet.schedule_vehicle_service_activity [easy] | Done | PASS | PASS | 1.0 |
-| 253 | fleet.log_fuel_refill_with_cost [medium] | WIP | — | — | — |
+| 253 | fleet.log_fuel_refill_with_cost [medium] | Done | PASS | FAIL | 0.0 |
 | 254 | event.register_attendee_confirm_check_in [medium] | Done | PASS | PASS | 1.0 |
 | 255 | event.configure_three_ticket_tiers [medium] | WIP | — | — | — |
 | 256 | mrp.unbuild_finished_goods_to_recover_components [medium] | Done | PASS | PASS | 1.0 |
