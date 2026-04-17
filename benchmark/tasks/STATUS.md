@@ -185,7 +185,7 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 | 173 | contacts.merge_duplicate_partners [hard] | Select two duplicate partners and merge them via the Merge Contacts wizard | WIP | — | — | — |
 | 174 | mrp.create_routing_set_workcenter [medium] | Create a workcenter and link it as an operation on an existing BOM | WIP | — | — | — |
 | 175 | mrp.scrap_component_during_production [hard] | Scrap one consumed component from a running MO via the component action menu | WIP | — | — | — |
-| 176 | mrp.convert_bom_to_kit_type [easy] | Change an existing BOM's type from Manufacture This Product to Kit | WIP | — | — | — |
+| 176 | mrp.convert_bom_to_kit_type [easy] | Change an existing BOM's type from Manufacture This Product to Kit | Done | PASS | PASS | 1.0 |
 | 177 | mrp.create_variant_specific_bom [hard] | Create a BOM that applies only to a single product variant via attribute filter | WIP | — | — | — |
 | 178 | mrp.configure_mo_operation_time_finish [medium] | Open a work order on an MO, set expected duration, and mark it finished | WIP | — | — | — |
 | 179 | point_of_sale.sell_two_products_apply_discount [medium] | Ring up two POS products, apply a 10% line discount, pay cash | WIP | — | — | — |
