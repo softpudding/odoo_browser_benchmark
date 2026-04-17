@@ -1,0 +1,20 @@
+task_id: fleet.schedule_vehicle_service_activity
+module: fleet
+difficulty: easy
+instruction: see prompt.md
+start_url: /odoo/fleet
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 240
+step_limit: 120
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: easy
+  agent_interaction: "Open a seeded vehicle and schedule a To-Do activity via the chatter with a specific due date and summary."
+  checks_verify: "Exactly one mail.activity exists for the seeded vehicle with activity_type To-Do, summary 'Yearly Safety Inspection', and due date 2026-07-20."
+  primary_track: true
+  tier: 1
