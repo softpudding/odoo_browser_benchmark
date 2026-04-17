@@ -3,6 +3,7 @@
 from benchmark.oracle_helpers import (
     click_list_row,
     click_tab,
+    ensure_list_view,
     fill_field,
     login,
     navigate,
@@ -19,6 +20,8 @@ def oracle(page):
     navigate(page, "/odoo/employees")
     _wait_no_loading(page)
 
+    ensure_list_view(page)
+    page.wait_for_timeout(500)
     click_list_row(page, "Maya Ortiz")
     _wait_for_ready(page)
     page.wait_for_timeout(500)

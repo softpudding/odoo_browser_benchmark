@@ -53,10 +53,10 @@ def setup(env):
             "department_id": dept.id,
         })
 
-    location = _ensure_location(env, "HQ Annex", "office", "220 Howard Street")
+    _ensure_location(env, "HQ Annex", "office", "220 Howard Street")
     alt_location = _ensure_location(env, "HQ West", "office", "80 Mission Street")
 
-    manager = env["hr.employee"].create({
+    env["hr.employee"].create({
         "name": MANAGER_NAME,
         "job_id": manager_job.id,
         "department_id": dept.id,

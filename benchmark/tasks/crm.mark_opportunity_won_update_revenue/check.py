@@ -3,7 +3,8 @@
 Validates:
 1. Target opportunity is in a won stage (stage_id.is_won=True).
 2. Target expected_revenue is 52000.
-3. Two distractors are in their original stages with unchanged revenue.
+3. Target priority is medium (2 stars).
+4. Two distractors are in their original stages with unchanged revenue.
 """
 
 
@@ -36,6 +37,10 @@ def check(env):
             f"Target expected_revenue={target.expected_revenue}, "
             f"expected {EXPECTED_REVENUE}"
         )
+    if target.priority != "2":
+        failures.append(
+            f"Target priority is '{target.priority}', expected '2'"
+        )
 
     for name, (orig_stage, orig_rev) in DISTRACTORS.items():
         other = Lead.search([("name", "=", name)], limit=1)
@@ -51,6 +56,10 @@ def check(env):
             failures.append(
                 f"Distractor '{name}' expected_revenue={other.expected_revenue}, "
                 f"expected {orig_rev}"
+            )
+        if other.priority not in (False, "0"):
+            failures.append(
+                f"Distractor '{name}' priority is '{other.priority}', expected default"
             )
 
     return failures

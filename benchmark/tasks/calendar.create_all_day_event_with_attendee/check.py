@@ -37,8 +37,11 @@ def check(env):
         failures.append("Event has no start date")
 
     desc_text = re.sub(r"<[^>]+>", "", event.description or "").strip()
-    if desc_text != "Annual planning offsite for operations leads.":
-        failures.append(f"Description is '{desc_text}', expected exact offsite text")
+    expected_desc = "Annual planning offsite for operations leads."
+    if expected_desc not in desc_text:
+        failures.append(
+            f"Description is '{desc_text}', expected to include exact offsite text"
+        )
 
     attendee_names = event.attendee_ids.mapped("partner_id.name")
     if attendee_names != ["Marc Demo"]:

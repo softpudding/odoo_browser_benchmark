@@ -5,10 +5,13 @@ Validates:
    Meridian Supply Co, still has its two product lines.
 2. A new confirmed PO with partner_ref `PH-REISSUE-77` exists for vendor
    Pinnacle Hardware.
-3. The new confirmed PO has the same two product lines with the same
+3. The duplicate's order deadline is 2026-05-28.
+4. The new confirmed PO has the same two product lines with the same
    products, quantities, and prices.
-4. No extra records under these references.
+5. No extra records under these references.
 """
+
+from datetime import date, datetime, timedelta
 
 
 def check(env):
@@ -59,6 +62,14 @@ def check(env):
     if dup.state != "purchase":
         failures.append(
             f"Duplicate state is '{dup.state}', expected 'purchase' (confirmed)"
+        )
+    if isinstance(dup.date_order, datetime):
+        actual_date = (dup.date_order + timedelta(hours=8)).date()
+    else:
+        actual_date = dup.date_order
+    if actual_date != date(2026, 5, 28):
+        failures.append(
+            f"Duplicate order deadline is {actual_date}, expected 2026-05-28"
         )
 
     lines = dup.order_line

@@ -44,6 +44,11 @@ def oracle(page):
         inp.press("Tab")
         page.wait_for_timeout(500)
 
+    stars = page.locator(".o_field_widget[name='priority'] .o_priority_star")
+    if stars.count() >= 2:
+        stars.nth(1).click()
+        page.wait_for_timeout(400)
+
     # Save the revenue change first so the Won action uses the latest value
     try:
         save_form(page)

@@ -2,6 +2,7 @@
 
 from benchmark.oracle_helpers import (
     click_list_row,
+    ensure_list_view,
     login,
     navigate,
     run_oracle,
@@ -18,6 +19,8 @@ def oracle(page):
     navigate(page, "/odoo/purchase")
     _wait_no_loading(page)
 
+    ensure_list_view(page)
+    page.wait_for_timeout(500)
     click_list_row(page, "P-RFQ-CANCEL-01")
     _wait_for_ready(page)
     page.wait_for_timeout(500)
