@@ -10,6 +10,17 @@ argument-hint: [module.task_name] [hard|medium|easy]
 You are creating a new benchmark task named `$ARGUMENTS` for evaluating browser
 agents on Odoo ERP workflows.
 
+## WORKTREE REQUIREMENT
+
+**You MUST work in a separate git worktree for this skill.** The workflow is:
+
+1. **Main branch first** — Steps 0–1 (validation, duplicate check) and Step 1b
+   (reserve task name in STATUS.md, commit, push) happen on the main branch.
+2. **Enter worktree** — After reserving the name, use `EnterWorktree`. All real
+   work (file creation, seed writing, testing, iteration) happens in the worktree.
+3. **Exit worktree** — Only exit (which merges changes back) once the task is
+   complete or you are done.
+
 **Read the full guide first:** `benchmark/TASK_CREATION_GUIDE.md`
 
 ---
@@ -142,6 +153,28 @@ the same ground.
 
 ---
 
+## Step 1b: Reserve the task name (on main branch, before worktree)
+
+Add a WIP row to `benchmark/tasks/STATUS.md` to claim the task name and prevent
+teammates from creating a duplicate while you work:
+
+```markdown
+| N | <task_name> [<difficulty>] | <one-line description> | WIP | — | — | — |
+```
+
+Commit and push immediately:
+
+```bash
+git add benchmark/tasks/STATUS.md
+git commit -m "[WIP] benchmark: reserve <task_name> task"
+git push upstream 19.0
+```
+
+**Now enter the worktree** with `EnterWorktree`. All remaining steps happen
+inside the worktree.
+
+---
+
 ## Step 2: Design the prompt
 
 Write `prompt.md` FIRST, before any code. Rules:
@@ -234,27 +267,6 @@ This is the most important validation file. Validate according to difficulty:
 - Put `create`/`write`/`web_save` in `optional_ops` (browser uses `web_save`
   instead of ORM methods)
 - Put destructive operations in `forbidden_ops` (`unlink`, `button_cancel`, etc.)
-
----
-
-## Step 3b: Register in STATUS.md and push immediately
-
-**Do this as soon as all 8 files are created** — before any testing. This
-prevents teammates from creating a duplicate task while yours is in progress.
-
-Add a row to the table in `benchmark/tasks/STATUS.md`:
-
-```markdown
-| N | <task_name> [<difficulty>] | <one-line description> | WIP | — | — | — |
-```
-
-Use `WIP` as the status, dashes for the test columns. Then commit and push:
-
-```bash
-git add benchmark/tasks/<task_name>/ benchmark/tasks/STATUS.md
-git commit -m "[WIP] benchmark: add <task_name> task"
-git push upstream 19.0
-```
 
 ---
 

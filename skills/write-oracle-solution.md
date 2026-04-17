@@ -11,6 +11,14 @@ You are writing or fixing a Playwright oracle script for the benchmark task
 `$ARGUMENTS`. The oracle proves this task is solvable through the browser UI —
 it is the gold-standard solution.
 
+## WORKTREE REQUIREMENT
+
+**You MUST work in a separate git worktree for this skill.** Before doing any
+file reads or edits, use `EnterWorktree` to create a new worktree. All oracle
+development (editing oracle.py, debugging, running eval) happens inside the
+worktree. Only exit the worktree (which merges changes back) once the oracle
+passes or you are done.
+
 ## CRITICAL RULES
 
 1. **NEVER lower task difficulty.** The oracle must solve the task the same way
