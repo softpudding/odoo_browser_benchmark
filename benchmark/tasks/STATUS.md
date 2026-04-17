@@ -131,6 +131,16 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 | 119 | crm.update_opportunity_revenue [easy] | WIP | — | — | — |
 | 120 | hr.update_employee_job_title [easy] | WIP | — | — | — |
 | 121 | purchase.update_rfq_source [easy] | WIP | — | — | — |
+| 122 | sale.create_quotation_down_payment_invoice [hard] | Down payment wizard with non-default % option, navigate to invoice, edit, confirm | WIP | — | — | — |
+| 123 | account.create_refund_modify_reissue [hard] | Credit note "Modify" wizard option: reverses + creates new draft, edit lines, post | WIP | — | — | — |
+| 124 | purchase.create_rfq_confirm_receive_backorder [hard] | Create PO with exact lines, confirm, partial receive, Create Backorder dialog | WIP | — | — | — |
+| 125 | stock.return_delivery_create_credit_note [hard] | Open delivery, return wizard, validate return, navigate to create credit note | WIP | — | — | — |
+| 126 | crm.create_opportunity_add_quotation_send [hard] | Create opportunity, add quotation with exact lines, send by email wizard | WIP | — | — | — |
+| 127 | sale_stock.confirm_order_deliver_partial_backorder [hard] | Confirm SO, navigate to delivery, partial validate with Create Backorder | WIP | — | — | — |
+| 128 | hr_recruitment.create_applicant_add_skills_refuse [hard] | Create applicant with skills, then refuse with specific reason wizard | WIP | — | — | — |
+| 129 | sale.cancel_confirmed_recreate_send_email [hard] | Cancel confirmed SO, create new quotation with exact lines, send by email | WIP | — | — | — |
+| 130 | calendar.create_recurring_edit_two_occurrences [hard] | Create recurring event, then edit two occurrences separately with "This Event" | WIP | — | — | — |
+| 131 | website.edit_page_update_text_set_properties [hard] | Edit webpage text in website editor, set page title via Properties dialog | WIP | — | — | — |
 
 ---
 
