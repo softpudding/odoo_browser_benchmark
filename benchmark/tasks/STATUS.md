@@ -154,7 +154,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 142 | hr_holidays.allocate_leave_days [easy] | Allocate 15 days of Sick Time Off to an employee | WIP | — | — | — |
 | 143 | hr_holidays.request_time_off_approve [medium] | Create Sick Time Off for employee, fill dates, save, and validate | Done | PASS | FAIL/PASS | 1.0 |
 | 144 | hr_holidays.refuse_leave_request [medium] | Refuse a pending time-off request as manager | Done | PASS | PASS | 1.0 |
-| 145 | hr_holidays.create_leave_type [medium] | Create a new Time Off Type with manager approval | WIP | PASS | — | — |
+| 145 | hr_holidays.create_leave_type [medium] | Create a new Time Off Type with manager approval | Done | PASS | PASS | 1.0 |
 | 146 | hr_holidays.cancel_approved_leave [medium] | Cancel an approved leave request via cancel wizard | WIP | — | — | — |
 | 147 | mrp.create_bom_confirm_mo [medium] | Create a Bill of Materials with 3 components, then create and confirm a Manufacturing Order for 10 units | Done | PASS | FAIL | 0.0 |
 | 148 | hr_expense.create_expense_report_submit [medium] | Create an expense line, attach it to a new expense report, and submit it for approval | Done | PASS | PASS | 1.0 |
@@ -214,7 +214,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 202 | fleet.transfer_vehicle_new_driver [medium] | Change a vehicle's driver and set the new assignment date | WIP | — | — | — |
 | 203 | event.add_event_questions_to_registration [medium] | Add two custom questions to an existing event registration form | WIP | — | — | — |
 | 204 | event.create_event_tracks_session_schedule [hard] | Add two conference tracks with times to a published event | WIP | — | — | — |
-| 205 | event.set_ticket_seat_availability_limit [easy] | Set total seat limit and per-ticket max for an event | WIP | PASS | — | — |
+| 205 | event.set_ticket_seat_availability_limit [easy] | Set total seat limit and per-ticket max for an event | Done | PASS | FAIL | 0.4 |
 | 206 | stock.create_internal_transfer_between_locations [medium] | Create an internal transfer between two locations, add a line, and validate | WIP | — | — | — |
 | 207 | stock.create_putaway_rule_for_product [hard] | Configure a putaway rule routing a product to a specific sub-location | WIP | — | — | — |
 | 208 | stock.count_inventory_apply_with_date [medium] | Make an inventory adjustment with a specific counted date | WIP | — | — | — |
