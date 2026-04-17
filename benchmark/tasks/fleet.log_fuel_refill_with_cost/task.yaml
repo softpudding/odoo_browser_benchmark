@@ -1,0 +1,20 @@
+task_id: fleet.log_fuel_refill_with_cost
+module: fleet
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/fleet
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: side_effect_trap
+  difficulty_level: medium
+  agent_interaction: "Open the services stat button on a specific vehicle, log a fuel refill service with exact type, vendor, cost, and date; do not modify the vehicle record itself"
+  checks_verify: "A fleet.vehicle.log.services record exists with the exact fields, AND the vehicle's own fields (driver, license plate, model) remain unchanged"
+  primary_track: true
+  tier: 2

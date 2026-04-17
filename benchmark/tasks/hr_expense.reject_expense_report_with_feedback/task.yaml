@@ -1,0 +1,20 @@
+task_id: hr_expense.reject_expense_report_with_feedback
+module: hr_expense
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/expenses
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: recovery_rollback
+  difficulty_level: medium
+  agent_interaction: "As approver, open a submitted expense report, refuse it with a written reason in the refuse wizard, so the report goes back to draft"
+  checks_verify: "The report is in 'refused' / 'draft' state and the refusal reason appears in the chatter"
+  primary_track: true
+  tier: 2
