@@ -157,6 +157,12 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 | 145 | hr_holidays.create_leave_type [medium] | Create a new Time Off Type with manager approval | WIP | — | — | — |
 | 146 | hr_holidays.cancel_approved_leave [medium] | Cancel an approved leave request via cancel wizard | WIP | — | — | — |
 | 147 | mrp.create_bom_confirm_mo [medium] | Create a Bill of Materials with 3 components, then create and confirm a Manufacturing Order for 10 units | WIP | — | — | — |
+| 148 | hr_expense.create_expense_report_submit [medium] | Create an expense line, attach it to a new expense report, and submit it for approval | WIP | — | — | — |
+| 149 | event.create_event_add_ticket [medium] | Create an event with one paid ticket, publish it, and keep the event open for registrations | WIP | — | — | — |
+| 150 | fleet.create_vehicle_log_odometer [medium] | Add a vehicle, record its odometer reading, and save the vehicle in service | WIP | — | — | — |
+| 151 | website_sale.publish_product_set_price [medium] | Publish a product to the website shop and set its sales price and description | WIP | — | — | — |
+| 152 | point_of_sale.open_session_sell_product_cash [medium] | Open a POS session, ring up one product, and complete a cash payment | WIP | — | — | — |
+| 153 | im_livechat.create_channel_add_canned_response [medium] | Create a live chat channel, add an operator and canned response, and publish the widget | WIP | — | — | — |
 
 ---
 
