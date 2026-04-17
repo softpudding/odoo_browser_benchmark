@@ -2087,12 +2087,13 @@ When adding a new task, append a form block (same format as above) with `Status:
 | Field | Value |
 |---|---|
 | **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Fleet |
 | **Workflow** | Create or update a vehicle contract, set renewal metadata, and schedule a renewal reminder activity. |
 | **Capability tested** | Fleet contract management with date fields and chatter activity scheduling on the same vehicle record. |
+| **Notes** | Oracle passes. Browser-use gave up immediately with zero steps in this environment, so the task needs cross-review before being marked Done. |
 
 ---
 
@@ -2115,12 +2116,13 @@ When adding a new task, append a form block (same format as above) with `Status:
 | Field | Value |
 |---|---|
 | **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Calendar |
 | **Workflow** | Create a private calendar meeting with attendees and an exact video-call link. |
 | **Capability tested** | Event creation using privacy controls, attendee selection, and conferencing metadata. |
+| **Notes** | Oracle passes. Browser-use gave up immediately with zero steps in this environment, so the task needs cross-review before being marked Done. |
 
 ---
 
@@ -2143,12 +2145,13 @@ When adding a new task, append a form block (same format as above) with `Status:
 | Field | Value |
 |---|---|
 | **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Expenses |
 | **Workflow** | Create a mileage-based expense entry, attach it to an expense report, and submit it for approval. |
 | **Capability tested** | Expense form creation with mileage-specific fields and report-submission workflow. |
+| **Notes** | Oracle passes. Browser-use gave up immediately with zero steps in this environment, so the task needs cross-review before being marked Done. |
 
 ---
 
