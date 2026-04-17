@@ -141,16 +141,16 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 | 129 | sale.cancel_confirmed_recreate_send_email [hard] | Cancel confirmed SO, create new quotation with exact lines, send by email | WIP | — | — | — |
 | 130 | calendar.create_recurring_edit_two_occurrences [hard] | Create recurring event, then edit two occurrences separately with "This Event" | WIP | — | — | — |
 | 131 | website.edit_page_update_text_set_properties [hard] | Edit webpage text in website editor, set page title via Properties dialog | WIP | — | — | — |
-| 132 | calendar.create_event_add_description_attendee [medium] | WIP | — | — | — |
-| 133 | contacts.create_linked_contact_set_title_phone [medium] | WIP | — | — | — |
-| 134 | crm.create_opportunity_set_close_date_priority [medium] | WIP | — | — | — |
-| 135 | hr.add_resume_line_update_mobile [medium] | WIP | — | — | — |
-| 136 | hr_recruitment.create_applicant_set_email_stage [medium] | WIP | — | — | — |
-| 137 | project.create_task_assign_tags_deadline [medium] | WIP | — | — | — |
-| 138 | project.rename_task_assign_tags_priority [medium] | WIP | — | — | — |
-| 139 | purchase.update_rfq_note_quantity_confirm [medium] | WIP | — | — | — |
-| 140 | sale.update_quote_payment_terms_validity_confirm [medium] | WIP | — | — | — |
-| 141 | stock.update_delivery_scheduled_date_validate [medium] | WIP | — | — | — |
+| 132 | calendar.create_event_add_description_attendee [medium] | Create one event with exact attendee, location, and description | WIP | PASS | FAIL | 0.0 |
+| 133 | contacts.create_linked_contact_set_title_phone [medium] | Add a linked contact under a company with title, phone, and email | WIP | PASS | PASS | 1.0 |
+| 134 | crm.create_opportunity_set_close_date_priority [medium] | Create an opportunity with revenue, closing date, and star priority | WIP | PASS | FAIL | 0.0 |
+| 135 | hr.add_resume_line_update_mobile [medium] | Update employee mobile and add one exact resume entry | WIP | PASS | FAIL | 0.0 |
+| 136 | hr_recruitment.create_applicant_set_email_stage [medium] | Create an applicant, set contact fields, and move to a target stage | WIP | PASS | FAIL | 0.0 |
+| 137 | project.create_task_assign_tags_deadline [medium] | Create a project task with assignee, tags, and deadline | WIP | PASS | FAIL | 0.0 |
+| 138 | project.rename_task_assign_tags_priority [medium] | Rename one task, add a tag, and change its priority | WIP | PASS | PASS | 1.0 |
+| 139 | purchase.update_rfq_note_quantity_confirm [medium] | Edit an RFQ note and quantity, then confirm it | WIP | PASS | PASS | 1.0 |
+| 140 | sale.update_quote_payment_terms_validity_confirm [medium] | Set payment terms, validity, and quantity before confirmation | WIP | PASS | FAIL | 0.0 |
+| 141 | stock.update_delivery_scheduled_date_validate [medium] | Change a delivery scheduled date, then validate it | WIP | PASS | PASS | 1.0 |
 
 ---
 
@@ -1568,6 +1568,8 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 
 Note: difficulty calibration used a shared-port browser-use validation on `benchmark_validate` / `127.0.0.1:8069`. Isolated-port runs were contaminated by the agent drifting to the shared `8069` server, so they were not used for the final medium-tier judgment.
 
+Note: all 10 tasks below have an oracle pass and a recorded browser-use run. They remain `WIP` only because the required cross-review has not been completed yet.
+
 ---
 
 ## calendar.create_event_add_description_attendee
@@ -1575,9 +1577,9 @@ Note: difficulty calibration used a shared-port browser-use validation on `bench
 | Field | Value |
 |---|---|
 | **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Calendar |
 | **Workflow** | Create one non-recurring calendar event with an exact attendee, location, and description, then save it at the requested date and time. |
 | **Capability tested** | Fresh event creation with date/time entry plus attendee lookup and rich-text field entry, distinct from recurrence-edit and existing-event update calendar tasks. |
@@ -1589,9 +1591,9 @@ Note: difficulty calibration used a shared-port browser-use validation on `bench
 | Field | Value |
 |---|---|
 | **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
 | **Odoo modules** | Contacts |
 | **Workflow** | Open a company contact, create one linked person contact beneath it, and set the linked contact's job position, phone, and email before saving. |
 | **Capability tested** | Parent-child contact creation on an existing company form, distinct from company-creation and tag-focused contact tasks. |
@@ -1603,9 +1605,9 @@ Note: difficulty calibration used a shared-port browser-use validation on `bench
 | Field | Value |
 |---|---|
 | **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | CRM |
 | **Workflow** | Create a new opportunity with an exact expected revenue, set its expected closing date, and apply a star priority before saving. |
 | **Capability tested** | Opportunity creation with mixed numeric, date-picker, and star-widget inputs, distinct from convert-lead and activity-scheduling CRM tasks. |
@@ -1617,9 +1619,9 @@ Note: difficulty calibration used a shared-port browser-use validation on `bench
 | Field | Value |
 |---|---|
 | **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Employees |
 | **Workflow** | Open an employee, change the mobile number, add one exact Resume entry on the Resume tab, and save. |
 | **Capability tested** | Cross-tab employee editing that combines a standard field edit with resume-widget creation, distinct from skill-entry and work-location employee tasks. |
@@ -1631,9 +1633,9 @@ Note: difficulty calibration used a shared-port browser-use validation on `bench
 | Field | Value |
 |---|---|
 | **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Recruitment |
 | **Workflow** | Create a new applicant for a named job opening, set the applicant email and phone, move the applicant to the requested stage, and save. |
 | **Capability tested** | New applicant creation followed by a stage transition on the same record, distinct from interview-scheduling and refusal-wizard recruitment tasks. |
@@ -1645,9 +1647,9 @@ Note: difficulty calibration used a shared-port browser-use validation on `bench
 | Field | Value |
 |---|---|
 | **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Project |
 | **Workflow** | Open a target project, create one task with an exact title, assign it, add specified tags, set a deadline, and save. |
 | **Capability tested** | New task creation with many2many tag entry and a deadline picker, distinct from subtask and archive-note project tasks. |
@@ -1659,9 +1661,9 @@ Note: difficulty calibration used a shared-port browser-use validation on `bench
 | Field | Value |
 |---|---|
 | **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
 | **Odoo modules** | Project |
 | **Workflow** | Open an existing task, rename it, assign one tag, change its priority, and save without changing its stage. |
 | **Capability tested** | Targeted task editing with the star-priority widget and tag autocomplete, distinct from task-creation and activity-scheduling project tasks. |
@@ -1673,9 +1675,9 @@ Note: difficulty calibration used a shared-port browser-use validation on `bench
 | Field | Value |
 |---|---|
 | **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
 | **Odoo modules** | Purchase |
 | **Workflow** | Find the correct RFQ, update the internal notes field, change one existing line quantity, and confirm the order. |
 | **Capability tested** | Same-record RFQ editing that mixes a multiline note field with inline order-line editing before confirmation, distinct from deadline-focused purchase tasks. |
@@ -1687,9 +1689,9 @@ Note: difficulty calibration used a shared-port browser-use validation on `bench
 | Field | Value |
 |---|---|
 | **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Sales |
 | **Workflow** | Open the right quotation, set payment terms and a validity date, adjust one existing line quantity, and confirm it. |
 | **Capability tested** | Quotation edit-and-confirm flow that combines many2one payment-term selection, date entry, and inline line editing, distinct from note-only and cancellation sales tasks. |
@@ -1701,9 +1703,9 @@ Note: difficulty calibration used a shared-port browser-use validation on `bench
 | Field | Value |
 |---|---|
 | **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
 | **Odoo modules** | Inventory / Stock |
 | **Workflow** | Open an existing delivery, set a requested scheduled date, then validate the transfer without changing quantities. |
 | **Capability tested** | Pick-and-validate stock workflow with a date edit on the transfer form, distinct from receipt validation, reorder-rule editing, and return/backorder stock tasks. |

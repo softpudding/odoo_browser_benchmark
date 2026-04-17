@@ -36,7 +36,7 @@ def _make_rfq(env, vendor, ref, dock_kit):
         "partner_id": vendor.id,
         "partner_ref": ref,
         "origin": ref,
-        "notes": "Keep original receiving instructions.",
+        "note": "Keep original receiving instructions.",
         "order_line": [(0, 0, {
             "product_id": dock_kit.id,
             "product_qty": 18,

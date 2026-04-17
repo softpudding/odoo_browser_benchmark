@@ -8,7 +8,7 @@ from benchmark.oracle_helpers import (
     login,
     navigate,
     run_oracle,
-    set_date,
+    save_form,
     set_o2m_field,
     _wait_no_loading,
 )
@@ -35,8 +35,30 @@ def oracle(page):
     click_list_row(page, "BENCH-DEL-DATE-01")
     page.wait_for_timeout(800)
     _wait_no_loading(page)
-    set_date(page, "scheduled_date", "05/27/2026")
+
+    sched_btn = page.locator(".o_field_widget[name='scheduled_date'] button").first
+    sched_btn.click()
+    page.wait_for_timeout(800)
+    picker = page.locator(".o_datetime_picker:visible").first
+    picker.locator(".o_next").first.click()
     page.wait_for_timeout(400)
+    day = picker.locator(
+        ".o_date_item_cell:not(.text-muted):has-text('27')"
+    ).first
+    day.click()
+    page.wait_for_timeout(400)
+    time_input = picker.locator("input").first
+    if time_input.count() > 0:
+        time_input.click(click_count=3)
+        time_input.fill("11:30:00am")
+        time_input.press("Tab")
+        page.wait_for_timeout(300)
+    page.keyboard.press("Escape")
+    page.wait_for_timeout(300)
+    save_form(page)
+    page.wait_for_timeout(800)
+    _wait_no_loading(page)
+
     rows = page.locator(".o_form_view .o_list_renderer .o_data_row")
     for i in range(rows.count()):
         row_text = rows.nth(i).inner_text()

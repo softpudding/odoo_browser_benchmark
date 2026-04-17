@@ -32,8 +32,15 @@ def oracle(page):
     if stars.count() >= 3:
         stars.nth(2).click()
         page.wait_for_timeout(300)
-    set_date(page, "date_deadline", "05/20/2026")
-    page.wait_for_timeout(400)
+
+    edit_btn = page.locator("button:has-text('Edit'):visible").first
+    if edit_btn.count() > 0:
+        edit_btn.click()
+        page.wait_for_timeout(1200)
+        _wait_for_ready(page)
+        set_date(page, "date_deadline", "05/20/2026")
+        page.wait_for_timeout(400)
+
     save_form(page)
     page.wait_for_timeout(500)
     _wait_no_loading(page)

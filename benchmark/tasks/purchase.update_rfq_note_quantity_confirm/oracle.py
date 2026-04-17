@@ -3,7 +3,6 @@
 from benchmark.oracle_helpers import (
     click_list_row,
     click_status_button,
-    fill_text_field,
     login,
     navigate,
     run_oracle,
@@ -19,8 +18,21 @@ def oracle(page):
     _wait_no_loading(page)
     click_list_row(page, "MED-RFQ-NOTE-01")
     page.wait_for_timeout(800)
-    fill_text_field(page, "notes", "Deliver dock seals in two labeled pallets.")
+
+    note_widget = page.locator(".o_field_widget[name='note']").first
+    editor = note_widget.locator(
+        "[contenteditable='true'], .note-editable, .odoo-editor-editable"
+    )
+    if editor.count() > 0:
+        editor.first.click()
+        page.wait_for_timeout(300)
+        editor.first.fill("Deliver dock seals in two labeled pallets.")
+    else:
+        note_widget.click()
+        page.wait_for_timeout(300)
+        page.keyboard.type("Deliver dock seals in two labeled pallets.")
     page.wait_for_timeout(400)
+
     set_o2m_field(page, 0, "product_qty", "24")
     page.wait_for_timeout(500)
     save_form(page)

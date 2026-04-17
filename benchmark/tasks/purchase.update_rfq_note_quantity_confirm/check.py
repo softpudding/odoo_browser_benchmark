@@ -1,5 +1,7 @@
 """Postcondition checks for purchase.update_rfq_note_quantity_confirm."""
 
+import re
+
 
 def check(env):
     failures = []
@@ -11,8 +13,9 @@ def check(env):
         return ["Target RFQ 'MED-RFQ-NOTE-01' not found"]
     if po.state != "purchase":
         failures.append(f"PO state is '{po.state}', expected 'purchase'")
-    if (po.notes or "").strip() != "Deliver dock seals in two labeled pallets.":
-        failures.append(f"Notes are '{po.notes}', expected exact delivery note")
+    note_text = re.sub(r"<[^>]+>", "", po.note or "").strip()
+    if note_text != "Deliver dock seals in two labeled pallets.":
+        failures.append(f"Notes are '{po.note}', expected exact delivery note")
     line = po.order_line.filtered(lambda l: l.product_id.name == "Dock Seal Kit")
     if not line:
         failures.append("Dock Seal Kit line not found")
