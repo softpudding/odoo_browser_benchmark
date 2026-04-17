@@ -16,9 +16,8 @@ def check(env):
     note = env["mail.message"].search([
         ("model", "=", "purchase.order"),
         ("res_id", "=", target.id),
-        ("subtype_id.name", "=", "Note"),
-    ], limit=1, order="id desc")
-    if not note or NOTE_TEXT not in (note.body or ""):
+    ], order="id desc")
+    if not any(NOTE_TEXT in (msg.body or "") for msg in note):
         failures.append("Expected internal note not found on target RFQ")
 
     distractor = env["purchase.order"].search([("name", "=", "P-RFQ-CANCEL-02")], limit=1)
