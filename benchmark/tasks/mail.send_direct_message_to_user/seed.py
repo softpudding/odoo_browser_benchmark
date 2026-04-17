@@ -37,3 +37,10 @@ def setup(env):
                 ("res_id", "=", ch.id),
             ]).unlink()
             ch.unlink()
+
+    # Pre-create the DM channel so the agent only needs to send a message,
+    # not navigate Discuss' hidden sidebar '+' button. This keeps the task
+    # focused on "send a message" which is what we validate.
+    env["discuss.channel"].with_user(admin)._get_or_create_chat(
+        partners_to=[user.partner_id.id],
+    )

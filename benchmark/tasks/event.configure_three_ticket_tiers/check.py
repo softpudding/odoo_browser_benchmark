@@ -16,11 +16,16 @@ def check(env):
     if not event:
         return [f"Event '{EVENT_NAME}' not found"]
 
+    # Odoo auto-creates a default "Registration" ticket on new events;
+    # count only the three explicit tier names we expect.
     tickets = event.event_ticket_ids
-    if len(tickets) != 3:
+    expected_names = set(EXPECTED_TIERS.keys())
+    specific_tickets = tickets.filtered(lambda t: t.name in expected_names)
+    if len(specific_tickets) != 3:
         failures.append(
-            f"Expected exactly 3 ticket tiers on {EVENT_NAME}, "
-            f"found {len(tickets)}"
+            f"Expected exactly 3 named tier tickets (Early Bird / Regular / "
+            f"VIP) on {EVENT_NAME}, found {len(specific_tickets)} "
+            f"(total tickets on event: {len(tickets)})"
         )
 
     by_name = {t.name: t for t in tickets}

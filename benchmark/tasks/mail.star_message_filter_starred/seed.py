@@ -1,11 +1,12 @@
 """Seed for mail.star_message_filter_starred.
 
-Creates three inbox messages for the admin partner; the task is to star
-the specific one referencing Q2 cutoff.
+Creates three mail.message records directly, addressed to admin as
+needaction recipient so they appear in admin's Discuss Inbox. The task
+is to star the target one (containing the Q2 cutoff marker).
 """
 
-TARGET_SUBJECT = "Finance close blocker — action required for Q2 cutoff"
-DISTRACTOR_SUBJECTS = [
+TARGET_MARKER = "Finance close blocker — action required for Q2 cutoff"
+DISTRACTOR_MARKERS = [
     "Office WiFi upgrade – FYI",
     "Welcome lunch sign-up",
 ]
@@ -14,7 +15,6 @@ DISTRACTOR_SUBJECTS = [
 def setup(env):
     admin = env.ref("base.user_admin")
 
-    # Ensure a distinct author user exists (OdooBot or demo) to post from.
     author = env["res.users"].search([("login", "=", "marc.demo")], limit=1)
     if not author:
         author = env["res.users"].create({
@@ -24,24 +24,34 @@ def setup(env):
             "group_ids": [(6, 0, [env.ref("base.group_user").id])],
         })
 
-    # Remove prior instances of our test messages.
-    for subj in [TARGET_SUBJECT] + DISTRACTOR_SUBJECTS:
-        env["mail.message"].search([("subject", "=", subj)]).unlink()
+    # Remove prior test messages by body marker.
+    for marker in [TARGET_MARKER] + DISTRACTOR_MARKERS:
+        env["mail.message"].search([("body", "ilike", marker)]).unlink()
 
-    # Post messages from Marc Demo addressed to admin — creates
-    # needaction notifications that land in admin's Inbox.
-    for subj in DISTRACTOR_SUBJECTS + [TARGET_SUBJECT]:
-        admin.partner_id.with_user(author).message_post(
-            body=f"<p>{subj}</p>",
-            subject=subj,
-            message_type="comment",
-            subtype_xmlid="mail.mt_comment",
-            partner_ids=[admin.partner_id.id],
-        )
+    mt_comment = env.ref("mail.mt_comment")
+    for marker in DISTRACTOR_MARKERS + [TARGET_MARKER]:
+        msg = env["mail.message"].create({
+            "author_id": author.partner_id.id,
+            "body": f"<p><strong>{marker}</strong></p>",
+            "subject": marker,
+            "message_type": "comment",
+            "subtype_id": mt_comment.id,
+            "model": "res.partner",
+            "res_id": admin.partner_id.id,
+        })
+        # Create the needaction notification that puts this in admin's
+        # Inbox.
+        env["mail.notification"].create({
+            "mail_message_id": msg.id,
+            "res_partner_id": admin.partner_id.id,
+            "notification_type": "inbox",
+            "notification_status": "sent",
+            "is_read": False,
+        })
 
-    # Clear any prior starred flag on these messages for a clean start.
+    # Clear any prior starred flag on these messages.
     msgs = env["mail.message"].search([
-        ("subject", "in", [TARGET_SUBJECT] + DISTRACTOR_SUBJECTS),
+        ("body", "ilike", TARGET_MARKER),
     ])
     for m in msgs:
         if admin.partner_id in m.starred_partner_ids:

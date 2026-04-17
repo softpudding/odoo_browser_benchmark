@@ -54,18 +54,23 @@ def oracle(page):
         ".o_form_statusbar button:has-text('Approve'):visible"
     )
     approve_btn.first.click()
-    page.wait_for_timeout(1200)
+    page.wait_for_timeout(2000)
     _wait_no_loading(page)
 
-    # 3. Post to accounting.
-    post_btn = page.locator(
-        ".o_form_statusbar button[name='action_post']:visible, "
-        ".o_form_statusbar button[name='action_move_create']:visible, "
-        ".o_form_statusbar button:has-text('Post Journal Entries'):visible, "
-        ".o_form_statusbar button:has-text('Post'):visible"
-    )
-    post_btn.first.click()
+    # Reload the form to ensure the Post button appears (it is only
+    # shown once state transitions to 'approved').
+    page.reload()
+    _wait_no_loading(page)
     page.wait_for_timeout(1500)
+
+    # 3. Post Journal Entries.
+    post_btn = page.locator(
+        ".o_form_statusbar button[name='action_post'], "
+        "button[name='action_post']:visible"
+    ).first
+    post_btn.wait_for(state="visible", timeout=15000)
+    post_btn.click()
+    page.wait_for_timeout(2000)
     _wait_no_loading(page)
 
 

@@ -18,6 +18,14 @@ def setup(env):
         "date_end": "2026-08-14 17:00:00",
     }
     if not event:
-        env["event.event"].create(values)
+        event = env["event.event"].create(values)
     else:
         event.write(values)
+
+    # Odoo auto-creates a default registration ticket when a new event
+    # is saved (via compute/default). Flush first, then remove ALL
+    # tickets on this event — searching directly in case the o2m cache
+    # is stale.
+    env.flush_all()
+    env["event.event.ticket"].search([("event_id", "=", event.id)]).unlink()
+    env.flush_all()

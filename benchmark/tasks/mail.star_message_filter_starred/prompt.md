@@ -1,29 +1,26 @@
-# Star a specific Discuss message
+# Star a specific message in a contact's chatter
 
-You are in the Odoo 19 **Discuss** app logged in as **Administrator**.
+You are in Odoo 19 logged in as **Administrator**.
 
-The admin inbox contains several messages. You need to mark one specific
-message as **starred** (a.k.a. bookmarked / important) so it shows up in
-the **Starred** view.
+A colleague posted several messages on your own Administrator contact
+record. One specific message is a blocker that you need to mark as
+important (starred/bookmarked) so it shows up in your Starred filter.
 
 ## What to do
 
-1. Open the **Discuss** app — the **Inbox** is shown by default in the
-   left sidebar. (If another folder is selected, click **Inbox**.)
-2. Find the message with the subject / body snippet:
+1. Open the **Contacts** app.
+2. Search for and open the **Administrator** contact record.
+3. In that contact's **chatter** (the right-side / bottom pane with
+   the message thread), find the message whose body contains:
 
    **"Finance close blocker — action required for Q2 cutoff"**
 
-3. Hover that message to reveal the message hover-toolbar, and click the
-   **star / bookmark** icon (the star/bookmark action that marks the
-   message as starred). The star icon should fill in / turn yellow
-   indicating it is starred.
-4. Verify by clicking **Starred** in the left sidebar — the message
-   should appear there.
+4. Hover that message to reveal its action toolbar and click the
+   **star / bookmark / Mark as Todo** icon so the message is marked
+   as starred for you.
 
 ## Rules
 
 - Star exactly **one** message — the Finance close blocker message.
 - Do **not** star any other messages.
 - Do **not** delete, reply to, or edit the message.
-- Do **not** mark any other messages as to-do or done.
