@@ -49,7 +49,7 @@ table, updated with live counts:
 These modules represent major Odoo functionality with no benchmark tasks at all.
 They are grouped by installation readiness:
 
-#### Ready to use (already installed or pulled in transitively)
+#### Ready to use (already installed in base snapshot)
 
 No changes to `base_modules.txt` needed. Just write tasks.
 
@@ -58,31 +58,28 @@ No changes to `base_modules.txt` needed. Just write tasks.
 | `hr_holidays` | Time Off | Core HR workflow, approval chains | Request leave, approve/refuse, allocate days |
 | `hr_expense` | Expenses | Receipt upload, approval, payment | Create expense report, attach receipt, submit for approval |
 | `mail` | Discuss | Internal messaging, channels | Create channel, send message, pin conversation |
-
-#### Needs one module install + snapshot rebuild
-
-Add the module to `benchmark/base_modules.txt` and run:
-```bash
-uv run benchmark-eval bootstrap-base --rebuild
-```
-
-| Module to add | Odoo app | Why it matters | Example workflows |
-|---------------|----------|---------------|-------------------|
 | `mrp` | Manufacturing | Core ERP pillar, unique BOM/MO UI | Create BOM, confirm manufacturing order, record production |
 | `website_sale` | E-Commerce | Public storefront, cart/checkout | Add product to shop, configure variants, process order |
 | `point_of_sale` | POS | Full-screen kiosk UI, completely different paradigm | Open session, ring up sale, process payment, close session |
-| `appointment` | Appointments | Calendar booking, portal scheduling | Create appointment type, book slot, manage availability |
-| `marketing_automation` | Marketing Automation | Campaign builder, email templates | Create campaign, add activity, set triggers |
 | `im_livechat` | Live Chat | Real-time chat widget, WebSocket-based | Create channel, set canned responses, handle chat session |
 | `fleet` | Fleet | Vehicle management | Add vehicle, log odometer, manage contracts |
 | `event` | Events | Event management, registration | Create event, manage tickets, track registrations |
-| `helpdesk` | Helpdesk | Support tickets, SLAs | Create ticket, assign, escalate, close with rating |
 
-#### Caution — may need infra adaptation
+#### Enterprise-only (not available in Community Edition)
+
+These modules cannot be installed — skip them for benchmark tasks.
+
+| Module | Odoo app |
+|--------|----------|
+| `appointment` | Appointments |
+| `marketing_automation` | Marketing Automation |
+| `helpdesk` | Helpdesk |
+
+#### Caution — installed but may need infra adaptation
 
 | Module | Issue | Recommendation |
 |--------|-------|----------------|
-| `point_of_sale` | Full-screen kiosk UI is not standard Odoo backend; browser agent may need different navigation patterns | Spike first: install, try one manual task, see if eval harness captures traces correctly |
+| `point_of_sale` | Full-screen kiosk UI is not standard Odoo backend; browser agent may need different navigation patterns | Spike first: try one manual task, see if eval harness captures traces correctly |
 | `im_livechat` | Real-time WebSocket chat may not play well with trace-based evaluation | Spike first: check if `benchmark_trace` captures chat actions |
 
 ---
@@ -166,7 +163,7 @@ If the user just wants to start filling gaps immediately, here are pre-designed
 tasks for the highest-priority missing modules. Each is ready to hand to
 `/create-benchmark-task`:
 
-### Manufacturing (`mrp`) — needs install
+### Manufacturing (`mrp`) — ready to use
 
 ```
 /create-benchmark-task mrp.create_bom_confirm_mo medium
@@ -180,7 +177,7 @@ confirm a Manufacturing Order for 10 units.
 Open a confirmed MO, record production quantities on each component, and mark
 the MO as done.
 
-### E-Commerce (`website_sale`) — needs install
+### E-Commerce (`website_sale`) — ready to use
 
 ```
 /create-benchmark-task website_sale.publish_product_set_price medium
@@ -188,7 +185,7 @@ the MO as done.
 Open a product in the website shop editor, set its published price and
 description, and toggle it to Published.
 
-### Time Off (`hr_holidays`) — already available
+### Time Off (`hr_holidays`) — ready to use
 
 ```
 /create-benchmark-task hr_holidays.request_leave_approve medium
@@ -200,7 +197,7 @@ As employee, request 3 days of Annual Leave. Switch to manager view and approve.
 ```
 Allocate 15 days of Sick Leave to an employee.
 
-### Expenses (`hr_expense`) — already available
+### Expenses (`hr_expense`) — ready to use
 
 ```
 /create-benchmark-task hr_expense.create_expense_report_submit medium
