@@ -210,7 +210,7 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 | 198 | mail.create_group_channel_upload_attachment [medium] | Create a private channel, invite a member, and upload a file attachment | WIP | — | — | — |
 | 199 | im_livechat.add_canned_response_send_in_chat [medium] | Create a canned response shortcut and send it in an operator chat | WIP | — | — | — |
 | 200 | fleet.log_service_cost_record [easy] | Add a service cost record (oil change) to an existing vehicle | Done | PASS (32.1s) | FAIL (142.4s) | 0.00 |
-| 201 | fleet.assign_vehicle_tags_category [easy] | Add two tags and set a category on a vehicle | WIP | — | — | — |
+| 201 | fleet.assign_vehicle_tags_category [easy] | Add two tags and set a category on a vehicle | Done | PASS | PASS | 1.0 |
 | 202 | fleet.transfer_vehicle_new_driver [medium] | Change a vehicle's driver and set the new assignment date | WIP | — | — | — |
 | 203 | event.add_event_questions_to_registration [medium] | Add two custom questions to an existing event registration form | WIP | — | — | — |
 | 204 | event.create_event_tracks_session_schedule [hard] | Add two conference tracks with times to a published event | WIP | — | — | — |
