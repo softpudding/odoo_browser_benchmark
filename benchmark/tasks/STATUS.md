@@ -141,16 +141,16 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 | 129 | sale.cancel_confirmed_recreate_send_email [hard] | Cancel confirmed SO, create new quotation with exact lines, send by email | WIP | — | — | — |
 | 130 | calendar.create_recurring_edit_two_occurrences [hard] | Create recurring event, then edit two occurrences separately with "This Event" | WIP | — | — | — |
 | 131 | website.edit_page_update_text_set_properties [hard] | Edit webpage text in website editor, set page title via Properties dialog | WIP | — | — | — |
-| 132 | calendar.create_event_add_description_attendee [medium] | Create one event with exact attendee, location, and description | WIP | PASS | FAIL | 0.0 |
-| 133 | contacts.create_linked_contact_set_title_phone [medium] | Add a linked contact under a company with title, phone, and email | WIP | PASS | PASS | 1.0 |
-| 134 | crm.create_opportunity_set_close_date_priority [medium] | Create an opportunity with revenue, closing date, and star priority | WIP | PASS | FAIL | 0.0 |
-| 135 | hr.add_resume_line_update_mobile [medium] | Update employee mobile and add one exact resume entry | WIP | PASS | FAIL | 0.0 |
-| 136 | hr_recruitment.create_applicant_set_email_stage [medium] | Create an applicant, set contact fields, and move to a target stage | WIP | PASS | FAIL | 0.0 |
-| 137 | project.create_task_assign_tags_deadline [medium] | Create a project task with assignee, tags, and deadline | WIP | PASS | FAIL | 0.0 |
-| 138 | project.rename_task_assign_tags_priority [medium] | Rename one task, add a tag, and change its priority | WIP | PASS | PASS | 1.0 |
-| 139 | purchase.update_rfq_note_quantity_confirm [medium] | Edit an RFQ note and quantity, then confirm it | WIP | PASS | PASS | 1.0 |
-| 140 | sale.update_quote_payment_terms_validity_confirm [medium] | Set payment terms, validity, and quantity before confirmation | WIP | PASS | FAIL | 0.0 |
-| 141 | stock.update_delivery_scheduled_date_validate [medium] | Change a delivery scheduled date, then validate it | WIP | PASS | PASS | 1.0 |
+| 132 | calendar.create_event_add_description_attendee [medium] | Create one event with exact attendee, location, and description | Done | PASS | FAIL | 0.0 |
+| 133 | contacts.create_linked_contact_set_title_phone [medium] | Add a linked contact under a company with title, phone, and email | Done | PASS | PASS | 1.0 |
+| 134 | crm.create_opportunity_set_close_date_priority [medium] | Create an opportunity with revenue, closing date, and star priority | Done | PASS | FAIL | 0.0 |
+| 135 | hr.add_resume_line_update_mobile [medium] | Update employee mobile and add one exact resume entry | Done | PASS | FAIL | 0.0 |
+| 136 | hr_recruitment.create_applicant_set_email_stage [medium] | Create an applicant, set contact fields, and move to a target stage | Done | PASS | FAIL | 0.0 |
+| 137 | project.create_task_assign_tags_deadline [medium] | Create a project task with assignee, tags, and deadline | Done | PASS | FAIL | 0.0 |
+| 138 | project.rename_task_assign_tags_priority [medium] | Rename one task, add a tag, and change its priority | Done | PASS | PASS | 1.0 |
+| 139 | purchase.update_rfq_note_quantity_confirm [medium] | Edit an RFQ note and quantity, then confirm it | Done | PASS | PASS | 1.0 |
+| 140 | sale.update_quote_payment_terms_validity_confirm [medium] | Set payment terms, validity, and quantity before confirmation | Done | PASS | FAIL | 0.0 |
+| 141 | stock.update_delivery_scheduled_date_validate [medium] | Change a delivery scheduled date, then validate it | Done | PASS | PASS | 1.0 |
 
 ---
 
@@ -1568,15 +1568,11 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 
 Note: difficulty calibration used a shared-port browser-use validation on `benchmark_validate` / `127.0.0.1:8069`. Isolated-port runs were contaminated by the agent drifting to the shared `8069` server, so they were not used for the final medium-tier judgment.
 
-Note: all 10 tasks below have an oracle pass and a recorded browser-use run. They remain `WIP` only because the required cross-review has not been completed yet.
-
----
-
 ## calendar.create_event_add_description_attendee
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
+| **Status** | Done |
 | **Oracle** | PASS |
 | **Browser-Use** | FAIL |
 | **F1** | 0.0 |
@@ -1590,7 +1586,7 @@ Note: all 10 tasks below have an oracle pass and a recorded browser-use run. The
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
+| **Status** | Done |
 | **Oracle** | PASS |
 | **Browser-Use** | PASS |
 | **F1** | 1.0 |
@@ -1604,7 +1600,7 @@ Note: all 10 tasks below have an oracle pass and a recorded browser-use run. The
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
+| **Status** | Done |
 | **Oracle** | PASS |
 | **Browser-Use** | FAIL |
 | **F1** | 0.0 |
@@ -1618,7 +1614,7 @@ Note: all 10 tasks below have an oracle pass and a recorded browser-use run. The
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
+| **Status** | Done |
 | **Oracle** | PASS |
 | **Browser-Use** | FAIL |
 | **F1** | 0.0 |
@@ -1632,7 +1628,7 @@ Note: all 10 tasks below have an oracle pass and a recorded browser-use run. The
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
+| **Status** | Done |
 | **Oracle** | PASS |
 | **Browser-Use** | FAIL |
 | **F1** | 0.0 |
@@ -1646,7 +1642,7 @@ Note: all 10 tasks below have an oracle pass and a recorded browser-use run. The
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
+| **Status** | Done |
 | **Oracle** | PASS |
 | **Browser-Use** | FAIL |
 | **F1** | 0.0 |
@@ -1660,7 +1656,7 @@ Note: all 10 tasks below have an oracle pass and a recorded browser-use run. The
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
+| **Status** | Done |
 | **Oracle** | PASS |
 | **Browser-Use** | PASS |
 | **F1** | 1.0 |
@@ -1674,7 +1670,7 @@ Note: all 10 tasks below have an oracle pass and a recorded browser-use run. The
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
+| **Status** | Done |
 | **Oracle** | PASS |
 | **Browser-Use** | PASS |
 | **F1** | 1.0 |
@@ -1688,7 +1684,7 @@ Note: all 10 tasks below have an oracle pass and a recorded browser-use run. The
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
+| **Status** | Done |
 | **Oracle** | PASS |
 | **Browser-Use** | FAIL |
 | **F1** | 0.0 |
@@ -1702,7 +1698,7 @@ Note: all 10 tasks below have an oracle pass and a recorded browser-use run. The
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
+| **Status** | Done |
 | **Oracle** | PASS |
 | **Browser-Use** | PASS |
 | **F1** | 1.0 |
