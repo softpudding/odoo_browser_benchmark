@@ -107,8 +107,8 @@ def oracle(page):
     )
     page.wait_for_timeout(300)
 
-    # Deselect by clicking elsewhere in the iframe
-    iframe_locator.locator("#wrap").first.click(position={"x": 10, "y": 10})
+    # Deselect by pressing Escape or clicking outside the editable content
+    page.keyboard.press("Escape")
     page.wait_for_timeout(500)
 
     # -----------------------------------------------------------------
