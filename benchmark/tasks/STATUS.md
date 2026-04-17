@@ -179,7 +179,7 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 | 167 | mail.create_channel_pin_message_invite_member [medium] | Create a private channel, invite a member, post a message, and pin the conversation | Done | PASS | FAIL | 0.0 |
 | 168 | mrp.produce_and_close_mo [easy] | Open a confirmed MO, click Produce All to complete production | Done | PASS | PASS/PASS | 1.0 |
 | 169 | mrp.produce_mo_partial_backorder [medium] | Produce partial qty on a confirmed MO and split the remainder into a backorder | Done | PASS | PASS/FAIL | 1.0/0.0 |
-| 170 | hr_holidays.request_half_day_afternoon [medium] | Request a half-day afternoon time-off via the conditional half-day toggle | WIP | — | — | — |
+| 170 | contacts.add_bank_account_iban [medium] | Open a partner, add a bank account with a specific IBAN via the Invoicing tab, and save | Done | PASS | PASS/PASS | 1.0 |
 | 171 | hr_expense.approve_submitted_report [medium] | Manager opens a pending submitted expense report among distractors and approves it | WIP | — | — | — |
 | 172 | stock.receive_lot_tracked_product [hard] | Receive a lot-tracked product and enter exact lot number and qty in the detail popup | WIP | — | — | — |
 | 173 | contacts.merge_duplicate_partners [hard] | Select two duplicate partners and merge them via the Merge Contacts wizard | WIP | — | — | — |
