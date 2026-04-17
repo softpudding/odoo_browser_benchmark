@@ -167,7 +167,7 @@ Commit and push immediately:
 ```bash
 git add benchmark/tasks/STATUS.md
 git commit -m "[WIP] benchmark: reserve <task_name> task"
-git push upstream 19.0
+git push upstream odoo_benchmark
 ```
 
 **Now enter the worktree** with `EnterWorktree`. All remaining steps happen
@@ -391,5 +391,5 @@ Then commit and push:
 ```bash
 git add benchmark/tasks/<task_name>/ benchmark/tasks/STATUS.md
 git commit -m "[ADD] benchmark: <task_name> task (<difficulty>)"
-git push upstream 19.0
+git push upstream odoo_benchmark
 ```
