@@ -34,7 +34,7 @@ def setup(env):
             "name": MODEL_NAME,
             "brand_id": brand.id,
             "vehicle_type": "car",
-            "default_fuel_type": "hybrid",
+            "default_fuel_type": "full_hybrid",
         })
 
     admin = env.ref("base.user_admin")
@@ -43,3 +43,21 @@ def setup(env):
         "license_plate": PLATE,
         "driver_id": admin.partner_id.id,
     })
+
+    # Pre-create the Refueling service type and the vendor so that the
+    # oracle (and browser-use) can select them without triggering the
+    # on-the-fly quick-create dialog.
+    st = env["fleet.service.type"].search([("name", "=", "Refueling")], limit=1)
+    if not st:
+        env["fleet.service.type"].create({
+            "name": "Refueling",
+            "category": "service",
+        })
+    vendor = env["res.partner"].search([
+        ("name", "=", "BP Express Holloway"),
+    ], limit=1)
+    if not vendor:
+        env["res.partner"].create({
+            "name": "BP Express Holloway",
+            "supplier_rank": 1,
+        })

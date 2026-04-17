@@ -1,43 +1,33 @@
 """Postcondition checks for hr_expense.submit_approve_post_accounting."""
 
 
-REPORT_NAME = "TRV-2026-04 – April client visit"
+EXPENSE_NAME = "TRV-2026-04 — April client visit"
 
 
 def check(env):
     failures = []
 
-    sheets = env["hr.expense.sheet"].search([("name", "=", REPORT_NAME)])
-    if not sheets:
-        return [f"No expense report found named '{REPORT_NAME}'"]
-    if len(sheets) > 1:
-        failures.append(f"Found {len(sheets)} reports, expected 1")
-    sheet = sheets[0]
+    expenses = env["hr.expense"].search([("name", "=", EXPENSE_NAME)])
+    if not expenses:
+        return [f"No expense found named '{EXPENSE_NAME}'"]
+    if len(expenses) > 1:
+        failures.append(f"Found {len(expenses)} expenses, expected 1")
+    exp = expenses[0]
 
-    # Accept either 'post' or 'done' depending on Odoo version.
-    if sheet.state not in ("post", "done"):
+    if exp.state not in ("posted", "in_payment", "paid"):
         failures.append(
-            f"Report state is '{sheet.state}', expected 'post' or 'done' "
-            f"(fully posted to accounting)"
+            f"Expense state is '{exp.state}', expected 'posted' (or later)"
         )
 
-    # Verify a journal entry (account.move) is linked.
-    moves = getattr(sheet, "account_move_ids", None)
-    if moves is None:
-        # Single-move field on some versions.
-        move = getattr(sheet, "account_move_id", None)
-        moves = move if move else env["account.move"]
-    if not moves:
+    move = getattr(exp, "account_move_id", None)
+    if not move:
         failures.append(
-            "No journal entry (account.move) is linked to the report — "
-            "the report must be posted to accounting"
+            "No account.move linked to the expense — the expense must be "
+            "posted to accounting"
         )
-    else:
-        any_posted = any(m.state == "posted" for m in moves)
-        if not any_posted:
-            failures.append(
-                "Linked journal entry exists but is not posted — expected at "
-                "least one posted account.move"
-            )
+    elif move.state != "posted":
+        failures.append(
+            f"Linked account.move state is '{move.state}', expected 'posted'"
+        )
 
     return failures

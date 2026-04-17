@@ -1,38 +1,30 @@
 """Seed for hr_expense.submit_approve_post_accounting.
 
-Category: closed_loop_cross_module (HARD).
-Creates a draft expense report 'TRV-2026-04' for employee Bob Benchmark.
-The task requires the agent to submit, approve, and post it to accounting.
+Odoo 19 uses hr.expense directly. Creates a draft expense; task is to
+submit -> approve -> post (state machine: draft -> submitted -> approved
+-> posted) and have an account.move linked.
 """
 
 EMPLOYEE_NAME = "Bob Benchmark"
 PRODUCT_NAME = "Benchmark Client Travel"
-EXPENSE_NAME = "April client visit — train + meals"
-REPORT_NAME = "TRV-2026-04 – April client visit"
+EXPENSE_NAME = "TRV-2026-04 — April client visit"
 
 
 def setup(env):
     admin = env.ref("base.user_admin")
 
-    # Cleanup prior runs.
-    prior_reports = env["hr.expense.sheet"].search([("name", "=", REPORT_NAME)])
-    for sheet in prior_reports:
+    # Cleanup prior runs (including any posted move linked).
+    prior = env["hr.expense"].search([("name", "=", EXPENSE_NAME)])
+    for e in prior:
         try:
-            sheet.account_move_ids.filtered(lambda m: m.state == "posted").button_draft()
+            move = getattr(e, "account_move_id", None)
+            if move and move.state == "posted":
+                move.button_draft()
+            if move:
+                move.unlink()
         except Exception:
             pass
-        try:
-            sheet.account_move_ids.unlink()
-        except Exception:
-            pass
-        try:
-            sheet.action_reset_expense_sheets()
-        except Exception:
-            pass
-    for sheet in prior_reports:
-        sheet.expense_line_ids.unlink()
-        sheet.unlink()
-    env["hr.expense"].search([("name", "=", EXPENSE_NAME)]).unlink()
+    prior.unlink()
 
     emp = env["hr.employee"].search([("name", "=", EMPLOYEE_NAME)], limit=1)
     if not emp:
@@ -62,8 +54,7 @@ def setup(env):
     else:
         product = products[0].product_variant_id
 
-    # Create the expense (draft).
-    expense = env["hr.expense"].create({
+    env["hr.expense"].create({
         "name": EXPENSE_NAME,
         "employee_id": emp.id,
         "product_id": product.id,
@@ -72,14 +63,6 @@ def setup(env):
         "date": "2026-04-08",
     })
 
-    # Create the expense report and attach the expense. Leave in draft.
-    env["hr.expense.sheet"].create({
-        "name": REPORT_NAME,
-        "employee_id": emp.id,
-        "expense_line_ids": [(6, 0, [expense.id])],
-    })
-
-    # Make sure admin has expense manager + accountant rights.
     for grp_ref in [
         "hr_expense.group_hr_expense_team_approver",
         "hr_expense.group_hr_expense_manager",

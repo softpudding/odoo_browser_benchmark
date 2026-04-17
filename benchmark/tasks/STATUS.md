@@ -253,19 +253,19 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 241 | event.create_event_configure_ticket [medium] | N/A | — | — | — |
 | 242 | helpdesk.create_ticket_assign_priority [medium] | N/A | — | — | — |
 | 243 | fleet.register_vehicle_log_odometer [easy] | N/A | — | — | — |
-| 244 | hr_holidays.allocate_sick_leave_to_employee [easy] | WIP | — | — | — |
+| 244 | hr_holidays.allocate_sick_leave_to_employee [easy] | Done | PASS | PASS | 1.0 |
 | 245 | hr_holidays.request_half_day_morning [easy] | WIP | — | — | — |
 | 246 | hr_holidays.cancel_approved_leave_and_reallocate [hard] | WIP | — | — | — |
-| 247 | hr_expense.reject_expense_report_with_feedback [medium] | WIP | — | — | — |
+| 247 | hr_expense.reject_expense_report_with_feedback [medium] | Done | PASS | PASS | 1.0 |
 | 248 | hr_expense.submit_approve_post_accounting [hard] | WIP | — | — | — |
 | 249 | mail.send_direct_message_to_user [easy] | WIP | — | — | — |
 | 250 | mail.star_message_filter_starred [easy] | WIP | — | — | — |
-| 251 | mail.mark_message_as_todo_and_resolve [medium] | WIP | — | — | — |
-| 252 | fleet.schedule_vehicle_service_activity [easy] | WIP | — | — | — |
+| 251 | mail.mark_message_as_todo_and_resolve [medium] | Done | PASS | FAIL | 0.67 |
+| 252 | fleet.schedule_vehicle_service_activity [easy] | Done | PASS | PASS | 1.0 |
 | 253 | fleet.log_fuel_refill_with_cost [medium] | WIP | — | — | — |
-| 254 | event.register_attendee_confirm_check_in [medium] | WIP | — | — | — |
+| 254 | event.register_attendee_confirm_check_in [medium] | Done | PASS | PASS | 1.0 |
 | 255 | event.configure_three_ticket_tiers [medium] | WIP | — | — | — |
-| 256 | mrp.unbuild_finished_goods_to_recover_components [medium] | WIP | — | — | — |
+| 256 | mrp.unbuild_finished_goods_to_recover_components [medium] | Done | PASS | PASS | 1.0 |
 | 257 | mrp.surgical_bom_component_qty_edit [medium] | WIP | — | — | — |
 | 258 | stock.internal_transfer_between_locations [medium] | WIP | — | — | — |
 | 259 | calendar.create_private_meeting_with_video_link [medium] | Create a private meeting with attendees and an exact video call link | Done | PASS | FAIL | 0.0 |

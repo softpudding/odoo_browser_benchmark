@@ -1,39 +1,18 @@
 """Seed for hr_expense.reject_expense_report_with_feedback.
 
-Category: recovery_rollback (MEDIUM).
-
-Creates an expense report 'SUMMIT-2026' in 'submit' state for employee
-'Alice Benchmark', with one hotel expense line. The task is to refuse
-(reject) this report with a written reason.
+Odoo 19 uses hr.expense directly (no hr.expense.sheet). Creates a
+submitted expense for Alice Benchmark that the approver must refuse.
 """
 
 EMPLOYEE_NAME = "Alice Benchmark"
 PRODUCT_NAME = "Benchmark Hotel Over-cap"
-EXPENSE_NAME = "Overpriced hotel night"
-REPORT_NAME = "SUMMIT-2026 – Summit trip reimbursement"
+EXPENSE_NAME = "SUMMIT-2026 — overpriced hotel night"
 
 
 def setup(env):
     admin = env.ref("base.user_admin")
 
     # Cleanup prior runs.
-    prior_reports = env["hr.expense.sheet"].search([
-        ("name", "=", REPORT_NAME),
-    ])
-    for sheet in prior_reports:
-        if sheet.state in ("approve",):
-            try:
-                sheet.action_refuse_expense_sheets()
-            except Exception:
-                pass
-        try:
-            sheet.action_reset_expense_sheets()
-        except Exception:
-            pass
-    for sheet in prior_reports:
-        sheet.expense_line_ids.unlink()
-        sheet.unlink()
-
     env["hr.expense"].search([("name", "=", EXPENSE_NAME)]).unlink()
 
     emp = env["hr.employee"].search([("name", "=", EMPLOYEE_NAME)], limit=1)
@@ -60,7 +39,6 @@ def setup(env):
     else:
         product = products[0].product_variant_id
 
-    # Create the expense line.
     expense = env["hr.expense"].create({
         "name": EXPENSE_NAME,
         "employee_id": emp.id,
@@ -70,24 +48,13 @@ def setup(env):
         "date": "2026-05-02",
     })
 
-    # Create the expense report (sheet) and attach the expense.
-    sheet = env["hr.expense.sheet"].create({
-        "name": REPORT_NAME,
-        "employee_id": emp.id,
-        "expense_line_ids": [(6, 0, [expense.id])],
-    })
-
-    # Submit the sheet so it lands in the approver's To Approve list.
+    # Submit so it lands in the approver queue.
     try:
-        sheet.action_submit_sheet()
+        expense.action_submit()
     except Exception:
-        # Fallback: some Odoo versions use a different method name.
-        try:
-            sheet.action_submit_expense_sheets()
-        except Exception:
-            pass
+        pass
 
-    # Make sure admin has expense manager rights to refuse.
+    # Admin needs expense approval rights.
     for grp_ref in [
         "hr_expense.group_hr_expense_team_approver",
         "hr_expense.group_hr_expense_manager",
