@@ -25,41 +25,31 @@ def oracle(page):
     _wait_for_ready(page)
     page.wait_for_timeout(500)
 
-    page.locator(".o-mail-Chatter, .o_chatter").first.scroll_into_view_if_needed()
+    chatter = page.locator("#chatter, .o-mail-Chatter").first
+    chatter.scroll_into_view_if_needed()
     page.wait_for_timeout(400)
-
-    page.locator(
+    log_note_btn = page.locator(
         "button.o-mail-Chatter-logNote, "
         "button:has-text('Log note'), "
         ".o-mail-Chatter button:has-text('Log note')"
-    ).first.click()
-    page.wait_for_timeout(700)
-
-    note_input = page.locator(
-        ".o-mail-Composer .o-mail-Composer-input, "
-        ".o-mail-composer [contenteditable='true'], "
-        ".o_mail_composer_input textarea, "
-        "div[contenteditable='true'].odoo-editor-editable"
-    ).last
-    note_input.click()
-    page.wait_for_timeout(200)
-    try:
-        note_input.fill(NOTE_TEXT)
-    except Exception:
-        page.keyboard.type(NOTE_TEXT)
+    ).first
+    log_note_btn.click()
+    page.wait_for_timeout(500)
+    composer = page.locator("textarea.o-mail-Composer-input:visible").first
+    composer.click()
     page.wait_for_timeout(300)
-
+    composer.type(NOTE_TEXT)
+    page.wait_for_timeout(400)
     page.locator(
-        "button.o-mail-Composer-send, "
-        "button:has-text('Add'), "
-        ".o-mail-Composer button[type='submit']"
+        "button.o-mail-Composer-send:visible, "
+        ".o-mail-Composer-send:visible"
     ).first.click()
-    page.wait_for_timeout(1200)
+    page.wait_for_timeout(5000)
     _wait_no_loading(page)
 
     cancel_btn = page.locator(
-        "button[name='button_cancel']:visible, "
-        ".o_statusbar_buttons button:visible:has-text('Cancel')"
+        ".o_statusbar_buttons button:visible:has-text('Cancel'), "
+        ".o_control_panel button:visible:has-text('Cancel')"
     ).first
     cancel_btn.click()
     page.wait_for_timeout(800)
@@ -67,11 +57,12 @@ def oracle(page):
     modal = page.locator(".modal:visible")
     if modal.count() > 0:
         modal.last.locator(
-            "button.btn-primary:visible, "
-            "button:has-text('Ok'):visible, "
-            "button:has-text('Confirm'):visible"
-        ).first.click()
-        page.wait_for_timeout(600)
+            "button:has-text('Ok'), "
+            "button:has-text('OK'), "
+            "button:has-text('Confirm'), "
+            "button:has-text('Cancel')"
+        ).last.click()
+        page.wait_for_timeout(800)
     _wait_no_loading(page)
 
 
