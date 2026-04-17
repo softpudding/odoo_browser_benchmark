@@ -264,7 +264,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 252 | fleet.schedule_vehicle_service_activity [easy] | Done | PASS | PASS | 1.0 |
 | 253 | fleet.log_fuel_refill_with_cost [medium] | Done | PASS | FAIL | 0.0 |
 | 254 | event.register_attendee_confirm_check_in [medium] | Done | PASS | PASS | 1.0 |
-| 255 | event.configure_three_ticket_tiers [medium] | WIP | PASS | — | — |
+| 255 | event.configure_three_ticket_tiers [medium] | Done | PASS | FAIL | 0.86 |
 | 256 | mrp.unbuild_finished_goods_to_recover_components [medium] | Done | PASS | PASS | 1.0 |
 | 257 | mrp.surgical_bom_component_qty_edit [medium] | Done | PASS | PASS | 1.0 |
 | 258 | stock.internal_transfer_between_locations [medium] | WIP | — | — | — |
