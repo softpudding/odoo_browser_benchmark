@@ -31,7 +31,9 @@ def check(env):
             f"Invoice date is {invoice.invoice_date}, expected 2026-06-10"
         )
 
-    lines = invoice.invoice_line_ids.filtered(lambda line: not line.display_type)
+    lines = invoice.invoice_line_ids.filtered(
+        lambda line: line.display_type in (False, "product")
+    )
     if len(lines) != 2:
         failures.append(f"Expected 2 invoice lines, found {len(lines)}")
     seen = {}

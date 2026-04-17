@@ -13,10 +13,14 @@ Find the lead titled **"Spark Innovations - Pager SaaS"**.
    - Under **Customer**, choose **"Link to an existing customer"** and set
      it to **Spark Innovations**.
 4. Click **Create Opportunity** to finish.
+5. Move the opportunity to the **Qualified** stage.
+6. In the chatter, schedule a **Call** activity with:
+   - **Summary:** `Confirm rollout timeline`
+   - **Due Date:** `05/15/2026`
 
 **Rules:**
 - Do NOT merge with any other lead.
 - Do NOT create a brand-new customer.
 - Do NOT touch any other lead or opportunity.
-- Do NOT change the lead's name, description, revenue, or stage before
+- Do NOT change the lead's name, description, revenue, or salesperson before
   converting.

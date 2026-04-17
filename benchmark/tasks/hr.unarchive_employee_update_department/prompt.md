@@ -9,7 +9,12 @@ them to find the target:
 3. Open the **gear/cog (Actions)** menu in the control panel and click
    **Unarchive**.
 4. After the form re-opens, set the **Department** field to **"Engineering"**.
-5. Click **Save**.
+5. Open the **Work** tab and set **Work Location** to **Home**.
+6. Click **Save**.
+7. In the chatter, schedule a new activity:
+   - **Activity Type**: Call
+   - **Due Date**: **05/21/2026**
+   - **Summary**: `Complete reactivation checklist`
 
 **Rules:**
 - Do NOT create a new employee — unarchive the existing one.

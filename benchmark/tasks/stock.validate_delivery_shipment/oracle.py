@@ -1,7 +1,7 @@
 """Oracle for stock.validate_delivery_shipment.
 
-Go to Inventory, open delivery BENCH-DEL-01, set done quantities on
-its two move lines (20 and 8), and click Validate.
+Go to Inventory, open delivery BENCH-DEL-01, set partial done quantities on
+its two move lines (12 and 5), click Validate, then choose No Backorder.
 """
 
 from benchmark.oracle_helpers import (
@@ -52,10 +52,10 @@ def oracle(page):
     for i in range(rows.count()):
         row_text = rows.nth(i).inner_text()
         if "Steel Bracket" in row_text:
-            set_o2m_field(page, i, "quantity", "20")
+            set_o2m_field(page, i, "quantity", "12")
             page.wait_for_timeout(300)
         elif "Copper Wire" in row_text:
-            set_o2m_field(page, i, "quantity", "8")
+            set_o2m_field(page, i, "quantity", "5")
             page.wait_for_timeout(300)
     page.wait_for_timeout(500)
 
@@ -64,7 +64,7 @@ def oracle(page):
     page.wait_for_timeout(1500)
     _wait_no_loading(page)
 
-    # If a backorder/confirmation dialog appears, dismiss it
+    # Backorder dialog should appear: explicitly choose No Backorder
     modal = page.locator(".modal:visible")
     if modal.count() > 0:
         no_bo = modal.last.locator("button:has-text('No Backorder')")

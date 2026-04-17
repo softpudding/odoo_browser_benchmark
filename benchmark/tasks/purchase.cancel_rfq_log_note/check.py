@@ -17,6 +17,7 @@ def check(env):
         ("model", "=", "purchase.order"),
         ("res_id", "=", target.id),
         ("subtype_id.name", "=", "Note"),
+        ("body", "ilike", NOTE_TEXT),
     ], limit=1, order="id desc")
     if not note or NOTE_TEXT not in (note.body or ""):
         failures.append("Expected internal note not found on target RFQ")

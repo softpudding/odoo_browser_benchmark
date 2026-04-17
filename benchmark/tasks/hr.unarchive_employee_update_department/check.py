@@ -3,9 +3,13 @@
 Validates:
 1. Employee "Avery Collins" is now active (active=True).
 2. Their department is set to "Engineering".
-3. Their name/email are unchanged from the seed.
-4. Distractor employee "Priya Patel" is untouched.
+3. Their work location is set to "Home".
+4. They have one exact Call activity scheduled.
+5. Their name/email are unchanged from the seed.
+6. Distractor employee "Priya Patel" is untouched.
 """
+
+from datetime import date
 
 
 def check(env):
@@ -25,6 +29,32 @@ def check(env):
         failures.append(
             f"Department is '{dept_name}', expected 'Engineering'"
         )
+
+    if not target.work_location_id or target.work_location_id.name != "Home":
+        loc_name = target.work_location_id.name if target.work_location_id else None
+        failures.append(
+            f"Work Location is '{loc_name}', expected 'Home'"
+        )
+
+    activities = env["mail.activity"].search([
+        ("res_model", "=", "hr.employee"),
+        ("res_id", "=", target.id),
+        ("summary", "=", "Complete reactivation checklist"),
+    ])
+    if len(activities) != 1:
+        failures.append(
+            f"Expected exactly 1 matching activity, found {len(activities)}"
+        )
+    else:
+        activity = activities[0]
+        if activity.activity_type_id.name != "Call":
+            failures.append(
+                f"Activity type is '{activity.activity_type_id.name}', expected 'Call'"
+            )
+        if activity.date_deadline != date(2026, 5, 21):
+            failures.append(
+                f"Activity due date is {activity.date_deadline}, expected 2026-05-21"
+            )
 
     if target.work_email != "avery.collins@example.com":
         failures.append(

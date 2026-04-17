@@ -11,6 +11,7 @@ from benchmark.oracle_helpers import (
     login,
     navigate,
     run_oracle,
+    set_date,
     set_many2one,
     _wait_no_loading,
     _wait_for_ready,
@@ -49,6 +50,9 @@ def oracle(page):
 
     # Set Vendor Reference (partner_ref) - present on the header
     fill_field(page, "partner_ref", "PH-REISSUE-77")
+    page.wait_for_timeout(500)
+
+    set_date(page, "date_order", "05/28/2026")
     page.wait_for_timeout(500)
 
     # Confirm the duplicate

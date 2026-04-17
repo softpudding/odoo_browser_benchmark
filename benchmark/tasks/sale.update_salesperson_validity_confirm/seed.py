@@ -45,6 +45,11 @@ def _ensure_product(env, name, price):
 def _ensure_salesperson(env):
     user = env["res.users"].search([("login", "=", "marc.demo")], limit=1)
     if user:
+        internal = env.ref("base.group_user", raise_if_not_found=False)
+        sales = env.ref("sales_team.group_sale_salesman", raise_if_not_found=False)
+        groups = [g.id for g in (internal, sales) if g]
+        if groups:
+            user.write({"group_ids": [(4, gid) for gid in groups]})
         return user
 
     partner = env["res.partner"].search([("name", "=", "Marc Demo")], limit=1)
@@ -53,11 +58,17 @@ def _ensure_salesperson(env):
             "name": "Marc Demo",
             "email": "marc.demo@example.com",
         })
-    return env["res.users"].create({
+    vals = {
         "name": "Marc Demo",
         "login": "marc.demo",
         "partner_id": partner.id,
-    })
+    }
+    internal = env.ref("base.group_user", raise_if_not_found=False)
+    sales = env.ref("sales_team.group_sale_salesman", raise_if_not_found=False)
+    groups = [g.id for g in (internal, sales) if g]
+    if groups:
+        vals["group_ids"] = [(6, 0, groups)]
+    return env["res.users"].create(vals)
 
 
 def _make_order(env, partner, user, name):

@@ -2,10 +2,11 @@
 
 MANAGER_NAME = "Nadia Reyes"
 EMPLOYEE_NAME = "Maya Ortiz"
+INITIAL_MANAGER = "Elliot Harper"
 
 
 def setup(env):
-    env["hr.employee"].search([("name", "in", [MANAGER_NAME, EMPLOYEE_NAME])]).unlink()
+    env["hr.employee"].search([("name", "in", [MANAGER_NAME, INITIAL_MANAGER, EMPLOYEE_NAME])]).unlink()
 
     dept = env["hr.department"].search([("name", "=", "Operations")], limit=1)
     if not dept:
@@ -27,7 +28,16 @@ def setup(env):
 
     location = env["hr.work.location"].search([("name", "=", "HQ Annex")], limit=1)
     if not location:
-        location = env["hr.work.location"].create({"name": "HQ Annex"})
+        address = env["res.partner"].search([("name", "=", "HQ Annex")], limit=1)
+        if not address:
+            address = env["res.partner"].create({
+                "name": "HQ Annex",
+                "is_company": True,
+            })
+        location = env["hr.work.location"].create({
+            "name": "HQ Annex",
+            "address_id": address.id,
+        })
 
     manager = env["hr.employee"].create({
         "name": MANAGER_NAME,
@@ -36,11 +46,17 @@ def setup(env):
         "work_phone": "+1 555 0410",
     })
 
+    initial_manager = env["hr.employee"].create({
+        "name": INITIAL_MANAGER,
+        "job_id": manager_job.id,
+        "department_id": dept.id,
+        "work_phone": "+1 555 0420",
+    })
+
     env["hr.employee"].create({
         "name": EMPLOYEE_NAME,
         "job_id": employee_job.id,
         "department_id": dept.id,
         "work_phone": "+1 555 0440",
-        "parent_id": manager.id,
-        "work_location_id": location.id,
+        "parent_id": initial_manager.id,
     })

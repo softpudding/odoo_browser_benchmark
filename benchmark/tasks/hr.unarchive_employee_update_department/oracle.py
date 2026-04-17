@@ -6,10 +6,12 @@ menu, set Department to Engineering, save.
 
 from benchmark.oracle_helpers import (
     click_list_row,
+    click_tab,
     login,
     navigate,
     run_oracle,
     save_form,
+    schedule_activity,
     set_many2one,
     _wait_no_loading,
     _wait_for_ready,
@@ -69,12 +71,25 @@ def oracle(page):
     page.wait_for_timeout(1000)
     _wait_no_loading(page)
 
+    click_tab(page, "Work")
+    page.wait_for_timeout(500)
+    set_many2one(page, "work_location_id", "Home")
+    page.wait_for_timeout(500)
+
     set_many2one(page, "department_id", "Engineering")
     page.wait_for_timeout(500)
 
     save_form(page)
     page.wait_for_timeout(1000)
     _wait_no_loading(page)
+
+    schedule_activity(
+        page,
+        activity_type="Call",
+        summary="Complete reactivation checklist",
+        due_date="05/21/2026",
+    )
+    page.wait_for_timeout(800)
 
 
 run_oracle(oracle)

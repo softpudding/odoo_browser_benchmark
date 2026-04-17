@@ -2,8 +2,9 @@
 
 Validates:
 1. Target delivery BENCH-DEL-01 is in state 'done'.
-2. The two move lines have quantity_done (or quantity) equal to 20 and 8.
-3. The distractor delivery BENCH-DEL-OTHER is still in 'assigned' state.
+2. The two move lines have quantity_done (or quantity) equal to 12 and 5.
+3. No backorder transfer was created from BENCH-DEL-01.
+4. The distractor delivery BENCH-DEL-OTHER is still in 'assigned' state.
 """
 
 
@@ -38,9 +39,9 @@ def check(env):
         delivered = getattr(steel, "quantity", None)
         if delivered is None:
             delivered = steel.quantity_done
-        if abs(delivered - 20) > 0.001:
+        if abs(delivered - 12) > 0.001:
             failures.append(
-                f"Steel Bracket 12\" delivered qty is {delivered}, expected 20"
+                f"Steel Bracket 12\" delivered qty is {delivered}, expected 12"
             )
     if not wire:
         failures.append("Copper Wire 100m move is missing on target delivery")
@@ -48,10 +49,19 @@ def check(env):
         delivered = getattr(wire, "quantity", None)
         if delivered is None:
             delivered = wire.quantity_done
-        if abs(delivered - 8) > 0.001:
+        if abs(delivered - 5) > 0.001:
             failures.append(
-                f"Copper Wire 100m delivered qty is {delivered}, expected 8"
+                f"Copper Wire 100m delivered qty is {delivered}, expected 5"
             )
+
+    backorders = env["stock.picking"].search([
+        ("backorder_id", "=", target.id),
+        ("state", "!=", "cancel"),
+    ])
+    if backorders:
+        failures.append(
+            f"Unexpected backorder(s) created: {backorders.mapped('name')}"
+        )
 
     distractor = env["stock.picking"].search(
         [("origin", "=", "BENCH-DEL-OTHER")], limit=1

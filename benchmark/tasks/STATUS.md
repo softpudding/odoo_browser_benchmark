@@ -97,25 +97,25 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 | 85 | hr.schedule_employee_activity [easy] | Done | PASS | FAIL | 0.0 |
 | 86 | project.set_task_deadline [easy] | Done | PASS | FAIL | 0.0 |
 | 87 | sale.duplicate_quotation_change_customer [medium] | WIP | — | — | — |
-| 88 | purchase.duplicate_rfq_change_vendor_confirm [medium] | WIP | — | — | — |
+| 88 | purchase.duplicate_rfq_change_vendor_confirm [medium] | Done | PASS | FAIL | 0.0 |
 | 89 | project.archive_task_with_log_note [medium] | WIP | — | — | — |
-| 90 | crm.convert_lead_to_opportunity_simple [medium] | WIP | — | — | — |
-| 91 | hr.unarchive_employee_update_department [medium] | WIP | — | — | — |
-| 92 | stock.validate_delivery_shipment [medium] | WIP | — | — | — |
-| 93 | account.create_bill_from_confirmed_po [medium] | WIP | — | — | — |
+| 90 | crm.convert_lead_to_opportunity_simple [medium] | Done | PASS | FAIL | 0.0 |
+| 91 | hr.unarchive_employee_update_department [medium] | Done | PASS | FAIL | 0.0 |
+| 92 | stock.validate_delivery_shipment [medium] | Done | PASS | FAIL | 0.0 |
+| 93 | account.create_bill_from_confirmed_po [medium] | Done | PASS | FAIL | 0.0 |
 | 94 | sale.cancel_quotation_log_reason [medium] | WIP | — | — | — |
 | 95 | hr_recruitment.refuse_applicant_with_reason [medium] | WIP | — | — | — |
-| 96 | crm.mark_opportunity_won_update_revenue [medium] | WIP | — | — | — |
-| 97 | account.create_customer_invoice_post [medium] | WIP | — | — | — |
-| 98 | account.partial_pay_vendor_bill_with_memo [medium] | WIP | — | — | — |
-| 99 | calendar.create_all_day_event_with_attendee [medium] | WIP | — | — | — |
-| 100 | contacts.create_company_add_supplier_tag [medium] | WIP | — | — | — |
-| 101 | crm.create_lead_priority_schedule_call [medium] | WIP | — | — | — |
-| 102 | hr.assign_manager_set_work_location [medium] | WIP | — | — | — |
-| 103 | hr_recruitment.schedule_interview_for_applicant [medium] | WIP | — | — | — |
-| 104 | project.duplicate_task_assign_deadline [medium] | WIP | — | — | — |
-| 105 | purchase.cancel_rfq_log_note [medium] | WIP | — | — | — |
-| 106 | sale.update_salesperson_validity_confirm [medium] | WIP | — | — | — |
+| 96 | crm.mark_opportunity_won_update_revenue [medium] | Done | PASS | FAIL | 0.0 |
+| 97 | account.create_customer_invoice_post [medium] | Done | PASS | FAIL | 0.0 |
+| 98 | account.partial_pay_vendor_bill_with_memo [medium] | Done | PASS | FAIL | 0.0 |
+| 99 | calendar.create_all_day_event_with_attendee [medium] | Done | PASS | FAIL | 0.0 |
+| 100 | contacts.create_company_add_supplier_tag [medium] | Done | PASS | FAIL | 0.0 |
+| 101 | crm.create_lead_priority_schedule_call [medium] | Removed | FAIL (spec) | — | — |
+| 102 | hr.assign_manager_set_work_location [medium] | Done | PASS | PASS | 1.0 |
+| 103 | hr_recruitment.schedule_interview_for_applicant [medium] | Done | PASS | FAIL | 0.0 |
+| 104 | project.duplicate_task_assign_deadline [medium] | Done | PASS | FAIL | 0.0 |
+| 105 | purchase.cancel_rfq_log_note [medium] | Done | PASS | FAIL | 0.0 |
+| 106 | sale.update_salesperson_validity_confirm [medium] | Done | PASS | FAIL | 0.0 |
 | 107 | crm.convert_lead_link_customer_schedule_call [medium] | Done | PASS | FAIL | 0.0 |
 | 108 | purchase_stock.confirm_rfq_receive_full [medium] | Done | PASS | FAIL | 0.0 |
 | 109 | sale.create_invoice_register_payment_memo [medium] | Done | PASS | PASS | 1.0 |
@@ -540,10 +540,10 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Inventory (stock) |
 | **Workflow** | Navigate to Operations > Physical Inventory. Set on-hand quantities for 3 specific products (Steel Bracket 12", Copper Wire 100m, Safety Harness XL) to exact target values while leaving 2 distractor products unchanged. Click Apply All. |
 | **Capability tested** | Inline tree editing — agent must click into quantity cells in a list view and type values; fails by entering wrong row or not interacting with inline-editable cells correctly. |
@@ -554,10 +554,10 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Employees (hr) |
 | **Workflow** | Create a new employee "Jordan Mercer" filling fields across three areas: main form (name, job position, work phone), Work Information tab (work location, working hours), and Private Information tab (certificate level, marital status). |
 | **Capability tested** | Create-from-scratch with multi-tab form — agent typically fills only the main form and saves without visiting Work Information or Private Information tabs. |
@@ -568,10 +568,10 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Purchase |
 | **Workflow** | Create a new RFQ for vendor Meridian Supply Co with exactly 3 product lines (Rubber Gasket 200×$1.50, Stainless Bolt M8 500×$0.75, Hex Nut M8 500×$0.40) and set Order Deadline to May 30, 2026 via the date picker. Confirm. |
 | **Capability tested** | Create-from-scratch with exact lines + date picker manipulation — agent leaves a phantom empty 4th line after entering the 3rd product, and/or sets wrong date via date picker widget. |
@@ -582,10 +582,10 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Project |
 | **Workflow** | In project "Omega Platform Launch", find task "Write API integration spec" in In Progress stage. Move it to Done stage. Then post an internal log note (not a regular message) with exact text via the chatter. |
 | **Capability tested** | Chatter "Log note" vs "Send message" distinction (unexploited pattern) — agent uses wrong chatter button or skips the note step after moving the stage. |
@@ -596,10 +596,10 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Contacts |
 | **Workflow** | Create company "Vantage Industrial Group" with full address details. Then create two individual contacts (Patricia Drum — Procurement Manager, Steven Okafor — Logistics Coordinator) both linked to the company with exact emails and mobile numbers. |
 | **Capability tested** | Multi-record create sequence with company linkage — agent correctly creates the company and first contact, but leaves missing or incorrect fields on the second contact, or fails to link one contact to the parent company. |
@@ -610,10 +610,10 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Sales — Quotations |
 | **Workflow** | Open draft quotation BENCH-VALID-01 for Lakeview Partners. Change the Expiration date to May 15, 2026. Click Save. |
 | **Capability tested** | Simple field edit + save — single date field change on a clearly identified draft quotation via date picker. |
@@ -624,10 +624,10 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Accounting — Invoices |
 | **Workflow** | Open posted invoice BENCH-PAY-01 for Lakeview Partners. Click Pay button. Accept all defaults in the Register Payment wizard. Click Create Payment. Verify invoice shows "Paid" status. |
 | **Capability tested** | Accept-defaults wizard — open payment registration dialog, click Create Payment without changing any fields, verify payment registered. |
@@ -638,10 +638,10 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | CRM — Pipeline |
 | **Workflow** | Find the "Acme Corporation" opportunity in the CRM pipeline. Move it from the "New" stage to the "Qualified" stage. |
 | **Capability tested** | Kanban stage change — direct drag or selector change on a single clearly identified opportunity. |
@@ -652,10 +652,10 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Purchase — Orders |
 | **Workflow** | Open confirmed PO BENCH-PO-RESET for Meridian Supply Co. Reset to Draft. Change Terms & Conditions to "Updated via browser". Click Confirm Order. |
 | **Capability tested** | Reset-to-draft → edit → re-confirm — linear 3-step sequence with single text field change. |
@@ -666,10 +666,10 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Project — Tasks |
 | **Workflow** | Open task "Write API integration spec" in project "Omega Platform Launch". Post a message in the chatter with exact text: "Backend team has reviewed the spec. Moving forward with implementation." |
 | **Capability tested** | Chatter message posting — type text in the chatter composer and click Send. Simple send message (not log note distinction). |
@@ -960,10 +960,11 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
+| **Status** | Removed |
+| **Oracle** | FAIL (spec) |
 | **Browser-Use** | — |
 | **F1** | — |
+| **Notes** | Removed because standard Odoo lead UI does not expose `expected_revenue` for records that remain `type = lead`, so the requested workflow is not browser-solvable without changing the task spec. |
 | **Odoo modules** | Website — Pages |
 | **Workflow** | Go to Website app, open the "About Us" page in the editor. Find the contact information section and change the phone number to "+1 555 987 6543". Save the page. |
 | **Capability tested** | Website inline editor — find and edit a specific text field within page content. Different from website.edit_careers_spotlight (card editing on careers page). |
@@ -974,10 +975,10 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
 | **Odoo modules** | Inventory — Products |
 | **Workflow** | Go to Inventory app. Open product "Steel Bracket 12" from the Products list. Change the Internal Reference field to "SB-12-BENCH". Click Save. |
 | **Capability tested** | Simple text field edit on product form. Different from stock.adjust_inventory_quantities (inline tree editing) and inventory.scrap_product (wizard). |
@@ -988,10 +989,10 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Employees (hr) |
 | **Workflow** | Go to Employees app. Find employee "Sofia Chen". Change the Department field to "Engineering". Click Save. |
 | **Capability tested** | Simple dropdown field edit on existing employee form. Different from hr.create_employee_complete_profile (multi-tab creation), hr.update_work_information (multi-tab editing), and hr.schedule_employee_activity (chatter dialog). |
@@ -1002,10 +1003,10 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Sales — Quotations |
 | **Workflow** | Go to Sales app. Open draft quotation BENCH-DISC-01 for customer "Azure Interior". On the "Desk Organizer" line, set the Discount field to 10%. Click Save. |
 | **Capability tested** | Inline order line editing with discount percentage field. Different from sale.change_validity_date (date field edit), sale.set_payment_terms_confirm (multi-field header edit), and sale.add_note_to_quotation (chatter interaction). |
@@ -1016,10 +1017,10 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Project — Tasks |
 | **Workflow** | Go to Project app. Open project "Omega Platform Launch". Find task "Design Landing Page Mockup". In the Subtasks tab, add a new subtask titled "Create Wireframes". Save. |
 | **Capability tested** | Subtask creation on existing task via subtasks tab. Different from project.post_chatter_message (chatter interaction), project.create_task_assign_stage (task creation), project.set_task_deadline (date edit), and project.complete_task_log_note (stage change + note). |
@@ -1142,10 +1143,10 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Sales — Quotations |
 | **Workflow** | Open draft quotation `BENCH-DUP-01`, duplicate it via the Action menu, change the customer on the copy to a different partner, set a new customer reference, and save the duplicate in draft. |
 | **Capability tested** | Action-menu Duplicate flow combined with swapping a many2one field on the copy while leaving the original untouched. |
@@ -1156,10 +1157,10 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Purchase — RFQs |
 | **Workflow** | Duplicate draft RFQ `BENCH-RFQ-DUP` (Meridian Supply Co), change vendor on the copy to Pinnacle Hardware, set vendor reference `PH-REISSUE-77`, then click Confirm Order. |
 | **Capability tested** | Duplicate-and-reassign on purchase module followed by confirmation, testing whether the agent edits the copy (not the original) and confirms only the copy. |
@@ -1184,10 +1185,10 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | CRM — Leads/Pipeline |
 | **Workflow** | Enable Leads setting, open lead `Spark Innovations - Pager SaaS`, click Convert to Opportunity, link to existing customer `Spark Innovations`, submit the wizard. |
 | **Capability tested** | Lead-to-opportunity conversion wizard with existing-partner selection, distinct from scheduling or tagging flows. |
@@ -1198,10 +1199,10 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | HR — Employees |
 | **Workflow** | Apply the Archived filter, open employee `Avery Collins`, use Action menu Unarchive, then set Department to Engineering and save. |
 | **Capability tested** | Filter toggle + Action-menu Unarchive + subsequent field edit, distinct from other hr tasks that only edit an active employee. |
@@ -1212,10 +1213,10 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Inventory — Transfers |
 | **Workflow** | Open outgoing delivery `BENCH-DEL-01`, set done quantities on each move line to the planned values, click Validate. |
 | **Capability tested** | Operations on outgoing delivery move lines with a distractor delivery that must stay in pending state. |
@@ -1226,10 +1227,10 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Purchase → Accounting |
 | **Workflow** | Open confirmed PO `BENCH-BILL-PO`, click the Create Bill stat button, set bill date and vendor reference on the draft bill, and Confirm (post) it. |
 | **Capability tested** | Cross-module stat-button navigation from Purchase to Accounting, followed by filling bill-specific fields and posting. |
@@ -1268,10 +1269,10 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | CRM — Pipeline |
 | **Workflow** | Open opportunity `Crestline Networks - Managed VPN` among similarly-named distractors, update expected revenue to 52000, then click the Won status-bar button. |
 | **Capability tested** | Field edit + state-bar Won action on a single opportunity among look-alike distractors, distinct from lost/schedule-call CRM tasks. |
@@ -1282,10 +1283,10 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Accounting — Customer Invoices |
 | **Workflow** | Create a new customer invoice for `Northwind Advisory`, set invoice date `2026-06-10`, set customer reference `NWA-AR-220`, add two exact product lines, then confirm it. |
 | **Capability tested** | Accounting create-from-scratch flow on the customer-invoice form with multiple exact fields, distinct from vendor-bill creation and from edit-an-existing-invoice tasks. |
@@ -1296,10 +1297,10 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Accounting — Vendor Bills |
 | **Workflow** | Open posted vendor bill `VB-PARTIAL-01`, register a payment, change the amount to a partial value, set memo `PARTIAL-JUN-600`, set payment date `2026-06-12`, and create the payment. |
 | **Capability tested** | Payment wizard interaction with a non-default amount plus memo/date edits, distinct from the existing full-payment customer-invoice task. |
@@ -1310,10 +1311,10 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Calendar |
 | **Workflow** | Create all-day event `Operations Offsite` on `2026-06-18`, set location and description, add `Marc Demo` as attendee, and save it as a one-time event. |
 | **Capability tested** | Calendar creation flow using the all-day toggle plus attendee selection, distinct from timed event creation and from editing existing events. |
@@ -1324,10 +1325,10 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Contacts |
 | **Workflow** | Create company `North Coast Fabrication`, fill address and communication fields, add the `Supplier` tag, and save. |
 | **Capability tested** | New-company creation with several address fields and a tag widget, distinct from editing an existing company and from creating a linked child contact. |
@@ -1338,10 +1339,11 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
+| **Status** | Removed |
+| **Oracle** | FAIL (spec) |
 | **Browser-Use** | — |
 | **F1** | — |
+| **Notes** | Removed because standard Odoo lead UI does not expose `expected_revenue` for records that remain `type = lead`, so the requested workflow is not browser-solvable without changing the task spec. |
 | **Odoo modules** | CRM — Leads |
 | **Workflow** | Create lead `Apex Warehouse Expansion`, set expected revenue and 2-star priority, then schedule a Call activity with exact summary and due date. |
 | **Capability tested** | Lead creation plus star-priority control and activity scheduling, distinct from opportunity editing and from lead-conversion tasks. |
@@ -1352,10 +1354,10 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
 | **Odoo modules** | Employees (hr) |
 | **Workflow** | Open employee `Maya Ortiz`, set manager `Nadia Reyes`, set work location `HQ Annex`, update work phone, and save. |
 | **Capability tested** | Multi-field employee edit centered on reporting-line and location fields, distinct from the repo's timezone/certificate and activity-scheduling HR tasks. |
@@ -1366,10 +1368,10 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Recruitment |
 | **Workflow** | Open applicant `Riley Mercer` under `Operations Analyst` and schedule a Call activity due `2026-06-17` with summary `Schedule first interview`. |
 | **Capability tested** | Applicant-form activity scheduling without creation or stage movement, distinct from applicant creation, refusal, and stage-advance flows. |
@@ -1380,10 +1382,10 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Project |
 | **Workflow** | Open task `Prepare webinar outline`, duplicate it from the Action menu, rename the copy to `Prepare webinar outline - APAC`, set a deadline, and move it to `In Progress`. |
 | **Capability tested** | Project-task duplication followed by edits on the copy only, distinct from fresh task creation, subtask creation, and archive/log-note tasks. |
@@ -1394,10 +1396,10 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Purchase — RFQs |
 | **Workflow** | Open draft RFQ `P-RFQ-CANCEL-01`, post an internal log note with exact text, then cancel the RFQ. |
 | **Capability tested** | RFQ cancellation paired with chatter log-note usage, distinct from purchase confirmation, duplicate-copy, and line-edit confirmation workflows. |
@@ -1408,10 +1410,10 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Sales — Quotations |
 | **Workflow** | Open quotation `S-QUOTE-VAL-01`, set salesperson `Marc Demo`, set expiration date `2026-06-25`, add customer reference `CGS-JUNE`, and confirm it. |
 | **Capability tested** | Header-field edit plus confirmation without touching line items, distinct from discount-line editing, cancel/log-note flows, and duplicate-quotation tasks. |
