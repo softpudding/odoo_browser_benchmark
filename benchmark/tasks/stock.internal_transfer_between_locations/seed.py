@@ -83,3 +83,33 @@ def setup(env):
         quant.action_apply_inventory()
     except Exception:
         pass
+
+    # Re-fetch the shelf location after creation.
+    shelf = env["stock.location"].search([
+        ("location_id", "=", stock_loc.id),
+        ("name", "=", SUBLOC_NAME),
+    ], limit=1)
+
+    # Pre-create the draft internal transfer so the agent only has to
+    # validate it (the "New transfer" flow with location pickers is too
+    # UI-brittle for a medium task).
+    if warehouse and shelf:
+        picking_type = warehouse.int_type_id
+        picking = env["stock.picking"].create({
+            "picking_type_id": picking_type.id,
+            "location_id": stock_loc.id,
+            "location_dest_id": shelf.id,
+            "origin": ORIGIN,
+            "move_ids": [(0, 0, {
+                "product_id": product.id,
+                "product_uom_qty": 5.0,
+                "product_uom": product.uom_id.id,
+                "location_id": stock_loc.id,
+                "location_dest_id": shelf.id,
+            })],
+        })
+        try:
+            picking.action_confirm()
+            picking.action_assign()
+        except Exception:
+            pass
