@@ -15,6 +15,18 @@ def oracle(page):
     ).decode()
     response = page.evaluate(
         """async ({receiptB64}) => {
+            const unwrapId = (value) => {
+                if (Array.isArray(value) && value.length === 1 && Number.isInteger(value[0])) {
+                    return value[0];
+                }
+                if (Array.isArray(value) && value.length === 1 && Array.isArray(value[0])) {
+                    return value[0][0];
+                }
+                if (Number.isInteger(value)) {
+                    return value;
+                }
+                return null;
+            };
             const callKw = async (payload) => {
                 const res = await fetch('/web/dataset/call_kw', {
                     method: 'POST',
@@ -50,21 +62,46 @@ def oracle(page):
                     date: '2026-04-08',
                     total_amount_currency: 486.75,
                     payment_mode: 'own_account',
-                    attachment_ids: [[0, 0, {
-                        name: 'hr_expense_submit_report_with_receipt_approve.svg',
-                        type: 'binary',
-                        datas: receiptB64,
-                        mimetype: 'image/svg+xml',
-                        res_model: 'hr.expense',
-                    }]],
                 }]],
                 kwargs: {},
             });
-            const expenseId = expenseRes.result;
+            const expenseId = unwrapId(expenseRes.result);
+            if (!expenseId) {
+                return `unexpected expense result ${JSON.stringify(expenseRes.result)}`;
+            }
+            const attachmentRes = await callKw({
+                model: 'ir.attachment',
+                method: 'create',
+                args: [[{
+                    name: 'hr_expense_submit_report_with_receipt_approve.svg',
+                    res_model: 'hr.expense',
+                    res_id: expenseId,
+                    type: 'binary',
+                    mimetype: 'image/svg+xml',
+                    datas: receiptB64,
+                }]],
+                kwargs: {},
+            });
+            const attachmentId = unwrapId(attachmentRes.result);
+            if (!attachmentId) {
+                return `unexpected attachment result ${JSON.stringify(attachmentRes.result)}`;
+            }
             await callKw({
                 model: 'hr.expense',
-                method: '_do_approve',
-                args: [[expenseId], false],
+                method: 'write',
+                args: [[expenseId], { attachment_ids: [[4, attachmentId]] }],
+                kwargs: {},
+            });
+            await callKw({
+                model: 'hr.expense',
+                method: 'action_submit',
+                args: [[expenseId]],
+                kwargs: {},
+            });
+            await callKw({
+                model: 'hr.expense',
+                method: 'action_approve',
+                args: [[expenseId]],
                 kwargs: {},
             });
             return 'ok';

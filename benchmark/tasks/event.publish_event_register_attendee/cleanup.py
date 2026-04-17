@@ -6,4 +6,7 @@ def cleanup(env):
     regs.unlink()
     event = env["event.event"].search([("name", "=", "Field Service Summit 2026")], limit=1)
     if event:
-        event.website_published = False
+        if "website_published" in env["event.event"]._fields:
+            event.website_published = False
+        if "is_published" in env["event.event"]._fields:
+            event.is_published = False

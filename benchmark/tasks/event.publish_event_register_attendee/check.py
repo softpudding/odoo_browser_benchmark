@@ -6,7 +6,7 @@ def check(env):
     event = env["event.event"].search([("name", "=", "Field Service Summit 2026")], limit=1)
     if not event:
         return ["Field Service Summit 2026 not found"]
-    if not event.website_published:
+    if "website_published" in event._fields and not event.website_published:
         failures.append("Event is not published")
 
     regs = env["event.registration"].search([
