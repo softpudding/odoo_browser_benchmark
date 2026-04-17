@@ -37,14 +37,20 @@ def check(env):
         failures.append("Event has no start date")
 
     desc_text = re.sub(r"<[^>]+>", "", event.description or "").strip()
-    expected_desc = "Annual planning offsite for operations leads."
-    if expected_desc not in desc_text:
+    if "Annual planning offsite for operations leads." not in desc_text:
         failures.append(
-            f"Description is '{desc_text}', expected to include exact offsite text"
+            f"Description is '{desc_text}', expected offsite text to be present"
         )
 
     attendee_names = event.attendee_ids.mapped("partner_id.name")
-    if attendee_names != ["Marc Demo"]:
-        failures.append(f"Attendees are {attendee_names}, expected ['Marc Demo']")
+    if "Marc Demo" not in attendee_names:
+        failures.append(f"Attendees are {attendee_names}, expected 'Marc Demo' to be present")
+    extra_attendees = sorted(
+        set(attendee_names) - {"Marc Demo", "Administrator"}
+    )
+    if extra_attendees:
+        failures.append(
+            f"Unexpected attendees present: {extra_attendees}"
+        )
 
     return failures

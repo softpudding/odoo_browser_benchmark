@@ -2,8 +2,6 @@
 
 from benchmark.oracle_helpers import (
     click_kanban_card,
-    click_list_row,
-    ensure_list_view,
     login,
     navigate,
     run_oracle,
@@ -13,20 +11,35 @@ from benchmark.oracle_helpers import (
 )
 
 
+def _click_exact_kanban_card(page, exact_text: str) -> None:
+    cards = page.locator(".o_kanban_view .o_kanban_record")
+    for idx in range(cards.count()):
+        card = cards.nth(idx)
+        lines = [
+            " ".join(line.split())
+            for line in card.inner_text().splitlines()
+            if line.strip()
+        ]
+        if exact_text in lines or " ".join(lines) == exact_text:
+            card.click()
+            page.wait_for_load_state("load")
+            _wait_for_ready(page)
+            return
+    raise RuntimeError(f"Could not find exact kanban card {exact_text!r}")
+
+
 def oracle(page):
     login(page)
     navigate(page, "/odoo/recruitment")
     _wait_no_loading(page)
 
     click_kanban_card(page, "Operations Analyst")
-    page.wait_for_timeout(1000)
     _wait_for_ready(page)
+    page.wait_for_timeout(500)
 
-    ensure_list_view(page)
-    page.wait_for_timeout(800)
-    click_list_row(page, "riley.mercer@example.com")
-    page.wait_for_timeout(1000)
+    _click_exact_kanban_card(page, "Riley Mercer")
     _wait_for_ready(page)
+    page.wait_for_timeout(500)
 
     schedule_activity(
         page,

@@ -43,13 +43,26 @@ def _ensure_product(env, name, price):
 
 
 def _ensure_salesperson(env):
+    internal_group = env.ref("base.group_user")
+    salesperson_group = env.ref("sales_team.group_sale_salesman")
+    company = env.company
     user = env["res.users"].search([("login", "=", "marc.demo")], limit=1)
     if user:
-        internal = env.ref("base.group_user", raise_if_not_found=False)
-        sales = env.ref("sales_team.group_sale_salesman", raise_if_not_found=False)
-        groups = [g.id for g in (internal, sales) if g]
-        if groups:
-            user.write({"group_ids": [(4, gid) for gid in groups]})
+        vals = {}
+        missing_groups = []
+        if internal_group not in user.group_ids:
+            missing_groups.append(internal_group.id)
+        if salesperson_group not in user.group_ids:
+            missing_groups.append(salesperson_group.id)
+        if missing_groups:
+            vals["group_ids"] = [(4, group_id) for group_id in missing_groups]
+        if company not in user.company_ids:
+            vals.setdefault("company_ids", [])
+            vals["company_ids"].append((4, company.id))
+        if user.company_id != company:
+            vals["company_id"] = company.id
+        if vals:
+            user.write(vals)
         return user
 
     partner = env["res.partner"].search([("name", "=", "Marc Demo")], limit=1)
@@ -58,17 +71,14 @@ def _ensure_salesperson(env):
             "name": "Marc Demo",
             "email": "marc.demo@example.com",
         })
-    vals = {
+    return env["res.users"].create({
         "name": "Marc Demo",
         "login": "marc.demo",
         "partner_id": partner.id,
-    }
-    internal = env.ref("base.group_user", raise_if_not_found=False)
-    sales = env.ref("sales_team.group_sale_salesman", raise_if_not_found=False)
-    groups = [g.id for g in (internal, sales) if g]
-    if groups:
-        vals["group_ids"] = [(6, 0, groups)]
-    return env["res.users"].create(vals)
+        "group_ids": [(6, 0, [internal_group.id, salesperson_group.id])],
+        "company_ids": [(6, 0, company.ids)],
+        "company_id": company.id,
+    })
 
 
 def _make_order(env, partner, user, name):
