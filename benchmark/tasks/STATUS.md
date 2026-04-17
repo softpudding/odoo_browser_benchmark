@@ -230,7 +230,7 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 | 218 | project.recurring_task_configure_frequency [medium] | Configure an existing task as recurring with weekly frequency | WIP | — | — | — |
 | 219 | contacts.add_bank_account_to_partner [easy] | Add an IBAN bank account to an existing partner via Accounting tab | WIP | — | — | — |
 | 220 | contacts.archive_partner_then_unarchive_filter [easy] | Archive a contact then unarchive it via the Archived search filter | WIP | — | — | — |
-| 221 | calendar.invite_external_attendee_by_email [easy] | Create a calendar event inviting an external email address not in partners | WIP | — | — | — |
+| 221 | calendar.invite_external_attendee_by_email [easy] | Create a calendar event inviting an external email address not in partners | Done | PASS | PASS | 1.0 |
 | 222 | survey.create_survey_one_page_publish_share [medium] | Create a 3-question survey, publish it, and copy the share link | WIP | — | — | — |
 | 223 | project_todo.create_note_add_tag_checklist [easy] | In the To-Do app, create a note with a tag and a checklist item | WIP | — | — | — |
 | 224 | hr_holidays.request_annual_leave [easy] | WIP | — | — | — |
