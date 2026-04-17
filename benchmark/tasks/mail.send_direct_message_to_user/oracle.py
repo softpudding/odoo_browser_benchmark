@@ -33,24 +33,28 @@ def oracle(page):
     page.wait_for_timeout(1000)
     _wait_no_loading(page)
 
-    # Post the message into the composer.
-    composer = page.locator(
-        ".o-mail-Composer-input:visible, "
-        "textarea[placeholder*='Message' i]:visible"
-    ).last
+    # Focus the composer and type the message. The composer is a
+    # textarea with class o-mail-Composer-input.
+    composer = page.locator("textarea.o-mail-Composer-input:visible").last
+    composer.wait_for(state="visible", timeout=10000)
     composer.click()
     composer.fill(MESSAGE)
-    page.wait_for_timeout(400)
+    page.wait_for_timeout(500)
+
+    # Send by clicking the send button, or Ctrl/Cmd+Enter as fallback.
     send_btn = page.locator(
         "button[aria-label='Send message']:visible, "
         "button.o-mail-Composer-send:visible, "
-        "button:has-text('Send'):visible"
-    ).last
-    try:
-        send_btn.click(timeout=3000)
-    except Exception:
+        "button[title='Send' i]:visible"
+    )
+    if send_btn.count() > 0:
+        try:
+            send_btn.first.click(timeout=3000)
+        except Exception:
+            composer.press("Enter")
+    else:
         composer.press("Enter")
-    page.wait_for_timeout(1500)
+    page.wait_for_timeout(2000)
     _wait_no_loading(page)
 
 

@@ -35,14 +35,27 @@ def oracle(page):
     search_input.fill("Administrator")
     page.keyboard.press("Enter")
     page.wait_for_timeout(1500)
+    page.keyboard.press("Escape")  # close any autocomplete overlay
+    page.wait_for_timeout(400)
     _wait_no_loading(page)
 
-    # Open the partner card.
-    card = page.locator(
-        ".o_kanban_record:has-text('Administrator'):visible, "
-        ".o_data_row:has-text('Administrator'):visible"
+    # Switch to list view for a stable click target.
+    list_btn = page.locator("button[data-tooltip='List']:visible")
+    if list_btn.count() > 0:
+        list_btn.first.click()
+        page.wait_for_timeout(500)
+
+    # Click the first data cell (name link) of the Administrator row.
+    link = page.locator(
+        ".o_data_row:has-text('Administrator') .o_data_cell"
     ).first
-    card.click()
+    link.wait_for(state="visible", timeout=15000)
+    try:
+        link.click(timeout=5000)
+    except Exception:
+        page.locator(
+            ".o_kanban_record:has-text('Administrator'):visible"
+        ).first.click(force=True)
     page.wait_for_timeout(1000)
     _wait_no_loading(page)
 
