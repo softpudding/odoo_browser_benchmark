@@ -131,16 +131,16 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 | 119 | crm.update_opportunity_revenue [easy] | WIP | — | — | — |
 | 120 | hr.update_employee_job_title [easy] | WIP | — | — | — |
 | 121 | purchase.update_rfq_source [easy] | WIP | — | — | — |
-| 122 | sale.create_quotation_down_payment_invoice [hard] | Down payment wizard with non-default % option, navigate to invoice, edit, confirm | WIP | — | — | — |
-| 123 | account.create_refund_modify_reissue [hard] | Credit note "Modify" wizard option: reverses + creates new draft, edit lines, post | WIP | — | — | — |
-| 124 | purchase.create_rfq_confirm_receive_backorder [hard] | Create PO with exact lines, confirm, partial receive, Create Backorder dialog | WIP | — | — | — |
-| 125 | stock.return_delivery_create_credit_note [hard] | Open delivery, return wizard, validate return, navigate to create credit note | WIP | — | — | — |
-| 126 | crm.create_opportunity_add_quotation_send [hard] | Create opportunity, add quotation with exact lines, send by email wizard | WIP | — | — | — |
-| 127 | sale_stock.confirm_order_deliver_partial_backorder [hard] | Confirm SO, navigate to delivery, partial validate with Create Backorder | WIP | — | — | — |
-| 128 | hr_recruitment.create_applicant_add_skills_refuse [hard] | Create applicant with skills, then refuse with specific reason wizard | WIP | — | — | — |
-| 129 | sale.cancel_confirmed_recreate_send_email [hard] | Cancel confirmed SO, create new quotation with exact lines, send by email | WIP | — | — | — |
-| 130 | calendar.create_recurring_edit_two_occurrences [hard] | Create recurring event, then edit two occurrences separately with "This Event" | WIP | — | — | — |
-| 131 | website.edit_page_update_text_set_properties [hard] | Edit webpage text in website editor, set page title via Properties dialog | WIP | — | — | — |
+| 122 | sale.create_quotation_down_payment_invoice [hard] | Down payment wizard with non-default % option, navigate to invoice, edit, confirm | Done | PASS | — | — |
+| 123 | account.create_refund_modify_reissue [hard] | Credit note "Reverse and Create Invoice" button, edit new draft lines, post | Done | PASS | — | — |
+| 124 | purchase.create_rfq_confirm_receive_backorder [hard] | Create PO with exact lines, confirm, partial receive, Create Backorder dialog | Done | PASS | — | — |
+| 125 | stock.return_delivery_create_credit_note [hard] | Open delivery, return wizard, validate return, navigate to create credit note | Done | PASS | — | — |
+| 126 | crm.create_opportunity_add_quotation_send [hard] | Create opportunity, add quotation with exact lines, send by email wizard | Done | PASS | — | — |
+| 127 | sale_stock.confirm_order_deliver_partial_backorder [hard] | Confirm SO, navigate to delivery, partial validate with Create Backorder | Done | PASS | — | — |
+| 128 | hr_recruitment.create_applicant_add_skills_refuse [hard] | Create applicant with skills, then refuse with specific reason wizard | Done | PASS | — | — |
+| 129 | sale.cancel_confirmed_recreate_send_email [hard] | Cancel confirmed SO, create new quotation with exact lines, send by email | Done | PASS | — | — |
+| 130 | calendar.create_recurring_edit_two_occurrences [hard] | Create recurring event, then edit two occurrences separately with "This Event" | Done | PASS | — | — |
+| 131 | website.edit_page_update_text_set_properties [hard] | Edit webpage text in website editor, set page title via Properties dialog | Done | PASS | — | — |
 
 ---
 
@@ -1557,6 +1557,146 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 | **Capability tested** | Fresh company creation with core-field entry, tag autocomplete, and explicit company/person mode handling, distinct from address-heavy company creation and linked-contact tasks. |
 
 Note: difficulty calibration used a shared-port browser-use validation on `benchmark_validate` / `127.0.0.1:8069`. Isolated-port runs were contaminated by the agent drifting to the shared `8069` server, so they were not used for the final medium-tier judgment.
+
+---
+
+## sale.create_quotation_down_payment_invoice
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Sales, Accounting |
+| **Workflow** | Create new quotation for Ridgeline Automation with 2 exact product lines ($1200 + $350), confirm, open Create Invoice wizard, select "Down payment (percentage)" (not default "Regular invoice"), set 30%, create draft, set invoice date, confirm. |
+| **Capability tested** | Non-default radio selection in wizard (advance_payment_method = 'percentage'), create-from-scratch with exact lines, cross-module Sales → Accounting navigation. |
+
+---
+
+## account.create_refund_modify_reissue
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Accounting |
+| **Workflow** | Open posted invoice HLE-MOD-01, click Credit Note, click "Reverse and Create Invoice" (NOT default "Reverse"), edit new draft's Technical Audit line qty from 8 to 5, set invoice date, confirm. |
+| **Capability tested** | Non-default button choice in credit note wizard (modify_moves vs refund_moves), post-wizard line editing, distractor invoice with similar name. |
+
+---
+
+## purchase.create_rfq_confirm_receive_backorder
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Purchase, Inventory |
+| **Workflow** | Create new RFQ with 3 exact product lines, confirm, navigate to receipt via smart button, set partial done quantities, validate with "Create Backorder" dialog. |
+| **Capability tested** | Create-from-scratch with 3 exact lines (phantom line issue), cross-module Purchase → Stock, backorder dialog with non-default choice, inline quantity editing. |
+
+---
+
+## stock.return_delivery_create_credit_note
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Inventory, Sales, Accounting |
+| **Workflow** | Open done delivery, create partial return via wizard (4 of 10 units, skip other product), validate return, navigate to SO's invoice, create credit note with reason and date, confirm. |
+| **Capability tested** | Return wizard quantity editing, cross-module Stock → Sales → Accounting round-trip, credit note creation from reversed invoice. |
+
+---
+
+## crm.create_opportunity_add_quotation_send
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | CRM, Sales |
+| **Workflow** | Create CRM opportunity with exact fields, move to Qualified, click New Quotation, add 2 exact product lines ($8500 + $12000), set ref and expiration, send by email with custom subject. |
+| **Capability tested** | Cross-module CRM → Sales, create-from-scratch quotation lines, email compose wizard, kanban quick-create then full form editing. |
+
+---
+
+## sale_stock.confirm_order_deliver_partial_backorder
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Sales, Inventory |
+| **Workflow** | Confirm draft SO with 3 lines, navigate to delivery via smart button, set partial done quantities (15/25, 40/40, 6/20), validate, choose "Create Backorder". |
+| **Capability tested** | Cross-module Sales → Stock via smart button, inline quantity editing on stock moves, backorder dialog with non-default choice. |
+
+---
+
+## hr_recruitment.create_applicant_add_skills_refuse
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Recruitment |
+| **Workflow** | Open job position, create new applicant with exact details, add skill via cascading selects (Languages/Python/Advanced), save, then refuse via wizard with specific reason and unchecked email. |
+| **Capability tested** | Skill widget cascading selects, refuse wizard with non-default many2one, combined create + wizard flow, distractor applicant with similar name. |
+
+---
+
+## sale.cancel_confirmed_recreate_send_email
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Sales |
+| **Workflow** | Cancel confirmed SO (confirmation dialog), create new quotation for different customer with modified quantities, set ref and expiration, send by email with custom subject. |
+| **Capability tested** | Cancel confirmation dialog, create-from-scratch with exact lines (phantom line issue), email compose wizard. |
+
+---
+
+## calendar.create_recurring_edit_two_occurrences
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Calendar |
+| **Workflow** | Create weekly recurring event (6 occurrences) with attendees, then navigate to 2 different future occurrences and edit each one's location, choosing "This Event" in the recurrence dialog each time. |
+| **Capability tested** | Full recurring event creation with date/time pickers, TWO separate recurrence "This Event" dialog interactions, calendar navigation to specific dates. |
+
+---
+
+## website.edit_page_update_text_set_properties
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Website |
+| **Workflow** | In website editor, edit heading and paragraph text within the iframe, then use Site > Properties dialog to change page title and URL slug, save. |
+| **Capability tested** | Website editor iframe interaction, text editing in complex DOM, Page Properties dialog, combined content + metadata editing. |
 
 ---
 
