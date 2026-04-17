@@ -183,6 +183,56 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 | 171 | hr_expense.approve_submitted_report [medium] | Manager opens a pending submitted expense report among distractors and approves it | WIP | — | — | — |
 | 172 | stock.receive_lot_tracked_product [hard] | Receive a lot-tracked product and enter exact lot number and qty in the detail popup | WIP | — | — | — |
 | 173 | contacts.merge_duplicate_partners [hard] | Select two duplicate partners and merge them via the Merge Contacts wizard | WIP | — | — | — |
+| 174 | mrp.create_routing_set_workcenter [medium] | Create a workcenter and link it as an operation on an existing BOM | WIP | — | — | — |
+| 175 | mrp.scrap_component_during_production [hard] | Scrap one consumed component from a running MO via the component action menu | WIP | — | — | — |
+| 176 | mrp.convert_bom_to_kit_type [easy] | Change an existing BOM's type from Manufacture This Product to Kit | WIP | — | — | — |
+| 177 | mrp.create_variant_specific_bom [hard] | Create a BOM that applies only to a single product variant via attribute filter | WIP | — | — | — |
+| 178 | mrp.configure_mo_operation_time_finish [medium] | Open a work order on an MO, set expected duration, and mark it finished | WIP | — | — | — |
+| 179 | point_of_sale.sell_two_products_apply_discount [medium] | Ring up two POS products, apply a 10% line discount, pay cash | WIP | — | — | — |
+| 180 | point_of_sale.refund_previous_order [hard] | Refund a prior POS order partially from the Orders menu | WIP | — | — | — |
+| 181 | point_of_sale.attach_customer_mid_sale [easy] | Open a POS session, add a product, attach existing customer, pay cash | WIP | — | — | — |
+| 182 | point_of_sale.close_session_reconcile_cash_diff [medium] | Close a POS session with a counted cash amount different from expected | WIP | — | — | — |
+| 183 | website_sale.add_product_to_cart_checkout_portal [medium] | As a public user, add a product to cart and complete checkout with address | WIP | — | — | — |
+| 184 | website_sale.apply_promo_code_at_checkout [medium] | Create a coupon program in backend then apply the code on the storefront | WIP | — | — | — |
+| 185 | website_sale.edit_product_image_gallery [easy] | Add an extra image to a published product via the shop editor | WIP | — | — | — |
+| 186 | website_sale.configure_delivery_method_weight [medium] | Create a delivery method with weight-based pricing rules | WIP | — | — | — |
+| 187 | website.create_new_page_publish [medium] | Create a blank new website page, add a heading, and publish it | WIP | — | — | — |
+| 188 | website.set_page_seo_fields [easy] | Use the Promote dialog to set meta title, description, and keywords on a page | WIP | — | — | — |
+| 189 | website.add_image_snippet_swap_source [medium] | Drag an Image snippet into a page and swap its source image | WIP | — | — | — |
+| 190 | website.duplicate_page_rename_unpublish [easy] | Duplicate an existing website page, rename the copy, and leave unpublished | WIP | — | — | — |
+| 191 | hr_holidays.approve_multiple_requests_bulk [hard] | Multi-select pending time-off requests in list view and bulk approve | WIP | — | — | — |
+| 192 | hr_holidays.request_leave_with_attachment [medium] | Request leave and attach a PDF justification via the chatter | WIP | — | — | — |
+| 193 | hr_expense.split_expense_analytic_distribution [hard] | Split one expense line 50/50 across two analytic accounts | WIP | — | — | — |
+| 194 | hr_expense.refuse_report_with_reason_chatter [medium] | Refuse a submitted expense report and post the reason to chatter | WIP | — | — | — |
+| 195 | hr_expense.post_approved_expense_to_journal [medium] | Manager posts an approved expense report to its journal entry | WIP | — | — | — |
+| 196 | mail.star_and_reply_inbox_message [easy] | Star an inbox message and post a reply | WIP | — | — | — |
+| 197 | mail.mark_message_done_archive_notification [easy] | Mark Done on an inbox notification to remove it from Inbox | WIP | — | — | — |
+| 198 | mail.create_group_channel_upload_attachment [medium] | Create a private channel, invite a member, and upload a file attachment | WIP | — | — | — |
+| 199 | im_livechat.add_canned_response_send_in_chat [medium] | Create a canned response shortcut and send it in an operator chat | WIP | — | — | — |
+| 200 | fleet.log_service_cost_record [easy] | Add a service cost record (oil change) to an existing vehicle | WIP | — | — | — |
+| 201 | fleet.assign_vehicle_tags_category [easy] | Add two tags and set a category on a vehicle | WIP | — | — | — |
+| 202 | fleet.transfer_vehicle_new_driver [medium] | Change a vehicle's driver and set the new assignment date | WIP | — | — | — |
+| 203 | event.add_event_questions_to_registration [medium] | Add two custom questions to an existing event registration form | WIP | — | — | — |
+| 204 | event.create_event_tracks_session_schedule [hard] | Add two conference tracks with times to a published event | WIP | — | — | — |
+| 205 | event.set_ticket_seat_availability_limit [easy] | Set total seat limit and per-ticket max for an event | WIP | — | — | — |
+| 206 | stock.create_internal_transfer_between_locations [medium] | Create an internal transfer between two locations, add a line, and validate | WIP | — | — | — |
+| 207 | stock.create_putaway_rule_for_product [hard] | Configure a putaway rule routing a product to a specific sub-location | WIP | — | — | — |
+| 208 | stock.count_inventory_apply_with_date [medium] | Make an inventory adjustment with a specific counted date | WIP | — | — | — |
+| 209 | stock.set_storage_category_capacity [medium] | Define a storage category with capacity and assign it to a location | WIP | — | — | — |
+| 210 | account.create_manual_journal_entry_balanced [hard] | Create a misc journal entry with three balanced debit/credit lines and post | WIP | — | — | — |
+| 211 | account.reconcile_bank_statement_line_manual [hard] | Open a bank statement line and reconcile it against a suggested invoice | WIP | — | — | — |
+| 212 | account.create_recurring_entry_template [medium] | Save a journal entry as a recurring entry template | WIP | — | — | — |
+| 213 | account.lock_books_set_period_lock_date [medium] | Set the Non-Advisors Lock Date in accounting settings | WIP | — | — | — |
+| 214 | crm.set_lost_reason_reassign_salesperson [medium] | Mark opportunity Lost with specific reason then reassign salesperson | WIP | — | — | — |
+| 215 | crm.pivot_view_opportunities_by_stage_revenue [easy] | Switch CRM pipeline to Pivot view, group by stage, measure expected revenue | WIP | — | — | — |
+| 216 | project.kanban_drag_task_between_stages [easy] | Drag a task kanban card from one stage to another | WIP | — | — | — |
+| 217 | project.create_project_from_template_duplicate [medium] | Duplicate an existing project keeping its tasks | WIP | — | — | — |
+| 218 | project.recurring_task_configure_frequency [medium] | Configure an existing task as recurring with weekly frequency | WIP | — | — | — |
+| 219 | contacts.add_bank_account_to_partner [easy] | Add an IBAN bank account to an existing partner via Accounting tab | WIP | — | — | — |
+| 220 | contacts.archive_partner_then_unarchive_filter [easy] | Archive a contact then unarchive it via the Archived search filter | WIP | — | — | — |
+| 221 | calendar.invite_external_attendee_by_email [easy] | Create a calendar event inviting an external email address not in partners | WIP | — | — | — |
+| 222 | survey.create_survey_one_page_publish_share [medium] | Create a 3-question survey, publish it, and copy the share link | WIP | — | — | — |
+| 223 | project_todo.create_note_add_tag_checklist [easy] | In the To-Do app, create a note with a tag and a checklist item | WIP | — | — | — |
 
 ---
 
