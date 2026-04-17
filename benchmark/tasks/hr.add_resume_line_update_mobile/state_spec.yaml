@@ -1,0 +1,27 @@
+models:
+  hr.employee:
+    match_key:
+      - name
+    fields:
+      - name
+      - work_location_id
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
+  hr.resume.line:
+    match_key:
+      - employee_id
+      - name
+    fields:
+      - employee_id
+      - name
+      - line_type_id
+      - date_start
+      - date_end
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
+      - duration
+      - description
