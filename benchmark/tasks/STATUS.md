@@ -242,10 +242,10 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 230 | mail.pin_and_reply_in_chatter [easy] | Done | PASS | PASS | 1.0 |
 | 231 | contacts.merge_duplicate_contacts [hard] | Done | PASS | PASS | 1.0 |
 | 232 | contacts.archive_then_unarchive [easy] | Done | PASS | FAIL | 0.00 |
-| 233 | website.create_blog_post_publish [medium] | WIP | — | — | — |
-| 234 | website.edit_menu_add_page_link [medium] | WIP | — | — | — |
-| 235 | stock.create_putaway_rule [hard] | WIP | — | — | — |
-| 236 | stock.transfer_lot_tracked_product [hard] | WIP | — | — | — |
+| 233 | website.create_blog_post_publish [medium] | N/A | — | — | — |
+| 234 | website.edit_menu_add_page_link [medium] | N/A | — | — | — |
+| 235 | stock.create_putaway_rule [hard] | N/A | — | — | — |
+| 236 | stock.transfer_lot_tracked_product [hard] | N/A | — | — | — |
 | 237 | mrp.create_bom_three_components [medium] | N/A | — | — | — |
 | 238 | mrp.confirm_produce_close_mo [hard] | N/A | — | — | — |
 | 239 | website_sale.publish_shop_product [medium] | N/A | — | — | — |
@@ -254,7 +254,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 242 | helpdesk.create_ticket_assign_priority [medium] | N/A | — | — | — |
 | 243 | fleet.register_vehicle_log_odometer [easy] | N/A | — | — | — |
 | 244 | hr_holidays.allocate_sick_leave_to_employee [easy] | Done | PASS | PASS | 1.0 |
-| 245 | hr_holidays.request_half_day_morning [easy] | WIP | — | — | — |
+| 245 | hr_holidays.request_half_day_morning [easy] | N/A | — | — | — |
 | 246 | hr_holidays.cancel_approved_leave_and_reallocate [hard] | Done | PASS | PASS | 1.0 |
 | 247 | hr_expense.reject_expense_report_with_feedback [medium] | Done | PASS | PASS | 1.0 |
 | 248 | hr_expense.submit_approve_post_accounting [hard] | Done | PASS | FAIL | 0.0 |
