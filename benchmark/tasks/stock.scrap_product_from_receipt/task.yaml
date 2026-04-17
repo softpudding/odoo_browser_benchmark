@@ -1,0 +1,20 @@
+task_id: stock.scrap_product_from_receipt
+module: stock
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/inventory
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "Open a specific receipt, launch the scrap flow from the picking context, and complete one scrap with an exact quantity"
+  checks_verify: "A done scrap exists for the target product and is linked to the seeded receipt"
+  primary_track: true
+  tier: 2

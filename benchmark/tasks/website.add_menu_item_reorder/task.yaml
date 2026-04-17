@@ -1,0 +1,20 @@
+task_id: website.add_menu_item_reorder
+module: website
+difficulty: medium
+instruction: see prompt.md
+start_url: /?enable_editor=1
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "Use the website editor menu tools to create one navigation item and drag or reorder it into the correct top-level position"
+  checks_verify: "The target Resources menu exists and the top-level menu sequence matches the required order"
+  primary_track: true
+  tier: 2
