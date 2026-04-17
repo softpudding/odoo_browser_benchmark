@@ -182,7 +182,7 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 | 170 | contacts.add_bank_account_iban [medium] | Open a partner, add a bank account with a specific IBAN via the Invoicing tab, and save | Done | PASS | PASS/PASS | 1.0 |
 | 171 | hr_expense.approve_submitted_report [medium] | Manager opens a submitted expense among a distractor and approves only the target | Done | PASS | PASS/PASS | 1.0 |
 | 172 | stock.receive_lot_tracked_product [hard] | Open a receipt for a lot-tracked product, enter the exact lot in the Details popup, then Validate | Done | PASS | FAIL/FAIL | 0.0 |
-| 173 | contacts.merge_duplicate_partners [hard] | Select two duplicate partners and merge them via the Merge Contacts wizard | WIP | — | — | — |
+| 173 | contacts.archive_duplicate_transfer_fields [medium] | Copy phone and email from a duplicate partner to the primary, then archive the duplicate via the Actions menu | Done | PASS | PASS/PASS | 1.0 |
 
 ---
 
