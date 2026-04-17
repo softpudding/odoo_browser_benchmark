@@ -4,7 +4,7 @@ Tracks all benchmark tasks. Update when adding new tasks or running evaluations.
 
 **Status values:** `WIP` — oracle or eval incomplete | `Done` — oracle passes, eval recorded
 
-Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New WIP: 30 (20 medium + 10 easy)
+Last eval: 2026-04-17 | Oracle: 86/86 (100%) | Browser-Use: 38/76 (50.0%) | New WIP: 30 (20 medium + 10 easy)
 
 ## Summary
 
@@ -96,16 +96,16 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 | 84 | inventory.scrap_product [easy] | Done | PASS | FAIL | 0.0 |
 | 85 | hr.schedule_employee_activity [easy] | Done | PASS | FAIL | 0.0 |
 | 86 | project.set_task_deadline [easy] | Done | PASS | FAIL | 0.0 |
-| 87 | sale.duplicate_quotation_change_customer [medium] | Duplicate a quotation, switch the customer on the copy, and save it in draft | Done | PASS | PASS/PASS | 1.0 |
-| 88 | purchase.duplicate_rfq_change_vendor_confirm [medium] | WIP | — | — | — |
-| 89 | project.archive_task_with_log_note [medium] | Post a log note on a project task, then archive it from the Action menu | Done | PASS | PASS | 1.0 |
-| 90 | crm.convert_lead_to_opportunity_simple [medium] | WIP | — | — | — |
-| 91 | hr.unarchive_employee_update_department [medium] | WIP | — | — | — |
-| 92 | stock.validate_delivery_shipment [medium] | WIP | — | — | — |
-| 93 | account.create_bill_from_confirmed_po [medium] | Create and post a vendor bill from a confirmed purchase order | Done | PASS | PASS | 1.0 |
-| 94 | sale.cancel_quotation_log_reason [medium] | Post a cancellation reason as a log note, then cancel the quotation | Done | PASS | PASS/FAIL | 1.0/0.0 |
-| 95 | hr_recruitment.refuse_applicant_with_reason [medium] | Refuse an applicant with the correct refuse reason and no email | Done | PASS | PASS/PASS | 1.0 |
-| 96 | crm.mark_opportunity_won_update_revenue [medium] | WIP | — | — | — |
+| 87 | sale.duplicate_quotation_change_customer [medium] | Done | PASS | PASS/PASS | 1.0 |
+| 88 | purchase.duplicate_rfq_change_vendor_confirm [medium] | WIP | PASS | — | — |
+| 89 | project.archive_task_with_log_note [medium] | Done | PASS | PASS | 1.0 |
+| 90 | crm.convert_lead_to_opportunity_simple [medium] | WIP | PASS | — | — |
+| 91 | hr.unarchive_employee_update_department [medium] | WIP | PASS | — | — |
+| 92 | stock.validate_delivery_shipment [medium] | WIP | PASS | — | — |
+| 93 | account.create_bill_from_confirmed_po [medium] | Done | PASS | PASS | 1.0 |
+| 94 | sale.cancel_quotation_log_reason [medium] | Done | PASS | PASS/FAIL | 1.0/0.0 |
+| 95 | hr_recruitment.refuse_applicant_with_reason [medium] | Done | PASS | PASS/PASS | 1.0 |
+| 96 | crm.mark_opportunity_won_update_revenue [medium] | WIP | PASS | — | — |
 | 97 | account.create_customer_invoice_post [medium] | WIP | — | — | — |
 | 98 | account.partial_pay_vendor_bill_with_memo [medium] | WIP | — | — | — |
 | 99 | calendar.create_all_day_event_with_attendee [medium] | WIP | — | — | — |
@@ -1167,7 +1167,7 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 | Field | Value |
 |---|---|
 | **Status** | WIP |
-| **Oracle** | — |
+| **Oracle** | PASS |
 | **Browser-Use** | — |
 | **F1** | — |
 | **Odoo modules** | Purchase — RFQs |
@@ -1195,7 +1195,7 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 | Field | Value |
 |---|---|
 | **Status** | WIP |
-| **Oracle** | — |
+| **Oracle** | PASS |
 | **Browser-Use** | — |
 | **F1** | — |
 | **Odoo modules** | CRM — Leads/Pipeline |
@@ -1209,7 +1209,7 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 | Field | Value |
 |---|---|
 | **Status** | WIP |
-| **Oracle** | — |
+| **Oracle** | PASS |
 | **Browser-Use** | — |
 | **F1** | — |
 | **Odoo modules** | HR — Employees |
@@ -1223,7 +1223,7 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 | Field | Value |
 |---|---|
 | **Status** | WIP |
-| **Oracle** | — |
+| **Oracle** | PASS |
 | **Browser-Use** | — |
 | **F1** | — |
 | **Odoo modules** | Inventory — Transfers |
@@ -1279,7 +1279,7 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 | Field | Value |
 |---|---|
 | **Status** | WIP |
-| **Oracle** | — |
+| **Oracle** | PASS |
 | **Browser-Use** | — |
 | **F1** | — |
 | **Odoo modules** | CRM — Pipeline |
