@@ -2086,7 +2086,7 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
+| **Status** | Done |
 | **Oracle** | PASS |
 | **Browser-Use** | FAIL |
 | **F1** | 0.0 |
@@ -2115,7 +2115,7 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
+| **Status** | Done |
 | **Oracle** | PASS |
 | **Browser-Use** | FAIL |
 | **F1** | 0.0 |
@@ -2144,7 +2144,7 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
+| **Status** | Done |
 | **Oracle** | PASS |
 | **Browser-Use** | FAIL |
 | **F1** | 0.0 |
