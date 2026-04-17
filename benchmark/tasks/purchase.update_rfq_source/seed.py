@@ -3,10 +3,13 @@
 VENDOR_NAME = "Horizon Components"
 SOURCE = "BENCH-SRC-01"
 PRODUCT_NAME = "Precision Sensor"
+MARKER = "BENCH-RFQ-SOURCE-TASK"
 
 
 def setup(env):
-    env["purchase.order"].search([("origin", "=", SOURCE)]).unlink()
+    env["purchase.order"].search([
+        ("partner_ref", "=", MARKER),
+    ]).unlink()
 
     vendor = env["res.partner"].search([("name", "=", VENDOR_NAME)], limit=1)
     if not vendor:
@@ -30,6 +33,7 @@ def setup(env):
     rfq = env["purchase.order"].create({
         "partner_id": vendor.id,
         "origin": SOURCE,
+        "partner_ref": MARKER,
     })
 
     env["purchase.order.line"].create({
