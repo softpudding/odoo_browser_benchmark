@@ -183,7 +183,7 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 | 171 | hr_expense.approve_submitted_report [medium] | Manager opens a pending submitted expense report among distractors and approves it | WIP | — | — | — |
 | 172 | stock.receive_lot_tracked_product [hard] | Receive a lot-tracked product and enter exact lot number and qty in the detail popup | WIP | — | — | — |
 | 173 | contacts.merge_duplicate_partners [hard] | Select two duplicate partners and merge them via the Merge Contacts wizard | WIP | — | — | — |
-| 174 | mrp.create_routing_set_workcenter [medium] | Create a workcenter and link it as an operation on an existing BOM | WIP | — | — | — |
+| 174 | mrp.create_routing_set_workcenter [medium] | Create a workcenter and link it as an operation on an existing BOM | Done | PASS | PASS | 1.0 |
 | 175 | mrp.scrap_component_during_production [hard] | Scrap one consumed component from a running MO via the component action menu | WIP | — | — | — |
 | 176 | mrp.convert_bom_to_kit_type [easy] | Change an existing BOM's type from Manufacture This Product to Kit | Done | PASS | PASS | 1.0 |
 | 177 | mrp.create_variant_specific_bom [hard] | Create a BOM that applies only to a single product variant via attribute filter | WIP | — | — | — |
