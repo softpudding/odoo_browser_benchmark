@@ -47,7 +47,7 @@ def setup(env):
         if not p:
             tmpl = env["product.template"].create({
                 "name": name,
-                "type": "consu",
+                "type": "service",
                 "list_price": price,
                 "standard_price": price,
                 "purchase_ok": True,
@@ -55,7 +55,11 @@ def setup(env):
             })
             p = tmpl.product_variant_id
         else:
-            p.product_tmpl_id.write({"purchase_method": "purchase"})
+            p.product_tmpl_id.write({
+                "type": "service",
+                "purchase_ok": True,
+                "purchase_method": "purchase",
+            })
         products[name] = p
 
     # --- Create and confirm the PO ---

@@ -1,0 +1,20 @@
+task_id: purchase.update_rfq_deadline
+difficulty: easy
+module: purchase
+instruction: see prompt.md
+start_url: /odoo/purchase
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 180
+step_limit: 120
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: easy
+  agent_interaction: "Open one RFQ and update the order date field"
+  checks_verify: "RFQ date is updated and no other RFQ fields or state changed"
+  primary_track: true
+  tier: 1

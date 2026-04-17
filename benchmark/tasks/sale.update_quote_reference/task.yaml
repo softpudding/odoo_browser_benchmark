@@ -1,0 +1,20 @@
+task_id: sale.update_quote_reference
+difficulty: easy
+module: sale
+instruction: see prompt.md
+start_url: /odoo/sales
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 180
+step_limit: 120
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: easy
+  agent_interaction: "Open one draft quotation and update one header reference field"
+  checks_verify: "Customer reference updated while line items and draft state remain unchanged"
+  primary_track: true
+  tier: 1

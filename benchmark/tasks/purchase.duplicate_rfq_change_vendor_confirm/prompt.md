@@ -11,6 +11,7 @@ Duplicate this RFQ and reissue the copy to a different vendor:
 3. On the duplicated draft:
    - Change the **Vendor** to **Pinnacle Hardware**.
    - Set the **Vendor Reference** to **"PH-REISSUE-77"**.
+   - Set **Order Deadline** to **05/28/2026**.
 4. Click **Confirm Order** to convert the duplicate from RFQ into a
    confirmed purchase order.
 

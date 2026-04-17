@@ -11,10 +11,13 @@ Find the ready delivery with reference **"BENCH-DEL-01"** for customer
 - **Copper Wire 100m** — demand: 8
 
 1. Open the delivery.
-2. For each move line, set the **Done** (received) quantity to match the
-   demand exactly (20 and 8).
-3. Click **Validate** to mark the delivery as done. No backorder dialog
-   should appear — if one does, choose to close it with "No Backorder".
+2. Set the **Done** quantity on the move lines to:
+   - **Steel Bracket 12"**: `12`
+   - **Copper Wire 100m**: `5`
+3. Click **Validate**.
+4. A backorder dialog appears because not everything was shipped. In that
+   dialog, choose **No Backorder** to close the delivery without creating
+   another transfer.
 
 **Rules:**
 - Do NOT touch the other delivery in the list (`BENCH-DEL-OTHER`).

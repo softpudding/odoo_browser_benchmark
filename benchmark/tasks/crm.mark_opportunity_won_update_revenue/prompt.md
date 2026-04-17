@@ -10,10 +10,11 @@ and needs the pipeline updated with the final revenue.
 2. Open it.
 3. On the opportunity form, set the **Expected Revenue** field to
    **52000** (the final contract value).
-4. In the status bar (the breadcrumb-like row of stages / buttons at the top
+4. Set **Priority** to **Medium** (**2 stars**).
+5. In the status bar (the breadcrumb-like row of stages / buttons at the top
    of the form), click the **Won** button. The opportunity's stage turns to a
    **Won** stage.
-5. Save if anything is still unsaved (the Won action saves automatically).
+6. Save if anything is still unsaved (the Won action saves automatically).
 
 ## Rules
 

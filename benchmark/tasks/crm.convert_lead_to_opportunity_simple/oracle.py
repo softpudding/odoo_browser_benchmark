@@ -11,6 +11,7 @@ from benchmark.oracle_helpers import (
     modal_set_many2one,
     navigate,
     run_oracle,
+    schedule_activity,
     _wait_no_loading,
     _wait_for_ready,
 )
@@ -66,6 +67,23 @@ def oracle(page):
     ).first.click()
     page.wait_for_timeout(1500)
     _wait_no_loading(page)
+    _wait_for_ready(page)
+
+    qualified_btn = page.locator(
+        ".o_statusbar_status button:has-text('Qualified')"
+    )
+    if qualified_btn.count() > 0:
+        qualified_btn.first.click()
+        page.wait_for_timeout(600)
+        _wait_no_loading(page)
+
+    schedule_activity(
+        page,
+        activity_type="Call",
+        summary="Confirm rollout timeline",
+        due_date="05/15/2026",
+    )
+    page.wait_for_timeout(800)
 
 
 run_oracle(oracle)
