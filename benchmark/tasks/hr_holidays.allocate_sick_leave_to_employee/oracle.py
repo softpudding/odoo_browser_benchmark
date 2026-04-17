@@ -1,99 +1,118 @@
-"""Oracle for hr_holidays.allocate_sick_leave_to_employee."""
+"""Oracle for hr_holidays.allocate_sick_leave_to_employee.
+
+Navigate to Time Off, open Management > Allocations, create a new
+allocation for Marc Demo / Sick Time Off / 15 days, save, then approve.
+"""
 
 from benchmark.oracle_helpers import (
-    _wait_no_loading,
-    click_create,
     fill_field,
     login,
     navigate,
     run_oracle,
     save_form,
     set_many2one,
+    _wait_no_loading,
 )
-
-
-def _click_new(page):
-    new_btn = page.locator(
-        "button.o_list_button_add:visible, button.o-kanban-button-new:visible, "
-        ".o_control_panel_main_buttons button:has-text('New'):visible"
-    )
-    if new_btn.count() > 0:
-        new_btn.first.click()
-    else:
-        page.locator("button:has-text('New'):visible").first.click()
-    page.wait_for_timeout(1200)
-    _wait_no_loading(page)
 
 
 def oracle(page):
     login(page)
+
+    # Go to Time Off root and click through menus to reach Allocations.
     navigate(page, "/odoo/time-off")
     _wait_no_loading(page)
-    page.wait_for_timeout(1200)
+    page.wait_for_timeout(1500)
 
-    # Open Management > Allocations via the app menu
-    # Click on "Management" top menu dropdown
+    # Open Management menu in the navbar.
+    # The navbar menus in Odoo 19 are rendered as dropdowns with
+    # data-section/labels. Try clicking the Management menu by text.
     mgmt = page.locator(
-        "nav.o_main_navbar button:has-text('Management'), "
-        "nav.o_main_navbar .o_nav_entry:has-text('Management'), "
-        ".o_menu_sections button:has-text('Management'), "
-        ".o_menu_sections a:has-text('Management')"
+        ".o_menu_sections button:has-text('Management'):visible, "
+        ".o_navbar_apps_menu_entry:has-text('Management'):visible, "
+        "a.dropdown-toggle:has-text('Management'):visible"
     )
     if mgmt.count() > 0:
         mgmt.first.click()
-        page.wait_for_timeout(600)
-        alloc_item = page.locator(
-            ".o-dropdown--menu .dropdown-item:has-text('Allocations'), "
-            ".o_menu_sections a:has-text('Allocations'), "
-            ".dropdown-menu a:has-text('Allocations')"
+        page.wait_for_timeout(500)
+        # Click Allocations inside the Management submenu.
+        alloc = page.locator(
+            ".o-dropdown--menu a:has-text('Allocations'):visible, "
+            ".dropdown-menu a:has-text('Allocations'):visible"
         )
-        alloc_item.first.click()
+        if alloc.count() > 0:
+            alloc.first.click()
+        else:
+            # Fallback: direct URL to the allocations approve action.
+            navigate(
+                page,
+                "/odoo/action-hr_holidays.hr_leave_allocation_action_approve_department",
+            )
     else:
-        # Fallback: navigate via Management > Allocations link directly
-        page.locator("a:has-text('Allocations'):visible").first.click()
-    _wait_no_loading(page)
-    page.wait_for_timeout(1200)
-
-    _click_new(page)
-
-    # Fill employee
-    set_many2one(page, "employee_id", "Benchmark Allocatee")
-    page.wait_for_timeout(600)
-
-    # Fill time off type
-    set_many2one(page, "holiday_status_id", "Sick Time Off")
-    page.wait_for_timeout(600)
-
-    # Fill duration (number_of_days_display is the editable display field)
-    # Try the display field first, then fall back to number_of_days.
-    for field_name in ("number_of_days_display", "number_of_days"):
-        widget = page.locator(
-            f".o_field_widget[name='{field_name}'] input"
+        navigate(
+            page,
+            "/odoo/action-hr_holidays.hr_leave_allocation_action_approve_department",
         )
-        if widget.count() > 0 and widget.first.is_visible():
-            widget.first.click()
-            widget.first.fill("")
-            widget.first.type("15")
-            widget.first.press("Tab")
-            page.wait_for_timeout(400)
-            break
+    page.wait_for_timeout(1000)
+    _wait_no_loading(page)
 
-    # Save the form
+    # Clear filters.
+    for _ in range(5):
+        facets = page.locator(".o_searchview .o_facet_remove:visible")
+        if facets.count() == 0:
+            break
+        try:
+            facets.first.click()
+            page.wait_for_timeout(300)
+        except Exception:
+            break
+    _wait_no_loading(page)
+
+    # Click New.
+    new_btn = page.locator(
+        "button.o_list_button_add:visible, "
+        ".o_control_panel_main_buttons button:has-text('New'):visible"
+    )
+    new_btn.first.click()
+    page.wait_for_timeout(800)
+    _wait_no_loading(page)
+
+    # Fill in the allocation form.
+    fill_field(page, "name", "2026 Sick leave pool")
+    try:
+        set_many2one(page, "employee_id", "Marc Demo")
+    except Exception:
+        pass
+    set_many2one(page, "holiday_status_id", "Sick Time Off")
+
+    # Set number of days (field may be number_of_days_display).
+    days_input = page.locator(
+        "div.o_field_widget[name='number_of_days_display'] input:visible, "
+        "div.o_field_widget[name='number_of_days'] input:visible"
+    )
+    if days_input.count() > 0:
+        days_input.first.fill("15")
+        page.wait_for_timeout(300)
+
     save_form(page)
+    page.wait_for_timeout(1200)
+    _wait_no_loading(page)
+
+    # Approve.
+    approve_btn = page.locator(
+        ".o_form_statusbar button[name='action_approve']:visible, "
+        ".o_form_statusbar button[name='action_validate']:visible"
+    )
+    if approve_btn.count() > 0:
+        approve_btn.first.click()
+    else:
+        btn = page.locator(
+            "button:has-text('Approve'):visible, "
+            "button:has-text('Validate'):visible"
+        )
+        if btn.count() > 0:
+            btn.first.click()
     page.wait_for_timeout(1500)
     _wait_no_loading(page)
-
-    # Click Validate (or Approve) -- backend method name is action_approve
-    validate_btn = page.locator(
-        "button[name='action_approve']:visible, "
-        "button:has-text('Validate'):visible, "
-        "button:has-text('Approve'):visible"
-    )
-    if validate_btn.count() > 0:
-        validate_btn.first.click()
-        page.wait_for_load_state("load")
-        _wait_no_loading(page)
-        page.wait_for_timeout(1500)
 
 
 run_oracle(oracle)

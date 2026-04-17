@@ -1,63 +1,41 @@
-"""Seed data for fleet.schedule_vehicle_service_activity.
+"""Seed for fleet.schedule_vehicle_service_activity.
 
-Creates a single vehicle "Benchmark Utility Truck" with license plate
-BENCH-ACT-001 and brand "Ford". The agent must schedule a To-Do activity
-on this vehicle via the chatter.
+Creates a specific fleet vehicle SVC-8812. The task is to schedule a
+To-Do activity on it with a specific summary and date.
 """
 
-
-VEHICLE_LABEL = "Benchmark Utility Truck"  # used as the fleet.vehicle.model name
-PLATE = "BENCH-ACT-001"
-BRAND_NAME = "Ford"
-MODEL_NAME = VEHICLE_LABEL
-SUMMARY = "Yearly Safety Inspection"
+BRAND_NAME = "Benchmark Auto"
+MODEL_NAME = "Benchmark Sedan"
+PLATE = "SVC-8812"
 
 
 def setup(env):
-    Vehicle = env["fleet.vehicle"]
-    Activity = env["mail.activity"]
-    Brand = env["fleet.vehicle.model.brand"]
-    Model = env["fleet.vehicle.model"]
-
-    # --- Cleanup prior runs ---
-    stale_vehicles = Vehicle.search([("license_plate", "=", PLATE)])
-    if stale_vehicles:
-        Activity.search([
+    # Clean any prior activities on this vehicle.
+    vehicle = env["fleet.vehicle"].search([("license_plate", "=", PLATE)], limit=1)
+    if vehicle:
+        env["mail.activity"].search([
             ("res_model", "=", "fleet.vehicle"),
-            ("res_id", "in", stale_vehicles.ids),
+            ("res_id", "=", vehicle.id),
         ]).unlink()
-        stale_vehicles.unlink()
 
-    # Drop any stale model with the same label (safe since we just removed
-    # any vehicle using it).
-    stale_models = Model.search([("name", "=", MODEL_NAME)])
-    stale_models.unlink()
+    env["fleet.vehicle"].search([("license_plate", "=", PLATE)]).unlink()
 
-    # --- Ensure brand + model exist ---
-    brand = Brand.search([("name", "=", BRAND_NAME)], limit=1)
+    brand = env["fleet.vehicle.model.brand"].search([("name", "=", BRAND_NAME)], limit=1)
     if not brand:
-        brand = Brand.create({"name": BRAND_NAME})
-
-    model = Model.search([
+        brand = env["fleet.vehicle.model.brand"].create({"name": BRAND_NAME})
+    model = env["fleet.vehicle.model"].search([
         ("name", "=", MODEL_NAME),
         ("brand_id", "=", brand.id),
     ], limit=1)
     if not model:
-        model = Model.create({
+        model = env["fleet.vehicle.model"].create({
             "name": MODEL_NAME,
             "brand_id": brand.id,
             "vehicle_type": "car",
         })
 
-    # --- Create the vehicle ---
-    # The `name` field is computed (Brand/Model/Plate), so we encode
-    # "Benchmark Utility Truck" into the model name instead. The resulting
-    # vehicle name is "Ford/Benchmark Utility Truck/BENCH-ACT-001".
-    admin_partner = env.ref("base.partner_admin", raise_if_not_found=False)
-    vals = {
-        "license_plate": PLATE,
+    env["fleet.vehicle"].create({
         "model_id": model.id,
-    }
-    if admin_partner:
-        vals["driver_id"] = admin_partner.id
-    Vehicle.create(vals)
+        "license_plate": PLATE,
+        "driver_id": env.ref("base.user_admin").partner_id.id,
+    })

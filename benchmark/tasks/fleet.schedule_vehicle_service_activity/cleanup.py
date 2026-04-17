@@ -1,25 +1,20 @@
 """Cleanup for fleet.schedule_vehicle_service_activity."""
 
-
-PLATE = "BENCH-ACT-001"
-MODEL_NAME = "Benchmark Utility Truck"
-SUMMARY = "Yearly Safety Inspection"
+PLATE = "SVC-8812"
+BRAND_NAME = "Benchmark Auto"
+MODEL_NAME = "Benchmark Sedan"
 
 
 def cleanup(env):
     vehicles = env["fleet.vehicle"].search([("license_plate", "=", PLATE)])
-    if vehicles:
+    for v in vehicles:
         env["mail.activity"].search([
             ("res_model", "=", "fleet.vehicle"),
-            ("res_id", "in", vehicles.ids),
+            ("res_id", "=", v.id),
         ]).unlink()
-        vehicles.unlink()
-
-    # Also sweep any stray activities with this summary linked to fleet.vehicle
-    # in case a previous run left orphans behind.
-    env["mail.activity"].search([
-        ("res_model", "=", "fleet.vehicle"),
-        ("summary", "=", SUMMARY),
+    vehicles.unlink()
+    env["fleet.vehicle.model"].search([
+        ("name", "=", MODEL_NAME),
+        ("brand_id.name", "=", BRAND_NAME),
     ]).unlink()
-
-    env["fleet.vehicle.model"].search([("name", "=", MODEL_NAME)]).unlink()
+    env["fleet.vehicle.model.brand"].search([("name", "=", BRAND_NAME)]).unlink()

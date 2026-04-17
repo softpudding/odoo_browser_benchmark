@@ -1,0 +1,20 @@
+task_id: fleet.create_contract_set_renewal_activity
+module: fleet
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/fleet
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "Create one vehicle and contract, assign the responsible user, then add the fleet contract-renewal activity on the contract."
+  checks_verify: "The vehicle and contract are created with the requested fields, and the contract has exactly one Contract to Renew activity due on the target date for the target user."
+  primary_track: true
+  tier: 2

@@ -2,19 +2,19 @@ task_id: hr_holidays.allocate_sick_leave_to_employee
 module: hr_holidays
 difficulty: easy
 instruction: see prompt.md
-start_url: /odoo/time-off
+start_url: /odoo/time-off-approval
 login_context:
   login: admin
 agent_interface: browser_only
 db_seed:
   snapshot: benchmark_base
-setup_script: seed.py
+  setup_script: seed.py
 time_limit_sec: 240
 step_limit: 120
 metadata:
-  category: deep_ui_interaction
+  category: simple_edit
   difficulty_level: easy
-  agent_interaction: "From the Time Off app, navigate to Management > Allocations, click New, allocate 15 sick leave days to Benchmark Allocatee, save, and Validate."
-  checks_verify: "Exactly one hr.leave.allocation exists for Benchmark Allocatee with Sick Time Off leave type, number_of_days=15, and state='validate'."
+  agent_interaction: "Open the Allocations view, create a new allocation for the specified employee, select the Sick Time Off leave type, set 15 days, and approve it"
+  checks_verify: "A validated allocation exists for Marc Demo, leave type Sick Time Off, number_of_days=15, with the specified description"
   primary_track: true
   tier: 1

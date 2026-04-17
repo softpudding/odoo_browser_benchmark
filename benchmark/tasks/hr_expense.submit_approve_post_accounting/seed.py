@@ -1,0 +1,73 @@
+"""Seed for hr_expense.submit_approve_post_accounting.
+
+Odoo 19 uses hr.expense directly. Creates a draft expense; task is to
+submit -> approve -> post (state machine: draft -> submitted -> approved
+-> posted) and have an account.move linked.
+"""
+
+EMPLOYEE_NAME = "Bob Benchmark"
+PRODUCT_NAME = "Benchmark Client Travel"
+EXPENSE_NAME = "TRV-2026-04 — April client visit"
+
+
+def setup(env):
+    admin = env.ref("base.user_admin")
+
+    # Cleanup prior runs (including any posted move linked).
+    prior = env["hr.expense"].search([("name", "=", EXPENSE_NAME)])
+    for e in prior:
+        try:
+            move = getattr(e, "account_move_id", None)
+            if move and move.state == "posted":
+                move.button_draft()
+            if move:
+                move.unlink()
+        except Exception:
+            pass
+    prior.unlink()
+
+    emp = env["hr.employee"].search([("name", "=", EMPLOYEE_NAME)], limit=1)
+    if not emp:
+        emp = env["hr.employee"].create({
+            "name": EMPLOYEE_NAME,
+            "work_email": "bob.benchmark@example.com",
+            "expense_manager_id": admin.id,
+        })
+    else:
+        emp.write({
+            "expense_manager_id": admin.id,
+        })
+
+    products = env["product.template"].search([("name", "=", PRODUCT_NAME)])
+    if not products:
+        tmpl = env["product.template"].create({
+            "name": PRODUCT_NAME,
+            "type": "service",
+            "purchase_ok": True,
+            "sale_ok": False,
+            "can_be_expensed": True,
+            "list_price": 175.0,
+        })
+        product = tmpl.product_variant_id
+    else:
+        product = products[0].product_variant_id
+
+    env["hr.expense"].create({
+        "name": EXPENSE_NAME,
+        "employee_id": emp.id,
+        "product_id": product.id,
+        "total_amount": 175.0,
+        "quantity": 1.0,
+        "date": "2026-04-08",
+    })
+
+    for grp_ref in [
+        "hr_expense.group_hr_expense_team_approver",
+        "hr_expense.group_hr_expense_manager",
+        "hr_expense.group_hr_expense_user",
+        "account.group_account_invoice",
+        "account.group_account_user",
+    ]:
+        group = env.ref(grp_ref, raise_if_not_found=False)
+        if group and group not in admin.group_ids:
+            admin.write({"group_ids": [(4, group.id)]})
