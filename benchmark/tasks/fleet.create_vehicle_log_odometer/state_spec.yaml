@@ -1,12 +1,24 @@
 models:
   fleet.vehicle:
     match_key:
-      - license_plate
+      - name
     fields:
+      - name
       - license_plate
-      - driver_id
       - model_id
+      - driver_id
       - odometer
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
+  fleet.vehicle.odometer:
+    match_key:
+      - vehicle_id
+      - value
+    fields:
+      - vehicle_id
+      - value
     ignore_fields:
       - id
       - create_date

@@ -1,9 +1,23 @@
 models:
+  mrp.bom:
+    match_key:
+      - product_tmpl_id
+      - code
+    fields:
+      - product_tmpl_id
+      - code
+      - product_qty
+      - bom_line_ids
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
   mrp.production:
     match_key:
-      - product_id
+      - product_tmpl_id
+      - product_qty
     fields:
-      - product_id
+      - product_tmpl_id
       - product_qty
       - state
       - bom_id
