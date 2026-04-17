@@ -96,25 +96,25 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 | 84 | inventory.scrap_product [easy] | Done | PASS | FAIL | 0.0 |
 | 85 | hr.schedule_employee_activity [easy] | Done | PASS | FAIL | 0.0 |
 | 86 | project.set_task_deadline [easy] | Done | PASS | FAIL | 0.0 |
-| 87 | sale.duplicate_quotation_change_customer [medium] | WIP | — | — | — |
+| 87 | sale.duplicate_quotation_change_customer [medium] | Duplicate a quotation, switch the customer on the copy, and save it in draft | Done | PASS | PASS/PASS | 1.0 |
 | 88 | purchase.duplicate_rfq_change_vendor_confirm [medium] | Done | PASS | FAIL | 0.0 |
-| 89 | project.archive_task_with_log_note [medium] | WIP | — | — | — |
+| 89 | project.archive_task_with_log_note [medium] | Post a log note on a project task, then archive it from the Action menu | Done | PASS | PASS | 1.0 |
 | 90 | crm.convert_lead_to_opportunity_simple [medium] | Done | PASS | FAIL | 0.0 |
 | 91 | hr.unarchive_employee_update_department [medium] | Done | PASS | FAIL | 0.0 |
 | 92 | stock.validate_delivery_shipment [medium] | Done | PASS | FAIL | 0.0 |
-| 93 | account.create_bill_from_confirmed_po [medium] | Done | PASS | FAIL | 0.0 |
-| 94 | sale.cancel_quotation_log_reason [medium] | WIP | — | — | — |
-| 95 | hr_recruitment.refuse_applicant_with_reason [medium] | WIP | — | — | — |
+| 93 | account.create_bill_from_confirmed_po [medium] | Create and post a vendor bill from a confirmed purchase order | Done | PASS | PASS | 1.0 |
+| 94 | sale.cancel_quotation_log_reason [medium] | Post a cancellation reason as a log note, then cancel the quotation | Done | PASS | PASS/FAIL | 1.0/0.0 |
+| 95 | hr_recruitment.refuse_applicant_with_reason [medium] | Refuse an applicant with the correct refuse reason and no email | Done | PASS | PASS/PASS | 1.0 |
 | 96 | crm.mark_opportunity_won_update_revenue [medium] | Done | PASS | FAIL | 0.0 |
 | 97 | account.create_customer_invoice_post [medium] | Done | PASS | FAIL | 0.0 |
 | 98 | account.partial_pay_vendor_bill_with_memo [medium] | Done | PASS | FAIL | 0.0 |
 | 99 | calendar.create_all_day_event_with_attendee [medium] | Done | PASS | FAIL | 0.0 |
-| 100 | contacts.create_company_add_supplier_tag [medium] | Done | PASS | FAIL | 0.0 |
+| 100 | contacts.create_company_add_supplier_tag [medium] | Create a company contact with address details and the Supplier tag | Done | PASS | FAIL | 0.0 |
 | 101 | crm.create_lead_priority_schedule_call [medium] | Removed | FAIL (spec) | — | — |
-| 102 | hr.assign_manager_set_work_location [medium] | Done | PASS | PASS | 1.0 |
+| 102 | hr.assign_manager_set_work_location [medium] | Update an employee's manager, work location, and work phone | Done | PASS | PASS/PASS | 1.0 |
 | 103 | hr_recruitment.schedule_interview_for_applicant [medium] | Done | PASS | FAIL | 0.0 |
 | 104 | project.duplicate_task_assign_deadline [medium] | Done | PASS | FAIL | 0.0 |
-| 105 | purchase.cancel_rfq_log_note [medium] | Done | PASS | FAIL | 0.0 |
+| 105 | purchase.cancel_rfq_log_note [medium] | Log an internal note on an RFQ, then cancel it | Done | PASS | PASS | 1.0 |
 | 106 | sale.update_salesperson_validity_confirm [medium] | Done | PASS | FAIL | 0.0 |
 | 107 | crm.convert_lead_link_customer_schedule_call [medium] | Done | PASS | FAIL | 0.0 |
 | 108 | purchase_stock.confirm_rfq_receive_full [medium] | Done | PASS | FAIL | 0.0 |
@@ -131,16 +131,31 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 | 119 | crm.update_opportunity_revenue [easy] | WIP | — | — | — |
 | 120 | hr.update_employee_job_title [easy] | WIP | — | — | — |
 | 121 | purchase.update_rfq_source [easy] | WIP | — | — | — |
-| 122 | sale.create_quotation_down_payment_invoice [hard] | Down payment wizard with non-default % option, navigate to invoice, edit, confirm | WIP | — | — | — |
-| 123 | account.create_refund_modify_reissue [hard] | Credit note "Modify" wizard option: reverses + creates new draft, edit lines, post | WIP | — | — | — |
-| 124 | purchase.create_rfq_confirm_receive_backorder [hard] | Create PO with exact lines, confirm, partial receive, Create Backorder dialog | WIP | — | — | — |
-| 125 | stock.return_delivery_create_credit_note [hard] | Open delivery, return wizard, validate return, navigate to create credit note | WIP | — | — | — |
-| 126 | crm.create_opportunity_add_quotation_send [hard] | Create opportunity, add quotation with exact lines, send by email wizard | WIP | — | — | — |
-| 127 | sale_stock.confirm_order_deliver_partial_backorder [hard] | Confirm SO, navigate to delivery, partial validate with Create Backorder | WIP | — | — | — |
-| 128 | hr_recruitment.create_applicant_add_skills_refuse [hard] | Create applicant with skills, then refuse with specific reason wizard | WIP | — | — | — |
-| 129 | sale.cancel_confirmed_recreate_send_email [hard] | Cancel confirmed SO, create new quotation with exact lines, send by email | WIP | — | — | — |
-| 130 | calendar.create_recurring_edit_two_occurrences [hard] | Create recurring event, then edit two occurrences separately with "This Event" | WIP | — | — | — |
-| 131 | website.edit_page_update_text_set_properties [hard] | Edit webpage text in website editor, set page title via Properties dialog | WIP | — | — | — |
+| 122 | sale.create_quotation_down_payment_invoice [hard] | Down payment wizard with non-default % option, navigate to invoice, edit, confirm | Done | PASS | — | — |
+| 123 | account.create_refund_modify_reissue [hard] | Credit note "Reverse and Create Invoice" button, edit new draft lines, post | Done | PASS | — | — |
+| 124 | purchase.create_rfq_confirm_receive_backorder [hard] | Create PO with exact lines, confirm, partial receive, Create Backorder dialog | Done | PASS | — | — |
+| 125 | stock.return_delivery_create_credit_note [hard] | Open delivery, return wizard, validate return, navigate to create credit note | Done | PASS | — | — |
+| 126 | crm.create_opportunity_add_quotation_send [hard] | Create opportunity, add quotation with exact lines, send by email wizard | Done | PASS | — | — |
+| 127 | sale_stock.confirm_order_deliver_partial_backorder [hard] | Confirm SO, navigate to delivery, partial validate with Create Backorder | Done | PASS | — | — |
+| 128 | hr_recruitment.create_applicant_add_skills_refuse [hard] | Create applicant with skills, then refuse with specific reason wizard | Done | PASS | — | — |
+| 129 | sale.cancel_confirmed_recreate_send_email [hard] | Cancel confirmed SO, create new quotation with exact lines, send by email | Done | PASS | — | — |
+| 130 | calendar.create_recurring_edit_two_occurrences [hard] | Create recurring event, then edit two occurrences separately with "This Event" | Done | PASS | — | — |
+| 131 | website.edit_page_update_text_set_properties [hard] | Edit webpage text in website editor, set page title via Properties dialog | Done | PASS | — | — |
+| 132 | calendar.create_event_add_description_attendee [medium] | Create one event with exact attendee, location, and description | Done | PASS | FAIL | 0.0 |
+| 133 | contacts.create_linked_contact_set_title_phone [medium] | Add a linked contact under a company with title, phone, and email | Done | PASS | PASS | 1.0 |
+| 134 | crm.create_opportunity_set_close_date_priority [medium] | Create an opportunity with revenue, closing date, and star priority | Done | PASS | FAIL | 0.0 |
+| 135 | hr.add_resume_line_update_mobile [medium] | Update employee mobile and add one exact resume entry | Done | PASS | FAIL | 0.0 |
+| 136 | hr_recruitment.create_applicant_set_email_stage [medium] | Create an applicant, set contact fields, and move to a target stage | Done | PASS | FAIL | 0.0 |
+| 137 | project.create_task_assign_tags_deadline [medium] | Create a project task with assignee, tags, and deadline | Done | PASS | FAIL | 0.0 |
+| 138 | project.rename_task_assign_tags_priority [medium] | Rename one task, add a tag, and change its priority | Done | PASS | PASS | 1.0 |
+| 139 | purchase.update_rfq_note_quantity_confirm [medium] | Edit an RFQ note and quantity, then confirm it | Done | PASS | PASS | 1.0 |
+| 140 | sale.update_quote_payment_terms_validity_confirm [medium] | Set payment terms, validity, and quantity before confirmation | Done | PASS | FAIL | 0.0 |
+| 141 | stock.update_delivery_scheduled_date_validate [medium] | Change a delivery scheduled date, then validate it | Done | PASS | PASS | 1.0 |
+| 142 | hr_holidays.allocate_leave_days [easy] | Allocate 15 days of Sick Time Off to an employee | WIP | — | — | — |
+| 143 | hr_holidays.request_time_off_approve [medium] | Request 3 days Annual Leave then approve as manager | WIP | — | — | — |
+| 144 | hr_holidays.refuse_leave_request [medium] | Refuse a pending time-off request as manager | WIP | — | — | — |
+| 145 | hr_holidays.create_leave_type [medium] | Create a new Time Off Type with manager approval | WIP | — | — | — |
+| 146 | hr_holidays.cancel_approved_leave [medium] | Cancel an approved leave request via cancel wizard | WIP | — | — | — |
 
 ---
 
@@ -542,8 +557,8 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 |---|---|
 | **Status** | Done |
 | **Oracle** | PASS |
-| **Browser-Use** | FAIL |
-| **F1** | 0.0 |
+| **Browser-Use** | PASS/PASS |
+| **F1** | 1.0 |
 | **Odoo modules** | Inventory (stock) |
 | **Workflow** | Navigate to Operations > Physical Inventory. Set on-hand quantities for 3 specific products (Steel Bracket 12", Copper Wire 100m, Safety Harness XL) to exact target values while leaving 2 distractor products unchanged. Click Apply All. |
 | **Capability tested** | Inline tree editing — agent must click into quantity cells in a list view and type values; fails by entering wrong row or not interacting with inline-editable cells correctly. |
@@ -556,8 +571,8 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 |---|---|
 | **Status** | Done |
 | **Oracle** | PASS |
-| **Browser-Use** | FAIL |
-| **F1** | 0.0 |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
 | **Odoo modules** | Employees (hr) |
 | **Workflow** | Create a new employee "Jordan Mercer" filling fields across three areas: main form (name, job position, work phone), Work Information tab (work location, working hours), and Private Information tab (certificate level, marital status). |
 | **Capability tested** | Create-from-scratch with multi-tab form — agent typically fills only the main form and saves without visiting Work Information or Private Information tabs. |
@@ -570,8 +585,8 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 |---|---|
 | **Status** | Done |
 | **Oracle** | PASS |
-| **Browser-Use** | FAIL |
-| **F1** | 0.0 |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
 | **Odoo modules** | Purchase |
 | **Workflow** | Create a new RFQ for vendor Meridian Supply Co with exactly 3 product lines (Rubber Gasket 200×$1.50, Stainless Bolt M8 500×$0.75, Hex Nut M8 500×$0.40) and set Order Deadline to May 30, 2026 via the date picker. Confirm. |
 | **Capability tested** | Create-from-scratch with exact lines + date picker manipulation — agent leaves a phantom empty 4th line after entering the 3rd product, and/or sets wrong date via date picker widget. |
@@ -584,8 +599,8 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 |---|---|
 | **Status** | Done |
 | **Oracle** | PASS |
-| **Browser-Use** | FAIL |
-| **F1** | 0.0 |
+| **Browser-Use** | PASS/FAIL |
+| **F1** | 1.0/0.0 |
 | **Odoo modules** | Project |
 | **Workflow** | In project "Omega Platform Launch", find task "Write API integration spec" in In Progress stage. Move it to Done stage. Then post an internal log note (not a regular message) with exact text via the chatter. |
 | **Capability tested** | Chatter "Log note" vs "Send message" distinction (unexploited pattern) — agent uses wrong chatter button or skips the note step after moving the stage. |
@@ -598,8 +613,8 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 |---|---|
 | **Status** | Done |
 | **Oracle** | PASS |
-| **Browser-Use** | FAIL |
-| **F1** | 0.0 |
+| **Browser-Use** | PASS/PASS |
+| **F1** | 1.0 |
 | **Odoo modules** | Contacts |
 | **Workflow** | Create company "Vantage Industrial Group" with full address details. Then create two individual contacts (Patricia Drum — Procurement Manager, Steven Okafor — Logistics Coordinator) both linked to the company with exact emails and mobile numbers. |
 | **Capability tested** | Multi-record create sequence with company linkage — agent correctly creates the company and first contact, but leaves missing or incorrect fields on the second contact, or fails to link one contact to the parent company. |
@@ -626,8 +641,8 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 |---|---|
 | **Status** | Done |
 | **Oracle** | PASS |
-| **Browser-Use** | FAIL |
-| **F1** | 0.0 |
+| **Browser-Use** | PASS/PASS |
+| **F1** | 1.0 |
 | **Odoo modules** | Accounting — Invoices |
 | **Workflow** | Open posted invoice BENCH-PAY-01 for Lakeview Partners. Click Pay button. Accept all defaults in the Register Payment wizard. Click Create Payment. Verify invoice shows "Paid" status. |
 | **Capability tested** | Accept-defaults wizard — open payment registration dialog, click Create Payment without changing any fields, verify payment registered. |
@@ -640,8 +655,8 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 |---|---|
 | **Status** | Done |
 | **Oracle** | PASS |
-| **Browser-Use** | FAIL |
-| **F1** | 0.0 |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
 | **Odoo modules** | CRM — Pipeline |
 | **Workflow** | Find the "Acme Corporation" opportunity in the CRM pipeline. Move it from the "New" stage to the "Qualified" stage. |
 | **Capability tested** | Kanban stage change — direct drag or selector change on a single clearly identified opportunity. |
@@ -652,10 +667,10 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | FAIL |
-| **F1** | 0.0 |
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
 | **Odoo modules** | Purchase — Orders |
 | **Workflow** | Open confirmed PO BENCH-PO-RESET for Meridian Supply Co. Reset to Draft. Change Terms & Conditions to "Updated via browser". Click Confirm Order. |
 | **Capability tested** | Reset-to-draft → edit → re-confirm — linear 3-step sequence with single text field change. |
@@ -666,10 +681,10 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | FAIL |
-| **F1** | 0.0 |
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
 | **Odoo modules** | Project — Tasks |
 | **Workflow** | Open task "Write API integration spec" in project "Omega Platform Launch". Post a message in the chatter with exact text: "Backend team has reviewed the spec. Moving forward with implementation." |
 | **Capability tested** | Chatter message posting — type text in the chatter composer and click Send. Simple send message (not log note distinction). |
@@ -960,11 +975,10 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | Removed |
-| **Oracle** | FAIL (spec) |
+| **Status** | WIP |
+| **Oracle** | — |
 | **Browser-Use** | — |
 | **F1** | — |
-| **Notes** | Removed because standard Odoo lead UI does not expose `expected_revenue` for records that remain `type = lead`, so the requested workflow is not browser-solvable without changing the task spec. |
 | **Odoo modules** | Website — Pages |
 | **Workflow** | Go to Website app, open the "About Us" page in the editor. Find the contact information section and change the phone number to "+1 555 987 6543". Save the page. |
 | **Capability tested** | Website inline editor — find and edit a specific text field within page content. Different from website.edit_careers_spotlight (card editing on careers page). |
@@ -975,10 +989,10 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | PASS |
-| **F1** | 1.0 |
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
 | **Odoo modules** | Inventory — Products |
 | **Workflow** | Go to Inventory app. Open product "Steel Bracket 12" from the Products list. Change the Internal Reference field to "SB-12-BENCH". Click Save. |
 | **Capability tested** | Simple text field edit on product form. Different from stock.adjust_inventory_quantities (inline tree editing) and inventory.scrap_product (wizard). |
@@ -989,10 +1003,10 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | FAIL |
-| **F1** | 0.0 |
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
 | **Odoo modules** | Employees (hr) |
 | **Workflow** | Go to Employees app. Find employee "Sofia Chen". Change the Department field to "Engineering". Click Save. |
 | **Capability tested** | Simple dropdown field edit on existing employee form. Different from hr.create_employee_complete_profile (multi-tab creation), hr.update_work_information (multi-tab editing), and hr.schedule_employee_activity (chatter dialog). |
@@ -1003,10 +1017,10 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | FAIL |
-| **F1** | 0.0 |
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
 | **Odoo modules** | Sales — Quotations |
 | **Workflow** | Go to Sales app. Open draft quotation BENCH-DISC-01 for customer "Azure Interior". On the "Desk Organizer" line, set the Discount field to 10%. Click Save. |
 | **Capability tested** | Inline order line editing with discount percentage field. Different from sale.change_validity_date (date field edit), sale.set_payment_terms_confirm (multi-field header edit), and sale.add_note_to_quotation (chatter interaction). |
@@ -1017,10 +1031,10 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | FAIL |
-| **F1** | 0.0 |
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
 | **Odoo modules** | Project — Tasks |
 | **Workflow** | Go to Project app. Open project "Omega Platform Launch". Find task "Design Landing Page Mockup". In the Subtasks tab, add a new subtask titled "Create Wireframes". Save. |
 | **Capability tested** | Subtask creation on existing task via subtasks tab. Different from project.post_chatter_message (chatter interaction), project.create_task_assign_stage (task creation), project.set_task_deadline (date edit), and project.complete_task_log_note (stage change + note). |
@@ -1145,8 +1159,8 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 |---|---|
 | **Status** | Done |
 | **Oracle** | PASS |
-| **Browser-Use** | FAIL |
-| **F1** | 0.0 |
+| **Browser-Use** | PASS/PASS |
+| **F1** | 1.0 |
 | **Odoo modules** | Sales — Quotations |
 | **Workflow** | Open draft quotation `BENCH-DUP-01`, duplicate it via the Action menu, change the customer on the copy to a different partner, set a new customer reference, and save the duplicate in draft. |
 | **Capability tested** | Action-menu Duplicate flow combined with swapping a many2one field on the copy while leaving the original untouched. |
@@ -1157,10 +1171,10 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | FAIL |
-| **F1** | 0.0 |
+| **Status** | WIP |
+| **Oracle** | — |
+| **Browser-Use** | — |
+| **F1** | — |
 | **Odoo modules** | Purchase — RFQs |
 | **Workflow** | Duplicate draft RFQ `BENCH-RFQ-DUP` (Meridian Supply Co), change vendor on the copy to Pinnacle Hardware, set vendor reference `PH-REISSUE-77`, then click Confirm Order. |
 | **Capability tested** | Duplicate-and-reassign on purchase module followed by confirmation, testing whether the agent edits the copy (not the original) and confirms only the copy. |
@@ -1171,10 +1185,10 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
 | **Odoo modules** | Project |
 | **Workflow** | Open project `Nexus Platform Launch`, open the task `Retire beta build`, post a specific internal log note, then archive via the Action menu. |
 | **Capability tested** | Combined chatter Log-note posting and Action-menu Archive on a project task with another task on the same project as distractor. |
@@ -1229,8 +1243,8 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 |---|---|
 | **Status** | Done |
 | **Oracle** | PASS |
-| **Browser-Use** | FAIL |
-| **F1** | 0.0 |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
 | **Odoo modules** | Purchase → Accounting |
 | **Workflow** | Open confirmed PO `BENCH-BILL-PO`, click the Create Bill stat button, set bill date and vendor reference on the draft bill, and Confirm (post) it. |
 | **Capability tested** | Cross-module stat-button navigation from Purchase to Accounting, followed by filling bill-specific fields and posting. |
@@ -1241,10 +1255,10 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS/FAIL |
+| **F1** | 1.0/0.0 |
 | **Odoo modules** | Sales — Quotations |
 | **Workflow** | Open draft quotation `BENCH-CANCEL-01` among two distractors, post a specific internal log note, then click Cancel and confirm the dialog. |
 | **Capability tested** | Chatter Log-note posting combined with a state-changing Cancel action while keeping distractor quotations untouched. |
@@ -1255,10 +1269,10 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS/PASS |
+| **F1** | 1.0 |
 | **Odoo modules** | Recruitment |
 | **Workflow** | Open job `Senior Platform Engineer`, open applicant `Marcus Whitfield`, click Refuse, set Refuse Reason to `Does not fit the job requirements` in the wizard, uncheck Send Email, apply. |
 | **Capability tested** | Refuse-wizard interaction with a non-default many2one and an explicit email-off toggle, distinct from applicant-creation and stage-move tasks. |
@@ -1356,7 +1370,7 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 |---|---|
 | **Status** | Done |
 | **Oracle** | PASS |
-| **Browser-Use** | PASS |
+| **Browser-Use** | PASS/PASS |
 | **F1** | 1.0 |
 | **Odoo modules** | Employees (hr) |
 | **Workflow** | Open employee `Maya Ortiz`, set manager `Nadia Reyes`, set work location `HQ Annex`, update work phone, and save. |
@@ -1398,8 +1412,8 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 |---|---|
 | **Status** | Done |
 | **Oracle** | PASS |
-| **Browser-Use** | FAIL |
-| **F1** | 0.0 |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
 | **Odoo modules** | Purchase — RFQs |
 | **Workflow** | Open draft RFQ `P-RFQ-CANCEL-01`, post an internal log note with exact text, then cancel the RFQ. |
 | **Capability tested** | RFQ cancellation paired with chatter log-note usage, distinct from purchase confirmation, duplicate-copy, and line-edit confirmation workflows. |
@@ -1559,6 +1573,284 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 | **Capability tested** | Fresh company creation with core-field entry, tag autocomplete, and explicit company/person mode handling, distinct from address-heavy company creation and linked-contact tasks. |
 
 Note: difficulty calibration used a shared-port browser-use validation on `benchmark_validate` / `127.0.0.1:8069`. Isolated-port runs were contaminated by the agent drifting to the shared `8069` server, so they were not used for the final medium-tier judgment.
+
+## calendar.create_event_add_description_attendee
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
+| **Odoo modules** | Calendar |
+| **Workflow** | Create one non-recurring calendar event with an exact attendee, location, and description, then save it at the requested date and time. |
+| **Capability tested** | Fresh event creation with date/time entry plus attendee lookup and rich-text field entry, distinct from recurrence-edit and existing-event update calendar tasks. |
+
+---
+
+## contacts.create_linked_contact_set_title_phone
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
+| **Odoo modules** | Contacts |
+| **Workflow** | Open a company contact, create one linked person contact beneath it, and set the linked contact's job position, phone, and email before saving. |
+| **Capability tested** | Parent-child contact creation on an existing company form, distinct from company-creation and tag-focused contact tasks. |
+
+---
+
+## crm.create_opportunity_set_close_date_priority
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
+| **Odoo modules** | CRM |
+| **Workflow** | Create a new opportunity with an exact expected revenue, set its expected closing date, and apply a star priority before saving. |
+| **Capability tested** | Opportunity creation with mixed numeric, date-picker, and star-widget inputs, distinct from convert-lead and activity-scheduling CRM tasks. |
+
+---
+
+## hr.add_resume_line_update_mobile
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
+| **Odoo modules** | Employees |
+| **Workflow** | Open an employee, change the mobile number, add one exact Resume entry on the Resume tab, and save. |
+| **Capability tested** | Cross-tab employee editing that combines a standard field edit with resume-widget creation, distinct from skill-entry and work-location employee tasks. |
+
+---
+
+## hr_recruitment.create_applicant_set_email_stage
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
+| **Odoo modules** | Recruitment |
+| **Workflow** | Create a new applicant for a named job opening, set the applicant email and phone, move the applicant to the requested stage, and save. |
+| **Capability tested** | New applicant creation followed by a stage transition on the same record, distinct from interview-scheduling and refusal-wizard recruitment tasks. |
+
+---
+
+## project.create_task_assign_tags_deadline
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
+| **Odoo modules** | Project |
+| **Workflow** | Open a target project, create one task with an exact title, assign it, add specified tags, set a deadline, and save. |
+| **Capability tested** | New task creation with many2many tag entry and a deadline picker, distinct from subtask and archive-note project tasks. |
+
+---
+
+## project.rename_task_assign_tags_priority
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
+| **Odoo modules** | Project |
+| **Workflow** | Open an existing task, rename it, assign one tag, change its priority, and save without changing its stage. |
+| **Capability tested** | Targeted task editing with the star-priority widget and tag autocomplete, distinct from task-creation and activity-scheduling project tasks. |
+
+---
+
+## purchase.update_rfq_note_quantity_confirm
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
+| **Odoo modules** | Purchase |
+| **Workflow** | Find the correct RFQ, update the internal notes field, change one existing line quantity, and confirm the order. |
+| **Capability tested** | Same-record RFQ editing that mixes a multiline note field with inline order-line editing before confirmation, distinct from deadline-focused purchase tasks. |
+
+---
+
+## sale.update_quote_payment_terms_validity_confirm
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
+| **Odoo modules** | Sales |
+| **Workflow** | Open the right quotation, set payment terms and a validity date, adjust one existing line quantity, and confirm it. |
+| **Capability tested** | Quotation edit-and-confirm flow that combines many2one payment-term selection, date entry, and inline line editing, distinct from note-only and cancellation sales tasks. |
+
+---
+
+## stock.update_delivery_scheduled_date_validate
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
+| **Odoo modules** | Inventory / Stock |
+| **Workflow** | Open an existing delivery, set a requested scheduled date, then validate the transfer without changing quantities. |
+| **Capability tested** | Pick-and-validate stock workflow with a date edit on the transfer form, distinct from receipt validation, reorder-rule editing, and return/backorder stock tasks. |
+
+---
+
+## sale.create_quotation_down_payment_invoice
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Sales, Accounting |
+| **Workflow** | Create new quotation for Ridgeline Automation with 2 exact product lines ($1200 + $350), confirm, open Create Invoice wizard, select "Down payment (percentage)" (not default "Regular invoice"), set 30%, create draft, set invoice date, confirm. |
+| **Capability tested** | Non-default radio selection in wizard (advance_payment_method = 'percentage'), create-from-scratch with exact lines, cross-module Sales → Accounting navigation. |
+
+---
+
+## account.create_refund_modify_reissue
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Accounting |
+| **Workflow** | Open posted invoice HLE-MOD-01, click Credit Note, click "Reverse and Create Invoice" (NOT default "Reverse"), edit new draft's Technical Audit line qty from 8 to 5, set invoice date, confirm. |
+| **Capability tested** | Non-default button choice in credit note wizard (modify_moves vs refund_moves), post-wizard line editing, distractor invoice with similar name. |
+
+---
+
+## purchase.create_rfq_confirm_receive_backorder
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Purchase, Inventory |
+| **Workflow** | Create new RFQ with 3 exact product lines, confirm, navigate to receipt via smart button, set partial done quantities, validate with "Create Backorder" dialog. |
+| **Capability tested** | Create-from-scratch with 3 exact lines (phantom line issue), cross-module Purchase → Stock, backorder dialog with non-default choice, inline quantity editing. |
+
+---
+
+## stock.return_delivery_create_credit_note
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Inventory, Sales, Accounting |
+| **Workflow** | Open done delivery, create partial return via wizard (4 of 10 units, skip other product), validate return, navigate to SO's invoice, create credit note with reason and date, confirm. |
+| **Capability tested** | Return wizard quantity editing, cross-module Stock → Sales → Accounting round-trip, credit note creation from reversed invoice. |
+
+---
+
+## crm.create_opportunity_add_quotation_send
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | CRM, Sales |
+| **Workflow** | Create CRM opportunity with exact fields, move to Qualified, click New Quotation, add 2 exact product lines ($8500 + $12000), set ref and expiration, send by email with custom subject. |
+| **Capability tested** | Cross-module CRM → Sales, create-from-scratch quotation lines, email compose wizard, kanban quick-create then full form editing. |
+
+---
+
+## sale_stock.confirm_order_deliver_partial_backorder
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Sales, Inventory |
+| **Workflow** | Confirm draft SO with 3 lines, navigate to delivery via smart button, set partial done quantities (15/25, 40/40, 6/20), validate, choose "Create Backorder". |
+| **Capability tested** | Cross-module Sales → Stock via smart button, inline quantity editing on stock moves, backorder dialog with non-default choice. |
+
+---
+
+## hr_recruitment.create_applicant_add_skills_refuse
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Recruitment |
+| **Workflow** | Open job position, create new applicant with exact details, add skill via cascading selects (Languages/Python/Advanced), save, then refuse via wizard with specific reason and unchecked email. |
+| **Capability tested** | Skill widget cascading selects, refuse wizard with non-default many2one, combined create + wizard flow, distractor applicant with similar name. |
+
+---
+
+## sale.cancel_confirmed_recreate_send_email
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Sales |
+| **Workflow** | Cancel confirmed SO (confirmation dialog), create new quotation for different customer with modified quantities, set ref and expiration, send by email with custom subject. |
+| **Capability tested** | Cancel confirmation dialog, create-from-scratch with exact lines (phantom line issue), email compose wizard. |
+
+---
+
+## calendar.create_recurring_edit_two_occurrences
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Calendar |
+| **Workflow** | Create weekly recurring event (6 occurrences) with attendees, then navigate to 2 different future occurrences and edit each one's location, choosing "This Event" in the recurrence dialog each time. |
+| **Capability tested** | Full recurring event creation with date/time pickers, TWO separate recurrence "This Event" dialog interactions, calendar navigation to specific dates. |
+
+---
+
+## website.edit_page_update_text_set_properties
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Website |
+| **Workflow** | In website editor, edit heading and paragraph text within the iframe, then use Site > Properties dialog to change page title and URL slug, save. |
+| **Capability tested** | Website editor iframe interaction, text editing in complex DOM, Page Properties dialog, combined content + metadata editing. |
 
 ---
 

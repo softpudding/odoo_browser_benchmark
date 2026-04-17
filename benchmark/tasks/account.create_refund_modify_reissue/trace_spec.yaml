@@ -1,0 +1,38 @@
+# Trace oracle for account.create_refund_modify_reissue
+#
+# Category: policy_trap (hard).
+# Agent must click the "Reverse and Create Invoice" button (modify_moves)
+# instead of the default "Reverse" button (refund_moves).
+
+required_ops:
+  - account.move.reversal.modify_moves    # the modify button, NOT refund_moves
+  - account.move.action_post              # post the new replacement invoice
+
+optional_ops:
+  - account.move.read
+  - account.move.web_read
+  - account.move.search_read
+  - account.move.web_search_read
+  - account.move.write
+  - account.move.web_save
+  - account.move.line.read
+  - account.move.line.search_read
+  - account.move.reversal.create
+  - account.move.reversal.read
+  - account.move.reversal.write
+  - account.move.create
+  - res.partner.read
+  - res.partner.search_read
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+  - account.journal.read
+  - account.journal.search_read
+  - mail.message.create
+  - mail.followers.create
+  - bus.bus.create
+
+forbidden_ops:
+  - account.move.reversal.refund_moves  # must use modify_moves, not refund_moves
+  - account.move.button_cancel
+  - account.move.unlink
+  - account.move.button_draft           # must not reset the original invoice to draft

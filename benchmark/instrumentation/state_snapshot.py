@@ -155,7 +155,7 @@ class StateSnapshot:
         if spec is None:
             return {}
 
-        Model = self.env[model_name]
+        Model = self.env[model_name].with_context(active_test=False)
         records = Model.search([])
 
         # Default ignore fields are only applied for fields NOT explicitly

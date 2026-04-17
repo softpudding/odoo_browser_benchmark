@@ -1,6 +1,7 @@
 """Oracle for account.update_invoice_reference."""
 
 from benchmark.oracle_helpers import (
+    click_tab,
     ensure_list_view,
     fill_field,
     login,
@@ -22,6 +23,8 @@ def oracle(page):
     click_list_row(page, "BENCH-INV-REF-01")
     _wait_for_ready(page)
 
+    click_tab(page, "Other Info")
+    page.wait_for_timeout(500)
     fill_field(page, "ref", "BENCH-INV-REF-01-UPDATED")
     save_form(page)
     _wait_no_loading(page)

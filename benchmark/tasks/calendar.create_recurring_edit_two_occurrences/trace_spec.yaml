@@ -1,0 +1,32 @@
+# Trace oracle for calendar.create_recurring_edit_two_occurrences
+#
+# Agent must create a recurring event and then edit two individual
+# occurrences using "This Event" in the recurrence dialog.
+
+required_ops:
+  - calendar.event.web_save           # at least one save (create + edits)
+
+optional_ops:
+  - calendar.event.read
+  - calendar.event.web_read
+  - calendar.event.search_read
+  - calendar.event.web_search_read
+  - calendar.event.web_save
+  - calendar.event.create
+  - calendar.event.write
+  - calendar.event.onchange
+  - calendar.recurrence.create
+  - calendar.recurrence.read
+  - calendar.recurrence.search_read
+  - calendar.recurrence.write
+  - res.partner.read
+  - res.partner.search_read
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+  - mail.message.create
+  - mail.followers.create
+  - bus.bus.create
+
+forbidden_ops:
+  - calendar.event.unlink
+  - calendar.recurrence.unlink

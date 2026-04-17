@@ -1,0 +1,20 @@
+task_id: project.rename_task_assign_tags_priority
+module: project
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/project
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "Open the right project task, rename it, set a deadline, and move it to a new stage."
+  checks_verify: "The target task is renamed and updated with the requested deadline and In Progress stage while the distractor task remains unchanged."
+  primary_track: true
+  tier: 2
