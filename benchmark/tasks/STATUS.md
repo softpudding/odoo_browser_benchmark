@@ -241,7 +241,7 @@ Last eval: 2026-04-16 | Oracle: 76/76 (100%) | Browser-Use: 38/76 (50.0%) | New 
 | 229 | mail.create_channel_invite_members [easy] | WIP | — | — | — |
 | 230 | mail.pin_and_reply_in_chatter [easy] | WIP | — | — | — |
 | 231 | contacts.merge_duplicate_contacts [hard] | WIP | — | — | — |
-| 232 | contacts.archive_then_unarchive [easy] | WIP | — | — | — |
+| 232 | contacts.archive_then_unarchive [easy] | Done | PASS | FAIL | 0.00 |
 | 233 | website.create_blog_post_publish [medium] | WIP | — | — | — |
 | 234 | website.edit_menu_add_page_link [medium] | WIP | — | — | — |
 | 235 | stock.create_putaway_rule [hard] | WIP | — | — | — |
