@@ -258,8 +258,8 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 246 | hr_holidays.cancel_approved_leave_and_reallocate [hard] | Done | PASS | PASS | 1.0 |
 | 247 | hr_expense.reject_expense_report_with_feedback [medium] | Done | PASS | PASS | 1.0 |
 | 248 | hr_expense.submit_approve_post_accounting [hard] | Done | PASS | FAIL | 0.0 |
-| 249 | mail.send_direct_message_to_user [easy] | WIP | — | — | — |
-| 250 | mail.star_message_filter_starred [easy] | WIP | — | — | — |
+| 249 | mail.send_direct_message_to_user [easy] | Done | PASS | PASS | 1.0 |
+| 250 | mail.star_message_filter_starred [easy] | Done | PASS | PASS | 1.0 |
 | 251 | mail.mark_message_as_todo_and_resolve [medium] | Done | PASS | FAIL | 0.67 |
 | 252 | fleet.schedule_vehicle_service_activity [easy] | Done | PASS | PASS | 1.0 |
 | 253 | fleet.log_fuel_refill_with_cost [medium] | Done | PASS | FAIL | 0.0 |
