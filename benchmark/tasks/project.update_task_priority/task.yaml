@@ -1,0 +1,20 @@
+task_id: project.update_task_priority
+module: project
+difficulty: easy
+instruction: see prompt.md
+start_url: /odoo/project
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 240
+step_limit: 120
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: easy
+  agent_interaction: "Open a project task and set one priority star"
+  checks_verify: "Task priority changes from normal to important on the target project task"
+  primary_track: true
+  tier: 1
