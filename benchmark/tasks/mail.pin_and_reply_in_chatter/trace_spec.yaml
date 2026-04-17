@@ -1,0 +1,34 @@
+# Trace oracle for mail.pin_and_reply_in_chatter
+#
+# Category 5: Deep UI interaction (EASY).
+# Agent must open a Discuss channel, pin a seeded message via its action menu,
+# and post a follow-up reply. Validation is primarily via check.py.
+
+required_ops: []
+
+optional_ops:
+  - discuss.channel.read
+  - discuss.channel.search_read
+  - discuss.channel.web_search_read
+  - discuss.channel.channel_fetched
+  - discuss.channel.channel_fold
+  - discuss.channel.execute_command_help
+  - mail.message.read
+  - mail.message.search_read
+  - mail.message.web_search_read
+  - mail.message.create
+  - mail.message.write
+  - mail.message.set_pin
+  - mail.message.set_pinned
+  - mail.message.toggle_pin
+  - mail.thread.message_post
+  - mail.followers.create
+  - bus.bus.create
+  - res.partner.read
+  - res.partner.search_read
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+
+forbidden_ops:
+  - discuss.channel.unlink
+  - mail.message.unlink
