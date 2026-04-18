@@ -1,0 +1,20 @@
+task_id: event.create_event_tracks_session_schedule
+module: event
+difficulty: hard
+instruction: see prompt.md
+start_url: /odoo/events
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 480
+step_limit: 300
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: hard
+  agent_interaction: "Open a published event, drill into its Tracks smart button, and create two new tracks with exact titles, start datetimes, and durations."
+  checks_verify: "Two event.track records exist on 'Bench Tech Summit' with the expected titles, start datetimes, and durations, and no extra tracks are created."
+  primary_track: true
+  tier: 3

@@ -1,0 +1,21 @@
+task_id: website_sale.configure_delivery_method_weight
+module: website_sale
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/delivery-methods
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "Create a new delivery.carrier 'Bench Weight Shipping' with provider 'Based on Rules', publish it on the website, and add two weight-based pricing rules (<= 5 kg fixed €10; > 5 kg fixed €20)."
+  checks_verify: "delivery.carrier 'Bench Weight Shipping' exists with delivery_type='base_on_rule', is_published=True, product_id set; two delivery.price.rule rows tied to it, one with variable=weight, operator='<=', max_value=5.0, list_base_price=10.0, list_price=0.0; one with variable=weight, operator='>', max_value=5.0, list_base_price=20.0, list_price=0.0."
+  failure_pattern: "Agent picks the default 'Fixed Price' provider so the Pricing tab with the rule list never appears, or enters the rule thresholds in the wrong column (Sale Price vs Sale Base Price)."
+  primary_track: true
+  tier: 2

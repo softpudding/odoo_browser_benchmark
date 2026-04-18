@@ -165,12 +165,12 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 153 | im_livechat.create_channel_add_canned_response [medium] | Create a live chat channel and canned response from the Live Chat app | Done | PASS | PASS | 1.0 |
 | 154 | website.create_blog_post_publish [medium] | Create and publish a blog post with title, cover image, and body content | Done | PASS | PASS | 1.0 |
 | 155 | website.add_menu_item_reorder [medium] | Add a website menu item and reorder it within the navigation hierarchy | Done | PASS | FAIL/FAIL | 0.0 |
-| 156 | website.create_contact_form_block [hard] | Edit a website page to add and configure a contact form block | WIP | — | — | — |
+| 156 | website.create_contact_form_block [hard] | Edit a website page to add and configure a contact form block | Done | PASS | FAIL/PASS | 0.5 |
 | 157 | stock.scrap_product_from_receipt [medium] | Open a stock receipt and scrap part of a received product from the operation flow | Done | PASS | PASS/PASS | 1.0 |
 | 158 | stock.adjust_inventory_with_location_filter [medium] | Adjust inventory for a target product in one location while leaving other locations unchanged | Done | PASS | PASS/PASS | 1.0 |
 | 159 | stock.receive_serial_tracked_product [hard] | Validate a receipt by assigning exact serial numbers to tracked units | WIP | — | — | — |
 | 160 | mrp.update_bom_component_quantity [medium] | Update one component quantity on an existing bill of materials and save it | Done (dup of 257) | — | — | — |
-| 161 | mrp.create_mo_consume_produce_done [hard] | Create a manufacturing order, record component consumption, and mark production done | WIP | — | — | — |
+| 161 | mrp.create_mo_consume_produce_done [hard] | Create a manufacturing order, record component consumption, and mark production done | Done | PASS | PASS/PASS | 1.0 |
 | 162 | mrp.unbuild_product_partial [hard] | Unbuild part of a manufactured product quantity and verify the resulting stock moves | Done (near-dup of 256) | — | — | — |
 | 163 | hr_expense.submit_report_with_receipt_approve [medium] | Create an expense with a receipt, submit it in a report, then approve it | Done | PASS | FAIL | 0.0 |
 | 164 | website_sale.configure_variant_publish_product [medium] | Configure website product variants, publish the product, and verify it on the shop | Done | PASS | PASS | 1.0 |
@@ -195,7 +195,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 183 | website_sale.add_product_to_cart_checkout_portal [medium] | As a public user, add a product to cart and complete checkout with address | WIP | — | — | — |
 | 184 | website_sale.apply_promo_code_at_checkout [medium] | Create a coupon program in backend then apply the code on the storefront | Done | PASS | PASS/PASS | 1.0 |
 | 185 | website_sale.edit_product_image_gallery [easy] | Add an extra image to a published product via the shop editor | Done | PASS | PASS/PASS | 1.0 |
-| 186 | website_sale.configure_delivery_method_weight [medium] | Create a delivery method with weight-based pricing rules | WIP | — | — | — |
+| 186 | website_sale.configure_delivery_method_weight [medium] | Create a delivery method with weight-based pricing rules | Done | PASS | FAIL/PASS | 0.5 |
 | 187 | website.create_new_page_publish [medium] | Create a blank new website page, add a heading, and publish it | Done | PASS | FAIL/FAIL | 0.0 |
 | 188 | website.set_page_seo_fields [easy] | Use the Promote dialog to set meta title, description, and keywords on a page | Done | PASS | FAIL/FAIL | 0.6667 |
 | 189 | website.add_image_snippet_swap_source [medium] | Drag an Image snippet into a page and swap its source image | Done | PASS | FAIL/FAIL | 0.0 |
@@ -213,10 +213,10 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 201 | fleet.assign_vehicle_tags_category [easy] | Add two tags and set a category on a vehicle | Done | PASS | PASS | 1.0 |
 | 202 | fleet.transfer_vehicle_new_driver [medium] | Change a vehicle's driver and set the new assignment date | Done | PASS | FAIL/FAIL | 0.0 |
 | 203 | event.add_event_questions_to_registration [medium] | Add two custom questions to an existing event registration form | Done | PASS | PASS/PASS | 1.0 |
-| 204 | event.create_event_tracks_session_schedule [hard] | Add two conference tracks with times to a published event | WIP | — | — | — |
+| 204 | event.create_event_tracks_session_schedule [hard] | Add two conference tracks with times to a published event | Done | PASS | FAIL/FAIL | 0.0 |
 | 205 | event.set_ticket_seat_availability_limit [easy] | Set total seat limit and per-ticket max for an event | Done | PASS | FAIL | 0.4 |
 | 206 | stock.create_internal_transfer_between_locations [medium] | Create an internal transfer between two locations, add a line, and validate | Done (dup of 258) | — | — | — |
-| 207 | stock.create_putaway_rule_for_product [hard] | Configure a putaway rule routing a product to a specific sub-location | WIP | — | — | — |
+| 207 | stock.create_putaway_rule_for_product [hard] | Configure a putaway rule routing a product to a specific sub-location | Done | PASS | PASS/PASS | 1.0 |
 | 208 | stock.count_inventory_apply_with_date [medium] | Make an inventory adjustment with a specific counted date | Done | PASS | FAIL/FAIL | 0.0 |
 | 209 | stock.set_storage_category_capacity [medium] | Define a storage category with capacity and assign it to a location | Done | PASS | FAIL/FAIL | 0.0 |
 | 210 | account.create_manual_journal_entry_balanced [hard] | Create a misc journal entry with three balanced debit/credit lines and post | Done | PASS | PASS/PASS | 1.0 |

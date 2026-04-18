@@ -1,0 +1,49 @@
+# Trace oracle for mrp.create_mo_consume_produce_done.
+#
+# HARD: create MO from scratch, confirm it, set quantity producing, and
+# mark as done, accepting the consumption dialog.
+
+required_ops:
+  - mrp.production.action_confirm
+  - mrp.production.button_mark_done
+
+optional_ops:
+  - mrp.production.create
+  - mrp.production.web_save
+  - mrp.production.onchange
+  - mrp.production.read
+  - mrp.production.search_read
+  - mrp.production.write
+  - mrp.production.action_assign
+  - mrp.production._action_assign
+  - mrp.production.pre_button_mark_done
+  - mrp.production._pre_button_mark_done
+  - mrp.production.set_qty_producing
+  - mrp.bom.read
+  - mrp.bom.search_read
+  - mrp.bom.search
+  - mrp.bom._bom_find
+  - product.product.read
+  - product.product.search_read
+  - product.template.read
+  - stock.move.read
+  - stock.move.search_read
+  - stock.move.write
+  - stock.move.line.read
+  - stock.move.line.search_read
+  - stock.move.line.write
+  - stock.move.line.create
+  - stock.picking.type.read
+  - stock.warehouse.read
+  - stock.location.search
+  - stock.location.read
+  - mrp.immediate.production.process
+  - mrp.production.backorder.action_backorder
+  - mrp.production.backorder.action_close_mo
+  - mrp.consumption.warning.action_confirm
+  - ir.ui.view.get_views
+  - ir.actions.server.run
+
+forbidden_ops:
+  - mrp.production.unlink
+  - mrp.production.action_cancel
