@@ -950,6 +950,38 @@ PO record is just mutating its partner_id.
 
 ---
 
+## hr_recruitment_survey — Interview Form attach + Send Interview button
+
+- `hr_recruitment_survey` is **NOT in the base snapshot**; seed must
+  `button_immediate_install()`. Adds `hr.job.survey_id`
+  (m2o → `survey.survey`, label "Interview Form") and
+  `hr.applicant.survey_id` (`related='job_id.survey_id'`, readonly).
+- The Interview Form m2o renders inside the Recruitment notebook tab
+  (page name `recruitment_page`, XML string "Details") under the
+  Hiring Process group and carries
+  `domain="[('survey_type','=','recruitment')]"`. Surveys seeded with
+  the default `survey_type='custom'` **do not appear** in the
+  autocomplete — seed must set `survey_type='recruitment'`.
+- The header **"Send Interview"** button on the applicant form has
+  `invisible="not active or not survey_id"`. Attaching a survey at
+  the job level is sufficient to reveal it; no applicant write is
+  needed (related field propagates through the job link).
+- The hr.job kanban card exposes a hidden `action_new_survey` menu
+  item ("Interview Form" under New) that auto-creates a blank
+  `survey.survey` titled `Interview Form: <job name>` and links it
+  via the kanban menu `t-if="!record.survey_id.raw_value"` branch.
+  Tasks that want the agent to **pick an existing** survey should
+  forbid `hr.job.action_new_survey` (and `survey.survey.create`) in
+  `trace_spec.yaml` so a BU that clicks the wrong menu doesn't get a
+  cheap pass.
+- `/odoo/recruitment` default kanban card click opens
+  `action_hr_job_applications` (applicants), **not** the job form.
+  UI paths to the job form: (a) viewswitcher → list → click row
+  (BU empirically finds this first), or (b) kanban card 3-dots menu
+  → "Configuration" (`type="open"`). No form-view kanban button.
+
+---
+
 ## maintenance.equipment — field inventory & duplicate-create BU failure
 
 - `maintenance.equipment` has **no `next_action_date`** field (not in Python

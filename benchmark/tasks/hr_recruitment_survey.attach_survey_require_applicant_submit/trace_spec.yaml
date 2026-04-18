@@ -1,0 +1,28 @@
+# Trace oracle for hr_recruitment_survey.attach_survey_require_applicant_submit
+#
+# Medium: attach existing survey to hr.job via Interview Form m2o, save,
+# then open applicant to confirm Send Interview button is visible.
+
+required_ops: []
+
+optional_ops:
+  - hr.job.read
+  - hr.job.write
+  - hr.job.web_save
+  - hr.job.search_read
+  - hr.job.web_search_read
+  - hr.applicant.read
+  - hr.applicant.search_read
+  - hr.applicant.web_search_read
+  - survey.survey.name_search
+  - survey.survey.read
+  - survey.survey.search_read
+  - survey.survey.web_search_read
+  - ir.ui.view.get_views
+
+forbidden_ops:
+  - hr.job.unlink
+  - hr.applicant.unlink
+  - survey.survey.create
+  - survey.survey.unlink
+  - hr.job.action_new_survey
