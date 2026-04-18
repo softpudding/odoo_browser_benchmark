@@ -884,6 +884,7 @@ PO record is just mutating its partner_id.
 
 ---
 
+<<<<<<< HEAD
 ## website_hr_recruitment / hr.job publish + preview
 
 - `hr.job.website_description` is **frontend-only**: the only view that
@@ -933,3 +934,38 @@ PO record is just mutating its partner_id.
   [name]` produces two distinct "create" groups that both match
   expected_state.json partially. See
   `maintenance.create_equipment_schedule_preventive_plan`.
+=======
+## DateTimeField widget: button vs input dual rendering
+
+`addons/web/static/src/views/fields/datetime/datetime_field.xml` renders the
+`DateTimeField` as a `<button class="o_input">` showing the formatted value
+whenever the field has a value AND `picker.activeInput !== field`. Clicking
+the button sets `picker.activeInput = field`, which re-renders as an
+`<input>`. Playwright selectors that target `.o_field_widget[name='X'] input`
+time out on any pre-populated datetime.
+
+Correct oracle pattern:
+
+```python
+widget.locator("button, input").first.click()  # flip button → input
+page.wait_for_timeout(400)
+inp = widget.locator("input").first
+inp.wait_for(state="visible", timeout=5000)
+inp.fill("")
+inp.type("04/17/2026 00:00:00", delay=20)
+page.keyboard.press("Escape")           # close picker popover
+dialog.locator(".modal-title").click()  # commit
+```
+
+Applies to every datetime field with a seeded default (e.g., `stock.lot.expiration_date` when `product.template.expiration_time > 0` auto-fills the date at lot-create time via `_compute_expiration_date`). Also applies on the existing `oracle_helpers.set_datetime` helper path — if a task needs to overwrite a pre-populated datetime in headless, inline the button-click step.
+
+---
+
+## product_expiry module quirks
+
+- **Not in base snapshot** — seed must `button_immediate_install()` on the `product_expiry` module record (depends only on `stock`). Adds `use_expiration_date`/`expiration_time`/`use_time`/`removal_time`/`alert_time` (Integer days) to `product.template`, and `expiration_date`/`use_date`/`removal_date`/`alert_date` (Datetime) on `stock.lot`.
+- **Receipts picking type needs BOTH `use_create_lots=True` and `use_existing_lots=True`** for the Detailed Operations popup to expose a `lot_id` m2o (with autocomplete Create + internal-link button). `use_create_lots` alone gives text-only `lot_name` (no path to the stock.lot form); `use_existing_lots` alone hides the Create option. Both True → m2o widget with Create + open.
+- **Clicking the m2o internal-link arrow inside a dialog opens a NESTED `<div class="modal">`** (not a new action) because `many2one.xml` routes `openRecord('dialog')` when `env.inDialog=True`. Multiple visible modals — identify the lot dialog by the presence of `.o_field_widget[name='expiration_date']`, not `.last`.
+- **`stock.lot._compute_dates` shifts `use_date`/`removal_date`/`alert_date` every time `expiration_date` changes.** On a fresh write, these start at `expiration_date - template.{use,removal,alert}_time`. On re-write they get shifted by the `expiration_date` delta. So oracle must set `expiration_date` BEFORE `removal_date` — writing removal first gets clobbered.
+- **`stock.lot.display_complete`** is True iff the lot `id` is set OR the context has `display_complete=True`. When opened as a nested-dialog from a popup m2o, `id` is truthy (the lot was created on the fly), so the full form renders (Dates group + expiration_date after ref). No extra context plumbing needed.
+>>>>>>> b7b7398b ([ADD] benchmark: product_expiry.receive_lot_set_expiry_date (medium))

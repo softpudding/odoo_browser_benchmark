@@ -1,0 +1,21 @@
+task_id: product_expiry.receive_lot_set_expiry_date
+module: product_expiry
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/inventory
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "Open a confirmed receipt for a lot-tracked perishable product, open Detailed Operations, create a new lot on the fly, navigate to the stock.lot form to set expiration_date (today+60) and removal_date (today+55), save the lot, return to the picking, and Validate."
+  checks_verify: "stock.lot 'BP-LOT-001' exists for the perishable product with use_expiration_date flag set and with expiration_date / removal_date / use_date populated; picking.state='done'; receipt reached done with the 10-unit quant in stock."
+  failure_pattern: "Agent types the lot name on the move line and validates without navigating to the lot form to set expiration_date/removal_date, so the lot record exists but has no explicit expiration dates."
+  primary_track: true
+  tier: 2
