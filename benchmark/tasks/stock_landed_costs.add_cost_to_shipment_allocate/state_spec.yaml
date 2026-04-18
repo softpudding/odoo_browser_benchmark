@@ -1,0 +1,52 @@
+models:
+  stock.landed.cost:
+    match_key:
+      - amount_total
+    fields:
+      - state
+      - amount_total
+    ignore_fields:
+      - id
+      - name
+      - create_date
+      - write_date
+      - date
+      - account_move_id
+      - picking_ids
+      - cost_lines
+      - valuation_adjustment_lines
+  stock.landed.cost.lines:
+    match_key:
+      - product_id
+    fields:
+      - product_id
+      - price_unit
+      - split_method
+    ignore_fields:
+      - id
+      - name
+      - create_date
+      - write_date
+      - cost_id
+      - account_id
+      - currency_id
+  stock.valuation.adjustment.lines:
+    match_key:
+      - product_id
+    fields:
+      - product_id
+      - quantity
+      - additional_landed_cost
+    ignore_fields:
+      - id
+      - name
+      - create_date
+      - write_date
+      - cost_id
+      - cost_line_id
+      - move_id
+      - weight
+      - volume
+      - former_cost
+      - final_cost
+      - currency_id

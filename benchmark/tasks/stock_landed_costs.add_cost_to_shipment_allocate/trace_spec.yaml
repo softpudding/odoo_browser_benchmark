@@ -1,0 +1,47 @@
+# Trace oracle for stock_landed_costs.add_cost_to_shipment_allocate
+#
+# Hard (policy_trap): two-button flow (Compute + Validate) on a
+# draft stock.landed.cost with non-default split_method pre-seeded
+# on the Freight product.
+
+required_ops:
+  - stock.landed.cost.button_validate
+
+optional_ops:
+  - stock.landed.cost.compute_landed_cost
+  - stock.landed.cost.create
+  - stock.landed.cost.write
+  - stock.landed.cost.read
+  - stock.landed.cost.web_save
+  - stock.landed.cost.onchange
+  - stock.landed.cost.lines.read
+  - stock.landed.cost.lines.write
+  - stock.landed.cost.lines.create
+  - stock.landed.cost.lines.onchange
+  - stock.landed.cost.lines.web_save
+  - stock.valuation.adjustment.lines.read
+  - stock.valuation.adjustment.lines.create
+  - stock.valuation.adjustment.lines.write
+  - stock.valuation.adjustment.lines.unlink
+  - stock.picking.read
+  - stock.picking.name_search
+  - stock.picking.web_search_read
+  - stock.picking.search_read
+  - stock.move.read
+  - stock.move.write
+  - product.product.name_search
+  - product.product.read
+  - product.template.read
+  - account.journal.read
+  - account.journal.name_search
+  - res.partner.read
+  - ir.ui.view.get_views
+  - ir.ui.menu.load_menus
+
+forbidden_ops:
+  - stock.landed.cost.unlink
+  - stock.landed.cost.button_cancel
+  - stock.picking.action_cancel
+  - stock.picking.button_validate
+  - purchase.order.button_cancel
+  - purchase.order.unlink

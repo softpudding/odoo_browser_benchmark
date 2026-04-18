@@ -1286,3 +1286,62 @@ Applies to every datetime field with a seeded default (e.g., `stock.lot.expirati
       referring.sudo().write({"assigned_partner_id": False})
   old_partners.sudo().unlink()
   ```
+
+---
+
+## stock_landed_costs — module install, picking domain, FIFO categ, two-button flow
+
+- **Not in base snapshot** — seed must `button_immediate_install()` on the
+  `stock_landed_costs` module record before referencing the
+  `stock.landed.cost` model. Guard downstream seed ops with
+  `if "stock.landed.cost" not in env.registry` to survive a partial install.
+- `stock.landed.cost.picking_ids` many2many_tags field domain requires
+  `move_ids.is_in != False OR move_ids.is_out != False`. `stock.move.is_in`
+  (added by `stock_account`) is a stored Boolean that flips True only when
+  `move.state == 'done'` and the move is net-incoming. So the seeded
+  receipt MUST be validated (`button_validate` with `skip_backorder=True`
+  and `move.quantity` + `move.picked=True` pre-set) or the Transfers
+  autocomplete silently returns zero rows.
+- `stock.landed.cost.get_valuation_lines` skips moves whose
+  `product.cost_method` is not in `('fifo', 'average')`. The default
+  company `cost_method` is `'standard'`, so a product with no special
+  category yields Compute → 0 adjustment lines → Validate raises
+  `"Cost and adjustments lines do not match."` Seed a dedicated
+  `product.category` with `property_cost_method='fifo'` (and
+  `property_valuation='periodic'` to avoid needing stock journal /
+  valuation / price-diff accounts — `real_time` requires those three
+  on the category or validate crashes at `_create_accounting_entries`).
+- `product.template.landed_cost_ok` + `split_method_landed_cost` are
+  **invisible** on the product form when `type != 'service'`. They're
+  writable via JSON-RPC regardless, but a UI-driven task that
+  toggles "Is a Landed Cost" MUST have `type='service'` first.
+- **Compute is a footer button**, not a header action. It lives inside
+  the Additional Costs tab in the `oe_subtotal_footer` group as
+  `<button name="compute_landed_cost" class="float-end btn-secondary"/>`.
+  Agents / oracles that target "Validate" via `.o_statusbar_buttons
+  button` and never call Compute hit the "Cost and adjustments lines
+  do not match" UserError.
+- **Validate (`button_validate`) requires a persisted record**. On a
+  dirty new form in Odoo 19 Owl, clicking Validate is a no-op. Oracle
+  must click `.o_form_button_save` first (if visible), THEN click
+  `.o_statusbar_buttons button[name='button_validate']`.
+- **DO NOT use `button.o_form_button_create` as a Validate fallback
+  selector**. `.o_form_button_create` is the top-bar "New" (plus
+  icon) button. Including it in an OR-selector for Validate makes
+  Playwright click "New" on the saved record, creating a phantom
+  `stock.landed.cost` with `amount_total=0` and poisoning the
+  state_diff.
+- `stock.landed.cost.lines.onchange_product_id` stamps
+  `split_method = product.product_tmpl_id.split_method_landed_cost or
+  line.split_method or 'equal'` — so the cost line inherits the
+  Freight-product default (e.g. `by_quantity`) on product pick. Tasks
+  that assert a specific split_method should pre-seed
+  `split_method_landed_cost` on the service product template AND
+  assert the cost-line value in `check.py`.
+- `compute_landed_cost()` calls
+  `AdjustementLines.search([('cost_id','in', self.ids)]).unlink()`
+  at the top, so clicking Compute twice is safe — each call rebuilds
+  the valuation adjustment lines from scratch.
+- URL for the list action is `/odoo/landed-costs`
+  (`action.path='landed-costs'`, xmlid `stock_landed_costs.action_stock_landed_cost`).
+  Menu path is Inventory > Operations > Adjustments > Landed Costs.

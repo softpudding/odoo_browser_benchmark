@@ -1,0 +1,21 @@
+task_id: stock_landed_costs.add_cost_to_shipment_allocate
+module: stock_landed_costs
+difficulty: hard
+instruction: see prompt.md
+start_url: /odoo/inventory
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 480
+step_limit: 300
+metadata:
+  category: policy_trap
+  difficulty_level: hard
+  agent_interaction: "From Inventory, open Operations > Landed Costs, click New. Pin the date, pick the seeded completed receipt R-BENCH-LC-001 in the Transfers m2m_tags autocomplete, add a cost line for product Freight split by_quantity with cost 45 EUR, click Compute to generate valuation adjustment lines (15/unit x 3 units), then click Validate to move state to Posted."
+  checks_verify: "stock.landed.cost in state='done' with exactly one valuation_adjustment_line (quantity=3.0, additional_landed_cost=45.0 — one line per stock.move), one cost line for Freight with price_unit=45 and split_method='by_quantity', amount_total=45."
+  failure_pattern: "Agent skips the Compute button (Validate alone raises 'Cost and adjustments lines do not match'), picks wrong picking in the many2many_tags autocomplete, leaves default split_method 'equal' instead of 'by_quantity', or misreads the two-step Compute+Validate flow."
+  primary_track: true
+  tier: 3
