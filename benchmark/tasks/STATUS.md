@@ -293,16 +293,16 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 281 | sale_project.timesheet_task_mark_billable_log_hours [hard] | Log timesheet hours on a sale-generated project task, mark billable, and verify invoice-ready state | Removed | FAIL (spec) | — | — |
 | 282 | project_todo.reorder_notes_add_due_dates_bulk [easy] | Set due dates on three seeded To-Do notes from the Kanban view | Done | PASS | PASS | 1.0 |
 | 283 | website_hr_recruitment.publish_job_from_backoffice_then_apply_portal [hard] | Create and publish a job position in the back office, then apply to it from the public portal | Done | PASS | FAIL | 0.0 |
-| 284 | mass_mailing.create_segmented_mailing_save_draft [medium] | Create an email mailing with a filtered Contacts recipient list and save as draft | WIP | — | — | — |
-| 285 | event_sale.configure_paid_ticket_register_with_invoice [hard] | Configure a paid event ticket, register an attendee, confirm registration, and generate the invoice | WIP | — | — | — |
-| 286 | inventory.run_replenishment_from_dashboard [medium] | Run replenishment for a low-stock product from the Replenishment dashboard | WIP | — | — | — |
-| 287 | sale_project.deliver_milestone_invoice_partially [hard] | Mark one of three SO milestones delivered and create an invoice for that milestone only | WIP | — | — | — |
-| 288 | website_sale.unpublish_archive_unarchive_publish_cycle [medium] | Take a published shop product through Unpublish → Archive → Unarchive → Publish | WIP | — | — | — |
-| 289 | website_blog.edit_post_change_author_add_tags_schedule [medium] | Edit a seeded blog post: change author, add two tags, and set the publish date | WIP | — | — | — |
-| 290 | website_slides.add_quiz_lesson_to_existing_course [hard] | Add a multi-question quiz lesson with answers to an existing course and publish | WIP | — | — | — |
-| 291 | sale_purchase.dropship_so_to_po_chain_validate [hard] | Confirm a dropship-routed SO and validate the auto-generated PO + receipt chain | WIP | — | — | — |
-| 292 | mail.create_channel_set_custom_avatar_pin_two_messages [medium] | Create a channel, upload a custom avatar, post messages, and pin two specific ones | WIP | — | — | — |
-| 293 | fleet.transfer_vehicle_between_drivers_log_history [medium] | Transfer a vehicle to a new driver and verify the assignation log entry | WIP | — | — | — |
+| 284 | mass_mailing.create_segmented_mailing_save_draft [medium] | Create an email mailing with a filtered Contacts recipient list and save as draft | Done | PASS | FAIL | 0.667 |
+| 285 | event_sale.configure_paid_ticket_register_with_invoice [hard] | Configure a paid event ticket, register an attendee, confirm registration, and generate the invoice | Done | PASS | FAIL | 0.0 |
+| 286 | inventory.run_replenishment_from_dashboard [medium] | Run replenishment for a low-stock product from the Replenishment dashboard | Done | PASS | PASS | 1.0 |
+| 287 | sale_project.deliver_milestone_invoice_partially [hard] | Mark one of three SO milestones delivered and create an invoice for that milestone only | Done | PASS | PASS | 1.0 |
+| 288 | website_sale.unpublish_archive_unarchive_publish_cycle [medium] | Take a published shop product through Unpublish → Archive → Unarchive → Publish | Done | PASS | PASS | 1.0 |
+| 289 | website_blog.edit_post_change_author_add_tags_schedule [medium] | Edit a seeded blog post: change author, add two tags, and set the publish date | Done | PASS | FAIL | 0.0 |
+| 290 | website_slides.add_quiz_lesson_to_existing_course [hard] | Add a multi-question quiz lesson with answers to an existing course and publish | Done | PASS | FAIL | 0.0 |
+| 291 | sale_purchase.dropship_so_to_po_chain_validate [hard] | Confirm a dropship-routed SO and validate the auto-generated PO + receipt chain | Done | PASS | PASS | 1.0 |
+| 292 | mail.create_channel_set_custom_avatar_pin_two_messages [medium] | Create a channel, upload a custom avatar, post messages, and pin two specific ones | Done | PASS | FAIL | 0.0 |
+| 293 | fleet.transfer_vehicle_between_drivers_log_history [medium] | Transfer a vehicle to a new driver and verify the assignation log entry | Done | PASS | PASS | 1.0 |
 
 ---
 
@@ -2609,3 +2609,153 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Back-office: create job "Senior Widget Engineer" in Administration with target=2 and a description, then publish it. Portal: open /jobs, click the new job, click Apply Now, fill the applicant form (incl. LinkedIn to satisfy client-side validation), and submit. |
 | **Capability tested** | Cross-surface round-trip between admin back-office and public portal — distinct from existing tasks that start from already-published jobs. |
 | **Notes** | Well-calibrated hard tier. Browser-use missed setting the Department field because the kanban "New" opens a stub modal — the full form is only reachable via "Configure" on the kanban card afterward. |
+
+---
+
+## mass_mailing.create_segmented_mailing_save_draft
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.667 |
+| **Odoo modules** | Email Marketing |
+| **Workflow** | Create a new mass mailing with subject "Berlin April Bulletin", recipients = Contact filtered by City="Berlin" (returns 2 of 3 seeded partners), set body, save as draft (do not send). |
+| **Capability tested** | Domain filter wizard configuration — first task in this previously untouched module. |
+| **Notes** | Well-calibrated medium. BU created a duplicate mailing with subject pollution (subject ended with email_from text) and run 2 hit a parallel-cleanup env crash. |
+
+---
+
+## event_sale.configure_paid_ticket_register_with_invoice
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
+| **Odoo modules** | Events, Sales |
+| **Workflow** | Add paid ticket "Professional Pass" (€150, 50 seats) to seeded event, register attendee "Berta Attendee" via the Sales→event-configurator path, then through the registrations wizard, then click Create Invoice in the wizard. |
+| **Capability tested** | Cross-module event→sale→invoice round-trip with mandatory attendee-detail override in a wizard. |
+| **Notes** | Well-calibrated hard tier. BU consistently skipped the attendee-name override in the registration wizard, leaving the partner's billing name on the registration. First task targeting the event_sale bridge. |
+
+---
+
+## inventory.run_replenishment_from_dashboard
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
+| **Odoo modules** | Inventory, Purchase |
+| **Workflow** | Open Inventory → Operations → Procurement → Replenishment, find the seeded "Bench Reorder Widget" row (on-hand=2 vs need=28), click the "Order" button on that row to auto-create a draft PO for vendor "Bench Supplies Ltd". |
+| **Capability tested** | Replenishment dashboard navigation + per-row action button. |
+| **Notes** | Calibrated below medium target — both BU runs solved cleanly. The button is "Order" not "Replenish" in Odoo 19, and the orderpoint auto-deletes after qty_to_order reaches 0. |
+
+---
+
+## sale_project.deliver_milestone_invoice_partially
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
+| **Odoo modules** | Sales, Project (Sale-Project) |
+| **Workflow** | Open the auto-generated project for an SO with `service_policy=delivered_milestones`. Mark only "Design Phase" milestone reached (not Build or Launch). Navigate back to SO and create a Regular Invoice for the delivered third only. |
+| **Capability tested** | Selective milestone delivery + cross-module invoice generation, distinct from existing project-generation-only tasks. |
+| **Notes** | Calibrated below hard target — milestone checkbox + accept-default wizard proved straightforward for browser-use. |
+
+---
+
+## website_sale.unpublish_archive_unarchive_publish_cycle
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS (re-run after env crashes) |
+| **F1** | 1.0 |
+| **Odoo modules** | Website (eCommerce) |
+| **Workflow** | Take seeded "Bench Cycle Gadget" through Unpublish (toggle on Sales tab) → Archive (cog menu) → switch to Archived filter → Unarchive → Publish back → also set Internal Reference to "BCG-RESTORED" on General tab. |
+| **Capability tested** | 5-step state cycle across kanban/list views, cog menu, and multiple form tabs. |
+| **Notes** | First two BU runs crashed mid-eval from sibling worktrees' parallel cleanup; sequential re-run after batch settled completed in 224s. Despite UI complexity, BU solved it. |
+
+---
+
+## website_blog.edit_post_change_author_add_tags_schedule
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
+| **Odoo modules** | Website (Blog) |
+| **Workflow** | Open seeded post "Spring Planning Recap" → change Author Many2one to "Alice Authoress" (in Publishing Options group) → add tags Planning + Quarterly (NOT Retrospective distractor) → set Publish on = 2026-04-25 09:00:00 → save. Do NOT publish. |
+| **Capability tested** | Multi-field edit with side-group Many2one, m2m tag picker, and datetime field. |
+| **Notes** | Well-calibrated medium. BU run 1 typed the datetime imprecisely (2026-04-25 09:00:30 vs expected 09:00:00) — exactly the medium-tier failure mode designed for. Subsequent runs hit env crashes. |
+
+---
+
+## website_slides.add_quiz_lesson_to_existing_course
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL (re-run after env crashes) |
+| **F1** | 0.0 |
+| **Odoo modules** | Website (eLearning) |
+| **Workflow** | Open seeded "Bench Onboarding Course" → Add Content → set Type=Quiz, title "Chapter 1 Quiz" → in Questions tab, add 3 questions each with 3 answers, mark exact correct answer (Blue, Daily, Platform) → publish slide. Distractor "Welcome Video" must remain unchanged. |
+| **Capability tested** | Nested polymorphic form (slide.question + slide.answer rows) with correct-answer flag per question. |
+| **Notes** | Well-calibrated hard. Re-run BU marked wrong correct answer (Never instead of Daily on Q2) and timed out at 480s on a third try. Initial parallel runs crashed environmentally. |
+
+---
+
+## sale_purchase.dropship_so_to_po_chain_validate
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
+| **Odoo modules** | Sales, Purchase, Stock (Dropshipping) |
+| **Workflow** | Seed creates a confirmed SO for a Dropship-routed product (auto-installs `stock_dropshipping`). Agent navigates SO → Purchase smart button → Confirm PO → Dropship smart button → Validate the dropship picking. |
+| **Capability tested** | Smart-button chain across SO → PO → dropship picking with state transitions. |
+| **Notes** | Calibrated below hard target — explicit smart-button hints in the prompt made navigation obvious. Designer flagged: drop labels and add distractors to push BU pass rate down. First sale_purchase task. |
+
+---
+
+## mail.create_channel_set_custom_avatar_pin_two_messages
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
+| **Odoo modules** | Discuss |
+| **Workflow** | Create channel "engineering-hub" with description, upload custom 4×4 PNG avatar from seed_artifacts, post 3 specific messages in order, pin exactly 2 (standup + retro) — NOT the PR review message. |
+| **Capability tested** | File upload (avatar) + selective pin among 3 messages by content. |
+| **Notes** | Well-calibrated medium. BU run 1 created channel + name fields then failed file upload and never posted messages. Run 2 created a duplicate channel. Discuss auto-creates an Administrator/OdooBot DM that pollutes state-diff F1 (oracle check.py is the source of truth). |
+
+---
+
+## fleet.transfer_vehicle_between_drivers_log_history
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
+| **Odoo modules** | Fleet |
+| **Workflow** | Open vehicle "Bench Sedan BS-1001" assigned to Driver Alice → change Driver Many2one to Driver Bob with effective date 2026-04-18 → save. Verify the system-created `fleet.vehicle.assignation.log` entry. |
+| **Capability tested** | Driver Many2one swap that auto-creates an audit log entry. |
+| **Notes** | Brittle calibration — `fleet.vehicle.write` auto-sets `date_start = today`, and 2026-04-18 happens to be today's date in this run window, so BU only needed to change driver and save. Will become genuinely medium on any other date. |
