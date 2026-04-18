@@ -1090,6 +1090,7 @@ Applies to every datetime field with a seeded default (e.g., `stock.lot.expirati
 
 ---
 
+<<<<<<< HEAD
 ## mrp_subcontracting — receipt + auto-MO chain
 
 - **Module not in base**: `mrp_subcontracting` AND its auto-install-gated
@@ -1144,3 +1145,60 @@ Applies to every datetime field with a seeded default (e.g., `stock.lot.expirati
   (`is_subcontract AND move_line_ids AND quantity > 0 AND MO state !=
   cancel`). The canonical flow is: open Details on the move → fill
   move_lines → validate — the smart button is optional drill-down.
+=======
+## pos_restaurant — install on demand, auto-floor, course.fired is the "ready" flag
+
+- `pos_restaurant` is NOT in `benchmark/base_modules.txt`. Seeds must
+  `button_immediate_install()` the `pos_restaurant` `ir.module.module`
+  row before using `restaurant.floor` / `restaurant.table` /
+  `restaurant.order.course` or setting
+  `pos.config.module_pos_restaurant=True`. Depends on `point_of_sale`
+  (already in base).
+- `pos.config._setup_default_floor` fires on both create and write
+  whenever `module_pos_restaurant=True`, auto-creating a
+  `restaurant.floor` named after the company and a single
+  `restaurant.table` with `table_number=1`. To control deterministic
+  floor/table identity, seed must: (1) create the config, (2) capture
+  `config.floor_ids`, (3) `config.write({"floor_ids": [(5, 0, 0)]})` to
+  detach, (4) unlink the orphan tables + floor, (5) create the desired
+  `restaurant.floor` / `restaurant.table` and link via
+  `pos_config_ids`. Order matters: the floor's `ondelete` guard
+  (`_unlink_except_active_pos_session`) blocks unlink while any of its
+  `pos_config_ids` has a non-closed session, so do all of this BEFORE
+  `env["pos.session"].create({"config_id": config.id})`.
+- Odoo 19 Community has **no** `kitchen_done` or explicit `ready` flag
+  on `pos.order`. The per-course kitchen-ready signal is
+  `restaurant.order.course.fired` (Boolean, default False) with an
+  auto-set `fired_date` when `fired` flips True and no date was set.
+- Courses are NOT auto-created on line add. They exist only after the
+  user clicks the **Course** control button (`this.pos.addCourse()`),
+  which wraps existing lines into Course 1 + creates an empty Course 2.
+  If no course exists when the Send/Order button is clicked,
+  `order.getFirstCourse()` returns undefined and the
+  `firstCourse.fired=true` side effect in
+  `sendOrderInPreparationUpdateLastChange` is skipped.
+- Two UI paths set `course.fired=True`: (a) clicking the primary
+  action-pad **Send** button (class `.submit-order`, labelled with the
+  per-category count summary) fires the first non-fired course on the
+  order via `sendOrderInPreparationUpdateLastChange`; (b) clicking the
+  explicit **Fire Course N** button (class `.fire-btn`) which replaces
+  the Payment button only when `getCourseToFire()` returns a non-empty
+  not-yet-fired course (usually after all in-flight lines have already
+  been sent). The `Fired` badge in the course header is the visual
+  confirmation (`rounded text-bg-info` span inside `.order-course-name`).
+- `pos.order.pos_reference` is auto-generated per run as
+  `<pos_config_id>-<pos_session_id>-<nnnnnn>`. Do NOT use it as a
+  state-diff `match_key` when oracle and browser-use both create
+  orders — the strings diverge and F1 drops to zero on an otherwise
+  successful BU run. Use `table_id` (which normalises to the display
+  `<floor.name>, <table_number>`, e.g. `"Main Floor, 1"`) as a stable
+  cross-run key.
+- `restaurant.table._compute_display_name` returns
+  `f"{floor.name}, {table_number}"` — NOT `"T<n>"` or a prefix form.
+  The kiosk floor-plan tile shows ONLY `table_number` as its label.
+- Browser-use calibration: a single-shot run of the open-table +
+  split-course + fire-course-1 flow PASSES in ~100s on a clearly
+  labelled kiosk UI. Restaurant POS is not by itself a hard pattern;
+  harden via split-bill, transfer-merge, non-default course picks,
+  guests count, or cash reconciliation with a deliberate mismatch.
+>>>>>>> 6ef063e4 ([ADD] benchmark: pos_restaurant.open_table_order_mark_ready (hard))
