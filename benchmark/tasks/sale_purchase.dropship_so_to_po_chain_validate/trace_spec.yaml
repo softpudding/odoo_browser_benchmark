@@ -1,0 +1,47 @@
+# Trace oracle for sale_purchase.dropship_so_to_po_chain_validate
+#
+# Hard: smart-button chain across 3 records. The agent must confirm the
+# auto-generated PO and then validate the dropship picking.
+
+required_ops:
+  - purchase.order.button_confirm
+  - stock.picking.button_validate
+
+optional_ops:
+  - sale.order.read
+  - sale.order.web_read
+  - sale.order.search_read
+  - sale.order.web_search_read
+  - sale.order.line.read
+  - purchase.order.read
+  - purchase.order.web_read
+  - purchase.order.search_read
+  - purchase.order.web_search_read
+  - purchase.order.line.read
+  - purchase.order.line.write
+  - stock.picking.read
+  - stock.picking.web_read
+  - stock.picking.search_read
+  - stock.picking.web_search_read
+  - stock.picking.write
+  - stock.picking.web_save
+  - stock.move.read
+  - stock.move.write
+  - stock.move.web_save
+  - stock.move.line.read
+  - stock.move.line.write
+  - stock.move.line.web_save
+  - stock.move.line.create
+  - stock.backorder.confirmation.process
+  - stock.backorder.confirmation.process_cancel_backorder
+  - ir.ui.view.get_views
+  - mail.message.create
+  - bus.bus.create
+
+forbidden_ops:
+  - sale.order.unlink
+  - sale.order._action_cancel
+  - purchase.order.unlink
+  - purchase.order.button_cancel
+  - stock.picking.unlink
+  - stock.picking.action_cancel
