@@ -330,7 +330,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 318 | website.create_contact_form_with_custom_field [hard] | Edit Contact Us page, add Selection field Inquiry Type with 3 options via website builder | Done | PASS | FAIL | 0.0 |
 | 319 | contacts.merge_three_duplicates_keep_email [hard] | Merge 3 duplicate contacts into one, choosing email from a specific record | WIP | — | — | — |
 | 320 | website_sale.create_gift_card_apply_in_cart [hard] | Configure Gift Card program, generate 1 €50 card code, apply in /shop/cart with €100 product | Done | PASS | PASS | 1.0 |
-| 321 | hr.create_department_assign_manager_three_employees [medium] | Create a new department, assign manager and 3 existing employees | WIP | — | — | — |
+| 321 | hr.create_department_assign_manager_three_employees [medium] | Create Bench Engineering dept with manager Mike, then bulk assign 3 employees to it | Done | PASS | FAIL | 0.0 |
 | 322 | stock.create_putaway_rule_for_specific_category [hard] | Create putaway rule routing a product category to a specific sub-location | WIP | — | — | — |
 | 323 | mail.invite_external_email_to_existing_channel [medium] | In existing channel, invite an external email (creates guest invitation) | WIP | — | — | — |
 | 324 | sale.add_line_with_optional_template_apply_discount [medium] | On a draft SO, add a line by selecting a template, then apply line-level 10% discount | WIP | — | — | — |
@@ -3200,3 +3200,18 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Configure Gift Card program (loyalty.program.create_from_template). Generate 1 gift card code worth €50. In /shop/cart with €100 product, enter code → €50 deducted → total €50. |
 | **Capability tested** | Two-stage workflow: backend Generate Gift Cards wizard + portal redemption via /shop/pricelist POST. |
 | **Notes** | Easier than hard. BU solved in 185s; Generate wizard only exposes qty/value/description so the wizard-with-non-default-values trap didn't fire. Workflow length justifies tier 3 listing. |
+
+---
+
+## hr.create_department_assign_manager_three_employees
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
+| **Odoo modules** | HR |
+| **Workflow** | Create department 'Bench Engineering' with manager Mike Manager. Open each of 3 seeded employees (Eng One, Eng Two, Eng Three) and set department_id=Bench Engineering. |
+| **Capability tested** | Bulk reassignment across N records — attention to completeness. |
+| **Notes** | Well-calibrated medium. BU created dept correctly + assigned Eng One + Eng Two, but **cleared** Eng Three's department_id to null instead of setting Bench Engineering — exactly the "may forget one" trap. |
