@@ -531,6 +531,50 @@ For mass_mailing oracles: prefer JSON-RPC `copy() + write()` over UI navigation 
 
 ---
 
+## calendar.event — duration is the reliable end-time handle
+
+`calendar.event.stop` is `invisible="1"` on the main form. `start` uses
+`widget="daterange" options="{'end_date_field': 'stop'}"` with a
+`.o_daterange_end` pill that opens a secondary `.o_datetime_picker` +
+`.o_time_picker_input` for the stop time.
+
+Driving that popover with `fill("4:00pm")` / `Tab` is flaky whenever the
+default stop is already 1h past start: Playwright's fill gets silently
+dropped and stop stays at start+1h. Oracles that happen to use a 1h
+duration (e.g. `calendar.invite_external_attendee_by_email`) hide this
+bug because the default is already correct.
+
+Reliable oracle pattern for any non-1h duration: write the visible
+`duration` float_time input directly.
+
+```python
+duration_input = page.locator('.o_field_widget[name="duration"] input').first
+duration_input.click(click_count=3)
+duration_input.fill("02:00")
+duration_input.press("Tab")
+```
+
+This deterministically produces `stop = start + duration` on web_save.
+
+---
+
+## calendar.event.alarm_ids — many2many_tags with `no_quick_create=True`
+
+The Options tab exposes `alarm_ids` as
+`widget="many2many_tags" options="{'no_quick_create': True}"`. Agents
+MUST pick an existing `calendar.alarm` record from autocomplete; typing
+a free-form label creates nothing.
+
+Odoo ships seven default alarms in `calendar/data/calendar_data.xml`
+covering 15/30 min + 1/2 h notifications + 1 d notification + 3/6 h
+email reminders. The `Notification - 1 Hours` record is the canonical
+"1 hour before" answer. Task `check.py` should assert
+`duration_minutes == 60`, not a specific alarm name/xmlid, and
+`trace_spec.yaml` should put `calendar.alarm.create`/`unlink` in
+`forbidden_ops` to pin the agent to the seeded records.
+
+---
+
 ## calendar.event.set_discuss_videocall_location is a no-op on the server
 
 In Odoo 19, `calendar.event.set_discuss_videocall_location()` is a no-op that returns True — the actual URL generation happens in JS (intercepted on the frontend). The private `_set_discuss_videocall_location()` does the real work but isn't callable via JSON-RPC.
