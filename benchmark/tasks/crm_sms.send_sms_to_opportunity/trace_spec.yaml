@@ -1,0 +1,26 @@
+# Trace oracle for crm_sms.send_sms_to_opportunity
+#
+# Medium: open cog Actions -> Send SMS -> fill body -> Send.
+
+required_ops: []
+
+optional_ops:
+  - crm.lead.read
+  - crm.lead.web_read
+  - crm.lead.search_read
+  - crm.lead.web_search_read
+  - sms.composer.create
+  - sms.composer.read
+  - sms.composer.web_read
+  - sms.composer.web_save
+  - sms.composer.action_send_sms
+  - sms.sms.create
+  - sms.sms.send
+  - mail.message.create
+  - ir.ui.view.get_views
+  - ir.actions.act_window.read
+
+forbidden_ops:
+  - crm.lead.unlink
+  - crm.lead.action_set_lost
+  - sms.sms.unlink
