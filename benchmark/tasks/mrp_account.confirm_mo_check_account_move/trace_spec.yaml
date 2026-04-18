@@ -1,0 +1,31 @@
+# Trace oracle for mrp_account.confirm_mo_check_account_move.
+#
+# Medium: open confirmed MO -> click Produce -> click Mark As Done ->
+# navigate to Accounting -> Journal Entries. account.move is generated
+# automatically by stock_account; no manual post.
+
+required_ops:
+  - mrp.production.button_mark_done
+
+optional_ops:
+  - mrp.production.read
+  - mrp.production.write
+  - mrp.production.web_save
+  - mrp.production.pre_button_mark_done
+  - mrp.production.search_read
+  - mrp.production.web_search_read
+  - mrp.production._action_done
+  - stock.move.read
+  - stock.move.write
+  - stock.move._action_done
+  - stock.move._create_account_move
+  - account.move.read
+  - account.move.search_read
+  - account.move.web_search_read
+  - ir.ui.view.get_views
+
+forbidden_ops:
+  - mrp.production.unlink
+  - mrp.production.action_cancel
+  - account.move.button_draft
+  - account.move.button_cancel
