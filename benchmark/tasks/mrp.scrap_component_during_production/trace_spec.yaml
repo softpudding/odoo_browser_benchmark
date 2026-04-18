@@ -1,0 +1,38 @@
+# Trace oracle for mrp.scrap_component_during_production.
+#
+# HARD: open MO form, open cog Actions > Scrap, fill and validate scrap
+# wizard (Bench Component A qty=2), then Produce All / Mark As Done on
+# the MO.
+
+required_ops:
+  - stock.scrap.action_validate
+
+optional_ops:
+  - mrp.production.read
+  - mrp.production.search_read
+  - mrp.production.web_save
+  - mrp.production.write
+  - mrp.production.button_scrap
+  - mrp.production.button_mark_done
+  - mrp.production.pre_button_mark_done
+  - mrp.production.action_assign
+  - mrp.production._action_assign
+  - stock.scrap.create
+  - stock.scrap.write
+  - stock.scrap.web_save
+  - stock.scrap.read
+  - stock.scrap.search_read
+  - stock.scrap.onchange
+  - stock.scrap.do_scrap
+  - stock.move.read
+  - stock.move.search_read
+  - stock.move.write
+  - stock.location.search
+  - stock.location.read
+  - ir.ui.view.get_views
+  - ir.actions.server.run
+
+forbidden_ops:
+  - mrp.production.unlink
+  - mrp.production.action_cancel
+  - stock.scrap.unlink

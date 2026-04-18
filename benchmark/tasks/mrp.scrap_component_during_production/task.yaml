@@ -1,0 +1,21 @@
+task_id: mrp.scrap_component_during_production
+module: mrp
+difficulty: hard
+instruction: see prompt.md
+start_url: /odoo/manufacturing
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 480
+step_limit: 300
+metadata:
+  category: side_effect_trap
+  difficulty_level: hard
+  failure_pattern: "Agent scraps the wrong component (Bench Component B instead of A), leaves the scrap wizard un-validated, or fails to mark the MO done after the scrap."
+  agent_interaction: "Open the in-progress MO, use the cog Actions > Scrap action, fill the scrap wizard with Bench Component A (qty=2), validate it, then return to the MO and Produce All / Mark as Done."
+  checks_verify: "A done stock.scrap for Bench Component A qty=2 linked to the MO; MO state=done with qty_produced=5; no other scraps; Bench Component B untouched."
+  primary_track: true
+  tier: 3

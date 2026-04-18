@@ -1,0 +1,18 @@
+task_id: account.create_manual_journal_entry_balanced
+module: account
+difficulty: hard
+instruction: see prompt.md
+start_url: /odoo/accounting
+login_context:
+  login: admin
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 450
+step_limit: 280
+agent_interface: browser_only
+metadata:
+  category: deep_ui_interaction
+  failure_pattern: "Agent must create a manual journal entry (move_type='entry') in the Miscellaneous Operations journal with exactly THREE balanced lines (one debit split across two credit accounts) using the Journal Items tab with explicit Debit/Credit columns, then post it. Browser agents often confuse this with an invoice form, miss the partner on the receivable line, or create unbalanced lines."
+  primary_track: true
+  tier: 3
