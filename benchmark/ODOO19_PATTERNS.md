@@ -1090,7 +1090,6 @@ Applies to every datetime field with a seeded default (e.g., `stock.lot.expirati
 
 ---
 
-<<<<<<< HEAD
 ## mrp_subcontracting — receipt + auto-MO chain
 
 - **Module not in base**: `mrp_subcontracting` AND its auto-install-gated
@@ -1145,7 +1144,9 @@ Applies to every datetime field with a seeded default (e.g., `stock.lot.expirati
   (`is_subcontract AND move_line_ids AND quantity > 0 AND MO state !=
   cancel`). The canonical flow is: open Details on the move → fill
   move_lines → validate — the smart button is optional drill-down.
-=======
+
+---
+
 ## pos_restaurant — install on demand, auto-floor, course.fired is the "ready" flag
 
 - `pos_restaurant` is NOT in `benchmark/base_modules.txt`. Seeds must
@@ -1201,4 +1202,3 @@ Applies to every datetime field with a seeded default (e.g., `stock.lot.expirati
   labelled kiosk UI. Restaurant POS is not by itself a hard pattern;
   harden via split-bill, transfer-merge, non-default course picks,
   guests count, or cash reconciliation with a deliberate mismatch.
->>>>>>> 6ef063e4 ([ADD] benchmark: pos_restaurant.open_table_order_mark_ready (hard))
