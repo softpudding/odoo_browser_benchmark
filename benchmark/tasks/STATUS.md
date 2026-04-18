@@ -331,9 +331,9 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 319 | contacts.merge_three_duplicates_keep_email [hard] | Merge 3 duplicate contacts into one, choosing email from a specific record | WIP | — | — | — |
 | 320 | website_sale.create_gift_card_apply_in_cart [hard] | Configure Gift Card program, generate 1 €50 card code, apply in /shop/cart with €100 product | Done | PASS | PASS | 1.0 |
 | 321 | hr.create_department_assign_manager_three_employees [medium] | Create Bench Engineering dept with manager Mike, then bulk assign 3 employees to it | Done | PASS | FAIL | 0.0 |
-| 322 | stock.create_putaway_rule_for_specific_category [hard] | Create putaway rule routing a product category to a specific sub-location | WIP | — | — | — |
+| 322 | stock.create_putaway_rule_for_specific_category [hard] | Create putaway rule routing a product category to a specific sub-location | Done | PASS | PASS | 1.0 |
 | 323 | mail.invite_external_email_to_existing_channel [medium] | In existing channel, invite an external email (creates guest invitation) | WIP | — | — | — |
-| 324 | sale.add_line_with_optional_template_apply_discount [medium] | On a draft SO, add a line by selecting a template, then apply line-level 10% discount | WIP | — | — | — |
+| 324 | sale.add_line_with_optional_template_apply_discount [medium] | On a draft SO, add a line by selecting a template, then apply line-level 10% discount | Done | PASS | PASS | 1.0 |
 | 325 | crm.create_lead_from_email_alias_log_message [hard] | Create a CRM team with email alias, then create lead via Send Message simulating inbound | WIP | — | — | — |
 | 326 | project.create_kanban_stage_reorder_drag [medium] | In project Kanban view, create a new stage and reorder it before existing stages | WIP | — | — | — |
 | 327 | account.create_recurring_journal_entry [hard] | Create a journal entry with template repeating monthly for 3 months | WIP | — | — | — |
@@ -3215,3 +3215,33 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Create department 'Bench Engineering' with manager Mike Manager. Open each of 3 seeded employees (Eng One, Eng Two, Eng Three) and set department_id=Bench Engineering. |
 | **Capability tested** | Bulk reassignment across N records — attention to completeness. |
 | **Notes** | Well-calibrated medium. BU created dept correctly + assigned Eng One + Eng Two, but **cleared** Eng Three's department_id to null instead of setting Bench Engineering — exactly the "may forget one" trap. |
+
+---
+
+## stock.create_putaway_rule_for_specific_category
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS (F1=1.0, 0 postcondition failures, 109.3s wall clock) |
+| **F1** | 1.0 |
+| **Odoo modules** | Inventory |
+| **Workflow** | Navigate Inventory > Configuration > Putaway Rules; click New to add an inline editable row; fill location_in_id=WH/Stock, category_id=Bench Cold Items (NOT product_id), location_out_id=WH/Stock/Refrigerator; save the list. |
+| **Capability tested** | Selecting the non-default Product Category column (not the default Product column) when both autocomplete fields are visible side-by-side and become mutually-readonly when one is set. |
+| **Notes** | Calibrated as `hard` but BU passed first attempt with F1=1.0. The editable=bottom list view exposes both Product and Product Category columns; once the agent reads the prompt's explicit "Product Category" instruction, the choice is unambiguous and BU has no trouble. The mutual-readonly side-effect (filling category greys out product, and vice versa) actually HELPS BU because it makes the choice visually obvious. To make this genuinely hard, would need to combine with another non-default selection (e.g., a Storage Category dropdown that becomes required when sublocation='closest_location') or move to a wizard with radio buttons. |
+
+---
+
+## sale.add_line_with_optional_template_apply_discount
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
+| **Odoo modules** | Sales |
+| **Workflow** | Open seeded draft SO (customer reference S-BENCH-OPT-001, customer Bench Optional Co). Click "Add a product" in the order lines, pick "Bench Service Bundle" from the autocomplete, set qty=2 and per-line Discount=10 on that new row, then Save (do not Confirm). |
+| **Capability tested** | Inline one2many row creation + per-row discount entry while leaving an existing line untouched. |
+| **Notes** | Seed enables `sale.group_discount_per_so_line` so the Discount column renders on the line. "Bench Service Bundle" is a service product; "Bench Hardware Kit" is the pre-existing consumable line. Both Oracle (32s) and Browser-Use (143s) solved the task cleanly with F1=1.0 on first attempt, so the task calibrates EASIER than medium — the inline add+discount pattern is well within BU's current capability once the discount group is pre-enabled. No unauthorized writes, no forbidden ops. |
