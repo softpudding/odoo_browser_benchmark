@@ -254,7 +254,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 242 | helpdesk.create_ticket_assign_priority [medium] | N/A | — | — | — |
 | 243 | fleet.register_vehicle_log_odometer [easy] | N/A | — | — | — |
 | 244 | hr_holidays.allocate_sick_leave_to_employee [easy] | Done | PASS | PASS | 1.0 |
-| 245 | hr_holidays.request_half_day_morning [easy] | N/A | — | — | — |
+| 245 | hr_holidays.request_half_day_morning [easy] | Done | PASS | — | — |
 | 246 | hr_holidays.cancel_approved_leave_and_reallocate [hard] | Done | PASS | PASS | 1.0 |
 | 247 | hr_expense.reject_expense_report_with_feedback [medium] | Done | PASS | PASS | 1.0 |
 | 248 | hr_expense.submit_approve_post_accounting [hard] | Done | PASS | FAIL | 0.0 |
