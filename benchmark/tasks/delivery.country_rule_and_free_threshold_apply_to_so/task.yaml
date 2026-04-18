@@ -1,0 +1,20 @@
+task_id: delivery.country_rule_and_free_threshold_apply_to_so
+module: delivery
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/delivery-methods
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "Create a fixed-price carrier with a country restriction and free-shipping threshold, then apply it to the correct quotation and confirm."
+  checks_verify: "Carrier is restricted to the US with the exact free-over threshold, the target SO is confirmed with one free delivery line, and the distractor SO remains untouched."
+  primary_track: true
+  tier: 2

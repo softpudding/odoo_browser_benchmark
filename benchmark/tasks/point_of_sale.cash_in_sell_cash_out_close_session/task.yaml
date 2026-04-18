@@ -1,0 +1,21 @@
+task_id: point_of_sale.cash_in_sell_cash_out_close_session
+module: point_of_sale
+difficulty: hard
+instruction: see prompt.md
+start_url: /odoo/point-of-sale
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 420
+step_limit: 260
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: hard
+  agent_interaction: "Open a POS session, perform cash in and cash out operations around a cash sale, then close the register with the correct counted amount."
+  checks_verify: "The session closes successfully, one cash-paid order exists, and the cash in/out statement lines were recorded with the exact amounts."
+  failure_pattern: "Browser agents often struggle with the POS cash management popups and the closing flow that mixes kiosk actions with back-office accounting state."
+  primary_track: true
+  tier: 3
