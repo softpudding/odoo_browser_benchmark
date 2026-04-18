@@ -320,7 +320,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 308 | survey.publish_share_via_link_get_url [easy] | Open seeded 'Customer Pulse Q2' survey, click Share, verify public /survey/start URL, close dialog | Done | PASS | PASS | 1.0 |
 | 309 | point_of_sale.add_item_apply_global_discount_pay_cash [hard] | POS session: 2 items, open Actions popup, Discount 15%, pay cash, validate order | Done | PASS | PASS | 1.0 |
 | 310 | mass_mailing.duplicate_existing_change_subject_recipients [medium] | Duplicate seeded 'Q1 Bulletin Template' via Actions→Duplicate, change subject and country=Germany filter | Done | PASS | FAIL | 0.0 |
-| 311 | hr_holidays.refuse_then_re_request_other_type [hard] | As manager refuse a leave, then as employee re-request with different leave type | WIP | — | — | — |
+| 311 | hr_holidays.refuse_then_re_request_other_type [hard] | Manager refuses Eves Paid Time Off, posts reason in chatter, then creates Sick Time Off on her behalf | Done | PASS | FAIL | 0.71 |
 | 312 | calendar.create_event_with_two_organizers_recurring_weekly [medium] | Create weekly recurring Monday event 09:00-09:30 with 2 attendees and Discuss videocall link | Done | PASS | FAIL | 0.0 |
 | 313 | mrp.scrap_component_during_partial_production [hard] | During an MO, scrap a defective component before producing | WIP | — | — | — |
 | 314 | crm.assign_team_change_salesperson_log_activity [medium] | Open opportunity, change sales team and salesperson, log a 'Call' activity | WIP | — | — | — |
@@ -3080,3 +3080,18 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Create event 'Weekly Standup' on 2026-06-01 09:00-09:30 (Monday); add Alice + Bob attendees; set Weekly recurrence on Mondays ending 2026-12-31; generate Discuss videocall link; save. |
 | **Capability tested** | Datetime entry + recurrence weekday picker + videocall location action. |
 | **Notes** | Well-calibrated medium. BU got datetime in AM/PM wrong (entered 01:00 instead of 09:00) and left Saturday toggled in weekday picker. Oracle uses JSON-RPC because set_discuss_videocall_location is server-side no-op (real work is JS-intercepted). |
+
+---
+
+## hr_holidays.refuse_then_re_request_other_type
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL (gave_up at 480s; strict FAIL, F1 0.71) |
+| **F1** | 0.71 |
+| **Odoo modules** | Time Off |
+| **Workflow** | Admin (manager) opens Eve's pending Paid Time Off, clicks Refuse, posts refusal reason "Use sick leave instead" as chatter message, then creates new Sick Time Off on Eve's behalf for same dates via the manager approval list, save to land in 'confirm'. |
+| **Capability tested** | Two-step lifecycle on different records: refuse + chatter + create-on-behalf-of with different leave type. |
+| **Notes** | Well-calibrated hard. hr.leave has no native refuse_reason — captured as chatter message. BU created a duplicate leave (one with 0 days) before producing the correct 3-day record; semantic check.py passed but strict scoring penalised the dup. |
