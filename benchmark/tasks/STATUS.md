@@ -325,7 +325,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 313 | mrp.scrap_component_during_partial_production [hard] | Open MO, cog Actions → Scrap (qty=2 ScrewA, tag Defective batch), validate scrap, then Produce All → Mark Done | Done | PASS | FAIL | 0.0 |
 | 314 | crm.assign_team_change_salesperson_log_activity [medium] | Open Bench Big Deal, change Team to Channel + Salesperson Sara via Contacts tab, schedule Call activity | Done | PASS | PASS | 1.0 |
 | 315 | website_sale.add_optional_at_cart_remove_main_keep_optional [hard] | In webshop cart with main+optional product, remove the main and verify optional remains | WIP | — | — | — |
-| 316 | hr_expense.create_with_currency_eur_to_usd [medium] | Create expense in foreign currency (USD) and verify EUR conversion in report | WIP | — | — | — |
+| 316 | hr_expense.create_with_currency_eur_to_usd [medium] | Create NYC Hotel expense in USD (200 USD = 185 EUR), employee paid, verify EUR conversion | Done | PASS | FAIL | 0.0 |
 | 317 | event_product.create_event_product_link_to_ticket [medium] | Create a service product linked to an event ticket type | WIP | — | — | — |
 | 318 | website.create_contact_form_with_custom_field [hard] | On website /contact-us page, add a custom dropdown field via website builder | WIP | — | — | — |
 | 319 | contacts.merge_three_duplicates_keep_email [hard] | Merge 3 duplicate contacts into one, choosing email from a specific record | WIP | — | — | — |
@@ -3125,3 +3125,18 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Open MO M-BENCH-SCRAP-001, click cog → Scrap (binding action), set product=ScrewA + qty=2 + tag=Defective batch + source=stock, validate scrap. Then Produce All → Mark As Done. |
 | **Capability tested** | Scrap binding action via cog menu + non-default qty edit on wizard + tag picker. |
 | **Notes** | Well-calibrated hard. BU left scrap_qty at default 1.0 instead of 2 — the calibration trap. RequiredOpRecall=1.0 (BU did open and validate the wizard). Strict F1=0.0 (1 missing + 1 extra edit). |
+
+---
+
+## hr_expense.create_with_currency_eur_to_usd
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
+| **Odoo modules** | Expenses |
+| **Workflow** | Create expense 'NYC Hotel' product=Hotel, total=200 USD, date=2026-04-01, paid by employee. (Sheet/report wrapper removed in Odoo 19; expense is the unit.) Verify EUR conversion ≈ 185. |
+| **Capability tested** | Multi-currency dropdown selection + computed amount conversion. |
+| **Notes** | Well-calibrated medium. BU completed correct fields but created the expense twice — postcondition "exactly 1 expense" fails. Currency dropdown gated by base.group_multi_currency; res.currency records start active=False in fresh DBs. |

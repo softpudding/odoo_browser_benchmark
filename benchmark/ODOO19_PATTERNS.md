@@ -437,3 +437,12 @@ On an **opportunity**, `team_id` is NOT in the main form header. Only editable c
 - The "Scrap" action on an MO is `mrp.action_production_order_scrap` (`ir.actions.server`, `binding_view_types="form"`) — accessed via cog Actions menu, NOT a header status-bar button.
 - `stock.scrap.scrap_qty` defaults to 1.0 — agents often forget to override it. Good calibration trap for hard tier.
 - `stock.scrap.production_id` as match_key emits an extra "create" diff row that must be in expected_state.json.
+
+---
+
+## hr_expense changes in Odoo 19
+
+- `hr.expense.sheet` model is **REMOVED**. The legacy "Expense Report" wrapper is gone — submission/approval/posting now happens directly on `hr.expense`. Tasks ported from older versions that say "create an expense report" must be redesigned. Vestige: `hr.expense.former_sheet_id` (Integer) preserves legacy id for migrated data only.
+- `hr.expense.currency_id` dropdown has `groups="base.group_multi_currency"` — invisible without that group on the user. Seed must add `admin.group_ids |= env.ref("base.group_multi_currency")` for foreign-currency tasks.
+- `res.currency` records (EUR, USD, etc.) start `active=False` in fresh DBs — seed must `currency.write({"active": True})` and ensure a `res.currency.rate` is set.
+- `res.currency.rate.rate` semantics: rate=0.925 with company_currency=USD means **1 USD = 0.925 EUR** (currency-per-company-currency).
