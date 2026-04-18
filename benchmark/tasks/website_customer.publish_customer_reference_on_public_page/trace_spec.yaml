@@ -1,0 +1,34 @@
+# Trace oracle for website_customer.publish_customer_reference_on_public_page.
+#
+# Medium: publish an existing res.partner customer reference via the
+# frontend systray (website_publish_button) and navigate to /customers.
+
+required_ops: []
+
+optional_ops:
+  - res.partner.read
+  - res.partner.web_read
+  - res.partner.write
+  - res.partner.web_save
+  - res.partner.search_read
+  - res.partner.web_search_read
+  - res.partner.onchange
+  - res.partner.website_publish_button
+  - res.partner.open_website_url
+  - res.country.read
+  - res.country.search_read
+  - res.country.web_name_search
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+  - website.get_client_action_url
+  - mail.message.create
+  - bus.bus.create
+  - custom:/partners
+  - custom:/customers
+  - custom:/website/force/1
+  - custom:/website/get_switchable_related_views
+  - custom:/website/get_seo_data
+
+forbidden_ops:
+  - res.partner.unlink
+  - res.partner.create      # task edits an existing partner, does not create a new one

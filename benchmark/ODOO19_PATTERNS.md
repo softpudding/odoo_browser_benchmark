@@ -1090,6 +1090,7 @@ Applies to every datetime field with a seeded default (e.g., `stock.lot.expirati
 
 ---
 
+<<<<<<< HEAD
 ## mrp_subcontracting — receipt + auto-MO chain
 
 - **Module not in base**: `mrp_subcontracting` AND its auto-install-gated
@@ -1202,3 +1203,50 @@ Applies to every datetime field with a seeded default (e.g., `stock.lot.expirati
   labelled kiosk UI. Restaurant POS is not by itself a hard pattern;
   harden via split-bill, transfer-merge, non-default course picks,
   guests count, or cash reconciliation with a deliberate mismatch.
+=======
+## website_customer / res.partner customer-reference publish
+
+- `website_customer` is NOT in the base snapshot. Seed must
+  `button_immediate_install()` — dependencies pulled transitively are
+  `website_crm_partner_assign` and `website_partner`.
+- `/customers` controller domain (in
+  `addons/website_customer/controllers/main.py`) is
+  `[('website_published', '=', True), ('assigned_partner_id', '!=', False)]`.
+  A res.partner MUST have BOTH `website_published=True` AND a non-
+  empty `assigned_partner_id` ("Implemented by") to render on the
+  public list. Seeds that publish but forget `assigned_partner_id`
+  will pass check.py for the publish flip but fail the "visible on
+  /customers" assertion.
+- `/partners/<slug>` (from `website_partner.partners_detail`)
+  renders for unpublished partners IFF the visitor has
+  `website.group_website_restricted_editor` (admin does). This
+  enables the "click Go to Website from the unpublished form, land
+  on the preview, then flip the Owl systray toggle" workflow —
+  admin can preview-then-publish in one chain without needing to
+  publish first to see the page.
+- `res.partner.is_published` on the backend form uses
+  `widget="website_redirect_button"` (from
+  `addons/website_partner/views/res_partner_views.xml`). Like
+  `event.event` / `hr.job` / `slide.channel`, this button is
+  NAVIGATION-ONLY — it calls `open_website_url` and navigates to
+  the `website_url`; it does NOT toggle `is_published`. The button's
+  visible text is always "Go to Website" with a red (unpublished)
+  or green (published) globe icon; the aria-label / title reflect
+  the current state ("Unpublished" / "Published"). Canonical
+  Playwright selector:
+  ```python
+  page.locator(".o_field_website_redirect_button button, "
+               ".o_field_widget[name='is_published'] button").first
+  ```
+- Seed cleanup must null out `assigned_partner_id` back-references
+  before unlinking implementer partners, else FK constraints from
+  `website_crm_partner_assign` block the unlink:
+  ```python
+  referring = env["res.partner"].with_context(active_test=False).search([
+      ("assigned_partner_id", "in", old_partners.ids),
+  ])
+  if referring:
+      referring.sudo().write({"assigned_partner_id": False})
+  old_partners.sudo().unlink()
+  ```
+>>>>>>> c078def6 ([ADD] benchmark: website_customer.publish_customer_reference_on_public_page (medium))

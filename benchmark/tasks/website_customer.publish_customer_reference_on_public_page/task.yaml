@@ -1,0 +1,22 @@
+task_id: website_customer.publish_customer_reference_on_public_page
+module: website_customer
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/contacts
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: closed_loop_cross_module
+  difficulty_level: medium
+  agent_interaction: "Open seeded res.partner 'Bench Happy Client' (a customer reference qualified for the /customers portal by having an assigned_partner_id and country), publish it via the Go-to-Website preview + Owl Published systray toggle, then navigate to /customers to verify it appears on the public list."
+  checks_verify: "res.partner.website_published=True AND partner name appears on the /customers page HTML."
+  failure_pattern: "Agent either clicks the form-header 'Unpublished' button expecting it to toggle (it is website_redirect_button, navigation-only) and never reaches the Owl systray toggle on the public preview, or publishes but fails to navigate to /customers to verify."
+  primary_track: true
+  tier: 2
+  version: "0.1"
