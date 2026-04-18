@@ -516,6 +516,17 @@ Last eval: 2026-04-19 | Oracle: 169/169 (100%) | Browser-Use: 60/169 (35.5%) | N
 | 504 | event_sale.create_paid_event_register_invoice [hard] | Create event with paid ticket, register, generate and post invoice | WIP | — | — | — |
 | 505 | survey.create_scored_quiz_check_results [medium] | Create quiz with scored answers, preview-submit, check results | WIP | — | — | — |
 | 506 | im_livechat.create_channel_configure_operator [hard] | Create livechat channel, add operator, configure auto-message rule | WIP | — | — | — |
+| 507 | inventory.filtered_cycle_count_apply_single_line [medium] | Filter inventory adjustments to one product/location, enter counted quantity and apply only that line | WIP | — | — | — |
+| 508 | delivery.configure_carrier_margin_rule_apply_to_order [medium] | Configure a margin-based carrier and apply it to the target quotation | WIP | — | — | — |
+| 509 | mass_mailing.create_sms_mailing_filter_schedule_send [hard] | Create an SMS mailing with recipient filter and schedule it to send later | WIP | — | — | — |
+| 510 | website_slides.create_course_add_certification_toggle_visibility [medium] | Create an eLearning course, enable certification/public options, add content, and publish | WIP | — | — | — |
+| 511 | sale_loyalty.create_points_program_redeem_reward_on_quote [hard] | Create a points loyalty program and redeem its reward on a target quotation | WIP | — | — | — |
+| 512 | website_blog.duplicate_post_localize_seo_slug_publish [hard] | Duplicate a blog post, localize slug/SEO metadata, and publish only the copy | WIP | — | — | — |
+| 513 | repair.create_repair_order_add_fee_quotation_confirm [hard] | Create a repair order with a fee/quotation flow and confirm the correct commercial setup | WIP | — | — | — |
+| 514 | website_hr_recruitment.publish_job_set_interview_form_and_archive_old_posting [hard] | Publish a new job, configure application/interview form behavior, and archive an old posting | WIP | — | — | — |
+| 515 | event.create_event_mail_schedule_and_publish_registration [hard] | Create an event, prepare scheduled communication, and publish registration | WIP | — | — | — |
+| 516 | im_livechat.configure_channel_hours_operator_rules [medium] | Configure livechat channel availability hours and operator assignment rules | WIP | — | — | — |
+
 ---
 
 ## account.complete_customer_tax_id_then_post
