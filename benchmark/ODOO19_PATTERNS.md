@@ -561,6 +561,63 @@ Free-product reward JSON-RPC payload: `reward_product_id` must be a
 
 ---
 
+## event_sale / website_event_sale — multi-ticket portal checkout
+
+- **`modal_ticket_registration` counter input pattern**: for events
+  with >1 `event.event.ticket`, the Tickets modal renders one row per
+  ticket, and each ticket's counter input is
+  `name="nb_register-<ticket_id>"` with `+`/`-` buttons carrying
+  `data-input-name="nb_register-<ticket_id>"`. The row's wrapper has
+  `name="<ticket_name>"` which is the easiest row selector.
+- **Paid-event Attendees modal button label**: `website_event_sale`
+  inherits `registration_attendee_details` and swaps the
+  `Confirm Registration` submit button for `Go to Payment` whenever
+  `any(ticket.price > 0)`. Selectors that match `has-text('Confirm')`
+  will time out on paid events — match
+  `button[type='submit'].btn-primary` instead.
+- **Per-attendee heading**: `<h5>Ticket #N - <ticket_name></h5>`
+  (space-dash-space) for each section. Inside each section, a hidden
+  input `<input name="{counter}-event_ticket_id" value="{ticket.id}">`
+  gives the `counter -> ticket id` map. Inputs for name/email/phone are
+  named `{counter}-{question_type}-{question_id}` — still match by
+  `name*='-name-'` substring (the suffix is the question id).
+- **Wire Transfer ends the SO in `state='sent'`, NOT `'sale'`**.
+  `payment_custom._apply_updates()` sets the tx to `pending`. The Sale
+  override of `PaymentTransaction._post_process` then runs
+  `action_quotation_sent()` on linked draft SOs, moving them to
+  `sent` but NOT calling `action_confirm`. Registrations stay in
+  `state='draft'` (`sale_status='to_pay'`). check.py must accept
+  `state in ('sent','sale','done')` for Wire-Transfer-only flows.
+- **`sale.async_emails=True` is mandatory** in the seed when the
+  checkout pays via Wire Transfer in an ephemeral test DB.  Without
+  it, the post-process chain calls
+  `_send_payment_succeeded_for_order_mail` which runs
+  `message_post_with_source(force_send=True)` synchronously. The
+  missing SMTP provider raises, the cursor rolled back in
+  `/payment/status/poll`, `is_post_processed` stays False, and the SO
+  is stuck in `draft`. Setting the ICP
+  `sale.async_emails='True'` defers the mail to a cron and lets
+  `_post_process` succeed.
+- **Payment providers default to `state='disabled'`**.  Seed must
+  `write({'state':'enabled', 'is_published': True})` on the target
+  provider. To force a deterministic payment radio (only one option
+  visible on `/shop/payment`), disable every other provider in seed.
+  Wire Transfer's xmlid is `payment.payment_provider_transfer`.
+- **Checkout address skip**: for `try_skip_step=true` to forward
+  `/shop/checkout` straight to `/shop/payment`, admin's
+  `res.partner` needs the full set returned by
+  `_get_mandatory_billing_address_fields` + `_get_mandatory_delivery_address_fields`
+  for its country (for US that includes `state_id` and `zip`) PLUS
+  name/email/phone. Missing any field triggers a redirect to
+  `/shop/address` before payment.
+- **Admin is not an anonymous cart**: `_is_anonymous_cart` returns
+  True only when `partner_id == website.user_id.partner_id` (the
+  public user).  Logged-in admin's cart's partner is NOT overwritten
+  from the first attendee's name/email by
+  `/event/<slug>/registration/confirm`.
+
+---
+
 ## mail.alias on crm.team form + o_select_menu widget
 
 - The `mail.alias` edit controls (`alias_name` + `alias_domain_id` inline inputs, `alias_contact` dropdown) are in the **Team Details** group on the main `crm.team` form — NOT in a dedicated settings panel. The block is wrapped in `invisible="not use_leads and not use_opportunities"`. Seed must enable at least one of those booleans for the fields to render.

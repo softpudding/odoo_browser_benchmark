@@ -1,0 +1,50 @@
+# Public portal checkout flow — `event.registration.create` is invoked
+# via `sudo()` inside `/event/<slug>/registration/confirm` and the event
+# slug is embedded in the canonical_op, so neither the ORM op nor a
+# clean route match survives in the required_ops list. The sale.order is
+# confirmed via `/shop/payment/validate` which calls `order._validate_order()`
+# internally. Rely on state diff + `check.py` for verification.
+required_ops: []
+
+optional_ops:
+  - event.event.read
+  - event.event.search_read
+  - event.event.web_search_read
+  - event.event.web_read
+  - event.event.get_views
+  - event.registration.create
+  - event.registration.read
+  - event.registration.search_read
+  - event.registration.web_search_read
+  - sale.order.create
+  - sale.order.write
+  - sale.order.read
+  - sale.order.web_save
+  - sale.order.web_search_read
+  - sale.order.action_confirm
+  - sale.order._action_confirm
+  - sale.order._validate_order
+  - sale.order.line.create
+  - sale.order.line.write
+  - sale.order.line.read
+  - payment.transaction.create
+  - payment.transaction.write
+  - payment.transaction._process
+  - payment.provider.read
+  - ir.ui.view.read
+  - website.page.read
+  - custom:/event
+  - custom:/events
+  - custom:/shop/cart
+  - custom:/shop/checkout
+  - custom:/shop/address
+  - custom:/shop/payment
+  - custom:/shop/payment/validate
+  - custom:/shop/confirmation
+
+forbidden_ops:
+  - sale.order.action_cancel
+  - sale.order.unlink
+  - event.event.unlink
+  - event.registration.unlink
+  - event.registration.action_cancel

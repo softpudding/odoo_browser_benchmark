@@ -1,0 +1,64 @@
+models:
+  event.registration:
+    match_key:
+      - name
+      - email
+    fields:
+      - name
+      - email
+      - event_id
+      - event_ticket_id
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
+      - barcode
+      - phone
+      - state           # varies: 'draft' (SO in sent) vs 'open' (SO in sale)
+      - sale_order_id
+      - sale_order_line_id
+      - partner_id
+      - message_ids
+      - activity_ids
+      - visitor_id
+      - utm_campaign_id
+      - utm_medium_id
+      - utm_source_id
+      - registration_answer_ids
+      - registration_answer_choice_ids
+      - utm_tag_ids
+      - sale_status
+
+  sale.order:
+    match_key:
+      - partner_id
+      - amount_total
+    fields:
+      - partner_id
+      - amount_total
+    ignore_fields:
+      - state           # Wire Transfer leaves the SO in 'sent'; verified via check.py
+      - id
+      - name
+      - create_date
+      - write_date
+      - date_order
+      - message_ids
+      - activity_ids
+      - transaction_ids
+      - payment_term_id
+      - team_id
+      - user_id
+      - access_token
+      - company_id
+      - website_id
+      - pricelist_id
+      - currency_id
+      - fiscal_position_id
+      - invoice_ids
+      - picking_ids
+      - procurement_group_id
+      - order_line
+      - partner_invoice_id
+      - partner_shipping_id
+      - client_order_ref
