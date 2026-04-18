@@ -326,7 +326,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 314 | crm.assign_team_change_salesperson_log_activity [medium] | Open Bench Big Deal, change Team to Channel + Salesperson Sara via Contacts tab, schedule Call activity | Done | PASS | PASS | 1.0 |
 | 315 | website_sale.add_optional_at_cart_remove_main_keep_optional [hard] | Add Bench Camera + accept Tripod optional in modal, then remove only Camera at cart, leaving Tripod orphaned | Done | PASS | FAIL | 0.0 |
 | 316 | hr_expense.create_with_currency_eur_to_usd [medium] | Create NYC Hotel expense in USD (200 USD = 185 EUR), employee paid, verify EUR conversion | Done | PASS | FAIL | 0.0 |
-| 317 | event_product.create_event_product_link_to_ticket [medium] | Create a service product linked to an event ticket type | WIP | — | — | — |
+| 317 | event_product.create_event_product_link_to_ticket [medium] | Create Conference Pass Std service product (service_tracking=event), add Standard Pass ticket to Spring Summit | Done | PASS | PASS | 1.0 |
 | 318 | website.create_contact_form_with_custom_field [hard] | On website /contact-us page, add a custom dropdown field via website builder | WIP | — | — | — |
 | 319 | contacts.merge_three_duplicates_keep_email [hard] | Merge 3 duplicate contacts into one, choosing email from a specific record | WIP | — | — | — |
 | 320 | website_sale.create_gift_card_apply_in_cart [hard] | Configure a gift card program, generate a code, apply in cart at checkout | WIP | — | — | — |
@@ -3155,3 +3155,18 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | From /shop add Bench Camera, accept Bench Tripod optional in upsell modal. Then on /shop/cart click per-line trash on Bench Camera only, leaving Bench Tripod orphaned in draft cart. |
 | **Capability tested** | Optional-products modal + selective per-line trash on public webshop. |
 | **Notes** | Well-calibrated hard. BU made 196 API calls but never drove the optional-products modal reliably. Postcondition is the source of truth (StateDiff empty by design). |
+
+---
+
+## event_product.create_event_product_link_to_ticket
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
+| **Odoo modules** | Events, Sales (event_product) |
+| **Workflow** | Create product 'Conference Pass Std' (type=service, list_price=100, service_tracking=event). Open seeded event 'Spring Summit'. Add ticket 'Standard Pass' with product=Conference Pass Std, price=100, seats_max=200. |
+| **Capability tested** | Cross-app product creation with event-specific service_tracking + ticket linking. |
+| **Notes** | Easier than medium — BU solved on first run (204s). Note: product.template has 2 pre-existing 'Gift Card' duplicates in base snapshot — match_key must include service_tracking + list_price to avoid diff-engine swapping. service_tracking field is invisible in base product view; event_sale (auto-installed) removes the invisible attr to expose the 'event' option. |

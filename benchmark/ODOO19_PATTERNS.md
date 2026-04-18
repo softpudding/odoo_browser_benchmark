@@ -446,3 +446,10 @@ On an **opportunity**, `team_id` is NOT in the main form header. Only editable c
 - `hr.expense.currency_id` dropdown has `groups="base.group_multi_currency"` — invisible without that group on the user. Seed must add `admin.group_ids |= env.ref("base.group_multi_currency")` for foreign-currency tasks.
 - `res.currency` records (EUR, USD, etc.) start `active=False` in fresh DBs — seed must `currency.write({"active": True})` and ensure a `res.currency.rate` is set.
 - `res.currency.rate.rate` semantics: rate=0.925 with company_currency=USD means **1 USD = 0.925 EUR** (currency-per-company-currency).
+
+---
+
+## product.template / event_product gotchas
+
+- The base snapshot has TWO pre-existing 'Gift Card' product.template records with different list_price. With `match_key: [name]` the diff engine swaps them non-deterministically, emitting phantom `list_price` edits. Fix: extend `match_key: [name, service_tracking, list_price]`.
+- `product.template.service_tracking` field is `invisible` in the base product view. `event_sale` (auto-installed) removes the invisible attr, exposing the `event` ('Event Registration') option contributed by `event_product`. No manual install needed for event_sale → event_product.
