@@ -1,0 +1,20 @@
+task_id: hr_holidays.refuse_then_re_request_other_type
+module: hr_holidays
+difficulty: hard
+instruction: see prompt.md
+start_url: /odoo/time-off-approval
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 480
+step_limit: 300
+metadata:
+  category: recovery_rollback
+  difficulty_level: hard
+  agent_interaction: "As manager: refuse Eve's Paid Time Off request, post the refusal reason as a chatter message, then create a new Sick Time Off request on her behalf for the same dates and submit it."
+  checks_verify: "Original Paid Time Off leave is refused with the reason in chatter; a new Sick Time Off leave for Eve exists in 'confirm' state with the same dates."
+  primary_track: true
+  tier: 3
