@@ -1,17 +1,17 @@
 """Postcondition checks for project_todo.create_note_add_tag_checklist.
 
 Validates:
-1. Exactly one project.task named 'Sprint planning notes' exists and is active.
-2. The note carries the 'Bench Sprint' tag.
-3. The note's description contains a checklist item with text 'Review backlog'.
+1. Exactly one project.task named 'Bench Todo Note' exists and is active.
+2. The note carries the 'BenchTag' tag.
+3. The note's description contains a checklist item with text 'First step'.
 """
 
 import re
 
 
-TARGET_NAME = "Sprint planning notes"
-TARGET_TAG = "Bench Sprint"
-CHECKLIST_ITEM = "Review backlog"
+TARGET_NAME = "Bench Todo Note"
+TARGET_TAG = "BenchTag"
+CHECKLIST_ITEM = "First step"
 
 
 def _strip_tags(html):

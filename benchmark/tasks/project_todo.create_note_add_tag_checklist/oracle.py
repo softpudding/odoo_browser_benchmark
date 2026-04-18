@@ -2,17 +2,17 @@
 
 Approach: log in, navigate to /odoo/to-do so the session is bound to the
 To-do controller, then use /web/dataset/call_kw to create a personal
-project.task named 'Sprint planning notes' assigned to the admin user,
-tagged with 'Bench Sprint', with a description that contains a checklist
-item 'Review backlog' (Odoo 19 uses <ul class="o_checklist"><li>...</li></ul>).
+project.task named 'Bench Todo Note' assigned to the admin user,
+tagged with 'BenchTag', with a description that contains a checklist
+item 'First step' (Odoo 19 uses <ul class="o_checklist"><li>...</li></ul>).
 """
 
 from benchmark.oracle_helpers import login, navigate, run_oracle
 
 
-TARGET_NAME = "Sprint planning notes"
-TARGET_TAG = "Bench Sprint"
-CHECKLIST_ITEM = "Review backlog"
+TARGET_NAME = "Bench Todo Note"
+TARGET_TAG = "BenchTag"
+CHECKLIST_ITEM = "First step"
 
 
 def oracle(page):

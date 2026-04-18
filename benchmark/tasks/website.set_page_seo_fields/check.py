@@ -1,14 +1,11 @@
 """Postcondition checks for website.set_page_seo_fields."""
 
 
-PAGE_URL = "/bench-product"
-PAGE_NAME = "Bench Product Landing"
-EXPECTED_TITLE = "Bench Product - Premium Quality | Bench Co"
-EXPECTED_DESCRIPTION = (
-    "Discover our flagship Bench Product with premium materials and lifetime warranty. "
-    "Order today for free shipping."
-)
-EXPECTED_KEYWORDS = {"bench product", "premium bench", "quality furniture"}
+PAGE_URL = "/bench-seo-page"
+PAGE_NAME = "Bench SEO Page"
+EXPECTED_TITLE = "Bench SEO Meta Title"
+EXPECTED_DESCRIPTION = "Bench SEO meta description text."
+EXPECTED_KEYWORDS = {"bench", "seo", "odoo"}
 
 
 def _normalize_keywords(raw):

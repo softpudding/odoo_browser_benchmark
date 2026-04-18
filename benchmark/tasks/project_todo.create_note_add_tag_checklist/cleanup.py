@@ -1,8 +1,8 @@
 """Cleanup for project_todo.create_note_add_tag_checklist."""
 
 
-TARGET_NAME = "Sprint planning notes"
-TARGET_TAG = "Bench Sprint"
+TARGET_NAME = "Bench Todo Note"
+TARGET_TAG = "BenchTag"
 
 
 def cleanup(env):

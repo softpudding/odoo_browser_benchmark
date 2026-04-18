@@ -2,4 +2,6 @@
 
 
 def cleanup(env):
-    env["website.page"].search([("url", "=", "/bench-product")]).unlink()
+    env["website.page"].with_context(active_test=False).search([
+        ("url", "=", "/bench-seo-page"),
+    ]).unlink()
