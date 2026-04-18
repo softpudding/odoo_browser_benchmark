@@ -79,6 +79,31 @@ if mod and mod.state != "installed":
   modal dialog with title "Validation Error" and body containing "There are not enough
   seats available for &lt;Event Name&gt;". Oracle scripts can detect it by selector
   `.modal:visible .modal-body:has-text('not enough seats')`.
+- `event.event.is_published` in the backend form uses `website_redirect_button` widget
+  (**navigation only**, NOT a toggle). The inline `website_publish_button` "Publish" link
+  in the right-hand Event Details group is hidden by default because
+  `website_visibility` defaults to `'public'` and the button is
+  `invisible="website_published or website_visibility == 'public'"`. Canonical publish
+  paths: (a) JSON-RPC `event.event.website_publish_button()` — oracles use this for
+  determinism; (b) navigate to frontend preview and click the Owl systray
+  `Unpublished/Published` toggle (fragile under Playwright). Unlike `event.track`, there
+  is no stage-bar publish on `event.event`.
+- Public portal registration is a **two-modal chain**: `#modal_ticket_registration`
+  (Bootstrap, opened via `data-bs-toggle` from event page) contains a ticket counter
+  (default 1 for single-ticket events) and a `.a-submit` button whose click handler JSON-
+  RPCs `/event/<slug>/registration/new` and **inserts** the returned HTML into
+  `document.body` as `#modal_attendees_registration`. Attendee inputs are named
+  `{registration_index}-{question_type}-{question_id}` (e.g. `1-name-1`, `1-email-2`).
+  Match via substring `name*='-name-'`, NOT suffix `name$='-name'` — the suffix is the
+  numeric question id. Submit to `/registration/confirm` navigates to a success page.
+- `event.registration.create` in the portal flow is called via `sudo()` inside the
+  `/registration/confirm` controller AND the route carries the event slug in
+  canonical_op (`custom:/event/<slug>/registration/confirm`). Neither form matches a
+  static `required_ops` entry — leave `required_ops: []` and rely on state diff +
+  `check.py` for portal-registration tasks.
+- New `event.event` records with no `event_type_id` auto-attach the three
+  `is_default=True` questions (Name mandatory / Email mandatory / Phone optional) via
+  `_compute_question_ids` fallback — no seed work needed for the portal form to render.
 
 ### Fleet
 

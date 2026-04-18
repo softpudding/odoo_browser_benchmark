@@ -1,0 +1,39 @@
+# The public portal flow POSTs to /event/<slug>/registration/confirm,
+# which creates the event.registration via sudo() and embeds the
+# event slug in the route. Because the slug is dynamic and sudo()
+# hides the ORM create in the trace, we rely entirely on
+# expected_state.json + check.py for verification. No canonical op
+# can be matched deterministically.
+required_ops: []
+
+optional_ops:
+  - event.event.read
+  - event.event.web_read
+  - event.event.write
+  - event.event.web_save
+  - event.event.website_publish_button
+  - event.event.read_progress_bar
+  - event.event.search_read
+  - event.event.web_search_read
+  - event.event.web_read_group
+  - event.event.get_views
+  - event.event.onchange
+  - event.registration.create
+  - event.registration.read
+  - event.registration.search_read
+  - event.registration.web_search_read
+  - ir.ui.view.read
+  - website.page.read
+  - website.page.search_read
+  - mail.message.create
+  - bus.bus.create
+  - custom:/event
+  - custom:/events
+  - custom:/event/register
+  - custom:/event/registration/new
+  - custom:/event/registration/success
+
+forbidden_ops:
+  - event.event.unlink
+  - event.registration.unlink
+  - event.registration.action_cancel
