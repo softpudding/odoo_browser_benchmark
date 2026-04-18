@@ -1525,3 +1525,96 @@ Implications for task authors:
   correct state-diff key — keying on `name` alone risks collision with
   foreign-project milestones; keying on `project_id` alone can't
   distinguish multiple milestones on the same project.
+
+---
+
+## lunch module — kiosk-style Owl UI + related-name partner rewrite
+
+- **Model naming**: the vendor model is `lunch.supplier` (NOT
+  `lunch.vendor`, which does not exist in Odoo 19). The UI label
+  reads "Vendor" but every technical reference is `supplier_*`.
+  `lunch.product.supplier_id` is a m2o to `lunch.supplier`.
+- **Not in base snapshot**: seed must `button_immediate_install()` the
+  `lunch` module record. Admin is auto-added to
+  `lunch.group_lunch_manager` by the module's security data, so
+  Configuration menus render post-install without extra ACL work.
+- **`lunch.supplier.name = related('partner_id.name', readonly=False)`**.
+  Picking an existing partner from the `partner_id` autocomplete
+  *clobbers* whatever the agent typed into the `name` field earlier.
+  Typing into `name` writes back to the partner (renaming it). Oracle
+  / human flow must pick the partner FIRST, then type the vendor
+  name. Seed cleanup should handle both the seeded partner name and
+  the final vendor name when releasing the partner, otherwise a
+  re-run fails to find the "Bench Cafe Partner" seed row (it got
+  renamed to "Bench Cafe").
+- **`lunch.supplier.delivery` Selection renders via `o_select_menu`
+  widget**, NOT a native `<select>`. The generic `set_selection`
+  helper (which calls `select_option(label=...)`) times out. Same
+  pattern as `crm.team.alias_contact`. Working:
+  ```python
+  page.locator(".o_field_widget[name='delivery'] .o_select_menu_toggler").click()
+  page.locator(".o_select_menu_menu .o_select_menu_item:has-text('Delivery')").click()
+  ```
+- **`lunch.supplier` weekday toggles use `widget="week_days"`**
+  (`addons/web/static/src/views/widgets/week_days/`). The widget
+  renders a 2-row `<table>`: row 1 = `<th>` day labels with
+  `data-tooltip` = the day string, row 2 = `<CheckBox>` components
+  *without* a `name` attribute. Toggle by matching header text to a
+  column index, then click the checkbox in the same column of
+  row 2. Default is Mon-Fri only; Sat and Sun are False.
+- **`/odoo/lunch` kiosk dashboard**: opens the
+  `lunch_product_action_order` kanban with a sidebar
+  `LunchDashboard` Owl component.
+  `LunchKanbanRenderer.getGroupsOrRecords` returns `[]` when
+  `searchModel.lunchState.locationId` is falsy. Seed must set
+  `admin.last_lunch_location_id` to the seeded `HQ Office`
+  location to avoid a race where the kanban renders empty before
+  the `/lunch/infos` RPC resolves the fallback.
+- **Clicking a product kanban card** triggers
+  `LunchKanbanRecord.onGlobalClick` → bus event `lunch_open_order` →
+  `action.doAction({res_model:'lunch.order', views:[[false,'form']],
+  target:'new', context:{default_product_id: ...}})`. The resulting
+  dialog is a standard `.o_dialog` wrapping the `lunch.order` form
+  view. **Click the product name text, NOT the favorite star** in
+  the card corner — `is_favorite widget="lunch_is_favorite"` has its
+  own click handler that swallows the card-level onGlobalClick.
+- **Order dialog footer button visibility**:
+  `Add To Cart` has `invisible="order_deadline_passed or
+  not display_add_button"`. Both computes fire at form-new time:
+  - `order_deadline_passed` for `date=today`, `send_by='phone'`
+    supplier = `not supplier.available_today` =
+    `not supplier[WEEKDAY_TO_NAME[today.weekday()]]`. If the weekday
+    flag for TODAY is off, the button is hidden. Tasks that require
+    "order for today" must either enable all 7 days on the supplier
+    or pin the test date to a known weekday.
+  - `display_add_button` = `get_wallet_balance(user) >= price`.
+    `get_wallet_balance` = `sum(cashmoves) +
+    res.company.lunch_minimum_threshold`. Seed must set
+    `lunch_minimum_threshold >= product.price` so the button is
+    visible without requiring the agent to top up a wallet.
+- **`lunch.order.add_to_cart()` is a no-op** Python method that
+  returns True. The order record is persisted by the form
+  controller's `web_save` BEFORE the object method runs. Initial
+  state is `'new'`.
+- **Two-phase submission**: closing the dialog fires the bus event
+  `lunch_update_dashboard` which re-fetches `/lunch/infos` and
+  shows the pending line + sidebar **Order Now** button. Clicking
+  Order Now POSTs to `/lunch/pay` which calls `action_order()` on
+  all `state='new'` lines for the current user today, transitioning
+  to `state='ordered'`. This is the ONLY state-transition step —
+  forgetting it leaves the order at `new` and the postcondition
+  fails.
+- **`lunch.product.supplier_id` display_name format**:
+  `lunch.supplier._compute_display_name` returns
+  `f'{name} {phone}'` when phone is set, else `name`. The state-diff
+  engine normalizes m2o to display_name, so `expected_state.json`
+  for `lunch.product.supplier_id` must encode
+  `"Bench Cafe +1 555 0199"` if the task pins a phone — NOT
+  `"Bench Cafe"` alone.
+- **Timezone-sensitive `lunch.order.date`**: admin's seeded tz in the
+  base snapshot is `Asia/Singapore` (+8h UTC). `fields.Date.
+  context_today(admin)` can differ from the backend UTC date by
+  1 day depending on when the test runs. `check.py` should accept
+  `today`, `today-1d`, `today+1d` as valid date candidates when
+  matching the order. (Browser-use failure mode here is separate —
+  BU usually never reaches the order step at all.)
