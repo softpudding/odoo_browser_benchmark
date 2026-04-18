@@ -500,3 +500,16 @@ full working pattern.
 - Quick way to create a gift-card program: `loyalty.program.create_from_template('gift_card')` (also `'loyalty'`, `'discount'`, etc.).
 - `sale.order._try_apply_code` has a `loyalty.card` branch that lets a gift-card code be applied via the same `/shop/pricelist?r=/shop/cart` POST as a promo code (no separate "redeem gift card" endpoint).
 - Backend menu xmlid: `/odoo/gift-cards-ewallet` (Discount & Loyalty → Gift Cards & eWallets).
+
+---
+
+## mail.alias on crm.team form + o_select_menu widget
+
+- The `mail.alias` edit controls (`alias_name` + `alias_domain_id` inline inputs, `alias_contact` dropdown) are in the **Team Details** group on the main `crm.team` form — NOT in a dedicated settings panel. The block is wrapped in `invisible="not use_leads and not use_opportunities"`. Seed must enable at least one of those booleans for the fields to render.
+- `alias_contact` (Selection) on `crm.team` renders as Odoo's **custom `o_select_menu` widget**, NOT a native HTML `<select>`. `oracle_helpers.set_selection` (which calls `page.locator(...).select_option(label=...)`) times out. Pattern that works:
+  ```python
+  page.locator(".o_field_widget[name='alias_contact'] .o_select_menu_toggler").click()
+  page.locator(".o_select_menu_menu .o_select_menu_item:has-text('Authenticated Partners')").click()
+  ```
+- Alias-name uniqueness: `mail.alias.alias_name` has a UNIQUE constraint per domain. Seed must null out any stale alias owning the target name before re-running (otherwise the agent's Save hits `UniqueViolation`).
+- `crm.lead.name` is rendered with `widget="text"` → textarea, not an input. Use `fill_text_field` in oracle, not `fill_field` (the latter queries `input` and times out).

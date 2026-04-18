@@ -334,7 +334,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 322 | stock.create_putaway_rule_for_specific_category [hard] | Create putaway rule routing a product category to a specific sub-location | Done | PASS | PASS | 1.0 |
 | 323 | mail.invite_external_email_to_existing_channel [medium] | In existing channel, invite an external email (creates guest invitation) | Done | PASS | PASS | 1.0 |
 | 324 | sale.add_line_with_optional_template_apply_discount [medium] | On a draft SO, add a line by selecting a template, then apply line-level 10% discount | Done | PASS | PASS | 1.0 |
-| 325 | crm.create_lead_from_email_alias_log_message [hard] | Create a CRM team with email alias, then create lead via Send Message simulating inbound | WIP | — | — | — |
+| 325 | crm.create_lead_from_email_alias_log_message [hard] | Configure CRM team 'Inbound' alias + Accept-Emails-From, create lead with priority/tag, post chatter | Done | PASS | FAIL | 0.0 |
 | 326 | project.create_kanban_stage_reorder_drag [medium] | In project Kanban view, create a new stage and reorder it before existing stages | Done | PASS | FAIL | 0.0 |
 | 327 | account.create_recurring_journal_entry [hard] | Create a journal entry with template repeating monthly for 3 months | WIP | — | — | — |
 | 328 | website.add_image_carousel_to_homepage [hard] | In website editor, add Image Carousel snippet to home page with 3 images | WIP | — | — | — |
@@ -3320,3 +3320,18 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Seed installs website_event/website_event_track on demand (not in base snapshot) and creates one unpublished event "Bench Spring Summit". Agent opens Events app, drills into the event, clicks the Tracks smart button, clicks New, enters title "Keynote: Future of Bench" + Track Date 05/15/2026 10:00:00 + Speaker-tab partner_name="Dr. Smith" + partner_email="dr.smith@example.com", saves, then clicks the Published stage on the status bar so `_synchronize_with_stage` flips is_published=True. |
 | **Capability tested** | Sub-resource creation on a smart-button sub-view with multi-tab field entry + stage-driven publish side-effect. The "Go to Website" button (widget=`website_redirect_button`) only navigates — publish must happen via the stage bar, not the header widget. |
 | **Notes** | Calibrated easier than medium (BU solved on single-shot with the explicit prompt). Kept at medium because it still covers the smart-button → sub-form → notebook-tab → status-bar chain, and because it seeds the publish-via-stage pattern for harder event.track tasks later. New cookbook entry: `event.track` publish control — the backend form's globe button does NOT toggle is_published; only stage transitions to a stage with `is_fully_accessible=True` do (default data: the "Published" stage at sequence=4). Also confirmed that `website_event` + `website_event_track` need on-demand `button_immediate_install` in seed.py (they are not in the base snapshot). |
+
+---
+
+## crm.create_lead_from_email_alias_log_message
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
+| **Odoo modules** | CRM (+ mail.alias, crm.team) |
+| **Workflow** | Configure CRM team 'Inbound' Email Alias to `leads-inbound` (inline input, mid-form under Team Details) + set Accept Emails From to Authenticated Partners (Odoo `o_select_menu` custom dropdown, NOT a native `<select>`). Create a new lead `Inbound Inquiry from Sample` with email_from `prospect@external.test`, priority Medium (single star), and existing `Website` tag. Post a regular chatter message `Asked about Bench Pro pricing.` (Send message, not Log note). |
+| **Capability tested** | Three-surface workflow (team config + lead creation + chatter) with stacked calibration traps: custom `o_select_menu` widget, single-star priority, many2many tag autocomplete with distractor, and Send-message vs Log-note distinction. |
+| **Notes** | First pass of the task (alias_name + lead + chatter only) was trivially passed by BU with F1=1.0 in 228s — alias field on the main form is too visually obvious. Hardened by stacking (a) `alias_contact -> Authenticated Partners` (custom select-menu), (b) `priority = Medium` (one star, BU canonical trap), (c) existing `Website` tag with distractor `Web-Inquiry` in autocomplete. Post-hardening BU hit 5/5 state diff but silently skipped the tag -> postcondition FAIL. Oracle uses `.o_select_menu_toggler` + `.o_select_menu_item:has-text(...)` for alias_contact. `crm.lead.name` widget=text (textarea) — must use `fill_text_field`, not `fill_field`. |

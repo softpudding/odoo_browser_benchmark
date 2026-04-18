@@ -1,0 +1,44 @@
+# Trace oracle for crm.create_lead_from_email_alias_log_message
+#
+# Category 5 (HARD): Deep UI interaction combining a team-form alias edit,
+# lead create, and chatter message.
+
+required_ops: []  # End state validated via check.py
+
+optional_ops:
+  - crm.team.read
+  - crm.team.write
+  - crm.team.web_save
+  - crm.team.search_read
+  - crm.team.web_search_read
+  - crm.lead.create
+  - crm.lead.read
+  - crm.lead.write
+  - crm.lead.web_save
+  - crm.lead.search_read
+  - crm.lead.web_search_read
+  - crm.stage.read
+  - crm.stage.search_read
+  - crm.tag.read
+  - crm.tag.search_read
+  - mail.alias.read
+  - mail.alias.write
+  - mail.alias.web_save
+  - mail.alias.create
+  - mail.alias.domain.read
+  - mail.alias.domain.search_read
+  - mail.message.create
+  - mail.message.read
+  - mail.message.search_read
+  - mail.message.web_save
+  - mail.thread.message_post
+  - mail.followers.create
+  - bus.bus.create
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+
+forbidden_ops:
+  - crm.team.unlink
+  - crm.lead.unlink
+  - crm.lead.action_set_lost
+  - crm.lead.convert_opportunity
