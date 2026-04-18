@@ -360,7 +360,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 348 | project_todo.create_note_set_color_deadline [easy] | Create a note, set a deadline, and apply a non-default kanban color | Done | PASS | FAIL | 0.0 |
 | 349 | survey.create_certification_quiz_attempt_limit_publish [hard] | Build a certification quiz with passing score and attempt limit, then publish it | Done | PASS | FAIL | 0.0 |
 | 350 | appointment.public_booking_reschedule_cancel_portal [hard] | Configure an appointment type, book it publicly, then reschedule and cancel it from the portal | WIP | — | — | — |
-| 351 | helpdesk.team_sla_assign_escalate_close [hard] | Create a helpdesk team with SLA policy, process a ticket through assignment and escalation, then close it | WIP | — | — | — |
+| 351 | helpdesk.team_sla_assign_escalate_close [hard] | Create a helpdesk team with SLA policy, process a ticket through assignment and escalation, then close it | Removed | FAIL (module unavailable) | — | — |
 | 352 | marketing_automation.tag_trigger_drip_campaign [hard] | Build a tag-triggered marketing automation flow with delayed actions and a stop condition | WIP | — | — | — |
 | 353 | event_product.sell_event_product_fill_attendee_details [medium] | Sell an event-linked product and complete attendee details for the generated registration | WIP | — | — | — |
 | 354 | event_sale.multi_ticket_checkout_two_attendees [hard] | Configure two paid ticket types and complete one website checkout with separate attendee details | WIP | — | — | — |
@@ -3639,3 +3639,18 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Seed installs website_event (not in base snapshot) and creates one unpublished event `Bench Public Day`. Phase 1: agent opens `/odoo/events`, opens the event, flips it to Published. Phase 2: navigates to `/event`, clicks the event card, clicks Register on the event page (opens `#modal_ticket_registration` Bootstrap modal), leaves the default single-ticket counter at 1, clicks the inner Register submit (JSON-RPC POST to `/event/<slug>/registration/new` inserts a second modal `#modal_attendees_registration` into body), fills Name=`Priya Patel` / Email=`priya.patel@example.com` / Phone=`+1 555 0142`, clicks Confirm Registration (POST to `/registration/confirm` → redirects to success page). |
 | **Capability tested** | Closed-loop cross-module back-office → public portal round-trip + dual-modal chained portal registration form. Attendee inputs are named `{registration_index}-{question_type}-{question_id}` — must be matched by `name*='-name-'` substring, not `name$='-name'` suffix (the suffix is the numeric question id). |
 | **Notes** | Calibration FAILED (intended hard tier, BU solved first-shot F1=1.0 in 85s). BU handled the dual-modal chain without trouble and the default ticket counter of 1 removed the `+` click hurdle. Kept at tier 3 (primary_track=false) to preserve the closed-loop back-office → portal pattern. New cookbook entries in COOKBOOK_NOTES.md: (1) `event.event.is_published` widget is `website_redirect_button` (navigation-only, NOT a toggle); "Publish" inline button is hidden by default since `website_visibility='public'` is the default. Canonical publish path: JSON-RPC `website_publish_button()` or the Owl systray toggle on the website preview. No stage-bar publish like `event.track` has. (2) The attendees-details modal is dynamically inserted into `document.body` after a JSON-RPC POST to `/registration/new` — it is NOT part of the initial event page DOM. (3) `event.registration.create` is called via `sudo()` inside the `/registration/confirm` controller AND the route carries the event slug (`custom:/event/<slug>/registration/confirm`), so neither the ORM op nor a clean route match shows up in `trace_spec.required_ops`. Rely on state diff + `check.py` only. (4) Default event questions (Name/Email/Phone with `is_default=True`) auto-attach to a fresh `event.event` via `_compute_question_ids` fallback — no seed work needed for the portal form to render. |
+
+---
+
+## helpdesk.team_sla_assign_escalate_close
+
+| Field | Value |
+|---|---|
+| **Status** | Removed |
+| **Oracle** | FAIL (module unavailable) |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Helpdesk (Enterprise-only) |
+| **Workflow** | Seed `helpdesk.team` 'Bench Support', create `helpdesk.sla` policy 'Bench 1hr Response' targeting High priority with time=1h on stage='In Progress'. Create a High-priority ticket 'Critical bug', assign to team user, move to In Progress (SLA timer starts), then move to Solved stage and mark Closed. |
+| **Capability tested** | Multi-step configuration (team + SLA policy) + record lifecycle across stages with SLA status tracking. |
+| **Notes** | Removed because the `helpdesk` addon is not present in this checkout (Odoo 19 Community — `helpdesk` is an Enterprise-only module). Verified: no `helpdesk`, `helpdesk_*`, `ticket`, or `support` directories under `addons/`; `benchmark/base_modules.txt` contains no `helpdesk` reference; follows same precedent as `helpdesk.create_ticket_tag_schedule_activity_resolve` (also Removed for module unavailability). Task cannot be implemented or validated on branch `odoo_benchmark` in the current environment. |
