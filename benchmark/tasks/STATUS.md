@@ -306,7 +306,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 294 | sale_loyalty.create_loyalty_program_apply_at_checkout [hard] | Create a loyalty program with a 10% discount rule, then apply it to a webshop cart at checkout | WIP | — | — | — |
 | 295 | event_sale.add_seat_limited_ticket_register_until_full [medium] | Add a 5-seat limited ticket to an event and register attendees until the seats fill | WIP | — | — | — |
 | 296 | sale_purchase.update_pol_alternative_vendor_compare [hard] | Open RFQ, add an alternative vendor with different price, compare and pick cheapest | WIP | — | — | — |
-| 297 | delivery.set_third_party_carrier_print_label [medium] | Configure a third-party carrier with tracking, apply to delivery, generate tracking number | WIP | — | — | — |
+| 297 | delivery.set_third_party_carrier_print_label [medium] | Configure a fixed-price carrier, apply it to a confirmed delivery picking with tracking ref, validate and trigger Print | Done | PASS | PASS | 1.0 |
 | 298 | inventory.create_storage_category_assign_to_location [medium] | Create a storage category with capacity rules and assign it to a stock location | WIP | — | — | — |
 | 299 | sale_stock.deliver_partial_split_into_two_pickings [hard] | On a multi-line SO with insufficient stock for one product, deliver partial and create explicit second picking later | WIP | — | — | — |
 | 300 | website_blog.create_blog_with_two_posts_archive_one [medium] | Create a new blog with 2 posts, then archive one of the two | WIP | — | — | — |
@@ -2809,3 +2809,18 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Open vehicle "Bench Sedan BS-1001" assigned to Driver Alice → change Driver Many2one to Driver Bob with effective date 2026-04-18 → save. Verify the system-created `fleet.vehicle.assignation.log` entry. |
 | **Capability tested** | Driver Many2one swap that auto-creates an audit log entry. |
 | **Notes** | Brittle calibration — `fleet.vehicle.write` auto-sets `date_start = today`, and 2026-04-18 happens to be today's date in this run window, so BU only needed to change driver and save. Will become genuinely medium on any other date. |
+
+---
+
+## delivery.set_third_party_carrier_print_label
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
+| **Odoo modules** | Delivery, Stock, Sale |
+| **Workflow** | Configure carrier "Bench Express" (delivery_type=fixed, fixed_price=12, delivery product "Bench Express Shipping" created via the create-and-edit shortcut). Open the outgoing delivery picking for SO S-BENCH-DLV-002 (Ready, 1 move `Bench Express Crate` x 3), set Shipping Method = "Bench Express", Tracking Reference = "BX-TRACK-002", click Validate, then click the header Print button. |
+| **Capability tested** | Smart-button print action + manual tracking-ref population on a confirmed delivery picking; cross-module Delivery-Methods → Inventory round-trip. |
+| **Notes** | Fixed-price provider does NOT auto-generate a tracking number (`fixed_send_shipping` returns `tracking_number: False`); the only built-in providers in base are `fixed` and `base_on_rule`, both return False — so the task has the agent type the tracking ref manually. BU solved in ~156s / 21 steps, handling the create-and-edit modal and the "Concatenation detected" auto-retry on the Fixed Price numeric input; Print header button opens the delivery-slip report in-app. Calibrates slightly easier than target medium; could be hardened by requiring a specific weight / destination on the picking before validate. Seed pins `sale.order.name = 'S-BENCH-DLV-002'` so the picking's `origin` matches the deterministic entity_key; oracle uses JSON-RPC with `skip_backorder=True` and writes `stock.move.quantity` + `picked=True` to get a clean `button_validate`. |

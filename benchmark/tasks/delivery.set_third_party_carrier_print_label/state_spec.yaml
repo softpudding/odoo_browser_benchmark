@@ -1,0 +1,26 @@
+models:
+  delivery.carrier:
+    match_key:
+      - name
+    fields:
+      - name
+      - delivery_type
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
+  stock.picking:
+    match_key:
+      - origin
+    fields:
+      - origin
+      - state
+      - carrier_id
+      - carrier_tracking_ref
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
+      - date_done
+      - scheduled_date
+      - message_ids

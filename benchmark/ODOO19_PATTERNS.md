@@ -74,6 +74,28 @@ if mod and mod.state != "installed":
   (used to be non-default in older versions). Flip the task design accordingly.
 - Dropship picking has a different `picking_type_id` from regular customer delivery;
   smart button is labeled "Dropship", not "Receipt"
+- `stock.picking.origin` inherits from `sale.order.name`, NOT `client_order_ref`.
+  If you want a deterministic `origin` for state-diff entity_key matching, pin
+  `sale.order.name` in seed (e.g. `"name": "S-BENCH-DLV-002"`).
+- Oracle JSON-RPC `button_validate` on a Ready picking with no `move.picked`/`move.quantity`
+  returns a wizard action. Cleanest oracle pattern: write `move.quantity = product_uom_qty`
+  and `move.picked = True` on every move, then call `button_validate` with
+  `context: {skip_backorder: True}`.
+
+### Delivery / shipping providers (`stock_delivery`)
+
+- Base snapshot only has two providers: `fixed` and `base_on_rule`. Both
+  `fixed_send_shipping` and `base_on_rule_send_shipping` return
+  `tracking_number: False` — there is NO auto-generated carrier_tracking_ref
+  for the built-in providers. Tasks that need a tracking ref must have the
+  agent **type it manually** into the `carrier_tracking_ref` field.
+- The form-header "Send to Shipper" and "Print Return Label" buttons are
+  hidden (`invisible`) for `delivery_type in ['fixed', 'base_on_rule']`.
+  The generic "Print" header button (present on any done picking) opens the
+  delivery-slip report — use it as the "trigger a PDF" step.
+- `delivery.carrier` requires a `product_id` (service product). Use the
+  create-and-edit autocomplete shortcut in the UI; in JSON-RPC / seed, create
+  a `product.product` with `type='service'` first.
 
 ### Website / website_sale
 
