@@ -536,6 +536,26 @@ full working pattern.
 - `sale.order._try_apply_code` has a `loyalty.card` branch that lets a gift-card code be applied via the same `/shop/pricelist?r=/shop/cart` POST as a promo code (no separate "redeem gift card" endpoint).
 - Backend menu xmlid: `/odoo/gift-cards-ewallet` (Discount & Loyalty → Gift Cards & eWallets).
 
+## sale_loyalty free-product reward lines: discount=100, NOT price_unit=0
+
+`sale_loyalty.sale.order._get_reward_values_product` creates a `reward_type='product'`
+reward line with `price_unit = product.list_price`, `discount = 100`, and the
+product's own taxes. The cart effective total is zero because of the 100%
+discount — NOT because `price_unit` is zero. check.py for free-product
+tasks must assert `price_subtotal` or `discount == 100`, not `price_unit`.
+Distinct from `reward_type='discount'` lines, which do carry a negative
+`price_unit` directly.
+
+Auto-apply entry point: `website_sale_loyalty.Cart.cart` invokes
+`order._update_programs_and_rewards()` + `_auto_apply_rewards()` on every
+GET of `/shop/cart`. For a single-reward `program_type='promotion'` with
+`trigger='auto'` whose rule qty condition is met, navigating to /shop/cart
+is sufficient — no button/code/wizard needed.
+
+Free-product reward JSON-RPC payload: `reward_product_id` must be a
+`product.product` (variant) id, not `product.template`. Resolve via
+`product.template.product_variant_id`.
+
 ---
 
 ## mail.alias on crm.team form + o_select_menu widget
