@@ -1,0 +1,20 @@
+task_id: website_blog.edit_post_change_author_add_tags_schedule
+module: website_blog
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/blog-post-pages
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "Edit a blog post: change Author, add two existing tags, set scheduled Publishing date — without publishing."
+  checks_verify: "Post author_id = Alice's partner; tag_ids has both Planning and Quarterly (no Retrospective); post_date = 2026-04-25 09:00 admin TZ; is_published unchanged (False)."
+  primary_track: true
+  tier: 2

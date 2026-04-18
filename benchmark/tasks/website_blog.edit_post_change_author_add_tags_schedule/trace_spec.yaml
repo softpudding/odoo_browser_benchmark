@@ -1,0 +1,25 @@
+# Trace oracle for website_blog.edit_post_change_author_add_tags_schedule
+#
+# Medium: edit existing blog post — change author + tags + scheduled date.
+# Browser client typically uses web_save instead of write — both optional.
+
+required_ops: []
+
+optional_ops:
+  - blog.post.read
+  - blog.post.write
+  - blog.post.web_save
+  - blog.post.search_read
+  - blog.post.web_search_read
+  - blog.tag.read
+  - blog.tag.search_read
+  - blog.tag.web_search_read
+  - blog.tag.name_search
+  - res.partner.name_search
+  - res.partner.read
+  - ir.ui.view.get_views
+
+forbidden_ops:
+  - blog.post.unlink
+  - blog.post.create
+  - blog.tag.create
