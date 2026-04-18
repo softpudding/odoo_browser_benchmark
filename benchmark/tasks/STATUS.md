@@ -367,7 +367,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 355 | sale_loyalty.buy_x_get_y_reward_in_cart [hard] | Configure a Buy X Get Y promotion and verify the free-product reward appears in the cart | Done | PASS | PASS | 1.0 |
 | 356 | sale_purchase.mto_so_generate_po_change_vendor_confirm [hard] | Confirm an MTO sale order, inspect the generated PO, switch vendor, and continue the chain | WIP | — | — | — |
 | 357 | sale_stock.confirm_so_manual_reserve_validate_delivery [medium] | Confirm a sale order, manually reserve stock on its delivery, and validate the transfer | Done | PASS | PASS | 1.0 |
-| 358 | website_blog.create_post_with_cta_seo_schedule [medium] | Create a blog post with a CTA, SEO metadata, and a scheduled publication date | Done | PASS | PASS | 1.0 |
+| 358 | website_blog.create_post_with_cta_seo_schedule [medium] | In the 'Bench News' blog, create a post with a CTA button block (Learn More, href='/shop'), fill Meta Title + Meta Description via the Optimize SEO dialog, and schedule publish for 2026-05-20 09:00 without publishing | Done | PASS | FAIL | 0.0 |
 | 359 | im_livechat.configure_channel_then_handle_widget_chat [hard] | Configure a live chat channel, open the website widget, accept the chat, and reply with a canned response | WIP | — | — | — |
 | 360 | website_hr_recruitment.apply_public_then_schedule_interview [hard] | Submit a public job application, then schedule that applicant’s interview from the backend | Done | PASS | PASS | 1.0 |
 | 361 | purchase_stock.receive_partial_scrap_damaged_units [hard] | Receive part of a PO, scrap damaged units from the receipt, and finish the remainder correctly | WIP | — | — | — |
@@ -3714,3 +3714,18 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Back-office `/odoo/discount-loyalty`, create program `Buy 2 Widgets Get 1 Gadget` with `program_type='promotion'`, `trigger='auto'`. Open the default rule and set Minimum Quantity=2 + Among-products=`Bench Widget`. Open the default reward and switch Reward type selection from the default "discount" to "Free Product" (the "Among" group then appears), pick `Bench Gadget`, set Quantity rewarded=1, Description="Free Bench Gadget". Save. Portal phase: navigate `/shop/cart` — the seeded cart has 2 Bench Widgets; `website_sale_loyalty.Cart.cart` auto-fires `_update_programs_and_rewards()` + `_auto_apply_rewards()`, attaching a free Bench Gadget reward line (discount=100%, price_subtotal=0). |
 | **Capability tested** | Buy-X-Get-Y promotion configuration using cascading loyalty-rule + loyalty-reward dialogs (reward-type dropdown flips the visible field group), plus implicit auto-apply side effect on /shop/cart via website_sale_loyalty controller. |
 | **Notes** | Calibration FAILED: BU solved it first-shot F1=1.0 in 139.8s (16 steps) — it handled both cascading dropdowns (rule editor + reward editor with reward_type switch) without getting stuck. Kept at tier 3 anyway since the reward-type switch is a genuine cascade test that fails intermittently on other runs. New cookbook entries added to ODOO19_PATTERNS.md: (1) Free-product reward lines have `price_unit=list_price` and `discount=100`, NOT `price_unit=0` — check.py must assert `price_subtotal`/`discount==100`. (2) `website_sale_loyalty.Cart.cart` auto-invokes `_update_programs_and_rewards` + `_auto_apply_rewards` on every /shop/cart GET — a single-reward `trigger='auto'` promotion with a satisfied rule attaches the reward line just by visiting /shop/cart. (3) JSON-RPC `reward_product_id` must be a `product.product` (variant) id, not `product.template` — resolve via `product.template.product_variant_id`. |
+
+---
+
+## website_blog.create_post_with_cta_seo_schedule
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
+| **Odoo modules** | Website Blog |
+| **Workflow** | In the Blog kanban pick `Bench News`. Create a new post titled `Bench Releases Q2 Features`. In the body, insert a CTA button block with label `Learn More` whose href is `/shop`. Open the **Optimize SEO** dialog (cog Actions > Optimize SEO) and set Meta Title = `Q2 Releases - Bench` and Meta Description = `Read about our Q2 release highlights and what it means for customers.`. Set the Publishing date to `05/20/2026 09:00:00` (future). Save; leave the post unpublished (scheduled). |
+| **Capability tested** | Three unrelated surfaces stacked into one medium task: drag/insert a CTA button snippet in the HTML editor, fill the Optimize SEO modal, and set a future Publishing date without toggling Publish. |
+| **Notes** | BU calibration: StateDiff matches 6/6 create-edits (name, blog_id, both SEO fields, and is_published/website_published=null for the scheduled state), but the `check.py` regex catches that BU never manages to insert the `<a href='/shop'>Learn More</a>` anchor in the body — BU's content stays empty (`<p></p>`) after 360 s of wall clock. Postcondition fail → strict FAIL, F1=0.0 via postcondition override. Cookbook: `blog.post.content` (not `arch_db`); `is_published`/`website_published` diff as `null` (not `false`) on create-and-schedule flows; Optimize SEO dialog is available on the blog.post backend form (unlike website_sale products where it's frontend-only). |
