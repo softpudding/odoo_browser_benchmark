@@ -342,7 +342,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 330 | event.add_track_with_speaker_publish [medium] | On existing event, add a track with speaker info and publish on website | Done | PASS | PASS | 1.0 |
 | 331 | purchase.send_rfq_email_with_template_signature [hard] | On a draft RFQ, click Send by Email, modify template body, attach signature | WIP | — | — | — |
 | 332 | website_sale.set_product_seo_title_meta [easy] | Open product, set SEO title and meta description | Done | PASS | PASS | 1.0 |
-| 333 | point_of_sale.attach_customer_apply_loyalty [hard] | In POS, attach a customer with loyalty card mid-sale and apply earned points | WIP | — | — | — |
+| 333 | point_of_sale.attach_customer_apply_loyalty [hard] | In POS, attach a customer with loyalty card mid-sale and apply earned points | Done | PASS | PASS | 1.0 |
 | 334 | website_blog.create_tag_assign_to_three_posts [medium] | Create a new tag, assign to 3 existing blog posts | WIP | — | — | — |
 | 335 | hr_recruitment.skill_filter_then_send_offer [hard] | Filter applicants by skill='Python', open top match, send offer email | WIP | — | — | — |
 | 336 | sale.create_quotation_with_customer_pricelist [medium] | Create SO with a customer who has a specific pricelist; verify pricelist auto-applied | WIP | — | — | — |
@@ -3350,3 +3350,18 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Seed a published product 'Bench SEO Widget' with empty website_meta_title / website_meta_description. Agent opens /odoo/ecommerce-products, clicks the product (lands on backend product form), clicks the header "Go to Website" button to reach /shop/bench-seo-widget, opens the Site menu → This Page → Optimize SEO, fills Title='Buy Bench SEO Widget Online' and Description='Premium widget for benchmarking with fast delivery.' in the Owl dialog, clicks Save. |
 | **Capability tested** | Reach a dialog that is NOT on the backend product form — SEO fields live on the `website.seo.metadata` mixin and are only editable through the frontend OptimizeSEODialog (registered under `website.menu_optimize_seo` in the `website_custom_menus` service). Forces the agent to pivot from backend list view to frontend Site menu. |
 | **Notes** | Calibrated as easy (~80% target) and BU solved first-shot in 81.9s. `is_seo_optimized` (computed+stored) flips False→True as a side effect of writing either meta field — placed in `ignore_fields` to keep the diff to exactly two atomic set edits. Oracle uses JSON-RPC write() bypass because the Owl dialog + iframe combo is fragile to script via Playwright and bypass is explicitly sanctioned for oracles. No forbidden ops; HarmfulWriteRate 0.0. See COOKBOOK_NOTES.md for the "SEO fields live on a mixin, not on the product form" quirk. |
+
+---
+
+## point_of_sale.attach_customer_apply_loyalty
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS (F1=1.0, 0 postcondition failures, 91.5s wall clock) |
+| **F1** | 1.0 |
+| **Odoo modules** | Point of Sale, loyalty, pos_loyalty (auto-installed via sale_loyalty in base) |
+| **Workflow** | Open the seeded Bench Loyalty POS register, add Bench POS Item x3 (EUR 60.00), click Customer on the action pad and pick Loyal Larry, open the Rewards popup and redeem the '10% on your order' loyalty-funded reward for 50 points (-EUR 6.00), then pay Bench Loyalty Cash 54.00 and validate. |
+| **Capability tested** | POS kiosk UI: attach a seeded customer mid-sale, open the Rewards popup, redeem a discount reward funded by the customer's loyalty.card point balance, pay cash, validate. Cross-module loyalty + POS. |
+| **Notes** | pos_loyalty auto-installs when both point_of_sale and loyalty are present; both are in base via sale_loyalty, no module install needed in seed. Seed creates a loyalty.program (program_type='loyalty', applies_on='both', reward=10% order discount at 50 points) scoped to the new POS config via pos_config_ids, and mints a loyalty.card for Loyal Larry with 100 points (exactly enough for one redemption, not two). Oracle uses the JSON-RPC call_kw bypass pattern. Calibration: browser-use solved on the first 91s run (F1=1.0) — the Rewards popup and customer autocomplete are well labelled, so the combined customer-attach + loyalty-redeem + cash-pay flow does NOT stack into a hard pattern. Earn-rule side note: reward_point_amount=1 on the order earn-rule means the POS awards 1 point on the same order the reward is redeemed, so the card ends at 51 points (100 + 1 earn - 50 redeem); check.py accepts ~51. To re-harden, require a non-default reward among multiple listed rewards, combine with a per-line discount, or add a cash reconciliation mismatch on session close. |
