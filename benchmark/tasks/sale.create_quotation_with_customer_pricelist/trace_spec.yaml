@@ -1,0 +1,34 @@
+# Trace oracle for sale.create_quotation_with_customer_pricelist
+#
+# Medium: create a draft quotation for a pricelist-bound customer, add a
+# line, save (don't confirm).
+
+required_ops: []
+
+optional_ops:
+  - sale.order.read
+  - sale.order.write
+  - sale.order.create
+  - sale.order.web_save
+  - sale.order.search_read
+  - sale.order.web_search_read
+  - sale.order.onchange
+  - sale.order.line.read
+  - sale.order.line.write
+  - sale.order.line.create
+  - sale.order.line.web_save
+  - sale.order.line.onchange
+  - product.pricelist.read
+  - product.pricelist.search_read
+  - product.product.read
+  - product.product.search_read
+  - res.partner.read
+  - res.partner.search_read
+  - ir.ui.view.get_views
+  - mail.message.create
+
+forbidden_ops:
+  - sale.order.unlink
+  - sale.order.line.unlink
+  - sale.order.action_confirm
+  - sale.order.action_cancel

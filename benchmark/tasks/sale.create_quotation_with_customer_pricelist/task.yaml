@@ -1,0 +1,21 @@
+task_id: sale.create_quotation_with_customer_pricelist
+module: sale
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/sales
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "Create draft SO for Bench Premium Co (has VIP 20% Off pricelist), add 5x Bench Standard Widget, verify 20% discount auto-applied on line price, save as quotation"
+  checks_verify: "SO created with pricelist_id=VIP 20% Off, one line Bench Standard Widget qty=5, line price_unit reflects 20% discount, state=draft (quotation)"
+  failure_pattern: "Agent may manually overwrite the auto-applied discounted price or skip selecting the seeded customer and pick a distractor without a pricelist"
+  primary_track: true
+  tier: 2
