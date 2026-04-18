@@ -1701,3 +1701,70 @@ Implications for task authors:
   `today`, `today-1d`, `today+1d` as valid date candidates when
   matching the order. (Browser-use failure mode here is separate —
   BU usually never reaches the order step at all.)
+
+---
+
+## sale_timesheet + hr_timesheet — install + timesheet-tab editable o2m quirks
+
+- **Neither `hr_timesheet` nor `sale_timesheet` is in the base snapshot.**
+  The `sale_timesheet` bridge depends on `hr_timesheet`; `button_immediate_install`
+  on `sale_timesheet` alone pulls `hr_timesheet` in transitively, but installing
+  both in order is more robust for test reliability. Wrap each install in
+  try/except so a partial install does not abort the seed.
+- `product.template.service_policy='delivered_timesheet'` is stored via
+  `invoice_policy='delivery' + service_type='timesheet'` (see
+  `_get_service_to_general_map` in
+  `addons/sale_timesheet/models/product_template.py`). Seeding `service_policy`
+  directly works, but writing the underlying two fields is cleaner and survives
+  registry reloads.
+- **`product.template` has NO `uom_po_id` field in Odoo 19.** The old dual
+  sale/purchase UoM split is gone — there's only `uom_id`. Seeds that try to
+  write `uom_po_id` raise `ValueError: Invalid field 'uom_po_id' in 'product.template'`.
+- `service_tracking='task_in_project'` on the service product causes
+  `sale.order.action_confirm` to trigger `_timesheet_service_generation()`
+  which auto-creates BOTH a `project.project` and a single `project.task`
+  tied to the SO line. The project's `allow_timesheets=True` by default, so
+  the Timesheets tab on the generated task is visible immediately.
+- **The Tasks smart button on `sale.order` is a COMBINED Projects+Tasks
+  button** (one `oe_stat_button` with two `<field>` counts stacked in an
+  `o_stat_info` block — see `addons/sale_project/views/sale_order_views.xml`).
+  Its `name="action_view_project_ids"` routes to
+  `project.act_project_project_2_project_task_all` (tasks list filtered by
+  the SO) when `len(project_ids) == 1`. Oracle selector that works:
+  `button.oe_stat_button:has-text('Tasks')` — there is no standalone Tasks
+  button.
+- **`project.task.timesheet_ids` editable-list (`editable="top"`) quirk**:
+  adding two rows back-to-back via "Add a line" without an explicit
+  `save_form()` between them persists ONLY the SECOND row. The first row's
+  in-memory changes are clobbered by the second Add. Oracles (and agents)
+  MUST call save (or Ctrl+S) between rows, or fill both rows before a single
+  terminal save. Cell selector for the timesheet o2m: the visible columns
+  are `date`, `employee_id` (widget=`many2one_avatar_employee`),
+  `name` (Description), `unit_amount` (widget=`timesheet_uom` = float_time).
+  All other columns in the list XML (`user_id`, `project_id`, `task_id`,
+  `company_id`, `readonly_timesheet`) are `column_invisible="True"`.
+- `account.analytic.line.unit_amount` uses `widget="timesheet_uom"`. The
+  cell input accepts float-time strings like `4:00`, `2:30`, `0.5`. The
+  string `4` alone is interpreted as 4.0 hours (no "minutes" magic).
+- The Create Invoice wizard's `advance_payment_method` radio on
+  `sale.advance.payment.inv` has **three options**: `Regular invoice`
+  (default), `Down payment (percentage)`, `Down payment (fixed amount)`.
+  Browser-use reliably keeps the default, so this radio alone is NOT a
+  hard-tier differentiator — it needs to combine with an upstream
+  cross-model chain (timesheets logged on an auto-task, delivered-qty
+  gating, etc.). Wizard primary button: `button[name='create_invoices']`
+  with text "Create Draft" or "Create Invoice".
+- `admin` user is already in `hr_timesheet.group_hr_timesheet_user` after
+  installing `hr_timesheet` (the module adds `base.user_admin` to that
+  group via its base demo data). A defensive `group.user_ids = [(4, admin.id)]`
+  still helps for reliability.
+- Browser-use single-shot calibration on this pattern: **PASS in ~183s**
+  on the first attempt. The SO -> Tasks smart button -> task form ->
+  Timesheets tab -> Add Line flow is well-signposted in Odoo 19, and BU
+  does NOT trip on the between-rows save quirk (it appears to navigate
+  cells slowly enough that each row commits via implicit blur). To
+  re-tier this workflow upward to hard, add: (a) a distractor task on
+  the same project that the agent must ignore, (b) require non-default
+  employee on one of the rows (e.g. a seeded "Bench Consultant" employee
+  vs admin), or (c) gate the Create Invoice on a non-default radio
+  (down-payment percentage) rather than the default Regular invoice.
