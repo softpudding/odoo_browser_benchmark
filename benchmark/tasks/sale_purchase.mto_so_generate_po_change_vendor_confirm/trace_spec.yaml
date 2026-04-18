@@ -1,21 +1,56 @@
+# Trace oracle for sale_purchase.mto_so_generate_po_change_vendor_confirm
+#
+# Category 1 (HARD, closed-loop cross-module): the agent must
+#   1. Navigate SO -> Purchase smart-button to the auto-generated RFQ
+#   2. Change its partner_id from Acme Supply Co to Brook Trading Ltd
+#   3. Save (web_save) so the line price_unit recomputes
+#   4. Click Confirm Order -> purchase.order.button_confirm
+
 required_ops:
-  - sale.order.action_confirm
+  - purchase.order.button_confirm
 
 optional_ops:
-  - sale.order.read
-  - sale.order.write
-  - sale.order.web_save
-  - purchase.order.create
-  - purchase.order.read
+  - sale.order.action_view_purchase_orders
+  - purchase.order.action_rfq_send
+  - purchase.order.action_confirm
   - purchase.order.write
+  - purchase.order.create
   - purchase.order.web_save
-  - purchase.order.button_confirm
-  - purchase.order.line.read
+  - purchase.order.read
+  - purchase.order.web_read
+  - purchase.order.search_read
+  - purchase.order.web_search_read
+  - purchase.order.onchange
   - purchase.order.line.write
+  - purchase.order.line.create
+  - purchase.order.line.read
+  - purchase.order.line.web_save
+  - purchase.order.line.onchange
+  - purchase.order.line.search_read
+  - sale.order.read
+  - sale.order.web_read
+  - sale.order.search_read
+  - sale.order.web_search_read
+  - sale.order.onchange
+  - res.partner.read
+  - res.partner.search_read
+  - res.partner.name_search
+  - product.product.read
+  - product.product.search_read
+  - product.product.name_search
+  - product.supplierinfo.read
   - ir.ui.view.get_views
+  - ir.ui.view.read
+  - mail.message.create
+  - mail.followers.create
+  - bus.bus.create
+  - stock.move.create
+  - stock.move.write
+  - stock.picking.create
+  - stock.picking.write
 
 forbidden_ops:
   - sale.order.action_cancel
-  - sale.order.unlink
-  - purchase.order.button_cancel
+  - sale.order._action_cancel
   - purchase.order.unlink
+  - sale.order.unlink

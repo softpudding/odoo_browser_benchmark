@@ -8,13 +8,11 @@ login_context:
 agent_interface: browser_only
 db_seed:
   snapshot: benchmark_base
-  setup_script: seed.py
-time_limit_sec: 420
-step_limit: 260
+setup_script: seed.py
+time_limit_sec: 480
+step_limit: 300
 metadata:
   category: closed_loop_cross_module
-  difficulty_level: hard
-  agent_interaction: "Confirm an MTO quotation, follow its generated RFQ via smart button, switch the vendor on that RFQ, and confirm the purchase order."
-  checks_verify: "The target sale order is confirmed and exactly one generated purchase order exists for the alternate vendor with the expected quantity and unit price."
+  failure_pattern: "Agent must follow the SO -> Purchase smart-button chain to the auto-generated draft RFQ, switch its vendor from the default (Vendor A) to the alternative (Vendor B) so the unit price recomputes, and then confirm the PO. Agents commonly either confirm the PO as-is (wrong vendor) or create a new PO instead of editing the generated one."
   primary_track: true
   tier: 3

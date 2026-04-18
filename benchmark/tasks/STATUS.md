@@ -3734,3 +3734,18 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | In the Blog kanban pick `Bench News`. Create a new post titled `Bench Releases Q2 Features`. In the body, insert a CTA button block with label `Learn More` whose href is `/shop`. Open the **Optimize SEO** dialog (cog Actions > Optimize SEO) and set Meta Title = `Q2 Releases - Bench` and Meta Description = `Read about our Q2 release highlights and what it means for customers.`. Set the Publishing date to `05/20/2026 09:00:00` (future). Save; leave the post unpublished (scheduled). |
 | **Capability tested** | Three unrelated surfaces stacked into one medium task: drag/insert a CTA button snippet in the HTML editor, fill the Optimize SEO modal, and set a future Publishing date without toggling Publish. |
 | **Notes** | BU calibration: StateDiff matches 6/6 create-edits (name, blog_id, both SEO fields, and is_published/website_published=null for the scheduled state), but the `check.py` regex catches that BU never manages to insert the `<a href='/shop'>Learn More</a>` anchor in the body — BU's content stays empty (`<p></p>`) after 360 s of wall clock. Postcondition fail → strict FAIL, F1=0.0 via postcondition override. Cookbook: `blog.post.content` (not `arch_db`); `is_published`/`website_published` diff as `null` (not `false`) on create-and-schedule flows; Optimize SEO dialog is available on the blog.post backend form (unlike website_sale products where it's frontend-only). |
+
+---
+
+## sale_purchase.mto_so_generate_po_change_vendor_confirm
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
+| **Odoo modules** | Sales, Purchase, Stock (MTO + Buy via sale_purchase_stock bridge) |
+| **Workflow** | Seed creates a confirmed SO for a storable product wired with MTO + Buy routes and two vendors (Acme 50.00 / Brook 40.00). Confirming the SO auto-generates a draft RFQ for Acme (first vendor by sequence). Agent opens the SO, clicks the Purchase smart button, changes `partner_id` to Brook Trading Ltd so `_compute_price_unit_and_date_planned_and_name` recomputes the line to 40.00, saves, and clicks Confirm Order. |
+| **Capability tested** | Closed-loop cross-module navigation (Sales → Purchase via smart button) + edit-the-generated-RFQ vs create-a-new-PO + vendor-driven price recompute. |
+| **Notes** | Calibrated under target — both oracle (24s) and browser-use (169s) pass F1=1.0. Could be escalated by hiding the smart-button hint or seeding distractor RFQs. Seed had to flip MTO.active, buy_route.product_selectable, warehouse.buy_to_resupply + re-run `_create_or_update_route()`, and force `procure_method='make_to_order'` on MTO rules — otherwise `action_confirm` silently produces no RFQ. MTO+Buy (non-dropship) PO lines do NOT carry `sale_line_id`; the SO↔PO link runs through `stock.reference.purchase_ids` (sale_purchase_stock override). check.py uses `purchase.order.origin == SO.name`. Vendor-swap on a partner_id match_key surfaces in the diff as `delete(old_partner) + create(new_partner)`, NOT as a single `set` edit. |

@@ -615,3 +615,48 @@ found under any configured addons path.
   precedent in STATUS.md rows 240 (`appointment.create_type_set_slots`)
   and 350
   (`appointment.public_booking_reschedule_cancel_portal`).
+
+---
+
+## MTO + Buy auto-RFQ (sale_purchase_stock) seed recipe
+
+Confirming a sale order for an MTO-routed storable product auto-generates a
+draft RFQ for the first-sequenced `product.supplierinfo` vendor.  The
+procurement chain is silent — if the seed is misconfigured, `action_confirm`
+succeeds but no PO appears, and the failure is invisible without a sanity
+probe.  Required seed steps:
+
+1. `env.ref("stock.route_warehouse0_mto").active = True` — MTO ships
+   `active=False` in fresh DBs.
+2. `env.ref("purchase_stock.route_warehouse0_buy").product_selectable = True` —
+   Buy ships `product_selectable=False` (warehouse-level); flip it so the
+   product can carry both MTO and Buy in `route_ids`.
+3. `main_wh.buy_to_resupply = True` then
+   `main_wh.write(main_wh._create_or_update_route())` — rebuilds the
+   `mto_pull_id` rule on the warehouse after toggling MTO active.
+4. `mto_route.rule_ids.write({"procure_method": "make_to_order"})` — paranoid:
+   ensures MTO rules push procurement upstream rather than fall back to
+   make_to_stock.
+5. Product must be `type='consu' + is_storable=True`, with
+   `route_ids=[mto_route, buy_route]` and ≥1 `product.supplierinfo`.  First
+   seller by `sequence` is picked for the auto-generated RFQ.
+
+**MTO-generated `purchase.order.line` does NOT carry `sale_line_id`** (that
+field is only populated for dropship; see the
+`if not values.get('move_dest_ids')` guard in
+`sale_purchase_stock/models/purchase_order.py::_prepare_purchase_order_line_from_procurement`).
+The SO↔PO linkage goes through `stock.reference.purchase_ids` (the
+`sale_purchase_stock.sale_order._get_purchase_orders` override unions it
+into the set returned by the `sale_purchase` bridge).  For check.py / seed
+sanity: search POs via `purchase.order.origin == SO.name`, NOT via
+`order_line.sale_line_id.order_id`.
+
+**Changing `partner_id` on the draft MTO-generated RFQ silently recomputes
+line `price_unit`** via `purchase.order.line._compute_price_unit_and_date_planned_and_name`.
+No wizard / no confirmation prompt appears even when the new vendor's
+supplierinfo price differs from the old one.
+
+**State-diff `match_key: [partner_id]` on purchase.order** treats a vendor
+swap as `delete(old_partner_key) + create(new_partner_key)` — NOT a single
+`set` edit.  expected_state.json must encode both operations if the underlying
+PO record is just mutating its partner_id.
