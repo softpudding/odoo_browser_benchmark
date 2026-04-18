@@ -6,6 +6,10 @@ LOST_REASON = "Too expensive"
 
 def setup(env):
     admin = env.ref("base.user_admin")
+    # Ensure the admin user's display name matches what the prompt calls them.
+    if admin.name != "Mitchell Admin":
+        admin.name = "Mitchell Admin"
+        admin.partner_id.name = "Mitchell Admin"
 
     # Cleanup prior runs.
     env["crm.lead"].with_context(active_test=False).search([
