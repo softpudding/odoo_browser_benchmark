@@ -316,7 +316,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 304 | project_todo.create_three_personal_with_specific_priorities [easy] | Create 3 personal to-dos; only Plan Sprint gets first priority star (Medium = '1'), others stay default | Done | PASS | FAIL | 0.0 |
 | 305 | website_hr_recruitment.set_kanban_state_assign_recruiter [medium] | Open Diana Recruit, flip kanban_state ball to 'Ready for Next Stage', set Recruiter, post Log note | Done | PASS | PASS | 1.0 |
 | 306 | purchase_stock.return_partial_with_distractor_lines [hard] | On a received PO with 3 product lines, return only 1 specific line partially | WIP | — | — | — |
-| 307 | sale_project.invoice_completed_milestones_only [hard] | With 4 milestones (2 reached, 2 not), invoice only the 2 reached | WIP | — | — | — |
+| 307 | sale_project.invoice_completed_milestones_only [hard] | Open SO S-BENCH-MS-002, click Create Invoice, accept wizard's auto-detected qty=2, Create Draft | Done | PASS | PASS | 1.0 |
 | 308 | survey.publish_share_via_link_get_url [easy] | Open a survey, click Share, generate the public URL | WIP | — | — | — |
 | 309 | point_of_sale.add_item_apply_global_discount_pay_cash [hard] | In POS, add 2 items, apply a 15% global discount, pay cash | WIP | — | — | — |
 | 310 | mass_mailing.duplicate_existing_change_subject_recipients [medium] | Duplicate a draft mailing, change subject and recipient list | WIP | — | — | — |
