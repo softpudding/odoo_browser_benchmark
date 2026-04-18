@@ -1,0 +1,21 @@
+task_id: hr_holidays.request_leave_with_attachment
+module: hr_holidays
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/time-off
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "From the Time Off app, create a new 2-day Annual Leave request for March 9-10, 2026 with a specific description, and attach a PDF justification file through the chatter paperclip."
+  checks_verify: "Exactly 1 hr.leave record exists with the seeded description, 2.0 number_of_days, and at least 1 ir.attachment (res_model='hr.leave') linked to it."
+  failure_pattern: "Browser-use agents often cannot drive the hidden input[type=file] behind the chatter paperclip and fail the attachment check."
+  primary_track: true
+  tier: 2

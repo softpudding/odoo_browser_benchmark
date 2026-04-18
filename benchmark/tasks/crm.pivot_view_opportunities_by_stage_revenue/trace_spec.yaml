@@ -1,0 +1,29 @@
+# Trace oracle for crm.pivot_view_opportunities_by_stage_revenue
+#
+# Category 1 (EASY): Switch to Pivot view, group by Stage, set Measures to
+# Expected Revenue, and save the current view as a favorite filter.
+# Validation is primarily state-based (check.py + expected_state.json).
+
+required_ops: []  # Favorite creation validated via state diff + check.py
+
+optional_ops:
+  - ir.filters.create
+  - ir.filters.search
+  - ir.filters.search_read
+  - ir.filters.read
+  - ir.filters.write
+  - web_save
+  - crm.lead.read
+  - crm.lead.search_read
+  - crm.lead.web_search_read
+  - crm.lead.formatted_read_group
+  - crm.lead.read_group
+  - crm.stage.read
+  - crm.stage.search_read
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+  - res.users.read
+
+forbidden_ops:
+  - crm.lead.unlink
+  - crm.lead.write

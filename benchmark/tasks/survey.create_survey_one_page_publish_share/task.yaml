@@ -1,0 +1,20 @@
+task_id: survey.create_survey_one_page_publish_share
+module: survey
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/surveys
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "Create a new customer feedback survey with three questions on a single page and public access so the share link works."
+  checks_verify: "Survey 'Bench Customer Feedback' exists with access_mode='public' and exactly 3 questions matching the expected titles, types, and simple_choice options."
+  primary_track: true
+  tier: 2
