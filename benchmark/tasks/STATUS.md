@@ -3005,3 +3005,18 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Open seeded PO P-BENCH-RET-001 (3 lines, fully received), open the done receipt, click Return, set WidgetA=0, WidgetB=2, WidgetC=0 in the multi-line wizard, click Return, then Validate the new return picking. |
 | **Capability tested** | Multi-line return wizard with selective per-row qty edits (2 distractor rows must be explicitly zeroed). |
 | **Notes** | BU gave up at 480s with 0 successful steps; required op stock.picking.button_validate was missed and WidgetB qty stayed at 5. Well-calibrated hard — non-default attention test on auto-populated wizard rows. |
+
+---
+
+## survey.publish_share_via_link_get_url
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
+| **Odoo modules** | Surveys |
+| **Workflow** | Open seeded 'Customer Pulse Q2' survey from kanban, click form-header Share button (calls survey.survey.action_send_survey), confirm wizard exposes /survey/start/<token> public URL via CopyClipboardChar widget, close dialog without sending email. |
+| **Capability tested** | Single-button form-header action opening a wizard exposing read-only side data. |
+| **Notes** | No DB state change (expected_state.json empty []). PASS anchored on action_send_survey trace + check.py invariants (active=True, access_mode='public', access_token non-null). BU solved in 10 steps (~68s). Calibration matches easy. |
