@@ -884,7 +884,6 @@ PO record is just mutating its partner_id.
 
 ---
 
-<<<<<<< HEAD
 ## website_hr_recruitment / hr.job publish + preview
 
 - `hr.job.website_description` is **frontend-only**: the only view that
@@ -934,7 +933,9 @@ PO record is just mutating its partner_id.
   [name]` produces two distinct "create" groups that both match
   expected_state.json partially. See
   `maintenance.create_equipment_schedule_preventive_plan`.
-=======
+
+---
+
 ## DateTimeField widget: button vs input dual rendering
 
 `addons/web/static/src/views/fields/datetime/datetime_field.xml` renders the
@@ -968,4 +969,3 @@ Applies to every datetime field with a seeded default (e.g., `stock.lot.expirati
 - **Clicking the m2o internal-link arrow inside a dialog opens a NESTED `<div class="modal">`** (not a new action) because `many2one.xml` routes `openRecord('dialog')` when `env.inDialog=True`. Multiple visible modals — identify the lot dialog by the presence of `.o_field_widget[name='expiration_date']`, not `.last`.
 - **`stock.lot._compute_dates` shifts `use_date`/`removal_date`/`alert_date` every time `expiration_date` changes.** On a fresh write, these start at `expiration_date - template.{use,removal,alert}_time`. On re-write they get shifted by the `expiration_date` delta. So oracle must set `expiration_date` BEFORE `removal_date` — writing removal first gets clobbered.
 - **`stock.lot.display_complete`** is True iff the lot `id` is set OR the context has `display_complete=True`. When opened as a nested-dialog from a popup m2o, `id` is truthy (the lot was created on the fly), so the full form renders (Dates group + expiration_date after ref). No extra context plumbing needed.
->>>>>>> b7b7398b ([ADD] benchmark: product_expiry.receive_lot_set_expiry_date (medium))
