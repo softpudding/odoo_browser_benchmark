@@ -506,7 +506,16 @@ Last eval: 2026-04-19 | Oracle: 169/169 (100%) | Browser-Use: 60/169 (35.5%) | N
 | 494 | hr.change_employee_work_schedule [easy] | Assign working-hours resource to employee | Done | PASS | PASS | 1.0 |
 | 495 | account.print_invoice_pdf_attach_to_partner [hard] | Print invoice PDF and attach to chatter | Done | PASS | PASS | 1.0 |
 | 496 | crm.add_opportunity_product_quotation_send [medium] | Add products on opp + create quote | WIP | — | — | — |
-
+| 497 | repair.diagnose_add_parts_mark_done [medium] | Create repair order, add part, start and complete repair (no invoice) | WIP | — | — | — |
+| 498 | sale_loyalty.create_buy_x_get_y_apply [medium] | Create Buy 2 Get 1 Free program, apply on SO with qualifying lines | WIP | — | — | — |
+| 499 | delivery.set_free_shipping_threshold [easy] | Set free shipping threshold on carrier, verify on SO | WIP | — | — | — |
+| 500 | mass_mailing.create_ab_test_send_winner [hard] | Create mailing with A/B test variant, send test, pick winner | WIP | — | — | — |
+| 501 | maintenance.create_request_complete_repair [easy] | Create maintenance request, assign technician, mark repaired | WIP | — | — | — |
+| 502 | website_slides.add_video_lesson_publish [medium] | Add URL video lesson to course section, publish | WIP | — | — | — |
+| 503 | sale_stock.confirm_so_deliver_full [medium] | Confirm SO, navigate to delivery via smart button, validate shipment | WIP | — | — | — |
+| 504 | event_sale.create_paid_event_register_invoice [hard] | Create event with paid ticket, register, generate and post invoice | WIP | — | — | — |
+| 505 | survey.create_scored_quiz_check_results [medium] | Create quiz with scored answers, preview-submit, check results | WIP | — | — | — |
+| 506 | im_livechat.create_channel_configure_operator [hard] | Create livechat channel, add operator, configure auto-message rule | WIP | — | — | — |
 ---
 
 ## account.complete_customer_tax_id_then_post
