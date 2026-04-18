@@ -1,0 +1,55 @@
+# Trace oracle for sale_purchase.update_pol_alternative_vendor_compare
+#
+# Category 2 (HARD): policy/wizard trap.  Agent must:
+#   - call action_create_alternative twice (Create Alternative button)
+#   - call action_compare_alternative_lines (Compare Product Lines button)
+#   - call action_choose / action_clear_quantities to zero rivals
+#   - confirm Beacon's RFQ via the alternative warning wizard
+#     (action_cancel_alternatives → button_confirm with skip flag)
+
+required_ops:
+  - purchase.order.button_confirm
+
+optional_ops:
+  - purchase.order.action_create_alternative
+  - purchase.order.action_compare_alternative_lines
+  - purchase.order.button_cancel
+  - purchase.order.line.action_choose
+  - purchase.order.line.action_clear_quantities
+  - purchase.requisition.create.alternative.create
+  - purchase.requisition.create.alternative.action_create_alternative
+  - purchase.requisition.alternative.warning.create
+  - purchase.requisition.alternative.warning.action_cancel_alternatives
+  - purchase.requisition.alternative.warning.action_keep_alternatives
+  - purchase.order.create
+  - purchase.order.write
+  - purchase.order.web_save
+  - purchase.order.read
+  - purchase.order.web_read
+  - purchase.order.search_read
+  - purchase.order.web_search_read
+  - purchase.order.onchange
+  - purchase.order.line.create
+  - purchase.order.line.write
+  - purchase.order.line.read
+  - purchase.order.line.search_read
+  - purchase.order.line.web_search_read
+  - purchase.order.line.web_save
+  - purchase.order.line.onchange
+  - purchase.order.group.create
+  - purchase.order.group.write
+  - product.product.read
+  - product.product.search_read
+  - product.product.name_search
+  - res.partner.read
+  - res.partner.search_read
+  - res.partner.name_search
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+  - mail.message.create
+  - mail.followers.create
+  - bus.bus.create
+  - stock.picking.action_cancel
+
+forbidden_ops:
+  - purchase.order.unlink

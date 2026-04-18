@@ -21,6 +21,7 @@ modules require additional modules that are NOT in the base:
 | Replenishment dashboard | `stock`, `purchase_stock` | Yes; lives at `/odoo/replenishment` |
 | Survey | `survey` | Yes (after early-batch installs) |
 | Maintenance | `maintenance` | Yes (after early-batch installs) |
+| Alternative RFQs / Compare Product Lines | `purchase_requisition` | **No** — seed must `button_immediate_install`; also grant admin `purchase_requisition.group_purchase_alternatives` so the **Alternatives** tab and **Create Alternative** button become visible on `purchase.order` form |
 
 Pattern to install on demand (see `survey.create_feedback_survey_with_sections/seed.py`):
 
@@ -76,6 +77,26 @@ if mod and mod.state != "installed":
 - `fleet.vehicle.write({'driver_id': ...})` auto-creates a `fleet.vehicle.assignation.log`
   entry with `date_start = fields.Date.today()`. If your test needs a specific `date_start`,
   do NOT pick today's date (date coincidence makes the task easier than intended)
+
+### Purchase / purchase_requisition
+
+- `res.groups` field is `user_ids` (Many2many), NOT `users` — writing
+  `grp.users = [(4, admin.id)]` raises `AttributeError`.  Use
+  `grp.user_ids = [(4, admin.id)]`.
+- `Create Alternative` wizard copies `origin` from the source PO onto every
+  alternative.  After running the wizard twice, list rows are ambiguous when
+  searching by `origin` — search by partner name instead.
+- `Compare Product Lines` opens `purchase_order_line_compare_tree` with
+  `search_default_groupby_product=True`.  The group starts **collapsed**
+  (`tr.o_group_header.o_group_has_content`) regardless of `expand="1"` on
+  the view.  Click the group header row before trying to locate `.o_data_row`
+  — Playwright `.o_data_row` queries return 0 until the group is expanded.
+- `purchase.order.button_confirm` raises the
+  `purchase.requisition.alternative.warning` wizard when the PO has any
+  draft/sent/to-approve alternatives.  The two actionable branches are
+  `action_cancel_alternatives` and `action_keep_alternatives`; there is no
+  "default" — agents must explicitly pick the non-default branch to cancel
+  rivals.
 
 ### Stock
 

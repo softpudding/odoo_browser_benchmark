@@ -305,7 +305,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 293 | fleet.transfer_vehicle_between_drivers_log_history [medium] | Transfer a vehicle to a new driver and verify the assignation log entry | Done | PASS | PASS | 1.0 |
 | 294 | sale_loyalty.create_loyalty_program_apply_at_checkout [hard] | Create a Discount Code loyalty program (SPRING10, $150 min purchase, 10% on order, custom reward description) and apply it on /shop/cart so a discount line appears | Done | PASS | PASS | 1.0 |
 | 295 | event_sale.add_seat_limited_ticket_register_until_full [medium] | Add a 5-seat limited ticket to an event and register attendees until the seats fill | Done | PASS | FAIL | 0.0 |
-| 296 | sale_purchase.update_pol_alternative_vendor_compare [hard] | Open RFQ, add an alternative vendor with different price, compare and pick cheapest | WIP | — | — | — |
+| 296 | sale_purchase.update_pol_alternative_vendor_compare [hard] | Open RFQ, add two alternative-vendor RFQs at different prices, then cancel the losers and confirm the cheapest via the alternative-warning wizard | Done | PASS | FAIL | 0.0 |
 | 297 | delivery.set_third_party_carrier_print_label [medium] | Configure a fixed-price carrier, apply it to a confirmed delivery picking with tracking ref, validate and trigger Print | Done | PASS | PASS | 1.0 |
 | 298 | inventory.create_storage_category_assign_to_location [medium] | Create a storage category with capacity rules and assign it to a stock location | Done | PASS | FAIL | 0.0 |
 | 299 | sale_stock.deliver_partial_split_into_two_pickings [hard] | On a multi-line SO, deliver partial (force inline-cell edit), create backorder, then on the backorder edit Done from auto-reserved 5 to 0 and SAVE without validating | Done | PASS | FAIL | 0.0 |
@@ -3020,3 +3020,18 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Open seeded 'Customer Pulse Q2' survey from kanban, click form-header Share button (calls survey.survey.action_send_survey), confirm wizard exposes /survey/start/<token> public URL via CopyClipboardChar widget, close dialog without sending email. |
 | **Capability tested** | Single-button form-header action opening a wizard exposing read-only side data. |
 | **Notes** | No DB state change (expected_state.json empty []). PASS anchored on action_send_survey trace + check.py invariants (active=True, access_mode='public', access_token non-null). BU solved in 10 steps (~68s). Calibration matches easy. |
+
+---
+
+## sale_purchase.update_pol_alternative_vendor_compare
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL (0.0) |
+| **F1** | 0.0 |
+| **Odoo modules** | purchase_requisition (installed on demand) |
+| **Workflow** | Open draft RFQ R-BENCH-ALT-001 (Atlas Industrial, 10 × Industrial Compressor @ 120). On the Alternatives tab, use **Create Alternative** to add a Beacon Mechanical RFQ; override its unit price to 100. Repeat for Crestline Equipment at 130. Open **Compare Product Lines**, click **Choose** on Beacon's row to zero the rival quantities, then confirm Beacon's RFQ. Choose **Cancel Alternatives** in the alternative-warning dialog so Atlas & Crestline are cancelled. |
+| **Capability tested** | Multi-step alternative-RFQ wizard sequence: partner_ids many2many_tags in a modal, copy-products side effect, a bespoke `js_class="purchase_order_line_compare"` grouped list view with per-row action buttons, and the non-default **Cancel Alternatives** branch in `purchase.requisition.alternative.warning`. |
+| **Notes** | BU ran out of steps at 480s without cancelling Atlas or confirming Beacon; created 4 duplicate Crestline drafts while looping on the create-alternative flow. Oracle reaches the same end state via the simpler direct-cancel path (cancel Atlas + Crestline → confirm Beacon with no warning), which is an allowed equivalent final state. Seed installs `purchase_requisition` on demand and adds admin to `group_purchase_alternatives` so the Alternatives tab is visible. |
