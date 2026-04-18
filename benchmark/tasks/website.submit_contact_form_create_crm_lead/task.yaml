@@ -1,0 +1,22 @@
+task_id: website.submit_contact_form_create_crm_lead
+module: website
+difficulty: medium
+instruction: see prompt.md
+start_url: /contactus-bench
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "Open the frontend /contactus-bench page (website_crm form), fill six fields (Name, Phone, Email, Company, Subject, Message) with exact copy-paste values, and click Submit to trigger a backend crm.lead creation."
+  checks_verify: "Exactly one crm.lead exists with contact_name='Bench Prospect Q4', email_from='prospect@bench.test', partner_name='Bench Test Inc', name='Requesting demo', normalized phone matches '+15555551212', and description contains 'enterprise plan'. The seeded /contactus-bench page remains published."
+  failure_pattern: "Agents may (a) open the Odoo backend /odoo/crm URL and create the lead manually instead of using the frontend form, or (b) submit with missing/wrong field values because they miss the Company or Subject input on the form."
+  distinct_from: "website.create_contact_form_with_custom_field adds a Selection field to an editable form in the website builder (backend iframe editor). This task instead tests the frontend submission pipeline itself — the form is pre-configured by the seed and the agent must use it as a public visitor would."
+  primary_track: true
+  tier: 2

@@ -2012,3 +2012,73 @@ Source tasks: `hr_attendance.clock_in_out_kiosk_mode`,
   `button.o_add_reserved` / `button.o_barcode_line_btn_add_quantity` —
   selector names drift between Odoo versions, always confirm against
   the shipping enterprise source before writing oracle selectors.
+
+---
+
+## website_crm contact form: frontend submit -> crm.lead pipeline
+
+- `website_crm` has `auto_install: True` and depends on `website + crm`.
+  When both are in the benchmark base, `website_crm` is already installed
+  and its `data/ir_model_data.xml` ran a `formbuilder_whitelist` call
+  exposing `crm.lead` fields (`contact_name`, `partner_name`,
+  `description`, `email_from`, `name`, `phone`, `team_id`, `user_id`,
+  `lead_properties`) to the `/website/form/<model>` controller. No extra
+  install step is needed in the seed.
+- The default `/contactus` page ships with `data-model_name="mail.mail"`
+  — submitting it creates a `mail.mail` record, NOT a `crm.lead`. To
+  create a lead you must EITHER drive the website builder to switch the
+  form action (tour `website_crm_pre_tour` does this via the right-hand
+  options panel "Action -> Create an Opportunity") OR seed a separate
+  page whose `<form>` arch already has `data-model_name="crm.lead"` plus
+  `name=` attributes matching the whitelisted crm.lead fields. The
+  latter is the pattern used for `website.submit_contact_form_create_crm_lead`.
+- Field-name mapping gotcha: on the default `/contactus` the "Name" input
+  is `name="name"` (maps to `crm.lead.name` = subject) and there is NO
+  `contact_name` input. For a crm.lead-targeted form the mapping must
+  be:
+    * Visitor's name  -> `<input name="contact_name">`
+    * Subject line    -> `<input name="name">`
+    * Company         -> `<input name="partner_name">`
+    * Message body    -> `<textarea name="description">`
+  Mixing these up silently puts the visitor's name into `crm.lead.name`
+  (subject) and leaves contact_name blank.
+- The `s_website_form` Owl `Interaction` (see
+  `addons/website/static/src/snippets/s_website_form/form.js`) binds a
+  `t-on-click.prevent` handler to `.s_website_form_send`, which calls
+  `send()` -> POST `/website/form/<model_name>`. It also attaches
+  `t-on-submit.prevent` to the `<form>` itself. **Critical for oracle
+  scripts:** a plain `page.click(".s_website_form_send")` is intercepted
+  synchronously BUT the JS `send()` is async — you MUST wait for the
+  redirect or for the POST round-trip. Pattern that works:
+  ```python
+  with page.expect_navigation(
+      url="**/contactus-thank-you**", timeout=25000
+  ) as nav:
+      page.click("form .s_website_form_send")
+  nav.value
+  ```
+- `form.js` `willStart()` unconditionally calls `recaptcha.loadLibs()`
+  unless the `<form>` carries class `s_website_form_no_recaptcha`. If
+  the base DB has `ir.config_parameter.recaptcha_private_key` set, the
+  submit will try to fetch a token and block. For seeded forms used in
+  benchmarks, either:
+  * add `s_website_form_no_recaptcha` to the form's class list, AND/OR
+  * explicitly clear `recaptcha_private_key` / `recaptcha_public_key`
+    config params in the seed (`icp.set_param(...)`).
+- `website_crm/controllers/website_form.WebsiteForm._handle_website_form`
+  reformats every phone field on `crm.lead` via
+  `phone_validation.phone_format(..., force_format='INTERNATIONAL')`
+  before insert. Passing `+15555551212` to a US-country form comes out
+  as `+1 555-555-1212` (spaces and dash). **Check scripts must normalize
+  phone** (strip non-digit/plus chars) before comparing equality.
+- `website_crm.insert_record` defaults `values['company_id'] =
+  request.website.company_id.id` and `values['lang_id'] =
+  res.lang._get_data(code=lang).id` AFTER the form handler. These
+  show up as extra create-edits in the state diff — include them in
+  `expected_state.json` or add them to `ignore_fields` in `state_spec.yaml`.
+- The created `crm.lead.type` defaults to `'opportunity'` in
+  Odoo 19 Community (crm.lead `_default_type` returns 'opportunity' when
+  `user_has_groups('crm.group_use_lead')` is False — which is the base
+  snapshot configuration). If your check expects `type='lead'` you must
+  either enable `crm.group_use_lead` in the seed OR accept
+  `type='opportunity'` as the expected value.
