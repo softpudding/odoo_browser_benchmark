@@ -1,0 +1,32 @@
+# Trace oracle for hr_recruitment.skill_filter_then_send_offer
+#
+# Hard: skill-based custom filter + pick senior + cog Send Email wizard with
+# subject override. `required_ops` focuses on the one deterministic call:
+# the applicant.send.mail wizard's action_send.
+required_ops:
+  - applicant.send.mail.action_send
+
+optional_ops:
+  - hr.applicant.read
+  - hr.applicant.search_read
+  - hr.applicant.web_search_read
+  - hr.applicant.write
+  - hr.applicant.web_save
+  - hr.skill.search_read
+  - hr.skill.name_search
+  - hr.applicant.skill.search_read
+  - hr.recruitment.stage.read
+  - hr.recruitment.stage.search_read
+  - hr.job.read
+  - hr.applicant.category.search_read
+  - mail.message.create
+  - mail.thread.message_post
+  - applicant.send.mail.create
+  - applicant.send.mail.web_save
+  - ir.ui.view.get_views
+  - ir.actions.server.run
+
+forbidden_ops:
+  - hr.applicant.unlink
+  - hr.applicant.archive_applicant
+  - hr.applicant.action_archive
