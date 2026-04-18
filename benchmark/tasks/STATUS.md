@@ -413,6 +413,11 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 401 | stock_barcode.receive_via_barcode_scan_validate [hard] | Use Barcode app to receive a picking by scanning product codes | Removed | FAIL (module unavailable) | — | — |
 | 402 | hr_holidays.request_allocation_approve_self_book_day_off [hard] | Allocate time off, approve, then book a day off against it | WIP | — | — | — |
 | 403 | hr_recruitment.create_applicant_kanban_move_to_offer [medium] | Create an applicant via kanban, move through stages to Contract Proposal | WIP | — | — | — |
+| 404 | account_followup.send_reminder_level_two_customers [hard] | Configure a follow-up level, trigger reminder on overdue invoices, send | WIP | — | — | — |
+| 405 | stock.adjust_inventory_count_apply_moves [medium] | Open Physical Inventory, edit counted qty, apply adjustments | WIP | — | — | — |
+| 406 | event.create_event_add_question_publish [hard] | Create event, add registration question with required answer, publish | WIP | — | — | — |
+| 407 | hr_expense.scan_submit_expense_from_mobile_portal [medium] | From My Expenses portal, create a simple expense and submit | WIP | — | — | — |
+| 408 | mail.send_email_with_attachment_log_as_note [medium] | On a partner form, send an email with attachment via chatter Send Message | WIP | — | — | — |
 
 ---
 
