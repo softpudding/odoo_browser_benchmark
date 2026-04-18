@@ -427,6 +427,30 @@ Default (no star filled) is `'0'` (Low). Prompt phrasing matters: "set High by c
 
 ---
 
+## project.task — no bulk "Move to Project" + list project_id is readonly
+
+`project.task` in Odoo 19 Community exposes **no** "Move to Project" /
+"Change Project" bulk action in the list or kanban cog Actions menu.
+The only server action bound to `model_project_task` is
+`mail.compose.message` ("Send Email"). In parallel,
+`project_task_view_tree_main_base` pins
+`<field name="project_id" ... readonly="1"/>` on the column, so list
+`multi_edit="1"` cannot be used to bulk-retarget tasks either. The
+canonical project reassignment path is **open each task's form →
+change the `Project` many2one → Save**. For "move N of M tasks"
+benchmark tasks the distractor trap is natural (Delta stays put while
+Alpha/Bravo/Charlie are reassigned one form edit at a time).
+
+Browser-use failure mode on this pattern: after the first successful
+form edit, the re-rendered `o-autocomplete--input` for `project_id`
+trips BU's dropdown-type detection (`Element and its children (depth 4)
+are not recognizable dropdown types`); BU misattributes to an
+ACL/"write access" error and aborts, leaving a partial
+1-of-N completion. Oracles should use JSON-RPC `web_save` of
+`project_id` for determinism — the UI path is noisy.
+
+---
+
 ## survey.survey + CopyClipboardChar widget
 
 - `survey.survey` has **no `state` field** in Odoo 19. "Ready to share" = `active=True` + `access_mode='public'` + populated `access_token`. Don't query a non-existent state field.

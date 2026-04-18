@@ -1,0 +1,33 @@
+# Trace oracle for project_todo.bulk_move_tasks_between_projects
+#
+# Agent reassigns three project.task records to a new project via form-view
+# edits. Browser-use routinely uses `web_save` instead of ORM `write`, so we
+# allow both as optional ops and validate the final state via check.py +
+# expected_state.json.
+
+required_ops: []
+
+optional_ops:
+  - project.task.read
+  - project.task.write
+  - project.task.web_save
+  - project.task.search_read
+  - project.task.web_search_read
+  - project.task.onchange
+  - project.task.get_views
+  - project.project.read
+  - project.project.search_read
+  - project.project.web_search_read
+  - project.task.type.read
+  - project.task.type.search_read
+  - ir.ui.view.get_views
+  - mail.message.read
+
+forbidden_ops:
+  - project.task.unlink
+  - project.project.unlink
+  - project.task.copy
+  - project.project.copy
+  - project.task.create
+  - project.project.create
+  - project.task.action_archive

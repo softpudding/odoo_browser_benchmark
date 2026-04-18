@@ -379,7 +379,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 367 | stock.scrap_specific_serial_unit [medium] | Scrap one specific serial-tracked unit (1 of 3 in stock) via Inventory Operations Scrap, leaving the other two in stock (originally hard, demoted after both browser-use runs passed) | Done | PASS | PASS | 1.0 |
 | 368 | hr_expense.split_submitted_report_resubmit [hard] | Refuse the Gadget expense (reason 'Not compliant') in a 3-expense submitted batch (R-BENCH-SPLIT-001) and approve the remaining Meal + Taxi — Odoo 19 hr.expense.sheet is removed so sheets pivot to per-expense triage | Done | PASS | PASS | 1.0 |
 | 369 | website_sale.apply_product_filter_clear_facets [medium] | On /shop, filter products by category and price range, then clear one facet and verify the other persists | WIP | — | — | — |
-| 370 | project_todo.bulk_move_tasks_between_projects [hard] | Move 3 specific tasks from project A to project B while leaving a distractor task in project A | WIP | — | — | — |
+| 370 | project_todo.bulk_move_tasks_between_projects [hard] | Move 3 specific tasks from project A to project B while leaving a distractor task in project A | Done | PASS | FAIL | 0.0 |
 | 371 | website_hr_recruitment.edit_job_form_publish_preview [medium] | Edit a recruitment job posting's description and requirements, publish it, then preview on the portal | WIP | — | — | — |
 | 372 | fleet.log_service_cost_add_odometer_close [hard] | Log a service cost on a vehicle, add an odometer reading, then mark the service record as closed | WIP | — | — | — |
 | 373 | maintenance.create_equipment_schedule_preventive_plan [medium] | Create a new maintenance.equipment and attach a preventive schedule with expected_mtbf | WIP | — | — | — |
@@ -3814,3 +3814,18 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Seed pre-creates the `im_livechat.channel` 'Bench Support' (admin as operator) with a URL rule, a `mail.canned.response` shortcut `hello` -> `Hi, thanks for reaching out!`, and a `discuss.channel` (channel_type='livechat') named 'Visitor #BENCH-359' with admin + anonymous visitor as members plus one waiting `mail.message` from the visitor body 'Hi there'. Agent opens `/odoo/discuss`, clicks the livechat session in the 'Bench Support' sidebar category, types `::hello` in the composer, picks the `hello` option from the suggestion popover (which substitutes the shortcut with the full text), and sends with Enter/Send. |
 | **Capability tested** | Triggering the Odoo 19 Discuss canned-response suggestion popover via the `::` delimiter and selecting the substitution (not sending the literal shortcut text); plus sidebar navigation into a livechat session inside the auto-collapsing `im_livechat.channel` sidebar category. Multi-tab widget flow calibrated down to single-tab per backlog guidance (Playwright multi-tab is fragile). |
 | **Notes** | Canned responses in Odoo 19 are triggered by **double-colon `::`**, NOT single-colon (single colon triggers the emoji picker); backlog spec said `:hello` and was corrected to `::hello`. Cookbook quirk discovered & documented in ODOO19_PATTERNS.md: `mail.canned.response` visibility in the `/mail/data` webclient endpoint is gated by `create_uid = env.user.id OR group_ids in user.all_group_ids.ids`. Odoo shell runs as `__system__` (id=1), NOT admin (id=2), so a naive `env["mail.canned.response"].create({...})` yields a record admin cannot see. Seed MUST `with_user(admin).create({..., "group_ids": [(6, 0, [base.group_user.id])]})`. Browser-use solved the task on the first try (9 steps, 69.5s) — calibration slots this as "easier" than hard tier. |
+
+---
+
+## project_todo.bulk_move_tasks_between_projects
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
+| **Odoo modules** | Project |
+| **Workflow** | Seed creates two projects `Bench Proj A` (4 tasks: Alpha/Bravo/Charlie/Delta) and `Bench Proj B` (empty). Agent opens each of Alpha/Bravo/Charlie in the task form, changes the `Project` many2one from Proj A to Proj B, and Saves — three times. Delta must remain in Proj A as a distractor. Final: Proj A has 1 task (Delta), Proj B has 3 (Alpha/Bravo/Charlie). |
+| **Capability tested** | Repeated form-edit of a many2one field across 3 similar records without touching the 4th distractor. Originally scoped as "multi-select + bulk 'Move to Project' action" but **no such action exists in Odoo 19 Community** — `project.task` has no move-to-project wizard, and the `project_id` column in `project_task_view_tree_main_base` is declared `readonly="1"`, so list inline edit is blocked too. Canonical path is per-task form edit. |
+| **Notes** | Calibration pivot: bulk wizard / list inline-edit pattern was unavailable; fell back to per-task form edit of project_id × 3. Oracle uses JSON-RPC `web_save` for determinism. Browser-use moved only **Alpha** (1/3) then hallucinated an access-rights error and gave up despite the admin user clearly having write permission — classic BU misfire on repeated form-hop workflows where the `o-autocomplete--input` combobox loses its dropdown-detectable shape after the first save. Genuine hard-tier FAIL: state_diff F1=0.0 (engine binarises on Recall<1 for small expected sets), 4 postcondition failures. BU wall-clock 161 s before abort, well inside the 480 s budget. |
