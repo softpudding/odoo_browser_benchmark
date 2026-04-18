@@ -246,6 +246,42 @@ if mod and mod.state != "installed":
   `website.sale.category` / `product.category.public` do not exist. The m2m
   on `product.template` is `public_categ_ids`.
 
+### Website / website_sale_stock (stock-availability banner)
+
+- **`website_sale_stock` is NOT in the base snapshot**, and neither are its
+  hard deps `sale_stock` and `stock_delivery`. It is marked
+  `auto_install=True`, but auto-install only fires when ALL deps are
+  already installed. Seed must walk the dep chain explicitly:
+  ```python
+  for mod_name in ("sale_stock", "stock_delivery", "website_sale_stock"):
+      mod = env["ir.module.module"].search([("name", "=", mod_name)], limit=1)
+      if mod and mod.state != "installed":
+          mod.button_immediate_install()
+  ```
+- **The "X in stock" badge on the product page is the `threshold_message`
+  block** (QWeb `website_sale_stock.product_availability`,
+  `addons/website_sale_stock/static/src/xml/website_sale_stock_product_availability.xml`).
+  Render conditions: `is_storable=True` AND `show_availability=True` AND
+  `free_qty > 0` AND `free_qty <= available_threshold`. Defaults are
+  `show_availability=False` and `available_threshold=5.0`, so a seed that
+  wants the banner visible at arbitrary qty must flip
+  `show_availability=True` AND raise the threshold above the seeded
+  on-hand qty.
+- **`product.template.is_storable=True` is the Odoo-19 storable flag for a
+  `type='consu'` product.** The legacy `type='product'` selection value is
+  gone; a "storable" product is `type='consu' + is_storable=True`.
+- **`/shop/cart/add` does NOT enforce the on-hand cap while
+  `allow_out_of_stock_order=True` (the default).** Even if the banner
+  advertises "5 Units in stock", a JSON-RPC POST of `quantity=999`
+  succeeds. Tasks that want a hard UI cap must flip
+  `allow_out_of_stock_order=False`; tasks that just need the banner
+  rendered can keep the default.
+- **BU is trivially good at product-detail quantity bump + Add-to-cart.**
+  `input[name="add_qty"]` is directly adjacent to `#add_to_cart` — no
+  modal, no dual-handle slider. Do NOT build a medium task around just
+  the qty bump; combine with filter/category nav, optional-product
+  upsell, or a cart-level edit to escalate.
+
 ### Loyalty / sale_loyalty / website_sale_loyalty
 
 - `loyalty.program.program_type='loyalty'` (Loyalty Cards) **cannot be applied with a code** —
