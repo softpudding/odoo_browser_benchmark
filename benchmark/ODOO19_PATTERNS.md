@@ -1090,7 +1090,6 @@ Applies to every datetime field with a seeded default (e.g., `stock.lot.expirati
 
 ---
 
-<<<<<<< HEAD
 ## mrp_subcontracting — receipt + auto-MO chain
 
 - **Module not in base**: `mrp_subcontracting` AND its auto-install-gated
@@ -1203,7 +1202,9 @@ Applies to every datetime field with a seeded default (e.g., `stock.lot.expirati
   labelled kiosk UI. Restaurant POS is not by itself a hard pattern;
   harden via split-bill, transfer-merge, non-default course picks,
   guests count, or cash reconciliation with a deliberate mismatch.
-=======
+
+---
+
 ## website_customer / res.partner customer-reference publish
 
 - `website_customer` is NOT in the base snapshot. Seed must
@@ -1249,4 +1250,3 @@ Applies to every datetime field with a seeded default (e.g., `stock.lot.expirati
       referring.sudo().write({"assigned_partner_id": False})
   old_partners.sudo().unlink()
   ```
->>>>>>> c078def6 ([ADD] benchmark: website_customer.publish_customer_reference_on_public_page (medium))
