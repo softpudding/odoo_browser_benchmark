@@ -1,0 +1,20 @@
+task_id: website_sale.edit_product_image_gallery
+module: website_sale
+difficulty: easy
+instruction: see prompt.md
+start_url: /odoo/inventory/products
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 240
+step_limit: 120
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: easy
+  agent_interaction: "Open the seeded product in the backend, navigate to its eCommerce/Sales tab and add a new extra image named 'Bench Side View' via the eCommerce Media widget."
+  checks_verify: "A single product.image record with name 'Bench Side View' is linked to product template 'Bench Gallery Mug' and has image_1920 bytes set."
+  primary_track: true
+  tier: 1
