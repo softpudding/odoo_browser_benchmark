@@ -300,6 +300,55 @@ if mod and mod.state != "installed":
   with form fields `promo=<CODE>` and `csrf_token=<form token>`. The form is rendered
   by template `website_sale.coupon_form` (visible by default on `/shop/cart`).
 
+### Website / website_forum
+
+- **`website_forum` is NOT in the base snapshot.** Seed must
+  `button_immediate_install` the module before creating any forum / post
+  (the `forum.forum` and `forum.post` models won't exist otherwise).
+- **Frontend Accept-answer controller blocks self-accept unconditionally**
+  (karma-independent). From
+  `addons/website_forum/controllers/website_forum.py`:
+  `def post_toggle_correct: if request.env.uid == post.create_uid.id:
+  return {'error': 'own_post'}`. Any "agent posts an answer and then
+  accepts it" task MUST seed a non-admin user to author the answer that
+  should be accepted — admin cannot click Accept on their own post.
+  Karma override does not help.
+- **Karma is a non-issue for admin.** `forum.post._compute_post_karma_rights`
+  branches on `self.env.is_admin()` first and sets `can_ask / can_answer /
+  can_accept / can_edit / can_close / ... = True` regardless of the karma
+  fields. So seeds don't need to write `admin.karma = ...` to unblock
+  the frontend flow. The only guard that still fires on admin is the
+  own-post block above.
+- **Accept checkmark selector is `.o_wforum_validate_toggler`** (an `<a>`
+  whose `data-href` posts to `/forum/<forum>/post/<answer>/toggle_correct`).
+  The visible affordance is a small Font Awesome icon `i.fa-check-circle-o`
+  (empty) / `i.fa-check-circle.text-success` (filled/accepted). BU reliably
+  FAILS to find this selector — it is the natural calibration trap for any
+  forum-acceptance task.
+- **Answer textarea has `minlength="50"`** (see template `post_answer`):
+  agent prompts must specify a long-enough answer body or the form will
+  reject it client-side (`required` + `minlength` HTML attributes).
+- **Forum `mode='questions'` caps answers at 1; `mode='discussions'`
+  allows many.** If the task seeds two pre-existing answers for a single
+  question so the agent has a "decoy" to avoid, use `mode='discussions'`.
+- **`forum.post` match_key for state-diff:** use `[name, parent_id,
+  create_uid]` — two seeded answers from the same user with the same
+  `Re: <title>` name collide, so give distinct backend `name` values
+  (the frontend renders only `content`, so `name` is safe to differentiate
+  without leaking task structure).
+- **`forum.post` create edits emit `is_correct=null` (not False)** — same
+  null-vs-false quirk documented for `blog.post`. `expected_state.json`
+  for a create must use `"norm_value": null` for `is_correct`, not
+  `false`.
+- **`forum.post.name` auto-prefix for answers:** the frontend controller
+  sets `name = 'Re: %s' % post_parent.name` when posting via `/new`. In
+  seed you can pick any name for the bot-authored answers; the frontend
+  shows only `content` to users.
+- **Tag `forum.tag.name` is scoped per-forum** (`forum_id` FK). Uniqueness
+  constraint is `(name, forum_id)`. Public forum creation in seed must
+  also create any tags referenced in the pre-seeded question via
+  `forum_id._tag_to_write_vals(...)` OR direct `(6, 0, [tag.id])`.
+
 ### Survey
 
 - Form hides Time Limit field when `survey_type='survey'`; use `'custom'` to expose it
