@@ -1037,6 +1037,19 @@ Free-product reward JSON-RPC payload: `reward_product_id` must be a
 
 ---
 
+## account.move.reversal wizard (Credit Note / Reverse)
+
+- Statusbar button on a posted `account.move` is **"Credit Note"** (`button[name='action_reverse']`, `groups=account.group_account_invoice`) — NOT "Reverse". The wizard that opens is `account.move.reversal`. On `move_type='entry'` the button is labeled "Reverse Entry" instead and goes directly through `action_view_account_move_reversal`.
+- **No `refund_method` radio in Odoo 19.** The 3-option radio (Partial Refund / Full Refund / Full refund and new draft) that existed in Odoo ≤16 was removed in 17+. The wizard footer now has exactly 2 buttons: **Reverse** (`btn-primary`, `name='refund_moves'`, `data-hotkey='q'`) and **Reverse and Create Invoice** (`btn-secondary`, `name='modify_moves'`, invisible when `move_type=='entry'`). The old "Partial Refund" behavior = click Reverse then edit the generated draft. Prompts must refer to buttons, not radios.
+- `refund_moves` → `reverse_moves(is_modify=False)` → creates a **draft `out_refund`** credit note prefilled with copied lines + `ref='Reversal of: {source.name}, {reason}'` + `invoice_date=wizard.date` + `auto_post='at_date' if date>today else 'no'`. The agent can then edit lines (change qty, delete rows) before clicking header **Confirm** (`action_post`).
+- `modify_moves` → creates the reversal AND a NEW draft invoice cloned from the source (minus payments) — the user is redirected to the new draft invoice, not a credit note. Tasks wanting the "edit credit note" flow must trace_spec `forbidden_ops: [account.move.reversal.modify_moves]`.
+- Credit note `ref` is built by `_prepare_default_reversal` as `self.env._('Reversal of: %(move_name)s, %(reason)s', move_name=move.name, reason=self.reason)` — it uses source `name` (the auto-generated `INV/2026/00001`), NOT the source's `ref` Char. `expected_state.json` entity_keys for the credit note MUST match this exact pattern; if seed sets `ref='INV/BENCH/001'` the reversal ref will still be `'Reversal of: INV/2026/00001, Wrong qty'`.
+- Reversal date defaults to `fields.Date.context_today`. If set to a **future** date, `auto_post='at_date'` and the header Confirm button is HIDDEN on the draft credit note — agent must either flip `auto_post` to 'No' in Other Info tab (select_menu, NOT a native select) or pick today. Tasks that say "leave date at default" sidestep this entirely.
+- **Phantom-line trap on qty edit**: BU's `input(clear=True)` frequently fires `⚠️ Text field clearing failed, typing may append to existing text` on the editable list `td[name='quantity']` cell. The retry loop sometimes writes "2" into a brand-new placeholder row instead of the target row, leaving a second `account.move.line` with `display_type='product'` but `product_id=False`, `quantity=0`, `price_unit=0`. `check.py` MUST assert `len(move.invoice_line_ids.filtered(lambda l: l.display_type=='product'))==1` (or filter by `l.product_id`) to catch this — using `amount_total` alone is fooled because the phantom line has subtotal 0.
+- Row-delete is the trash icon at the end of each `account.move.line` row: selectors `td.o_list_record_remove button`, `.o_list_record_remove`, `button[aria-label='Delete row']`, or (BU's hit) `button[name=delete]`. BU deletes rows reliably on the first try — the failure mode is the qty edit, not the delete.
+
+---
+
 ## account.move type='entry' form (direct journal entries)
 
 - Journal Entries list: `/odoo/accounting/entries` (action `account.action_move_journal_line`, context `default_move_type='entry'`). NOT the same form as invoices.
