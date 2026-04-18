@@ -324,7 +324,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 312 | calendar.create_event_with_two_organizers_recurring_weekly [medium] | Create weekly recurring Monday event 09:00-09:30 with 2 attendees and Discuss videocall link | Done | PASS | FAIL | 0.0 |
 | 313 | mrp.scrap_component_during_partial_production [hard] | Open MO, cog Actions → Scrap (qty=2 ScrewA, tag Defective batch), validate scrap, then Produce All → Mark Done | Done | PASS | FAIL | 0.0 |
 | 314 | crm.assign_team_change_salesperson_log_activity [medium] | Open Bench Big Deal, change Team to Channel + Salesperson Sara via Contacts tab, schedule Call activity | Done | PASS | PASS | 1.0 |
-| 315 | website_sale.add_optional_at_cart_remove_main_keep_optional [hard] | In webshop cart with main+optional product, remove the main and verify optional remains | WIP | — | — | — |
+| 315 | website_sale.add_optional_at_cart_remove_main_keep_optional [hard] | Add Bench Camera + accept Tripod optional in modal, then remove only Camera at cart, leaving Tripod orphaned | Done | PASS | FAIL | 0.0 |
 | 316 | hr_expense.create_with_currency_eur_to_usd [medium] | Create NYC Hotel expense in USD (200 USD = 185 EUR), employee paid, verify EUR conversion | Done | PASS | FAIL | 0.0 |
 | 317 | event_product.create_event_product_link_to_ticket [medium] | Create a service product linked to an event ticket type | WIP | — | — | — |
 | 318 | website.create_contact_form_with_custom_field [hard] | On website /contact-us page, add a custom dropdown field via website builder | WIP | — | — | — |
@@ -3140,3 +3140,18 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Create expense 'NYC Hotel' product=Hotel, total=200 USD, date=2026-04-01, paid by employee. (Sheet/report wrapper removed in Odoo 19; expense is the unit.) Verify EUR conversion ≈ 185. |
 | **Capability tested** | Multi-currency dropdown selection + computed amount conversion. |
 | **Notes** | Well-calibrated medium. BU completed correct fields but created the expense twice — postcondition "exactly 1 expense" fails. Currency dropdown gated by base.group_multi_currency; res.currency records start active=False in fresh DBs. |
+
+---
+
+## website_sale.add_optional_at_cart_remove_main_keep_optional
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
+| **Odoo modules** | Website (eCommerce) |
+| **Workflow** | From /shop add Bench Camera, accept Bench Tripod optional in upsell modal. Then on /shop/cart click per-line trash on Bench Camera only, leaving Bench Tripod orphaned in draft cart. |
+| **Capability tested** | Optional-products modal + selective per-line trash on public webshop. |
+| **Notes** | Well-calibrated hard. BU made 196 API calls but never drove the optional-products modal reliably. Postcondition is the source of truth (StateDiff empty by design). |
