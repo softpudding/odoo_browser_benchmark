@@ -1,0 +1,28 @@
+models:
+  stock.storage.category:
+    match_key:
+      - name
+    fields:
+      - name
+      - max_weight
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
+      - capacity_ids
+      - product_capacity_ids
+      - package_capacity_ids
+      - location_ids
+      - weight_uom_name
+      - allow_new_product
+
+  stock.location:
+    match_key:
+      - complete_name
+    fields:
+      - complete_name
+      - storage_category_id
+    ignore_fields:
+      - id
+      - create_date
+      - write_date

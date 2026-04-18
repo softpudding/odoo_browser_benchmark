@@ -307,7 +307,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 295 | event_sale.add_seat_limited_ticket_register_until_full [medium] | Add a 5-seat limited ticket to an event and register attendees until the seats fill | Done | PASS | FAIL | 0.0 |
 | 296 | sale_purchase.update_pol_alternative_vendor_compare [hard] | Open RFQ, add an alternative vendor with different price, compare and pick cheapest | WIP | — | — | — |
 | 297 | delivery.set_third_party_carrier_print_label [medium] | Configure a fixed-price carrier, apply it to a confirmed delivery picking with tracking ref, validate and trigger Print | Done | PASS | PASS | 1.0 |
-| 298 | inventory.create_storage_category_assign_to_location [medium] | Create a storage category with capacity rules and assign it to a stock location | WIP | — | — | — |
+| 298 | inventory.create_storage_category_assign_to_location [medium] | Create a storage category with capacity rules and assign it to a stock location | Done | PASS | FAIL | 0.0 |
 | 299 | sale_stock.deliver_partial_split_into_two_pickings [hard] | On a multi-line SO with insufficient stock for one product, deliver partial and create explicit second picking later | WIP | — | — | — |
 | 300 | website_blog.create_blog_with_two_posts_archive_one [medium] | Create a new blog with 2 posts, then archive one of the two | WIP | — | — | — |
 | 301 | website_slides.duplicate_lesson_to_new_section [medium] | Duplicate an existing lesson and move the copy to a new section in a course | WIP | — | — | — |
@@ -2827,8 +2827,6 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 ---
 
-## sale_loyalty.create_loyalty_program_apply_at_checkout
-
 ## event_sale.add_seat_limited_ticket_register_until_full
 
 | Field | Value |
@@ -2841,6 +2839,7 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Seed creates 'Spring Q2 Workshop' with no real ticket types. Agent (1) adds VIP Seat ticket with seats_max=5, price=200; (2) registers VIP-1..VIP-5 one-at-a-time via the Attendees stat button → New, setting `event_ticket_id=VIP Seat` on each registration; (3) attempts to register VIP-6 with the same ticket — Odoo's `_check_seats_availability` constrains state in ('open','done'), so saving raises a ValidationError "There are not enough seats available". Agent must discard the 6th draft. |
 | **Capability tested** | Repetitive form fills (5 round-trips event → Attendees → New → Save), per-row non-default `event_ticket_id` selection, and recognition of a hard server-side seat-limit block on the 6th attempt. |
 | **Notes** | Well-calibrated medium. Oracle passes cleanly with F1=1.0 (24/24 atomic edits matched). Browser-Use failed: it created a duplicate 'VIP-1', omitted `event_ticket_id` on every registration (so seats_max was never enforced), and successfully created VIP-6 because no ticket meant no seat-limit constraint. Postcondition catches both the duplicate and the missing-ticket-link, F1 collapses to 0.0. Cookbook quirk discovered: BU drops the `event_ticket_id` Many2one on `event.registration.create` when registering from the event's Attendees view because the field is empty by default and the registration is still valid (just unconstrained) — drives both the seat-limit bypass and the duplicate-name re-attempts. |
+
 ---
 
 ## sale_loyalty.create_loyalty_program_apply_at_checkout
@@ -2856,3 +2855,18 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Capability tested** | Cross-module workflow: backend program creation (with two embedded subforms — rule and reward — each with non-default fields) followed by switching from `/odoo` to the public web shop and applying the code through the cart's coupon form. |
 | **Calibration note** | Hardened from base spec by adding a distractor existing program, a hidden non-default Minimum Purchase=$150 on the rule, and a custom Reward Description string. Browser-Use 1.0 (model `bu-1-0`) still solved it in 14 steps; this is a strong agent and the form widgets are well structured. The task remains genuinely cross-module and exercises the rule sub-form, reward sub-form, and the public `/shop/pricelist` POST flow — borderline easy for top agents but will challenge weaker models that struggle with sub-form save & close cycles. Per build instructions, committed as-is with this calibration note. |
 | **Notes** | `program_type='loyalty'` cannot be applied with a code (`_try_apply_code` rejects it with "This program cannot be applied with code"), so the spec's literal `program_type=loyalty` is infeasible — used `promo_code` (the canonical "Discount Code" type that lives under the same Discount & Loyalty menu). Cart auto-pickup works because admin is logged in and `_get_and_cache_current_cart` resurrects the abandoned draft order matching `partner_id+website_id+state=draft`. |
+
+---
+
+## inventory.create_storage_category_assign_to_location
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
+| **Odoo modules** | Inventory (Stock) |
+| **Workflow** | Open Inventory → Configuration → Settings, enable the **Storage Locations** toggle (group_stock_multi_locations — this is what gates the Storage Categories menu and the storage_category_id field on stock.location in Odoo 19), Save. Then Configuration → Storage Categories → New: name="Cold Chain", Max Weight=500, Save (leave Allow New Product=mixed default, no capacity rows). Then Configuration → Locations → click WH/Stock → set Storage Category=Cold Chain → Save. |
+| **Capability tested** | Settings-toggle prerequisite (settings save reloads the page and only then exposes the menu/field) + nested form across two distinct configuration screens. |
+| **Notes** | Cookbook quirks: (1) In Odoo 19 there is **no** separate `group_stock_storage_categories` setting — the only toggle is "Storage Locations". The prompt phrasing reflects this. (2) `complete_name` on `stock.location` must be in `state_spec.fields` (not just `match_key`) or the diff engine emits `entity_key=[null]` and stable matches break. (3) `allow_new_product` defaults to `mixed` on create and showed up as a noisy `create` op — moved to `ignore_fields`. (4) Seed must remove `group_stock_multi_locations` from `base.user_admin.group_ids` AND from `base.group_user.implied_ids` to make the Storage Categories menu invisible at start. (5) BU run took 244s, created the category but typed Max Weight=0.01 (likely confused the field with a default decimal placeholder) and never reached step 3 — clean medium FAIL. |
