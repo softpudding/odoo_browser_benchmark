@@ -1,0 +1,26 @@
+# Trace oracle for account.lock_books_set_period_lock_date.
+#
+# Agent must update the main company record with a new fiscalyear_lock_date.
+# Browser-use typically calls web_save instead of plain write.
+
+required_ops:
+  - res.company.write
+
+optional_ops:
+  - res.company.read
+  - res.company.search_read
+  - res.company.web_read
+  - res.company.web_save
+  - res.config.settings.create
+  - res.config.settings.write
+  - res.config.settings.execute
+  - res.config.settings.read
+  - res.config.settings.web_save
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+  - mail.message.create
+  - mail.tracking.value.create
+
+forbidden_ops:
+  - res.company.unlink
+  - res.company.create

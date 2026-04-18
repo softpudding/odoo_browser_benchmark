@@ -1,0 +1,20 @@
+task_id: event.add_event_questions_to_registration
+module: event
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/events
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "Open a seeded event, navigate to its Questions tab, add two new questions to the registration form (one Text Input, one Selection with three options), and save."
+  checks_verify: "The event 'Bench Tech Conference 2026' has the two expected questions linked, with correct titles, types, and the Selection question carries the three answer options."
+  primary_track: true
+  tier: 2

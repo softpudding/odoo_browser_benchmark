@@ -1,0 +1,20 @@
+task_id: project.recurring_task_configure_frequency
+module: project
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/project
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "Open the seeded 'Bench Recurring Project', open the task 'Weekly Status Update', toggle the Recurrent (repeat) icon next to the deadline, then configure Repeat Every 1 Weeks Until the date 06/13/2026 (eight weeks ahead) and save."
+  checks_verify: "project.task 'Weekly Status Update' has recurring_task=True, repeat_interval=1, repeat_unit='week', repeat_type='until', repeat_until=2026-06-13."
+  primary_track: true
+  tier: 2
