@@ -1345,3 +1345,41 @@ Applies to every datetime field with a seeded default (e.g., `stock.lot.expirati
 - URL for the list action is `/odoo/landed-costs`
   (`action.path='landed-costs'`, xmlid `stock_landed_costs.action_stock_landed_cost`).
   Menu path is Inventory > Operations > Adjustments > Landed Costs.
+
+---
+
+## hr_skills_survey is Community-limited: no hr.skill.survey_id
+
+Odoo 19 Community ships `hr_skills_survey` as an auto-install bridge
+between `hr_skills` and `survey`, but the Community version does NOT
+add a `survey_id` field on `hr.skill`. The bridge only extends:
+
+- `hr.resume.line.survey_id` — Many2one('survey.survey'), **readonly**,
+  populated automatically by `survey.user_input._mark_done()` when a
+  user submits a passing certification response (see
+  `addons/hr_skills_survey/models/survey_user.py`).
+- `survey.survey.certification_validity_months` — Integer (months
+  validity after passing).
+
+No module in `addons/` declares `_inherit = 'hr.skill'` adding a
+survey Many2one — verified via:
+
+```python
+"survey_id" in env["hr.skill"]._fields   # False in Community
+```
+
+Implications for task authors:
+
+- Tasks of the form "open a skill, pick a certification survey in its
+  Certification field" are **Enterprise-only** and should be filed as
+  BLOCKED (precedent: row 387
+  `hr_skills_survey.link_certification_survey_to_skill`).
+- The side-effect path (take a certification survey as admin → resume
+  line appears via `_mark_done()`) IS available in Community, but the
+  `survey_id` on the resume line is readonly, so any task asserting it
+  must drive the change through a full survey-submission flow rather
+  than a UI field write.
+- Before taking a backlog task that touches `hr.skill` ↔ survey linkage,
+  probe `env["hr.skill"]._fields` for `survey_id` (or grep
+  `_inherit.*hr\.skill` across addons) and mark Removed if absent.
+
