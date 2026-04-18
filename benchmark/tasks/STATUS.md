@@ -2945,3 +2945,18 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Open the seeded equipment 'Old Belt OB-99' in category Warehouse Gear and archive it via the form Actions menu. Then create a new equipment 'New Belt NB-100' in the same Warehouse Gear category with serial 'NB-100-SN-2026', and save. |
 | **Capability tested** | Two-step lifecycle on the same model: archive existing record (active=False) via Actions menu, then create-from-scratch a replacement with exact category and serial. |
 | **Notes** | Archive sets `active=False` which the diff engine normalizes to `null`. The create-from-scratch on `maintenance.equipment` also generates an explicit `active=true` create entry — both must be encoded in expected_state.json. BU solved on first attempt; calibration trends easier than medium. |
+
+---
+
+## website_hr_recruitment.set_kanban_state_assign_recruiter
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
+| **Odoo modules** | Recruitment (hr_recruitment) |
+| **Workflow** | Open the seeded applicant 'Diana Recruit' (linked to job 'Senior QA Engineer'). Click the small kanban_state status ball at the top of the form and pick 'Ready for Next Stage'. Set the Recruiter many2one to 'Recruiter Bob'. Post an internal Log note 'Phone screen done.' in the chatter. Save. |
+| **Capability tested** | Three-part edit on a recruitment form: state-selection ball widget + many2one autocomplete + internal Log-note vs public Send-message distinction. |
+| **Notes** | BU solved on first run (F1=1.0, 147s). State-selection ball findable via dropdown; agent correctly picked Log note over Send message. Calibration: easier than medium target. |
