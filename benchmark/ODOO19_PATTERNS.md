@@ -246,6 +246,43 @@ if mod and mod.state != "installed":
   `website.sale.category` / `product.category.public` do not exist. The m2m
   on `product.template` is `public_categ_ids`.
 
+### Website / website_sale_wishlist (heart icon + /shop/wishlist)
+
+- **No share-by-email feature exists.** Odoo 19 Community
+  `website_sale_wishlist` ships NO share controller, NO share template,
+  NO share JS (`grep -rn "share" addons/website_sale_wishlist/` returns
+  zero matches). Only routes exposed by `controllers/main.py` are
+  `/shop/wishlist/add`, `/shop/wishlist`, `/shop/wishlist/remove/<id>`,
+  `/shop/wishlist/get_product_ids`. Backlog rows that ask for "wishlist
+  share via email" must be re-scoped to wishlist-persistence
+  verification (product.wishlist row).
+- **Heart button selectors.** On the product detail page the heart is
+  `a.o_add_wishlist_dyn` (inside `#product_option_block`, rendered by
+  `website_sale_wishlist.product_add_to_wishlist`). On `/shop` tiles and
+  on `/shop/cart` "Save for Later" links, the class is
+  `.o_add_wishlist` (with `<button>` and `<a>` variants). The JS handler
+  (`AddProductToWishlistButton.addProduct`) binds to `.o_add_wishlist,
+  .o_add_wishlist_dyn` — a single selector union covers both.
+- **Wishlist row ownership depends on login.** `/shop/wishlist/add` is
+  `auth='public'`. When the session is admin-logged-in,
+  `ProductWishlist._add_to_wishlist` writes `partner_id=admin.partner_id.id`
+  on the new row. When the session is anonymous, `partner_id=False` and
+  the wishlist id is pushed into `request.session['wishlist_ids']` —
+  the row is orphaned to the session cookie and `current()` filters it
+  through the session. Tasks that verify wishlist persistence must
+  either assert `partner_id` equals the expected user (deterministic
+  only if the oracle/agent is logged in) OR accept partner_id=False +
+  verify via `request.session`.
+- **product.wishlist has a UNIQUE constraint** on `(product_id, partner_id)` —
+  seeds that run twice must `cleanup()` the prior row before
+  re-creating, or the seed will crash with `duplicate key value violates
+  unique constraint "product_wishlist_product_unique_partner_id"`.
+- **state_spec match_key for `product.wishlist`.** Use
+  `match_key: [product_id]` — the diff engine normalizes the Many2one to
+  the product's display_name. `partner_id` normalizes to the partner's
+  display name (e.g. "Mitchell Admin" for the admin user in the base
+  snapshot).
+
 ### Website / website_sale_stock (stock-availability banner)
 
 - **`website_sale_stock` is NOT in the base snapshot**, and neither are its
