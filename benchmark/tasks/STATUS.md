@@ -315,7 +315,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 303 | maintenance.archive_equipment_create_replacement [medium] | Archive seeded 'Old Belt OB-99' via Actions, then create 'New Belt NB-100' with serial in same category | Done | PASS | PASS | 1.0 |
 | 304 | project_todo.create_three_personal_with_specific_priorities [easy] | Create 3 personal to-dos; only Plan Sprint gets first priority star (Medium = '1'), others stay default | Done | PASS | FAIL | 0.0 |
 | 305 | website_hr_recruitment.set_kanban_state_assign_recruiter [medium] | Open Diana Recruit, flip kanban_state ball to 'Ready for Next Stage', set Recruiter, post Log note | Done | PASS | PASS | 1.0 |
-| 306 | purchase_stock.return_partial_with_distractor_lines [hard] | On a received PO with 3 product lines, return only 1 specific line partially | WIP | — | — | — |
+| 306 | purchase_stock.return_partial_with_distractor_lines [hard] | Multi-line PO return wizard: zero out 2 distractor lines and set qty=2 on third, then validate return | Done | PASS | FAIL | 0.0 |
 | 307 | sale_project.invoice_completed_milestones_only [hard] | Open SO S-BENCH-MS-002, click Create Invoice, accept wizard's auto-detected qty=2, Create Draft | Done | PASS | PASS | 1.0 |
 | 308 | survey.publish_share_via_link_get_url [easy] | Open a survey, click Share, generate the public URL | WIP | — | — | — |
 | 309 | point_of_sale.add_item_apply_global_discount_pay_cash [hard] | In POS, add 2 items, apply a 15% global discount, pay cash | WIP | — | — | — |
@@ -2990,3 +2990,18 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Open Sales app, find SO S-BENCH-MS-002. Click Create Invoice on the SO header. Wizard auto-fills line quantity 2 (M1+M2 of 4 milestones already reached). Accept Regular Invoice radio default and click Create Draft. |
 | **Capability tested** | Trust the Create Invoice wizard's auto-quantity for delivered_milestones products (do not override). |
 | **Notes** | Calibration: easier than hard. BU solved in 104s; wizard auto-detect is robust enough that agents accept it. To push to hard we'd need a non-default radio (Down Payment) or require typing a different qty — both forbidden by spec. Seed pre-marks M1+M2 reached so agent doesn't navigate to Project. SO line invoice_status flips to "no" (qty_to_invoice=0). |
+
+---
+
+## purchase_stock.return_partial_with_distractor_lines
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
+| **Odoo modules** | Purchase, Stock |
+| **Workflow** | Open seeded PO P-BENCH-RET-001 (3 lines, fully received), open the done receipt, click Return, set WidgetA=0, WidgetB=2, WidgetC=0 in the multi-line wizard, click Return, then Validate the new return picking. |
+| **Capability tested** | Multi-line return wizard with selective per-row qty edits (2 distractor rows must be explicitly zeroed). |
+| **Notes** | BU gave up at 480s with 0 successful steps; required op stock.picking.button_validate was missed and WidgetB qty stayed at 5. Well-calibrated hard — non-default attention test on auto-populated wizard rows. |
