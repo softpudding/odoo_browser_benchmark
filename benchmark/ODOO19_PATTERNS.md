@@ -921,6 +921,7 @@ PO record is just mutating its partner_id.
 
 ---
 
+<<<<<<< HEAD
 ## website_hr_recruitment / hr.job publish + preview
 
 - `hr.job.website_description` is **frontend-only**: the only view that
@@ -1006,3 +1007,51 @@ Applies to every datetime field with a seeded default (e.g., `stock.lot.expirati
 - **Clicking the m2o internal-link arrow inside a dialog opens a NESTED `<div class="modal">`** (not a new action) because `many2one.xml` routes `openRecord('dialog')` when `env.inDialog=True`. Multiple visible modals — identify the lot dialog by the presence of `.o_field_widget[name='expiration_date']`, not `.last`.
 - **`stock.lot._compute_dates` shifts `use_date`/`removal_date`/`alert_date` every time `expiration_date` changes.** On a fresh write, these start at `expiration_date - template.{use,removal,alert}_time`. On re-write they get shifted by the `expiration_date` delta. So oracle must set `expiration_date` BEFORE `removal_date` — writing removal first gets clobbered.
 - **`stock.lot.display_complete`** is True iff the lot `id` is set OR the context has `display_complete=True`. When opened as a nested-dialog from a popup m2o, `id` is truthy (the lot was created on the fly), so the full form renders (Dates group + expiration_date after ref). No extra context plumbing needed.
+=======
+## website_slides — publish / prerequisite / attendees gotchas
+
+- `slide.channel.prerequisite_channel_ids` field renders as
+  `widget="many2many_tags"` with domain
+  `[('id', '!=', id), ('visibility', '=', visibility), ('website_published', '=', website_published)]`.
+  The dropdown is empty until **both** form-state conditions are applied
+  live on the current record: visibility matches the candidate and
+  `website_published` matches. A task that seeds the prereq as
+  `members + published=True` requires the agent to flip visibility to
+  `members` AND publish BEFORE touching the prereq field — otherwise the
+  autocomplete silently yields nothing.
+- `slide.channel.is_published` in the backend form uses
+  `widget="website_redirect_button"` (navigation-only, same RedirectField
+  component as event.event). The backend form CANNOT publish — only
+  (a) the frontend `/slides/<slug>` Owl systray Unpublished/Published
+  toggle (calls `website_publish_button`) or (b) toggling the list-view
+  `is_published` boolean cell.
+- `slide.channel._compute_enroll` auto-coerces `enroll='invite'` when
+  `visibility=='members'` (backed by a DB CHECK constraint). Writing
+  `{visibility: 'members'}` alone is sufficient — do not also write
+  `enroll` in the same call unless you want to be explicit.
+- `slide.channel.user_id` defaults to `self.env.uid`. Seeds run under
+  SUPERUSER_ID (id=1, partner_root / OdooBot), so a `create()` without
+  explicit `user_id=admin.id` ends up calling `_action_add_members` on
+  the OdooBot partner and enrolling it as an attendee. Fix: pass
+  `user_id=admin.id` OR unlink `slide.channel.partner` residue right
+  after create; check.py counts exactly the task-added rows otherwise.
+- `slide.channel.invite` wizard (opened by the `Add Attendees` /
+  `Invite` header buttons) has `_compute_send_email =
+  channel_visibility != 'public' or enroll_mode`. The toggle is
+  `invisible="enroll_mode or channel_visibility != 'public'"`, so with
+  `visibility='members'` (or any enroll_mode=True opening) you CANNOT
+  uncheck send_email. The wizard calls `mail.mail.send` and the
+  transaction rolls back (no `slide.channel.partner` row persisted) if
+  SMTP fails. Same aiosmtpd sink pattern as the discuss invite-by-email
+  cookbook applies.
+- `slide.channel.partner` list view has `create="0"` — no "New" button.
+  The only supported UI path to add attendees is the wizard (forcing
+  email). Oracle scripts should `slide.channel.partner.create(...)`
+  directly via JSON-RPC; `slide.channel._action_add_members` is
+  underscore-prefixed and blocked by `call_kw`'s private-method guard.
+- Browser-use failure mode: `many2many_tags` with autocomplete — BU
+  often types the term and then moves on without clicking the popover
+  option, leaving the m2m empty. Since state_spec usually leaves m2m
+  out (noisy diffs), the postcondition check must explicitly assert
+  the m2m membership.
+>>>>>>> 944a9305 ([ADD] benchmark: website_sale_slides.assign_attendees_publish_course (hard))
