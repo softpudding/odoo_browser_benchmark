@@ -1,0 +1,20 @@
+task_id: website_blog.create_post_with_cta_seo_schedule
+module: website_blog
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/blog-post-pages
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 360
+step_limit: 220
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "Create a new blog post in an existing blog, add CTA copy in the body, fill SEO metadata, and schedule publication without publishing immediately."
+  checks_verify: "One unpublished post exists in the target blog with the exact title, subtitle, CTA phrase in content, SEO title, SEO description, and scheduled publishing date."
+  primary_track: true
+  tier: 2

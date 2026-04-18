@@ -367,7 +367,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 355 | sale_loyalty.buy_x_get_y_reward_in_cart [hard] | Configure a Buy X Get Y promotion and verify the free-product reward appears in the cart | WIP | — | — | — |
 | 356 | sale_purchase.mto_so_generate_po_change_vendor_confirm [hard] | Confirm an MTO sale order, inspect the generated PO, switch vendor, and continue the chain | WIP | — | — | — |
 | 357 | sale_stock.confirm_so_manual_reserve_validate_delivery [medium] | Confirm a sale order, manually reserve stock on its delivery, and validate the transfer | Done | PASS | PASS | 1.0 |
-| 358 | website_blog.create_post_with_cta_seo_schedule [medium] | Create a blog post with a CTA, SEO metadata, and a scheduled publication date | WIP | — | — | — |
+| 358 | website_blog.create_post_with_cta_seo_schedule [medium] | Create a blog post with a CTA, SEO metadata, and a scheduled publication date | Done | PASS | PASS | 1.0 |
 | 359 | im_livechat.configure_channel_then_handle_widget_chat [hard] | Configure a live chat channel, open the website widget, accept the chat, and reply with a canned response | WIP | — | — | — |
 | 360 | website_hr_recruitment.apply_public_then_schedule_interview [hard] | Submit a public job application, then schedule that applicant’s interview from the backend | Done | PASS | PASS | 1.0 |
 | 361 | purchase_stock.receive_partial_scrap_damaged_units [hard] | Receive part of a PO, scrap damaged units from the receipt, and finish the remainder correctly | WIP | — | — | — |
