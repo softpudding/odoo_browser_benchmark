@@ -1,0 +1,21 @@
+task_id: mass_mailing.duplicate_mailing_edit_subject_send
+module: mass_mailing
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/email-marketing
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "Open seeded sent mailing 'Bench Newsletter V1', use cog/Actions → Duplicate, then on the copy set Subject to 'Bench Newsletter V2 Spring Special', confirm Recipients is Mailing List, add 'Bench Subscribers' to the Mailing Lists, and click Send (not Schedule, not Test)."
+  checks_verify: "Exactly two mailing.mailing records exist across the {V1, V2} subject set. Original V1 still has state='done' and original subject. V2 has subject 'Bench Newsletter V2 Spring Special', contact_list_ids includes 'Bench Subscribers', state in ('sending', 'done'), and a sent_date set."
+  failure_pattern: "Browser-use may (a) click Send on the original, (b) click Schedule instead of Send, (c) enter Duplicate spam loop because post-duplicate subject still looks like V1, (d) use New/Create from scratch instead of Duplicate, or (e) forget to add the Bench Subscribers list."
+  primary_track: true
+  tier: 2

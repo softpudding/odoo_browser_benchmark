@@ -556,6 +556,8 @@ Implication: when the *only* visible signal of Duplicate success is a URL/id cha
 
 For mass_mailing oracles: prefer JSON-RPC `copy() + write()` over UI navigation — the domain tree editor + Recipients autocomplete are notoriously fragile.
 
+**Counter-calibration data point (`mass_mailing.duplicate_mailing_edit_subject_send`):** the spam loop is NOT deterministic. When the post-duplicate edit list is short enough (just change subject + add one m2o list, no domain editor) and the Send button is explicit ("Send" top button), BU completes the flow in ~10 steps on the first try and lands the new mailing in state='done' with F1=1.0. The spam loop triggers primarily when BU gets stuck on a brittle subsequent widget (domain tree editor in the sibling task) and loops back to re-Duplicate as a recovery strategy. Summary: the Duplicate-then-edit pattern is only reliably hard when paired with a second failure anchor (domain widget, non-default radio, etc.). `mailing.mailing.copy_data` copies `contact_list_ids` verbatim, so seeding the source with empty `contact_list_ids=[(6,0,[])]` forces the agent to explicitly add the target list to the duplicate — a useful discriminator that does NOT induce the spam loop.
+
 ---
 
 ## POS / pos_discount

@@ -1,0 +1,30 @@
+# Trace oracle for mass_mailing.duplicate_mailing_edit_subject_send
+#
+# Medium: open seeded sent mailing 'Bench Newsletter V1', Action menu
+# Duplicate, then on the copy change subject + add Bench Subscribers list
+# + click Send.
+
+required_ops: []
+
+optional_ops:
+  - mailing.mailing.read
+  - mailing.mailing.write
+  - mailing.mailing.create
+  - mailing.mailing.copy
+  - mailing.mailing.web_save
+  - mailing.mailing.search_read
+  - mailing.mailing.web_search_read
+  - mailing.mailing.onchange
+  - mailing.mailing.action_launch
+  - mailing.mailing.action_send_mail
+  - mailing.mailing.action_put_in_queue
+  - mailing.list.search_read
+  - mailing.list.name_search
+  - ir.model.search_read
+  - ir.model.name_search
+  - mail.message.create
+
+forbidden_ops:
+  - mailing.mailing.unlink
+  - mailing.mailing.test.send_mail_test
+  - mailing.mailing.schedule.date.action_schedule_date
