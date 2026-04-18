@@ -171,6 +171,11 @@ Last eval: 2026-04-17 | Oracle: 131/131 (100%) | Browser-Use: 57/104 (54.8%) | N
 | 159 | event.create_event_configure_ticket [medium] | WIP | — | — | — |
 | 160 | helpdesk.create_ticket_assign_priority [medium] | WIP | — | — | — |
 | 161 | fleet.register_vehicle_log_odometer [easy] | WIP | — | — | — |
+| 162 | point_of_sale.sell_pos_order_invoice_customer [hard] | Done | PASS | FAIL | 0.0 |
+| 163 | repair.cancel_repair_log_internal_reason [medium] | Done | PASS | PASS | 1.0 |
+| 164 | survey.duplicate_survey_rename_archive_original [medium] | Done | PASS | PASS | 1.0 |
+| 165 | maintenance.fill_description_schedule_window_move_to_repaired [medium] | Done | PASS | PASS | 1.0 |
+| 166 | stock.scrap_specific_serial_unit [medium] | Done | PASS | PASS | 1.0 |
 
 ---
 
@@ -1867,6 +1872,61 @@ Note: difficulty calibration used a shared-port browser-use validation on `bench
 | **Capability tested** | Website editor iframe interaction, text editing in complex DOM, Page Properties dialog, combined content + metadata editing. |
 
 ---
+
+## point_of_sale.sell_pos_order_invoice_customer
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
+
+Hard task. Browser-use must open POS, ring up an order, attach a customer, enable the Invoice toggle on the payment screen, and validate to generate an actual posted account.move. Both runs failed at the kiosk POS UI: run 1 timed out after 7 stalled payment attempts, run 2 reached 401s with the order stuck in draft and no invoice generated.
+
+## repair.cancel_repair_log_internal_reason
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
+
+Medium task. Open the seeded confirmed repair order, cancel it, then post an internal note (mail.mt_note subtype) with a specific reason. Both browser-use runs passed in ~57s.
+
+## survey.duplicate_survey_rename_archive_original
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
+
+Medium task. Duplicate a survey, rename the copy without the "(copy)" suffix, then archive the original. Both browser-use runs passed in 81-99s.
+
+## maintenance.fill_description_schedule_window_move_to_repaired
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
+
+Medium task. Open the maintenance request, fill a specific description paragraph, set scheduled start 04/15/2026 09:00 and end 11:00, move to Repaired stage. Both browser-use runs passed in 77-94s.
+
+## stock.scrap_specific_serial_unit
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
+
+Medium task (originally drafted as hard, demoted after both browser-use runs passed cleanly in 73-113s). Open Inventory > Operations > Scrap, create a scrap for the serial-tracked product picking the middle serial SN-A002 out of three, validate.
 
 ## Adding New Tasks
 
