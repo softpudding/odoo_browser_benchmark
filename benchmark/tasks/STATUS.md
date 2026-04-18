@@ -323,7 +323,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 311 | hr_holidays.refuse_then_re_request_other_type [hard] | Manager refuses Eves Paid Time Off, posts reason in chatter, then creates Sick Time Off on her behalf | Done | PASS | FAIL | 0.71 |
 | 312 | calendar.create_event_with_two_organizers_recurring_weekly [medium] | Create weekly recurring Monday event 09:00-09:30 with 2 attendees and Discuss videocall link | Done | PASS | FAIL | 0.0 |
 | 313 | mrp.scrap_component_during_partial_production [hard] | During an MO, scrap a defective component before producing | WIP | — | — | — |
-| 314 | crm.assign_team_change_salesperson_log_activity [medium] | Open opportunity, change sales team and salesperson, log a 'Call' activity | WIP | — | — | — |
+| 314 | crm.assign_team_change_salesperson_log_activity [medium] | Open Bench Big Deal, change Team to Channel + Salesperson Sara via Contacts tab, schedule Call activity | Done | PASS | PASS | 1.0 |
 | 315 | website_sale.add_optional_at_cart_remove_main_keep_optional [hard] | In webshop cart with main+optional product, remove the main and verify optional remains | WIP | — | — | — |
 | 316 | hr_expense.create_with_currency_eur_to_usd [medium] | Create expense in foreign currency (USD) and verify EUR conversion in report | WIP | — | — | — |
 | 317 | event_product.create_event_product_link_to_ticket [medium] | Create a service product linked to an event ticket type | WIP | — | — | — |
