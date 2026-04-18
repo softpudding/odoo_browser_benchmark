@@ -317,3 +317,11 @@ other products). The Options tab only exposes:
 
 If a task description implies offline-form configuration, map to `button_text` /
 `default_message` or skip — seeding non-existent fields raises `ValueError`.
+
+---
+
+## website_blog archive + state-diff null-vs-false
+
+- For a record **created in the same task and then archived** (active=False), the state-diff engine emits `op: "create"` with `norm_value: null` (NOT `false`) for `active`, `is_published`, and `website_published`. `expected_state.json` must use `null` for these fields, not `false`.
+- `blog.post.action_archive` is the canonical UI/JSON-RPC method (mirrors form's Action > Archive). Auto-flips `is_published`/`website_published` to False as a side effect.
+- `blog.blog` records surface their `active` field in the diff (`norm_value: true` on fresh create) — include in `expected_state.json` or `ignore_fields`.

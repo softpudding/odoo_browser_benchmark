@@ -309,7 +309,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 297 | delivery.set_third_party_carrier_print_label [medium] | Configure a fixed-price carrier, apply it to a confirmed delivery picking with tracking ref, validate and trigger Print | Done | PASS | PASS | 1.0 |
 | 298 | inventory.create_storage_category_assign_to_location [medium] | Create a storage category with capacity rules and assign it to a stock location | Done | PASS | FAIL | 0.0 |
 | 299 | sale_stock.deliver_partial_split_into_two_pickings [hard] | On a multi-line SO with insufficient stock for one product, deliver partial and create explicit second picking later | WIP | — | — | — |
-| 300 | website_blog.create_blog_with_two_posts_archive_one [medium] | Create a new blog with 2 posts, then archive one of the two | WIP | — | — | — |
+| 300 | website_blog.create_blog_with_two_posts_archive_one [medium] | Create blog 'Bench Insights' + 2 published posts, then archive only March Notes (active=False, kept in DB) | Done | PASS | FAIL | 0.0 |
 | 301 | website_slides.duplicate_lesson_to_new_section [medium] | Duplicate an existing lesson and move the copy to a new section in a course | WIP | — | — | — |
 | 302 | im_livechat.assign_team_set_offline_form_message [medium] | Configure Live Chat channel via 3-dots Configure menu, switch Options tab, set notification text and welcome message | Done | PASS | PASS | 1.0 |
 | 303 | maintenance.archive_equipment_create_replacement [medium] | Archive an existing equipment and create a replacement equipment in same category | WIP | — | — | — |
@@ -2885,3 +2885,18 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Open Live Chat app, hover the seeded "Website Support" kanban card, click the 3-dots menu and choose Configure Channel to reach the form. Switch to the Options tab and update Notification Text (button_text) and Welcome Message (default_message) to the exact strings, then save. |
 | **Capability tested** | Tab switching combined with multi-field text input on a non-default form view (Live Chat kanban opens session, not form). |
 | **Notes** | Original task spec referenced offline_form_text / offline_email fields that do NOT exist on im_livechat.channel in Odoo 19; remapped to the real Options-tab text fields (button_text, default_message) preserving the "tab switch + multi-text-field input" hard pattern. Browser-use solved cleanly, so calibration is "easier" than the medium target. |
+
+---
+
+## website_blog.create_blog_with_two_posts_archive_one
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
+| **Odoo modules** | website_blog |
+| **Workflow** | Agent must create blog 'Bench Insights' from scratch, then create two blog.posts under it ('April Update' and 'March Notes', both published), then open March Notes and archive it via Action > Archive (active=False) without deleting it or touching April Update. |
+| **Capability tested** | Multi-record creation followed by selective archive among siblings — tests attention to which of two newly created records to archive. |
+| **Notes** | Browser-use created blog + both published posts correctly (9/12 atomic edits matched) but failed to archive March Notes within the 360s budget — exactly the predicted "selective archive among siblings" failure mode. Calibration matches medium tier. State diff for the archived post serializes False booleans as `null` on a `create` op (active/is_published/website_published all show `norm_value: null`); expected_state.json must mirror that. |
