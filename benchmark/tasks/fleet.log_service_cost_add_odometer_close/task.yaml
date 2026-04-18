@@ -1,0 +1,21 @@
+task_id: fleet.log_service_cost_add_odometer_close
+module: fleet
+difficulty: hard
+instruction: see prompt.md
+start_url: /odoo/fleet
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 480
+step_limit: 300
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: hard
+  agent_interaction: "Open a seeded fleet vehicle, click its Services smart button, create a new service record with service type, vendor, amount, date, and odometer reading, save, then move the service record's status to Done via the statusbar."
+  checks_verify: "Exactly one fleet.vehicle.log.services record exists with service_type Oil Change, amount 120.0, date 2026-04-15, vendor Bench Garage, state done, AND a fleet.vehicle.odometer with value 25000 linked to BENCH-TRUCK-01."
+  failure_pattern: "Agent creates service but skips the odometer field (thinking it is unrelated), OR forgets to click the Done status after saving, OR enters odometer 25,000 with a comma which the widget rejects."
+  primary_track: true
+  tier: 3

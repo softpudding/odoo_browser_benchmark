@@ -120,6 +120,30 @@ if mod and mod.state != "installed":
 - `fleet.vehicle.write({'driver_id': ...})` auto-creates a `fleet.vehicle.assignation.log`
   entry with `date_start = fields.Date.today()`. If your test needs a specific `date_start`,
   do NOT pick today's date (date coincidence makes the task easier than intended)
+- `fleet.vehicle.log.services.odometer` is a **computed Float with an inverse**
+  (`_set_odometer`) that creates a `fleet.vehicle.odometer` row linked to the same
+  vehicle with `value = odometer` and `date = log.date or today()`. Filling the
+  Odometer Value field on the service form is sufficient to satisfy an "add an
+  odometer reading" step — no separate Odometers-list navigation needed. Guard:
+  `create()` drops `odometer=0` from vals (so zero-value fills silently no-op).
+- `fleet.vehicle.log.services.state` is a **clickable statusbar** (values
+  `new / running / done / cancelled`, `widget="statusbar"`
+  `options="{'clickable': '1'}"`). Click target is
+  `.o_statusbar_status button.o_arrow_button:has-text('Done')` — no
+  confirmation dialog, click persists immediately. `state` IS the stage
+  (there is no `stage_id`).
+- `fleet.vehicle.log.services.currency_id` is `related='company_id.currency_id'`
+  (readonly). To make the Cost monetary widget render with EUR (or any other
+  currency), seed must flip `env.company.currency_id` to the target currency
+  and activate the currency record if `active=False` (the default for
+  non-USD currencies in a fresh base snapshot).
+- **Browser-use decimal-separator trap on fleet numeric fields**: typing
+  a thousands-separator value like `25,000` into the Odometer Value
+  Float input makes Owl's numeric parser treat the comma as a decimal
+  point, resulting in `value = 0.0025` — and BU often **retries 3+ times**,
+  spawning phantom `fleet.vehicle.odometer` rows at 0.0025 each. Tasks
+  that want this as a calibration trap should phrase the prompt with a
+  bare-numeric value (`25000`) and enforce row-count in `check.py`.
 
 ### Purchase / purchase_requisition
 
