@@ -1,0 +1,42 @@
+# Trace oracle for purchase_stock.return_partial_with_distractor_lines
+#
+# Category 3: Side-effect trap.
+# Agent must use the Return wizard on a completed receipt with three product
+# lines, set qty=0 on TWO distractor rows and qty=2 on the only target row,
+# then validate the generated return picking.
+
+required_ops:
+  - stock.return.picking.action_create_returns
+  - stock.picking.button_validate
+
+optional_ops:
+  - purchase.order.read
+  - purchase.order.web_read
+  - purchase.order.search_read
+  - purchase.order.web_search_read
+  - purchase.order.line.read
+  - purchase.order.line.search_read
+  - stock.picking.read
+  - stock.picking.web_read
+  - stock.picking.search_read
+  - stock.picking.web_search_read
+  - stock.return.picking.create
+  - stock.return.picking.read
+  - stock.return.picking.write
+  - stock.return.picking.line.read
+  - stock.return.picking.line.write
+  - stock.move.read
+  - stock.move.write
+  - product.product.read
+  - res.partner.read
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+  - mail.message.create
+  - mail.followers.create
+  - bus.bus.create
+
+forbidden_ops:
+  - stock.return.picking.action_create_returns_all
+  - purchase.order.button_cancel
+  - purchase.order.unlink
+  - purchase.order.create
