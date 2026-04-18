@@ -346,7 +346,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 334 | website_blog.create_tag_assign_to_three_posts [medium] | Create a new tag, assign to 3 existing blog posts | Done | PASS | FAIL | 0.0 |
 | 335 | hr_recruitment.skill_filter_then_send_offer [hard] | Filter applicants by skill='Python', open top match, send offer email | WIP | — | — | — |
 | 336 | sale.create_quotation_with_customer_pricelist [medium] | Create SO with a customer who has a specific pricelist; verify pricelist auto-applied | WIP | — | — | — |
-| 337 | calendar.invite_organize_with_event_agenda_attachment [hard] | Create calendar event with attachment file as agenda | WIP | — | — | — |
+| 337 | calendar.invite_organize_with_event_agenda_attachment [hard] | Create calendar event 'Q2 Planning Session' 2026-05-20 14:00-15:30, add Alice+Bob attendees, upload agenda.txt via chatter paperclip | Done | PASS | FAIL | 0.0 |
 | 338 | stock.cancel_picking_create_replacement_with_serial [hard] | Cancel an existing receipt picking, create a replacement with serial-tracked products | WIP | — | — | — |
 | 339 | mrp_account.confirm_mo_check_account_move [medium] | Confirm an MO and verify the cost-of-production journal entry was created | WIP | — | — | — |
 | 340 | survey.invite_attendees_send_email [medium] | On existing survey, click Invite, enter 3 emails, customize subject, send | WIP | — | — | — |
@@ -3395,3 +3395,18 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Accounting -> Journal Entries (path `/odoo/accounting/entries`, NOT Customer Invoices). New -> Reference='Bench Rent Apr', Accounting Date 2026-05-01, Journal=Miscellaneous Operations. Three balanced Journal Items: Rent debit 1000, Tax Paid debit 50, Bank credit 1050. Save. Chatter Activities -> schedule To-Do "Post next month's rent entry" due 2026-06-01. Click Post. |
 | **Capability tested** | Distinct move_type='entry' form (no Customer, Debit/Credit columns, `line_ids` not `invoice_line_ids`); multi-line balance with 3 lines including a tax line; chatter activity scheduling; entry-specific Post button. |
 | **Notes** | Calibrated hard but BU passed twice. The Journal Items tab is only visible with `account.group_account_readonly`; seed explicitly grants admin `readonly/invoice/user` accounting groups via `res.groups.user_ids` (NOT `users`). The `name` column widget is `section_and_note_text` -> renders `<textarea>`; cell filler uses `input, textarea`. Account autocomplete displays "<code> <name>" so filtering on `has_text='Rent'` wrongly matches "Cur**rent** Assets"; oracle splits on whitespace and matches `parts[1]` exactly. Activity type stored as "To-Do" with hyphen. Per-calibration 3rd line (Tax Paid 50) added to escape trivial 2-line pattern, but BU still solved — further hardening would require analytic_distribution or per-line partner. |
+
+---
+
+## calendar.invite_organize_with_event_agenda_attachment
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS (F1=1.0, 10.8s) |
+| **Browser-Use** | FAIL (F1=0.0 — postcondition failed, 82.2s) |
+| **F1** | 0.0 |
+| **Odoo modules** | Calendar, mail (chatter attachments) |
+| **Workflow** | Open /odoo/calendar, click New, set Title='Q2 Planning Session', date 2026-05-20, start 14:00 end 15:30 (timed, not all-day, no recurrence), add attendees Alice Bench + Bob Bench via the Attendees m2m autocomplete, then upload the seeded agenda.txt via the chatter paperclip (FileUploader → hidden input[type=file]) so an ir.attachment named 'agenda.txt' is linked to the event (res_model='calendar.event', res_id=event.id). Save. |
+| **Capability tested** | File upload through the chatter's hidden `<input type=file>` (canonical BU weakness). Also tests timezone-aware datetime entry + many2many attendee autocomplete selection among existing contacts. |
+| **Notes** | Hard by calibration and outcome. BU correctly created the event + added both attendees but could NOT upload the file: the runner does not pass `available_file_paths` through to the browser-use Agent, so every attempt returns `File path ... is not available. To fix: ...available_file_paths...`. Event also was not saved after the agent gave up on the upload. Oracle uses pure JSON-RPC `call_kw` (calendar.event.create + ir.attachment.create with base64 datas) — same pattern used by mail.create_channel_set_custom_avatar_pin_two_messages. State_spec tracks only calendar.event (not ir.attachment) because creating an event with attendees auto-generates one `invitation.ics` ir.attachment per invitee plus the public asset cache flows through ir.attachment on first page load; both would swamp the diff. Attachment existence is verified in `check.py`. See COOKBOOK_NOTES.md for the full list of quirks (admin tz not UTC in base snapshot, invitation.ics side-effect, BU available_file_paths sandbox). |
