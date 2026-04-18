@@ -1,0 +1,33 @@
+# Trace oracle for crm.assign_team_change_salesperson_log_activity
+#
+# Medium: two Many2one swaps + schedule a Call activity. Browser-use rarely
+# invokes specific ORM action methods for these flows, so keep required_ops
+# empty and rely on check.py for postconditions.
+
+required_ops: []
+
+optional_ops:
+  - crm.lead.read
+  - crm.lead.write
+  - crm.lead.web_save
+  - crm.lead.web_read
+  - crm.lead.search_read
+  - crm.lead.web_search_read
+  - crm.team.read
+  - crm.team.search_read
+  - crm.team.web_search_read
+  - res.users.read
+  - res.users.search_read
+  - res.users.web_search_read
+  - mail.activity.create
+  - mail.activity.read
+  - mail.activity.write
+  - mail.activity.web_save
+  - mail.activity.type.read
+  - mail.activity.type.search_read
+  - mail.message.create
+  - ir.ui.view.get_views
+
+forbidden_ops:
+  - crm.lead.unlink
+  - crm.lead.action_set_lost

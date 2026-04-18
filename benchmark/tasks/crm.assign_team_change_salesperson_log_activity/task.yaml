@@ -1,0 +1,20 @@
+task_id: crm.assign_team_change_salesperson_log_activity
+module: crm
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/crm
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: simple_edit
+  difficulty_level: medium
+  agent_interaction: "Open opportunity, change Sales Team and Salesperson Many2one fields, then schedule a Call activity with date and summary"
+  checks_verify: "crm.lead has team_id=Channel, user_id=Sara Sales; mail.activity scheduled with type=Call, date 2026-06-10, summary 'Discovery call'"
+  primary_track: true
+  tier: 2
