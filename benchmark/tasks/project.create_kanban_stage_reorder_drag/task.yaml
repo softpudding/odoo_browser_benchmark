@@ -1,0 +1,20 @@
+task_id: project.create_kanban_stage_reorder_drag
+module: project
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/project
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "Open Bench Project A kanban, create new stage 'Backlog Review' via the Add column quick-create, then drag-reorder the new stage so it sits at position #2 (immediately before 'In Progress')."
+  checks_verify: "project.task.type 'Backlog Review' exists, is linked to Bench Project A, has sequence placing it at position #2 (between the original pos-1 and 'In Progress')."
+  primary_track: true
+  tier: 2

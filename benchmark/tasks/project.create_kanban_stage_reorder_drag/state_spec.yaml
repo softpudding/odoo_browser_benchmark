@@ -1,0 +1,28 @@
+models:
+  project.task.type:
+    match_key:
+      - name
+    fields:
+      - name
+      - active
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
+      # sequence is validated via check.py (ordering only, not absolute
+      # sequence numbers), because web_resequence may renumber ALL stages
+      # (not just the moved one) when the starting sequences are not a
+      # tight 0..N run.
+      - sequence
+      # project_ids is m2m; scoping is validated in check.py.
+      - project_ids
+      - color
+      - user_id
+      - mail_template_id
+      - rating_template_id
+      - rating_active
+      - auto_validation_state
+      - rotting_threshold_days
+      - fold
+      - description
+      - stage_ids

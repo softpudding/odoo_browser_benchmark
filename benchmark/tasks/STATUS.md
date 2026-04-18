@@ -335,7 +335,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 323 | mail.invite_external_email_to_existing_channel [medium] | In existing channel, invite an external email (creates guest invitation) | WIP | — | — | — |
 | 324 | sale.add_line_with_optional_template_apply_discount [medium] | On a draft SO, add a line by selecting a template, then apply line-level 10% discount | Done | PASS | PASS | 1.0 |
 | 325 | crm.create_lead_from_email_alias_log_message [hard] | Create a CRM team with email alias, then create lead via Send Message simulating inbound | WIP | — | — | — |
-| 326 | project.create_kanban_stage_reorder_drag [medium] | In project Kanban view, create a new stage and reorder it before existing stages | WIP | — | — | — |
+| 326 | project.create_kanban_stage_reorder_drag [medium] | In project Kanban view, create a new stage and reorder it before existing stages | Done | PASS | FAIL | 0.0 |
 | 327 | account.create_recurring_journal_entry [hard] | Create a journal entry with template repeating monthly for 3 months | WIP | — | — | — |
 | 328 | website.add_image_carousel_to_homepage [hard] | In website editor, add Image Carousel snippet to home page with 3 images | WIP | — | — | — |
 | 329 | hr_holidays.bulk_approve_two_pending_requests [hard] | Select 2 pending leave requests in list view, approve in bulk via action | WIP | — | — | — |
@@ -3245,3 +3245,18 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Open seeded draft SO (customer reference S-BENCH-OPT-001, customer Bench Optional Co). Click "Add a product" in the order lines, pick "Bench Service Bundle" from the autocomplete, set qty=2 and per-line Discount=10 on that new row, then Save (do not Confirm). |
 | **Capability tested** | Inline one2many row creation + per-row discount entry while leaving an existing line untouched. |
 | **Notes** | Seed enables `sale.group_discount_per_so_line` so the Discount column renders on the line. "Bench Service Bundle" is a service product; "Bench Hardware Kit" is the pre-existing consumable line. Both Oracle (32s) and Browser-Use (143s) solved the task cleanly with F1=1.0 on first attempt, so the task calibrates EASIER than medium — the inline add+discount pattern is well within BU's current capability once the discount group is pre-enabled. No unauthorized writes, no forbidden ops. |
+
+---
+
+## project.create_kanban_stage_reorder_drag
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
+| **Odoo modules** | Project |
+| **Workflow** | Open seeded project 'Bench Project A' (grouped kanban of its tasks with pre-seeded stages Triage/In Progress/Review/Done). Unfold the `.o_column_quick_create` chevron at the right edge, type 'Backlog Review', confirm. Then drag the new 'Backlog Review' column header leftward so it drops between 'Triage' and 'In Progress'. |
+| **Capability tested** | Kanban column quick-create + column drag-reorder (web_resequence via Owl's useSortable) — a UI interaction pattern distinct from the existing card-drag task (project.kanban_drag_task_between_stages), since it moves GROUPS not RECORDS and involves two web_resequence RPCs (one implicit on create, one on drag). |
+| **Notes** | Oracle uses an emulated slow mouse drag on the `.o_column_title` handle (the `KanbanRenderer` useSortable config pins `handle: ".o_column_title"`). Browser-use created 'Backlog Review' correctly (single `name_create` + auto `web_resequence` to place at end) but could NOT drag the column to position #2 — left it at position #5 (far right). Classic drag-reorder failure mode predicted in the backlog calibration note. Seed intentionally uses sparse sequences (10/20/30/40) so the kanban's reorderAll branch renumbers everything starting at min(sequences)=1 on the first web_resequence; check.py is sequence-agnostic and validates left-to-right ordering instead. |
