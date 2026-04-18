@@ -283,6 +283,16 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 271 | maintenance.create_request_assign_technician_mark_repaired [medium] | Create a maintenance request, assign the technician, and mark it repaired | Done | PASS | FAIL | 0.0 |
 | 272 | website_blog.create_post_with_cover_tag_publish [medium] | Create a tagged blog post with a cover image and publish it | Done | PASS | FAIL | 0.0 |
 | 273 | website_slides.create_course_add_lesson_publish [medium] | Create an eLearning course, add a lesson, and publish the course | Done | PASS | FAIL | 0.0 |
+| 274 | delivery.configure_weight_rules_carrier_apply_to_so [medium] | Configure a weight-tier shipping carrier and apply the correct tier to a sale order | WIP | — | — | — |
+| 275 | maintenance.create_equipment_assign_category_team [easy] | Create a new equipment record, assign it to a category and maintenance team | WIP | — | — | — |
+| 276 | maintenance.schedule_preventive_plan_recurring [medium] | Schedule a recurring preventive maintenance plan with interval and team assignment | WIP | — | — | — |
+| 277 | sale_stock.partial_stock_warning_confirm_anyway [hard] | Confirm a sale order with insufficient stock, override the warning, and verify backorder | WIP | — | — | — |
+| 278 | survey.create_feedback_survey_with_sections [medium] | Create a multi-section feedback (non-quiz) survey with time limit and publish | WIP | — | — | — |
+| 279 | survey.review_submitted_responses_filter [medium] | Open survey responses dashboard, filter results, and mark a participation as reviewed | WIP | — | — | — |
+| 280 | im_livechat.configure_url_rule_auto_message [medium] | Add a URL-match rule to a livechat channel that triggers an auto-greeting on a specific page | WIP | — | — | — |
+| 281 | sale_project.timesheet_task_mark_billable_log_hours [hard] | Log timesheet hours on a sale-generated project task, mark billable, and verify invoice-ready state | WIP | — | — | — |
+| 282 | project_todo.reorder_notes_add_due_dates_bulk [easy] | Reorder three seeded To-Do notes and assign due dates in the Kanban view | WIP | — | — | — |
+| 283 | website_hr_recruitment.publish_job_from_backoffice_then_apply_portal [hard] | Create and publish a job position in the back office, then apply to it from the public portal | WIP | — | — | — |
 
 ---
 
