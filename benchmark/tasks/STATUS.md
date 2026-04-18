@@ -310,7 +310,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 298 | inventory.create_storage_category_assign_to_location [medium] | Create a storage category with capacity rules and assign it to a stock location | Done | PASS | FAIL | 0.0 |
 | 299 | sale_stock.deliver_partial_split_into_two_pickings [hard] | On a multi-line SO with insufficient stock for one product, deliver partial and create explicit second picking later | WIP | — | — | — |
 | 300 | website_blog.create_blog_with_two_posts_archive_one [medium] | Create blog 'Bench Insights' + 2 published posts, then archive only March Notes (active=False, kept in DB) | Done | PASS | FAIL | 0.0 |
-| 301 | website_slides.duplicate_lesson_to_new_section [medium] | Duplicate an existing lesson and move the copy to a new section in a course | WIP | — | — | — |
+| 301 | website_slides.duplicate_lesson_to_new_section [medium] | Add Advanced section, duplicate Welcome Video lesson via Actions menu, move duplicate to Advanced and rename | Done | PASS | FAIL | 0.0 |
 | 302 | im_livechat.assign_team_set_offline_form_message [medium] | Configure Live Chat channel via 3-dots Configure menu, switch Options tab, set notification text and welcome message | Done | PASS | PASS | 1.0 |
 | 303 | maintenance.archive_equipment_create_replacement [medium] | Archive an existing equipment and create a replacement equipment in same category | WIP | — | — | — |
 | 304 | project_todo.create_three_personal_with_specific_priorities [easy] | Create 3 personal todos with assigned priorities (high/normal/low) | WIP | — | — | — |
@@ -2900,3 +2900,18 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Agent must create blog 'Bench Insights' from scratch, then create two blog.posts under it ('April Update' and 'March Notes', both published), then open March Notes and archive it via Action > Archive (active=False) without deleting it or touching April Update. |
 | **Capability tested** | Multi-record creation followed by selective archive among siblings — tests attention to which of two newly created records to archive. |
 | **Notes** | Browser-use created blog + both published posts correctly (9/12 atomic edits matched) but failed to archive March Notes within the 360s budget — exactly the predicted "selective archive among siblings" failure mode. Calibration matches medium tier. State diff for the archived post serializes False booleans as `null` on a `create` op (active/is_published/website_published all show `norm_value: null`); expected_state.json must mirror that. |
+
+---
+
+## website_slides.duplicate_lesson_to_new_section
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
+| **Odoo modules** | Website (eLearning) |
+| **Workflow** | Open Bench Onboarding Course (seeded with Intro section + Welcome Video lesson). Add new section Advanced, then duplicate Welcome Video via the cog/Actions menu, move the copy into Advanced via the section Many2one, and rename it to Advanced Welcome. |
+| **Capability tested** | Sub-resource duplication via cog/Actions Duplicate menu plus section reassignment of a slide.slide whose section is sequence-derived, not a directly editable Many2one. |
+| **Notes** | Well-calibrated medium. Browser-use duplicated the entire course three times instead of the lesson — exactly the cog-menu navigation hazard the task targets. Oracle uses copy() + sequence rewrite because slide.slide.category_id is computed from sequence ordering. |
