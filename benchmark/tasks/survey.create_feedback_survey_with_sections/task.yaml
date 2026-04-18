@@ -1,0 +1,20 @@
+task_id: survey.create_feedback_survey_with_sections
+module: survey
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/action-survey.action_survey_form
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "Build a multi-section feedback survey with two sections, four questions, and a 10-minute time limit."
+  checks_verify: "Survey exists with the exact title, public access, page-per-section layout, time limit of 10 minutes, two sections and four questions with the right titles, and is not archived/assessment."
+  primary_track: true
+  tier: 2
