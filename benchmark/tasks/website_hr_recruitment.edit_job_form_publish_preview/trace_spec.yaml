@@ -1,0 +1,37 @@
+# Trace oracle for website_hr_recruitment.edit_job_form_publish_preview.
+#
+# Medium: edit description + toggle publish on an existing hr.job, then
+# navigate to /jobs/<slug> preview.
+
+required_ops: []
+
+optional_ops:
+  - hr.job.read
+  - hr.job.web_read
+  - hr.job.write
+  - hr.job.web_save
+  - hr.job.search_read
+  - hr.job.web_search_read
+  - hr.job.read_progress_bar
+  - hr.job.onchange
+  - hr.department.read
+  - hr.department.search_read
+  - hr.department.web_name_search
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+  - website.page.read
+  - website.page.search_read
+  - mail.message.create
+  - bus.bus.create
+  - custom:/jobs
+  - custom:/jobs/detail
+  - custom:/website/force/1
+
+forbidden_ops:
+  - hr.job.unlink
+  - hr.job.create       # task edits an existing job, does not create a new one
+  - hr.applicant.create
+  - hr.applicant.write
+  - hr.applicant.unlink
+  - hr.department.write
+  - hr.department.unlink

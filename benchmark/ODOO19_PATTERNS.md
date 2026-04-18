@@ -784,3 +784,32 @@ supplierinfo price differs from the old one.
 swap as `delete(old_partner_key) + create(new_partner_key)` — NOT a single
 `set` edit.  expected_state.json must encode both operations if the underlying
 PO record is just mutating its partner_id.
+
+---
+
+## website_hr_recruitment / hr.job publish + preview
+
+- `hr.job.website_description` is **frontend-only**: the only view that
+  touches it is `<div t-field="job.website_description"/>` in
+  `/jobs/detail/<slug>` (template
+  `website_hr_recruitment.detail`). There is NO backend form field for
+  it, so the only UI edit path is the website WYSIWYG overlay (fragile
+  iframe). Tasks that need a specific Requirements/section content
+  should **pre-seed** the HTML in `seed.py` and instruct the agent
+  NOT to touch it; let `check.py` assert tokens via `html2plaintext`.
+- `hr.job.description` IS on the backend form — on the Summary
+  notebook tab (`<page name="job_description_page">`). Standard
+  in-page HTML editor (not iframe); BU can type into it reliably.
+- The `website_published` **Published** `boolean_toggle` on the job
+  form has an explicit `@api.onchange('website_published')` handler
+  (`addons/website_hr_recruitment/models/hr_job.py`) that mirrors the
+  value to `is_published`. A single user click flips BOTH fields —
+  both show up in `state_diff.json` as `op: "set"`.
+- The `is_published` field rendered in the button box is
+  `widget="website_redirect_button"` — it only navigates to
+  `/jobs/<slug>` for preview; it is NOT a publish toggle
+  (same pattern as `event.event` / `event.track`).
+- Put both `description` and `website_description` in
+  `state_spec.yaml` `ignore_fields`; the HTML diff is noisy on
+  whitespace and sanitizer tweaks. Validate via `check.py` using
+  `html2plaintext` substring checks.

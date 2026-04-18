@@ -1,0 +1,22 @@
+task_id: website_hr_recruitment.edit_job_form_publish_preview
+module: website_hr_recruitment
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/recruitment
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "Open a seeded hr.job, edit its Summary description, toggle Published, save, then preview the /jobs/<slug> page on the public website"
+  checks_verify: "Job description contains the expected phrase, is_published=True, website_description still contains the seeded Requirements section"
+  failure_pattern: "Agent either toggles Published without saving the description edit, or clicks Go to Website before the Published switch, or misses the Summary tab where description lives"
+  primary_track: true
+  tier: 2
+  version: "0.1"
