@@ -1,0 +1,21 @@
+task_id: sale_stock.deliver_partial_split_into_two_pickings
+module: sale_stock
+difficulty: hard
+instruction: see prompt.md
+start_url: /odoo/sales
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 480
+step_limit: 300
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: hard
+  agent_interaction: "Confirm multi-line draft SO, navigate to delivery via smart button, edit Done qty inline (one full, one partial), validate with Create Backorder, then open the new backorder picking and zero out the Done qty for the partial product."
+  checks_verify: "Original picking validated with ProdA Done=5 and ProdB Done=3; backorder picking exists for ProdB demand=5 in non-cancelled draft/assigned state with Done=0; SO is confirmed; original demand fully accounted between original+backorder."
+  failure_pattern: "Agent picks 'No Backorder' instead of 'Create Backorder', or fails to commit inline cell edits (cell reverts on blur), or never opens the backorder to clear the auto-reserved 5 → 0."
+  primary_track: true
+  tier: 3

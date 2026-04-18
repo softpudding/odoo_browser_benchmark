@@ -107,6 +107,18 @@ if mod and mod.state != "installed":
 - `delivery.carrier` requires a `product_id` (service product). Use the
   create-and-edit autocomplete shortcut in the UI; in JSON-RPC / seed, create
   a `product.product` with `type='service'` first.
+- After validating an original picking with backorder, agents often click
+  "Return" instead of opening the existing backorder. The backorder is
+  reachable via SO breadcrumb → Delivery smart button (now shows count = 2).
+- A reservation-reducing edit (e.g., Done 5→0 on an `assigned` backorder) flips
+  `stock.picking.state` from `assigned` back to `confirmed` because reserved
+  stock is released. expected_state.json must encode `confirmed`, not `assigned`.
+- To force the inline-cell Done-edit pattern on a partial delivery: seed the
+  partial product with **enough stock for the full demand** so the original
+  picking auto-reserves the full quantity — the agent must MANUALLY decrease
+  Done before validating to trigger the backorder split. Seeding only the
+  partial amount (e.g., 3 of 8) makes Done auto-fill to the partial amount,
+  removing the cell-edit step entirely.
 
 ### Website / website_sale
 

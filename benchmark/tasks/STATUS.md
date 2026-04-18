@@ -308,7 +308,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 296 | sale_purchase.update_pol_alternative_vendor_compare [hard] | Open RFQ, add an alternative vendor with different price, compare and pick cheapest | WIP | — | — | — |
 | 297 | delivery.set_third_party_carrier_print_label [medium] | Configure a fixed-price carrier, apply it to a confirmed delivery picking with tracking ref, validate and trigger Print | Done | PASS | PASS | 1.0 |
 | 298 | inventory.create_storage_category_assign_to_location [medium] | Create a storage category with capacity rules and assign it to a stock location | Done | PASS | FAIL | 0.0 |
-| 299 | sale_stock.deliver_partial_split_into_two_pickings [hard] | On a multi-line SO with insufficient stock for one product, deliver partial and create explicit second picking later | WIP | — | — | — |
+| 299 | sale_stock.deliver_partial_split_into_two_pickings [hard] | On a multi-line SO, deliver partial (force inline-cell edit), create backorder, then on the backorder edit Done from auto-reserved 5 to 0 and SAVE without validating | Done | PASS | FAIL | 0.0 |
 | 300 | website_blog.create_blog_with_two_posts_archive_one [medium] | Create blog 'Bench Insights' + 2 published posts, then archive only March Notes (active=False, kept in DB) | Done | PASS | FAIL | 0.0 |
 | 301 | website_slides.duplicate_lesson_to_new_section [medium] | Add Advanced section, duplicate Welcome Video lesson via Actions menu, move duplicate to Advanced and rename | Done | PASS | FAIL | 0.0 |
 | 302 | im_livechat.assign_team_set_offline_form_message [medium] | Configure Live Chat channel via 3-dots Configure menu, switch Options tab, set notification text and welcome message | Done | PASS | PASS | 1.0 |
@@ -2915,3 +2915,18 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Open Bench Onboarding Course (seeded with Intro section + Welcome Video lesson). Add new section Advanced, then duplicate Welcome Video via the cog/Actions menu, move the copy into Advanced via the section Many2one, and rename it to Advanced Welcome. |
 | **Capability tested** | Sub-resource duplication via cog/Actions Duplicate menu plus section reassignment of a slide.slide whose section is sequence-derived, not a directly editable Many2one. |
 | **Notes** | Well-calibrated medium. Browser-use duplicated the entire course three times instead of the lesson — exactly the cog-menu navigation hazard the task targets. Oracle uses copy() + sequence rewrite because slide.slide.category_id is computed from sequence ordering. |
+
+---
+
+## sale_stock.deliver_partial_split_into_two_pickings
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL (gave up at 480s) |
+| **F1** | 0.0 |
+| **Odoo modules** | Sales, Inventory |
+| **Workflow** | Confirm draft SO S-BENCH-SPLIT-001 (Halberd Industries, Alpha×5 + Beta×8 with both fully reservable). Open delivery, manually edit Beta Done from auto-reserved 8 down to 3, validate, click "Create Backorder". Then breadcrumb back to SO, smart-button to delivery list, open the not-Done backorder picking, edit Beta Done from auto-reserved 5 down to 0, then SAVE (no validate). |
+| **Capability tested** | Inline-cell qty edits in TWO separate pickings + backorder dialog choice + non-validate save. |
+| **Notes** | Well-calibrated hard. Initial design with Beta stock=3 (matching user spec literal "3 in stock") made the 5→0 step a no-op (backorder Done already 0 because no stock left), and BU passed. Reseeded Beta with 8 in stock so backorder genuinely auto-reserves 5 → forced cell-edit pattern. BU failed by creating a return picking ("Return of WH/OUT/00001") instead of opening the existing backorder, then ran out of time. F1=0.0 / postcondition failure: "Expected exactly 1 original (non-backorder) picking, found 2". Backorder ends in state=`confirmed` after Done is zeroed (stock un-reserves). |
