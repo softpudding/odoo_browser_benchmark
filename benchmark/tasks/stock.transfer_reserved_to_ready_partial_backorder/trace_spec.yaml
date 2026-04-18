@@ -1,0 +1,43 @@
+# Trace oracle for stock.transfer_reserved_to_ready_partial_backorder
+#
+# Hard (policy_trap): Check Availability + Detailed Operations popup
+# (quantity cell-edit) + Validate + Create Backorder dialog primary.
+
+required_ops:
+  - stock.picking.button_validate
+
+optional_ops:
+  - stock.picking.action_assign
+  - stock.picking.action_confirm
+  - stock.picking.read
+  - stock.picking.write
+  - stock.picking.web_save
+  - stock.picking.web_read
+  - stock.picking.search_read
+  - stock.picking.web_search_read
+  - stock.picking.onchange
+  - stock.picking.do_unreserve
+  - stock.picking.action_show_details
+  - stock.picking.action_detailed_operations
+  - stock.move.read
+  - stock.move.write
+  - stock.move.web_save
+  - stock.move.web_read
+  - stock.move.action_show_details
+  - stock.move.onchange
+  - stock.move.line.read
+  - stock.move.line.write
+  - stock.move.line.web_save
+  - stock.move.line.create
+  - stock.move.line.onchange
+  - stock.backorder.confirmation.create
+  - stock.backorder.confirmation.process
+  - stock.backorder.confirmation.web_save
+  - stock.backorder.confirmation.read
+  - res.partner.read
+  - product.product.read
+  - ir.ui.view.get_views
+
+forbidden_ops:
+  - stock.picking.unlink
+  - stock.picking.action_cancel

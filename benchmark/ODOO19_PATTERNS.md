@@ -207,6 +207,36 @@ if mod and mod.state != "installed":
   Done before validating to trigger the backorder split. Seeding only the
   partial amount (e.g., 3 of 8) makes Done auto-fill to the partial amount,
   removing the cell-edit step entirely.
+- **Detailed Operations popup (`action_show_details` on a move row).** The
+  "Details" button in the Operations list is gated by
+  `stock.move.show_details_visible`, which is True only when (i) the user
+  has `stock.group_stock_multi_locations` / `group_tracking_lot` /
+  `group_tracking_owner`, (ii) `len(move_line_ids) > 1`, OR (iii) the
+  product has non-`none` tracking (lot/serial). For a single-move / single
+  move_line / untracked task, seed **must grant
+  `stock.group_stock_multi_locations` to admin** or the Details button is
+  absent. The button launches a secondary `stock.move` form dialog
+  (`stock.view_stock_move_operations`, target='new') containing an
+  editable-bottom `move_line_ids` list (`stock.view_stock_move_line_operation_tree`)
+  whose columns include `quantity` (Quantity). Editing the `quantity`
+  cell + Tab + clicking the technical modal's footer Save button
+  (label "Save & Close" or `.o_form_button_save` inside the dialog)
+  is what persists. BU reliably types the new quantity but fails to
+  persist it — the outer picking-form Save click gets intercepted by
+  the still-open popup, and validating afterwards silently promotes
+  the reserved full qty (so no backorder dialog ever appears). Oracle
+  pattern: click the popup-footer Save first; if the modal is still
+  visible, press Escape to force-close (editable-list x2m saves on
+  close by default).
+- **Reservation gating:** `stock.picking.action_confirm()` does NOT
+  reserve stock when `picking_type_id.reservation_method` is the default
+  `manual` — picking ends in state `confirmed`, NOT `assigned`. To force
+  the agent through the Check Availability header button, seed with
+  `action_confirm()` only; if the picking auto-reserves (some types
+  default to `at_confirm`), call `picking.do_unreserve()` after
+  confirmation. Skipping Check Availability in the UI triggers the
+  Immediate Transfer wizard on Validate, NOT the Create Backorder
+  dialog — a good hard-tier trap for partial-ship tasks.
 
 ### Website / website_sale
 
