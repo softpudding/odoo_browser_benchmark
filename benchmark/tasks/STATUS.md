@@ -3050,3 +3050,18 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Open seeded draft 'Q1 Bulletin Template'. Click cog → Duplicate. On the duplicate, change subject to 'Q2 Bulletin Update' and Recipients filter to Contact with Country=Germany. Save (do not send). |
 | **Capability tested** | Action menu Duplicate (non-default path) + multi-field edit on copy + domain widget for country filter. |
 | **Notes** | BU clicked Duplicate 14 extra times (15 mailings total) before hitting step limit — canonical "duplicate spam loop" failure when post-duplicate state isn't visually distinct. check.py traps via "exactly 2 mailings" count. |
+
+---
+
+## point_of_sale.add_item_apply_global_discount_pay_cash
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
+| **Odoo modules** | Point of Sale (+ pos_discount installed on demand) |
+| **Workflow** | Open POS session, add Bench POS Widget × 2 (€40), click Actions (ellipsis) → Discount, enter 15%, confirm (€34), pay Bench Cash, validate. |
+| **Capability tested** | POS kiosk UI with ellipsis-hidden Discount button. |
+| **Notes** | Calibration: easier than hard. BU solved cleanly on first shot (15 steps, 128s). Oracle uses JSON-RPC call_kw bypass (UI hangs on stale o_technical_modal). Would need split payment + discount combo to regain hard tier. |

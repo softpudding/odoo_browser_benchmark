@@ -396,3 +396,12 @@ When asked to "Duplicate via Actions menu, then edit the copy", BU on `mailing.m
 Implication: when the *only* visible signal of Duplicate success is a URL/id change (not a subject change), BU loops. Either phrase the prompt so post-duplicate state is visually distinct, or accept as canonical FAIL mode and test via "exactly N records" assertion in check.py.
 
 For mass_mailing oracles: prefer JSON-RPC `copy() + write()` over UI navigation — the domain tree editor + Recipients autocomplete are notoriously fragile.
+
+---
+
+## POS / pos_discount
+
+- `pos_discount` is NOT in the base snapshot — seed must `button_immediate_install()` on demand.
+- To enable Discount button: `pos.config.module_pos_discount=True`, `iface_discount=True`, `discount_pc=<float>`, `discount_product_id` (data record `pos_discount.product_product_consumable`).
+- UI: Discount button lives inside the **Actions popup** (ellipsis `more-btn`), not the top bar. In Odoo 19 `control_buttons.xml` moves secondary actions (Pricelist, Refund, Fiscal position, Discount, etc.) into ControlButtonsPopup.
+- Oracle pattern: prefer JSON-RPC `call_kw` over UI-driven POS oracle — `o_technical_modal` sometimes stays in DOM and intercepts pointer events.
