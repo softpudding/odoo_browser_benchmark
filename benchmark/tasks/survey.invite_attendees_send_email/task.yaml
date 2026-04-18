@@ -1,0 +1,20 @@
+task_id: survey.invite_attendees_send_email
+module: survey
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/action-survey.action_survey_form
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: policy_trap_wizard
+  difficulty_level: medium
+  agent_interaction: "Open the seeded 'Bench Onboarding Quiz' survey, click the Send button to open the survey.invite wizard, enter three comma-separated external emails into the 'Additional emails' field, overwrite the default Subject with 'Please complete onboarding', and click Send to trigger action_invite which creates one survey.user_input per email."
+  checks_verify: "Exactly three survey.user_input records exist for the survey with email in {alice@x.com, bob@y.com, carol@z.com}; associated mail.mail records carry the custom subject 'Please complete onboarding'."
+  primary_track: true
+  tier: 2

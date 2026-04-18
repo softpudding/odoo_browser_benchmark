@@ -1,0 +1,29 @@
+# Trace oracle for survey.invite_attendees_send_email.
+#
+# Required: survey.invite.action_invite must fire on the wizard (the "Send"
+# button in the dialog footer). Opening the wizard without sending is a FAIL.
+
+required_ops:
+  - survey.invite.action_invite
+
+optional_ops:
+  - survey.survey.action_send_survey
+  - survey.survey.read
+  - survey.survey.search_read
+  - survey.survey.web_search_read
+  - survey.survey.web_read
+  - survey.invite.create
+  - survey.invite.read
+  - survey.invite.web_save
+  - survey.user_input.create
+  - mail.mail.create
+  - mail.mail.send
+  - mail.template.read
+  - res.partner.read
+  - res.partner.name_search
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+
+forbidden_ops:
+  - survey.survey.unlink
+  - survey.survey.write
