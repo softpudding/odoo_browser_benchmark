@@ -332,7 +332,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 320 | website_sale.create_gift_card_apply_in_cart [hard] | Configure Gift Card program, generate 1 €50 card code, apply in /shop/cart with €100 product | Done | PASS | PASS | 1.0 |
 | 321 | hr.create_department_assign_manager_three_employees [medium] | Create Bench Engineering dept with manager Mike, then bulk assign 3 employees to it | Done | PASS | FAIL | 0.0 |
 | 322 | stock.create_putaway_rule_for_specific_category [hard] | Create putaway rule routing a product category to a specific sub-location | Done | PASS | PASS | 1.0 |
-| 323 | mail.invite_external_email_to_existing_channel [medium] | In existing channel, invite an external email (creates guest invitation) | WIP | — | — | — |
+| 323 | mail.invite_external_email_to_existing_channel [medium] | In existing channel, invite an external email (creates guest invitation) | Done | PASS | PASS | 1.0 |
 | 324 | sale.add_line_with_optional_template_apply_discount [medium] | On a draft SO, add a line by selecting a template, then apply line-level 10% discount | Done | PASS | PASS | 1.0 |
 | 325 | crm.create_lead_from_email_alias_log_message [hard] | Create a CRM team with email alias, then create lead via Send Message simulating inbound | WIP | — | — | — |
 | 326 | project.create_kanban_stage_reorder_drag [medium] | In project Kanban view, create a new stage and reorder it before existing stages | Done | PASS | FAIL | 0.0 |
@@ -3275,3 +3275,18 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Seed four res.partner rows named "John Doe" (refs BENCH-JD-01 empty, JD-02 email=john@x.com, JD-03 phone=555-1234) plus a decoy JD-DECOY under Acme Corp. In /odoo/contacts list view, select only the three refs without a parent company, Actions > Merge, set Destination Contact = the JD with email john@x.com (BENCH-JD-02) via the partner_show_db_id-tagged dropdown, click Merge Contacts. Final survivor must be BENCH-JD-02 with email=john@x.com AND phone=555-1234. |
 | **Capability tested** | 3-way merge with explicit master selection. Agent must read the prompt's master-selection rule and pick the non-default dst_partner_id, and must NOT include the Acme Corp decoy in the selection. |
 | **Notes** | Well-calibrated hard. BU completed the Actions>Merge flow and called `action_merge`, but left the default dst_partner_id (BENCH-JD-01, the first partner by id) instead of switching to the email-bearing BENCH-JD-02 — exactly the non-default wizard trap. The merge did preserve email+phone, but check.py asserts the survivor ref so the wrong master fails. Task also verifies the decoy (JD-DECOY under Acme Corp) is untouched. Note: the base Odoo 19 merge wizard does NOT have per-field source tabs; field preservation is deterministic via `_update_values` (src_partners, dst last) — since the 3 duplicates have disjoint email/phone, any master produces the same email+phone on the survivor, so the distinguishing difficulty is picking the right *survivor ref* and excluding the decoy. |
+
+---
+
+## mail.invite_external_email_to_existing_channel
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS (F1=1.0, 0 postcondition failures, 230.4s wall clock) |
+| **F1** | 1.0 |
+| **Odoo modules** | Discuss |
+| **Workflow** | Open seeded private group channel 'project-discussion'. In channel header click "Invite People" icon. In unified search input type `external-guest@bench.test`, wait for the envelope-icon email-fallback row to appear, click it to select, then click "Invite to Group Chat". This triggers `discuss.channel.invite_by_email` and creates a `mail.mail`. |
+| **Capability tested** | Non-default selectable row in an Owl side panel — the email fallback only appears after a complete valid email is typed and no partner matches. Distinct from the typical "add internal member" pathway. |
+| **Notes** | Odoo 19 has NO "Email tab" in the invite dialog (despite row 323 task-spec text) — only a single unified input; restructured the prompt to "click the envelope row" instead. Seed spins up a detached aiosmtpd sink on 127.0.0.1:2525 and registers an ir.mail_server pointing at it, plus sets admin.partner_id.email and mail.catchall.domain/mail.default.from ICPs, because invite_by_email calls `.send(raise_exception=True)` which rolls back the mail.mail on any SMTP or sender-missing failure. BU solved on first attempt (230s) — calibrated EASIER than medium, but keeps pathway coverage (invite_by_email vs the usual add_members). Also discovered and fixed two worktree-infra issues: (a) the copied skeleton .venv's `_editable_impl_odoo_benchmark.pth` pointed at the original skeleton-source worktree and needed to be rewritten to the current worktree root before oracle/check subprocess scripts could `import benchmark`; (b) `/tmp/benchmark_snapshots/benchmark_base.dump` was a 16KB stub restored from an uninitialised DB — re-dumped from a healthy per-task DB. See COOKBOOK_NOTES.md for the full aiosmtpd + ir.mail_server seed pattern. |

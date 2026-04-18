@@ -456,6 +456,37 @@ On an **opportunity**, `team_id` is NOT in the main form header. Only editable c
 
 ---
 
+## Discuss invite-by-email — no "Email tab" and SMTP is mandatory
+
+The channel Invite People side panel (`discuss.ChannelInvitation`) has a
+**single unified search input** in Odoo 19, NOT a tabbed Users/Email UI.
+The envelope-icon email fallback row (`selectable_email`) appears only
+when (a) the typed text fully matches `single_email_re`, (b) no
+selectable partner matches, (c) `thread._allow_invite_by_email()` returns
+True (`channel_type='group'` or public `channel`), (d) no existing
+channel member has that email. Clicking the row + "Invite to Group Chat"
+calls `discuss.channel.invite_by_email`.
+
+`invite_by_email` calls `mail.mail.send(raise_exception=True)` **in the
+same transaction**. SMTP failure → `MailDeliveryException` →
+`UserError`, which HTTP dispatcher rolls back — the `mail.mail` is NOT
+persisted. Seed requirements for a test that must verify the mail.mail:
+
+1. `admin.partner_id.email` must be non-empty (else
+   `_build_email__` raises `You must provide a sender address
+   explicitly`).
+2. Set `mail.catchall.domain` + `mail.default.from` ICPs.
+3. Configure a working outgoing `ir.mail_server`. Simplest approach:
+   spawn a detached `aiosmtpd` Sink Controller on `127.0.0.1:2525` from
+   seed.py (`subprocess.Popen(..., start_new_session=True)`) and register
+   an `ir.mail_server` pointing at that host/port. The venv already has
+   `aiosmtpd` installed.
+
+See `mail.invite_external_email_to_existing_channel/seed.py` for the
+full working pattern.
+
+---
+
 ## sale_loyalty Gift Card flow
 
 - Quick way to create a gift-card program: `loyalty.program.create_from_template('gift_card')` (also `'loyalty'`, `'discount'`, etc.).
