@@ -1,0 +1,20 @@
+task_id: website.create_new_page_publish
+module: website
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/website
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "In Website > Site, use '+ New' > Page to create a new blank page named 'Bench New Page' with URL '/bench-new-page', add an H1 'Welcome to Bench' via the website editor, then publish it."
+  checks_verify: "Exactly one website.page exists at '/bench-new-page' with name 'Bench New Page' and is_published=True; its view arch contains the heading 'Welcome to Bench'."
+  primary_track: true
+  tier: 2

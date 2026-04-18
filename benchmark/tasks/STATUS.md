@@ -166,7 +166,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 154 | website.create_blog_post_publish [medium] | Create and publish a blog post with title, cover image, and body content | Done | PASS | PASS | 1.0 |
 | 155 | website.add_menu_item_reorder [medium] | Add a website menu item and reorder it within the navigation hierarchy | WIP | — | — | — |
 | 156 | website.create_contact_form_block [hard] | Edit a website page to add and configure a contact form block | WIP | — | — | — |
-| 157 | stock.scrap_product_from_receipt [medium] | Open a stock receipt and scrap part of a received product from the operation flow | WIP | — | — | — |
+| 157 | stock.scrap_product_from_receipt [medium] | Open a stock receipt and scrap part of a received product from the operation flow | Done | PASS | PASS/PASS | 1.0 |
 | 158 | stock.adjust_inventory_with_location_filter [medium] | Adjust inventory for a target product in one location while leaving other locations unchanged | WIP | — | — | — |
 | 159 | stock.receive_serial_tracked_product [hard] | Validate a receipt by assigning exact serial numbers to tracked units | WIP | — | — | — |
 | 160 | mrp.update_bom_component_quantity [medium] | Update one component quantity on an existing bill of materials and save it | Done (dup of 257) | — | — | — |
@@ -194,21 +194,21 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 182 | point_of_sale.close_session_reconcile_cash_diff [medium] | Close a POS session with a counted cash amount different from expected | WIP | — | — | — |
 | 183 | website_sale.add_product_to_cart_checkout_portal [medium] | As a public user, add a product to cart and complete checkout with address | WIP | — | — | — |
 | 184 | website_sale.apply_promo_code_at_checkout [medium] | Create a coupon program in backend then apply the code on the storefront | WIP | — | — | — |
-| 185 | website_sale.edit_product_image_gallery [easy] | Add an extra image to a published product via the shop editor | WIP | — | — | — |
+| 185 | website_sale.edit_product_image_gallery [easy] | Add an extra image to a published product via the shop editor | Done | PASS | PASS/PASS | 1.0 |
 | 186 | website_sale.configure_delivery_method_weight [medium] | Create a delivery method with weight-based pricing rules | WIP | — | — | — |
-| 187 | website.create_new_page_publish [medium] | Create a blank new website page, add a heading, and publish it | WIP | — | — | — |
+| 187 | website.create_new_page_publish [medium] | Create a blank new website page, add a heading, and publish it | Done | PASS | FAIL/FAIL | 0.0 |
 | 188 | website.set_page_seo_fields [easy] | Use the Promote dialog to set meta title, description, and keywords on a page | WIP | — | — | — |
 | 189 | website.add_image_snippet_swap_source [medium] | Drag an Image snippet into a page and swap its source image | WIP | — | — | — |
 | 190 | website.duplicate_page_rename_unpublish [easy] | Duplicate an existing website page, rename the copy, and leave unpublished | WIP | — | — | — |
 | 191 | hr_holidays.approve_multiple_requests_bulk [hard] | Multi-select pending time-off requests in list view and bulk approve | WIP | — | — | — |
 | 192 | hr_holidays.request_leave_with_attachment [medium] | Request leave and attach a PDF justification via the chatter | Done | PASS | FAIL/FAIL | 0.0 |
 | 193 | hr_expense.split_expense_analytic_distribution [hard] | Split one expense line 50/50 across two analytic accounts | WIP | — | — | — |
-| 194 | hr_expense.refuse_report_with_reason_chatter [medium] | Refuse a submitted expense report and post the reason to chatter | WIP | — | — | — |
+| 194 | hr_expense.refuse_report_with_reason_chatter [medium] | Refuse a submitted expense report and post the reason to chatter | Done | PASS | PASS/PASS | 1.0 |
 | 195 | hr_expense.post_approved_expense_to_journal [medium] | Manager posts an approved expense report to its journal entry | WIP | — | — | — |
 | 196 | mail.star_and_reply_inbox_message [easy] | Star an inbox message and post a reply | WIP | — | — | — |
 | 197 | mail.mark_message_done_archive_notification [easy] | Mark Done on an inbox notification to remove it from Inbox | WIP | — | — | — |
 | 198 | mail.create_group_channel_upload_attachment [medium] | Create a private channel, invite a member, and upload a file attachment | Done | PASS | FAIL/FAIL | 0.0 |
-| 199 | im_livechat.add_canned_response_send_in_chat [medium] | Create a canned response shortcut and send it in an operator chat | WIP | — | — | — |
+| 199 | im_livechat.add_canned_response_send_in_chat [medium] | Create a canned response shortcut and send it in an operator chat | Done | PASS | PASS/PASS | 1.0 |
 | 200 | fleet.log_service_cost_record [easy] | Add a service cost record (oil change) to an existing vehicle | Done | PASS (32.1s) | FAIL (142.4s) | 0.00 |
 | 201 | fleet.assign_vehicle_tags_category [easy] | Add two tags and set a category on a vehicle | Done | PASS | PASS | 1.0 |
 | 202 | fleet.transfer_vehicle_new_driver [medium] | Change a vehicle's driver and set the new assignment date | Done | PASS | FAIL/FAIL | 0.0 |
