@@ -1,0 +1,39 @@
+# Trace oracle for stock.cancel_picking_create_replacement_with_serial
+#
+# Hard (recovery_rollback): cancel original receipt, create replacement
+# receipt from scratch with 2 serials via Detailed Operations popup.
+
+required_ops:
+  - stock.picking.action_cancel
+
+optional_ops:
+  - stock.picking.read
+  - stock.picking.write
+  - stock.picking.web_save
+  - stock.picking.search_read
+  - stock.picking.web_search_read
+  - stock.picking.button_validate
+  - stock.picking.action_confirm
+  - stock.picking.action_assign
+  - stock.picking.create
+  - stock.picking.onchange
+  - stock.move.read
+  - stock.move.write
+  - stock.move.create
+  - stock.move.web_save
+  - stock.move.action_show_details
+  - stock.move.line.read
+  - stock.move.line.write
+  - stock.move.line.create
+  - stock.move.line.web_save
+  - stock.lot.create
+  - stock.lot.read
+  - stock.lot.name_create
+  - res.partner.name_search
+  - res.partner.read
+  - product.product.name_search
+  - product.product.read
+  - ir.ui.view.get_views
+
+forbidden_ops:
+  - stock.picking.unlink
