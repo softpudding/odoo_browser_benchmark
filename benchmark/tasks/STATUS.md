@@ -313,7 +313,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 301 | website_slides.duplicate_lesson_to_new_section [medium] | Add Advanced section, duplicate Welcome Video lesson via Actions menu, move duplicate to Advanced and rename | Done | PASS | FAIL | 0.0 |
 | 302 | im_livechat.assign_team_set_offline_form_message [medium] | Configure Live Chat channel via 3-dots Configure menu, switch Options tab, set notification text and welcome message | Done | PASS | PASS | 1.0 |
 | 303 | maintenance.archive_equipment_create_replacement [medium] | Archive seeded 'Old Belt OB-99' via Actions, then create 'New Belt NB-100' with serial in same category | Done | PASS | PASS | 1.0 |
-| 304 | project_todo.create_three_personal_with_specific_priorities [easy] | Create 3 personal todos with assigned priorities (high/normal/low) | WIP | — | — | — |
+| 304 | project_todo.create_three_personal_with_specific_priorities [easy] | Create 3 personal to-dos; only Plan Sprint gets first priority star (Medium = '1'), others stay default | Done | PASS | FAIL | 0.0 |
 | 305 | website_hr_recruitment.set_kanban_state_assign_recruiter [medium] | Open Diana Recruit, flip kanban_state ball to 'Ready for Next Stage', set Recruiter, post Log note | Done | PASS | PASS | 1.0 |
 | 306 | purchase_stock.return_partial_with_distractor_lines [hard] | On a received PO with 3 product lines, return only 1 specific line partially | WIP | — | — | — |
 | 307 | sale_project.invoice_completed_milestones_only [hard] | With 4 milestones (2 reached, 2 not), invoice only the 2 reached | WIP | — | — | — |
@@ -2960,3 +2960,18 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Open the seeded applicant 'Diana Recruit' (linked to job 'Senior QA Engineer'). Click the small kanban_state status ball at the top of the form and pick 'Ready for Next Stage'. Set the Recruiter many2one to 'Recruiter Bob'. Post an internal Log note 'Phone screen done.' in the chatter. Save. |
 | **Capability tested** | Three-part edit on a recruitment form: state-selection ball widget + many2one autocomplete + internal Log-note vs public Send-message distinction. |
 | **Notes** | BU solved on first run (F1=1.0, 147s). State-selection ball findable via dropdown; agent correctly picked Log note over Send message. Calibration: easier than medium target. |
+
+---
+
+## project_todo.create_three_personal_with_specific_priorities
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL (1 run, headless) — 7 duplicate Plan Sprint records created |
+| **F1** | 0.0 |
+| **Odoo modules** | To-Do (project_todo) |
+| **Workflow** | Open the To-do app, create three personal notes (Plan Sprint, Write Docs, Refactor CSS). Only Plan Sprint should get one priority star clicked (Medium = priority '1'); other two stay default. Save each. |
+| **Capability tested** | Multi-record creation in to-do quick-create combined with priority star widget. |
+| **Notes** | Priority widget renders N-1 stars (skips `value_first`). For [(0,Low),(1,Medium),(2,High)] means 2 stars: star 1 → '1' (Medium), star 2 → '2' (High). Calibration matches easy tier — BU set right priority but ran a duplication loop on Plan Sprint instead of moving on. |

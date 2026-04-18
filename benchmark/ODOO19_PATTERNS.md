@@ -347,3 +347,13 @@ If a task description implies offline-form configuration, map to `button_text` /
 - `slide.slide.copy_data()` resets `sequence=0` on the duplicate (lands at top, uncategorized). Agent must re-sequence/pick section.
 - New `is_category` slides default to `slide_category='document'` and `website_published=True` even though they aren't real lessons.
 - BU failure mode: asked to "duplicate the lesson via Actions menu", BU tends to land on the COURSE cog menu and duplicate the whole `slide.channel` instead.
+
+---
+
+## project_todo / web.PriorityField — star indexing
+
+`project.task.priority` is a Selection `[('0','Low'),('1','Medium'),('2','High')]`. The widget renders **N-1 stars**, skipping `value_first`:
+- Star 1 (`.o_priority_star` index 0) → priority `'1'` (Medium / one filled star)
+- Star 2 (`.o_priority_star` index 1) → priority `'2'` (High / both filled stars)
+
+Default (no star filled) is `'0'` (Low). Prompt phrasing matters: "set High by clicking the star" gets BU to click the rightmost star (priority `'2'`). For priority `'1'` say "click only the FIRST star (Medium)".
