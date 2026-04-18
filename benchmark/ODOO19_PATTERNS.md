@@ -555,3 +555,30 @@ full working pattern.
 - Account autocomplete renders items as "`<code> <name>`" (e.g. "612000 Rent"). Playwright `filter(has_text=X)` matches substrings and wrongly picks "Cur**rent** Assets" when typing "Rent". Exact-match logic: split on whitespace and compare `parts[1]` to the account name.
 - Generic CoA ships "Rent" (6120, expense) and "Tax Paid" (1310, asset_current). NO "Bank" account — the default Bank journal's `default_account_id` is auto-created as `asset_cash` and inherits the journal's name ("Bank"). Seed can rename it for deterministic autocomplete.
 - `mail.activity.type` for "To Do" is stored as name **"To-Do"** (with hyphen), not "To Do". `schedule_activity` helper's badge lookup needs the exact name.
+
+---
+
+## appointment addon is enterprise-only — uninstallable in Community
+
+`appointment` (and by extension `website_appointment`,
+`appointment_account_payment`, `appointment_hr`,
+`appointment_sms`, `appointment_crm`, etc.) is an **enterprise-only**
+module.  On the `odoo_benchmark` branch it registers in
+`ir_module_module` as `state='uninstallable'` because no manifest is
+found under any configured addons path.
+
+- `button_immediate_install()` on an uninstallable record raises
+  `UserError` — you cannot "install on demand".
+- `calendar.event` is NOT a drop-in substitute for public booking
+  tasks: `/calendar/meeting/view` only exposes Accept/Decline; no
+  Reschedule / Cancel / public slot picker.
+- Before picking any `appointment.*` or `/appointment/*` task from the
+  backlog, run:
+  ```sql
+  SELECT name, state FROM ir_module_module WHERE name LIKE 'appointment%';
+  ```
+  If any row is `uninstallable`, mark the task Removed with Oracle
+  `FAIL (module unavailable)` and skip the full lifecycle — match the
+  precedent in STATUS.md rows 240 (`appointment.create_type_set_slots`)
+  and 350
+  (`appointment.public_booking_reschedule_cancel_portal`).

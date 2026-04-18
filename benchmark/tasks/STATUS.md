@@ -359,7 +359,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 347 | inventory.cycle_count_two_locations_apply_selected_delta [medium] | Perform a cycle count across two locations and apply only the intended stock discrepancy | Done | PASS | FAIL | 0.0 |
 | 348 | project_todo.create_note_set_color_deadline [easy] | Create a note, set a deadline, and apply a non-default kanban color | Done | PASS | FAIL | 0.0 |
 | 349 | survey.create_certification_quiz_attempt_limit_publish [hard] | Build a certification quiz with passing score and attempt limit, then publish it | Done | PASS | FAIL | 0.0 |
-| 350 | appointment.public_booking_reschedule_cancel_portal [hard] | Configure an appointment type, book it publicly, then reschedule and cancel it from the portal | WIP | — | — | — |
+| 350 | appointment.public_booking_reschedule_cancel_portal [hard] | Configure an appointment type, book it publicly, then reschedule and cancel it from the portal | Removed | FAIL (module unavailable) | — | — |
 | 351 | helpdesk.team_sla_assign_escalate_close [hard] | Create a helpdesk team with SLA policy, process a ticket through assignment and escalation, then close it | Removed | FAIL (module unavailable) | — | — |
 | 352 | marketing_automation.tag_trigger_drip_campaign [hard] | Build a tag-triggered marketing automation flow with delayed actions and a stop condition | Removed | FAIL (module unavailable) | — | — |
 | 353 | event_product.sell_event_product_fill_attendee_details [medium] | Sell an event-linked product and complete attendee details for the generated registration | Done | PASS | PASS | 1.0 |
@@ -3639,6 +3639,21 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Seed installs website_event (not in base snapshot) and creates one unpublished event `Bench Public Day`. Phase 1: agent opens `/odoo/events`, opens the event, flips it to Published. Phase 2: navigates to `/event`, clicks the event card, clicks Register on the event page (opens `#modal_ticket_registration` Bootstrap modal), leaves the default single-ticket counter at 1, clicks the inner Register submit (JSON-RPC POST to `/event/<slug>/registration/new` inserts a second modal `#modal_attendees_registration` into body), fills Name=`Priya Patel` / Email=`priya.patel@example.com` / Phone=`+1 555 0142`, clicks Confirm Registration (POST to `/registration/confirm` → redirects to success page). |
 | **Capability tested** | Closed-loop cross-module back-office → public portal round-trip + dual-modal chained portal registration form. Attendee inputs are named `{registration_index}-{question_type}-{question_id}` — must be matched by `name*='-name-'` substring, not `name$='-name'` suffix (the suffix is the numeric question id). |
 | **Notes** | Calibration FAILED (intended hard tier, BU solved first-shot F1=1.0 in 85s). BU handled the dual-modal chain without trouble and the default ticket counter of 1 removed the `+` click hurdle. Kept at tier 3 (primary_track=false) to preserve the closed-loop back-office → portal pattern. New cookbook entries in COOKBOOK_NOTES.md: (1) `event.event.is_published` widget is `website_redirect_button` (navigation-only, NOT a toggle); "Publish" inline button is hidden by default since `website_visibility='public'` is the default. Canonical publish path: JSON-RPC `website_publish_button()` or the Owl systray toggle on the website preview. No stage-bar publish like `event.track` has. (2) The attendees-details modal is dynamically inserted into `document.body` after a JSON-RPC POST to `/registration/new` — it is NOT part of the initial event page DOM. (3) `event.registration.create` is called via `sudo()` inside the `/registration/confirm` controller AND the route carries the event slug (`custom:/event/<slug>/registration/confirm`), so neither the ORM op nor a clean route match shows up in `trace_spec.required_ops`. Rely on state diff + `check.py` only. (4) Default event questions (Name/Email/Phone with `is_default=True`) auto-attach to a fresh `event.event` via `_compute_question_ids` fallback — no seed work needed for the portal form to render. |
+
+---
+
+## appointment.public_booking_reschedule_cancel_portal
+
+| Field | Value |
+|---|---|
+| **Status** | Removed |
+| **Oracle** | FAIL (module unavailable) |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Appointments (enterprise-only), Website/Portal |
+| **Workflow** | Seed `appointment.type` 'Bench Intro Call' with a 30-min slot + 1 seeded user resource. Phase 1 (back-office): agent verifies config. Phase 2 (public portal): navigate to `/appointment/<slug>`, pick a slot next week, submit form (name=Bench Visitor, email=visitor@bench.test). Phase 3: open returned confirmation URL, click Reschedule to next-week+1, then Cancel. |
+| **Capability tested** | Multi-phase public-portal workflow with reschedule + cancel (two separate portal actions post-booking). Tests backend-to-portal handoff + two distinct portal actions on a single booking record. |
+| **Notes** | Blocked — `ir.module.module` reports `state='uninstallable'` for `appointment` on the current `odoo_benchmark` branch (Odoo Community Edition checkout does not ship the `appointment` addon source; no manifest found under `addons/`). Seed would need `button_immediate_install`, but that raises UserError on an uninstallable record. Calendar's `/calendar/meeting/view` portal only exposes Accept/Decline, not Reschedule/Cancel, so the workflow cannot be cleanly re-scoped onto `calendar.event`. Task skeleton (seed/check/oracle) is committed with clear BLOCKED guards that short-circuit with a diagnostic error instead of silently passing. Re-enable once enterprise `appointment` (+ `website_appointment` + `appointment_account_payment`) addons are vendored into the repo. Matches the precedent set by the earlier sibling task `appointment.portal_reschedule_and_cancel_booking` (also removed for the same reason). |
 
 ---
 
