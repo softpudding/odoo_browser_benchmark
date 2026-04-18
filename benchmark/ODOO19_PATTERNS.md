@@ -386,3 +386,13 @@ Default (no star filled) is `'0'` (Low). Prompt phrasing matters: "set High by c
 - `survey.survey` has **no `state` field** in Odoo 19. "Ready to share" = `active=True` + `access_mode='public'` + populated `access_token`. Don't query a non-existent state field.
 - `widget="CopyClipboardChar"` (e.g. `survey.invite.survey_start_url`) renders as `<span>` in readonly mode, NOT `<input>`. `page.input_value()` will time out. Read via `text_content()` on the field widget div, with input fallback.
 - `survey.survey.action_send_survey` returns a `survey.invite` wizard with `default_send_email=False` for public surveys, so closing the wizard has no DB side effect.
+
+---
+
+## Browser-use failure mode: cog→Duplicate spam loop
+
+When asked to "Duplicate via Actions menu, then edit the copy", BU on `mailing.mailing` (and likely other forms) clicked Duplicate **repeatedly**. After the first Duplicate, the form navigates to the new copy with subject still equal to the source; BU's policy of "find original, click Duplicate" reads the heading as still-not-yet-duplicated and tries again.
+
+Implication: when the *only* visible signal of Duplicate success is a URL/id change (not a subject change), BU loops. Either phrase the prompt so post-duplicate state is visually distinct, or accept as canonical FAIL mode and test via "exactly N records" assertion in check.py.
+
+For mass_mailing oracles: prefer JSON-RPC `copy() + write()` over UI navigation — the domain tree editor + Recipients autocomplete are notoriously fragile.
