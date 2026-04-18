@@ -1,0 +1,33 @@
+# Trace oracle for website_hr_recruitment.set_kanban_state_assign_recruiter
+#
+# MEDIUM: kanban_state ball + recruiter many2one + internal Log note in chatter.
+# Browser-use solves any one of these reliably; the combination — especially
+# locating the small status ball — is the hard part.
+
+required_ops: []  # All effects validated via state diff + check.py
+
+optional_ops:
+  - hr.applicant.read
+  - hr.applicant.write
+  - hr.applicant.web_save
+  - hr.applicant.search_read
+  - hr.applicant.web_search_read
+  - hr.recruitment.stage.read
+  - hr.recruitment.stage.search_read
+  - hr.job.read
+  - hr.job.search_read
+  - res.users.read
+  - res.users.search_read
+  - res.users.web_name_search
+  - mail.message.create
+  - mail.message.read
+  - mail.message.search_read
+  - mail.thread.message_post
+  - mail.followers.create
+  - bus.bus.create
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+
+forbidden_ops:
+  - hr.applicant.unlink
+  - hr.applicant.archive_applicant
