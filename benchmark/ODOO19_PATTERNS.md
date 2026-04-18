@@ -513,3 +513,20 @@ full working pattern.
   ```
 - Alias-name uniqueness: `mail.alias.alias_name` has a UNIQUE constraint per domain. Seed must null out any stale alias owning the target name before re-running (otherwise the agent's Save hits `UniqueViolation`).
 - `crm.lead.name` is rendered with `widget="text"` → textarea, not an input. Use `fill_text_field` in oracle, not `fill_field` (the latter queries `input` and times out).
+
+---
+
+## account.move type='entry' form (direct journal entries)
+
+- Journal Entries list: `/odoo/accounting/entries` (action `account.action_move_journal_line`, context `default_move_type='entry'`). NOT the same form as invoices.
+- Form differences on move_type='entry':
+  - No Customer/Partner header field; `ref` is the visible "Reference" field.
+  - **Journal Items** tab (`aml_tab`) replaces Invoice Lines; uses `line_ids` (not `invoice_line_ids`) with columns Account / Partner / Label / Debit / Credit / Tax Grids.
+  - Header button is **Post** (not Confirm).
+  - `invoice_tab` and `other_tab` are both invisible for move_type='entry'.
+- `aml_tab` has `groups="account.group_account_readonly"`. If the admin user lacks that group in the base snapshot, the tab silently does not render — seed must `grp.user_ids = [(4, admin.id)]` on `account.group_account_readonly`, `group_account_invoice`, `group_account_user` to guarantee visibility. (Field is `user_ids`, not `users`.)
+- `hide_post_button = state != 'draft' OR (auto_post != 'no' AND date > today)`. For a future-dated entry, keep `auto_post='no'` (default) to keep the Post button visible. `auto_post='monthly'` triggers `_copy_recurring_entries()` on post but HIDES the manual Post button until the date arrives — incompatible with a "create and post today" task.
+- `line_ids` list `name` column uses widget `section_and_note_text` which renders a `<textarea>` for non-section rows (not `<input>`). Cell fillers must target `input, textarea` together.
+- Account autocomplete renders items as "`<code> <name>`" (e.g. "612000 Rent"). Playwright `filter(has_text=X)` matches substrings and wrongly picks "Cur**rent** Assets" when typing "Rent". Exact-match logic: split on whitespace and compare `parts[1]` to the account name.
+- Generic CoA ships "Rent" (6120, expense) and "Tax Paid" (1310, asset_current). NO "Bank" account — the default Bank journal's `default_account_id` is auto-created as `asset_cash` and inherits the journal's name ("Bank"). Seed can rename it for deterministic autocomplete.
+- `mail.activity.type` for "To Do" is stored as name **"To-Do"** (with hyphen), not "To Do". `schedule_activity` helper's badge lookup needs the exact name.

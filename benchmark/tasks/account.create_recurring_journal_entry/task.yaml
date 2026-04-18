@@ -1,0 +1,18 @@
+task_id: account.create_recurring_journal_entry
+module: account
+difficulty: hard
+instruction: see prompt.md
+start_url: /odoo/accounting
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 480
+step_limit: 300
+metadata:
+  category: deep_ui_interaction
+  failure_pattern: "Agent cannot navigate the move_type='entry' form (different from invoices), may skip debit/credit columns, or fail to schedule the monthly activity via the chatter."
+  primary_track: true
+  tier: 3

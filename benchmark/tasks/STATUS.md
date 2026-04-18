@@ -336,7 +336,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 324 | sale.add_line_with_optional_template_apply_discount [medium] | On a draft SO, add a line by selecting a template, then apply line-level 10% discount | Done | PASS | PASS | 1.0 |
 | 325 | crm.create_lead_from_email_alias_log_message [hard] | Configure CRM team 'Inbound' alias + Accept-Emails-From, create lead with priority/tag, post chatter | Done | PASS | FAIL | 0.0 |
 | 326 | project.create_kanban_stage_reorder_drag [medium] | In project Kanban view, create a new stage and reorder it before existing stages | Done | PASS | FAIL | 0.0 |
-| 327 | account.create_recurring_journal_entry [hard] | Create a journal entry with template repeating monthly for 3 months | WIP | — | — | — |
+| 327 | account.create_recurring_journal_entry [hard] | Create a 3-line balanced journal entry (Rent 1000 + Tax 50 / Bank 1050), schedule To-Do activity for next month, Post | Done | PASS | PASS | 1.0 |
 | 328 | website.add_image_carousel_to_homepage [hard] | In website editor, add Image Carousel snippet to home page with 3 images | WIP | — | — | — |
 | 329 | hr_holidays.bulk_approve_two_pending_requests [hard] | Select 2 pending leave requests in list view, approve in bulk via action | Done | PASS | FAIL | 0.67 |
 | 330 | event.add_track_with_speaker_publish [medium] | On existing event, add a track with speaker info and publish on website | Done | PASS | PASS | 1.0 |
@@ -3380,3 +3380,18 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Create a new `blog.tag` named `Q2-2026` via `/odoo/blog-tags`, then loop through three seeded `blog.post` records (Post-A, Post-B, Post-C) and add the tag on each post's `tag_ids` m2m (many2many_tags widget). A fourth seeded post (Post-D) acts as a distractor that must remain untagged. |
 | **Capability tested** | Tag creation + bulk m2m assignment across multiple records with a "do-not-touch-the-distractor" negative constraint. Same bulk-loop trap as row 321 (hr.create_department_assign_manager_three_employees), but with the added temptation of the tag form's reverse `post_ids` m2m labeled "Used in:" which could let BU mass-assign from the wrong side. |
 | **Notes** | BU successfully created the `Q2-2026` tag (1 matching create edit on `blog.tag`) and issued 172 writes total, but timed out with `gave_up=True` at 360s without landing the tag on a single post. Postconditions flagged Post-A/B/C all missing the tag. Distractor Post-D stayed clean. Failure is harsher than the "forget one" trap predicted — BU never made it past the tag form into the per-post loop. Oracle writes `tag_ids: [[4, tagId]]` via JSON-RPC because the `many2many_tags` autocomplete can be brittle under Playwright; BU's UI route is the authentic failure test. New cookbook note: `blog.tag.name` has a UNIQUE constraint (`_name_uniq`), and the tag form's "Used in:" reverse m2m (`post_ids`) is a natural shortcut BU can get lured into — adding a distractor post punishes the "select all posts" branch. |
+
+---
+
+## account.create_recurring_journal_entry
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS (F1=1.0, 0 postcondition failures, 213s first run + 288s second run; both passed) |
+| **F1** | 1.0 |
+| **Odoo modules** | Accounting (account) |
+| **Workflow** | Accounting -> Journal Entries (path `/odoo/accounting/entries`, NOT Customer Invoices). New -> Reference='Bench Rent Apr', Accounting Date 2026-05-01, Journal=Miscellaneous Operations. Three balanced Journal Items: Rent debit 1000, Tax Paid debit 50, Bank credit 1050. Save. Chatter Activities -> schedule To-Do "Post next month's rent entry" due 2026-06-01. Click Post. |
+| **Capability tested** | Distinct move_type='entry' form (no Customer, Debit/Credit columns, `line_ids` not `invoice_line_ids`); multi-line balance with 3 lines including a tax line; chatter activity scheduling; entry-specific Post button. |
+| **Notes** | Calibrated hard but BU passed twice. The Journal Items tab is only visible with `account.group_account_readonly`; seed explicitly grants admin `readonly/invoice/user` accounting groups via `res.groups.user_ids` (NOT `users`). The `name` column widget is `section_and_note_text` -> renders `<textarea>`; cell filler uses `input, textarea`. Account autocomplete displays "<code> <name>" so filtering on `has_text='Rent'` wrongly matches "Cur**rent** Assets"; oracle splits on whitespace and matches `parts[1]` exactly. Activity type stored as "To-Do" with hyphen. Per-calibration 3rd line (Tax Paid 50) added to escape trivial 2-line pattern, but BU still solved — further hardening would require analytic_distribution or per-line partner. |
