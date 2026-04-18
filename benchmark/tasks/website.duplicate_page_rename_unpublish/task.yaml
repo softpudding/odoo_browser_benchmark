@@ -1,0 +1,20 @@
+task_id: website.duplicate_page_rename_unpublish
+module: website
+difficulty: easy
+instruction: see prompt.md
+start_url: /odoo/website
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 240
+step_limit: 120
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: easy
+  agent_interaction: "In Website > Site > Pages, duplicate the seeded 'Bench Original' page via the Actions/cog menu, rename the copy to 'Bench Original Draft', and leave the copy unpublished."
+  checks_verify: "Original 'Bench Original' page remains published at /bench-original; a new 'Bench Original Draft' page exists (unpublished) derived from the original."
+  primary_track: true
+  tier: 1

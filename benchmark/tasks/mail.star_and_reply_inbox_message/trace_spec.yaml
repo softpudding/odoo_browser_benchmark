@@ -1,0 +1,33 @@
+# Trace oracle for mail.star_and_reply_inbox_message
+#
+# Category 5: Deep UI interaction (EASY).
+# Agent must open Discuss > Inbox, star the seeded message, and post a reply.
+# Validation is primarily via check.py since the browser may route through
+# web_save or message_post instead of plain create/write.
+
+required_ops: []
+
+optional_ops:
+  - mail.message.read
+  - mail.message.search_read
+  - mail.message.web_search_read
+  - mail.message.message_format
+  - mail.message.toggle_message_starred
+  - mail.message.set_message_done
+  - mail.message.create
+  - mail.message.write
+  - mail.message.web_save
+  - mail.thread.message_post
+  - mail.notification.read
+  - mail.notification.search_read
+  - discuss.channel.read
+  - discuss.channel.search_read
+  - res.partner.read
+  - res.partner.search_read
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+  - bus.bus.create
+
+forbidden_ops:
+  - mail.message.unlink
+  - res.partner.unlink
