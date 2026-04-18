@@ -117,6 +117,24 @@ if mod and mod.state != "installed":
 - After toggling `is_published` on the Sales tab, the form stays on that tab; if the
   next step is on a different tab (e.g., General for `default_code`), re-open it
 
+### Loyalty / sale_loyalty / website_sale_loyalty
+
+- `loyalty.program.program_type='loyalty'` (Loyalty Cards) **cannot be applied with a code** —
+  `sale.order._try_apply_code` returns `{'error': "This program cannot be applied with code."}`
+  for both `loyalty` and `ewallet`. For "apply at checkout via code" tasks use
+  `program_type='promo_code'` (UI label "Discount Code") with `trigger='with_code'`.
+- A `loyalty.program` cannot be `unlink`ed while `active=True` (`_unlink_except_active`
+  guard). Cleanup must `write({'active': False})` before `unlink()`.
+- Backend menu path is `/odoo/discount-loyalty` (action xmlid
+  `loyalty.loyalty_program_discount_loyalty_action`). Domain hides gift_card and ewallet.
+- Admin/internal users can have a website cart: `_get_and_cache_current_cart` will
+  resurrect the abandoned draft `sale.order` matching `partner_id=admin.partner_id`
+  + `website_id=current` + `state='draft'`. Seed accordingly to give the agent a
+  pre-populated `/shop/cart`.
+- Apply discount code from the website cart by POSTing to `/shop/pricelist?r=/shop/cart`
+  with form fields `promo=<CODE>` and `csrf_token=<form token>`. The form is rendered
+  by template `website_sale.coupon_form` (visible by default on `/shop/cart`).
+
 ### Survey
 
 - Form hides Time Limit field when `survey_type='survey'`; use `'custom'` to expose it

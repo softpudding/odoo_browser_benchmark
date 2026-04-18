@@ -303,7 +303,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 291 | sale_purchase.dropship_so_to_po_chain_validate [hard] | Confirm a dropship-routed SO and validate the auto-generated PO + receipt chain | Done | PASS | PASS | 1.0 |
 | 292 | mail.create_channel_set_custom_avatar_pin_two_messages [medium] | Create a channel, upload a custom avatar, post messages, and pin two specific ones | Done | PASS | FAIL | 0.0 |
 | 293 | fleet.transfer_vehicle_between_drivers_log_history [medium] | Transfer a vehicle to a new driver and verify the assignation log entry | Done | PASS | PASS | 1.0 |
-| 294 | sale_loyalty.create_loyalty_program_apply_at_checkout [hard] | Create a loyalty program with a 10% discount rule, then apply it to a webshop cart at checkout | WIP | — | — | — |
+| 294 | sale_loyalty.create_loyalty_program_apply_at_checkout [hard] | Create a Discount Code loyalty program (SPRING10, $150 min purchase, 10% on order, custom reward description) and apply it on /shop/cart so a discount line appears | Done | PASS | PASS | 1.0 |
 | 295 | event_sale.add_seat_limited_ticket_register_until_full [medium] | Add a 5-seat limited ticket to an event and register attendees until the seats fill | Done | PASS | FAIL | 0.0 |
 | 296 | sale_purchase.update_pol_alternative_vendor_compare [hard] | Open RFQ, add an alternative vendor with different price, compare and pick cheapest | WIP | — | — | — |
 | 297 | delivery.set_third_party_carrier_print_label [medium] | Configure a fixed-price carrier, apply it to a confirmed delivery picking with tracking ref, validate and trigger Print | Done | PASS | PASS | 1.0 |
@@ -2827,6 +2827,8 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 ---
 
+## sale_loyalty.create_loyalty_program_apply_at_checkout
+
 ## event_sale.add_seat_limited_ticket_register_until_full
 
 | Field | Value |
@@ -2839,3 +2841,18 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Seed creates 'Spring Q2 Workshop' with no real ticket types. Agent (1) adds VIP Seat ticket with seats_max=5, price=200; (2) registers VIP-1..VIP-5 one-at-a-time via the Attendees stat button → New, setting `event_ticket_id=VIP Seat` on each registration; (3) attempts to register VIP-6 with the same ticket — Odoo's `_check_seats_availability` constrains state in ('open','done'), so saving raises a ValidationError "There are not enough seats available". Agent must discard the 6th draft. |
 | **Capability tested** | Repetitive form fills (5 round-trips event → Attendees → New → Save), per-row non-default `event_ticket_id` selection, and recognition of a hard server-side seat-limit block on the 6th attempt. |
 | **Notes** | Well-calibrated medium. Oracle passes cleanly with F1=1.0 (24/24 atomic edits matched). Browser-Use failed: it created a duplicate 'VIP-1', omitted `event_ticket_id` on every registration (so seats_max was never enforced), and successfully created VIP-6 because no ticket meant no seat-limit constraint. Postcondition catches both the duplicate and the missing-ticket-link, F1 collapses to 0.0. Cookbook quirk discovered: BU drops the `event_ticket_id` Many2one on `event.registration.create` when registering from the event's Attendees view because the field is empty by default and the registration is still valid (just unconstrained) — drives both the seat-limit bypass and the duplicate-name re-attempts. |
+---
+
+## sale_loyalty.create_loyalty_program_apply_at_checkout
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
+| **Odoo modules** | Sale, Loyalty, Sale Loyalty, Website Sale, Website Sale Loyalty |
+| **Workflow** | On `Discount & Loyalty`, create a new program "Spring 10% Discount", `program_type=Discount Code`, conditional rule with `Code=SPRING10` and `Minimum Purchase=150.00`, single 10% Order discount reward with description "Spring Sale Discount". Save. Then visit `/shop/cart` (admin's seeded draft cart, $200 of two products), enter `SPRING10` in the Discount code box and Apply. A reward line of -$20 must appear, total = $180. A distractor program "Holiday Bonus 5%" must remain untouched. |
+| **Capability tested** | Cross-module workflow: backend program creation (with two embedded subforms — rule and reward — each with non-default fields) followed by switching from `/odoo` to the public web shop and applying the code through the cart's coupon form. |
+| **Calibration note** | Hardened from base spec by adding a distractor existing program, a hidden non-default Minimum Purchase=$150 on the rule, and a custom Reward Description string. Browser-Use 1.0 (model `bu-1-0`) still solved it in 14 steps; this is a strong agent and the form widgets are well structured. The task remains genuinely cross-module and exercises the rule sub-form, reward sub-form, and the public `/shop/pricelist` POST flow — borderline easy for top agents but will challenge weaker models that struggle with sub-form save & close cycles. Per build instructions, committed as-is with this calibration note. |
+| **Notes** | `program_type='loyalty'` cannot be applied with a code (`_try_apply_code` rejects it with "This program cannot be applied with code"), so the spec's literal `program_type=loyalty` is infeasible — used `promo_code` (the canonical "Discount Code" type that lives under the same Discount & Loyalty menu). Cart auto-pickup works because admin is logged in and `_get_and_cache_current_cart` resurrects the abandoned draft order matching `partner_id+website_id+state=draft`. |
