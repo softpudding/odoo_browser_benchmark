@@ -350,7 +350,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 338 | stock.cancel_picking_create_replacement_with_serial [hard] | Cancel an existing receipt picking, create a replacement with serial-tracked products | WIP | — | — | — |
 | 339 | mrp_account.confirm_mo_check_account_move [medium] | Confirm an MO and verify the cost-of-production journal entry was created | Done | PASS | PASS | 1.0 |
 | 340 | survey.invite_attendees_send_email [medium] | On existing survey, click Invite, enter 3 emails, customize subject, send | Done | PASS | PASS | 1.0 |
-| 341 | hr.add_skill_to_employee_with_level [medium] | Open employee, add a skill with skill type and level | WIP | — | — | — |
+| 341 | hr.add_skill_to_employee_with_level [medium] | Open employee, add a skill with skill type and level | Done | PASS | PASS | 1.0 |
 | 342 | website_event.publish_event_register_via_portal [hard] | Publish event website page, navigate to portal /events, register | WIP | — | — | — |
 | 343 | crm_sms.send_sms_to_opportunity [medium] | On opportunity, click Send SMS button, compose and send | WIP | — | — | — |
 | 344 | hr_attendance.kiosk_pin_check_in_then_manager_fix_checkout [medium] | Check in via kiosk PIN, then fix the missing checkout from manager attendance view | WIP | — | — | — |
@@ -3476,3 +3476,18 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Seed survey 'Bench Onboarding Quiz' with `access_mode='token'` and three pre-existing `res.partner` rows (Alice/Bob/Carol Invitee keyed by alice@x.com / bob@y.com / carol@z.com). Agent opens the survey from kanban, clicks the form-header **Send** button (`survey.survey.action_send_survey`), which opens the `survey.invite` wizard with Send-by-Email on by default. Agent types each email in the **Recipients** many2many_tags_email autocomplete, picks the matching seeded partner (three chips accumulate), clears and replaces **Subject** with 'Please complete onboarding', then clicks the modal-footer **Send** (`survey.invite.action_invite`). One `survey.user_input` row is created per invited partner with `state='new'`. |
 | **Capability tested** | Multi-recipient compose wizard (tag-input + subject override) on a transient wizard whose `partner_ids` is hard-required (can't send with emails-only free text). |
 | **Notes** | Calibration: BU solves in 136s with F1=1.0 (clean pass). Confirms that compose-wizard flows where the required field is an autocomplete-over-seeded-partners are tractable for BU as long as the recipient search is keyed by a user-provided identifier (email). New cookbook findings: (a) `survey.invite.partner_ids` is `required="True"` with `options="{'no_quick_create': True}"` — the Additional-emails text area is a distractor, sending with emails-only is UI-blocked; (b) `_compute_send_email` flips True only for `access_mode in ('token','authentication','internal')` — `public` surveys open the wizard with all compose fields hidden; (c) seed must stand up an aiosmtpd Sink + matching `ir.mail_server` + `mail.catchall.domain`/`mail.default.from` ICPs so any sync SMTP failure inside `action_invite` does NOT roll back the created `survey.user_input` rows; (d) state-diff emits two `create` rows per recipient — one for `email`, one for `state='new'` — both must be in `expected_state.json` to reach F1=1.0. |
+
+---
+
+## hr.add_skill_to_employee_with_level
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS (F1=1.0, 31.4s) |
+| **Browser-Use** | PASS (F1=1.0, 82.0s) |
+| **F1** | 1.0 |
+| **Odoo modules** | Employees (hr, hr_skills) |
+| **Workflow** | Open /odoo/employees, pick seeded employee 'Tech Tom', navigate to the Resume tab (Skills section at the bottom), click 'Pick a skill from the list', and in the Update Skills modal use the cascading `o_selection_badge` groups: Skill Type='Programming Languages' → Skill='Python' → Level='Advanced'. Save & Close, then save the employee form. |
+| **Capability tested** | Cascading dependent-dropdown interaction via the skill picker modal: the Skill list is filtered by Skill Type, and the Level set depends on Skill Type too. Distinct from `hr.add_employee_skill` by using a different skill type ('Programming Languages' vs 'IT Skills') so the entity keys don't collide. |
+| **Notes** | Calibration: single-shot BU passes (F1=1.0). The cascading UI didn't block BU on Claude-Opus. Seed installs `hr_skills` defensively though it's already pulled into base via `hr_recruitment_skills` auto_install. match_key `[employee_id, skill_id]` — 4 deterministic atomic edits (employee_id/skill_id/skill_type_id/skill_level_id) on the new `hr.employee.skill`. No pre-existing row for Tom so entity is created by the agent. |
