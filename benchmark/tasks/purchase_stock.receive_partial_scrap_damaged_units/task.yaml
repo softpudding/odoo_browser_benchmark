@@ -1,0 +1,21 @@
+task_id: purchase_stock.receive_partial_scrap_damaged_units
+module: purchase_stock
+difficulty: hard
+instruction: see prompt.md
+start_url: /odoo/purchase
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 480
+step_limit: 300
+metadata:
+  category: side_effect_trap
+  difficulty_level: hard
+  agent_interaction: "On the receipt generated from confirmed PO P-BENCH-DMG-001 (Bench Parts qty=20), set Done=15 on the move line, open cog Actions > Scrap to scrap 5 damaged units to WH/Lost, then Validate the picking and choose Create Backorder in the dialog."
+  checks_verify: "Original receipt in state 'done' with Done qty=15 on the Bench Parts move; one stock.scrap record for Bench Parts with scrap_qty=5 and scrap_location_id='WH/Lost'; a backorder stock.picking exists carrying the remaining 5 units."
+  failure_pattern: "Agent either skips the scrap (just validates with Done=15 and backorder), scraps to the wrong location (Virtual Locations/Scrap default), forgets to edit scrap_qty away from the 1.0 default, or clicks No Backorder instead of Create Backorder."
+  primary_track: true
+  tier: 3

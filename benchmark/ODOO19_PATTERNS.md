@@ -480,9 +480,17 @@ On an **opportunity**, `team_id` is NOT in the main form header. Only editable c
 ## mrp / stock.scrap quirks
 
 - `stock.scrap.reason` is **many2many** `scrap_reason_tag_ids` (model `stock.scrap.reason.tag`), NOT a Char field. Seed must create the tags (Odoo ships none by default). Phrase prompts as "add the existing tag X" so agent picks from autocomplete.
-- The "Scrap" action on an MO is `mrp.action_production_order_scrap` (`ir.actions.server`, `binding_view_types="form"`) — accessed via cog Actions menu, NOT a header status-bar button.
+- The "Scrap" action on an MO is `mrp.action_production_order_scrap` (`ir.actions.server`, `binding_view_types="form"`) — accessed via cog Actions menu, NOT a header status-bar button. The **same pattern** applies to `stock.picking`: `stock.action_scrap` (`binding_model_id=stock.picking`, `binding_view_types=form`) lives in the picking-form cog Actions menu, NOT on the header status-bar.
 - `stock.scrap.scrap_qty` defaults to 1.0 — agents often forget to override it. Good calibration trap for hard tier.
 - `stock.scrap.production_id` as match_key emits an extra "create" diff row that must be in expected_state.json.
+- `stock.scrap.scrap_location_id` defaults to the per-company `Virtual Locations/Scrap` (the auto-created inventory-usage location from `_create_scrap_location`). For a task that requires a custom scrap destination (e.g. `WH/Lost`), seed must create a new `stock.location` with `usage='inventory'` + `location_id=warehouse.view_location_id` so its `complete_name` resolves to `WH/<name>`. Both `scrap_location_id` AND `location_id` fields on the wizard are gated by `groups="stock.group_stock_multi_locations"` — seed must add the admin to that group or the fields are invisible and silently default.
+- A validated scrap launched from a `stock.picking` (via `picking_id` in the wizard context) **auto-creates a `stock.move` on the parent picking** (`move._prepare_move_values` sets `picking_id=self.picking_id.id` and `scrap_id=self.id`). Consequence: `picking.move_ids` grows by one after scrap, so `check.py` assertions like `len(picking.move_ids)==1` MUST filter `not m.scrap_id`.
+
+## purchase_stock / sale_stock — origin and demand quirks on pickings
+
+- `stock.picking.origin` on a PO-generated receipt inherits from **`purchase.order.name`**, NOT from `purchase.order.origin`. If the task relies on a deterministic `origin` for `state_spec.match_key`, pin `po.name` in the seed (e.g. `name="P-BENCH-DMG-001"`). Same pattern as the previously documented `sale.order.name` → delivery `origin`.
+- **Validate-with-backorder rewrites the original move's demand.** When `picking.button_validate()` is called with the backorder dialog's **Create Backorder** choice, Odoo's `_action_done()` splits the split-moves: the original picking's `move.product_uom_qty` is REDUCED from the full demand to the actually-Done quantity, and a fresh move with the remaining demand is created on the backorder picking. Do NOT assert `product_uom_qty == original_full_demand` on the done picking — assert `== Done quantity`.
+- Backorder picking inherits `origin` from the original picking (via `copy()`), so `backorder.origin == original.origin`. To distinguish original vs backorder in `state_spec.match_key`, add `backorder_id` to the key list: the original has `backorder_id=False → null` and the backorder has `backorder_id=<original picking display_name>`. Pin `original_picking.name` in seed to make that display_name deterministic across runs.
 
 ---
 

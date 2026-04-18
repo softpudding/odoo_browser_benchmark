@@ -1,0 +1,33 @@
+models:
+  stock.picking:
+    match_key:
+      - origin
+      - partner_id
+      - backorder_id
+    fields:
+      - origin
+      - partner_id
+      - state
+      - backorder_id
+    ignore_fields:
+      - id
+      - name
+      - create_date
+      - write_date
+      - date_done
+      - scheduled_date
+      - date
+  stock.scrap:
+    match_key:
+      - product_id
+    fields:
+      - product_id
+      - scrap_qty
+      - state
+      - scrap_location_id
+    ignore_fields:
+      - id
+      - name
+      - create_date
+      - write_date
+      - date_done
