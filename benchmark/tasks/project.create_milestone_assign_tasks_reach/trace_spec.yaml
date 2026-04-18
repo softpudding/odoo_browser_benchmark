@@ -1,0 +1,43 @@
+# Agent creates a project.milestone, re-parents two project.task rows via
+# the form edit, and flips is_reached on the milestone.
+#
+# Browser-use uses web_save for persistence — leave create/write in
+# optional_ops and pin the postcondition via expected_state + check.py.
+
+required_ops: []
+
+optional_ops:
+  - project.milestone.create
+  - project.milestone.write
+  - project.milestone.web_save
+  - project.milestone.read
+  - project.milestone.search_read
+  - project.milestone.web_search_read
+  - project.milestone.onchange
+  - project.milestone.toggle_is_reached
+  - project.task.read
+  - project.task.write
+  - project.task.web_save
+  - project.task.search_read
+  - project.task.web_search_read
+  - project.task.onchange
+  - project.task.get_views
+  - project.project.read
+  - project.project.search_read
+  - project.project.web_read
+  - project.task.type.read
+  - project.task.type.search_read
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+  - mail.message.create
+  - mail.followers.create
+  - bus.bus.create
+
+forbidden_ops:
+  - project.milestone.unlink
+  - project.task.unlink
+  - project.project.unlink
+  - project.project.create
+  - project.task.create
+  - project.task.copy
+  - project.milestone.copy

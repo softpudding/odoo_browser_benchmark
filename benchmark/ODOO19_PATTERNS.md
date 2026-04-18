@@ -1287,7 +1287,6 @@ Applies to every datetime field with a seeded default (e.g., `stock.lot.expirati
   old_partners.sudo().unlink()
   ```
 
-<<<<<<< HEAD
 ---
 
 ## stock_landed_costs — module install, picking domain, FIFO categ, two-button flow
@@ -1418,7 +1417,9 @@ Implications for task authors:
 - `sale.order.template.name` renders inside the `oe_title` H1 block,
   but the field name is still `name` — standard
   `fill_field(page, "name", "...")` works.
-=======
+
+---
+
 ## stock_sms — delivery SMS feature + post_init hook trap
 
 - `stock_sms` is `auto_install=True` with `depends=[stock, sms]`.
@@ -1473,4 +1474,54 @@ Implications for task authors:
   `"entity_key": [null]` literally — verified against
   `stock_sms.enable_delivery_sms_notification_validate`'s observed
   `state_diff.json`.
->>>>>>> 6a1fd19a ([ADD] benchmark: stock_sms.enable_delivery_sms_notification_validate (medium))
+
+---
+
+## project.milestone — gating + embedded action entry point
+
+- `project.milestone` is gated per-project by
+  `project.project.allow_milestones` (Boolean, default False on fresh
+  `create()`). Seed must explicitly set `allow_milestones=True` or the
+  Milestones entry point is hidden AND the per-task `milestone_id` field
+  is `invisible="not allow_milestones"` on the task form group.
+- Visibility also requires `project.group_project_milestone`. In Odoo 19
+  the group is implied by `base.group_user` via
+  `addons/project/data/project_demo.xml`, so admin inherits it in a clean
+  base snapshot. Seeds for milestone-heavy tasks should still idempotently
+  add admin to the group to survive snapshot churn.
+- **Entry point is an `ir.embedded.actions` record**
+  (`project.project_embedded_action_project_milestones`) whose
+  `parent_action_id` is
+  `project.act_project_project_2_project_task_all`. It surfaces as a
+  **"Milestones" breadcrumb button in the project's task view's Top Menu**,
+  NOT as a tab on the `project.project` form. The project card's
+  kebab menu on the dashboard also exposes a View > Milestones option.
+  Browser-use consistently struggles to discover either path: in the
+  calibration run for
+  `project.create_milestone_assign_tasks_reach` BU spent 27+ steps
+  clicking the wrong menu items before landing on the embedded panel.
+- `project.milestone.is_reached` (Boolean, `default=False`,
+  `copy=False`): on a record created-and-set-True inside the same task,
+  the state-diff engine folds to a single `op: "create"` with
+  `norm_value: true`. Partial-failure runs emit
+  `op: "create"` with `norm_value: null` (same null-vs-false quirk
+  documented for `website_blog.archive`). `expected_state.json` must
+  encode `true` for the success case.
+- `project.milestone.toggle_is_reached(is_reached)` is the kanban
+  checkmark-widget binding; backend list clicks the `is_reached` cell
+  directly. Leave `project.milestone.write` + `web_save` + `toggle_is_reached`
+  all in `optional_ops`.
+- `project.milestone.reached_date` is a `@api.depends('is_reached')`
+  stored computed Date — add it to `ignore_fields` in `state_spec.yaml`
+  to avoid timezone-sensitive diff noise.
+- `project.task.milestone_id` is
+  `compute='_compute_milestone_id', store=True, readonly=False` with
+  `domain="[('project_id', '=', project_id)]"`. Autocomplete is
+  scoped per-project, so cross-project milestone distractors are
+  impossible. Writing `project_id` on a task with a milestone pinned
+  to the old project silently nulls `milestone_id` via the guard in
+  `project.task.write` (see `project_task.py::1219-1233`).
+- `match_key: [project_id, name]` on `project.milestone` is the
+  correct state-diff key — keying on `name` alone risks collision with
+  foreign-project milestones; keying on `project_id` alone can't
+  distinguish multiple milestones on the same project.
