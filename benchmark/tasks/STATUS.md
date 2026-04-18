@@ -387,6 +387,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 375 | website_sale_slides.assign_attendees_publish_course [hard] | Publish an eLearning course, set prerequisite, and assign enrolled attendees | WIP | — | — | — |
 | 376 | calendar.configure_meeting_with_location_and_reminder [medium] | Create a calendar event with a physical location, attendees, and a 1-hour reminder | WIP | — | — | — |
 | 377 | mrp.bom_with_kit_component_confirm_mo [hard] | Create a BoM that uses a kit-type sub-component, confirm an MO, and verify kit expansion | WIP | — | — | — |
+| 378 | mrp_subcontracting.receive_subcontracted_product_with_components [hard] | Receive a subcontracted product from a vendor, validating its components were consumed by the subcontractor | WIP | — | — | — |
 
 ---
 
