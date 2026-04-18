@@ -1,0 +1,35 @@
+# Trace oracle for mrp.configure_mo_operation_time_finish
+#
+# Medium: edit a field on a work order line, then advance it through
+# button_start and button_finish so its state becomes 'done'.
+
+required_ops: []
+
+optional_ops:
+  - mrp.workorder.read
+  - mrp.workorder.write
+  - mrp.workorder.web_save
+  - mrp.workorder.button_start
+  - mrp.workorder.button_finish
+  - mrp.workorder.button_pending
+  - mrp.workorder.search
+  - mrp.workorder.search_read
+  - mrp.workorder.web_search_read
+  - mrp.production.read
+  - mrp.production.write
+  - mrp.production.web_save
+  - mrp.production.search_read
+  - mrp.production.web_search_read
+  - mrp.production.button_start
+  - mrp.production.button_finish
+  - button_start
+  - button_finish
+  - web_save
+  - write
+  - ir.ui.view.get_views
+
+forbidden_ops:
+  - mrp.production.action_cancel
+  - mrp.production.unlink
+  - mrp.workorder.action_cancel
+  - mrp.workorder.unlink

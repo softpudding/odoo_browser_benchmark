@@ -1,0 +1,20 @@
+task_id: stock.adjust_inventory_with_location_filter
+module: stock
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/inventory
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 360
+step_limit: 220
+metadata:
+  category: side_effect_trap
+  difficulty_level: medium
+  agent_interaction: "Navigate Inventory > Operations > Physical Inventory, filter the list to the specific Shelf A sub-location and the target product, change counted qty from 50 to 42 inline, then click the row-level Apply. The sibling Shelf B quant must stay untouched."
+  checks_verify: "Shelf A quant becomes 42, Shelf B quant remains at 30 (unchanged), total on-hand becomes 72, and an inventory adjustment stock.move exists in done state."
+  primary_track: true
+  tier: 2
