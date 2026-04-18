@@ -1,0 +1,26 @@
+[
+  {
+    "model": "stock.picking",
+    "entity_key": ["S-BENCH-SMS-001"],
+    "field": "state",
+    "op": "set",
+    "norm_value": "done",
+    "note": "Picking must be validated (state transitions from assigned -> done)"
+  },
+  {
+    "model": "sms.sms",
+    "entity_key": ["+16175551234"],
+    "field": "number",
+    "op": "create",
+    "norm_value": "+16175551234",
+    "note": "SMS record created for the customer phone when validate triggers the stock_sms side effect"
+  },
+  {
+    "model": "res.company",
+    "entity_key": [null],
+    "field": "stock_text_confirmation",
+    "op": "set",
+    "norm_value": true,
+    "note": "Company-level Text Confirmation toggle flipped True (entity_key normalizes to [null] in state_snapshot for this singleton company)"
+  }
+]

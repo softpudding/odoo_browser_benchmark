@@ -1,0 +1,45 @@
+models:
+  stock.picking:
+    match_key:
+      - origin
+    fields:
+      - origin
+      - state
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
+      - date_done
+      - date_deadline
+      - scheduled_date
+      - message_ids
+      - move_ids
+      - move_line_ids
+  sms.sms:
+    match_key:
+      - number
+    fields:
+      - number
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
+      - uuid
+      - state
+      - failure_type
+      - mail_message_id
+      - partner_id
+      - sms_tracker_id
+      - to_delete
+      - body
+  res.company:
+    match_key:
+      - name
+    fields:
+      - stock_text_confirmation
+      - stock_confirmation_type
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
+      - has_received_warning_stock_sms

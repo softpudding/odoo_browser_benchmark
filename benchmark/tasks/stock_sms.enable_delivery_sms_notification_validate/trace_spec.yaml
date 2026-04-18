@@ -1,0 +1,31 @@
+# Trace oracle for stock_sms.enable_delivery_sms_notification_validate.
+#
+# Medium: toggle Text Confirmation in Inventory settings (res.config.settings
+# execute), then validate the S-BENCH-SMS-001 picking and click Confirm in
+# the stock_sms warning wizard to trigger the SMS.
+
+required_ops: []
+
+optional_ops:
+  - res.config.settings.create
+  - res.config.settings.execute
+  - res.config.settings.web_save
+  - res.company.write
+  - stock.picking.read
+  - stock.picking.web_read
+  - stock.picking.search_read
+  - stock.picking.web_search_read
+  - stock.picking.button_validate
+  - confirm.stock.sms.create
+  - confirm.stock.sms.send_sms
+  - stock.move.write
+  - sms.sms.create
+  - sms.sms.send
+  - mail.message.create
+  - ir.ui.view.get_views
+  - ir.actions.act_window.read
+
+forbidden_ops:
+  - stock.picking.unlink
+  - stock.picking.action_cancel
+  - confirm.stock.sms.dont_send_sms

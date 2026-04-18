@@ -1287,6 +1287,7 @@ Applies to every datetime field with a seeded default (e.g., `stock.lot.expirati
   old_partners.sudo().unlink()
   ```
 
+<<<<<<< HEAD
 ---
 
 ## stock_landed_costs — module install, picking domain, FIFO categ, two-button flow
@@ -1417,3 +1418,59 @@ Implications for task authors:
 - `sale.order.template.name` renders inside the `oe_title` H1 block,
   but the field name is still `name` — standard
   `fill_field(page, "name", "...")` works.
+=======
+## stock_sms — delivery SMS feature + post_init hook trap
+
+- `stock_sms` is `auto_install=True` with `depends=[stock, sms]`.
+  Neither `sms` nor `stock_sms` is in `benchmark/base_modules.txt`, so
+  seeding `sms` alone via `button_immediate_install()` pulls
+  `stock_sms` in transitively.
+- The feature is a pair of **company-dependent** fields on
+  `res.company`: `stock_text_confirmation` (Boolean) and
+  `stock_confirmation_type` (Selection, only value `'sms'`). There is
+  NO `stock.picking.type.sms_confirmation` field — the SMS delivery
+  notification is NOT per-picking-type, it is per-company.
+- The Settings path is **Inventory > Configuration > Settings >
+  Operations block > Text Confirmation** (setting id
+  `stock_text_confirmation` in the view). Action:
+  `stock.action_stock_config_settings`.
+- `stock_sms.__init__._assign_default_sms_template_picking_id` is a
+  **post_init_hook that unconditionally sets
+  `res.company.stock_text_confirmation=True`** on every company where
+  the field was False, as long as the default SMS template exists
+  (which it always does — it's loaded from `data/sms_data.xml`).
+  Tasks that want the agent to flip the toggle through the UI MUST
+  reset `company.stock_text_confirmation=False` in seed AFTER
+  `button_immediate_install` runs, otherwise the Settings step is a
+  no-op.
+- `res.company.has_received_warning_stock_sms` gates the
+  `confirm.stock.sms` warning wizard shown on the FIRST validate after
+  the feature is enabled. Reset it to False in seed if you want the
+  wizard to appear.
+- Warning wizard buttons: **`name='send_sms'`** (*Confirm*, primary,
+  highlighted) → sets `has_received_warning_stock_sms=True`, re-invokes
+  `button_validate()` which then emits the SMS via
+  `_send_confirmation_email` → `_message_sms_with_template` →
+  `_notify_thread_by_sms`. **`name='dont_send_sms'`** (*Disable SMS*,
+  secondary) → sets `has_received_warning_stock_sms=True` AND
+  `stock_text_confirmation=False`, re-invokes validate which proceeds
+  without emitting the SMS. This is a natural side-effect-trap
+  distractor for medium tasks.
+- Playwright selector for the primary button:
+  `.modal:visible button[name='send_sms']` (safer than matching
+  "Confirm" text — localization-safe + avoids collisions with other
+  generic Confirm buttons).
+
+## `res.company` entity_key normalizes to [null] in state_diff
+
+- Even with `state_spec.yaml.res.company.match_key: [name]`, the state
+  diff engine emits `"entity_key": [null]` for the singleton main
+  company. Root cause: `_extract_entity_key` calls
+  `getattr(record, "name", None)`, which on `res.company` comes back
+  as `False` / `None` through the instrumentation cursor in some
+  snapshot flows (company_dependent / related-field read paths). The
+  current workaround in `expected_state.json` is to use
+  `"entity_key": [null]` literally — verified against
+  `stock_sms.enable_delivery_sms_notification_validate`'s observed
+  `state_diff.json`.
+>>>>>>> 6a1fd19a ([ADD] benchmark: stock_sms.enable_delivery_sms_notification_validate (medium))
