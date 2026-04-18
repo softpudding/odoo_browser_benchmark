@@ -164,10 +164,10 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 152 | point_of_sale.open_session_sell_product_cash [medium] | Open a POS session, ring up one product, and complete a cash payment | Done | PASS | PASS | 1.0 |
 | 153 | im_livechat.create_channel_add_canned_response [medium] | Create a live chat channel and canned response from the Live Chat app | Done | PASS | PASS | 1.0 |
 | 154 | website.create_blog_post_publish [medium] | Create and publish a blog post with title, cover image, and body content | Done | PASS | PASS | 1.0 |
-| 155 | website.add_menu_item_reorder [medium] | Add a website menu item and reorder it within the navigation hierarchy | WIP | — | — | — |
+| 155 | website.add_menu_item_reorder [medium] | Add a website menu item and reorder it within the navigation hierarchy | Done | PASS | FAIL/FAIL | 0.0 |
 | 156 | website.create_contact_form_block [hard] | Edit a website page to add and configure a contact form block | WIP | — | — | — |
 | 157 | stock.scrap_product_from_receipt [medium] | Open a stock receipt and scrap part of a received product from the operation flow | Done | PASS | PASS/PASS | 1.0 |
-| 158 | stock.adjust_inventory_with_location_filter [medium] | Adjust inventory for a target product in one location while leaving other locations unchanged | WIP | — | — | — |
+| 158 | stock.adjust_inventory_with_location_filter [medium] | Adjust inventory for a target product in one location while leaving other locations unchanged | Done | PASS | PASS/PASS | 1.0 |
 | 159 | stock.receive_serial_tracked_product [hard] | Validate a receipt by assigning exact serial numbers to tracked units | WIP | — | — | — |
 | 160 | mrp.update_bom_component_quantity [medium] | Update one component quantity on an existing bill of materials and save it | Done (dup of 257) | — | — | — |
 | 161 | mrp.create_mo_consume_produce_done [hard] | Create a manufacturing order, record component consumption, and mark production done | WIP | — | — | — |
@@ -187,7 +187,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 175 | mrp.scrap_component_during_production [hard] | Scrap one consumed component from a running MO via the component action menu | WIP | — | — | — |
 | 176 | mrp.convert_bom_to_kit_type [easy] | Change an existing BOM's type from Manufacture This Product to Kit | Done | PASS | PASS | 1.0 |
 | 177 | mrp.create_variant_specific_bom [hard] | Create a BOM that applies only to a single product variant via attribute filter | WIP | — | — | — |
-| 178 | mrp.configure_mo_operation_time_finish [medium] | Open a work order on an MO, set expected duration, and mark it finished | WIP | — | — | — |
+| 178 | mrp.configure_mo_operation_time_finish [medium] | Open a work order on an MO, set expected duration, and mark it finished | Done | PASS | FAIL/PASS | 1.0 |
 | 179 | point_of_sale.sell_two_products_apply_discount [medium] | Ring up two POS products, apply a 10% line discount, pay cash | WIP | — | — | — |
 | 180 | point_of_sale.refund_previous_order [hard] | Refund a prior POS order partially from the Orders menu | WIP | — | — | — |
 | 181 | point_of_sale.attach_customer_mid_sale [easy] | Open a POS session, add a product, attach existing customer, pay cash | Done | PASS | PASS/PASS | 1.0 |
@@ -221,7 +221,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 209 | stock.set_storage_category_capacity [medium] | Define a storage category with capacity and assign it to a location | WIP | — | — | — |
 | 210 | account.create_manual_journal_entry_balanced [hard] | Create a misc journal entry with three balanced debit/credit lines and post | WIP | — | — | — |
 | 211 | account.reconcile_bank_statement_line_manual [hard] | Open a bank statement line and reconcile it against a suggested invoice | WIP | — | — | — |
-| 212 | account.create_recurring_entry_template [medium] | Save a journal entry as a recurring entry template | WIP | — | — | — |
+| 212 | account.create_recurring_entry_template [medium] | Save a journal entry as a recurring entry template | Done | PASS | PASS/PASS | 1.0 |
 | 213 | account.lock_books_set_period_lock_date [medium] | Set the Non-Advisors Lock Date in accounting settings | Done | PASS | FAIL/FAIL | 0.0 |
 | 214 | crm.set_lost_reason_reassign_salesperson [medium] | Mark opportunity Lost with specific reason then reassign salesperson | Done | PASS | — | — |
 | 215 | crm.pivot_view_opportunities_by_stage_revenue [easy] | Switch CRM pipeline to Pivot view, group by stage, measure expected revenue | Done | PASS | PASS/PASS | 1.0 |

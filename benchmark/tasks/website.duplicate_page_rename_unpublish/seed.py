@@ -3,19 +3,20 @@
 Category: deep_ui_interaction (EASY).
 
 Starting state: primary website (id=1) has a seeded, published website.page
-named 'Bench Original' at '/bench-original'. The agent must duplicate this
-page via the Pages list Actions menu, rename the copy to 'Bench Original
-Draft' at '/bench-original-draft', and leave the copy unpublished.
+named 'Bench Source Page' at '/bench-source-page'. The agent must duplicate
+this page via the Pages list Actions menu, rename the copy to 'Bench
+Duplicate Page' at '/bench-duplicate-page', and leave the copy unpublished.
 
-This seed removes any leftover 'Bench Original' / 'Bench Original Draft'
-pages from prior runs so it is idempotent.
+This seed removes any leftover 'Bench Source Page' / 'Bench Duplicate Page'
+pages (and any page sitting at either url) from prior runs so it is
+idempotent.
 """
 
 
-ORIGINAL_NAME = "Bench Original"
-ORIGINAL_URL = "/bench-original"
-DRAFT_NAME = "Bench Original Draft"
-DRAFT_URL = "/bench-original-draft"
+SOURCE_NAME = "Bench Source Page"
+SOURCE_URL = "/bench-source-page"
+DUPLICATE_NAME = "Bench Duplicate Page"
+DUPLICATE_URL = "/bench-duplicate-page"
 
 
 def setup(env):
@@ -25,28 +26,28 @@ def setup(env):
     # across active and archived records) so the seed is idempotent.
     env["website.page"].with_context(active_test=False).search([
         "|", "|", "|",
-        ("url", "=", ORIGINAL_URL),
-        ("url", "=", DRAFT_URL),
-        ("name", "=", ORIGINAL_NAME),
-        ("name", "=", DRAFT_NAME),
+        ("url", "=", SOURCE_URL),
+        ("url", "=", DUPLICATE_URL),
+        ("name", "=", SOURCE_NAME),
+        ("name", "=", DUPLICATE_NAME),
     ]).unlink()
 
     env["website.page"].with_context(website_id=website.id).create({
-        "name": ORIGINAL_NAME,
+        "name": SOURCE_NAME,
         "type": "qweb",
-        "url": ORIGINAL_URL,
+        "url": SOURCE_URL,
         "is_published": True,
         "website_id": website.id,
-        "key": "benchmark.bench_original",
+        "key": "benchmark.bench_source_page",
         "arch": """
             <t t-call="website.layout">
                 <div id="wrap">
                     <section class="pt96 pb96">
                         <div class="container">
-                            <h1 class="text-center mb-5">Bench Original</h1>
+                            <h1 class="text-center mb-5">Bench Source Page</h1>
                             <p class="text-center">
-                                This is the original benchmark page. Duplicate
-                                it and rename the copy to "Bench Original Draft".
+                                This is the source benchmark page. Duplicate
+                                it and rename the copy to "Bench Duplicate Page".
                             </p>
                         </div>
                     </section>

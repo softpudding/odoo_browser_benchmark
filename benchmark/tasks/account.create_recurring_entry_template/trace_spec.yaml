@@ -1,0 +1,31 @@
+# Trace oracle for account.create_recurring_entry_template.
+#
+# Agent opens an existing draft journal entry, switches to Other Info tab,
+# sets auto_post = monthly + auto_post_until, saves. Browser client often
+# uses web_save instead of write — list both in optional_ops.
+
+required_ops: []
+
+optional_ops:
+  - account.move.write
+  - account.move.web_save
+  - account.move.web_read
+  - account.move.read
+  - account.move.search_read
+  - account.move.line.read
+  - account.move.line.search_read
+  - account.journal.read
+  - account.journal.search_read
+  - account.account.read
+  - account.account.search_read
+  - res.partner.read
+  - res.partner.search_read
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+
+forbidden_ops:
+  - account.move.unlink
+  - account.move.create
+  - account.move.action_post
+  - account.move.button_draft
+  - account.move.button_cancel
