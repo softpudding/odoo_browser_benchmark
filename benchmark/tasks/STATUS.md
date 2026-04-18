@@ -339,7 +339,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 327 | account.create_recurring_journal_entry [hard] | Create a journal entry with template repeating monthly for 3 months | WIP | — | — | — |
 | 328 | website.add_image_carousel_to_homepage [hard] | In website editor, add Image Carousel snippet to home page with 3 images | WIP | — | — | — |
 | 329 | hr_holidays.bulk_approve_two_pending_requests [hard] | Select 2 pending leave requests in list view, approve in bulk via action | Done | PASS | FAIL | 0.67 |
-| 330 | event.add_track_with_speaker_publish [medium] | On existing event, add a track with speaker info and publish on website | WIP | — | — | — |
+| 330 | event.add_track_with_speaker_publish [medium] | On existing event, add a track with speaker info and publish on website | Done | PASS | PASS | 1.0 |
 | 331 | purchase.send_rfq_email_with_template_signature [hard] | On a draft RFQ, click Send by Email, modify template body, attach signature | WIP | — | — | — |
 | 332 | website_sale.set_product_seo_title_meta [easy] | Open product, set SEO title and meta description | WIP | — | — | — |
 | 333 | point_of_sale.attach_customer_apply_loyalty [hard] | In POS, attach a customer with loyalty card mid-sale and apply earned points | WIP | — | — | — |
@@ -3305,3 +3305,18 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Navigate to `/odoo/time-off-approval`, switch to list view, clear default "Waiting For Me" facets, tick exactly the two checkboxes on Eve Pending's "Family vacation" row and Frank Pending's "Wedding attendance" row, then click the **Approve** bulk button that the `hr_holidays_payslip_list` JS controller renders in the list selection-actions slot. A third pending request (Alice Pending's "Personal errands") must stay in `confirm` state and two distractor leaves (one `validate`, one `refuse`) must be untouched. |
 | **Capability tested** | Multi-record list selection combined with a non-generic bulk action button (not the built-in cog Actions menu; the custom `MultiRecordViewButton` shown by `HolidaysListController.displayButton`). Calibration trap: selecting all pending rows flips Alice's leave to `validate`, and approving each one individually violates the bulk-only instruction. |
 | **Notes** | BU flipped Eve + Frank to `validate` and kept Alice's state at `confirm` — but on the way it silently CREATED an extra `hr.leave` with `state='confirm'` (null name), dragging Strict down to FAIL (Precision=0.5, Recall=1.0, F1=0.6667). Postcondition `check.py` passed on the canonical named records; the state-diff engine counts the stray create as 2 unexpected extras. Genuine hard-tier failure via Strict scoring. |
+
+---
+
+## event.add_track_with_speaker_publish
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS (F1=1.0, 0 postcondition failures, 68.6s wall clock, 11 steps) |
+| **F1** | 1.0 |
+| **Odoo modules** | Events (event + website_event + website_event_track) |
+| **Workflow** | Seed installs website_event/website_event_track on demand (not in base snapshot) and creates one unpublished event "Bench Spring Summit". Agent opens Events app, drills into the event, clicks the Tracks smart button, clicks New, enters title "Keynote: Future of Bench" + Track Date 05/15/2026 10:00:00 + Speaker-tab partner_name="Dr. Smith" + partner_email="dr.smith@example.com", saves, then clicks the Published stage on the status bar so `_synchronize_with_stage` flips is_published=True. |
+| **Capability tested** | Sub-resource creation on a smart-button sub-view with multi-tab field entry + stage-driven publish side-effect. The "Go to Website" button (widget=`website_redirect_button`) only navigates — publish must happen via the stage bar, not the header widget. |
+| **Notes** | Calibrated easier than medium (BU solved on single-shot with the explicit prompt). Kept at medium because it still covers the smart-button → sub-form → notebook-tab → status-bar chain, and because it seeds the publish-via-stage pattern for harder event.track tasks later. New cookbook entry: `event.track` publish control — the backend form's globe button does NOT toggle is_published; only stage transitions to a stage with `is_fully_accessible=True` do (default data: the "Published" stage at sequence=4). Also confirmed that `website_event` + `website_event_track` need on-demand `button_immediate_install` in seed.py (they are not in the base snapshot). |

@@ -53,8 +53,16 @@ if mod and mod.state != "installed":
 - `blog.post.published_date` is the storage field; `post_date` is computed with an inverse
 - `blog.post.author_id` is a Many2one on `res.partner`, not `res.users`
 
-### Event / event_sale
+### Event / event_sale / event_track
 
+- `event.track` publish: the backend form's "Go to Website" button (widget
+  `website_redirect_button`) ONLY navigates — it does NOT toggle `is_published`.
+  Canonical publish path is to move `stage_id` to one with
+  `is_fully_accessible=True` (default data: the "Published" stage at
+  sequence 4); the `_synchronize_with_stage` hook flips `is_published=True`
+  as a side-effect.
+- `website_event` and `website_event_track` are NOT in the base snapshot;
+  seed must `button_immediate_install` both before touching `event.track`.
 - `event.event.event_ticket_ids` auto-materializes a default "Registration" ticket on create
 - `event_sale` is auto-installed when both `event` and `sale` are present; no manual install
 - Invoicing a paid registration goes through the Sales app (SO → event configurator wizard)
