@@ -283,16 +283,16 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 271 | maintenance.create_request_assign_technician_mark_repaired [medium] | Create a maintenance request, assign the technician, and mark it repaired | Done | PASS | FAIL | 0.0 |
 | 272 | website_blog.create_post_with_cover_tag_publish [medium] | Create a tagged blog post with a cover image and publish it | Done | PASS | FAIL | 0.0 |
 | 273 | website_slides.create_course_add_lesson_publish [medium] | Create an eLearning course, add a lesson, and publish the course | Done | PASS | FAIL | 0.0 |
-| 274 | delivery.configure_weight_rules_carrier_apply_to_so [medium] | Configure a weight-tier shipping carrier and apply the correct tier to a sale order | WIP | — | — | — |
-| 275 | maintenance.create_equipment_assign_category_team [easy] | Create a new equipment record, assign it to a category and maintenance team | WIP | — | — | — |
-| 276 | maintenance.schedule_preventive_plan_recurring [medium] | Schedule a recurring preventive maintenance plan with interval and team assignment | WIP | — | — | — |
-| 277 | sale_stock.partial_stock_warning_confirm_anyway [hard] | Confirm a sale order with insufficient stock, override the warning, and verify backorder | WIP | — | — | — |
-| 278 | survey.create_feedback_survey_with_sections [medium] | Create a multi-section feedback (non-quiz) survey with time limit and publish | WIP | — | — | — |
-| 279 | survey.review_submitted_responses_filter [medium] | Open survey responses dashboard, filter results, and mark a participation as reviewed | WIP | — | — | — |
-| 280 | im_livechat.configure_url_rule_auto_message [medium] | Add a URL-match rule to a livechat channel that triggers an auto-greeting on a specific page | WIP | — | — | — |
-| 281 | sale_project.timesheet_task_mark_billable_log_hours [hard] | Log timesheet hours on a sale-generated project task, mark billable, and verify invoice-ready state | WIP | — | — | — |
-| 282 | project_todo.reorder_notes_add_due_dates_bulk [easy] | Reorder three seeded To-Do notes and assign due dates in the Kanban view | WIP | — | — | — |
-| 283 | website_hr_recruitment.publish_job_from_backoffice_then_apply_portal [hard] | Create and publish a job position in the back office, then apply to it from the public portal | WIP | — | — | — |
+| 274 | delivery.configure_weight_rules_carrier_apply_to_so [medium] | Configure a weight-tier shipping carrier and apply the correct tier to a sale order | Done | PASS | PASS/FAIL | 0.5 |
+| 275 | maintenance.create_equipment_assign_category_team [easy] | Create a new equipment record, assign it to a category and maintenance team | Done | PASS | FAIL | 0.0 |
+| 276 | maintenance.schedule_preventive_plan_recurring [medium] | Schedule a recurring preventive maintenance plan with interval and team assignment | Done | PASS | PASS | 1.0 |
+| 277 | sale_stock.partial_stock_warning_confirm_anyway [hard] | Confirm a sale order with insufficient stock and validate delivery as backorder | Done | PASS | FAIL | 0.857 |
+| 278 | survey.create_feedback_survey_with_sections [medium] | Create a multi-section feedback (non-quiz) survey with time limit and publish | Done | PASS | PASS | 1.0 |
+| 279 | survey.review_submitted_responses_filter [medium] | Open survey participations, filter results, and post a review note on a target response | Done | PASS | PASS | 1.0 |
+| 280 | im_livechat.configure_url_rule_auto_message [medium] | Add a URL-match rule to a livechat channel that triggers an auto-greeting on a specific page | Done | PASS | PASS | 1.0 |
+| 281 | sale_project.timesheet_task_mark_billable_log_hours [hard] | Log timesheet hours on a sale-generated project task, mark billable, and verify invoice-ready state | Removed | FAIL (spec) | — | — |
+| 282 | project_todo.reorder_notes_add_due_dates_bulk [easy] | Set due dates on three seeded To-Do notes from the Kanban view | Done | PASS | PASS | 1.0 |
+| 283 | website_hr_recruitment.publish_job_from_backoffice_then_apply_portal [hard] | Create and publish a job position in the back office, then apply to it from the public portal | Done | PASS | FAIL | 0.0 |
 
 ---
 
@@ -2449,3 +2449,153 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Odoo modules** | Time Off |
 | **Workflow** | Create a leave allocation for a specific employee for Annual Leave and approve it. |
 | **Capability tested** | Leave allocation form creation and manager approval action. |
+
+---
+
+## delivery.configure_weight_rules_carrier_apply_to_so
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS/FAIL (1 of 2) |
+| **F1** | 0.5 |
+| **Odoo modules** | Inventory (Delivery), Sales |
+| **Workflow** | Configure a Based-on-Rules shipping carrier with two weight tiers (≤5 kg → 8.00, ≤20 kg → 18.00), then add the carrier to a seeded quotation and confirm the order. |
+| **Capability tested** | Weight-bracket pricing rule configuration plus cross-module application onto a sale order — distinct from the existing fixed-rate carrier task. |
+| **Notes** | Well-calibrated medium tier. Run 1 timed out before reaching the SO step; run 2 completed end-to-end. |
+
+---
+
+## maintenance.create_equipment_assign_category_team
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
+| **Odoo modules** | Maintenance |
+| **Workflow** | Create a new equipment record "Dock Scanner DS-200" with serial number, category "Warehouse Gear", and team "Bench Maintenance". |
+| **Capability tested** | Single-form equipment registry creation with two Many2one assignments — distinct from the existing maintenance request flow. |
+| **Notes** | Easy tier but harder than expected. Browser-use consistently saved the equipment without setting the Maintenance Team Many2one. |
+
+---
+
+## maintenance.schedule_preventive_plan_recurring
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
+| **Odoo modules** | Maintenance |
+| **Workflow** | Open the seeded "Conveyor Belt CB-7" equipment, set Expected MTBF=120, then create a Preventive maintenance request with recurring 30-day interval. |
+| **Capability tested** | Editing a numeric equipment field plus creating a request with the non-default Preventive maintenance_type radio. |
+| **Notes** | Calibrated below medium tier — both browser-use runs passed (target was ~60%). Odoo 19 dropped the legacy `period` field; task adapted to use `expected_mtbf` + recurring toggle. |
+
+---
+
+## sale_stock.partial_stock_warning_confirm_anyway
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.857 |
+| **Odoo modules** | Sales, Inventory |
+| **Workflow** | Confirm a sale order with insufficient on-hand stock (5 units available for a 10-unit order), open the auto-created delivery, change Done qty from 5 to 2, validate, and create a backorder for the remaining 8 units in the wizard. |
+| **Capability tested** | Inline-cell quantity edit on a stock move plus the backorder wizard. Hard pattern: the inline qty edit must persist before validation. |
+| **Notes** | Well-calibrated hard tier. Browser-use consistently reported "I changed Done to 2" but the inline-cell edit did not save, leaving Done=5 and triggering postcondition failures. |
+
+---
+
+## survey.create_feedback_survey_with_sections
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
+| **Odoo modules** | Surveys |
+| **Workflow** | Create a non-quiz feedback survey "Q1 Workshop Feedback" with two sections, four questions of mixed types, public access, page-per-section layout, and a 10-minute time limit. |
+| **Capability tested** | Multi-section survey authoring with mixed question types — distinct from the existing branching-quiz survey task. |
+| **Notes** | Calibrated below medium tier — both browser-use runs passed. Odoo 19 hides the Time Limit field for `survey_type='survey'`; task uses `custom` to expose it. |
+
+---
+
+## survey.review_submitted_responses_filter
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
+| **Odoo modules** | Surveys |
+| **Workflow** | Open the "Customer Pulse March" survey's Participations smart button, find the response with email reviewer-target@example.com (4 distractors present), and post a chatter message starting with "Reviewed:". |
+| **Capability tested** | Read/analyze workflow on existing responses (vs. authoring) — distinct from all existing survey.* tasks which create surveys. |
+| **Notes** | Calibrated below medium tier — both browser-use runs passed. Oracle uses JSON-RPC to bypass the fragile filter UI. |
+
+---
+
+## im_livechat.configure_url_rule_auto_message
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS (run 1) / FAIL strict (run 2 reached correct state but timed out signalling Done) |
+| **F1** | 1.0 |
+| **Odoo modules** | Live Chat |
+| **Workflow** | Open the seeded "Website Support" channel via the kanban dropdown → "Configure Channel" → Rules tab → add a rule with regex_url=/contact, action=auto_popup, auto_popup_timer=5. |
+| **Capability tested** | Secondary-tab modal-form rule configuration distinct from existing canned-response and runtime-chat tasks. |
+| **Notes** | Calibrated below medium tier — agent achieved correct state both runs. Discovery: kanban card opens chat session, not form; must use 3-dots → Configure Channel. |
+
+---
+
+## sale_project.timesheet_task_mark_billable_log_hours
+
+| Field | Value |
+|---|---|
+| **Status** | Removed |
+| **Oracle** | FAIL (spec) |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Sales, Project (Sale-Project, Timesheet) |
+| **Workflow** | Open the auto-generated project task from a confirmed services SO, log timesheet hours, and verify the SO line's delivered quantity updates so an invoice can be created. |
+| **Capability tested** | Cross-module billable-time round-trip across Sales, Project, Timesheet, and Invoicing surfaces. |
+| **Notes** | Aborted — the benchmark base snapshot does not include `hr_timesheet` or `sale_timesheet`, so service products cannot use `service_policy='delivered_timesheet'` and project tasks have no Timesheets tab. Re-enable when those modules are added to base_modules.txt. |
+
+---
+
+## project_todo.reorder_notes_add_due_dates_bulk
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
+| **Odoo modules** | To-Do |
+| **Workflow** | Open three seeded To-Do notes (Alpha, Beta, Gamma) and assign specific due dates: Alpha=2026-04-25, Beta=2026-04-30, Gamma=2026-05-02. The kanban auto-sorts by date_deadline asc. |
+| **Capability tested** | Bulk targeted date assignment across personal To-Do entries. |
+| **Notes** | Calibrated for easy tier — both browser-use runs passed. Drag-reorder was dropped from the original spec because the default kanban sort makes a sequence write indistinguishable from date-driven sorting. |
+
+---
+
+## website_hr_recruitment.publish_job_from_backoffice_then_apply_portal
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
+| **Odoo modules** | Recruitment, Website Recruitment |
+| **Workflow** | Back-office: create job "Senior Widget Engineer" in Administration with target=2 and a description, then publish it. Portal: open /jobs, click the new job, click Apply Now, fill the applicant form (incl. LinkedIn to satisfy client-side validation), and submit. |
+| **Capability tested** | Cross-surface round-trip between admin back-office and public portal — distinct from existing tasks that start from already-published jobs. |
+| **Notes** | Well-calibrated hard tier. Browser-use missed setting the Department field because the kanban "New" opens a stub modal — the full form is only reachable via "Configure" on the kanban card afterward. |
