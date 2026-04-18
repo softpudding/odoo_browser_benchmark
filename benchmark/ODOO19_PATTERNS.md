@@ -661,6 +661,36 @@ Free-product reward JSON-RPC payload: `reward_product_id` must be a
 
 ---
 
+## Discuss canned-response (`mail.canned.response`) seeding quirks
+
+- Delimiter is **`::` (double colon)**, NOT `:hello`. Single colon triggers the
+  emoji picker (`suggestion_service.js::searchSuggestions` — case `":"` dispatches
+  to `loadEmoji()`). Prompt / oracle must type `::hello` explicitly.
+- `/mail/data` endpoint (`webclient.py`) filters canned responses by
+  `create_uid = env.user.id OR group_ids in user.all_group_ids.ids`. Odoo shell
+  runs as `__system__` (id=1), NOT admin (id=2), so a naive
+  `env["mail.canned.response"].create({...})` yields a record the admin agent
+  cannot see via Discuss. Fix:
+  ```python
+  env["mail.canned.response"].with_user(admin).create({
+      "source": "hello",
+      "substitution": "...",
+      "group_ids": [(6, 0, [env.ref("base.group_user").id])],
+  })
+  ```
+- Suggestion fetch is debounced 250 ms; wait ≥ 800 ms after typing `::` before
+  expecting the `.o-mail-NavigableList-item` popover.
+- Livechat sidebar category `im_livechat.channel.appCategory` has
+  `hideWhenEmpty: !are_you_inside` — the seed livechat channel MUST list the
+  admin in `user_ids` else the sidebar category is collapsed/hidden and the
+  session is unreachable via UI.
+- `discuss.channel` with `channel_type='livechat'` has a CHECK constraint
+  requiring `livechat_operator_id`. Minimum viable seed vals include
+  `livechat_channel_id`, `livechat_operator_id`, and both admin + visitor
+  `channel_member_ids`.
+
+---
+
 ## appointment addon is enterprise-only — uninstallable in Community
 
 `appointment` (and by extension `website_appointment`,
