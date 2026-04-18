@@ -301,3 +301,19 @@ When you need to copy a pattern, these are the cleanest examples:
 | Multi-step kanban modal (hard) | `website_hr_recruitment.publish_job_from_backoffice_then_apply_portal` |
 | Module install on demand | `survey.create_feedback_survey_with_sections/seed.py` |
 | JSON-RPC oracle bypass | `survey.review_submitted_responses_filter/oracle.py` |
+
+---
+
+## Live Chat (im_livechat) — Options tab fields
+
+The `im_livechat.channel` model has **NO** `offline_form_text`, `offline_email`,
+or any `offline_*` fields in Odoo 19 (often confused with older versions or
+other products). The Options tab only exposes:
+- `button_text` (Char, "Notification Text")
+- `default_message` (Char, "Welcome Message")
+- `header_background_color`, `title_color`, `button_background_color`, `button_text_color` (color widgets)
+- `review_link` (Char)
+- `max_sessions_mode`, `max_sessions`, `block_assignment_during_call` (Session Limits group)
+
+If a task description implies offline-form configuration, map to `button_text` /
+`default_message` or skip — seeding non-existent fields raises `ValueError`.

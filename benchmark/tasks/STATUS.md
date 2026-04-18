@@ -311,7 +311,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 299 | sale_stock.deliver_partial_split_into_two_pickings [hard] | On a multi-line SO with insufficient stock for one product, deliver partial and create explicit second picking later | WIP | — | — | — |
 | 300 | website_blog.create_blog_with_two_posts_archive_one [medium] | Create a new blog with 2 posts, then archive one of the two | WIP | — | — | — |
 | 301 | website_slides.duplicate_lesson_to_new_section [medium] | Duplicate an existing lesson and move the copy to a new section in a course | WIP | — | — | — |
-| 302 | im_livechat.assign_team_set_offline_form_message [medium] | Configure offline behavior for a livechat channel with custom message | WIP | — | — | — |
+| 302 | im_livechat.assign_team_set_offline_form_message [medium] | Configure Live Chat channel via 3-dots Configure menu, switch Options tab, set notification text and welcome message | Done | PASS | PASS | 1.0 |
 | 303 | maintenance.archive_equipment_create_replacement [medium] | Archive an existing equipment and create a replacement equipment in same category | WIP | — | — | — |
 | 304 | project_todo.create_three_personal_with_specific_priorities [easy] | Create 3 personal todos with assigned priorities (high/normal/low) | WIP | — | — | — |
 | 305 | website_hr_recruitment.set_kanban_state_assign_recruiter [medium] | Open existing job applicant, set kanban state to 'Done', assign a recruiter | WIP | — | — | — |
@@ -2870,3 +2870,18 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Open Inventory → Configuration → Settings, enable the **Storage Locations** toggle (group_stock_multi_locations — this is what gates the Storage Categories menu and the storage_category_id field on stock.location in Odoo 19), Save. Then Configuration → Storage Categories → New: name="Cold Chain", Max Weight=500, Save (leave Allow New Product=mixed default, no capacity rows). Then Configuration → Locations → click WH/Stock → set Storage Category=Cold Chain → Save. |
 | **Capability tested** | Settings-toggle prerequisite (settings save reloads the page and only then exposes the menu/field) + nested form across two distinct configuration screens. |
 | **Notes** | Cookbook quirks: (1) In Odoo 19 there is **no** separate `group_stock_storage_categories` setting — the only toggle is "Storage Locations". The prompt phrasing reflects this. (2) `complete_name` on `stock.location` must be in `state_spec.fields` (not just `match_key`) or the diff engine emits `entity_key=[null]` and stable matches break. (3) `allow_new_product` defaults to `mixed` on create and showed up as a noisy `create` op — moved to `ignore_fields`. (4) Seed must remove `group_stock_multi_locations` from `base.user_admin.group_ids` AND from `base.group_user.implied_ids` to make the Storage Categories menu invisible at start. (5) BU run took 244s, created the category but typed Max Weight=0.01 (likely confused the field with a default decimal placeholder) and never reached step 3 — clean medium FAIL. |
+
+---
+
+## im_livechat.assign_team_set_offline_form_message
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS (F1=1.0, 154.1s) |
+| **F1** | 1.0 |
+| **Odoo modules** | Live Chat |
+| **Workflow** | Open Live Chat app, hover the seeded "Website Support" kanban card, click the 3-dots menu and choose Configure Channel to reach the form. Switch to the Options tab and update Notification Text (button_text) and Welcome Message (default_message) to the exact strings, then save. |
+| **Capability tested** | Tab switching combined with multi-field text input on a non-default form view (Live Chat kanban opens session, not form). |
+| **Notes** | Original task spec referenced offline_form_text / offline_email fields that do NOT exist on im_livechat.channel in Odoo 19; remapped to the real Options-tab text fields (button_text, default_message) preserving the "tab switch + multi-text-field input" hard pattern. Browser-use solved cleanly, so calibration is "easier" than the medium target. |
