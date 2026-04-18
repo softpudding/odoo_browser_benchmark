@@ -1,0 +1,20 @@
+task_id: hr_attendance.clock_in_out_kiosk_mode
+module: hr_attendance
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/attendances
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "From the Attendances app, open the public Kiosk Mode (tablet-style). Select the employee, enter the PIN on the numpad, confirm check-in. After the greeting screen, return to the employee selector and repeat for check-out."
+  checks_verify: "An hr.attendance record exists for 'Bench Worker' with both check_in and check_out set on the same day."
+  primary_track: true
+  tier: 2

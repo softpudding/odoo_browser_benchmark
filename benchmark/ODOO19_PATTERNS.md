@@ -1884,3 +1884,68 @@ Implications for task authors:
   employee on one of the rows (e.g. a seeded "Bench Consultant" employee
   vs admin), or (c) gate the Create Invoice on a non-default radio
   (down-payment percentage) rather than the default Regular invoice.
+
+## hr_attendance — public kiosk Owl UI, admin logout redirect, barcode validator
+
+Source tasks: `hr_attendance.clock_in_out_kiosk_mode`,
+`hr_attendance.kiosk_pin_check_in_then_manager_fix_checkout`.
+
+- `res.company.attendance_kiosk_mode` is a Selection whose **raw values**
+  are `barcode`, `barcode_manual`, `manual` (the Settings UI label
+  "Manual Selection" maps to `manual`). Do NOT use `manual_selection`,
+  `no_barcode`, or `auto` in seeds — those values don't exist in the
+  selection and the write will succeed silently as False but the kiosk
+  controller will not render the manual grid.
+- To drive the PIN flow you MUST set BOTH
+  `company.attendance_kiosk_mode = 'manual'` AND
+  `company.attendance_kiosk_use_pin = True`. Without the latter, the
+  controller's `manual_selection` JSON-RPC short-circuits without
+  requiring a PIN and the kiosk will check the employee in immediately
+  on card-click (skipping the numpad screen).
+- **Barcode validator** (`hr.employee._verify_barcode`) rejects any
+  character outside `[A-Za-z0-9]` and anything longer than 18 chars.
+  Seed values like `ATT-001` or `BADGE_42` raise `ValidationError`.
+  Use `ATT001`, `BENCH01`, etc.
+- `attendance_from_systray` on the company must be `False` when the
+  intent is to force the kiosk workflow — otherwise the admin navbar
+  grows a clock widget that the agent can (and will) click instead of
+  the kiosk menu.
+- Backend menu item **Attendances → Kiosk Mode** triggers the server
+  action `hr_attendance.open_kiosk_url` with path `attendance-kiosk`,
+  which calls `res.company._action_open_kiosk_mode()` and returns an
+  `ir.actions.act_url` pointing at
+  `/hr_attendance/kiosk_mode_menu/<company_id>`. That controller
+  **logs the admin out** (via `request.session.logout(keep_db=True)`)
+  when the admin has a password, then 302-redirects to
+  `/hr_attendance/<attendance_kiosk_key>`. Implication for oracle/agent:
+  after the menu click, `/web/session/authenticate` credentials are
+  gone and the kiosk page is served via `auth='public'`. Any attempt to
+  jump back to `/odoo/...` in the same browser context will force a
+  re-login. For checks that must run admin RPC after the flow, prefer
+  capturing DB state out-of-band (the eval harness already does this).
+- Kiosk DOM landmarks (stable across Odoo 19):
+  - Manual-selection grid container: `.o_hr_kiosk_manual_selection`.
+  - Employee card (name shown in `h6`):
+    `.o_hr_kiosk_manual_selection .card:has(h6:has-text('<name>'))`.
+  - PIN pad container: `.o_hr_attendance_pin_pad`.
+  - Digit and OK buttons: `.o_hr_attendance_PINbox_button:has-text('<n>')`
+    and `...:has-text('OK')`. The numpad layout is rows of 1-2-3, 4-5-6,
+    7-8-9, then a C-0-OK row (OK has class `btn-primary`).
+  - Greeting card: `.o_hr_attendance_kiosk_card`. After a successful
+    check-in/out it auto-returns to main in `kiosk_delay * 1000` ms
+    (default 10 s), OR the user can click the bottom
+    `.o_hr_kiosk_mode_bottom button:has-text('OK')` to return
+    immediately. The latter is more reliable for scripted flows.
+- Browser-use single-shot calibration on this pattern: **PASS in ~107s**
+  — BU handles the full 2-phase cycle (card → numpad → OK → greet →
+  OK → card → numpad → OK) without getting stuck. This makes the
+  "public kiosk + PIN + two-phase" flow a **medium tier** difficulty
+  in Odoo 19 rather than hard: the UI is very visually distinct
+  ("Absent" vs "On site" badges, big circular avatars, large numpad
+  buttons) so even naive DOM heuristics pick the right element.
+- To re-tier this workflow upward to hard, add: (a) multiple decoy
+  employees with similar names in the grid (forces name disambiguation
+  without filter UI), (b) barcode mode instead of manual (forces the
+  agent to understand it must scan or switch to Manual Selection from
+  settings), or (c) a department filter sidebar where the target
+  employee is hidden behind a department click.

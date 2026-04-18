@@ -407,7 +407,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 395 | stock.transfer_reserved_to_ready_partial_backorder [hard] | Reserve qty on a delivery, validate only part of it, create backorder | Done | PASS | FAIL | 0.0 |
 | 396 | website_sale_wishlist.add_product_share_to_email [medium] | Add a seeded product to the admin wishlist from /shop (share-by-email feature absent in Odoo 19 Community — re-scoped to wishlist persistence) | Done | PASS | PASS | 1.0 |
 | 397 | purchase.create_rfq_receive_invoice_3way_match [hard] | Create RFQ with 2 lines, confirm, receive partially, then bill and reconcile | WIP | — | — | — |
-| 398 | hr_attendance.clock_in_out_kiosk_mode [medium] | From Attendance kiosk, an employee clocks in and then clocks out | WIP | — | — | — |
+| 398 | hr_attendance.clock_in_out_kiosk_mode [medium] | From Attendance kiosk, an employee clocks in and then clocks out | Done | PASS | PASS | 1.0 |
 | 399 | account.credit_note_partial_refund_post [hard] | On a posted customer invoice, create a partial credit note via reversal wizard and post it | WIP | — | — | — |
 | 400 | website.submit_contact_form_create_crm_lead [medium] | Submit the frontend /contactus form and verify a CRM lead is created | WIP | — | — | — |
 | 401 | stock_barcode.receive_via_barcode_scan_validate [hard] | Use Barcode app to receive a picking by scanning product codes | WIP | — | — | — |
@@ -2464,6 +2464,21 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Check in, start a break, resume work, and check out in the attendance interface. |
 | **Capability tested** | Time-clock style attendance interactions with sequential status transitions. |
 | **Notes** | Removed because this checkout's `hr_attendance` addon does not expose a break/resume workflow to implement or validate. |
+
+---
+
+## hr_attendance.clock_in_out_kiosk_mode
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
+| **Odoo modules** | Attendances |
+| **Workflow** | Seed `Bench Worker` (PIN=1234, barcode=ATT001) and set the company to kiosk mode `manual` with PIN identification. From `/odoo/attendances`, click the sidebar **Kiosk Mode** menu (logs the admin out and redirects to the public `/hr_attendance/<token>` kiosk). In the tablet-style manual grid, click the employee card, enter `1234` on the numpad, press **OK** to check in. Return to the grid, click the employee again, enter the PIN, press **OK** to check out. |
+| **Capability tested** | Public kiosk tablet UI: non-backend Owl app, employee-card selection, PIN numpad entry, two-phase clock-in/clock-out with greeting-screen auto-return in between. |
+| **Notes** | `attendance_kiosk_mode` selection values in Odoo 19 are `barcode`, `barcode_manual`, `manual` — the "Manual Selection" label in Settings maps to the raw value `manual`. Barcode must be alphanumeric ≤18 chars with no hyphens (`hr.employee._verify_barcode`). The kiosk menu item issues an HTTP redirect via a server action that logs the admin session out; subsequent automated access requires navigating the public token URL directly. |
 
 ---
 
