@@ -340,7 +340,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 328 | website.add_image_carousel_to_homepage [hard] | In website editor, add Image Carousel snippet to home page with 3 images | WIP | — | — | — |
 | 329 | hr_holidays.bulk_approve_two_pending_requests [hard] | Select 2 pending leave requests in list view, approve in bulk via action | Done | PASS | FAIL | 0.67 |
 | 330 | event.add_track_with_speaker_publish [medium] | On existing event, add a track with speaker info and publish on website | Done | PASS | PASS | 1.0 |
-| 331 | purchase.send_rfq_email_with_template_signature [hard] | On a draft RFQ, click Send by Email, modify template body, attach signature | WIP | — | — | — |
+| 331 | purchase.send_rfq_email_with_template_signature [hard] | On a draft RFQ click Send RFQ, switch template from 'Purchase: Request For Quotation' to 'Purchase: Purchase Order', append 'Please confirm by Friday.' to body, Send | Done | PASS | PASS | 1.0 |
 | 332 | website_sale.set_product_seo_title_meta [easy] | Open product, set SEO title and meta description | Done | PASS | PASS | 1.0 |
 | 333 | point_of_sale.attach_customer_apply_loyalty [hard] | In POS, attach a customer with loyalty card mid-sale and apply earned points | Done | PASS | PASS | 1.0 |
 | 334 | website_blog.create_tag_assign_to_three_posts [medium] | Create a new tag, assign to 3 existing blog posts | Done | PASS | FAIL | 0.0 |
@@ -3491,3 +3491,18 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Open /odoo/employees, pick seeded employee 'Tech Tom', navigate to the Resume tab (Skills section at the bottom), click 'Pick a skill from the list', and in the Update Skills modal use the cascading `o_selection_badge` groups: Skill Type='Programming Languages' → Skill='Python' → Level='Advanced'. Save & Close, then save the employee form. |
 | **Capability tested** | Cascading dependent-dropdown interaction via the skill picker modal: the Skill list is filtered by Skill Type, and the Level set depends on Skill Type too. Distinct from `hr.add_employee_skill` by using a different skill type ('Programming Languages' vs 'IT Skills') so the entity keys don't collide. |
 | **Notes** | Calibration: single-shot BU passes (F1=1.0). The cascading UI didn't block BU on Claude-Opus. Seed installs `hr_skills` defensively though it's already pulled into base via `hr_recruitment_skills` auto_install. match_key `[employee_id, skill_id]` — 4 deterministic atomic edits (employee_id/skill_id/skill_type_id/skill_level_id) on the new `hr.employee.skill`. No pre-existing row for Tom so entity is created by the agent. |
+
+---
+
+## purchase.send_rfq_email_with_template_signature
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS (F1=1.0, 0 postcondition failures, 89.1s wall clock, 13 steps) |
+| **F1** | 1.0 |
+| **Odoo modules** | Purchase, Mail |
+| **Workflow** | Seed draft RFQ `R-BENCH-EMAIL-001` for vendor "Beacon Electrical Ltd." (2 lines, distractor `R-BENCH-EMAIL-002` same vendor). Agent opens `/odoo/purchase`, clicks the RFQ, clicks the **Send RFQ** header button (draft state). In the Compose Email wizard the agent must switch the pre-loaded **Purchase: Request For Quotation** template to **Purchase: Purchase Order** via the `.mail-composer-template-dropdown-btn` (ellipsis-v icon) template selector, then append `Please confirm by Friday.` to the end of the re-rendered body, then click the primary **Send**. The purchase `_notify_thread` override (`mark_rfq_as_sent=True` context) flips `state: draft → sent` as a side effect of send. |
+| **Capability tested** | Non-default template selection via an Owl `<Dropdown>` portaled OUT of the modal (dropdown menu is at page level, not inside `.modal`), template-switch BEFORE body-append sequencing (onchange wipes body on switch), body append into `html_composer_message` editor without clicking into it (pointer-intercept from `.o_technical_modal` overlay forces JS-based caret placement), primary-vs-disabled Send-button twin resolution. |
+| **Notes** | BU solved on first run (model `bu-1-0`) in 89s / 13 steps. It correctly swapped the template *before* typing the append and placed the sentence after the signature. Calibration therefore landed easier than hard — kept at tier 3 for workflow length + wizard density. Two new cookbook quirks: (1) both `purchase.email_template_edi_purchase` and `..._done` ship with `report_template_ids` that require `wkhtmltopdf` to render a PDF attachment — on benchmark runners that binary is absent, so Send RFQ pops "Invalid Operation — Unable to find Wkhtmltopdf" instead of the compose wizard; seed must `tpl.report_template_ids = [(5, 0, 0)]` on both templates. (2) The `mail_composer_template_selector` widget renders only as a `.mail-composer-template-dropdown-btn` ellipsis-v icon; its menu is portaled to a page-level `.mail-composer-template-dropdown` container, so `modal.locator(".dropdown-item")` returns 0. Oracle must query the dropdown items at page scope. Also re-confirms SMTP-sink cookbook from row 323: `aiosmtpd` Sink on `127.0.0.1:2525` + benchmark `ir.mail_server` required so `mail.mail.send(raise_exception=True)` doesn't roll back the whole transaction. Distractor leak-check uses `message_type='email_outgoing'` because the auto-"RFQ Sent" internal notification is logged on every PO that fires `action_rfq_send`. |

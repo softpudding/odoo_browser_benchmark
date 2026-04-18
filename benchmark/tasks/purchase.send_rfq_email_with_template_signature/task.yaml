@@ -1,0 +1,21 @@
+task_id: purchase.send_rfq_email_with_template_signature
+module: purchase
+difficulty: hard
+instruction: see prompt.md
+start_url: /odoo/purchase
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 480
+step_limit: 300
+metadata:
+  category: policy_trap_wizard
+  difficulty_level: hard
+  failure_pattern: "Agent sends with the default 'Purchase: Request For Quotation' template instead of switching to 'Purchase: Purchase Order', OR switches the template AFTER typing the appended sentence (which the onchange wipes). BU must both pick the non-default template AND sequence the append correctly."
+  agent_interaction: "Open seeded draft RFQ, click Send RFQ, switch the template to 'Purchase: Purchase Order' via the template selector dropdown, then append 'Please confirm by Friday.' to the body and click Send."
+  checks_verify: "PO state flips to 'sent' and the mail.message body carries the 'Purchase: Purchase Order' template marker AND the appended sentence (and must NOT still carry the RFQ template marker)."
+  primary_track: true
+  tier: 3
