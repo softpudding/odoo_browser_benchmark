@@ -361,7 +361,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 349 | survey.create_certification_quiz_attempt_limit_publish [hard] | Build a certification quiz with passing score and attempt limit, then publish it | Done | PASS | FAIL | 0.0 |
 | 350 | appointment.public_booking_reschedule_cancel_portal [hard] | Configure an appointment type, book it publicly, then reschedule and cancel it from the portal | WIP | — | — | — |
 | 351 | helpdesk.team_sla_assign_escalate_close [hard] | Create a helpdesk team with SLA policy, process a ticket through assignment and escalation, then close it | Removed | FAIL (module unavailable) | — | — |
-| 352 | marketing_automation.tag_trigger_drip_campaign [hard] | Build a tag-triggered marketing automation flow with delayed actions and a stop condition | WIP | — | — | — |
+| 352 | marketing_automation.tag_trigger_drip_campaign [hard] | Build a tag-triggered marketing automation flow with delayed actions and a stop condition | Removed | FAIL (module unavailable) | — | — |
 | 353 | event_product.sell_event_product_fill_attendee_details [medium] | Sell an event-linked product and complete attendee details for the generated registration | WIP | — | — | — |
 | 354 | event_sale.multi_ticket_checkout_two_attendees [hard] | Configure two paid ticket types and complete one website checkout with separate attendee details | WIP | — | — | — |
 | 355 | sale_loyalty.buy_x_get_y_reward_in_cart [hard] | Configure a Buy X Get Y promotion and verify the free-product reward appears in the cart | WIP | — | — | — |
@@ -3654,3 +3654,18 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Seed `helpdesk.team` 'Bench Support', create `helpdesk.sla` policy 'Bench 1hr Response' targeting High priority with time=1h on stage='In Progress'. Create a High-priority ticket 'Critical bug', assign to team user, move to In Progress (SLA timer starts), then move to Solved stage and mark Closed. |
 | **Capability tested** | Multi-step configuration (team + SLA policy) + record lifecycle across stages with SLA status tracking. |
 | **Notes** | Removed because the `helpdesk` addon is not present in this checkout (Odoo 19 Community — `helpdesk` is an Enterprise-only module). Verified: no `helpdesk`, `helpdesk_*`, `ticket`, or `support` directories under `addons/`; `benchmark/base_modules.txt` contains no `helpdesk` reference; follows same precedent as `helpdesk.create_ticket_tag_schedule_activity_resolve` (also Removed for module unavailability). Task cannot be implemented or validated on branch `odoo_benchmark` in the current environment. |
+
+---
+
+## marketing_automation.tag_trigger_drip_campaign
+
+| Field | Value |
+|---|---|
+| **Status** | Removed |
+| **Oracle** | FAIL (module unavailable) |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Odoo modules** | Marketing Automation (Enterprise-only) |
+| **Workflow** | Seed `res.partner.category` 'Bench Leads'. Create `marketing.automation` 'Welcome Drip' targeting model=`res.partner`, filter=category contains 'Bench Leads'. Add Activity 1: send `mailing.mailing` 'Welcome Day 1' (trigger=immediate, `trigger_type='begin'`). Add Activity 2: send 'Day 3 Follow-up' (trigger=3 days after Activity 1 opened, `trigger_type='mail_open'` + `interval_number=3` + `interval_type='days'`). |
+| **Capability tested** | Multi-activity marketing automation builder with parent-child trigger chaining (begin → mail_open delay). |
+| **Notes** | Removed because the `marketing_automation` addon is not present in this checkout (Odoo 19 Community — `marketing_automation` is an Enterprise-only module; see `skills/expand-benchmark-coverage.md` which explicitly lists it under Enterprise-only alongside `appointment` and `helpdesk`). Verified: no `marketing_automation` directory under `addons/` (only `marketing_card` exists); no module declares `_name = 'marketing.automation'` or `'marketing.activity'`; `benchmark/base_modules.txt` contains no `marketing_automation` reference. Follows the same precedent as `helpdesk.create_ticket_tag_schedule_activity_resolve`, `helpdesk.team_sla_assign_escalate_close`, and `appointment.portal_reschedule_and_cancel_booking` (all Removed for module unavailability). Task cannot be implemented or validated on branch `odoo_benchmark` in the current environment. |
