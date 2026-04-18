@@ -388,6 +388,11 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 376 | calendar.configure_meeting_with_location_and_reminder [medium] | Create a calendar event with a physical location, attendees, and a 1-hour reminder | Done | PASS | PASS | 1.0 |
 | 377 | mrp.bom_with_kit_component_confirm_mo [hard] | Create a BoM that uses a kit-type sub-component, confirm an MO, and verify kit expansion | Done | PASS | FAIL | 0.0 |
 | 378 | mrp_subcontracting.receive_subcontracted_product_with_components [hard] | Receive a subcontracted product from a vendor, validating its components were consumed by the subcontractor | WIP | — | — | — |
+| 379 | stock_landed_costs.add_cost_to_shipment_allocate [hard] | Create a landed cost with a freight line, apply to a completed receipt, validate | WIP | — | — | — |
+| 380 | hr_recruitment_survey.attach_survey_require_applicant_submit [medium] | Attach a screening survey to a job position and mark it required for applicants | WIP | — | — | — |
+| 381 | website_customer.publish_customer_reference_on_public_page [medium] | Mark a customer reference as published and verify it appears on /customers | WIP | — | — | — |
+| 382 | pos_restaurant.open_table_order_mark_ready [hard] | In restaurant POS, open a table, take an order, and mark the course ready | WIP | — | — | — |
+| 383 | website_sale_stock.show_stock_availability_add_to_cart [medium] | On a /shop product with stock availability display enabled, verify availability shows and add to cart within limits | WIP | — | — | — |
 
 ---
 
