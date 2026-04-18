@@ -353,6 +353,12 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 341 | hr.add_skill_to_employee_with_level [medium] | Open employee, add a skill with skill type and level | WIP | — | — | — |
 | 342 | website_event.publish_event_register_via_portal [hard] | Publish event website page, navigate to portal /events, register | WIP | — | — | — |
 | 343 | crm_sms.send_sms_to_opportunity [medium] | On opportunity, click Send SMS button, compose and send | WIP | — | — | — |
+| 344 | hr_attendance.kiosk_pin_check_in_then_manager_fix_checkout [medium] | Check in via kiosk PIN, then fix the missing checkout from manager attendance view | WIP | — | — | — |
+| 345 | point_of_sale.cash_in_sell_cash_out_close_session [hard] | In POS, perform cash in, complete a sale, record cash out, then close the session | WIP | — | — | — |
+| 346 | delivery.country_rule_and_free_threshold_apply_to_so [medium] | Create a carrier with destination rules and free-shipping threshold, then apply it to a matching quotation | WIP | — | — | — |
+| 347 | inventory.cycle_count_two_locations_apply_selected_delta [medium] | Perform a cycle count across two locations and apply only the intended stock discrepancy | WIP | — | — | — |
+| 348 | project_todo.create_note_set_color_reminder_favorite [easy] | Create a note, set its color and reminder, then mark it favorite | WIP | — | — | — |
+| 349 | survey.create_certification_quiz_attempt_limit_publish [hard] | Build a certification quiz with passing score and attempt limit, then publish it | WIP | — | — | — |
 
 ---
 
