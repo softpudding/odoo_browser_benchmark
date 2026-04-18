@@ -1,0 +1,29 @@
+# Trace oracle for mass_mailing.duplicate_existing_change_subject_recipients
+#
+# Medium: open seeded draft mailing, Action menu Duplicate, then on the
+# copy change subject + Recipients model + add a Country=Germany domain
+# rule, save as draft.
+
+required_ops: []
+
+optional_ops:
+  - mailing.mailing.read
+  - mailing.mailing.write
+  - mailing.mailing.create
+  - mailing.mailing.copy
+  - mailing.mailing.web_save
+  - mailing.mailing.search_read
+  - mailing.mailing.web_search_read
+  - mailing.mailing.onchange
+  - ir.model.search_read
+  - ir.model.name_search
+  - res.country.name_search
+  - res.country.search_read
+  - mail.message.create
+
+forbidden_ops:
+  - mailing.mailing.unlink
+  - mailing.mailing.action_send_mail
+  - mailing.mailing.action_launch
+  - mailing.mailing.action_send_now
+  - mailing.mailing.action_test
