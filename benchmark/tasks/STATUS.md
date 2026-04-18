@@ -3095,3 +3095,18 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Admin (manager) opens Eve's pending Paid Time Off, clicks Refuse, posts refusal reason "Use sick leave instead" as chatter message, then creates new Sick Time Off on Eve's behalf for same dates via the manager approval list, save to land in 'confirm'. |
 | **Capability tested** | Two-step lifecycle on different records: refuse + chatter + create-on-behalf-of with different leave type. |
 | **Notes** | Well-calibrated hard. hr.leave has no native refuse_reason — captured as chatter message. BU created a duplicate leave (one with 0 days) before producing the correct 3-day record; semantic check.py passed but strict scoring penalised the dup. |
+
+---
+
+## crm.assign_team_change_salesperson_log_activity
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
+| **Odoo modules** | CRM |
+| **Workflow** | Open seeded opportunity 'Bench Big Deal'. Switch to Contacts tab → Ownership group, change Team from Direct Sales to Channel and Salesperson from admin to Sara Sales. Schedule a Call activity for 2026-06-10 with summary 'Discovery call'. Save. |
+| **Capability tested** | Hidden Many2one fields (team_id only in Contacts tab on opportunities) + activity scheduling. |
+| **Notes** | Easier than medium — BU solved on first try after switching to Contacts tab. team_id is invisible in the main form header for opportunities (only visible on leads); editable copy lives under Contacts > Ownership group. |

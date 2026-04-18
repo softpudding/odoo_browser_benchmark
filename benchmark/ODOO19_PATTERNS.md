@@ -418,3 +418,13 @@ import secrets
 token = secrets.token_hex(16)
 videocall_location = f"/calendar/join_videocall/{token}"
 ```
+
+---
+
+## crm.lead form: team_id hidden on opportunities
+
+In Odoo 19, `crm.crm_lead_view_form` has TWO copies of the user_id/team_id group:
+- Under `<group invisible="type == 'lead'">` — shows just `user_id` (with `many2one_avatar_leader_user` widget). Visible on opportunities.
+- Under `<group invisible="type == 'opportunity'">` — shows BOTH `user_id` and `team_id`. Visible on leads.
+
+On an **opportunity**, `team_id` is NOT in the main form header. Only editable copy is under the **Contacts** notebook tab → **Ownership** group. Tasks that "change Sales Team" on an opportunity must explicitly tell the agent to open the Contacts tab.
