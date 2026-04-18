@@ -1,0 +1,20 @@
+task_id: sale_stock.confirm_so_manual_reserve_validate_delivery
+module: sale_stock
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/sales
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 360
+step_limit: 220
+metadata:
+  category: sequential_single_record
+  difficulty_level: medium
+  agent_interaction: "Confirm the correct quotation, open its delivery, reserve stock manually with Check Availability, then validate the transfer."
+  checks_verify: "The target SO is confirmed, its delivery is done, the delivered quantities match the ordered quantities, and the distractor quotation remains draft."
+  primary_track: true
+  tier: 2
