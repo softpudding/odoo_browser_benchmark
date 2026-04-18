@@ -398,6 +398,11 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 386 | sale_management.create_quotation_template_apply_to_new_so [medium] | Create a quotation template with 2 default lines, then apply it to a new SO | Done | PASS | PASS | 1.0 |
 | 387 | hr_skills_survey.link_certification_survey_to_skill [hard] | Create a certification survey, link it to a skill, and attempt completion | Removed | FAIL (feature unavailable) | — | — |
 | 388 | project.create_milestone_assign_tasks_reach [medium] | Create a project milestone, assign 2 tasks to it, then mark reached | WIP | — | — | — |
+| 389 | mass_mailing.duplicate_mailing_edit_subject_send [medium] | Duplicate an existing mass mailing, edit the subject, add a contact list, and send | WIP | — | — | — |
+| 390 | sale_timesheet.log_timesheet_on_so_invoice_delivered [hard] | Confirm a service SO with delivered-timesheet policy, log timesheet hours, create invoice for delivered qty | WIP | — | — | — |
+| 391 | project_sms.send_reminder_sms_to_task_followers [medium] | Send a reminder SMS to task followers from a project task log note | WIP | — | — | — |
+| 392 | mrp.workorder_operation_scan_serial_complete [hard] | Start a work order, consume serial-tracked component via scan, mark operation done and finish MO | WIP | — | — | — |
+| 393 | crm_iap_enrich.bulk_enrich_leads_from_list [hard] | From CRM pipeline list view, select 3 leads without partner info and trigger enrich action | WIP | — | — | — |
 
 ---
 
