@@ -1,0 +1,21 @@
+task_id: mrp.workorder_operation_scan_serial_complete
+module: mrp
+difficulty: hard
+instruction: see prompt.md
+start_url: /odoo/manufacturing
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 480
+step_limit: 300
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: hard
+  agent_interaction: "Drive a full work-order lifecycle on a confirmed MO (MO-BENCH-WO) with a serial-tracked component: Start the work order on WC-01, override the default-reserved serial from the auto-reserved SN-A to the required SN-B via the Details popup (Detailed Operations) on the Bench Serial Part component row, click Done on the work order, then Mark as Done on the MO itself."
+  checks_verify: "mrp.production 'MO-BENCH-WO' has state='done'; its single workorder ('Final Assembly', WC-01) has state='done'; exactly one stock.move.line with lot_id == SN-B exists on the consumed Bench Serial Part move with quantity=1 and picked=True; SN-A/SN-C/SN-D still have qty_available==1 at WH/Stock; no backorder MO was created."
+  failure_pattern: "Browser-use tends to click Mark as Done immediately and accept the default-reserved SN-A, consume SN-C/SN-D at random, OR fail the work-order lifecycle by clicking Mark as Done on the MO before the Details popup is saved or before the WO is Done. It also frequently confuses the WO Done button with the MO Mark as Done button."
+  primary_track: true
+  tier: 3

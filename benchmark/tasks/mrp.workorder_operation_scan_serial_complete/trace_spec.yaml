@@ -1,0 +1,51 @@
+# Trace oracle for mrp.workorder_operation_scan_serial_complete.
+#
+# Hard: start a work order, override the default-reserved serial
+# (SN-A -> SN-B), finish the work order, then mark the MO done. The
+# browser agent drives everything through the MO form and Details popup;
+# the oracle uses JSON-RPC button_start / button_finish /
+# button_mark_done for determinism.
+
+required_ops:
+  - mrp.production.button_mark_done
+
+optional_ops:
+  - mrp.production.read
+  - mrp.production.write
+  - mrp.production.web_save
+  - mrp.production.search_read
+  - mrp.production.web_search_read
+  - mrp.production.action_confirm
+  - mrp.production.onchange
+  - mrp.production.pre_button_mark_done
+  - mrp.production.set_qty_producing
+  - mrp.workorder.read
+  - mrp.workorder.write
+  - mrp.workorder.button_start
+  - mrp.workorder.button_finish
+  - mrp.workorder.button_pending
+  - mrp.workorder.action_next
+  - mrp.workorder.search_read
+  - mrp.workorder.web_save
+  - stock.move.read
+  - stock.move.write
+  - stock.move.web_save
+  - stock.move.search_read
+  - stock.move.action_show_details
+  - stock.move.line.read
+  - stock.move.line.write
+  - stock.move.line.create
+  - stock.move.line.web_save
+  - stock.move.line.unlink
+  - stock.lot.read
+  - stock.lot.search_read
+  - stock.lot.name_search
+  - ir.ui.view.get_views
+
+forbidden_ops:
+  - mrp.production.unlink
+  - mrp.production.action_cancel
+  - mrp.workorder.unlink
+  - mrp.workorder.action_cancel
+  - mrp.bom.write
+  - mrp.bom.unlink

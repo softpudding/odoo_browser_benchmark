@@ -682,6 +682,55 @@ On an **opportunity**, `team_id` is NOT in the main form header. Only editable c
   failure. BU may also hallucinate success by conflating Source with
   the MO reference in its memory log.
 
+## mrp — work-order lifecycle + serial-tracked component consumption
+
+- `mrp.workorder.button_finish` internally calls
+  `move._set_quantity_done(qty)` on every unpicked raw move, which
+  **replaces** `move_line_ids` with vals derived from fresh reservation
+  lookups. Consequence: if the agent overrides `lot_id` on a
+  serial-tracked component move line via the MO form's Details popup
+  and then clicks WO `Done`, the override can be overwritten by
+  `_set_quantity_done` unless the move's `picked` flag is already
+  `True` (lines with `picked=True` are skipped by `button_finish`'s
+  move-picking loop, so the agent's serial choice sticks). Oracle path
+  sets `stock.move.picked = True` explicitly after writing the SN-B
+  move line, BEFORE calling `button_finish`.
+- The MO Components-tab row for a serial-tracked product has two UI
+  entry points for picking a specific serial: (a) inline `lot_ids`
+  many2many_tags column (readonly until MO is in progress,
+  `show_lot_ids`-gated), and (b) the `Details` button (per-row), which
+  opens `stock.move.action_show_details` → `view_stock_move_operations`
+  modal with an editable `move_line_ids` O2M list. The per-line
+  `lot_id` m2o in that list is the reliable way to **override** an
+  already-reserved serial. Browser-use empirically types the serial
+  name into the `lot_name` Char (typed autocomplete fallback) instead
+  of picking from the `lot_id` dropdown — which creates an unassigned
+  line that `button_mark_done` silently discards, leaving
+  `consumed_lots = []`.
+- On `mrp.production.action_confirm` with a serial-tracked component
+  and multiple on-hand lots, the auto-reservation picks the lot with
+  the **lowest `stock.lot.id`** (FIFO by creation order), NOT by
+  `name` lexicographic order. Seed serials in the exact order you want
+  them reserved (e.g. create SN-A first so SN-A has lowest id ⇒ SN-A
+  is the default reserved ⇒ agent has a clear "not the default"
+  target like SN-B).
+- `mrp.workorder` entity_key with `match_key: [production_id,
+  workcenter_id]` normalizes to `[null, null]` in `expected_state.json`
+  — both Many2one fields read back as null through the instrumentation
+  cursor. Use literal `"entity_key": [null, null]` in expected_state.
+- `button_start` on a work order with `qty_producing == 0` auto-sets
+  `qty_producing = qty_remaining` (usually 1 for a single-unit MO).
+  No separate `qty_producing` edit needed before clicking Done.
+- Two distinct `Done`-style buttons cause UI confusion: the work-order
+  row's `Done` (→ `mrp.workorder.button_finish`) vs the MO header's
+  `Mark as Done` (→ `mrp.production.button_mark_done`). The correct
+  order is WO-Done FIRST, then MO-Mark-as-Done. Clicking
+  `button_mark_done` first on an in-progress MO with unfinished
+  workorders raises `UserError('You need to finish the Work Order before marking the Manufacturing Order as Done.')` in
+  some configurations — but on single-WO MOs Odoo auto-finishes the
+  WO when the MO is marked done, so BU often gets away with a
+  "happy path" that skips the WO Done button.
+
 ## purchase_stock / sale_stock — origin and demand quirks on pickings
 
 - `stock.picking.origin` on a PO-generated receipt inherits from **`purchase.order.name`**, NOT from `purchase.order.origin`. If the task relies on a deterministic `origin` for `state_spec.match_key`, pin `po.name` in the seed (e.g. `name="P-BENCH-DMG-001"`). Same pattern as the previously documented `sale.order.name` → delivery `origin`.
