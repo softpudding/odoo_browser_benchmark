@@ -1,0 +1,38 @@
+# Trace oracle for
+# mrp_subcontracting.receive_subcontracted_product_with_components
+#
+# Hard (closed_loop_cross_module): validate a subcontract receipt so the
+# linked subcontract MO auto-closes and back-flushes components.
+
+required_ops:
+  - stock.picking.button_validate
+
+optional_ops:
+  - stock.picking.read
+  - stock.picking.write
+  - stock.picking.web_save
+  - stock.picking.search_read
+  - stock.picking.web_search_read
+  - stock.picking.action_confirm
+  - stock.picking.action_assign
+  - stock.picking.action_show_subcontract_details
+  - stock.move.read
+  - stock.move.write
+  - stock.move.web_save
+  - stock.move.action_show_details
+  - stock.move.line.read
+  - stock.move.line.write
+  - stock.move.line.create
+  - stock.move.line.web_save
+  - mrp.production.read
+  - mrp.production.button_mark_done
+  - res.partner.name_search
+  - res.partner.read
+  - product.product.name_search
+  - product.product.read
+  - ir.ui.view.get_views
+
+forbidden_ops:
+  - stock.picking.unlink
+  - stock.picking.action_cancel
+  - purchase.order.button_cancel

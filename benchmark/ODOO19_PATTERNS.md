@@ -973,6 +973,7 @@ PO record is just mutating its partner_id.
 
 ---
 
+<<<<<<< HEAD
 ## DateTimeField widget: button vs input dual rendering
 
 `addons/web/static/src/views/fields/datetime/datetime_field.xml` renders the
@@ -1055,3 +1056,60 @@ Applies to every datetime field with a seeded default (e.g., `stock.lot.expirati
   option, leaving the m2m empty. Since state_spec usually leaves m2m
   out (noisy diffs), the postcondition check must explicitly assert
   the m2m membership.
+=======
+## mrp_subcontracting — receipt + auto-MO chain
+
+- **Module not in base**: `mrp_subcontracting` AND its auto-install-gated
+  bridge `mrp_subcontracting_purchase` are NOT in
+  `benchmark/base_modules.txt`. Seed must `button_immediate_install` both
+  before creating any subcontract BoM or confirming a subcontracting PO.
+- **Phantom "Resupply Subcontractor" picking on PO confirm**:
+  `stock.warehouse.subcontracting_to_resupply` defaults to **True**, so
+  confirming a subcontracting PO auto-generates TWO pickings sharing the
+  same `origin`: the incoming Receipt (`WH/IN/…`) AND an internal
+  `Resupply Subcontractor` picking (`WH/RES/…`) that wants to push
+  components from WH/Stock → Subcontracting location. If the task
+  pre-stocks components directly at the subcontracting location, the
+  resupply picking is spurious and breaks `click_list_row(PO_NAME)`
+  (matches both rows). Fix: seed
+  `env["stock.warehouse"].search([]).write({"subcontracting_to_resupply": False})`.
+- **Subcontract BoM wiring**: `mrp.bom.type='subcontract'` (Selection
+  extension) + `subcontractor_ids` (m2m `mrp_bom_subcontractor`) are
+  both required — view XML makes `subcontractor_ids` required when
+  `type='subcontract'`. `_bom_subcontract_find` uses `'parent_of'`
+  matching on subcontractor so a child contact still resolves.
+- **Subcontracting location resolution**:
+  `partner.with_company(env.company).property_stock_subcontractor` with a
+  company fallback `env.company.subcontracting_location_id`. Needs
+  `stock.group_stock_multi_locations` on admin for the
+  Subcontracting location to render in the UI + `stock.group_production_lot`
+  for the Detailed Operations popup's `lot_id` columns.
+- **Serial-tracked finished → MO splitting**: with `tracking='serial'`
+  on the finished subcontracted product and `product_qty>1`, validating
+  the receipt triggers `_sync_subcontracting_productions._split_productions`
+  → the single initial MO becomes **N done MOs** (one per serial/lot).
+  `expected_state.json` must encode the extras with `#dup1`, `#dup2`, …
+  entity-key suffixes (the diff engine's collision marker) + `op=create`.
+  The first MO stays on its original key with `op=set`.
+- **Receipt picking type lot-creation flags**: for the Detailed
+  Operations popup's `lot_id` autocomplete to expose a
+  `Create "<serial>"` option, the incoming picking type needs BOTH
+  `use_create_lots=True` AND `use_existing_lots=True`. Without the
+  former, the `lot_name` Char input is hidden; without the latter, the
+  `lot_id` autocomplete is hidden.
+- **Subcontract move `action_show_details`** returns the
+  `mrp_subcontracting_view_stock_move_operations` view (not the vanilla
+  stock one) — same button selector
+  (`button[name='action_show_details']:visible` on the move row) but the
+  popup layout exposes `order_finished_lot_ids` on the move and an
+  editable move_line_ids list in the lower half.
+- **No user-facing "Record Production" button on the backend receipt**
+  form for backend (internal) users. The portal view has a `Register
+  components for subcontracted product` button, but the backend shows
+  only the `Subcontracting Productions` smart button in the button_box,
+  and it's invisible until `move.show_subcontracting_details_visible`
+  (`is_subcontract AND move_line_ids AND quantity > 0 AND MO state !=
+  cancel`). The canonical flow is: open Details on the move → fill
+  move_lines → validate — the smart button is optional drill-down.
+
+>>>>>>> ea749f33 ([ADD] benchmark: mrp_subcontracting.receive_subcontracted_product_with_components (hard))
