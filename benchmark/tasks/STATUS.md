@@ -2061,13 +2061,14 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Live Chat, Website |
 | **Workflow** | Configure a live chat channel's offline behavior, then verify the website widget shows the offline contact form path. |
 | **Capability tested** | Backend chat-channel settings plus public website widget verification across two UI surfaces. |
+| **Notes** | Oracle passes. Browser-use gave up immediately with zero steps in this environment. |
 
 ---
 
@@ -2075,13 +2076,14 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Point of Sale |
 | **Workflow** | Open a POS session, ring up a sale, split the payment across two methods, and email the receipt to the customer. |
 | **Capability tested** | Full-screen kiosk interaction, keypad payment entry, multi-payment flow, and receipt-delivery workflow. |
+| **Notes** | Oracle passes. Browser-use gave up immediately with zero steps in this environment. |
 
 ---
 
@@ -2209,13 +2211,14 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Manufacturing |
 | **Workflow** | Confirm a manufacturing order, start a work order, block it with a reason, resume it, and finish production. |
 | **Capability tested** | Work-order execution controls with state transitions beyond BOM or MO creation alone. |
+| **Notes** | Oracle passes. Browser-use gave up immediately with zero steps in this environment. |
 
 ---
 
@@ -2223,13 +2226,14 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Inventory |
 | **Workflow** | Open an outgoing delivery, package the products into a package, and validate the shipment. |
 | **Capability tested** | Delivery operation handling with package creation and final stock validation. |
+| **Notes** | Oracle passes. Browser-use gave up immediately with zero steps in this environment. |
 
 ---
 
@@ -2237,13 +2241,14 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
+| **Status** | Removed |
+| **Oracle** | FAIL (spec) |
 | **Browser-Use** | — |
 | **F1** | — |
 | **Odoo modules** | Barcode, Inventory |
 | **Workflow** | Open a barcode receipt flow, scan or enter the target product, and validate the received quantity. |
 | **Capability tested** | Scanner-style inventory interaction rather than standard backend list/form editing. |
+| **Notes** | Removed because this checkout has `barcodes` but does not include the stock barcode client addon needed for warehouse receipt scanning (`stock_barcodes` / equivalent inventory barcode app). |
 
 ---
 
@@ -2296,13 +2301,14 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Repairs |
 | **Workflow** | Create a repair order, add repair parts, complete the repair, and create the resulting invoice. |
 | **Capability tested** | Repair-order lifecycle with part lines and downstream accounting side effect. |
+| **Notes** | Oracle passes. Browser-use gave up immediately with zero steps in this environment. |
 
 ---
 
@@ -2310,13 +2316,14 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Email Marketing |
 | **Workflow** | Build an email campaign, send a test email, and schedule the campaign for later delivery. |
 | **Capability tested** | Campaign composer plus test-send and schedule actions in email marketing. |
+| **Notes** | Oracle passes. Browser-use gave up immediately with zero steps in this environment. |
 
 ---
 
@@ -2324,13 +2331,14 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 | Field | Value |
 |---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
 | **Odoo modules** | Sales, Loyalty |
 | **Workflow** | Create a loyalty or coupon program, then apply the reward on a target quotation. |
 | **Capability tested** | Cross-configuration from loyalty setup into quotation-side reward application. |
+| **Notes** | Oracle passes. Browser-use gave up immediately with zero steps in this environment. |
 
 ---
 

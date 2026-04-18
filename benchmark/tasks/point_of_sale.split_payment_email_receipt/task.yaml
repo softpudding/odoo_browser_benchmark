@@ -1,0 +1,21 @@
+task_id: point_of_sale.split_payment_email_receipt
+module: point_of_sale
+difficulty: hard
+instruction: see prompt.md
+start_url: /odoo/point-of-sale
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 420
+step_limit: 260
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: hard
+  agent_interaction: "Open the seeded POS session, create one sale, split the payment across two methods, and email the receipt to the customer."
+  checks_verify: "The POS order exists in a paid state with one exact product line, two distinct payments at the required amounts, and a receipt attachment tied to the emailed order."
+  failure_pattern: "Agents often finish the sale but miss the second payment line or never complete the receipt-email workflow."
+  primary_track: true
+  tier: 3
