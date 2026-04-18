@@ -1,0 +1,32 @@
+# Trace oracle for crm_iap_enrich.bulk_enrich_leads_from_list
+#
+# The Enrich action is an ir.actions.server binding on crm.lead that
+# runs `records.iap_enrich()`. The server-action execution surfaces as
+# `ir.actions.server.run` or the direct `crm.lead.iap_enrich` call
+# depending on how the binding menu invokes it. We keep required_ops
+# empty and validate end state via check.py.
+
+required_ops: []
+
+optional_ops:
+  - crm.lead.iap_enrich
+  - crm.lead.read
+  - crm.lead.write
+  - crm.lead.web_save
+  - crm.lead.search_read
+  - crm.lead.web_search_read
+  - crm.lead.message_post
+  - crm.lead.message_post_with_source
+  - ir.actions.server.run
+  - ir.actions.server.read
+  - ir.model.data.read
+  - mail.message.create
+  - mail.message.read
+  - mail.thread.message_post
+  - ir.ui.view.get_views
+
+forbidden_ops:
+  - crm.lead.unlink
+  - crm.lead.action_set_lost
+  - crm.lead.convert_opportunity
+  - crm.lead.action_archive

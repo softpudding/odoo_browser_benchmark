@@ -308,6 +308,38 @@ if mod and mod.state != "installed":
 - `_check_answers_integrity` requires each quiz question to have ≥1 correct AND
   ≥1 incorrect answer (enforces natural "mark exactly one correct" constraint)
 
+### CRM / crm_iap_enrich
+
+- `crm.lead` has NO `ref` field — do not use it as a state-diff `match_key`.
+  Use `name` (unique within the seed) instead. `search_read` with an invalid
+  field raises `ValueError: Invalid field 'ref' on 'crm.lead'`.
+- `crm_iap_enrich` module is NOT in the base snapshot. Seed must
+  `button_immediate_install` it on demand before creating any
+  `iap_enrich_done`-carrying leads.
+- `crm.lead.create()` (in the enrich bridge) triggers the
+  `ir_cron_lead_enrichment` cron when
+  `crm.iap.lead.enrich.setting='auto'` (the default). For deterministic
+  test state seed `ir.config_parameter` key `crm.iap.lead.enrich.setting`
+  to `'manual'` BEFORE creating leads — otherwise the cron may flip
+  `iap_enrich_done` under you.
+- `iap_enrich()` short-circuits BEFORE any external IAP call when
+  `tools.email_normalize(lead.email_from).split('@')[1]` is in
+  `iap_tools._MAIL_PROVIDERS` (gmail.com, yahoo.com, hotmail.com,
+  outlook.com, icloud.com, aol.com, 163.com, qq.com, ..., plus the
+  dummy `example.com`). In that branch it flips `iap_enrich_done=True`
+  and posts the `crm_iap_enrich.mail_message_lead_enrich_notfound`
+  template on the lead ("No company data found based on the email
+  address or email address is one of an email provider. No credit was
+  consumed."). This is the credit-free, network-free deterministic
+  path for bench tasks that need to exercise the Enrich action.
+- The `Enrich` server action is `crm_iap_enrich.action_enrich_mail`
+  with `binding_model_id=crm.model_crm_lead` and `state='code'` running
+  `records.iap_enrich()`. It surfaces in the list-view control-panel
+  **Actions** dropdown when ≥1 `crm.lead` row is ticked — separate
+  from the per-record **Enrich** form-header button (same label, same
+  underlying method). Multi-select + Actions-menu pattern is solvable
+  by browser-use in ~140s once rows are named uniquely.
+
 ---
 
 ## UI navigation surprises
