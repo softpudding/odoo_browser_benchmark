@@ -607,6 +607,43 @@ On an **opportunity**, `team_id` is NOT in the main form header. Only editable c
 - `stock.scrap.scrap_location_id` defaults to the per-company `Virtual Locations/Scrap` (the auto-created inventory-usage location from `_create_scrap_location`). For a task that requires a custom scrap destination (e.g. `WH/Lost`), seed must create a new `stock.location` with `usage='inventory'` + `location_id=warehouse.view_location_id` so its `complete_name` resolves to `WH/<name>`. Both `scrap_location_id` AND `location_id` fields on the wizard are gated by `groups="stock.group_stock_multi_locations"` — seed must add the admin to that group or the fields are invisible and silently default.
 - A validated scrap launched from a `stock.picking` (via `picking_id` in the wizard context) **auto-creates a `stock.move` on the parent picking** (`move._prepare_move_values` sets `picking_id=self.picking_id.id` and `scrap_id=self.id`). Consequence: `picking.move_ids` grows by one after scrap, so `check.py` assertions like `len(picking.move_ids)==1` MUST filter `not m.scrap_id`.
 
+## mrp — phantom/kit BoM expansion + `mrp.production.name` UI trap
+
+- `mrp.bom.type` is a Selection with values `'normal'` (UI label "Manufacture
+  This Product") and `'phantom'` (UI label **"Kit"**). Do not seed
+  `type='kit'` — `'phantom'` is the correct selection key.
+- `mrp.production.action_confirm` calls `_get_moves_raw_values` which invokes
+  `bom.explode(product, factor, ...)`. `explode()` walks each BoM line; for
+  lines whose `product_id` has its own phantom BoM, it **recursively drills
+  in** and pushes the sub-components onto the todo queue. The final
+  `lines_done` only contains leaves (atomic components), so `move_raw_ids`
+  on the confirmed MO reflects the **fully expanded** leaf set — NOT the
+  immediate children of the primary BoM. An MO for product P whose normal
+  BoM has `[1x K, 1x F]` where `K` has phantom BoM `[1x A, 2x B]` will
+  confirm into 3 raw moves: `A=1, B=2, F=1`. Agent must NOT add/edit
+  Components tab manually.
+- Phantom expansion requires no stock / no routes / no rules — it's driven
+  purely by `_bom_find(product, bom_type='phantom')` at confirm time.
+- For a confirmed-but-not-produced MO, check `move.product_uom_qty`
+  (demand) on `move_raw_ids` — `move.quantity` is 0.0 until Produce All
+  is clicked.
+- **`mrp.production.name` has no editable Reference input on the draft
+  form.** The Odoo 19 `mrp.production_form_view` displays the auto-generated
+  `WH/MO/####` sequence in the breadcrumb but provides no inline Char
+  input for `name` in the form body. The only UI paths to override `name`
+  are (a) click the breadcrumb text in the top bar and overwrite (fragile
+  in Playwright, browser-agents rarely discover this) or (b) JSON-RPC
+  `create({'name': '...', ...})` (oracle path).
+- The Miscellaneous tab exposes `origin` (label "Source") as a free-text
+  Char. Browser-use empirically types the prompt's "reference" into
+  **Source** when the prompt says "Reference field". This is a deep-UI
+  trap for hard-tier tasks that need a deterministic `name` match in
+  `check.py` — even when the agent is correct about every other step
+  (product, BoM, qty, confirm), the missing `name` override triggers an
+  entity_key mismatch in state_diff AND a "MO not found" postcondition
+  failure. BU may also hallucinate success by conflating Source with
+  the MO reference in its memory log.
+
 ## purchase_stock / sale_stock — origin and demand quirks on pickings
 
 - `stock.picking.origin` on a PO-generated receipt inherits from **`purchase.order.name`**, NOT from `purchase.order.origin`. If the task relies on a deterministic `origin` for `state_spec.match_key`, pin `po.name` in the seed (e.g. `name="P-BENCH-DMG-001"`). Same pattern as the previously documented `sale.order.name` → delivery `origin`.

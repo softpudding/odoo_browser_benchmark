@@ -1,0 +1,36 @@
+# Trace oracle for mrp.bom_with_kit_component_confirm_mo
+#
+# Hard: create a new MO for Bench Assembly (qty 1) + confirm it so the kit
+# BoM auto-explodes into 3 raw moves. Agent uses the browser form; oracle
+# uses JSON-RPC create + action_confirm.
+
+required_ops:
+  - mrp.production.action_confirm
+
+optional_ops:
+  - mrp.production.create
+  - mrp.production.write
+  - mrp.production.web_save
+  - mrp.production.read
+  - mrp.production.search_read
+  - mrp.production.web_search_read
+  - mrp.production.onchange
+  - mrp.production._onchange_product_id
+  - mrp.production._onchange_bom_id
+  - mrp.production.name_create
+  - mrp.production.name_search
+  - mrp.bom.read
+  - mrp.bom.search_read
+  - mrp.bom.explode
+  - mrp.bom.onchange
+  - stock.move.read
+  - stock.move.create
+  - stock.move.write
+  - ir.ui.view.get_views
+
+forbidden_ops:
+  - mrp.production.unlink
+  - mrp.production.action_cancel
+  - mrp.production.button_mark_done
+  - mrp.bom.unlink
+  - mrp.bom.write
