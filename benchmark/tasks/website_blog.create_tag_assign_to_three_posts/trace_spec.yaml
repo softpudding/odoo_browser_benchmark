@@ -1,0 +1,25 @@
+# Trace oracle for website_blog.create_tag_assign_to_three_posts
+#
+# Medium: create blog.tag + bulk assign to 3 of 4 seeded posts.
+# Browser client typically uses web_save instead of write/create — both optional.
+
+required_ops: []
+
+optional_ops:
+  - blog.tag.create
+  - blog.tag.web_save
+  - blog.tag.read
+  - blog.tag.search_read
+  - blog.tag.web_search_read
+  - blog.tag.name_search
+  - blog.post.read
+  - blog.post.write
+  - blog.post.web_save
+  - blog.post.search_read
+  - blog.post.web_search_read
+  - ir.ui.view.get_views
+
+forbidden_ops:
+  - blog.post.unlink
+  - blog.post.create
+  - blog.tag.unlink

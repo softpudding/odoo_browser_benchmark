@@ -343,7 +343,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 331 | purchase.send_rfq_email_with_template_signature [hard] | On a draft RFQ, click Send by Email, modify template body, attach signature | WIP | — | — | — |
 | 332 | website_sale.set_product_seo_title_meta [easy] | Open product, set SEO title and meta description | Done | PASS | PASS | 1.0 |
 | 333 | point_of_sale.attach_customer_apply_loyalty [hard] | In POS, attach a customer with loyalty card mid-sale and apply earned points | Done | PASS | PASS | 1.0 |
-| 334 | website_blog.create_tag_assign_to_three_posts [medium] | Create a new tag, assign to 3 existing blog posts | WIP | — | — | — |
+| 334 | website_blog.create_tag_assign_to_three_posts [medium] | Create a new tag, assign to 3 existing blog posts | Done | PASS | FAIL | 0.0 |
 | 335 | hr_recruitment.skill_filter_then_send_offer [hard] | Filter applicants by skill='Python', open top match, send offer email | WIP | — | — | — |
 | 336 | sale.create_quotation_with_customer_pricelist [medium] | Create SO with a customer who has a specific pricelist; verify pricelist auto-applied | WIP | — | — | — |
 | 337 | calendar.invite_organize_with_event_agenda_attachment [hard] | Create calendar event with attachment file as agenda | WIP | — | — | — |
@@ -3365,3 +3365,18 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Open the seeded Bench Loyalty POS register, add Bench POS Item x3 (EUR 60.00), click Customer on the action pad and pick Loyal Larry, open the Rewards popup and redeem the '10% on your order' loyalty-funded reward for 50 points (-EUR 6.00), then pay Bench Loyalty Cash 54.00 and validate. |
 | **Capability tested** | POS kiosk UI: attach a seeded customer mid-sale, open the Rewards popup, redeem a discount reward funded by the customer's loyalty.card point balance, pay cash, validate. Cross-module loyalty + POS. |
 | **Notes** | pos_loyalty auto-installs when both point_of_sale and loyalty are present; both are in base via sale_loyalty, no module install needed in seed. Seed creates a loyalty.program (program_type='loyalty', applies_on='both', reward=10% order discount at 50 points) scoped to the new POS config via pos_config_ids, and mints a loyalty.card for Loyal Larry with 100 points (exactly enough for one redemption, not two). Oracle uses the JSON-RPC call_kw bypass pattern. Calibration: browser-use solved on the first 91s run (F1=1.0) — the Rewards popup and customer autocomplete are well labelled, so the combined customer-attach + loyalty-redeem + cash-pay flow does NOT stack into a hard pattern. Earn-rule side note: reward_point_amount=1 on the order earn-rule means the POS awards 1 point on the same order the reward is redeemed, so the card ends at 51 points (100 + 1 earn - 50 redeem); check.py accepts ~51. To re-harden, require a non-default reward among multiple listed rewards, combine with a per-line discount, or add a cash reconciliation mismatch on session close. |
+
+---
+
+## website_blog.create_tag_assign_to_three_posts
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL (gave_up=True at 360s) |
+| **F1** | 0.0 |
+| **Odoo modules** | website_blog |
+| **Workflow** | Create a new `blog.tag` named `Q2-2026` via `/odoo/blog-tags`, then loop through three seeded `blog.post` records (Post-A, Post-B, Post-C) and add the tag on each post's `tag_ids` m2m (many2many_tags widget). A fourth seeded post (Post-D) acts as a distractor that must remain untagged. |
+| **Capability tested** | Tag creation + bulk m2m assignment across multiple records with a "do-not-touch-the-distractor" negative constraint. Same bulk-loop trap as row 321 (hr.create_department_assign_manager_three_employees), but with the added temptation of the tag form's reverse `post_ids` m2m labeled "Used in:" which could let BU mass-assign from the wrong side. |
+| **Notes** | BU successfully created the `Q2-2026` tag (1 matching create edit on `blog.tag`) and issued 172 writes total, but timed out with `gave_up=True` at 360s without landing the tag on a single post. Postconditions flagged Post-A/B/C all missing the tag. Distractor Post-D stayed clean. Failure is harsher than the "forget one" trap predicted — BU never made it past the tag form into the per-post loop. Oracle writes `tag_ids: [[4, tagId]]` via JSON-RPC because the `many2many_tags` autocomplete can be brittle under Playwright; BU's UI route is the authentic failure test. New cookbook note: `blog.tag.name` has a UNIQUE constraint (`_name_uniq`), and the tag form's "Used in:" reverse m2m (`post_ids`) is a natural shortcut BU can get lured into — adding a distractor post punishes the "select all posts" branch. |
