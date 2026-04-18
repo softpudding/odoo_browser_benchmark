@@ -1,0 +1,20 @@
+task_id: stock.count_inventory_apply_with_date
+module: stock
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/inventory
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "Navigate Inventory > Operations > Physical Inventory, locate one specific product row, set both the counted quantity and the inventory date inline, then click Apply on that row."
+  checks_verify: "The WH/Stock quant for the seeded product reaches quantity 25 and an offsetting inventory adjustment quant is created via the row-level Apply action."
+  primary_track: true
+  tier: 2

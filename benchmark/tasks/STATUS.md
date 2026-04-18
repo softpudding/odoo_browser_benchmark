@@ -207,27 +207,27 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 195 | hr_expense.post_approved_expense_to_journal [medium] | Manager posts an approved expense report to its journal entry | WIP | — | — | — |
 | 196 | mail.star_and_reply_inbox_message [easy] | Star an inbox message and post a reply | WIP | — | — | — |
 | 197 | mail.mark_message_done_archive_notification [easy] | Mark Done on an inbox notification to remove it from Inbox | WIP | — | — | — |
-| 198 | mail.create_group_channel_upload_attachment [medium] | Create a private channel, invite a member, and upload a file attachment | WIP | — | — | — |
+| 198 | mail.create_group_channel_upload_attachment [medium] | Create a private channel, invite a member, and upload a file attachment | Done | PASS | FAIL/FAIL | 0.0 |
 | 199 | im_livechat.add_canned_response_send_in_chat [medium] | Create a canned response shortcut and send it in an operator chat | WIP | — | — | — |
 | 200 | fleet.log_service_cost_record [easy] | Add a service cost record (oil change) to an existing vehicle | Done | PASS (32.1s) | FAIL (142.4s) | 0.00 |
 | 201 | fleet.assign_vehicle_tags_category [easy] | Add two tags and set a category on a vehicle | Done | PASS | PASS | 1.0 |
 | 202 | fleet.transfer_vehicle_new_driver [medium] | Change a vehicle's driver and set the new assignment date | Done | PASS | FAIL/FAIL | 0.0 |
-| 203 | event.add_event_questions_to_registration [medium] | Add two custom questions to an existing event registration form | WIP | — | — | — |
+| 203 | event.add_event_questions_to_registration [medium] | Add two custom questions to an existing event registration form | Done | PASS | PASS/PASS | 1.0 |
 | 204 | event.create_event_tracks_session_schedule [hard] | Add two conference tracks with times to a published event | WIP | — | — | — |
 | 205 | event.set_ticket_seat_availability_limit [easy] | Set total seat limit and per-ticket max for an event | Done | PASS | FAIL | 0.4 |
 | 206 | stock.create_internal_transfer_between_locations [medium] | Create an internal transfer between two locations, add a line, and validate | Done (dup of 258) | — | — | — |
 | 207 | stock.create_putaway_rule_for_product [hard] | Configure a putaway rule routing a product to a specific sub-location | WIP | — | — | — |
-| 208 | stock.count_inventory_apply_with_date [medium] | Make an inventory adjustment with a specific counted date | WIP | — | — | — |
+| 208 | stock.count_inventory_apply_with_date [medium] | Make an inventory adjustment with a specific counted date | Done | PASS | FAIL/FAIL | 0.0 |
 | 209 | stock.set_storage_category_capacity [medium] | Define a storage category with capacity and assign it to a location | WIP | — | — | — |
 | 210 | account.create_manual_journal_entry_balanced [hard] | Create a misc journal entry with three balanced debit/credit lines and post | WIP | — | — | — |
 | 211 | account.reconcile_bank_statement_line_manual [hard] | Open a bank statement line and reconcile it against a suggested invoice | WIP | — | — | — |
 | 212 | account.create_recurring_entry_template [medium] | Save a journal entry as a recurring entry template | WIP | — | — | — |
-| 213 | account.lock_books_set_period_lock_date [medium] | Set the Non-Advisors Lock Date in accounting settings | WIP | — | — | — |
+| 213 | account.lock_books_set_period_lock_date [medium] | Set the Non-Advisors Lock Date in accounting settings | Done | PASS | FAIL/FAIL | 0.0 |
 | 214 | crm.set_lost_reason_reassign_salesperson [medium] | Mark opportunity Lost with specific reason then reassign salesperson | Done | PASS | — | — |
 | 215 | crm.pivot_view_opportunities_by_stage_revenue [easy] | Switch CRM pipeline to Pivot view, group by stage, measure expected revenue | Done | PASS | PASS/PASS | 1.0 |
 | 216 | project.kanban_drag_task_between_stages [easy] | Drag a task kanban card from one stage to another | Done | PASS | FAIL | 0.0 |
 | 217 | project.create_project_from_template_duplicate [medium] | Duplicate an existing project keeping its tasks | Done | PASS | PASS/PASS | 1.0 |
-| 218 | project.recurring_task_configure_frequency [medium] | Configure an existing task as recurring with weekly frequency | WIP | — | — | — |
+| 218 | project.recurring_task_configure_frequency [medium] | Configure an existing task as recurring with weekly frequency | Done | PASS | PASS/PASS | 1.0 |
 | 219 | contacts.add_bank_account_to_partner [easy] | Add an IBAN bank account to an existing partner via Invoicing tab | Done | PASS | — | — |
 | 220 | contacts.archive_partner_then_unarchive_filter [easy] | Archive a contact then unarchive it via the Archived search filter | Done (dup of 232) | — | — | — |
 | 221 | calendar.invite_external_attendee_by_email [easy] | Create a calendar event inviting an external email address not in partners | Done | PASS | PASS | 1.0 |

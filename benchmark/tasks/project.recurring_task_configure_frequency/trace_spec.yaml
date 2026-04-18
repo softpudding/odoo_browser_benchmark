@@ -1,0 +1,27 @@
+# Trace oracle for project.recurring_task_configure_frequency
+#
+# Medium: open one task, toggle a boolean, fill a small subform, save.
+
+required_ops: []
+
+optional_ops:
+  - project.task.read
+  - project.task.write
+  - project.task.web_save
+  - project.task.search_read
+  - project.task.web_search_read
+  - project.task.web_read
+  - project.task.recurrence.create
+  - project.task.recurrence.write
+  - project.task.recurrence.read
+  - project.project.read
+  - project.project.search_read
+  - project.task.type.read
+  - project.task.type.search_read
+  - ir.ui.view.get_views
+  - ir.actions.act_window.read
+
+forbidden_ops:
+  - project.task.unlink
+  - project.project.unlink
+  - project.task.recurrence.unlink
