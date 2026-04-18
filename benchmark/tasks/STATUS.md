@@ -328,7 +328,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 316 | hr_expense.create_with_currency_eur_to_usd [medium] | Create NYC Hotel expense in USD (200 USD = 185 EUR), employee paid, verify EUR conversion | Done | PASS | FAIL | 0.0 |
 | 317 | event_product.create_event_product_link_to_ticket [medium] | Create Conference Pass Std service product (service_tracking=event), add Standard Pass ticket to Spring Summit | Done | PASS | PASS | 1.0 |
 | 318 | website.create_contact_form_with_custom_field [hard] | Edit Contact Us page, add Selection field Inquiry Type with 3 options via website builder | Done | PASS | FAIL | 0.0 |
-| 319 | contacts.merge_three_duplicates_keep_email [hard] | Merge 3 duplicate contacts into one, choosing email from a specific record | WIP | — | — | — |
+| 319 | contacts.merge_three_duplicates_keep_email [hard] | Merge 3 duplicate contacts into one, choosing email from a specific record | Done | PASS | FAIL | 0.0 |
 | 320 | website_sale.create_gift_card_apply_in_cart [hard] | Configure Gift Card program, generate 1 €50 card code, apply in /shop/cart with €100 product | Done | PASS | PASS | 1.0 |
 | 321 | hr.create_department_assign_manager_three_employees [medium] | Create Bench Engineering dept with manager Mike, then bulk assign 3 employees to it | Done | PASS | FAIL | 0.0 |
 | 322 | stock.create_putaway_rule_for_specific_category [hard] | Create putaway rule routing a product category to a specific sub-location | Done | PASS | PASS | 1.0 |
@@ -3260,3 +3260,18 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Open seeded project 'Bench Project A' (grouped kanban of its tasks with pre-seeded stages Triage/In Progress/Review/Done). Unfold the `.o_column_quick_create` chevron at the right edge, type 'Backlog Review', confirm. Then drag the new 'Backlog Review' column header leftward so it drops between 'Triage' and 'In Progress'. |
 | **Capability tested** | Kanban column quick-create + column drag-reorder (web_resequence via Owl's useSortable) — a UI interaction pattern distinct from the existing card-drag task (project.kanban_drag_task_between_stages), since it moves GROUPS not RECORDS and involves two web_resequence RPCs (one implicit on create, one on drag). |
 | **Notes** | Oracle uses an emulated slow mouse drag on the `.o_column_title` handle (the `KanbanRenderer` useSortable config pins `handle: ".o_column_title"`). Browser-use created 'Backlog Review' correctly (single `name_create` + auto `web_resequence` to place at end) but could NOT drag the column to position #2 — left it at position #5 (far right). Classic drag-reorder failure mode predicted in the backlog calibration note. Seed intentionally uses sparse sequences (10/20/30/40) so the kanban's reorderAll branch renumbers everything starting at min(sequences)=1 on the first web_resequence; check.py is sequence-agnostic and validates left-to-right ordering instead. |
+
+---
+
+## contacts.merge_three_duplicates_keep_email
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
+| **Odoo modules** | Contacts |
+| **Workflow** | Seed four res.partner rows named "John Doe" (refs BENCH-JD-01 empty, JD-02 email=john@x.com, JD-03 phone=555-1234) plus a decoy JD-DECOY under Acme Corp. In /odoo/contacts list view, select only the three refs without a parent company, Actions > Merge, set Destination Contact = the JD with email john@x.com (BENCH-JD-02) via the partner_show_db_id-tagged dropdown, click Merge Contacts. Final survivor must be BENCH-JD-02 with email=john@x.com AND phone=555-1234. |
+| **Capability tested** | 3-way merge with explicit master selection. Agent must read the prompt's master-selection rule and pick the non-default dst_partner_id, and must NOT include the Acme Corp decoy in the selection. |
+| **Notes** | Well-calibrated hard. BU completed the Actions>Merge flow and called `action_merge`, but left the default dst_partner_id (BENCH-JD-01, the first partner by id) instead of switching to the email-bearing BENCH-JD-02 — exactly the non-default wizard trap. The merge did preserve email+phone, but check.py asserts the survivor ref so the wrong master fails. Task also verifies the decoy (JD-DECOY under Acme Corp) is untouched. Note: the base Odoo 19 merge wizard does NOT have per-field source tabs; field preservation is deterministic via `_update_values` (src_partners, dst last) — since the 3 duplicates have disjoint email/phone, any master produces the same email+phone on the survivor, so the distinguishing difficulty is picking the right *survivor ref* and excluding the decoy. |
