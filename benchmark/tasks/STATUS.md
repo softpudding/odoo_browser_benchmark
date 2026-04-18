@@ -359,6 +359,19 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 347 | inventory.cycle_count_two_locations_apply_selected_delta [medium] | Perform a cycle count across two locations and apply only the intended stock discrepancy | Done | PASS | FAIL | 0.0 |
 | 348 | project_todo.create_note_set_color_deadline [easy] | Create a note, set a deadline, and apply a non-default kanban color | Done | PASS | FAIL | 0.0 |
 | 349 | survey.create_certification_quiz_attempt_limit_publish [hard] | Build a certification quiz with passing score and attempt limit, then publish it | Done | PASS | FAIL | 0.0 |
+| 350 | appointment.public_booking_reschedule_cancel_portal [hard] | Configure an appointment type, book it publicly, then reschedule and cancel it from the portal | WIP | — | — | — |
+| 351 | helpdesk.team_sla_assign_escalate_close [hard] | Create a helpdesk team with SLA policy, process a ticket through assignment and escalation, then close it | WIP | — | — | — |
+| 352 | marketing_automation.tag_trigger_drip_campaign [hard] | Build a tag-triggered marketing automation flow with delayed actions and a stop condition | WIP | — | — | — |
+| 353 | event_product.sell_event_product_fill_attendee_details [medium] | Sell an event-linked product and complete attendee details for the generated registration | WIP | — | — | — |
+| 354 | event_sale.multi_ticket_checkout_two_attendees [hard] | Configure two paid ticket types and complete one website checkout with separate attendee details | WIP | — | — | — |
+| 355 | sale_loyalty.buy_x_get_y_reward_in_cart [hard] | Configure a Buy X Get Y promotion and verify the free-product reward appears in the cart | WIP | — | — | — |
+| 356 | sale_purchase.mto_so_generate_po_change_vendor_confirm [hard] | Confirm an MTO sale order, inspect the generated PO, switch vendor, and continue the chain | WIP | — | — | — |
+| 357 | sale_stock.confirm_so_manual_reserve_validate_delivery [medium] | Confirm a sale order, manually reserve stock on its delivery, and validate the transfer | WIP | — | — | — |
+| 358 | website_blog.create_post_with_cta_seo_schedule [medium] | Create a blog post with a CTA, SEO metadata, and a scheduled publication date | WIP | — | — | — |
+| 359 | im_livechat.configure_channel_then_handle_widget_chat [hard] | Configure a live chat channel, open the website widget, accept the chat, and reply with a canned response | WIP | — | — | — |
+| 360 | website_hr_recruitment.apply_public_then_schedule_interview [hard] | Submit a public job application, then schedule that applicant’s interview from the backend | WIP | — | — | — |
+| 361 | purchase_stock.receive_partial_scrap_damaged_units [hard] | Receive part of a PO, scrap damaged units from the receipt, and finish the remainder correctly | WIP | — | — | — |
+| 362 | maintenance.create_request_from_equipment_schedule_followup [medium] | Create a maintenance request from an equipment record and schedule a follow-up activity | WIP | — | — | — |
 
 ---
 
