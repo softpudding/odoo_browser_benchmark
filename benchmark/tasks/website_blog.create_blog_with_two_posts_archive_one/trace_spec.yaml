@@ -1,0 +1,28 @@
+# Trace oracle for website_blog.create_blog_with_two_posts_archive_one
+#
+# Medium: create blog + 2 posts, then archive one of them.
+# Browser client uses web_save / action_archive — keep create/write/web_save
+# in optional_ops. Forbid unlink (the archived post must remain in DB).
+
+required_ops: []
+
+optional_ops:
+  - blog.blog.create
+  - blog.blog.read
+  - blog.blog.write
+  - blog.blog.web_save
+  - blog.blog.search_read
+  - blog.blog.web_search_read
+  - blog.post.create
+  - blog.post.read
+  - blog.post.write
+  - blog.post.web_save
+  - blog.post.search_read
+  - blog.post.web_search_read
+  - blog.post.action_archive
+  - blog.post.action_unarchive
+  - ir.ui.view.get_views
+
+forbidden_ops:
+  - blog.post.unlink
+  - blog.blog.unlink

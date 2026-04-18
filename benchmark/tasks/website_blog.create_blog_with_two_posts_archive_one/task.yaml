@@ -1,0 +1,20 @@
+task_id: website_blog.create_blog_with_two_posts_archive_one
+module: website_blog
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/blogs
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "Create a blog and two published posts under it, then archive only one of the posts."
+  checks_verify: "Blog 'Bench Insights' exists; two blog.posts exist; March Notes is_published=False AND active=False; April Update active=True and published."
+  primary_track: true
+  tier: 2

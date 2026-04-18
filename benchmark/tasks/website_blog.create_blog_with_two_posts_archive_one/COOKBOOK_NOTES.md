@@ -1,0 +1,3 @@
+- For a record that is **created in the same task and then archived** (active=False), the state-diff engine emits `op: "create"` with `norm_value: null` (NOT `false`) for `active`, `is_published`, and `website_published`. expected_state.json must use `null` for these fields, not `false`.
+- `blog.post.action_archive` is the canonical UI/JSON-RPC method for archive (mirrors what the form's Action > Archive menu calls). Auto-flips `is_published`/`website_published` to False as a side effect.
+- `blog.blog` records also surface their `active` field in the state diff (norm_value: true on a fresh create) — include it in expected_state.json or add to ignore_fields to avoid spurious extras.
