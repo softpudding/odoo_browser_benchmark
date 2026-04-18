@@ -1949,3 +1949,53 @@ Source tasks: `hr_attendance.clock_in_out_kiosk_mode`,
   agent to understand it must scan or switch to Manual Selection from
   settings), or (c) a department filter sidebar where the target
   employee is hidden behind a department click.
+
+---
+
+## stock_barcode — Barcode tablet UI is Enterprise-only in Odoo 19
+
+- The warehouse Barcode app (scan-to-receive, scan-to-pack, tablet UI
+  with `+ 1` quantity button and Validate tile) ships in the **Enterprise**
+  `stock_barcode` addon. Odoo 19 **Community** has ONLY:
+  - `addons/barcodes/` — keyboard-event mixin (`BarcodeEventsMixin`)
+    that captures Enter-terminated key bursts from USB scanners + bus
+    broadcast of `barcode_scanned`; plus the `barcode.nomenclature` /
+    `barcode.rule` models for GS1 prefix parsing. **No** warehouse UI.
+  - `addons/barcodes_gs1_nomenclature/` — GS1 AI parser extension.
+- `grep -rn "stock_barcode" addons/` on `odoo_benchmark` returns only
+  i18n strings and one `module_stock_barcode = fields.Boolean("Barcode
+  Scanner")` upgrade_boolean on `addons/stock/models/res_config_settings.py:29`
+  (ticking it in Inventory → Configuration → Settings asks Odoo to
+  install the absent module and fails with "Module not found").
+- `/odoo/barcode` is NOT a registered client-action route in this
+  checkout — there is no `stock_barcode_action_main_menu`, no
+  `BarcodeMainMenu` Owl component, no `BarcodePickingModel` JS class,
+  no `receipt_line.js`, no `line_component.js`. Navigating there in a
+  Community build lands on the "action not found" 404 screen.
+- **Pre-flight for any `stock_barcode.*` task:** run
+  ```python
+  module = env["ir.module.module"].search(
+      [("name", "=", "stock_barcode")], limit=1)
+  assert module and module.state == "installed"
+  ```
+  If False, the task is BLOCKED — ship the standard BLOCKED skeleton
+  (seed / oracle / check short-circuit with diagnostics, empty
+  expected_state / state_spec / trace_spec, RESULT.md documenting the
+  absence). Precedent: `barcodes.receive_product_via_scan_validate`,
+  `stock_barcode.receive_via_barcode_scan_validate` (row 401), and all
+  other Enterprise-only module blockers (rows 350, 351, 352, 387).
+- When scaffolding a fallback task for scanning-like behavior in
+  Community, pivot to the backend form view: `stock.picking` list →
+  open picking → edit move line `quantity` inline → Validate. This is
+  the same data path but exposed via the standard form widget, not a
+  tablet UI. File the re-scoped task under `stock.*`, not
+  `stock_barcode.*`.
+- When the enterprise addon IS vendored, the scanning UI historically
+  listens on a hidden `<input class="o_barcode_input">` that is
+  positioned off-screen; programmatic scanning via
+  `page.keyboard.type("BENCH-A-001"); page.keyboard.press("Enter")`
+  drives the same `barcode_scanned` bus event as a physical USB
+  scanner. The `+ 1` tile is (as of recent versions)
+  `button.o_add_reserved` / `button.o_barcode_line_btn_add_quantity` —
+  selector names drift between Odoo versions, always confirm against
+  the shipping enterprise source before writing oracle selectors.
