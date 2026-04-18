@@ -403,6 +403,11 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 391 | project_sms.send_reminder_sms_to_task_followers [medium] | Send a reminder SMS to task followers from a project task log note | WIP | — | — | — |
 | 392 | mrp.workorder_operation_scan_serial_complete [hard] | Start a work order, consume serial-tracked component via scan, mark operation done and finish MO | WIP | — | — | — |
 | 393 | crm_iap_enrich.bulk_enrich_leads_from_list [hard] | From CRM pipeline list view, select 3 leads without partner info and trigger enrich action | WIP | — | — | — |
+| 394 | website_forum.post_question_accept_answer [medium] | Post a question on the website forum, answer it, accept the answer | WIP | — | — | — |
+| 395 | stock.transfer_reserved_to_ready_partial_backorder [hard] | Reserve qty on a delivery, validate only part of it, create backorder | WIP | — | — | — |
+| 396 | website_sale_wishlist.add_product_share_to_email [medium] | Add a product to wishlist on the shop and share via email | WIP | — | — | — |
+| 397 | purchase.create_rfq_receive_invoice_3way_match [hard] | Create RFQ with 2 lines, confirm, receive partially, then bill and reconcile | WIP | — | — | — |
+| 398 | hr_attendance.clock_in_out_kiosk_mode [medium] | From Attendance kiosk, an employee clocks in and then clocks out | WIP | — | — | — |
 
 ---
 
