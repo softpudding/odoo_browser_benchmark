@@ -393,6 +393,11 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 381 | website_customer.publish_customer_reference_on_public_page [medium] | Mark a customer reference as published and verify it appears on /customers | WIP | — | — | — |
 | 382 | pos_restaurant.open_table_order_mark_ready [hard] | In restaurant POS, open a table, take an order, and mark the course ready | WIP | — | — | — |
 | 383 | website_sale_stock.show_stock_availability_add_to_cart [medium] | On a /shop product with stock availability display enabled, verify availability shows and add to cart within limits | WIP | — | — | — |
+| 384 | lunch.create_vendor_product_order_for_today [medium] | Seed a lunch vendor + product, then submit a lunch order for today | WIP | — | — | — |
+| 385 | stock_sms.enable_delivery_sms_notification_validate [medium] | Enable SMS delivery notification on a picking type and validate a delivery to trigger it | WIP | — | — | — |
+| 386 | sale_management.create_quotation_template_apply_to_new_so [medium] | Create a quotation template with 2 default lines, then apply it to a new SO | WIP | — | — | — |
+| 387 | hr_skills_survey.link_certification_survey_to_skill [hard] | Create a certification survey, link it to a skill, and attempt completion | WIP | — | — | — |
+| 388 | project.create_milestone_assign_tasks_reach [medium] | Create a project milestone, assign 2 tasks to it, then mark reached | WIP | — | — | — |
 
 ---
 
