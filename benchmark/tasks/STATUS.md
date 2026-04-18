@@ -408,6 +408,11 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 396 | website_sale_wishlist.add_product_share_to_email [medium] | Add a product to wishlist on the shop and share via email | WIP | — | — | — |
 | 397 | purchase.create_rfq_receive_invoice_3way_match [hard] | Create RFQ with 2 lines, confirm, receive partially, then bill and reconcile | WIP | — | — | — |
 | 398 | hr_attendance.clock_in_out_kiosk_mode [medium] | From Attendance kiosk, an employee clocks in and then clocks out | WIP | — | — | — |
+| 399 | account.credit_note_partial_refund_post [hard] | On a posted customer invoice, create a partial credit note via reversal wizard and post it | WIP | — | — | — |
+| 400 | website.submit_contact_form_create_crm_lead [medium] | Submit the frontend /contactus form and verify a CRM lead is created | WIP | — | — | — |
+| 401 | stock_barcode.receive_via_barcode_scan_validate [hard] | Use Barcode app to receive a picking by scanning product codes | WIP | — | — | — |
+| 402 | hr_holidays.request_allocation_approve_self_book_day_off [hard] | Allocate time off, approve, then book a day off against it | WIP | — | — | — |
+| 403 | hr_recruitment.create_applicant_kanban_move_to_offer [medium] | Create an applicant via kanban, move through stages to Contract Proposal | WIP | — | — | — |
 
 ---
 
