@@ -1,0 +1,21 @@
+task_id: website.add_image_snippet_swap_source
+module: website
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/action-website.website_preview?path=%2Fbench-image-page&enable_editor=1
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 330
+step_limit: 220
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "In website builder, drag an Image snippet onto the seeded page, swap its src to /web/image/website.library_image_10, save"
+  checks_verify: "Page arch_db contains an <img> with src='/web/image/website.library_image_10' inside the page body; heading preserved"
+  failure_pattern: "Agent struggles to drop the Image snippet onto the iframe dropzone, or fails to swap the media in the media dialog"
+  primary_track: true
+  tier: 2

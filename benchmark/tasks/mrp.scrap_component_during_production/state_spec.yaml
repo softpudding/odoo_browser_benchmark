@@ -1,0 +1,31 @@
+models:
+  mrp.production:
+    match_key:
+      - name
+    fields:
+      - name
+      - state
+      - product_qty
+      - qty_produced
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
+      - date_start
+      - date_finished
+      - date_deadline
+
+  stock.scrap:
+    match_key:
+      - production_id
+    fields:
+      - production_id
+      - product_id
+      - scrap_qty
+      - state
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
+      - date_done
+      - name

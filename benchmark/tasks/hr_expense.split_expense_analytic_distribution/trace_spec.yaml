@@ -1,0 +1,37 @@
+# Trace spec for hr_expense.split_expense_analytic_distribution.
+#
+# Agent edits analytic_distribution on a draft expense and submits it.
+# Browser clients commonly use web_save for writes, so create/write
+# operations live in optional_ops and we validate the real outcome
+# through check.py.
+
+required_ops: []
+
+optional_ops:
+  - hr.expense.read
+  - hr.expense.write
+  - hr.expense.web_save
+  - hr.expense.web_read
+  - hr.expense.search_read
+  - hr.expense.web_search_read
+  - hr.expense.action_submit
+  - account.analytic.account.read
+  - account.analytic.account.search_read
+  - account.analytic.account.web_search_read
+  - account.analytic.account.name_search
+  - account.analytic.plan.read
+  - account.analytic.plan.search_read
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+  - mail.message.create
+  - mail.followers.create
+  - bus.bus.create
+
+forbidden_ops:
+  - hr.expense.unlink
+  - hr.expense.action_refuse
+  - hr.expense.action_reset
+  - hr.expense.action_approve
+  - hr.expense.action_post
+  - account.analytic.account.unlink
+  - account.analytic.plan.unlink
