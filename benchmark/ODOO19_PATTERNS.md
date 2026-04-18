@@ -973,7 +973,6 @@ PO record is just mutating its partner_id.
 
 ---
 
-<<<<<<< HEAD
 ## DateTimeField widget: button vs input dual rendering
 
 `addons/web/static/src/views/fields/datetime/datetime_field.xml` renders the
@@ -1056,7 +1055,9 @@ Applies to every datetime field with a seeded default (e.g., `stock.lot.expirati
   option, leaving the m2m empty. Since state_spec usually leaves m2m
   out (noisy diffs), the postcondition check must explicitly assert
   the m2m membership.
-=======
+
+---
+
 ## mrp_subcontracting — receipt + auto-MO chain
 
 - **Module not in base**: `mrp_subcontracting` AND its auto-install-gated
@@ -1111,5 +1112,3 @@ Applies to every datetime field with a seeded default (e.g., `stock.lot.expirati
   (`is_subcontract AND move_line_ids AND quantity > 0 AND MO state !=
   cancel`). The canonical flow is: open Details on the move → fill
   move_lines → validate — the smart button is optional drill-down.
-
->>>>>>> ea749f33 ([ADD] benchmark: mrp_subcontracting.receive_subcontracted_product_with_components (hard))
