@@ -395,7 +395,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 383 | website_sale_stock.show_stock_availability_add_to_cart [medium] | On a /shop product with stock availability display enabled, verify availability shows and add to cart within limits | Done | PASS | PASS | 1.0 |
 | 384 | lunch.create_vendor_product_order_for_today [medium] | Seed a lunch vendor + product, then submit a lunch order for today | WIP | — | — | — |
 | 385 | stock_sms.enable_delivery_sms_notification_validate [medium] | Enable SMS delivery notification on a picking type and validate a delivery to trigger it | WIP | — | — | — |
-| 386 | sale_management.create_quotation_template_apply_to_new_so [medium] | Create a quotation template with 2 default lines, then apply it to a new SO | WIP | — | — | — |
+| 386 | sale_management.create_quotation_template_apply_to_new_so [medium] | Create a quotation template with 2 default lines, then apply it to a new SO | Done | PASS | PASS | 1.0 |
 | 387 | hr_skills_survey.link_certification_survey_to_skill [hard] | Create a certification survey, link it to a skill, and attempt completion | Removed | FAIL (feature unavailable) | — | — |
 | 388 | project.create_milestone_assign_tasks_reach [medium] | Create a project milestone, assign 2 tasks to it, then mark reached | WIP | — | — | — |
 
@@ -4065,3 +4065,18 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Seed `survey.survey` 'Bench Python Cert' (`survey_type='certification'`, `scoring_type='scoring_with_answers'`, `scoring_success_min>=70`, 2 scored simple_choice questions). Seed `hr.skill.type` 'Programming Languages' + `hr.skill` 'Python'. Agent opens skill Python, picks 'Bench Python Cert' in the skill's Certification (survey_id) many2one, saves. Optional: admin takes the survey via the Test link, scores pass, and the admin's `hr.resume.line` / `hr.employee.skill` surfaces a certified entry via the `_mark_done()` hook. |
 | **Capability tested** | Configure-then-certify chain: survey creation with scoring config + cross-model Many2one link (skill → survey) + side-effect observation on the employee's resume when the cert is awarded. |
 | **Notes** | Blocked — Odoo 19 **Community** `hr_skills_survey` does NOT extend `hr.skill` with a `survey_id` / Certification field. Inspection of `addons/hr_skills_survey/models/` shows only: readonly `survey_id` on `hr.resume.line` (populated automatically by `survey.user_input._mark_done()`), `certification_validity_months` on `survey.survey`, and a `_mark_done()` override that writes resume lines. `grep '_inherit.*hr\\.skill'` across all addons returns zero hits — no module adds a survey Many2one on `hr.skill`. The "link survey to skill" UI is an Enterprise-only extension not vendored in this checkout. Task skeleton (seed/oracle/check) is committed with clear BLOCKED guards that short-circuit with diagnostic errors instead of silently passing. Follows the same precedent as rows 350 (appointment), 351 (helpdesk), 352 (marketing_automation) — all Removed for Enterprise-only feature unavailability. Re-enable once the enterprise skill-certification link is vendored into `addons/`. See the task's RESULT.md for full evidence and re-enabling steps. |
+
+---
+
+## sale_management.create_quotation_template_apply_to_new_so
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS (F1=1.0, 44.3s) |
+| **Browser-Use** | PASS (F1=1.0, 234.7s single-shot, 0 postcondition failures) |
+| **F1** | 1.0 |
+| **Odoo modules** | Sales (sale_management) |
+| **Workflow** | Seed grants `sale_management.group_sale_order_template` to admin, seeds two consu products (Bench Widget €10, Bench Gadget €20) and customer `Bench Test Co`. Agent navigates Sales > Configuration > Quotation Templates > New, fills the H1 title `Bench Starter Pack`, adds two lines via the `so_template_line_o2m` editable list (Bench Widget qty 5, Bench Gadget qty 2), saves. Then from Sales > Orders > Quotations > New, picks customer `Bench Test Co`, sets `sale_order_template_id=Bench Starter Pack`; the `_onchange_sale_order_template_id` hook clears and recreates `order_line` from the template's `_prepare_order_line_values()`. Saves as draft. |
+| **Capability tested** | Two-stage config + application flow gated by a feature group (`sale_management.group_sale_order_template` controls both the Configuration menu AND the SO form's Quotation Template field). Inline-editable o2m list with a custom `SectionAndNoteListRenderer`-based widget. Onchange-driven line auto-population via an m2o pick (no per-line data entry needed on the SO). |
+| **Notes** | Calibration CORRECT for medium: BU single-shot PASS in 234.7s with F1=1.0. Workflow length (config + apply) + the `so_template_line_o2m` line widget made this more than a trivial form edit, but none of the steps required a non-default wizard choice or date picker. To escalate to hard: add a distractor template `Bench Legacy Pack` with different lines (agent must verify correct template applied), require the agent to enable the feature group in Settings first (seed un-grants it), or require an `is_optional` section line on the template. Cookbook notes added for the feature-group double-gate, `so_template_line_o2m` list-cell field names (`product_id`, NOT `product_template_id`), and `sale.order.template.display_name` has no currency suffix (unlike `product.pricelist`). |

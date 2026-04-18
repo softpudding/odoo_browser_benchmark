@@ -1,0 +1,39 @@
+models:
+  sale.order.template:
+    match_key:
+      - name
+    fields:
+      - name
+      - active
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
+      - sequence
+      - number_of_days
+      - require_signature
+      - require_payment
+      - prepayment_percent
+      - mail_template_id
+      - journal_id
+      - company_id
+      - note
+      - sale_order_template_line_ids
+  sale.order:
+    match_key:
+      - partner_id
+    fields:
+      - partner_id
+      - sale_order_template_id
+      - state
+    ignore_fields:
+      - id
+      - name
+      - create_date
+      - write_date
+      - date_order
+      - amount_total
+      - amount_untaxed
+      - amount_tax
+      - validity_date
+      - note

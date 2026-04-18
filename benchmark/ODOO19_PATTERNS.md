@@ -1383,3 +1383,37 @@ Implications for task authors:
   probe `env["hr.skill"]._fields` for `survey_id` (or grep
   `_inherit.*hr\.skill` across addons) and mark Removed if absent.
 
+---
+
+## sale_management — quotation template feature group + auto-populate onchange
+
+- `sale_management.group_sale_order_template` gates BOTH the
+  **Sales > Configuration > Quotation Templates** menu AND the
+  **Quotation Template** (`sale_order_template_id`) field on the
+  `sale.order` form. Seeds that want either surface visible must
+  `group.sudo().write({"user_ids": [(4, admin.id)]})`. The Sales
+  Settings checkbox labelled "Quotation Templates" just toggles this
+  same group.
+- Direct action URL for the templates list:
+  `/odoo/action-sale_management.sale_order_template_action`.
+- `sale.order.template` Lines tab uses the `so_template_line_o2m` widget
+  (a `SectionAndNoteListRenderer` extension) over a standard
+  `<list editable="bottom">`. Cell field names in the list are
+  `product_id`, `name`, `product_uom_qty`, `product_uom_id` — NOT
+  `product_template_id` (the `sol_o2m` widget on `sale.order` uses
+  `product_template_id` in its list but `sale.order.template` does NOT).
+- Setting `sale.order.sale_order_template_id` fires the
+  `_onchange_sale_order_template_id` hook which **clears** existing
+  `order_line` and recreates one `sale.order.line` per
+  `sale.order.template.line` via `_prepare_order_line_values()`. One
+  m2o pick fully populates the lines — no per-line data entry needed.
+- `sale.order.sale_order_template_id` uses
+  `options="{'no_create': True}"` and is
+  `readonly="state in ['cancel', 'sale']"`. Quick-create is disabled;
+  the template must already exist before the SO form loads.
+- `sale.order.template.display_name` is just `name` (NO currency suffix
+  like pricelists have). `expected_state.json` entries that target
+  `sale.order.sale_order_template_id` use the bare template name.
+- `sale.order.template.name` renders inside the `oe_title` H1 block,
+  but the field name is still `name` — standard
+  `fill_field(page, "name", "...")` works.
