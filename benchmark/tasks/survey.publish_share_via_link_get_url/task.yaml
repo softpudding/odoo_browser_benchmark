@@ -1,0 +1,20 @@
+task_id: survey.publish_share_via_link_get_url
+module: survey
+difficulty: easy
+instruction: see prompt.md
+start_url: /odoo/action-survey.action_survey_form
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 240
+step_limit: 120
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: easy
+  agent_interaction: "Open the seeded 'Customer Pulse Q2' survey and click the Share button to open the share dialog showing the public URL."
+  checks_verify: "The survey remains active with access_mode='public' and a non-null access_token, and the Share action was invoked on the survey."
+  primary_track: true
+  tier: 1

@@ -1,0 +1,22 @@
+# Trace oracle for survey.publish_share_via_link_get_url.
+#
+# The agent must press the form-header "Share" button on the seeded survey,
+# which calls survey.survey.action_send_survey to open the share wizard.
+
+required_ops:
+  - survey.survey.action_send_survey
+
+optional_ops:
+  - survey.survey.read
+  - survey.survey.search_read
+  - survey.survey.web_search_read
+  - survey.survey.web_read
+  - survey.invite.create
+  - survey.invite.read
+  - survey.invite.web_save
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+
+forbidden_ops:
+  - survey.survey.unlink
+  - survey.invite.action_invite
