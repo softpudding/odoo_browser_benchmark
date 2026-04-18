@@ -8,13 +8,11 @@ login_context:
 agent_interface: browser_only
 db_seed:
   snapshot: benchmark_base
-  setup_script: seed.py
+setup_script: seed.py
 time_limit_sec: 360
-step_limit: 220
+step_limit: 200
 metadata:
   category: closed_loop_cross_module
-  difficulty_level: medium
-  agent_interaction: "Create a sale order for a seeded event-registration product, confirm it, and complete the attendee details in the registration dialog."
-  checks_verify: "One confirmed sale order exists for the target customer and one registered attendee exists on the target event ticket with the exact name and email."
+  failure_pattern: "Agent creates the sales order line but skips the Configure an event wizard (picking event + ticket) or, after confirming the SO, fails to fill the Name + Email in the attendee-details wizard before submitting it, so the registration is created without Alice Attendee's personal details."
   primary_track: true
   tier: 2

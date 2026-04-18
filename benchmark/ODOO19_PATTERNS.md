@@ -68,6 +68,16 @@ if mod and mod.state != "installed":
 - Invoicing a paid registration goes through the Sales app (SO → event configurator wizard)
 - The attendee-details wizard pre-fills name/email from the partner; non-default override needed
   if the attendee differs from the buyer
+- The `event_configurator` wizard fires on `sale.order.line.product_template_id` onchange iff
+  the picked product has `event_ok=True` (computed from `service_tracking='event'`). Inside the
+  modal, both `event_id` and `event_ticket_id` are required m2o fields — the OK footer button is
+  enabled only when both are set. In oracles, use
+  `modal.locator(".o_field_widget[name='event_id'] input").fill(...)` / dropdown click, then the
+  same for `event_ticket_id`, then click the primary footer button. No save on the parent SO
+  happens inside the wizard; the wizard just writes the two fields back onto the SO line.
+- Seeding both a paid ticket and the auto-default `Registration for …` placeholder on
+  `event.event.event_ticket_ids` in the same `create()` suppresses the auto-materialisation,
+  keeping the post-run diff clean of phantom ticket rows.
 - `event.registration.state` defaults to `'open'` (Registered), so saving a new attendee
   immediately fires `_check_seats_availability` — but only if `event_ticket_id` is set
   (a ticketless registration is unconstrained). Browser-use frequently leaves

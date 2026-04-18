@@ -1,113 +1,165 @@
-"""Oracle for event_product.sell_event_product_fill_attendee_details."""
+"""Oracle for event_product.sell_event_product_fill_attendee_details.
 
-from benchmark.oracle_helpers import login, navigate, run_oracle
+Sales workflow:
+  sales -> new SO -> pick customer -> add Bench Summit Ticket line ->
+  event configurator wizard (event + ticket) -> save -> confirm ->
+  registration editor wizard (fill Name + Email) -> submit.
+"""
+
+from benchmark.oracle_helpers import (
+    click_create,
+    click_tab,
+    login,
+    navigate,
+    run_oracle,
+    save_form,
+    set_many2one,
+    set_o2m_many2one,
+    _wait_no_loading,
+    _wait_for_ready,
+)
+
+
+EVENT_NAME = "Bench Summit"
+PARTNER_NAME = "Bench Attendee Co"
+PRODUCT_NAME = "Bench Summit Ticket"
+TICKET_NAME = "Standard Pass"
+ATTENDEE_NAME = "Alice Attendee"
+ATTENDEE_EMAIL = "alice@bench.test"
+
+
+def _click_add_a_line(page):
+    add_link = page.locator(
+        "a.o_field_x2many_list_row_add:visible, "
+        "td.o_field_x2many_list_row_add a:visible"
+    )
+    add_link.first.click()
+    page.wait_for_timeout(500)
+    _wait_no_loading(page)
+
+
+def _modal_fill_field_in_row(page, row_idx, field_name, value):
+    modal = page.locator(".modal:visible").last
+    rows = modal.locator(".o_data_row")
+    cell = rows.nth(row_idx).locator(
+        f"td[name='{field_name}'], .o_field_widget[name='{field_name}']"
+    ).first
+    cell.click()
+    page.wait_for_timeout(200)
+    inp = cell.locator("input").first
+    inp.fill("")
+    inp.fill(value)
+    inp.press("Tab")
+    page.wait_for_timeout(300)
+    _wait_no_loading(page)
 
 
 def oracle(page):
+    # ============================================================
+    # STEP 1 — New quotation in Sales
+    # ============================================================
     login(page)
     navigate(page, "/odoo/sales")
-    response = page.evaluate(
-        """async () => {
-            const unwrap = (value) => Array.isArray(value) ? value[0] : value;
-            const callKw = async (payload) => {
-                const res = await fetch('/web/dataset/call_kw', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    credentials: 'same-origin',
-                    body: JSON.stringify({ jsonrpc: '2.0', method: 'call', params: payload }),
-                });
-                const json = await res.json();
-                if (json.error) {
-                    throw new Error(json.error.data?.message || json.error.message);
-                }
-                return json.result;
-            };
+    _wait_no_loading(page)
+    page.wait_for_timeout(800)
 
-            const partnerRes = await callKw({
-                model: 'res.partner',
-                method: 'search_read',
-                args: [[['name', '=', 'Northwind Workshops']], ['id']],
-                kwargs: { limit: 1 },
-            });
-            const productRes = await callKw({
-                model: 'product.product',
-                method: 'search_read',
-                args: [[['name', '=', 'Enablement Seat Product']], ['id']],
-                kwargs: { limit: 1 },
-            });
-            const eventRes = await callKw({
-                model: 'event.event',
-                method: 'search_read',
-                args: [[['name', '=', 'Partner Enablement Day']], ['id']],
-                kwargs: { limit: 1 },
-            });
-            const ticketRes = await callKw({
-                model: 'event.event.ticket',
-                method: 'search_read',
-                args: [[['name', '=', 'Workshop Seat'], ['event_id', '=', eventRes[0].id]], ['id']],
-                kwargs: { limit: 1 },
-            });
-            if (!partnerRes.length || !productRes.length || !eventRes.length || !ticketRes.length) {
-                throw new Error('seed records missing');
-            }
+    click_create(page)
+    page.wait_for_timeout(800)
+    _wait_for_ready(page)
 
-            const orderId = unwrap(await callKw({
-                model: 'sale.order',
-                method: 'create',
-                args: [[{
-                    partner_id: partnerRes[0].id,
-                    order_line: [[0, 0, {
-                        product_id: productRes[0].id,
-                        product_uom_qty: 1,
-                        price_unit: 95,
-                        tax_ids: [[6, 0, []]],
-                        event_id: eventRes[0].id,
-                        event_ticket_id: ticketRes[0].id,
-                    }]],
-                }]],
-                kwargs: {},
-            }));
+    set_many2one(page, "partner_id", PARTNER_NAME)
+    page.wait_for_timeout(500)
 
-            await callKw({
-                model: 'sale.order',
-                method: 'action_confirm',
-                args: [[orderId]],
-                kwargs: {},
-            });
+    # Default tab is Order Lines; make sure.
+    try:
+        click_tab(page, "Order Lines")
+    except Exception:
+        pass
+    page.wait_for_timeout(300)
 
-            const regRes = await callKw({
-                model: 'event.registration',
-                method: 'search_read',
-                args: [[['sale_order_id', '=', orderId]], ['id']],
-                kwargs: { limit: 1 },
-            });
-            if (!regRes.length) {
-                throw new Error('generated registration missing');
-            }
-            const regId = regRes[0].id;
-            await callKw({
-                model: 'event.registration',
-                method: 'write',
-                args: [[regId], {
-                    name: 'Jordan Rivera',
-                    email: 'jordan.rivera@example.com',
-                }],
-                kwargs: {},
-            });
-            await callKw({
-                model: 'event.registration',
-                method: 'action_confirm',
-                args: [[regId]],
-                kwargs: {},
-            });
-            if (!regId) {
-                throw new Error('registration update failed');
-            }
-            return 'ok';
-        }""",
+    _click_add_a_line(page)
+    page.wait_for_timeout(300)
+
+    # Set the product on the new line; triggers event configurator wizard.
+    set_o2m_many2one(page, 0, "product_template_id", PRODUCT_NAME)
+    page.wait_for_timeout(1500)
+    _wait_no_loading(page)
+
+    # ============================================================
+    # STEP 2 — Event configurator wizard
+    # ============================================================
+    if page.locator(".modal:visible").count() > 0:
+        modal = page.locator(".modal:visible").last
+        # Event field.
+        evt_inp = modal.locator(
+            ".o_field_widget[name='event_id'] input"
+        ).first
+        evt_inp.click()
+        evt_inp.fill("")
+        evt_inp.fill(EVENT_NAME)
+        page.wait_for_timeout(800)
+        page.locator(".dropdown-menu .dropdown-item").filter(
+            has_text=EVENT_NAME
+        ).first.click()
+        page.wait_for_timeout(500)
+        _wait_no_loading(page)
+
+        # Ticket field.
+        tk_inp = modal.locator(
+            ".o_field_widget[name='event_ticket_id'] input"
+        ).first
+        tk_inp.click()
+        tk_inp.fill("")
+        tk_inp.fill(TICKET_NAME)
+        page.wait_for_timeout(800)
+        page.locator(".dropdown-menu .dropdown-item").filter(
+            has_text=TICKET_NAME
+        ).first.click()
+        page.wait_for_timeout(500)
+        _wait_no_loading(page)
+
+        # Ok footer button.
+        ok_btn = page.locator(
+            ".modal:visible .modal-footer button:has-text('Ok'), "
+            ".modal:visible .modal-footer button:has-text('OK'), "
+            ".modal:visible .modal-footer button.btn-primary"
+        )
+        ok_btn.first.click()
+        page.wait_for_timeout(1000)
+        _wait_no_loading(page)
+
+    # Save SO first so Confirm becomes enabled.
+    save_form(page)
+    page.wait_for_timeout(800)
+    _wait_no_loading(page)
+
+    # ============================================================
+    # STEP 3 — Confirm the SO
+    # ============================================================
+    confirm_btn = page.locator(
+        ".o_statusbar_buttons button[name='action_confirm']:visible, "
+        ".o_statusbar_buttons button:has-text('Confirm'):visible"
     )
-    if response != "ok":
-        raise RuntimeError(response)
+    confirm_btn.first.click()
+    page.wait_for_timeout(1500)
+    _wait_no_loading(page)
+
+    # ============================================================
+    # STEP 4 — Registration editor wizard
+    # ============================================================
+    if page.locator(".modal:visible").count() > 0:
+        _modal_fill_field_in_row(page, 0, "name", ATTENDEE_NAME)
+        _modal_fill_field_in_row(page, 0, "email", ATTENDEE_EMAIL)
+        page.wait_for_timeout(500)
+
+        action_btn = page.locator(
+            ".modal:visible .modal-footer button[name='action_make_registration'], "
+            ".modal:visible .modal-footer button:has-text('Create/Update'), "
+            ".modal:visible .modal-footer button.btn-primary"
+        )
+        action_btn.first.click()
+        page.wait_for_timeout(1500)
+        _wait_no_loading(page)
 
 
 run_oracle(oracle)

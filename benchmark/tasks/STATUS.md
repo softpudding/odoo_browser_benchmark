@@ -362,7 +362,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 350 | appointment.public_booking_reschedule_cancel_portal [hard] | Configure an appointment type, book it publicly, then reschedule and cancel it from the portal | Removed | FAIL (module unavailable) | — | — |
 | 351 | helpdesk.team_sla_assign_escalate_close [hard] | Create a helpdesk team with SLA policy, process a ticket through assignment and escalation, then close it | Removed | FAIL (module unavailable) | — | — |
 | 352 | marketing_automation.tag_trigger_drip_campaign [hard] | Build a tag-triggered marketing automation flow with delayed actions and a stop condition | Removed | FAIL (module unavailable) | — | — |
-| 353 | event_product.sell_event_product_fill_attendee_details [medium] | Sell an event-linked product and complete attendee details for the generated registration | Done | PASS | PASS | 1.0 |
+| 353 | event_product.sell_event_product_fill_attendee_details [medium] | Sell an event-linked product and complete attendee details for the generated registration | Done | PASS | FAIL | 1.0 |
 | 354 | event_sale.multi_ticket_checkout_two_attendees [hard] | Configure two paid ticket types and complete one website checkout with separate attendee details | WIP | — | — | — |
 | 355 | sale_loyalty.buy_x_get_y_reward_in_cart [hard] | Configure a Buy X Get Y promotion and verify the free-product reward appears in the cart | WIP | — | — | — |
 | 356 | sale_purchase.mto_so_generate_po_change_vendor_confirm [hard] | Confirm an MTO sale order, inspect the generated PO, switch vendor, and continue the chain | WIP | — | — | — |
@@ -3642,6 +3642,7 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 ---
 
+<<<<<<< HEAD
 ## appointment.public_booking_reschedule_cancel_portal
 
 | Field | Value |
@@ -3684,3 +3685,18 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Seed `res.partner.category` 'Bench Leads'. Create `marketing.automation` 'Welcome Drip' targeting model=`res.partner`, filter=category contains 'Bench Leads'. Add Activity 1: send `mailing.mailing` 'Welcome Day 1' (trigger=immediate, `trigger_type='begin'`). Add Activity 2: send 'Day 3 Follow-up' (trigger=3 days after Activity 1 opened, `trigger_type='mail_open'` + `interval_number=3` + `interval_type='days'`). |
 | **Capability tested** | Multi-activity marketing automation builder with parent-child trigger chaining (begin → mail_open delay). |
 | **Notes** | Removed because the `marketing_automation` addon is not present in this checkout (Odoo 19 Community — `marketing_automation` is an Enterprise-only module; see `skills/expand-benchmark-coverage.md` which explicitly lists it under Enterprise-only alongside `appointment` and `helpdesk`). Verified: no `marketing_automation` directory under `addons/` (only `marketing_card` exists); no module declares `_name = 'marketing.automation'` or `'marketing.activity'`; `benchmark/base_modules.txt` contains no `marketing_automation` reference. Follows the same precedent as `helpdesk.create_ticket_tag_schedule_activity_resolve`, `helpdesk.team_sla_assign_escalate_close`, and `appointment.portal_reschedule_and_cancel_booking` (all Removed for module unavailability). Task cannot be implemented or validated on branch `odoo_benchmark` in the current environment. |
+
+---
+
+## event_product.sell_event_product_fill_attendee_details
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS (F1=1.0, 40.5s) |
+| **Browser-Use** | FAIL (strict, gave_up=True at 360s wall-clock; StateDiffF1=1.0, 0 postcondition failures) |
+| **F1** | 1.0 |
+| **Odoo modules** | Sales, Events (event_product / event_sale auto-installed bridge) |
+| **Workflow** | Seed creates customer `Bench Attendee Co`, a service product `Bench Summit Ticket` with `service_tracking='event'` / `list_price=100` / `invoice_policy='order'`, and event `Bench Summit` with one paid ticket `Standard Pass` linked to that product (price=100) plus the auto-default `Registration for Bench Summit` placeholder (backed by the built-in `EVENT_REG` product). Agent opens `/odoo/sales`, creates a new quotation for Bench Attendee Co, adds `Bench Summit Ticket` to Order Lines — the `event_configurator` wizard fires (because `product.event_ok=True`) — picks `Bench Summit` + `Standard Pass` and clicks Ok. Confirms the SO, which opens the `registration.editor` wizard pre-filled from the buyer's name/email; overwrites Name=`Alice Attendee` / Email=`alice@bench.test` and clicks Create/Update registrations. |
+| **Capability tested** | Chain of two modal wizards triggered by SO actions (configurator on product pick, registration editor on confirm) + overriding pre-filled o2m row fields before submitting the second wizard. |
+| **Notes** | Oracle deterministic PASS. Browser-use reached the correct final state (all 9 atomic edits match, postcondition check passes) but used the full 360s budget chaining the two wizards, so `gave_up=True` flipped strict to FAIL. Medium calibration matches the expected behaviour: the attendee tab must be filled, not just saved. New cookbook notes: (1) `product.event_ok` triggers the `event_configurator` wizard on SO line product pick (no explicit UI action needed). (2) `registration.editor` is a one2many wizard pre-filled from partner email/name — clicking the primary footer button without editing the row saves with buyer defaults, which is the intended calibration trap. (3) Seed-scoping: only `event.registration` + `sale.order` in state_spec avoids the base snapshot's Gift Card product.template duplicate-key nondeterminism and keeps the diff narrowly on what the agent mutates. (4) Pre-seeding both `Standard Pass` and `Registration for Bench Summit` tickets on `event.event.event_ticket_ids` via `(0, 0, …)` stops the auto-default ticket from polluting the diff. |
