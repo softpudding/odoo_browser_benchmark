@@ -1,0 +1,50 @@
+# State oracle — Section 9 of the spec.
+#
+# Defines which models, records, and fields to inspect for the
+# normalized DB-state diff.
+
+models:
+  hr.applicant:
+    match_key:
+      - partner_name
+      - email_from
+      - job_id
+    fields:
+      - partner_name
+      - email_from
+      - partner_phone
+      - linkedin_profile
+      - job_id
+      - department_id
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
+      - __last_update
+      - create_uid
+      - write_uid
+      - message_ids
+      - activity_ids
+    expected_changes:
+      create: 1
+
+  # mail.message is kept optional because Odoo generates many system
+  # messages (tracking, notifications) per transaction, making exact
+  # match unreliable. The applicant's short introduction is validated
+  # via the metadata postconditions and human review.
+  mail.message:
+    optional: true
+    match_key:
+      - res_id
+      - model
+    fields:
+      - body
+      - model
+      - message_type
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
+      - __last_update
+      - date
+      - email_from
