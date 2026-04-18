@@ -327,7 +327,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 315 | website_sale.add_optional_at_cart_remove_main_keep_optional [hard] | Add Bench Camera + accept Tripod optional in modal, then remove only Camera at cart, leaving Tripod orphaned | Done | PASS | FAIL | 0.0 |
 | 316 | hr_expense.create_with_currency_eur_to_usd [medium] | Create NYC Hotel expense in USD (200 USD = 185 EUR), employee paid, verify EUR conversion | Done | PASS | FAIL | 0.0 |
 | 317 | event_product.create_event_product_link_to_ticket [medium] | Create Conference Pass Std service product (service_tracking=event), add Standard Pass ticket to Spring Summit | Done | PASS | PASS | 1.0 |
-| 318 | website.create_contact_form_with_custom_field [hard] | On website /contact-us page, add a custom dropdown field via website builder | WIP | — | — | — |
+| 318 | website.create_contact_form_with_custom_field [hard] | Edit Contact Us page, add Selection field Inquiry Type with 3 options via website builder | Done | PASS | FAIL | 0.0 |
 | 319 | contacts.merge_three_duplicates_keep_email [hard] | Merge 3 duplicate contacts into one, choosing email from a specific record | WIP | — | — | — |
 | 320 | website_sale.create_gift_card_apply_in_cart [hard] | Configure a gift card program, generate a code, apply in cart at checkout | WIP | — | — | — |
 | 321 | hr.create_department_assign_manager_three_employees [medium] | Create a new department, assign manager and 3 existing employees | WIP | — | — | — |
@@ -3170,3 +3170,18 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Create product 'Conference Pass Std' (type=service, list_price=100, service_tracking=event). Open seeded event 'Spring Summit'. Add ticket 'Standard Pass' with product=Conference Pass Std, price=100, seats_max=200. |
 | **Capability tested** | Cross-app product creation with event-specific service_tracking + ticket linking. |
 | **Notes** | Easier than medium — BU solved on first run (204s). Note: product.template has 2 pre-existing 'Gift Card' duplicates in base snapshot — match_key must include service_tracking + list_price to avoid diff-engine swapping. service_tracking field is invisible in base product view; event_sale (auto-installed) removes the invisible attr to expose the 'event' option. |
+
+---
+
+## website.create_contact_form_with_custom_field
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
+| **Odoo modules** | Website |
+| **Workflow** | Edit Contact Us page in website editor. Add a Selection field "Inquiry Type" with options Sales/Support/Partnership; required. Save and publish. |
+| **Capability tested** | Website builder drag-drop + form field config (selection options + required flag). |
+| **Notes** | Well-calibrated hard. BU never called ir.ui.view.write within 480s — website editor iframe + form-field config defeated it. expected_state empty by design (content lives in view arch which isn't diffed). Note: Odoo 19 renders custom Selection form fields as radios in s_website_form_multiple, not <select>; <select> only appears for many2one or if Display is switched to select dropdown. |
