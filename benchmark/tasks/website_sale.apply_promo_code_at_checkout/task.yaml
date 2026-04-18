@@ -1,0 +1,21 @@
+task_id: website_sale.apply_promo_code_at_checkout
+module: website_sale
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/discount-loyalty
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: closed_loop_cross_module
+  difficulty_level: medium
+  agent_interaction: "Configure a Discount Code loyalty program (program_type='promo_code') with code BENCH10 for 10% off the whole order, then apply that code to a seeded draft sales order 'SO-BENCH-001' so the total drops by 10%."
+  checks_verify: "loyalty.program 'Bench Promo 10%' exists with program_type='promo_code'; one loyalty.rule with code 'BENCH10'; one loyalty.reward with discount=10, discount_mode='percent', discount_applicability='order'; seeded draft SO 'SO-BENCH-001' has a reward (discount) line and amount_total ~ 90."
+  failure_pattern: "Agent creates the program with wrong type (e.g. 'promotion' or 'coupons') or misses the promo code on the rule; then fails to apply the code to the existing SO because the Send Coupon / apply flow is split between form buttons and chatter."
+  primary_track: true
+  tier: 2
