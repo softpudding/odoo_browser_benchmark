@@ -228,7 +228,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 216 | project.kanban_drag_task_between_stages [easy] | Drag a task kanban card from one stage to another | Done | PASS | FAIL | 0.0 |
 | 217 | project.create_project_from_template_duplicate [medium] | Duplicate an existing project keeping its tasks | WIP | — | — | — |
 | 218 | project.recurring_task_configure_frequency [medium] | Configure an existing task as recurring with weekly frequency | WIP | — | — | — |
-| 219 | contacts.add_bank_account_to_partner [easy] | Add an IBAN bank account to an existing partner via Accounting tab | WIP | — | — | — |
+| 219 | contacts.add_bank_account_to_partner [easy] | Add an IBAN bank account to an existing partner via Invoicing tab | Done | PASS | — | — |
 | 220 | contacts.archive_partner_then_unarchive_filter [easy] | Archive a contact then unarchive it via the Archived search filter | Done (dup of 232) | — | — | — |
 | 221 | calendar.invite_external_attendee_by_email [easy] | Create a calendar event inviting an external email address not in partners | Done | PASS | PASS | 1.0 |
 | 222 | survey.create_survey_one_page_publish_share [medium] | Create a 3-question survey, publish it, and copy the share link | WIP | — | — | — |
