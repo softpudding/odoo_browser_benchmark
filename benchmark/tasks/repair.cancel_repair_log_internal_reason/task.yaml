@@ -1,0 +1,20 @@
+task_id: repair.cancel_repair_log_internal_reason
+module: repair
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/repairs
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: recovery_rollback
+  difficulty_level: medium
+  agent_interaction: "Open the seeded confirmed repair order, log an internal note in the chatter with exact text, then cancel via the Action/cog menu."
+  checks_verify: "repair.order state is 'cancel' and a mail.message internal note with the exact body text is attached to the order."
+  primary_track: true
+  tier: 2

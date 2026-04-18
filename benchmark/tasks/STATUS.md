@@ -372,11 +372,11 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 360 | website_hr_recruitment.apply_public_then_schedule_interview [hard] | Submit a public job application, then schedule that applicant’s interview from the backend | WIP | — | — | — |
 | 361 | purchase_stock.receive_partial_scrap_damaged_units [hard] | Receive part of a PO, scrap damaged units from the receipt, and finish the remainder correctly | WIP | — | — | — |
 | 362 | maintenance.create_request_from_equipment_schedule_followup [medium] | Create a maintenance request from an equipment record and schedule a follow-up activity | Done | PASS | FAIL | 0.0 |
-| 363 | point_of_sale.sell_pos_order_invoice_customer [hard] | Ring up a POS sale, attach a customer, toggle Invoice this Order, pay cash, and verify a posted account.move invoice was generated | WIP | — | — | — |
-| 364 | mass_mailing.create_mailing_send_test_to_self [medium] | Compose a mailing, click Send Test, send to admin's own email, then save the mailing as draft | WIP | — | — | — |
-| 365 | survey.duplicate_survey_change_title_publish [medium] | Duplicate a seeded survey via Actions menu, rename the copy, and publish only the copy | WIP | — | — | — |
-| 366 | maintenance.log_repair_duration_description_move_to_repaired [medium] | Open an in-progress maintenance request, log a duration, fill the description, and move it to the Repaired stage | WIP | — | — | — |
-| 367 | stock.scrap_specific_serial_unit [hard] | Scrap one specific serial-tracked unit (1 of 3 in stock) via Inventory Operations Scrap, leaving the other two in stock | WIP | — | — | — |
+| 363 | point_of_sale.sell_pos_order_invoice_customer [hard] | Ring up a POS sale, attach a customer, toggle Invoice this Order, pay cash, and verify a posted account.move invoice was generated | Done | PASS | FAIL | 0.0 |
+| 364 | repair.cancel_repair_log_internal_reason [medium] | Open an existing repair quotation, start it, then cancel via Action menu and log an internal note in the chatter explaining the cancellation reason | Done | PASS | PASS | 1.0 |
+| 365 | survey.duplicate_survey_rename_archive_original [medium] | Duplicate a seeded survey via cog menu, rename the copy, then archive the original so only the renamed copy remains active | Done | PASS | PASS | 1.0 |
+| 366 | maintenance.fill_description_schedule_window_move_to_repaired [medium] | Open an existing in-progress maintenance request, fill the description, set the scheduled start and end dates (logging the repair duration), and move it to the Repaired stage | Done | PASS | PASS | 1.0 |
+| 367 | stock.scrap_specific_serial_unit [medium] | Scrap one specific serial-tracked unit (1 of 3 in stock) via Inventory Operations Scrap, leaving the other two in stock (originally hard, demoted after both browser-use runs passed) | Done | PASS | PASS | 1.0 |
 
 ---
 
@@ -2074,6 +2074,61 @@ Note: difficulty calibration used a shared-port browser-use validation on `bench
 | **Capability tested** | Website editor iframe interaction, text editing in complex DOM, Page Properties dialog, combined content + metadata editing. |
 
 ---
+
+## point_of_sale.sell_pos_order_invoice_customer
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
+
+Hard task. Browser-use must open POS, ring up an order, attach a customer, enable the Invoice toggle on the payment screen, and validate to generate an actual posted account.move. Both runs failed at the kiosk POS UI: run 1 timed out after 7 stalled payment attempts, run 2 reached 401s with the order stuck in draft and no invoice generated.
+
+## repair.cancel_repair_log_internal_reason
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
+
+Medium task. Open the seeded confirmed repair order, cancel it, then post an internal note (mail.mt_note subtype) with a specific reason. Both browser-use runs passed in ~57s.
+
+## survey.duplicate_survey_rename_archive_original
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
+
+Medium task. Duplicate a survey, rename the copy without the "(copy)" suffix, then archive the original. Both browser-use runs passed in 81-99s.
+
+## maintenance.fill_description_schedule_window_move_to_repaired
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
+
+Medium task. Open the maintenance request, fill a specific description paragraph, set scheduled start 04/15/2026 09:00 and end 11:00, move to Repaired stage. Both browser-use runs passed in 77-94s.
+
+## stock.scrap_specific_serial_unit
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
+
+Medium task (originally drafted as hard, demoted after both browser-use runs passed cleanly in 73-113s). Open Inventory > Operations > Scrap, create a scrap for the serial-tracked product picking the middle serial SN-A002 out of three, validate.
 
 ## Adding New Tasks
 
