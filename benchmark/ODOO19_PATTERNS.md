@@ -453,3 +453,11 @@ On an **opportunity**, `team_id` is NOT in the main form header. Only editable c
 
 - The base snapshot has TWO pre-existing 'Gift Card' product.template records with different list_price. With `match_key: [name]` the diff engine swaps them non-deterministically, emitting phantom `list_price` edits. Fix: extend `match_key: [name, service_tracking, list_price]`.
 - `product.template.service_tracking` field is `invisible` in the base product view. `event_sale` (auto-installed) removes the invisible attr, exposing the `event` ('Event Registration') option contributed by `event_product`. No manual install needed for event_sale → event_product.
+
+---
+
+## sale_loyalty Gift Card flow
+
+- Quick way to create a gift-card program: `loyalty.program.create_from_template('gift_card')` (also `'loyalty'`, `'discount'`, etc.).
+- `sale.order._try_apply_code` has a `loyalty.card` branch that lets a gift-card code be applied via the same `/shop/pricelist?r=/shop/cart` POST as a promo code (no separate "redeem gift card" endpoint).
+- Backend menu xmlid: `/odoo/gift-cards-ewallet` (Discount & Loyalty → Gift Cards & eWallets).

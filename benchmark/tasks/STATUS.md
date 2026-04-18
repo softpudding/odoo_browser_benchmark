@@ -329,7 +329,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 317 | event_product.create_event_product_link_to_ticket [medium] | Create Conference Pass Std service product (service_tracking=event), add Standard Pass ticket to Spring Summit | Done | PASS | PASS | 1.0 |
 | 318 | website.create_contact_form_with_custom_field [hard] | Edit Contact Us page, add Selection field Inquiry Type with 3 options via website builder | Done | PASS | FAIL | 0.0 |
 | 319 | contacts.merge_three_duplicates_keep_email [hard] | Merge 3 duplicate contacts into one, choosing email from a specific record | WIP | — | — | — |
-| 320 | website_sale.create_gift_card_apply_in_cart [hard] | Configure a gift card program, generate a code, apply in cart at checkout | WIP | — | — | — |
+| 320 | website_sale.create_gift_card_apply_in_cart [hard] | Configure Gift Card program, generate 1 €50 card code, apply in /shop/cart with €100 product | Done | PASS | PASS | 1.0 |
 | 321 | hr.create_department_assign_manager_three_employees [medium] | Create a new department, assign manager and 3 existing employees | WIP | — | — | — |
 | 322 | stock.create_putaway_rule_for_specific_category [hard] | Create putaway rule routing a product category to a specific sub-location | WIP | — | — | — |
 | 323 | mail.invite_external_email_to_existing_channel [medium] | In existing channel, invite an external email (creates guest invitation) | WIP | — | — | — |
@@ -3185,3 +3185,18 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Edit Contact Us page in website editor. Add a Selection field "Inquiry Type" with options Sales/Support/Partnership; required. Save and publish. |
 | **Capability tested** | Website builder drag-drop + form field config (selection options + required flag). |
 | **Notes** | Well-calibrated hard. BU never called ir.ui.view.write within 480s — website editor iframe + form-field config defeated it. expected_state empty by design (content lives in view arch which isn't diffed). Note: Odoo 19 renders custom Selection form fields as radios in s_website_form_multiple, not <select>; <select> only appears for many2one or if Display is switched to select dropdown. |
+
+---
+
+## website_sale.create_gift_card_apply_in_cart
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
+| **Odoo modules** | Website (eCommerce), Loyalty |
+| **Workflow** | Configure Gift Card program (loyalty.program.create_from_template). Generate 1 gift card code worth €50. In /shop/cart with €100 product, enter code → €50 deducted → total €50. |
+| **Capability tested** | Two-stage workflow: backend Generate Gift Cards wizard + portal redemption via /shop/pricelist POST. |
+| **Notes** | Easier than hard. BU solved in 185s; Generate wizard only exposes qty/value/description so the wizard-with-non-default-values trap didn't fire. Workflow length justifies tier 3 listing. |
