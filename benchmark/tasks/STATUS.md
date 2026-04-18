@@ -163,7 +163,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 151 | website_sale.publish_product_set_price [medium] | Publish a product to the website shop and set its sales price and description | Done | PASS | PASS | 1.0 |
 | 152 | point_of_sale.open_session_sell_product_cash [medium] | Open a POS session, ring up one product, and complete a cash payment | Done | PASS | PASS | 1.0 |
 | 153 | im_livechat.create_channel_add_canned_response [medium] | Create a live chat channel and canned response from the Live Chat app | Done | PASS | PASS | 1.0 |
-| 154 | website.create_blog_post_publish [medium] | Create and publish a blog post with title, cover image, and body content | WIP | PASS | — | — |
+| 154 | website.create_blog_post_publish [medium] | Create and publish a blog post with title, cover image, and body content | Done | PASS | PASS | 1.0 |
 | 155 | website.add_menu_item_reorder [medium] | Add a website menu item and reorder it within the navigation hierarchy | WIP | — | — | — |
 | 156 | website.create_contact_form_block [hard] | Edit a website page to add and configure a contact form block | WIP | — | — | — |
 | 157 | stock.scrap_product_from_receipt [medium] | Open a stock receipt and scrap part of a received product from the operation flow | WIP | — | — | — |
@@ -234,25 +234,25 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 222 | survey.create_survey_one_page_publish_share [medium] | Create a 3-question survey, publish it, and copy the share link | WIP | — | — | — |
 | 223 | project_todo.create_note_add_tag_checklist [easy] | In the To-Do app, create a note with a tag and a checklist item | WIP | — | — | — |
 | 224 | hr_holidays.request_annual_leave [easy] | Done | PASS | PASS | 1.0 |
-| 225 | hr_holidays.approve_leave_as_manager [medium] | Approve a pending leave request from manager approvals view | WIP | PASS | — | — |
+| 225 | hr_holidays.approve_leave_as_manager [medium] | Approve a pending leave request from manager approvals view | Done | PASS | PASS | 1.0 |
 | 226 | hr_holidays.refuse_leave_with_reason [medium] | Done | PASS | PASS | 1.0 |
 | 227 | hr_expense.create_expense_with_receipt [medium] | Done | PASS | PASS | 1.0 |
-| 228 | hr_expense.submit_report_for_approval [medium] | Create an expense and submit it to the manager for approval | WIP | PASS | — | — |
-| 229 | mail.create_channel_invite_members [easy] | Create a Discuss channel and invite internal users as members | WIP | PASS | — | — |
+| 228 | hr_expense.submit_report_for_approval [medium] | Create an expense and submit it to the manager for approval | Done | PASS | PASS | 1.0 |
+| 229 | mail.create_channel_invite_members [easy] | Create a Discuss channel and invite internal users as members | Done | PASS | FAIL | 0.0 |
 | 230 | mail.pin_and_reply_in_chatter [easy] | Done | PASS | PASS | 1.0 |
 | 231 | contacts.merge_duplicate_contacts [hard] | Done | PASS | PASS | 1.0 |
 | 232 | contacts.archive_then_unarchive [easy] | Done | PASS | FAIL | 0.00 |
 | 233 | website.create_blog_post_publish [medium] | Duplicate of 154 | — | — | — |
-| 234 | website.edit_menu_add_page_link [medium] | Add a new menu entry linked to an existing website page | WIP | PASS | — | — |
-| 235 | stock.create_putaway_rule [hard] | Create a putaway rule routing a product to a specific sub-location | WIP | PASS | — | — |
-| 236 | stock.transfer_lot_tracked_product [hard] | Validate a receipt for a lot-tracked product with specific lot number and quantity | WIP | PASS | — | — |
-| 237 | mrp.create_bom_three_components [medium] | Create a Bill of Materials for a product with three components | WIP | PASS | — | — |
-| 238 | mrp.confirm_produce_close_mo [hard] | Confirm a draft MO and close it by producing the finished product | WIP | PASS | — | — |
-| 239 | website_sale.publish_shop_product [medium] | Open a storable product, set its list price and website description, and publish it to the shop | WIP | PASS | — | — |
+| 234 | website.edit_menu_add_page_link [medium] | Add a new menu entry linked to an existing website page | Done | PASS | PASS | 1.0 |
+| 235 | stock.create_putaway_rule [hard] | Create a putaway rule routing a product to a specific sub-location | Done | PASS | PASS | 1.0 |
+| 236 | stock.transfer_lot_tracked_product [hard] | Validate a receipt for a lot-tracked product with specific lot number and quantity | Done | PASS | PASS | 1.0 |
+| 237 | mrp.create_bom_three_components [medium] | Create a Bill of Materials for a product with three components | Done | PASS | FAIL | 0.0 |
+| 238 | mrp.confirm_produce_close_mo [hard] | Confirm a draft MO and close it by producing the finished product | Done | PASS | PASS | 1.0 |
+| 239 | website_sale.publish_shop_product [medium] | Open a storable product, set its list price and website description, and publish it to the shop | Done | PASS | FAIL | 0.0 |
 | 240 | appointment.create_type_set_slots [medium] | Removed | — | — | — |
-| 241 | event.create_event_configure_ticket [medium] | Create an event with dates and venue and configure a ticket type with price and seat limit | WIP | PASS | — | — |
+| 241 | event.create_event_configure_ticket [medium] | Create an event with dates and venue and configure a ticket type with price and seat limit | Done | PASS | FAIL | 0.7368 |
 | 242 | helpdesk.create_ticket_assign_priority [medium] | Removed | — | — | — |
-| 243 | fleet.register_vehicle_log_odometer [easy] | Register a new fleet vehicle and log an odometer reading for it | WIP | PASS | — | — |
+| 243 | fleet.register_vehicle_log_odometer [easy] | Register a new fleet vehicle and log an odometer reading for it | Done | PASS | PASS | 1.0 |
 | 244 | hr_holidays.allocate_sick_leave_to_employee [easy] | Done | PASS | PASS | 1.0 |
 | 245 | hr_holidays.request_half_day_morning [easy] | Done | PASS | PASS | 1.0 |
 | 246 | hr_holidays.cancel_approved_leave_and_reallocate [hard] | Done | PASS | PASS | 1.0 |
