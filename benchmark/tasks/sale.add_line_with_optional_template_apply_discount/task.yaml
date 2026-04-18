@@ -1,0 +1,18 @@
+task_id: sale.add_line_with_optional_template_apply_discount
+module: sale
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/sales
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  failure_pattern: "Add a new order line via product autocomplete, set qty 2 and per-line discount 10% on that specific row, save without confirm"
+  primary_track: true
+  tier: 2
