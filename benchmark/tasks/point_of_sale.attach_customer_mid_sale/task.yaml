@@ -1,0 +1,20 @@
+task_id: point_of_sale.attach_customer_mid_sale
+module: point_of_sale
+difficulty: easy
+instruction: see prompt.md
+start_url: /odoo/point-of-sale
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 210
+step_limit: 150
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: easy
+  agent_interaction: "Open the seeded POS register, add one unit of the seeded product, attach the existing customer via the Customer button, then complete payment with cash."
+  checks_verify: "A paid POS order exists for the seeded config with partner_id set to the seeded customer."
+  primary_track: true
+  tier: 1
