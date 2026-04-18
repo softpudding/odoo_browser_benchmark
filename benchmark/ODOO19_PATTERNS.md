@@ -866,3 +866,26 @@ PO record is just mutating its partner_id.
   `state_spec.yaml` `ignore_fields`; the HTML diff is noisy on
   whitespace and sanitizer tweaks. Validate via `check.py` using
   `html2plaintext` substring checks.
+
+---
+
+## maintenance.equipment — field inventory & duplicate-create BU failure
+
+- `maintenance.equipment` has **no `next_action_date`** field (not in Python
+  or XML; only stale `.po` translation strings). Writable date fields are
+  `effective_date`, `warranty_date`, `assign_date`, `scrap_date`. The
+  Maintenance tab's `estimated_next_failure` / `latest_failure_date` /
+  `mtbf` / `mttr` are all computed/readonly. `expected_mtbf` (Integer) is
+  the writable sibling.
+- `maintenance.equipment.category._unlink_except_contains_maintenance_requests`
+  prevents delete while any equipment / request references the category.
+  Seed cleanup order: delete equipment first, then guard-unlink the
+  category only if `equipment_ids` and `maintenance_ids` are both empty.
+- **Two-phase save failure mode** (save equipment, then reopen to set one
+  more field): browser-use consistently creates a duplicate record on the
+  second phase instead of re-editing the saved one. Reliable medium-tier
+  trap without any wizard. `check.py` must assert `len(equipment) == 1`
+  — the diff engine alone won't catch the duplicate because `match_key:
+  [name]` produces two distinct "create" groups that both match
+  expected_state.json partially. See
+  `maintenance.create_equipment_schedule_preventive_plan`.
