@@ -1,0 +1,29 @@
+# Trace oracle for survey.review_submitted_responses_filter.
+#
+# The agent must navigate to the participations of the seeded survey, filter
+# down to find a specific email, open it, and post a chatter message.
+
+required_ops: []  # Validated via check.py
+
+optional_ops:
+  - survey.survey.read
+  - survey.survey.search_read
+  - survey.survey.web_search_read
+  - survey.user_input.read
+  - survey.user_input.search_read
+  - survey.user_input.web_search_read
+  - survey.user_input.web_save
+  - survey.user_input.write
+  - mail.message.create
+  - mail.message.read
+  - mail.message.search_read
+  - mail.message.web_save
+  - mail.thread.message_post
+  - mail.followers.create
+  - bus.bus.create
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+
+forbidden_ops:
+  - survey.user_input.unlink
+  - survey.survey.unlink
