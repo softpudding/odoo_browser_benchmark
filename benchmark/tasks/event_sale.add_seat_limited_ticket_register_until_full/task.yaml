@@ -1,0 +1,18 @@
+task_id: event_sale.add_seat_limited_ticket_register_until_full
+module: event_sale
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/events
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  failure_pattern: "Repetitive attendee form fills (5x) with a non-default ticket selection per row, then a final 6th attempt that the seats_max constraint blocks; agents typically misname the attendees (off-by-one), forget to set the ticket on each new registration, or fail to recognise the seat-limit ValidationError as the intended outcome."
+  primary_track: true
+  tier: 2

@@ -304,7 +304,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 292 | mail.create_channel_set_custom_avatar_pin_two_messages [medium] | Create a channel, upload a custom avatar, post messages, and pin two specific ones | Done | PASS | FAIL | 0.0 |
 | 293 | fleet.transfer_vehicle_between_drivers_log_history [medium] | Transfer a vehicle to a new driver and verify the assignation log entry | Done | PASS | PASS | 1.0 |
 | 294 | sale_loyalty.create_loyalty_program_apply_at_checkout [hard] | Create a loyalty program with a 10% discount rule, then apply it to a webshop cart at checkout | WIP | — | — | — |
-| 295 | event_sale.add_seat_limited_ticket_register_until_full [medium] | Add a 5-seat limited ticket to an event and register attendees until the seats fill | WIP | — | — | — |
+| 295 | event_sale.add_seat_limited_ticket_register_until_full [medium] | Add a 5-seat limited ticket to an event and register attendees until the seats fill | Done | PASS | FAIL | 0.0 |
 | 296 | sale_purchase.update_pol_alternative_vendor_compare [hard] | Open RFQ, add an alternative vendor with different price, compare and pick cheapest | WIP | — | — | — |
 | 297 | delivery.set_third_party_carrier_print_label [medium] | Configure a fixed-price carrier, apply it to a confirmed delivery picking with tracking ref, validate and trigger Print | Done | PASS | PASS | 1.0 |
 | 298 | inventory.create_storage_category_assign_to_location [medium] | Create a storage category with capacity rules and assign it to a stock location | WIP | — | — | — |
@@ -2824,3 +2824,18 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Configure carrier "Bench Express" (delivery_type=fixed, fixed_price=12, delivery product "Bench Express Shipping" created via the create-and-edit shortcut). Open the outgoing delivery picking for SO S-BENCH-DLV-002 (Ready, 1 move `Bench Express Crate` x 3), set Shipping Method = "Bench Express", Tracking Reference = "BX-TRACK-002", click Validate, then click the header Print button. |
 | **Capability tested** | Smart-button print action + manual tracking-ref population on a confirmed delivery picking; cross-module Delivery-Methods → Inventory round-trip. |
 | **Notes** | Fixed-price provider does NOT auto-generate a tracking number (`fixed_send_shipping` returns `tracking_number: False`); the only built-in providers in base are `fixed` and `base_on_rule`, both return False — so the task has the agent type the tracking ref manually. BU solved in ~156s / 21 steps, handling the create-and-edit modal and the "Concatenation detected" auto-retry on the Fixed Price numeric input; Print header button opens the delivery-slip report in-app. Calibrates slightly easier than target medium; could be hardened by requiring a specific weight / destination on the picking before validate. Seed pins `sale.order.name = 'S-BENCH-DLV-002'` so the picking's `origin` matches the deterministic entity_key; oracle uses JSON-RPC with `skip_backorder=True` and writes `stock.move.quantity` + `picked=True` to get a clean `button_validate`. |
+
+---
+
+## event_sale.add_seat_limited_ticket_register_until_full
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
+| **Odoo modules** | Events / event_sale |
+| **Workflow** | Seed creates 'Spring Q2 Workshop' with no real ticket types. Agent (1) adds VIP Seat ticket with seats_max=5, price=200; (2) registers VIP-1..VIP-5 one-at-a-time via the Attendees stat button → New, setting `event_ticket_id=VIP Seat` on each registration; (3) attempts to register VIP-6 with the same ticket — Odoo's `_check_seats_availability` constrains state in ('open','done'), so saving raises a ValidationError "There are not enough seats available". Agent must discard the 6th draft. |
+| **Capability tested** | Repetitive form fills (5 round-trips event → Attendees → New → Save), per-row non-default `event_ticket_id` selection, and recognition of a hard server-side seat-limit block on the 6th attempt. |
+| **Notes** | Well-calibrated medium. Oracle passes cleanly with F1=1.0 (24/24 atomic edits matched). Browser-Use failed: it created a duplicate 'VIP-1', omitted `event_ticket_id` on every registration (so seats_max was never enforced), and successfully created VIP-6 because no ticket meant no seat-limit constraint. Postcondition catches both the duplicate and the missing-ticket-link, F1 collapses to 0.0. Cookbook quirk discovered: BU drops the `event_ticket_id` Many2one on `event.registration.create` when registering from the event's Attendees view because the field is empty by default and the registration is still valid (just unconstrained) — drives both the seat-limit bypass and the duplicate-name re-attempts. |

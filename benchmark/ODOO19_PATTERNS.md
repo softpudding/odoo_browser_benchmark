@@ -59,6 +59,17 @@ if mod and mod.state != "installed":
 - Invoicing a paid registration goes through the Sales app (SO → event configurator wizard)
 - The attendee-details wizard pre-fills name/email from the partner; non-default override needed
   if the attendee differs from the buyer
+- `event.registration.state` defaults to `'open'` (Registered), so saving a new attendee
+  immediately fires `_check_seats_availability` — but only if `event_ticket_id` is set
+  (a ticketless registration is unconstrained). Browser-use frequently leaves
+  `event_ticket_id` blank on the registration form (it's not required), which silently
+  bypasses any `seats_max` cap. Tasks that test seat-limit enforcement must validate
+  that the registration is linked to the right ticket in `check.py` — relying on the
+  ValidationError firing alone is not enough.
+- The seat-limit ValidationError raised by `_check_seats_availability` shows up as a
+  modal dialog with title "Validation Error" and body containing "There are not enough
+  seats available for &lt;Event Name&gt;". Oracle scripts can detect it by selector
+  `.modal:visible .modal-body:has-text('not enough seats')`.
 
 ### Fleet
 
