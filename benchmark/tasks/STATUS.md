@@ -338,7 +338,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 326 | project.create_kanban_stage_reorder_drag [medium] | In project Kanban view, create a new stage and reorder it before existing stages | Done | PASS | FAIL | 0.0 |
 | 327 | account.create_recurring_journal_entry [hard] | Create a journal entry with template repeating monthly for 3 months | WIP | — | — | — |
 | 328 | website.add_image_carousel_to_homepage [hard] | In website editor, add Image Carousel snippet to home page with 3 images | WIP | — | — | — |
-| 329 | hr_holidays.bulk_approve_two_pending_requests [hard] | Select 2 pending leave requests in list view, approve in bulk via action | WIP | — | — | — |
+| 329 | hr_holidays.bulk_approve_two_pending_requests [hard] | Select 2 pending leave requests in list view, approve in bulk via action | Done | PASS | FAIL | 0.67 |
 | 330 | event.add_track_with_speaker_publish [medium] | On existing event, add a track with speaker info and publish on website | WIP | — | — | — |
 | 331 | purchase.send_rfq_email_with_template_signature [hard] | On a draft RFQ, click Send by Email, modify template body, attach signature | WIP | — | — | — |
 | 332 | website_sale.set_product_seo_title_meta [easy] | Open product, set SEO title and meta description | WIP | — | — | — |
@@ -3290,3 +3290,18 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Open seeded private group channel 'project-discussion'. In channel header click "Invite People" icon. In unified search input type `external-guest@bench.test`, wait for the envelope-icon email-fallback row to appear, click it to select, then click "Invite to Group Chat". This triggers `discuss.channel.invite_by_email` and creates a `mail.mail`. |
 | **Capability tested** | Non-default selectable row in an Owl side panel — the email fallback only appears after a complete valid email is typed and no partner matches. Distinct from the typical "add internal member" pathway. |
 | **Notes** | Odoo 19 has NO "Email tab" in the invite dialog (despite row 323 task-spec text) — only a single unified input; restructured the prompt to "click the envelope row" instead. Seed spins up a detached aiosmtpd sink on 127.0.0.1:2525 and registers an ir.mail_server pointing at it, plus sets admin.partner_id.email and mail.catchall.domain/mail.default.from ICPs, because invite_by_email calls `.send(raise_exception=True)` which rolls back the mail.mail on any SMTP or sender-missing failure. BU solved on first attempt (230s) — calibrated EASIER than medium, but keeps pathway coverage (invite_by_email vs the usual add_members). Also discovered and fixed two worktree-infra issues: (a) the copied skeleton .venv's `_editable_impl_odoo_benchmark.pth` pointed at the original skeleton-source worktree and needed to be rewritten to the current worktree root before oracle/check subprocess scripts could `import benchmark`; (b) `/tmp/benchmark_snapshots/benchmark_base.dump` was a 16KB stub restored from an uninitialised DB — re-dumped from a healthy per-task DB. See COOKBOOK_NOTES.md for the full aiosmtpd + ir.mail_server seed pattern. |
+
+---
+
+## hr_holidays.bulk_approve_two_pending_requests
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.6667 |
+| **Odoo modules** | HR Holidays (Time Off) |
+| **Workflow** | Navigate to `/odoo/time-off-approval`, switch to list view, clear default "Waiting For Me" facets, tick exactly the two checkboxes on Eve Pending's "Family vacation" row and Frank Pending's "Wedding attendance" row, then click the **Approve** bulk button that the `hr_holidays_payslip_list` JS controller renders in the list selection-actions slot. A third pending request (Alice Pending's "Personal errands") must stay in `confirm` state and two distractor leaves (one `validate`, one `refuse`) must be untouched. |
+| **Capability tested** | Multi-record list selection combined with a non-generic bulk action button (not the built-in cog Actions menu; the custom `MultiRecordViewButton` shown by `HolidaysListController.displayButton`). Calibration trap: selecting all pending rows flips Alice's leave to `validate`, and approving each one individually violates the bulk-only instruction. |
+| **Notes** | BU flipped Eve + Frank to `validate` and kept Alice's state at `confirm` — but on the way it silently CREATED an extra `hr.leave` with `state='confirm'` (null name), dragging Strict down to FAIL (Precision=0.5, Recall=1.0, F1=0.6667). Postcondition `check.py` passed on the canonical named records; the state-diff engine counts the stray create as 2 unexpected extras. Genuine hard-tier failure via Strict scoring. |
