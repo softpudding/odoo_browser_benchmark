@@ -1,0 +1,20 @@
+task_id: calendar.create_event_with_two_organizers_recurring_weekly
+module: calendar
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/calendar
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "Create a timed recurring weekly calendar event with two attendees, set end date, and generate a Discuss videocall link."
+  checks_verify: "One non-all-day calendar.event with two attendees, weekly rrule on Mondays until 2026-12-31, and a /calendar/join_videocall/ videocall_location."
+  primary_track: true
+  tier: 2
