@@ -303,6 +303,56 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 291 | sale_purchase.dropship_so_to_po_chain_validate [hard] | Confirm a dropship-routed SO and validate the auto-generated PO + receipt chain | Done | PASS | PASS | 1.0 |
 | 292 | mail.create_channel_set_custom_avatar_pin_two_messages [medium] | Create a channel, upload a custom avatar, post messages, and pin two specific ones | Done | PASS | FAIL | 0.0 |
 | 293 | fleet.transfer_vehicle_between_drivers_log_history [medium] | Transfer a vehicle to a new driver and verify the assignation log entry | Done | PASS | PASS | 1.0 |
+| 294 | sale_loyalty.create_loyalty_program_apply_at_checkout [hard] | Create a loyalty program with a 10% discount rule, then apply it to a webshop cart at checkout | WIP | — | — | — |
+| 295 | event_sale.add_seat_limited_ticket_register_until_full [medium] | Add a 5-seat limited ticket to an event and register attendees until the seats fill | WIP | — | — | — |
+| 296 | sale_purchase.update_pol_alternative_vendor_compare [hard] | Open RFQ, add an alternative vendor with different price, compare and pick cheapest | WIP | — | — | — |
+| 297 | delivery.set_third_party_carrier_print_label [medium] | Configure a third-party carrier with tracking, apply to delivery, generate tracking number | WIP | — | — | — |
+| 298 | inventory.create_storage_category_assign_to_location [medium] | Create a storage category with capacity rules and assign it to a stock location | WIP | — | — | — |
+| 299 | sale_stock.deliver_partial_split_into_two_pickings [hard] | On a multi-line SO with insufficient stock for one product, deliver partial and create explicit second picking later | WIP | — | — | — |
+| 300 | website_blog.create_blog_with_two_posts_archive_one [medium] | Create a new blog with 2 posts, then archive one of the two | WIP | — | — | — |
+| 301 | website_slides.duplicate_lesson_to_new_section [medium] | Duplicate an existing lesson and move the copy to a new section in a course | WIP | — | — | — |
+| 302 | im_livechat.assign_team_set_offline_form_message [medium] | Configure offline behavior for a livechat channel with custom message | WIP | — | — | — |
+| 303 | maintenance.archive_equipment_create_replacement [medium] | Archive an existing equipment and create a replacement equipment in same category | WIP | — | — | — |
+| 304 | project_todo.create_three_personal_with_specific_priorities [easy] | Create 3 personal todos with assigned priorities (high/normal/low) | WIP | — | — | — |
+| 305 | website_hr_recruitment.set_kanban_state_assign_recruiter [medium] | Open existing job applicant, set kanban state to 'Done', assign a recruiter | WIP | — | — | — |
+| 306 | purchase_stock.return_partial_with_distractor_lines [hard] | On a received PO with 3 product lines, return only 1 specific line partially | WIP | — | — | — |
+| 307 | sale_project.invoice_completed_milestones_only [hard] | With 4 milestones (2 reached, 2 not), invoice only the 2 reached | WIP | — | — | — |
+| 308 | survey.publish_share_via_link_get_url [easy] | Open a survey, click Share, generate the public URL | WIP | — | — | — |
+| 309 | point_of_sale.add_item_apply_global_discount_pay_cash [hard] | In POS, add 2 items, apply a 15% global discount, pay cash | WIP | — | — | — |
+| 310 | mass_mailing.duplicate_existing_change_subject_recipients [medium] | Duplicate a draft mailing, change subject and recipient list | WIP | — | — | — |
+| 311 | hr_holidays.refuse_then_re_request_other_type [hard] | As manager refuse a leave, then as employee re-request with different leave type | WIP | — | — | — |
+| 312 | calendar.create_event_with_two_organizers_recurring_weekly [medium] | Create weekly recurring calendar event with 2 attendees and a video link | WIP | — | — | — |
+| 313 | mrp.scrap_component_during_partial_production [hard] | During an MO, scrap a defective component before producing | WIP | — | — | — |
+| 314 | crm.assign_team_change_salesperson_log_activity [medium] | Open opportunity, change sales team and salesperson, log a 'Call' activity | WIP | — | — | — |
+| 315 | website_sale.add_optional_at_cart_remove_main_keep_optional [hard] | In webshop cart with main+optional product, remove the main and verify optional remains | WIP | — | — | — |
+| 316 | hr_expense.create_with_currency_eur_to_usd [medium] | Create expense in foreign currency (USD) and verify EUR conversion in report | WIP | — | — | — |
+| 317 | event_product.create_event_product_link_to_ticket [medium] | Create a service product linked to an event ticket type | WIP | — | — | — |
+| 318 | website.create_contact_form_with_custom_field [hard] | On website /contact-us page, add a custom dropdown field via website builder | WIP | — | — | — |
+| 319 | contacts.merge_three_duplicates_keep_email [hard] | Merge 3 duplicate contacts into one, choosing email from a specific record | WIP | — | — | — |
+| 320 | website_sale.create_gift_card_apply_in_cart [hard] | Configure a gift card program, generate a code, apply in cart at checkout | WIP | — | — | — |
+| 321 | hr.create_department_assign_manager_three_employees [medium] | Create a new department, assign manager and 3 existing employees | WIP | — | — | — |
+| 322 | stock.create_putaway_rule_for_specific_category [hard] | Create putaway rule routing a product category to a specific sub-location | WIP | — | — | — |
+| 323 | mail.invite_external_email_to_existing_channel [medium] | In existing channel, invite an external email (creates guest invitation) | WIP | — | — | — |
+| 324 | sale.add_line_with_optional_template_apply_discount [medium] | On a draft SO, add a line by selecting a template, then apply line-level 10% discount | WIP | — | — | — |
+| 325 | crm.create_lead_from_email_alias_log_message [hard] | Create a CRM team with email alias, then create lead via Send Message simulating inbound | WIP | — | — | — |
+| 326 | project.create_kanban_stage_reorder_drag [medium] | In project Kanban view, create a new stage and reorder it before existing stages | WIP | — | — | — |
+| 327 | account.create_recurring_journal_entry [hard] | Create a journal entry with template repeating monthly for 3 months | WIP | — | — | — |
+| 328 | website.add_image_carousel_to_homepage [hard] | In website editor, add Image Carousel snippet to home page with 3 images | WIP | — | — | — |
+| 329 | hr_holidays.bulk_approve_two_pending_requests [hard] | Select 2 pending leave requests in list view, approve in bulk via action | WIP | — | — | — |
+| 330 | event.add_track_with_speaker_publish [medium] | On existing event, add a track with speaker info and publish on website | WIP | — | — | — |
+| 331 | purchase.send_rfq_email_with_template_signature [hard] | On a draft RFQ, click Send by Email, modify template body, attach signature | WIP | — | — | — |
+| 332 | website_sale.set_product_seo_title_meta [easy] | Open product, set SEO title and meta description | WIP | — | — | — |
+| 333 | point_of_sale.attach_customer_apply_loyalty [hard] | In POS, attach a customer with loyalty card mid-sale and apply earned points | WIP | — | — | — |
+| 334 | website_blog.create_tag_assign_to_three_posts [medium] | Create a new tag, assign to 3 existing blog posts | WIP | — | — | — |
+| 335 | hr_recruitment.skill_filter_then_send_offer [hard] | Filter applicants by skill='Python', open top match, send offer email | WIP | — | — | — |
+| 336 | sale.create_quotation_with_customer_pricelist [medium] | Create SO with a customer who has a specific pricelist; verify pricelist auto-applied | WIP | — | — | — |
+| 337 | calendar.invite_organize_with_event_agenda_attachment [hard] | Create calendar event with attachment file as agenda | WIP | — | — | — |
+| 338 | stock.cancel_picking_create_replacement_with_serial [hard] | Cancel an existing receipt picking, create a replacement with serial-tracked products | WIP | — | — | — |
+| 339 | mrp_account.confirm_mo_check_account_move [medium] | Confirm an MO and verify the cost-of-production journal entry was created | WIP | — | — | — |
+| 340 | survey.invite_attendees_send_email [medium] | On existing survey, click Invite, enter 3 emails, customize subject, send | WIP | — | — | — |
+| 341 | hr.add_skill_to_employee_with_level [medium] | Open employee, add a skill with skill type and level | WIP | — | — | — |
+| 342 | website_event.publish_event_register_via_portal [hard] | Publish event website page, navigate to portal /events, register | WIP | — | — | — |
+| 343 | crm_sms.send_sms_to_opportunity [medium] | On opportunity, click Send SMS button, compose and send | WIP | — | — | — |
 
 ---
 
