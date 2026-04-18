@@ -1,0 +1,20 @@
+task_id: website_sale.set_product_seo_title_meta
+module: website_sale
+difficulty: easy
+instruction: see prompt.md
+start_url: /odoo/ecommerce-products
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 240
+step_limit: 120
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: easy
+  agent_interaction: "Open the seeded eCommerce product, open the Optimize SEO dialog, and set the page title and meta description."
+  checks_verify: "product.template website_meta_title and website_meta_description match the requested values."
+  primary_track: true
+  tier: 1

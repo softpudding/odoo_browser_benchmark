@@ -341,7 +341,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 329 | hr_holidays.bulk_approve_two_pending_requests [hard] | Select 2 pending leave requests in list view, approve in bulk via action | Done | PASS | FAIL | 0.67 |
 | 330 | event.add_track_with_speaker_publish [medium] | On existing event, add a track with speaker info and publish on website | Done | PASS | PASS | 1.0 |
 | 331 | purchase.send_rfq_email_with_template_signature [hard] | On a draft RFQ, click Send by Email, modify template body, attach signature | WIP | — | — | — |
-| 332 | website_sale.set_product_seo_title_meta [easy] | Open product, set SEO title and meta description | WIP | — | — | — |
+| 332 | website_sale.set_product_seo_title_meta [easy] | Open product, set SEO title and meta description | Done | PASS | PASS | 1.0 |
 | 333 | point_of_sale.attach_customer_apply_loyalty [hard] | In POS, attach a customer with loyalty card mid-sale and apply earned points | WIP | — | — | — |
 | 334 | website_blog.create_tag_assign_to_three_posts [medium] | Create a new tag, assign to 3 existing blog posts | WIP | — | — | — |
 | 335 | hr_recruitment.skill_filter_then_send_offer [hard] | Filter applicants by skill='Python', open top match, send offer email | WIP | — | — | — |
@@ -3335,3 +3335,18 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Configure CRM team 'Inbound' Email Alias to `leads-inbound` (inline input, mid-form under Team Details) + set Accept Emails From to Authenticated Partners (Odoo `o_select_menu` custom dropdown, NOT a native `<select>`). Create a new lead `Inbound Inquiry from Sample` with email_from `prospect@external.test`, priority Medium (single star), and existing `Website` tag. Post a regular chatter message `Asked about Bench Pro pricing.` (Send message, not Log note). |
 | **Capability tested** | Three-surface workflow (team config + lead creation + chatter) with stacked calibration traps: custom `o_select_menu` widget, single-star priority, many2many tag autocomplete with distractor, and Send-message vs Log-note distinction. |
 | **Notes** | First pass of the task (alias_name + lead + chatter only) was trivially passed by BU with F1=1.0 in 228s — alias field on the main form is too visually obvious. Hardened by stacking (a) `alias_contact -> Authenticated Partners` (custom select-menu), (b) `priority = Medium` (one star, BU canonical trap), (c) existing `Website` tag with distractor `Web-Inquiry` in autocomplete. Post-hardening BU hit 5/5 state diff but silently skipped the tag -> postcondition FAIL. Oracle uses `.o_select_menu_toggler` + `.o_select_menu_item:has-text(...)` for alias_contact. `crm.lead.name` widget=text (textarea) — must use `fill_text_field`, not `fill_field`. |
+
+---
+
+## website_sale.set_product_seo_title_meta
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS (F1=1.0, 0 postcondition failures, 81.9s wall clock, 11 steps) |
+| **F1** | 1.0 |
+| **Odoo modules** | Website (eCommerce) |
+| **Workflow** | Seed a published product 'Bench SEO Widget' with empty website_meta_title / website_meta_description. Agent opens /odoo/ecommerce-products, clicks the product (lands on backend product form), clicks the header "Go to Website" button to reach /shop/bench-seo-widget, opens the Site menu → This Page → Optimize SEO, fills Title='Buy Bench SEO Widget Online' and Description='Premium widget for benchmarking with fast delivery.' in the Owl dialog, clicks Save. |
+| **Capability tested** | Reach a dialog that is NOT on the backend product form — SEO fields live on the `website.seo.metadata` mixin and are only editable through the frontend OptimizeSEODialog (registered under `website.menu_optimize_seo` in the `website_custom_menus` service). Forces the agent to pivot from backend list view to frontend Site menu. |
+| **Notes** | Calibrated as easy (~80% target) and BU solved first-shot in 81.9s. `is_seo_optimized` (computed+stored) flips False→True as a side effect of writing either meta field — placed in `ignore_fields` to keep the diff to exactly two atomic set edits. Oracle uses JSON-RPC write() bypass because the Owl dialog + iframe combo is fragile to script via Playwright and bypass is explicitly sanctioned for oracles. No forbidden ops; HarmfulWriteRate 0.0. See COOKBOOK_NOTES.md for the "SEO fields live on a mixin, not on the product form" quirk. |
