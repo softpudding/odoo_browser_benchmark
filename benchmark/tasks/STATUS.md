@@ -382,6 +382,11 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 370 | project_todo.bulk_move_tasks_between_projects [hard] | Move 3 specific tasks from project A to project B while leaving a distractor task in project A | WIP | — | — | — |
 | 371 | website_hr_recruitment.edit_job_form_publish_preview [medium] | Edit a recruitment job posting's description and requirements, publish it, then preview on the portal | WIP | — | — | — |
 | 372 | fleet.log_service_cost_add_odometer_close [hard] | Log a service cost on a vehicle, add an odometer reading, then mark the service record as closed | WIP | — | — | — |
+| 373 | maintenance.create_equipment_schedule_preventive_plan [medium] | Create a new maintenance.equipment and attach a preventive schedule with expected_mtbf | WIP | — | — | — |
+| 374 | product_expiry.receive_lot_set_expiry_date [medium] | Receive a lot-tracked perishable product and set its expiration and best-before dates | WIP | — | — | — |
+| 375 | website_sale_slides.assign_attendees_publish_course [hard] | Publish an eLearning course, set prerequisite, and assign enrolled attendees | WIP | — | — | — |
+| 376 | calendar.configure_meeting_with_location_and_reminder [medium] | Create a calendar event with a physical location, attendees, and a 1-hour reminder | WIP | — | — | — |
+| 377 | mrp.bom_with_kit_component_confirm_mo [hard] | Create a BoM that uses a kit-type sub-component, confirm an MO, and verify kit expansion | WIP | — | — | — |
 
 ---
 
