@@ -1,0 +1,36 @@
+required_ops:
+  # The website form posts to /website/form/ which creates the applicant.
+  - hr.applicant.create
+
+optional_ops:
+  - hr.job.create
+  - hr.job.write
+  - hr.job.web_save
+  - hr.job.read
+  - hr.job.web_read
+  - hr.job.read_progress_bar
+  - hr.job.search_read
+  - hr.job.web_search_read
+  - hr.job.onchange
+  - hr.applicant.read
+  - hr.applicant.search_read
+  - hr.applicant.web_read_group
+  - hr.department.read
+  - hr.department.web_name_search
+  - hr.department.search_read
+  - ir.ui.view.read
+  - website.page.read
+  - website.page.search_read
+  - mail.message.create
+  - bus.bus.create
+  - custom:/website/form/hr.applicant
+  - custom:/website_hr_recruitment/check_recent_application
+  - custom:/jobs
+  - custom:/jobs/apply
+
+forbidden_ops:
+  - hr.job.unlink
+  - hr.applicant.unlink
+  - hr.applicant.write    # task only creates the applicant, never edits
+  - hr.department.write
+  - hr.department.unlink
