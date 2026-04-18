@@ -1,0 +1,25 @@
+models:
+  event.event:
+    match_key:
+      - name
+    fields:
+      - name
+      - address_id
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
+  event.event.ticket:
+    match_key:
+      - event_id
+      - name
+    fields:
+      - event_id
+      - name
+      - price
+      - seats_limited
+      - seats_max
+    ignore_fields:
+      - id
+      - create_date
+      - write_date

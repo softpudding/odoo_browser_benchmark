@@ -1,0 +1,24 @@
+# Trace oracle for mrp.confirm_produce_close_mo
+#
+# Hard: open draft MO -> click Confirm -> click Produce All -> accept wizard.
+
+required_ops:
+  - mrp.production.action_confirm
+  - mrp.production.button_mark_done
+
+optional_ops:
+  - mrp.production.read
+  - mrp.production.write
+  - mrp.production.web_save
+  - mrp.production.pre_button_mark_done
+  - mrp.production.search_read
+  - mrp.production.web_search_read
+  - mrp.production._action_done
+  - stock.move.read
+  - stock.move.write
+  - stock.move._action_done
+  - ir.ui.view.get_views
+
+forbidden_ops:
+  - mrp.production.unlink
+  - mrp.production.action_cancel

@@ -1,0 +1,21 @@
+task_id: stock.create_putaway_rule
+module: stock
+difficulty: hard
+instruction: see prompt.md
+start_url: /odoo/inventory
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 420
+step_limit: 300
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: hard
+  agent_interaction: "Navigate from Inventory to Configuration, open the Putaway Rules list, create a new rule, and fill three distinct many2one fields (product, When product arrives in = WH/Stock, Store to sublocation = WH/Stock/Shelf A1) before saving."
+  checks_verify: "A stock.putaway.rule exists for product 'Storage Box Echo' with location_in_id='WH/Stock', location_out_id='WH/Stock/Shelf A1'; the placeholder empty rule is not left behind; distractor product has no rule."
+  failure_pattern: "Agents often confuse location_in_id (source) with location_out_id (destination), set the product-category field instead of product, or save without fully resolving the many2one dropdowns so a blank draft rule remains."
+  primary_track: true
+  tier: 3
