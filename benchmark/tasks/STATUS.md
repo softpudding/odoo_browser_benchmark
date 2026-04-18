@@ -321,7 +321,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 309 | point_of_sale.add_item_apply_global_discount_pay_cash [hard] | POS session: 2 items, open Actions popup, Discount 15%, pay cash, validate order | Done | PASS | PASS | 1.0 |
 | 310 | mass_mailing.duplicate_existing_change_subject_recipients [medium] | Duplicate seeded 'Q1 Bulletin Template' via Actions→Duplicate, change subject and country=Germany filter | Done | PASS | FAIL | 0.0 |
 | 311 | hr_holidays.refuse_then_re_request_other_type [hard] | As manager refuse a leave, then as employee re-request with different leave type | WIP | — | — | — |
-| 312 | calendar.create_event_with_two_organizers_recurring_weekly [medium] | Create weekly recurring calendar event with 2 attendees and a video link | WIP | — | — | — |
+| 312 | calendar.create_event_with_two_organizers_recurring_weekly [medium] | Create weekly recurring Monday event 09:00-09:30 with 2 attendees and Discuss videocall link | Done | PASS | FAIL | 0.0 |
 | 313 | mrp.scrap_component_during_partial_production [hard] | During an MO, scrap a defective component before producing | WIP | — | — | — |
 | 314 | crm.assign_team_change_salesperson_log_activity [medium] | Open opportunity, change sales team and salesperson, log a 'Call' activity | WIP | — | — | — |
 | 315 | website_sale.add_optional_at_cart_remove_main_keep_optional [hard] | In webshop cart with main+optional product, remove the main and verify optional remains | WIP | — | — | — |
@@ -3065,3 +3065,18 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Open POS session, add Bench POS Widget × 2 (€40), click Actions (ellipsis) → Discount, enter 15%, confirm (€34), pay Bench Cash, validate. |
 | **Capability tested** | POS kiosk UI with ellipsis-hidden Discount button. |
 | **Notes** | Calibration: easier than hard. BU solved cleanly on first shot (15 steps, 128s). Oracle uses JSON-RPC call_kw bypass (UI hangs on stale o_technical_modal). Would need split payment + discount combo to regain hard tier. |
+
+---
+
+## calendar.create_event_with_two_organizers_recurring_weekly
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | FAIL |
+| **F1** | 0.0 |
+| **Odoo modules** | Calendar |
+| **Workflow** | Create event 'Weekly Standup' on 2026-06-01 09:00-09:30 (Monday); add Alice + Bob attendees; set Weekly recurrence on Mondays ending 2026-12-31; generate Discuss videocall link; save. |
+| **Capability tested** | Datetime entry + recurrence weekday picker + videocall location action. |
+| **Notes** | Well-calibrated medium. BU got datetime in AM/PM wrong (entered 01:00 instead of 09:00) and left Saturday toggled in weekday picker. Oracle uses JSON-RPC because set_discuss_videocall_location is server-side no-op (real work is JS-intercepted). |

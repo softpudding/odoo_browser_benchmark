@@ -405,3 +405,16 @@ For mass_mailing oracles: prefer JSON-RPC `copy() + write()` over UI navigation 
 - To enable Discount button: `pos.config.module_pos_discount=True`, `iface_discount=True`, `discount_pc=<float>`, `discount_product_id` (data record `pos_discount.product_product_consumable`).
 - UI: Discount button lives inside the **Actions popup** (ellipsis `more-btn`), not the top bar. In Odoo 19 `control_buttons.xml` moves secondary actions (Pricelist, Refund, Fiscal position, Discount, etc.) into ControlButtonsPopup.
 - Oracle pattern: prefer JSON-RPC `call_kw` over UI-driven POS oracle — `o_technical_modal` sometimes stays in DOM and intercepts pointer events.
+
+---
+
+## calendar.event.set_discuss_videocall_location is a no-op on the server
+
+In Odoo 19, `calendar.event.set_discuss_videocall_location()` is a no-op that returns True — the actual URL generation happens in JS (intercepted on the frontend). The private `_set_discuss_videocall_location()` does the real work but isn't callable via JSON-RPC.
+
+For JSON-RPC oracles that need a Discuss videocall URL, craft it manually and write `videocall_location` + `access_token` directly:
+```python
+import secrets
+token = secrets.token_hex(16)
+videocall_location = f"/calendar/join_videocall/{token}"
+```
