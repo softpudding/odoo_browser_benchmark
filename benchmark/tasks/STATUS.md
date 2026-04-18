@@ -312,7 +312,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 300 | website_blog.create_blog_with_two_posts_archive_one [medium] | Create blog 'Bench Insights' + 2 published posts, then archive only March Notes (active=False, kept in DB) | Done | PASS | FAIL | 0.0 |
 | 301 | website_slides.duplicate_lesson_to_new_section [medium] | Add Advanced section, duplicate Welcome Video lesson via Actions menu, move duplicate to Advanced and rename | Done | PASS | FAIL | 0.0 |
 | 302 | im_livechat.assign_team_set_offline_form_message [medium] | Configure Live Chat channel via 3-dots Configure menu, switch Options tab, set notification text and welcome message | Done | PASS | PASS | 1.0 |
-| 303 | maintenance.archive_equipment_create_replacement [medium] | Archive an existing equipment and create a replacement equipment in same category | WIP | — | — | — |
+| 303 | maintenance.archive_equipment_create_replacement [medium] | Archive seeded 'Old Belt OB-99' via Actions, then create 'New Belt NB-100' with serial in same category | Done | PASS | PASS | 1.0 |
 | 304 | project_todo.create_three_personal_with_specific_priorities [easy] | Create 3 personal todos with assigned priorities (high/normal/low) | WIP | — | — | — |
 | 305 | website_hr_recruitment.set_kanban_state_assign_recruiter [medium] | Open existing job applicant, set kanban state to 'Done', assign a recruiter | WIP | — | — | — |
 | 306 | purchase_stock.return_partial_with_distractor_lines [hard] | On a received PO with 3 product lines, return only 1 specific line partially | WIP | — | — | — |
@@ -2930,3 +2930,18 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Confirm draft SO S-BENCH-SPLIT-001 (Halberd Industries, Alpha×5 + Beta×8 with both fully reservable). Open delivery, manually edit Beta Done from auto-reserved 8 down to 3, validate, click "Create Backorder". Then breadcrumb back to SO, smart-button to delivery list, open the not-Done backorder picking, edit Beta Done from auto-reserved 5 down to 0, then SAVE (no validate). |
 | **Capability tested** | Inline-cell qty edits in TWO separate pickings + backorder dialog choice + non-validate save. |
 | **Notes** | Well-calibrated hard. Initial design with Beta stock=3 (matching user spec literal "3 in stock") made the 5→0 step a no-op (backorder Done already 0 because no stock left), and BU passed. Reseeded Beta with 8 in stock so backorder genuinely auto-reserves 5 → forced cell-edit pattern. BU failed by creating a return picking ("Return of WH/OUT/00001") instead of opening the existing backorder, then ran out of time. F1=0.0 / postcondition failure: "Expected exactly 1 original (non-backorder) picking, found 2". Backorder ends in state=`confirmed` after Done is zeroed (stock un-reserves). |
+
+---
+
+## maintenance.archive_equipment_create_replacement
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS (F1 1.0, 97.4s) |
+| **F1** | 1.0 |
+| **Odoo modules** | Maintenance |
+| **Workflow** | Open the seeded equipment 'Old Belt OB-99' in category Warehouse Gear and archive it via the form Actions menu. Then create a new equipment 'New Belt NB-100' in the same Warehouse Gear category with serial 'NB-100-SN-2026', and save. |
+| **Capability tested** | Two-step lifecycle on the same model: archive existing record (active=False) via Actions menu, then create-from-scratch a replacement with exact category and serial. |
+| **Notes** | Archive sets `active=False` which the diff engine normalizes to `null`. The create-from-scratch on `maintenance.equipment` also generates an explicit `active=true` create entry — both must be encoded in expected_state.json. BU solved on first attempt; calibration trends easier than medium. |
