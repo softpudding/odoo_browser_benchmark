@@ -2975,3 +2975,18 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Open the To-do app, create three personal notes (Plan Sprint, Write Docs, Refactor CSS). Only Plan Sprint should get one priority star clicked (Medium = priority '1'); other two stay default. Save each. |
 | **Capability tested** | Multi-record creation in to-do quick-create combined with priority star widget. |
 | **Notes** | Priority widget renders N-1 stars (skips `value_first`). For [(0,Low),(1,Medium),(2,High)] means 2 stars: star 1 → '1' (Medium), star 2 → '2' (High). Calibration matches easy tier — BU set right priority but ran a duplication loop on Plan Sprint instead of moving on. |
+
+---
+
+## sale_project.invoice_completed_milestones_only
+
+| Field | Value |
+|---|---|
+| **Status** | Done |
+| **Oracle** | PASS |
+| **Browser-Use** | PASS |
+| **F1** | 1.0 |
+| **Odoo modules** | Sales, Project |
+| **Workflow** | Open Sales app, find SO S-BENCH-MS-002. Click Create Invoice on the SO header. Wizard auto-fills line quantity 2 (M1+M2 of 4 milestones already reached). Accept Regular Invoice radio default and click Create Draft. |
+| **Capability tested** | Trust the Create Invoice wizard's auto-quantity for delivered_milestones products (do not override). |
+| **Notes** | Calibration: easier than hard. BU solved in 104s; wizard auto-detect is robust enough that agents accept it. To push to hard we'd need a non-default radio (Down Payment) or require typing a different qty — both forbidden by spec. Seed pre-marks M1+M2 reached so agent doesn't navigate to Project. SO line invoice_status flips to "no" (qty_to_invoice=0). |
