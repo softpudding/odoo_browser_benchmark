@@ -293,6 +293,16 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 281 | sale_project.timesheet_task_mark_billable_log_hours [hard] | Log timesheet hours on a sale-generated project task, mark billable, and verify invoice-ready state | Removed | FAIL (spec) | — | — |
 | 282 | project_todo.reorder_notes_add_due_dates_bulk [easy] | Set due dates on three seeded To-Do notes from the Kanban view | Done | PASS | PASS | 1.0 |
 | 283 | website_hr_recruitment.publish_job_from_backoffice_then_apply_portal [hard] | Create and publish a job position in the back office, then apply to it from the public portal | Done | PASS | FAIL | 0.0 |
+| 284 | mass_mailing.create_segmented_mailing_save_draft [medium] | Create an email mailing with a filtered Contacts recipient list and save as draft | WIP | — | — | — |
+| 285 | event_sale.configure_paid_ticket_register_with_invoice [hard] | Configure a paid event ticket, register an attendee, confirm registration, and generate the invoice | WIP | — | — | — |
+| 286 | inventory.run_replenishment_from_dashboard [medium] | Run replenishment for a low-stock product from the Replenishment dashboard | WIP | — | — | — |
+| 287 | sale_project.deliver_milestone_invoice_partially [hard] | Mark one of three SO milestones delivered and create an invoice for that milestone only | WIP | — | — | — |
+| 288 | website_sale.unpublish_archive_unarchive_publish_cycle [medium] | Take a published shop product through Unpublish → Archive → Unarchive → Publish | WIP | — | — | — |
+| 289 | website_blog.edit_post_change_author_add_tags_schedule [medium] | Edit a seeded blog post: change author, add two tags, and set the publish date | WIP | — | — | — |
+| 290 | website_slides.add_quiz_lesson_to_existing_course [hard] | Add a multi-question quiz lesson with answers to an existing course and publish | WIP | — | — | — |
+| 291 | sale_purchase.dropship_so_to_po_chain_validate [hard] | Confirm a dropship-routed SO and validate the auto-generated PO + receipt chain | WIP | — | — | — |
+| 292 | mail.create_channel_set_custom_avatar_pin_two_messages [medium] | Create a channel, upload a custom avatar, post messages, and pin two specific ones | WIP | — | — | — |
+| 293 | fleet.transfer_vehicle_between_drivers_log_history [medium] | Transfer a vehicle to a new driver and verify the assignation log entry | WIP | — | — | — |
 
 ---
 
