@@ -1,0 +1,21 @@
+task_id: website_sale.add_optional_at_cart_remove_main_keep_optional
+module: website_sale
+difficulty: hard
+instruction: see prompt.md
+start_url: /shop
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 480
+step_limit: 300
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: hard
+  failure_pattern: "Agent removes the wrong cart line, removes both lines, or empties the cart entirely instead of preserving the orphaned optional"
+  agent_interaction: "From the webshop, add the main product (which auto-adds the optional via configurator), then on /shop/cart remove only the main line and leave the optional behind"
+  checks_verify: "The remaining draft sale.order has exactly one line for the optional product, no line for the main product, and remains in draft state"
+  primary_track: true
+  tier: 3
