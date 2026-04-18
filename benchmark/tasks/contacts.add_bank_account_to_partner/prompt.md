@@ -9,10 +9,11 @@ account number for payments. Record it on their contact record.
 
 1. Open the **Contacts** app.
 2. Find and open the contact **Benchmark IBAN Supplier Ltd**.
-3. Go to the **Accounting** tab on the contact form.
-4. Click **Add a line** (or **Add**) under **Bank Accounts** and fill
-   in:
-   - **Account Number (IBAN)**: `GB82 WEST 1234 5698 7654 32`
+3. Go to the **Invoicing** tab on the contact form.
+4. In the **Bank Accounts** field, type the IBAN
+   `GB82 WEST 1234 5698 7654 32` into the add input. Confirm the
+   **Create …** suggestion in the autocomplete dropdown, then
+   Save the bank record in the dialog that appears.
 5. Save the contact.
 
 ## Rules
