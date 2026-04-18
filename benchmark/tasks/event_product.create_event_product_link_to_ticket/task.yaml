@@ -1,0 +1,18 @@
+task_id: event_product.create_event_product_link_to_ticket
+module: event_product
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/inventory
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: closed_loop_cross_module
+  failure_pattern: "Cross-module workflow: agent must first create a service product with the obscure 'Event Ticket' service tracking option, then go back to the Events app and pick that product on a new event ticket. Agents commonly forget to set service_tracking='event' (so the product won't appear in the event ticket product dropdown), or create a consumable instead of a service, or use the wrong tab to add the ticket."
+  primary_track: true
+  tier: 2
