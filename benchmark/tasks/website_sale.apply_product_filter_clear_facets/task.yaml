@@ -1,0 +1,21 @@
+task_id: website_sale.apply_product_filter_clear_facets
+module: website_sale
+difficulty: medium
+instruction: see prompt.md
+start_url: /shop
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "On /shop, filter by the Gadgets category then by a maximum price of 100; remove the Gadgets category filter (keeping the price filter) and finally add 'Bench Widget Tiny' to the cart."
+  checks_verify: "Admin website cart contains exactly one line for 'Bench Widget Tiny' (qty 1) and no line for any of the other seeded products."
+  failure_pattern: "Agent forgets to remove the category facet before adding Bench Widget Tiny, adds the wrong product, or fails to combine the two filters."
+  primary_track: true
+  tier: 2

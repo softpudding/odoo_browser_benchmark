@@ -192,6 +192,35 @@ if mod and mod.state != "installed":
   switch to list view AND clear filters to see archived / unpublished records
 - After toggling `is_published` on the Sales tab, the form stays on that tab; if the
   next step is on a different tab (e.g., General for `default_code`), re-open it
+- **Category filter on `/shop` is a URL PATH, not a query param.** Clicking a
+  category sidebar link redirects to `/shop/category/<slug-id>` (see
+  `website_sale.categorie_link` + `_get_shop_path` in
+  `website_sale/controllers/main.py`). There is no "x on category facet" chip.
+  Removing the category filter = clicking the **All Products** link at the top
+  of the Categories sidebar, which navigates back to plain `/shop` while
+  preserving existing query params (`min_price`, `max_price`, `tags`, etc.) via
+  the Jinja `keep(...)` helper.
+- **Price filter is a dual-handle multirange slider.** Rendered from
+  `addons/website/static/lib/multirange/multirange_custom.js`; the `<input
+  type="range" multiple="multiple" class="form-range range-with-input">`
+  has **two hidden `<input type="number">` counters** inserted alongside the
+  `$<value>` spans. Clicking the counter span toggles the number input
+  visible; typing a value + Enter fires `newRangeValue`, which redirects to
+  `?max_price=<value>`. Playwright drag-handle automation is fragile; the
+  reliable oracle pattern is **direct URL navigation** (e.g.
+  `page.goto("/shop/category/<id>?max_price=100")`).
+- **`/shop/cart/add` is a `type='jsonrpc'`, `auth='public'` route**
+  (`website_sale/controllers/cart.py`). Payload:
+  `{product_template_id, product_id (variant_id), quantity, ...}`. Session
+  cookie drives cart ownership: admin-logged = admin cart; no login = public-
+  user cart. **Postcondition checks for public-shop tasks must find the cart
+  by line content (product name), not by `partner_id`**, because a BU run
+  that skips login will silently own the cart as the public user and a
+  `partner_id=admin` filter will miss it.
+- **`product.public.category` is the correct model name** for a website
+  (eCommerce) product category — common backlog misspellings
+  `website.sale.category` / `product.category.public` do not exist. The m2m
+  on `product.template` is `public_categ_ids`.
 
 ### Loyalty / sale_loyalty / website_sale_loyalty
 
