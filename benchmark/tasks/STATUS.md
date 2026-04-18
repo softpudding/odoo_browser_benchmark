@@ -371,7 +371,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 359 | im_livechat.configure_channel_then_handle_widget_chat [hard] | Configure a live chat channel, open the website widget, accept the chat, and reply with a canned response | WIP | — | — | — |
 | 360 | website_hr_recruitment.apply_public_then_schedule_interview [hard] | Submit a public job application, then schedule that applicant’s interview from the backend | WIP | — | — | — |
 | 361 | purchase_stock.receive_partial_scrap_damaged_units [hard] | Receive part of a PO, scrap damaged units from the receipt, and finish the remainder correctly | WIP | — | — | — |
-| 362 | maintenance.create_request_from_equipment_schedule_followup [medium] | Create a maintenance request from an equipment record and schedule a follow-up activity | WIP | — | — | — |
+| 362 | maintenance.create_request_from_equipment_schedule_followup [medium] | Create a maintenance request from an equipment record and schedule a follow-up activity | Done | PASS | FAIL | 0.0 |
 | 363 | point_of_sale.sell_pos_order_invoice_customer [hard] | Ring up a POS sale, attach a customer, toggle Invoice this Order, pay cash, and verify a posted account.move invoice was generated | WIP | — | — | — |
 | 364 | mass_mailing.create_mailing_send_test_to_self [medium] | Compose a mailing, click Send Test, send to admin's own email, then save the mailing as draft | WIP | — | — | — |
 | 365 | survey.duplicate_survey_change_title_publish [medium] | Duplicate a seeded survey via Actions menu, rename the copy, and publish only the copy | WIP | — | — | — |
