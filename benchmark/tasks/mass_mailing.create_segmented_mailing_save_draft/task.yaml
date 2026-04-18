@@ -1,0 +1,21 @@
+task_id: mass_mailing.create_segmented_mailing_save_draft
+module: mass_mailing
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/email-marketing
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "Create a draft email mailing targeting res.partner with a domain filter (city = Berlin) so the recipient count is 2; fill the WYSIWYG body and save as draft (do not send)."
+  checks_verify: "A mailing.mailing exists with subject 'Berlin April Bulletin', mailing_model_name='res.partner', state='draft', body contains 'Berlin team', and the mailing_domain filters to the two Berlin contacts."
+  failure_pattern: "Browser agents often skip the domain editor (default 'all records'), pick the wrong recipients model (Mailing List vs Contact), or accidentally click Send instead of Save."
+  primary_track: true
+  tier: 2
