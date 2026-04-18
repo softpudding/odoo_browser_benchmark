@@ -1,0 +1,27 @@
+# Trace oracle for project.create_project_from_template_duplicate
+#
+# Medium: duplicate a project (which auto-copies its tasks via map_tasks)
+# and ensure the copy is named "Bench Template Project (Copy)".
+
+required_ops: []
+
+optional_ops:
+  - project.project.copy
+  - project.project.create
+  - project.project.web_save
+  - project.project.write
+  - project.project.read
+  - project.project.search_read
+  - project.project.web_search_read
+  - project.task.copy
+  - project.task.create
+  - project.task.read
+  - project.task.search_read
+  - project.task.web_search_read
+  - project.task.web_save
+  - project.task.write
+  - ir.ui.view.get_views
+
+forbidden_ops:
+  - project.project.unlink
+  - project.task.unlink

@@ -1,0 +1,21 @@
+task_id: fleet.transfer_vehicle_new_driver
+module: fleet
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/fleet
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "Open the seeded TESLA Model 3 vehicle, change its driver from Old Driver Bob to New Driver Alice via the form, save, and set the assignation log Start Date to 2026-03-15."
+  checks_verify: "Vehicle driver is updated to New Driver Alice, the original Old Driver Bob assignation log is closed (date_end set), and New Driver Alice's assignation log has date_start = 2026-03-15."
+  failure_pattern: "Agent changes the driver but forgets to set the new assignation log's Start Date or edits the wrong log entry."
+  primary_track: true
+  tier: 2

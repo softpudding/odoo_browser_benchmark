@@ -1,0 +1,20 @@
+task_id: project.create_project_from_template_duplicate
+module: project
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/project
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "Open 'Bench Template Project', use the project's Duplicate action (Actions menu or kanban card 3-dot menu) to create a full copy including all 3 tasks, named 'Bench Template Project (Copy)'."
+  checks_verify: "Original project still exists with its 3 tasks untouched; a new project named 'Bench Template Project (Copy)' exists and contains 3 tasks named {Setup, Build, Review}."
+  primary_track: true
+  tier: 2

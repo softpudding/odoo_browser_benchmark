@@ -1,0 +1,21 @@
+task_id: crm.pivot_view_opportunities_by_stage_revenue
+module: crm
+difficulty: easy
+instruction: see prompt.md
+start_url: /odoo/crm
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 240
+step_limit: 120
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: easy
+  agent_interaction: "Open CRM Pipeline, switch to Pivot view, group rows by Stage, set Measures to Expected Revenue, and save the resulting view as a favorite filter."
+  checks_verify: "An ir.filters record named 'Bench Stage Revenue Pivot' exists on model crm.lead with context containing pivot_row_groupby=['stage_id'] and pivot_measures=['expected_revenue']."
+  failure_pattern: "Agent fails to switch to Pivot view, misses the Measures toggle, or does not save the favorite with the exact name."
+  primary_track: true
+  tier: 1
