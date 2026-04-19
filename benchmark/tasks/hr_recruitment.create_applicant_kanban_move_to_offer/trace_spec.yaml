@@ -1,0 +1,41 @@
+# Trace oracle for hr_recruitment.create_applicant_kanban_move_to_offer
+#
+# Medium: kanban quick-create applicant + form field fill + stage-bar advance.
+# Browser-use uses `web_save` / `onchange` / `name_create` rather than direct
+# ORM create/write, so the required_ops list is empty and we validate via
+# check.py + expected_state.json.
+
+required_ops: []
+
+optional_ops:
+  - hr.applicant.name_create
+  - hr.applicant.create
+  - hr.applicant.web_save
+  - hr.applicant.write
+  - hr.applicant.read
+  - hr.applicant.search_read
+  - hr.applicant.web_search_read
+  - hr.applicant.web_read_group
+  - hr.applicant.onchange
+  - hr.applicant.get_formview_id
+  - hr.applicant.get_formview_action
+  - hr.recruitment.stage.read
+  - hr.recruitment.stage.search_read
+  - hr.recruitment.stage.web_search_read
+  - hr.recruitment.stage.name_search
+  - hr.job.read
+  - hr.job.search_read
+  - hr.job.web_search_read
+  - hr.department.read
+  - hr.department.search_read
+  - res.partner.name_search
+  - ir.ui.view.get_views
+  - ir.actions.server.run
+
+forbidden_ops:
+  - hr.applicant.unlink
+  - hr.applicant.action_archive
+  - hr.applicant.archive_applicant
+  - hr.recruitment.stage.unlink
+  - hr.recruitment.stage.write
+  - hr.job.unlink

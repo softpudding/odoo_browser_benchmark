@@ -1,0 +1,20 @@
+task_id: hr_recruitment.create_applicant_kanban_move_to_offer
+module: hr_recruitment
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/recruitment
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "Open Bench Senior Dev job applications kanban (grouped by stage), use '+ New' on the Initial Qualification column to create an applicant with exact partner_name/email_from/partner_phone, save, then move the applicant through Qualified and Contract Proposal stages using the form status bar or kanban drag."
+  checks_verify: "hr.applicant with partner_name='Alice Applicant' exists, has the exact email_from/partner_phone, is on job 'Bench Senior Dev', and currently sits in stage 'Contract Proposal'."
+  primary_track: true
+  tier: 2

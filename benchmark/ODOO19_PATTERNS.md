@@ -1230,6 +1230,39 @@ PO record is just mutating its partner_id.
 
 ---
 
+## hr_recruitment — Applications kanban entry + quick-create fields
+
+- `hr.applicant` kanban view `hr_kanban_view_applicant` has
+  `default_group_by="stage_id"` and `quick_create_view="hr_recruitment.quick_create_applicant_form"`.
+  The quick-create view exposes ONLY `partner_name` + `job_id`. To
+  set `email_from`, `partner_phone`, or any other applicant field,
+  the user/oracle MUST click the newly-created card to reach the
+  full form after the quick-create commits. Tasks that require
+  `email_from` / `partner_phone` values cannot be completed inside
+  the quick-create dialog alone.
+- Per-column `+` button in the Applications kanban is
+  `button.o_kanban_quick_add` inside `.o_kanban_header`. Confirming
+  the quick-create uses `button.o_kanban_add` (green check). The
+  `hr.applicant` form's status-bar widget is
+  `rotting_statusbar_duration` with `options="{'clickable': '1'}"`
+  on `stage_id`, so each stage pill is a direct-click stage write.
+- Default Odoo 19 demo stages are `New`, `Qualification`, `First
+  Interview`, `Second Interview`, `Contract Proposal`, `Contract
+  Signed` (sequences 0..5, all global — `job_ids=[]`). Tasks that
+  want a custom 4-column pipeline must (a) create new
+  `hr.recruitment.stage` rows with explicit sequences AND (b) pin
+  them to the job via `job_ids=[(6, 0, [job.id])]`. Global stages
+  (empty `job_ids`) are visible to every job, so without pinning the
+  Applications kanban mixes seeded + global columns.
+- Stage-name collisions between seeded and global records (e.g.
+  `Contract Proposal`, `Contract Signed`) are safe as long as the
+  seeded copies have `job_ids` containing the task's job — the
+  kanban renders the job-scoped record, and `search([('name', '=',
+  ...), ('job_ids', 'in', [job.id])])` uniquely targets the seeded
+  stage.
+
+---
+
 ## maintenance.equipment — field inventory & duplicate-create BU failure
 
 - `maintenance.equipment` has **no `next_action_date`** field (not in Python
