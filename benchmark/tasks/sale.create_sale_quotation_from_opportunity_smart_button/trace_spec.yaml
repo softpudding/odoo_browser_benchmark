@@ -1,0 +1,48 @@
+# Trace oracle for sale.create_sale_quotation_from_opportunity_smart_button
+#
+# Medium: cross-module smart-button create. The Quotations smart button
+# calls crm.lead.action_view_sale_quotation, which opens a sale.order
+# list filtered by opportunity_id. The agent then creates a draft SO
+# (web_save) without confirming.
+
+required_ops: []
+
+optional_ops:
+  - crm.lead.read
+  - crm.lead.web_read
+  - crm.lead.search_read
+  - crm.lead.web_search_read
+  - crm.lead.action_view_sale_quotation
+  - crm.lead.action_sale_quotations_new
+  - sale.order.read
+  - sale.order.web_read
+  - sale.order.write
+  - sale.order.create
+  - sale.order.web_save
+  - sale.order.search_read
+  - sale.order.web_search_read
+  - sale.order.onchange
+  - sale.order.line.read
+  - sale.order.line.write
+  - sale.order.line.create
+  - sale.order.line.web_save
+  - sale.order.line.onchange
+  - product.product.read
+  - product.product.search_read
+  - product.template.read
+  - product.template.search_read
+  - res.partner.read
+  - res.partner.search_read
+  - ir.ui.view.get_views
+  - mail.message.create
+
+forbidden_ops:
+  - sale.order.unlink
+  - sale.order.line.unlink
+  - sale.order.action_confirm
+  - sale.order.action_cancel
+  - crm.lead.unlink
+  - crm.lead.action_archive
+  - crm.lead.action_set_won_rainbowman
+  - crm.lead.action_set_won
+  - crm.lead.action_set_lost

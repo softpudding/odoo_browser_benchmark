@@ -1,0 +1,38 @@
+models:
+  sale.order:
+    match_key:
+      - partner_id
+    fields:
+      - partner_id
+      - opportunity_id
+      - state
+    ignore_fields:
+      - id
+      - name
+      - create_date
+      - write_date
+      - date_order
+      - amount_total
+      - amount_untaxed
+      - amount_tax
+      - commitment_date
+      - validity_date
+  crm.lead:
+    match_key:
+      - name
+    fields:
+      - name
+      - partner_id
+      - type
+      - expected_revenue
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
+      - date_last_stage_update
+      - date_conversion
+      - quotation_count
+      - sale_order_count
+      - sale_amount_total
+      - order_ids
+      - probability
