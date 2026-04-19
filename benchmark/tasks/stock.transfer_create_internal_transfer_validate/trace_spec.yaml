@@ -1,0 +1,57 @@
+# Trace oracle for stock.transfer_create_internal_transfer_validate
+#
+# Medium (deep_ui_interaction): create-from-scratch internal stock.picking
+# (Operation Type + 2 m2o locations + 1 editable move line), then Mark as
+# Todo + Validate. No backorder dialog at full Quantity==Demand.
+
+required_ops:
+  - stock.picking.button_validate
+
+optional_ops:
+  - stock.picking.action_confirm
+  - stock.picking.action_assign
+  - stock.picking.create
+  - stock.picking.write
+  - stock.picking.web_save
+  - stock.picking.read
+  - stock.picking.web_read
+  - stock.picking.search_read
+  - stock.picking.web_search_read
+  - stock.picking.onchange
+  - stock.picking.default_get
+  - stock.move.create
+  - stock.move.write
+  - stock.move.web_save
+  - stock.move.read
+  - stock.move.web_read
+  - stock.move.onchange
+  - stock.move.default_get
+  - stock.move.line.create
+  - stock.move.line.write
+  - stock.move.line.web_save
+  - stock.move.line.read
+  - stock.move.line.onchange
+  - stock.picking.type.read
+  - stock.picking.type.name_search
+  - stock.location.read
+  - stock.location.name_search
+  - product.product.read
+  - product.product.name_search
+  - product.template.read
+  - uom.uom.read
+  - stock.quant.read
+  - stock.quant.search_read
+  - stock.quant.web_search_read
+  - ir.ui.view.get_views
+
+forbidden_ops:
+  - stock.picking.unlink
+  - stock.picking.action_cancel
+  - stock.location.create
+  - stock.location.unlink
+  - stock.picking.type.create
+  - stock.picking.type.unlink
+  - product.product.write
+  - product.template.write
+  - stock.backorder.confirmation.process
+  - stock.backorder.confirmation.process_cancel_backorder

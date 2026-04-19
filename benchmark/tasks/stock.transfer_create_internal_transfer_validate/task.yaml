@@ -1,0 +1,21 @@
+task_id: stock.transfer_create_internal_transfer_validate
+module: stock
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/inventory
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  tier: 2
+  agent_interaction: "From Inventory overview, open Transfers and click New. Set Operation Type='Internal Transfers', Source Location='WH/Stock', Destination Location='WH/Stock/Shelf C'. In the Operations tab add a new move line: product 'Bench Move Item', Demand 5. Click Mark as Todo (confirm) then Validate. No backorder dialog because Demand equals the auto-reserved Quantity."
+  checks_verify: "Exactly one done stock.picking with picking_type_code='internal', source WH/Stock, destination WH/Stock/Shelf C, one move of Bench Move Item quantity=5; a stock.quant at WH/Stock/Shelf C for Bench Move Item with quantity=5 and the WH/Stock quant reduced to 5."
+  failure_pattern: "Agent picks the wrong Operation Type (Receipts / Delivery Orders), forgets to pick WH/Stock/Shelf C as the destination (autocomplete default may be WH/Stock), adds a phantom empty second line, or tries to click Validate without first clicking Mark as Todo (which leaves the picking in draft state with a 'Nothing to check' wizard)."
+  primary_track: true
