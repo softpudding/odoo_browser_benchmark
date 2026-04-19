@@ -3305,3 +3305,31 @@ Option 2 is what `sale.duplicate_quotation_edit_delivery_date_confirm`
 uses. Pattern is reusable for any `sale.order` / `purchase.order` /
 `account.move` task that only needs the agent to land on a specific
 pre-seeded record form.
+
+---
+
+## hr_timesheet — no Submit/Approve lifecycle in Community
+
+The weekly timesheet sheet state machine (`draft → confirm → done`) and
+its `Submit to Manager` / `Approve` UI buttons live in the **Enterprise**
+`hr_timesheet_sheet` addon (a.k.a. the `timesheet.sheet` model). That
+addon is not vendored in the Odoo Community checkout — grepping
+`addons/` for `hr_timesheet_sheet` returns nothing and
+`ir.module.module` does not know it exists.
+
+Community `hr_timesheet` only ships `account.analytic.line` timesheet
+entries; that model has **no `state`, no `validated`, no `sheet_id`
+field** (verified by grepping `addons/hr_timesheet/models/*.py`). Any
+benchmark task that phrases its validation as "submit timesheet to
+manager" or "manager approves timesheet" cannot be implemented
+end-to-end against this checkout.
+
+Additionally `hr_timesheet` is not listed in
+`benchmark/base_modules.txt`, so `/odoo/timesheets` is absent from the
+stock `benchmark_base` DB — timesheet tasks first need the module added
+to the base snapshot before they can even exercise logging hours.
+
+Precedent (Removed): row 429
+(`hr_timesheet.log_time_for_2_days_approve_via_manager`) — BLOCKED
+skeleton committed with guard errors, same pattern as the appointment /
+helpdesk / marketing_automation removals (rows 350/351/352).
