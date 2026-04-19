@@ -1,0 +1,20 @@
+task_id: stock.archive_old_product_set_inactive
+module: stock
+difficulty: easy
+instruction: see prompt.md
+start_url: /odoo/inventory
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 300
+step_limit: 150
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: easy
+  agent_interaction: "Open Inventory, navigate to Products, open the seeded product 'Bench Archive Me', click the cog Actions menu, and select Archive."
+  checks_verify: "Product 'Bench Archive Me' has product.product.active=False AND product.template.active=False after archiving."
+  primary_track: true
+  tier: 1

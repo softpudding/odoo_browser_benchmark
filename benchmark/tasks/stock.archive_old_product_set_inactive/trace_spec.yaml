@@ -1,0 +1,28 @@
+# Trace oracle for stock.archive_old_product_set_inactive
+#
+# Easy task: agent opens Inventory > Products > Bench Archive Me,
+# then uses cog Actions > Archive. Archive triggers
+# product.template.toggle_active or action_archive.
+
+required_ops: []
+
+optional_ops:
+  - product.template.toggle_active
+  - product.template.action_archive
+  - product.template.write
+  - product.template.web_save
+  - product.template.read
+  - product.template.search_read
+  - product.template.web_search_read
+  - product.product.toggle_active
+  - product.product.action_archive
+  - product.product.write
+  - product.product.web_save
+  - product.product.read
+  - product.product.search_read
+  - ir.ui.view.get_views
+  - ir.actions.act_window.read
+
+forbidden_ops:
+  - product.template.unlink
+  - product.product.unlink
