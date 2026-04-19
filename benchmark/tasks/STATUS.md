@@ -359,9 +359,9 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 347 | inventory.cycle_count_two_locations_apply_selected_delta [medium] | Perform a cycle count across two locations and apply only the intended stock discrepancy | Done | PASS | FAIL | 0.0 |
 | 348 | project_todo.create_note_set_color_deadline [easy] | Create a note, set a deadline, and apply a non-default kanban color | Done | PASS | FAIL | 0.0 |
 | 349 | survey.create_certification_quiz_attempt_limit_publish [hard] | Build a certification quiz with passing score and attempt limit, then publish it | Done | PASS | FAIL | 0.0 |
-| 350 | appointment.public_booking_reschedule_cancel_portal [hard] | Configure an appointment type, book it publicly, then reschedule and cancel it from the portal | WIP | — | — | — |
-| 351 | helpdesk.team_sla_assign_escalate_close [hard] | Create a helpdesk team with SLA policy, process a ticket through assignment and escalation, then close it | WIP | — | — | — |
-| 352 | marketing_automation.tag_trigger_drip_campaign [hard] | Build a tag-triggered marketing automation flow with delayed actions and a stop condition | WIP | — | — | — |
+| 350 | appointment.public_booking_reschedule_cancel_portal [hard] | Configure an appointment type, book it publicly, then reschedule and cancel it from the portal (Enterprise-only module, not installable in CE) | Blocked | — | — | — |
+| 351 | helpdesk.team_sla_assign_escalate_close [hard] | Create a helpdesk team with SLA policy, process a ticket through assignment and escalation, then close it (Enterprise-only module, not installable in CE) | Blocked | — | — | — |
+| 352 | marketing_automation.tag_trigger_drip_campaign [hard] | Build a tag-triggered marketing automation flow with delayed actions and a stop condition (Enterprise-only module, not installable in CE) | Blocked | — | — | — |
 | 353 | event_product.sell_event_product_fill_attendee_details [medium] | Sell an event-linked product and complete attendee details for the generated registration | Done | PASS | PASS | 1.0 |
 | 354 | event_sale.multi_ticket_checkout_two_attendees [hard] | Configure two paid ticket types and complete one website checkout with separate attendee details | Done | PASS | FAIL/PASS | 0.5 |
 | 355 | sale_loyalty.buy_x_get_y_reward_in_cart [hard] | Configure a Buy X Get Y promotion and verify the free-product reward appears in the cart | Done | PASS | PASS | 1.0 |
@@ -377,6 +377,10 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 365 | survey.duplicate_survey_rename_archive_original [medium] | Duplicate a seeded survey via cog menu, rename the copy, then archive the original so only the renamed copy remains active | Done | PASS | PASS | 1.0 |
 | 366 | maintenance.fill_description_schedule_window_move_to_repaired [medium] | Open an existing in-progress maintenance request, fill the description, set the scheduled start and end dates (logging the repair duration), and move it to the Repaired stage | Done | PASS | PASS | 1.0 |
 | 367 | stock.scrap_specific_serial_unit [medium] | Scrap one specific serial-tracked unit (1 of 3 in stock) via Inventory Operations Scrap, leaving the other two in stock (originally hard, demoted after both browser-use runs passed) | Done | PASS | PASS | 1.0 |
+| 368 | event.create_event_add_ticket_publish [medium] | Create an event with a specific date, add a paid ticket type, and set it to published | Done | PASS | PASS | 1.0 |
+| 369 | fleet.add_vehicle_log_odometer [easy] | Create a new vehicle record, then log an odometer reading via the dedicated odometer action | Done | PASS | PASS/FAIL | 0.5 |
+| 370 | mrp.create_bom_with_components [medium] | Create a Bill of Materials for a product with three specific components and quantities | Done | PASS | FAIL | 0.0 |
+| 371 | website_sale.publish_product_shop [easy] | Find an unpublished product in the backend, set its sales price and publish it to the shop | Done | PASS | PASS | 1.0 |
 
 ---
 
