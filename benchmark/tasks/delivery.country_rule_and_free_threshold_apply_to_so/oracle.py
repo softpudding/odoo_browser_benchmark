@@ -1,115 +1,82 @@
 """Oracle for delivery.country_rule_and_free_threshold_apply_to_so."""
 
-from benchmark.oracle_helpers import login, navigate, run_oracle
+from benchmark.oracle_helpers import (
+    _wait_for_ready,
+    _wait_no_loading,
+    add_many2many_tag,
+    clear_search_filters,
+    click_button,
+    click_create,
+    click_list_row,
+    click_tab,
+    click_status_button,
+    ensure_list_view,
+    fill_field,
+    login,
+    modal_set_many2one,
+    navigate,
+    run_oracle,
+    save_form,
+    set_boolean,
+    set_many2one,
+)
 
 
 def oracle(page):
     login(page)
     navigate(page, "/odoo/delivery-methods")
-    response = page.evaluate(
-        """async () => {
-            const unwrapId = (value) => Array.isArray(value) ? value[0] : value;
-            const callKw = async (payload) => {
-                const res = await fetch('/web/dataset/call_kw', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    credentials: 'same-origin',
-                    body: JSON.stringify({ jsonrpc: '2.0', method: 'call', params: payload }),
-                });
-                const json = await res.json();
-                if (json.error) {
-                    throw new Error(json.error.data?.message || json.error.message);
-                }
-                return json.result;
-            };
+    _wait_no_loading(page)
+    ensure_list_view(page)
+    click_create(page)
+    page.wait_for_timeout(1000)
+    _wait_for_ready(page)
 
-            const usRes = await callKw({
-                model: 'res.country',
-                method: 'search_read',
-                args: [[['code', '=', 'US']], ['id']],
-                kwargs: { limit: 1 },
-            });
-            if (!usRes.length) {
-                throw new Error('missing US country');
-            }
-            const usId = usRes[0].id;
+    fill_field(page, "name", "US Harbor Freight")
+    set_boolean(page, "free_over", True)
+    fill_field(page, "amount", "100.00")
+    set_many2one(page, "product_id", "US Harbor Shipping")
+    fixed_price = page.locator(".o_field_widget[name='fixed_price'] input").first
+    fixed_price.click(force=True)
+    fixed_price.press("Control+a")
+    fixed_price.press("Backspace")
+    fixed_price.fill("15")
+    fixed_price.press("Tab")
+    page.wait_for_timeout(400)
 
-            const productId = unwrapId(await callKw({
-                model: 'product.product',
-                method: 'create',
-                args: [[{
-                    name: 'US Harbor Shipping',
-                    type: 'service',
-                    sale_ok: false,
-                    purchase_ok: false,
-                    list_price: 15.0,
-                    invoice_policy: 'order',
-                }]],
-                kwargs: {},
-            }));
+    click_tab(page, "Availability")
+    page.wait_for_timeout(500)
+    add_many2many_tag(page, "country_ids", "United States")
 
-            const carrierId = unwrapId(await callKw({
-                model: 'delivery.carrier',
-                method: 'create',
-                args: [[{
-                    name: 'US Harbor Freight',
-                    delivery_type: 'fixed',
-                    product_id: productId,
-                    free_over: true,
-                    amount: 100.0,
-                    country_ids: [[6, 0, [usId]]],
-                }]],
-                kwargs: {},
-            }));
+    save_form(page)
+    page.wait_for_timeout(1200)
+    _wait_no_loading(page)
 
-            await callKw({
-                model: 'delivery.carrier',
-                method: 'write',
-                args: [[carrierId], { fixed_price: 15.0 }],
-                kwargs: {},
-            });
+    navigate(page, "/odoo/sales")
+    _wait_no_loading(page)
+    clear_search_filters(page)
+    ensure_list_view(page)
+    page.wait_for_timeout(800)
+    click_list_row(page, "Bench US Customer")
+    page.wait_for_timeout(1000)
+    _wait_for_ready(page)
 
-            const orderRes = await callKw({
-                model: 'sale.order',
-                method: 'search_read',
-                args: [[['client_order_ref', '=', 'SHIP-US-100']], ['id']],
-                kwargs: { limit: 1 },
-            });
-            if (!orderRes.length) {
-                throw new Error('missing target sale order');
-            }
-            const orderId = orderRes[0].id;
+    page.get_by_text("Add shipping", exact=True).click()
+    page.wait_for_timeout(1200)
+    _wait_no_loading(page)
 
-            await callKw({
-                model: 'sale.order',
-                method: 'write',
-                args: [[orderId], { carrier_id: carrierId }],
-                kwargs: {},
-            });
-            await callKw({
-                model: 'sale.order.line',
-                method: 'create',
-                args: [[{
-                    order_id: orderId,
-                    product_id: productId,
-                    name: 'US Harbor Freight',
-                    product_uom_qty: 1,
-                    price_unit: 0.0,
-                    is_delivery: true,
-                }]],
-                kwargs: {},
-            });
-            await callKw({
-                model: 'sale.order',
-                method: 'action_confirm',
-                args: [[orderId]],
-                kwargs: {},
-            });
-            return 'ok';
-        }""",
-    )
-    if response != "ok":
-        raise RuntimeError(response)
+    page.wait_for_selector(".modal:visible", timeout=10000)
+    modal_set_many2one(page, "carrier_id", "US Harbor Freight")
+    page.wait_for_timeout(500)
+    page.locator(
+        ".modal:visible .modal-footer button:has-text('Add'), "
+        ".modal:visible .modal-footer button.btn-primary"
+    ).first.click()
+    page.wait_for_timeout(1500)
+    _wait_no_loading(page)
+
+    click_status_button(page, "Confirm")
+    page.wait_for_timeout(1500)
+    _wait_no_loading(page)
 
 
 run_oracle(oracle)

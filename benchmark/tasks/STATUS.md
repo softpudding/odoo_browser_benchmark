@@ -354,11 +354,11 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 342 | website_event.publish_event_register_via_portal [hard] | Publish event website page, navigate to portal /events, register | Done | PASS | PASS | 1.0 |
 | 343 | crm_sms.send_sms_to_opportunity [medium] | On opportunity, click Send SMS button, compose and send | Done | PASS | PASS | 1.0 |
 | 344 | hr_attendance.kiosk_pin_check_in_then_manager_fix_checkout [medium] | Check in via kiosk PIN, then fix the missing checkout from manager attendance view | Done | PASS | FAIL | 0.0 |
-| 345 | point_of_sale.cash_in_sell_cash_out_close_session [hard] | In POS, perform cash in, complete a sale, record cash out, then close the session | Done | PASS | FAIL | 0.0 |
+| 345 | point_of_sale.cash_in_sell_cash_out_close_session [hard] | In POS, perform cash in, complete a sale, record cash out, then close the session | Removed | FAIL (spec) | — | — |
 | 346 | delivery.country_rule_and_free_threshold_apply_to_so [medium] | Create a carrier with destination rules and free-shipping threshold, then apply it to a matching quotation | Done | PASS | PASS | 1.0 |
 | 347 | inventory.cycle_count_two_locations_apply_selected_delta [medium] | Perform a cycle count across two locations and apply only the intended stock discrepancy | Done | PASS | FAIL | 0.0 |
 | 348 | project_todo.create_note_set_color_deadline [easy] | Create a note, set a deadline, and apply a non-default kanban color | Done | PASS | FAIL | 0.0 |
-| 349 | survey.create_certification_quiz_attempt_limit_publish [hard] | Build a certification quiz with passing score and attempt limit, then publish it | Done | PASS | FAIL | 0.0 |
+| 349 | survey.create_certification_quiz_attempt_limit_publish [hard] | Build a certification quiz with passing score and attempt limit, then publish it | Removed | FAIL (oracle) | — | — |
 | 350 | appointment.public_booking_reschedule_cancel_portal [hard] | Configure an appointment type, book it publicly, then reschedule and cancel it from the portal | Removed | FAIL (module unavailable) | — | — |
 | 351 | helpdesk.team_sla_assign_escalate_close [hard] | Create a helpdesk team with SLA policy, process a ticket through assignment and escalation, then close it | Removed | FAIL (module unavailable) | — | — |
 | 352 | marketing_automation.tag_trigger_drip_campaign [hard] | Build a tag-triggered marketing automation flow with delayed actions and a stop condition | Removed | FAIL (module unavailable) | — | — |
@@ -367,7 +367,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 355 | sale_loyalty.buy_x_get_y_reward_in_cart [hard] | Configure a Buy X Get Y promotion and verify the free-product reward appears in the cart | Done | PASS | PASS | 1.0 |
 | 356 | sale_purchase.mto_so_generate_po_change_vendor_confirm [hard] | Confirm an MTO sale order, inspect the generated PO, switch vendor, and continue the chain | Done | PASS | PASS | 1.0 |
 | 357 | sale_stock.confirm_so_manual_reserve_validate_delivery [medium] | Confirm a sale order, manually reserve stock on its delivery, and validate the transfer | Done | PASS | PASS | 1.0 |
-| 358 | website_blog.create_post_with_cta_seo_schedule [medium] | In the 'Bench News' blog, create a post with a CTA button block (Learn More, href='/shop'), fill Meta Title + Meta Description via the Optimize SEO dialog, and schedule publish for 2026-05-20 09:00 without publishing | Done | PASS | FAIL | 0.0 |
+| 358 | website_blog.create_post_with_cta_seo_schedule [medium] | In the 'Bench News' blog, create a post with a CTA button block (Learn More, href='/shop'), fill Meta Title + Meta Description via the Optimize SEO dialog, and schedule publish for 2026-05-20 09:00 without publishing | Removed | FAIL (oracle) | — | — |
 | 359 | im_livechat.configure_channel_then_handle_widget_chat [hard] | Reply to a seeded livechat session in Discuss via `::hello` canned-response shortcut (single-tab variant) | Done | PASS | PASS | 1.0 |
 | 360 | website_hr_recruitment.apply_public_then_schedule_interview [hard] | Submit a public job application, then schedule that applicant’s interview from the backend | Done | PASS | PASS | 1.0 |
 | 361 | purchase_stock.receive_partial_scrap_damaged_units [hard] | Receive part of a PO, scrap damaged units from the receipt, and finish the remainder correctly | Done | PASS | FAIL | 0.0 |
@@ -3799,18 +3799,48 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 ---
 
+## point_of_sale.cash_in_sell_cash_out_close_session
+
+| Field | Value |
+|---|---|
+| **Status** | Removed |
+| **Oracle** | FAIL (spec) |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Notes** | Removed during oracle recheck because the current task wiring is not deterministic against the live POS UI. The seeded `opening_control` session is graded by `check.py`, but the browser UI entry points can open and close a different session for the same config, leaving the seeded session in `opening_control`. In repeated Playwright runs the UI closed a session successfully, yet `check.py` still saw the stale opening-control session with no cash-move lines. Re-enable only after the seed/check pair pins the exact session the UI operates on. |
+| **Odoo modules** | Point of Sale |
+| **Workflow** | Open the register `Benchmark Cash Desk`, perform Cash In `20.00`, sell one `Bench Snack Crate`, pay with `Bench Cash`, perform Cash Out `5.00`, and close the register with counted cash `27.00`. |
+| **Capability tested** | Full POS kiosk cycle combining burger-menu cash moves, payment flow, and session close / cash-count reconciliation. |
+
+---
+
+## survey.create_certification_quiz_attempt_limit_publish
+
+| Field | Value |
+|---|---|
+| **Status** | Removed |
+| **Oracle** | FAIL (oracle) |
+| **Browser-Use** | — |
+| **F1** | — |
+| **Notes** | Removed during oracle recheck because the task no longer had a verified browser-faithful oracle after JSON-RPC shortcuts were disallowed. The remaining implementation depends on the Survey question/section builder's nested one2many editing dialogs, and no passing pure-UI oracle was completed in the current environment. Re-enable once a Playwright-only oracle is validated end-to-end. |
+| **Odoo modules** | Survey |
+| **Workflow** | Create certification survey `Forklift Safety Certification`, configure one-page-per-section, invited-only access, scoring/certification, 80% passing score, 2-attempt limit, and add the exact two sections plus four multiple-choice questions and answers. |
+| **Capability tested** | Survey builder composition across the main form, Options notebook, and nested question/answer editors. |
+
+---
+
 ## website_blog.create_post_with_cta_seo_schedule
 
 | Field | Value |
 |---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | FAIL |
-| **F1** | 0.0 |
+| **Status** | Removed |
+| **Oracle** | FAIL (oracle) |
+| **Browser-Use** | — |
+| **F1** | — |
 | **Odoo modules** | Website Blog |
 | **Workflow** | In the Blog kanban pick `Bench News`. Create a new post titled `Bench Releases Q2 Features`. In the body, insert a CTA button block with label `Learn More` whose href is `/shop`. Open the **Optimize SEO** dialog (cog Actions > Optimize SEO) and set Meta Title = `Q2 Releases - Bench` and Meta Description = `Read about our Q2 release highlights and what it means for customers.`. Set the Publishing date to `05/20/2026 09:00:00` (future). Save; leave the post unpublished (scheduled). |
 | **Capability tested** | Three unrelated surfaces stacked into one medium task: drag/insert a CTA button snippet in the HTML editor, fill the Optimize SEO modal, and set a future Publishing date without toggling Publish. |
-| **Notes** | BU calibration: StateDiff matches 6/6 create-edits (name, blog_id, both SEO fields, and is_published/website_published=null for the scheduled state), but the `check.py` regex catches that BU never manages to insert the `<a href='/shop'>Learn More</a>` anchor in the body — BU's content stays empty (`<p></p>`) after 360 s of wall clock. Postcondition fail → strict FAIL, F1=0.0 via postcondition override. Cookbook: `blog.post.content` (not `arch_db`); `is_published`/`website_published` diff as `null` (not `false`) on create-and-schedule flows; Optimize SEO dialog is available on the blog.post backend form (unlike website_sale products where it's frontend-only). |
+| **Notes** | Removed during oracle recheck because the old oracle still relied on JSON-RPC shortcuts and no passing pure-UI replacement was completed in the current environment. The unresolved piece is the combined backend-form + website-editor CTA insertion flow. Re-enable once a Playwright-only oracle is validated end-to-end. |
 
 ---
 

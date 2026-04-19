@@ -1,89 +1,80 @@
 """Oracle for sale_stock.confirm_so_manual_reserve_validate_delivery."""
 
-from benchmark.oracle_helpers import login, navigate, run_oracle
+from benchmark.oracle_helpers import (
+    _wait_for_ready,
+    _wait_no_loading,
+    clear_search_filters,
+    click_button,
+    click_list_row,
+    click_stat_button,
+    click_status_button,
+    ensure_list_view,
+    login,
+    navigate,
+    run_oracle,
+    set_o2m_field,
+)
 
 
 def oracle(page):
     login(page)
     navigate(page, "/odoo/sales")
-    response = page.evaluate(
-        """async () => {
-            const unwrapId = (value) => Array.isArray(value) ? value[0] : value;
-            const callKw = async (payload) => {
-                const res = await fetch('/web/dataset/call_kw', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    credentials: 'same-origin',
-                    body: JSON.stringify({ jsonrpc: '2.0', method: 'call', params: payload }),
-                });
-                const json = await res.json();
-                if (json.error) {
-                    throw new Error(json.error.data?.message || json.error.message);
-                }
-                return json.result;
-            };
+    _wait_no_loading(page)
 
-            const so = await callKw({
-                model: 'sale.order',
-                method: 'search_read',
-                args: [[['client_order_ref', '=', 'BENCH-SO-RESERVE']], ['id', 'name']],
-                kwargs: { limit: 1 },
-            });
-            if (!so.length) {
-                return 'missing sale order seed data';
-            }
+    clear_search_filters(page)
+    ensure_list_view(page)
+    page.wait_for_timeout(800)
 
-            await callKw({
-                model: 'sale.order',
-                method: 'action_confirm',
-                args: [[so[0].id]],
-                kwargs: {},
-            });
+    row = page.locator(
+        ".o_list_view .o_data_row:has-text('Northwind Assembly')"
+    ).first
+    if row.count() > 0:
+        customer_cell = row.locator(
+            "td[name='partner_id'], td:has-text('Northwind Assembly')"
+        ).first
+        customer_cell.click(force=True)
+        page.wait_for_load_state("load")
+    else:
+        click_list_row(page, "Northwind Assembly")
+    page.wait_for_timeout(1000)
+    _wait_for_ready(page)
 
-            const actualPickings = await callKw({
-                model: 'stock.picking',
-                method: 'search_read',
-                args: [[['origin', '=', so[0].name]], ['id', 'origin']],
-                kwargs: { limit: 1 },
-            });
-            const targetPicking = actualPickings[0];
-            if (!targetPicking) {
-                return 'no delivery created';
-            }
+    click_status_button(page, "Confirm")
+    page.wait_for_timeout(1200)
+    _wait_no_loading(page)
 
-            await callKw({
-                model: 'stock.picking',
-                method: 'action_assign',
-                args: [[targetPicking.id]],
-                kwargs: {},
-            });
+    click_stat_button(page, "Delivery")
+    page.wait_for_timeout(1000)
+    _wait_for_ready(page)
 
-            const moves = await callKw({
-                model: 'stock.move',
-                method: 'search_read',
-                args: [[['picking_id', '=', targetPicking.id]], ['id', 'product_uom_qty']],
-                kwargs: { limit: 20 },
-            });
-            for (const move of moves) {
-                await callKw({
-                    model: 'stock.move',
-                    method: 'write',
-                    args: [[move.id], { quantity: move.product_uom_qty }],
-                    kwargs: {},
-                });
-            }
+    click_button(page, "Check Availability")
+    page.wait_for_timeout(1500)
+    _wait_no_loading(page)
 
-            await callKw({
-                model: 'stock.picking',
-                method: 'button_validate',
-                args: [[targetPicking.id]],
-                kwargs: {},
-            });
-            return 'ok';
-        }""",
-    )
-    if response != "ok":
-        raise RuntimeError(response)
+    rows = page.locator(".o_form_view .o_list_renderer .o_data_row")
+    for i in range(rows.count()):
+        row_text = rows.nth(i).inner_text()
+        if "Bench Servo Housing" in row_text:
+            set_o2m_field(page, i, "quantity", "7")
+            page.wait_for_timeout(300)
+        elif "Bench Control Cable" in row_text:
+            set_o2m_field(page, i, "quantity", "5")
+            page.wait_for_timeout(300)
+
+    click_status_button(page, "Validate")
+    page.wait_for_timeout(1500)
+    _wait_no_loading(page)
+
+    modal = page.locator(".modal:visible")
+    if modal.count() > 0:
+        modal.last.locator(
+            "button:has-text('Apply'), "
+            "button:has-text('Validate'), "
+            "button:has-text('Ok'), "
+            "button.btn-primary"
+        ).first.click()
+        page.wait_for_timeout(1000)
+        _wait_no_loading(page)
 
 
 run_oracle(oracle)
