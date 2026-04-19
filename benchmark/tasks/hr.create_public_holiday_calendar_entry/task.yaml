@@ -1,0 +1,20 @@
+task_id: hr.create_public_holiday_calendar_entry
+module: hr_holidays
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/time-off
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "Create a company-wide public holiday entry 'Bench Founder Day' on 2026-06-01 from 00:00:00 to 23:59:59 via Time Off > Configuration > Public Holidays editable-bottom list; leave Working Hours at default (All Schedules)."
+  checks_verify: "resource.calendar.leaves row exists with name='Bench Founder Day', resource_id=False, date_from/date_to admin-local date = 2026-06-01, and spans at least a few hours."
+  primary_track: true
+  tier: 2

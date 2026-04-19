@@ -1,0 +1,27 @@
+# Trace oracle for hr.create_public_holiday_calendar_entry.
+#
+# Agent must create a company-wide public holiday. We don't require any
+# specific ORM op since browser-use uses web_save / onchange; validation
+# is via check.py.
+
+required_ops: []
+
+optional_ops:
+  - resource.calendar.leaves.create
+  - resource.calendar.leaves.write
+  - resource.calendar.leaves.web_save
+  - resource.calendar.leaves.read
+  - resource.calendar.leaves.web_read
+  - resource.calendar.leaves.search_read
+  - resource.calendar.leaves.web_search_read
+  - resource.calendar.leaves.onchange
+  - resource.calendar.leaves.name_search
+  - resource.calendar.read
+  - resource.calendar.search_read
+  - resource.calendar.web_search_read
+  - resource.calendar.name_search
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+
+forbidden_ops:
+  - resource.calendar.leaves.unlink
