@@ -1,0 +1,21 @@
+task_id: stock.run_manual_replenishment_for_product
+module: stock
+difficulty: hard
+instruction: see prompt.md
+start_url: /odoo/inventory
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 480
+step_limit: 260
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: hard
+  tier: 3
+  agent_interaction: "Open Inventory, navigate Operations → Replenishment, locate the Bench Replenish Item row (qty_to_order auto-computed to 20 because on-hand=0, min=5, max=20), click the per-row Order button (fa-truck icon, button[name='action_replenish']) which calls stock.warehouse.orderpoint.action_replenish and generates a new draft purchase.order for vendor Bench Replenish Vendor with one line qty=20 of Bench Replenish Item at $50.00."
+  checks_verify: "Exactly one new purchase.order (state='draft' OR 'purchase') exists for vendor Bench Replenish Vendor; it has a single purchase.order.line with product=Bench Replenish Item, product_qty=20.0, price_unit=50.0; the seeded stock.warehouse.orderpoint remains intact with product_min_qty=5 and product_max_qty=20; no deliveries created."
+  failure_pattern: "Agent goes through the Reordering Rules menu (/odoo/action-stock.action_orderpoint) instead of the Replenishment dashboard (/odoo/replenishment) — the Reordering Rules list does not render the fa-truck Order button; it only surfaces Snooze / Info. Or the agent opens the orderpoint form view and finds no Order button (form view does not render the per-row inline button). Or the agent clicks Automate (action_replenish_auto) which flips trigger='auto' before triggering the replenishment, mutating the seeded orderpoint. Or the agent clicks the top bulk-action Order dropdown without first ticking the row checkbox (dropdown items are gated by hasSelectedRecords)."
+  primary_track: true

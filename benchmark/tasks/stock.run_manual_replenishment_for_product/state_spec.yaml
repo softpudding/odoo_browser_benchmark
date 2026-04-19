@@ -1,0 +1,47 @@
+models:
+  purchase.order:
+    match_key:
+      - partner_id
+    fields:
+      - partner_id
+      - state
+    ignore_fields:
+      - id
+      - name
+      - create_date
+      - write_date
+      - date_order
+      - date_approve
+      - date_planned
+      - origin
+      - currency_id
+      - amount_total
+      - amount_untaxed
+      - amount_tax
+      - priority
+      - access_token
+      - access_url
+      - access_warning
+  purchase.order.line:
+    match_key:
+      - product_id
+      - order_id
+    fields:
+      - product_id
+      - product_qty
+      - price_unit
+    ignore_fields:
+      - id
+      - name
+      - create_date
+      - write_date
+      - date_planned
+      - sequence
+      - tax_ids
+      - product_uom
+      - product_packaging_id
+      - currency_id
+      - price_subtotal
+      - price_total
+      - price_tax
+      - company_id

@@ -650,6 +650,32 @@ if mod and mod.state != "installed":
 - Replenishment: `Inventory → Operations → Procurement → Replenishment` (NOT directly
   under Operations). The per-row action button is labeled **"Order"** (name
   `action_replenish`), not "Replenish".
+- **Replenishment dashboard menu vs Reordering Rules menu** (critical): the
+  Replenishment dashboard (server action `stock.action_replenishment`, path
+  `replenishment`, URL `/odoo/replenishment`) opens the editable list with
+  default facets `filter_to_reorder + filter_not_snoozed +
+  searchpanel_default_trigger='manual'` AND renders the per-row
+  `.o_replenish_buttons` column (Order = fa-truck, Automate = fa-refresh).
+  The Reordering Rules menu (`stock.action_orderpoint`,
+  `/odoo/action-stock.action_orderpoint`) uses a primary-mode inherit view
+  and defaults to `search_default_trigger='auto'` — manual rules are hidden
+  until the trigger facet is flipped. Tasks that require the agent to click
+  Order MUST route through `/odoo/replenishment`.
+- **`action_replenish` auto-deletes the orderpoint** post-success when
+  `create_uid == SUPERUSER_ID` AND `qty_to_order <= 0` AND `trigger ==
+  'manual'` (`stock_orderpoint.py:365`). Seeds run via `odoo shell` as
+  uid=1 (SUPERUSER) so seeded manual orderpoints disappear after a
+  successful replenishment. check.py must tolerate `0 or 1 remaining`.
+- **Per-row Order button gate**: `invisible="qty_to_order &lt;= 0.0"`. Seeding
+  an on-hand=0 product with min=5/max=20 yields qty_to_order=20 (formula
+  `max(min, max) - forecast`) — the button renders. Seeds that leave
+  qty_on_hand >= min will hide the button entirely.
+- **Bulk Order dropdown** (top of list, from
+  `stock_orderpoint_list_controller.js#onClickOrder`) fires the SAME
+  `action_replenish` as the per-row button, but dropdown items are gated
+  by `hasSelectedRecords` — clicking them without first ticking the row
+  checkbox is a no-op. BU often skips the checkbox when using the
+  dropdown, producing a silent no-progress step.
 
 ### Wizard buttons
 
