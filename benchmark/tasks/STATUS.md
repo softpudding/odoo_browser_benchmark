@@ -426,6 +426,10 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 414 | crm.duplicate_lead_convert_to_opportunity [medium] | Duplicate a lead, convert the copy to an opportunity | WIP | — | — | — |
 | 415 | mrp.scrap_consumed_component_during_production [hard] | During MO production, scrap 1 of 3 consumed units, validate MO | Done | PASS | PASS | 1.0 |
 | 416 | account.reconcile_customer_payment_against_invoice [hard] | Register a customer payment and reconcile against an open invoice | WIP | — | — | — |
+| 417 | product.configure_variant_attribute_two_values [medium] | Configure a product with a Size attribute + 3 values, generates variants | WIP | — | — | — |
+| 418 | sale.configure_pricelist_apply_to_order_line [hard] | Create pricelist with rule, apply to SO, verify discount | WIP | — | — | — |
+| 419 | mrp.unbuild_product_back_to_components [hard] | Unbuild 2 finished products and return components to stock | WIP | — | — | — |
+| 420 | point_of_sale.apply_fixed_discount_before_payment [hard] | In POS, add 2 products, apply fixed 5 EUR discount, pay cash | WIP | — | — | — |
 
 ---
 
