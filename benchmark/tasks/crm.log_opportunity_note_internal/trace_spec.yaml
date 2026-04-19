@@ -1,0 +1,30 @@
+# Trace oracle for crm.log_opportunity_note_internal.
+#
+# The log-note subtype / body substring check is enforced entirely via
+# check.py, so no required ops are listed here.
+
+required_ops: []
+
+optional_ops:
+  - crm.lead.read
+  - crm.lead.search_read
+  - crm.lead.web_search_read
+  - crm.lead.web_save
+  - crm.lead.write
+  - mail.thread.message_post
+  - mail.message.create
+  - mail.message.read
+  - mail.message.search_read
+  - mail.message.web_save
+  - mail.followers.create
+  - ir.attachment.read
+  - ir.attachment.search_read
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+  - bus.bus.create
+
+forbidden_ops:
+  - crm.lead.unlink
+  - crm.lead.action_set_lost
+  - crm.lead.action_set_won
+  - mail.message.unlink

@@ -1,0 +1,21 @@
+task_id: crm.log_opportunity_note_internal
+module: crm
+difficulty: easy
+instruction: see prompt.md
+start_url: /odoo/crm
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 300
+step_limit: 150
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: easy
+  agent_interaction: "Open CRM opportunity 'Bench Note Opp' and post an internal Log note with exact text in the chatter."
+  checks_verify: "mail.message on the crm.lead has body containing 'demo', message_type='comment', and subtype_id=mail.mt_note (internal Log note)."
+  failure_pattern: "Agent uses Send message (mail.mt_comment) instead of Log note (mail.mt_note), or omits the keyword 'demo'."
+  primary_track: true
+  tier: 1
