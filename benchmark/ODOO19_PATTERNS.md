@@ -188,6 +188,28 @@ if mod and mod.state != "installed":
   `action_cancel_alternatives` and `action_keep_alternatives`; there is no
   "default" — agents must explicitly pick the non-default branch to cancel
   rivals.
+- **`purchase.order` form has NO "Create Bill" status-bar button in
+  Odoo 19 Community.** The `action_create_invoice` button lives ONLY on
+  the Purchase Orders **list view** header (`<button
+  name="action_create_invoice" string="Create Bills"/>`, note plural),
+  visible after selecting one or more PO rows via checkbox. The PO form
+  header only has Send RFQ / Confirm Order / Cancel / Lock buttons plus
+  the `Upload Bill` widget (which attaches a PDF to a generated bill).
+  Tasks that say "click Create Bill on the PO" must route the agent
+  through `/odoo/purchase-orders` → checkbox-select → Create Bills. With
+  exactly one selected PO, `action_view_invoice` redirects straight to
+  the created bill's form view.
+- **`purchase.order.action_create_invoice` + "just-opened bill form" =
+  clean Owl state (Save button disabled).** After the redirect to
+  `/odoo/purchase-orders/bills/<id>`, a plain `fill_field("ref",...)`
+  does NOT dirty the form — the Save button stays disabled, and
+  `button[name='action_post']` ("Confirm") clicks silently no-op. Two
+  workarounds validated in oracle runs: (1) set a different field FIRST
+  via the date picker (e.g. `set_date("invoice_date", ...)`) which
+  transitions the form into edit mode, THEN `fill_field("ref", ...)`
+  persists, or (2) re-navigate to `/odoo/bills/<id>` via a fresh action
+  to force a clean form open. Agents that just type into the ref input
+  and hit Confirm will see no state change.
 
 ### Stock
 
