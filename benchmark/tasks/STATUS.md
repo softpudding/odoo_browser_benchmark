@@ -444,6 +444,16 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 432 | fleet.add_vehicle_log_odometer [easy] | Create a new vehicle record, then log an odometer reading via the dedicated odometer action | Done | PASS | PASS/FAIL | 0.5 |
 | 433 | mrp.create_bom_with_components [medium] | Create a Bill of Materials for a product with three specific components and quantities | Done | PASS | FAIL | 0.0 |
 | 434 | website_sale.publish_product_shop [easy] | Find an unpublished product in the backend, set its sales price and publish it to the shop | Done | PASS | PASS | 1.0 |
+| 435 | account.register_partial_payment_reconcile_invoice [hard] | Register partial payment on posted customer invoice, verify reconciliation state | WIP | — | — | — |
+| 436 | stock.delivery_transfer_validate_partial_backorder_no [medium] | Validate delivery picking with partial qty, decline backorder creation | WIP | — | — | — |
+| 437 | purchase.confirm_rfq_receive_full_three_way_match [medium] | Confirm RFQ, mark PO received, verify 3-way match ready | WIP | — | — | — |
+| 438 | hr.create_department_assign_manager_two_employees [medium] | Create HR department, assign manager, add 2 employees | WIP | — | — | — |
+| 439 | project.set_task_priority_urgent_assign_tag [easy] | Set task priority star (urgent) and apply one tag | WIP | — | — | — |
+| 440 | sale.add_section_note_line_to_quotation [medium] | Add section header + note line to draft quotation | WIP | — | — | — |
+| 441 | website.publish_draft_page_set_menu_visibility [hard] | Publish a draft website page and add it to main menu | WIP | — | — | — |
+| 442 | crm.assign_lead_salesperson_change_stage_won [medium] | Assign salesperson, move stage, mark Won | WIP | — | — | — |
+| 443 | mass_mailing.create_mailing_select_list_schedule_send [hard] | Create mass mailing, pick list, schedule future send | WIP | — | — | — |
+| 444 | fleet.assign_vehicle_create_contract_active [medium] | Create vehicle contract, link to existing vehicle, activate | WIP | — | — | — |
 
 ---
 
