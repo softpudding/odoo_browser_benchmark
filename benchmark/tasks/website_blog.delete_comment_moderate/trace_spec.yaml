@@ -1,0 +1,39 @@
+# Trace oracle for website_blog.delete_comment_moderate
+#
+# Hard: the agent must delete the spam chatter comment on the blog
+# post via the chatter per-message Delete action. The browser client
+# wires this to `/mail/message/update_content` with body=''; admin may
+# alternatively unlink the mail.message row directly from the backend
+# list view. Both paths are acceptable, so we only forbid destructive
+# operations that would fail the task outright.
+
+required_ops: []
+
+optional_ops:
+  - blog.post.read
+  - blog.post.search_read
+  - blog.post.web_search_read
+  - blog.post.web_save
+  - blog.post.write
+  - mail.message.read
+  - mail.message.search_read
+  - mail.message.web_search_read
+  - mail.message.write
+  - mail.message.unlink
+  - mail.thread.message_update_content
+  - mail.followers.create
+  - mail.followers.read
+  - res.partner.read
+  - res.partner.search_read
+  - res.users.read
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+  - bus.bus.create
+
+forbidden_ops:
+  - blog.post.unlink
+  - blog.post.create
+  - blog.blog.unlink
+  - blog.blog.create
+  - blog.post.action_archive
+  - res.users.unlink

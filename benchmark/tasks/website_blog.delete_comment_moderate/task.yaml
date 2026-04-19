@@ -1,0 +1,21 @@
+task_id: website_blog.delete_comment_moderate
+module: website_blog
+difficulty: hard
+instruction: see prompt.md
+start_url: /odoo/blog-post-pages
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 420
+step_limit: 220
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: hard
+  agent_interaction: "Open the seeded blog post 'Bench Mod Post' in the back-office form, scroll the chatter, hover the spam 'Spam Bot' comment, open its action toolbar, click Delete, and confirm. Keep the Reviewer Good review intact."
+  checks_verify: "Post still has exactly one non-empty comment (from Reviewer Good) and the Spam Bot comment is gone (either unlinked or body emptied via the chatter delete dialog). Post stays published."
+  primary_track: true
+  tier: 3
+  failure_pattern: "Agent either edits/replies to the spam instead of deleting, deletes the wrong (good) comment, or cannot locate the Delete action hidden inside the per-message hover toolbar's overflow menu."
