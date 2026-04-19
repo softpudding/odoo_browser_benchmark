@@ -1,0 +1,40 @@
+# Trace oracle for stock.receipt_full_quantity_validate_no_backorder
+#
+# Easy (deep_ui_interaction): single-click Validate on a Ready receipt
+# whose qty_done matches demand exactly. No dialogs should appear.
+
+required_ops:
+  - stock.picking.button_validate
+
+optional_ops:
+  - stock.picking.action_assign
+  - stock.picking.action_confirm
+  - stock.picking.read
+  - stock.picking.write
+  - stock.picking.web_save
+  - stock.picking.web_read
+  - stock.picking.search_read
+  - stock.picking.web_search_read
+  - stock.picking.onchange
+  - stock.move.read
+  - stock.move.write
+  - stock.move.web_save
+  - stock.move.web_read
+  - stock.move.onchange
+  - stock.move.line.read
+  - stock.move.line.write
+  - stock.move.line.web_save
+  - stock.move.line.create
+  - stock.move.line.onchange
+  - stock.quant.read
+  - stock.quant.search_read
+  - stock.quant.web_search_read
+  - res.partner.read
+  - product.product.read
+  - ir.ui.view.get_views
+
+forbidden_ops:
+  - stock.picking.unlink
+  - stock.picking.action_cancel
+  - stock.backorder.confirmation.process
+  - stock.backorder.confirmation.process_cancel_backorder

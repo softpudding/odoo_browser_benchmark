@@ -1,0 +1,21 @@
+task_id: stock.receipt_full_quantity_validate_no_backorder
+module: stock
+difficulty: easy
+instruction: see prompt.md
+start_url: /odoo/inventory
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 300
+step_limit: 150
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: easy
+  agent_interaction: "On incoming receipt WH/IN/BENCH-FULL (Bench Recv Item x10, Bench Vendor), click Validate in the header. Because Quantity (Done) already matches Demand (10) no Create Backorder dialog appears — the receipt goes straight to Done."
+  checks_verify: "Original stock.picking state=='done' with Bench Recv Item move quantity==10; NO backorder stock.picking exists with backorder_id==original.id; on-hand stock.quant at WH/Stock for Bench Recv Item == 10."
+  failure_pattern: "Easy calibration anchor — a single-click Validate with no dialogs. Agents fail only when they misnavigate away from Receipts, edit the Done cell, cancel the picking, or create an extra picking."
+  primary_track: true
+  tier: 1
