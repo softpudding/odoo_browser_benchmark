@@ -1,0 +1,21 @@
+task_id: website.publish_draft_page_set_menu_visibility
+module: website
+difficulty: hard
+instruction: see prompt.md
+start_url: /odoo/website-pages
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 420
+step_limit: 220
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: hard
+  agent_interaction: "Publish a draft website page via the inline Published boolean pill, then open the Menu Editor dialog (or Page Properties 'In Menu' toggle) and create a new top-level menu entry for /about-us. Must avoid editing the distractor 'About' menu that points at /contactus."
+  checks_verify: "website.page.is_published=True for /about-us AND a website.menu row with url='/about-us', website_id=1, parent_id=primary website main menu, page_id=About Us page. The distractor 'About'->/contactus menu is left untouched."
+  failure_pattern: "Two-phase workflow: publish pill in list/form AND a menu-configuration dialog. Agents commonly publish the page but miss the menu step, or edit the existing 'About' distractor's URL instead of creating a new menu entry."
+  primary_track: true
+  tier: 3

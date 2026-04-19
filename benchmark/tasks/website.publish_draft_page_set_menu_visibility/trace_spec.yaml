@@ -1,0 +1,36 @@
+# Trace oracle for website.publish_draft_page_set_menu_visibility.
+#
+# Hard: two-phase publish + menu-configuration workflow. The browser
+# client is free to use web_save / write / save depending on which UI
+# route (list toggle, page form, page properties dialog, menu editor)
+# it ends up going down. Required_ops stays empty; check.py is the
+# source of truth.
+
+required_ops: []
+
+optional_ops:
+  - website.page.read
+  - website.page.search_read
+  - website.page.web_search_read
+  - website.page.write
+  - website.page.web_save
+  - website.page.properties.create
+  - website.page.properties.write
+  - website.page.properties.web_save
+  - website.page.properties.base.read
+  - website.menu.create
+  - website.menu.save
+  - website.menu.write
+  - website.menu.web_save
+  - website.menu.read
+  - website.menu.search_read
+  - website.menu.web_search_read
+  - website.menu.get_tree
+  - ir.ui.view.read
+  - ir.ui.view.write
+  - mail.message.create
+  - bus.bus.create
+
+forbidden_ops:
+  - website.page.unlink
+  - website.menu.unlink
