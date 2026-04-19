@@ -1,0 +1,21 @@
+task_id: mrp.create_variant_specific_bom
+module: mrp
+difficulty: hard
+instruction: see prompt.md
+start_url: /odoo/manufacturing
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 480
+step_limit: 300
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: hard
+  failure_pattern: "Agent creates a BoM for the Bench T-Shirt template without filling the 'Apply on Variants' field, so the BoM applies to every variant (product_id=False) instead of the Red variant only."
+  agent_interaction: "Open Manufacturing → Products → Bills of Materials, create a new BoM for the Bench T-Shirt template, set the 'Apply on Variants' field to the Red variant, add one Bench Fabric component line, and save."
+  checks_verify: "Exactly one mrp.bom exists for the Bench T-Shirt template with product_id set to the Bench T-Shirt (Red) variant (not False), type='normal', product_qty=1.0, and exactly one component line for Bench Fabric at qty=1."
+  primary_track: true
+  tier: 3

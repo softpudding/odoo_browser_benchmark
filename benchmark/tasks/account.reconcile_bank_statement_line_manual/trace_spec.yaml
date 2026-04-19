@@ -1,0 +1,38 @@
+# Trace oracle for account.reconcile_bank_statement_line_manual.
+#
+# Agent reconciles a bank statement line against a posted customer invoice
+# via the bank reconciliation widget. The ORM path exercises reconcile(),
+# account move draft/post, and move_line writes on the statement move.
+
+required_ops: []
+
+optional_ops:
+  - account.move.line.reconcile
+  - account.move.line.write
+  - account.move.line.read
+  - account.move.line.search_read
+  - account.move.line.web_save
+  - account.move.button_draft
+  - account.move.action_post
+  - account.move.read
+  - account.move.search_read
+  - account.move.web_search_read
+  - account.move.web_read
+  - account.bank.statement.line.write
+  - account.bank.statement.line.web_save
+  - account.bank.statement.line.read
+  - account.bank.statement.line.search_read
+  - bank.rec.widget.new
+  - bank.rec.widget.write
+  - bank.rec.widget._action_validate
+  - res.partner.read
+  - res.partner.search_read
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+  - mail.message.create
+  - mail.followers.create
+  - bus.bus.create
+
+forbidden_ops:
+  - account.move.unlink
+  - account.bank.statement.line.unlink
