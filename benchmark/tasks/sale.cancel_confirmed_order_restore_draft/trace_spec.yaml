@@ -1,0 +1,34 @@
+# Trace oracle for sale.cancel_confirmed_order_restore_draft
+#
+# Medium: cancel a confirmed sale.order via the statusbar Cancel button
+# + confirm the resulting "Are you sure?" dialog, then click Set to
+# Quotation (visible only on cancelled SOs) to return state to draft.
+
+required_ops:
+  - sale.order.action_cancel
+  - sale.order.action_draft
+
+optional_ops:
+  - sale.order.read
+  - sale.order.write
+  - sale.order.web_save
+  - sale.order.search_read
+  - sale.order.web_search_read
+  - sale.order.onchange
+  - sale.order.line.read
+  - sale.order.line.search_read
+  - sale.order.line.onchange
+  - product.product.read
+  - product.product.search_read
+  - product.template.read
+  - product.template.search_read
+  - res.partner.read
+  - res.partner.search_read
+  - ir.ui.view.get_views
+  - mail.message.create
+  - mail.thread.message_post
+
+forbidden_ops:
+  - sale.order.unlink
+  - sale.order.line.unlink
+  - sale.order.action_confirm

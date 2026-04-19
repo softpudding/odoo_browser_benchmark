@@ -1,0 +1,21 @@
+task_id: sale.cancel_confirmed_order_restore_draft
+module: sale
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/sales
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: recovery_rollback
+  difficulty_level: medium
+  agent_interaction: "Open the confirmed sale.order with client_order_ref BENCH-CANCEL-RESTORE for Bench Cancel Co, click Cancel in the statusbar header, confirm the cancellation in the 'Are you sure?' dialog, then click Set to Quotation (which appears after the order state becomes cancel) to return state to draft."
+  checks_verify: "sale.order with client_order_ref='BENCH-CANCEL-RESTORE' for Bench Cancel Co is in state='draft' with the same two original lines (Bench Cancel Item A qty=2, Bench Cancel Item B qty=3). Exactly one sale.order for Bench Cancel Co."
+  failure_pattern: "Agent may (a) dismiss the cancel confirmation dialog instead of confirming it, (b) stop after cancellation without clicking Set to Quotation, (c) create a new quotation instead of using the existing one's Set to Quotation button, or (d) delete the cancelled order."
+  primary_track: true
+  tier: 2

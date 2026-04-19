@@ -4,7 +4,7 @@ Tracks all benchmark tasks. Update when adding new tasks or running evaluations.
 
 **Status values:** `WIP` — oracle or eval incomplete | `Done` — oracle passes, eval recorded
 
-Last eval: 2026-04-19 | Oracle: 166/166 (100%) | Browser-Use: 57/166 (34.3%) | New WIP: 87 (45 medium + 24 easy + 18 hard)
+Last eval: 2026-04-19 | Oracle: 167/167 (100%) | Browser-Use: 58/167 (34.7%) | New WIP: 86 (44 medium + 24 easy + 18 hard)
 
 ## Summary
 
@@ -471,7 +471,7 @@ Last eval: 2026-04-19 | Oracle: 166/166 (100%) | Browser-Use: 57/166 (34.3%) | N
 | 459 | hr.create_public_holiday_calendar_entry [medium] | Add a public holiday entry for a specific date | Done | PASS | PASS | 1.0 |
 | 460 | mrp.create_bom_kit_type_for_product [hard] | Create a BoM of type Kit with 2 components | Done | PASS | FAIL | 0.0 |
 | 461 | website_blog.schedule_post_future_date_unpublish [hard] | Unpublish a blog post and reschedule for future | WIP | — | — | — |
-| 462 | sale.cancel_confirmed_order_restore_draft [medium] | Cancel confirmed SO then set back to draft | WIP | — | — | — |
+| 462 | sale.cancel_confirmed_order_restore_draft [medium] | Cancel confirmed SO then set back to draft | Done | PASS | PASS | 1.0 |
 | 463 | product.set_product_category_change [easy] | Change a product's category | Done | PASS | PASS | 1.0 |
 | 464 | calendar.create_meeting_invite_attendees_send [medium] | Create calendar meeting with 2 attendees | WIP | — | — | — |
 | 465 | hr.request_reimbursement_expense_report [hard] | Submit hr.expense + approve + post | WIP | — | — | — |
@@ -5420,4 +5420,22 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Seed creates a `consu` product `Bench Cat Item` with `categ_id` pinned to the `All` root category (`product.product_category_all`), and ensures a `product.category` named `Office Supplies` exists at root level. Agent: Inventory → Products → open `Bench Cat Item` → click the **Product Category** m2o field (currently "All") → type `Office Supplies` → pick the single dropdown match → Save. End state: `product.template.categ_id -> Office Supplies`. |
 | **Capability tested** | Single many2one field change on a product form save — the canonical easy "form edit + save" anchor on the TASK_CREATION_GUIDE "simple form edits" list. Used as an easy-tier calibration target to cross-check that the harness (state diff + API trace) behaves correctly for a minimal m2o set. |
 | **Notes** | **Well-calibrated easy (~80% pass expected — BU single-shot PASS here).** The task is intentionally trivial: one m2o, one autocomplete, one Save. Oracle uses `set_many2one("categ_id", "Office Supplies")` from `oracle_helpers.py` and `save_form(page)`. State_spec tracks only `product.template` by `name`; the single expected edit is `{"field": "categ_id", "op": "set", "norm_value": "Office Supplies"}` — Many2one display-name normalization works out-of-the-box. **Quirks / choices**: (1) Seed pins `categ_id=product.product_category_all` so the "before" value is unambiguously the root **All** category, giving the prompt a clear "from X to Y" contract; a base snapshot default of `categ_id` being the first non-root seed category would still produce a diff but would make the prompt less self-describing. (2) `trace_spec.yaml` forbids `product.category.create` so an agent attempting to create a NEW "Office Supplies" (instead of picking the seeded one) is flagged; the autocomplete on `categ_id` offers a quick-create option when no match exists — because the seed creates the target first, the dropdown has an exact match and the quick-create is not selected. (3) `product.template.unlink` / `product.product.unlink` forbidden to catch "archive/delete instead of recategorize" errors. **Commit**: `[ADD] benchmark: product.set_product_category_change (easy)`. |
+---
+
+## sale.cancel_confirmed_order_restore_draft
+
+| Field | Value |
+|---|---|
+| **Task ID** | `sale.cancel_confirmed_order_restore_draft` |
+| **Row** | 462 |
+| **Difficulty** | medium |
+| **Tier** | 2 |
+| **Status** | Done |
+| **Oracle** | PASS (F1=1.0, 24.3s wall clock, 1/1 atomic edit matched, 0 postcondition failures, 45 API calls, 18 non-forbidden writes, 0 forbidden, StrictClean=True). |
+| **Browser-Use** | PASS (F1=1.0, 67.9s wall clock single-shot, 1/1 atomic edit matched, 32 API calls, 16 non-forbidden writes, 0 forbidden, StrictClean=True). |
+| **F1** | 1.0 |
+| **Odoo modules** | Sales — seeds a confirmed `sale.order` (`client_order_ref='BENCH-CANCEL-RESTORE'`, `state='sale'`) for `Bench Cancel Co` with two untaxed consu lines (`Bench Cancel Item A` qty 2 @ 40.00, `Bench Cancel Item B` qty 3 @ 25.00). The statusbar `Cancel` button (`name='action_cancel'` in `addons/sale/views/sale_order_views.xml:357-363`) carries `confirm="Are you sure you want to cancel this order?..."` which fires an Odoo `Dialog` component with a primary Ok button. The `Set to Quotation` button (`name='action_draft'`, lines 364-369) is guarded by `invisible="state != 'cancel'"` and calls `action_draft` (`sale/models/sale_order.py:1050-1057`), which writes `state='draft'` and clears `signature/signed_by/signed_on`. |
+| **Workflow** | Open `/odoo/sales/{id}` → click statusbar `Cancel` → confirm the "Are you sure?" modal → state becomes `cancel` and `Set to Quotation` appears → click it → state becomes `draft`. No wizard is launched because the seed SO has no delivered quantities and no invoices (`_action_cancel` only opens the `sale.order.cancel` wizard path when `invoice_ids` with `state=='posted'` exist; vanilla confirmed orders go straight to `action_cancel` → `write({'state':'cancel'})`). |
+| **Capability tested** | Two sequential statusbar actions gated by a native confirmation dialog. The design bet was that BU would (a) dismiss the confirm dialog by clicking the wrong button or (b) stop at `state='cancel'` without noticing the newly-rendered `Set to Quotation` button. |
+| **Notes** | **Calibration MISS — BU passed single-shot in 67.9s**. The prompt explicitly names both buttons ("Cancel" then "Set to Quotation") and BU followed the script verbatim, including clicking Ok on the confirmation modal. To escalate to tier 3 without redesigning from scratch: (a) seed posted draft `account.move` invoices tied to the SO so `action_cancel` triggers the `sale.order.cancel` wizard (has radio buttons for "Cancel and keep invoices" vs "Cancel and cancel invoices"); (b) combine with a "Customer Reference" edit on the now-draft order before the agent is allowed to leave the form — the mid-workflow field edit traps BU. **Quirks captured**: (1) The Cancel button's `confirm=...` attr triggers an Odoo `Dialog`, NOT a browser `window.confirm()`, so oracles must click a `.modal-footer button.btn-primary` — not handle a JS dialog. (2) `sale.order.action_draft` on a cancelled order fires `sale.order.write` on the tracked fields, so the state_spec only needs `state` in its fields list for the diff engine to record the `cancel→draft` transition; the `signature/signed_by/signed_on` resets must be added to `ignore_fields` or the diff engine reports extras. (3) `client_order_ref` is stable across the cancel/restore cycle (no `copy=False` issue since we're not duplicating), so using it as `match_key` gives a deterministic entity_key `["BENCH-CANCEL-RESTORE"]` that the diff engine reproduces exactly. |
 
