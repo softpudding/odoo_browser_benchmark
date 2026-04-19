@@ -1,0 +1,40 @@
+# Trace oracle for project.assign_task_to_user_change_deadline.
+#
+# Medium: open an existing project.task, add an existing user to user_ids
+# and set date_deadline. Browser-use normally writes via web_save; we leave
+# required_ops empty and validate outcomes via check.py + expected_state.json.
+
+required_ops: []
+
+optional_ops:
+  - project.task.read
+  - project.task.write
+  - project.task.web_save
+  - project.task.web_read
+  - project.task.search_read
+  - project.task.web_search_read
+  - project.task.onchange
+  - project.task.get_views
+  - project.task.name_search
+  - project.project.read
+  - project.project.search_read
+  - project.project.web_search_read
+  - project.task.type.read
+  - project.task.type.search_read
+  - res.users.read
+  - res.users.name_search
+  - res.users.search_read
+  - res.users.web_search_read
+  - res.partner.read
+  - res.partner.name_search
+  - res.partner.search_read
+  - ir.ui.view.get_views
+  - mail.message.create
+
+forbidden_ops:
+  - project.task.unlink
+  - project.task.create
+  - project.project.unlink
+  - project.project.create
+  - res.users.unlink
+  - res.users.create
