@@ -2443,3 +2443,79 @@ env["stock.move"].search([
 
 and sum signed deltas via `location_dest_id == WH/Stock ? +qty : -qty` to
 confirm the Apply path was exercised end-to-end.
+
+---
+
+## `project.task.date_deadline` — Datetime stored in UTC, typed as a date
+
+`project.task.date_deadline` is `fields.Datetime` (not Date) in Odoo 19:
+
+```
+# addons/project/models/project_task.py:183
+date_deadline = fields.Datetime(string='Deadline', index=True, tracking=True, copy=False)
+```
+
+The form widget renders it as a date-only input, so when the agent types
+`06/30/2026` the backend stores `2026-06-30 00:00:00` interpreted in the
+CURRENT USER'S timezone and serialized to UTC. With the benchmark admin on
+America/Los_Angeles, `06/30/2026` persists as `2026-06-29 16:00:00 UTC`.
+
+For check.py, compare on the admin-local date, not the UTC datetime:
+
+```python
+import pytz
+tz = pytz.timezone(env.user.tz or "UTC")
+actual = pytz.UTC.localize(task.date_deadline).astimezone(tz).date()
+assert actual == date(2026, 6, 30)
+```
+
+Same approach for any Datetime field the prompt expresses as a date
+(`project_todo` notes, event activities, etc.). Never assert
+`task.date_deadline == date(...)` directly.
+
+---
+
+## Seeding a second internal user that appears in `user_ids` m2m autocompletes
+
+To make a seeded user pickable on `project.task.user_ids` (and similar
+`res.users` m2m fields constrained by `domain=[('share','=',False)]`), the
+user must be a full internal user:
+
+```python
+group_internal = env.ref("base.group_user")
+group_project_user = env.ref("project.group_project_user")
+env["res.users"].create({
+    "name": "Bench Dev 2",
+    "login": "bench_dev_2",
+    "password": "bench_dev_2",
+    "group_ids": [(6, 0, [group_internal.id, group_project_user.id])],
+})
+```
+
+A login/password is REQUIRED even when the seed never authenticates as the
+user — the form's name_search filters out users with `share=True` (the default
+for users without `base.group_user`). Use the `login` slug as the canonical
+identifier in check.py (logins are benchmark-owned; display names may collide
+with other seeds).
+
+---
+
+## Newly-created records emit `active=True` alongside `name` in the diff
+
+Most Odoo models default `active=True` and the diff engine emits BOTH a
+`name` create edit and an `active=True` create edit when a new record is
+created (seen on `project.task`, `project.task.type`, `project.tags`, etc.).
+Include both in `expected_state.json`:
+
+```json
+[
+  {"model":"project.task","entity_key":["Fix login bug"],"field":"name","op":"create","norm_value":"Fix login bug"},
+  {"model":"project.task","entity_key":["Fix login bug"],"field":"active","op":"create","norm_value":true}
+]
+```
+
+Missing the `active` edit drops F1 to 0.67 (1 extra, 2 observed, 1 matched
+of 1 expected → Precision 0.5, Recall 1.0 → F1 = 0.67). Always run the task
+against the oracle once and inspect `state_diff.json` for the full create-row
+set.
+
