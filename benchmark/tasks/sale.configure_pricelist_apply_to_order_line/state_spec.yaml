@@ -1,0 +1,35 @@
+models:
+  product.pricelist:
+    match_key:
+      - name
+    fields:
+      - name
+      - active
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
+      - sequence
+      - currency_id
+      - company_id
+      - country_group_ids
+      - item_ids
+      - discount_policy
+  sale.order:
+    match_key:
+      - partner_id
+    fields:
+      - partner_id
+      - pricelist_id
+      - state
+    ignore_fields:
+      - id
+      - name
+      - create_date
+      - write_date
+      - date_order
+      - amount_total
+      - amount_untaxed
+      - amount_tax
+      - validity_date
+      - note

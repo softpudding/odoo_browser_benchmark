@@ -1,0 +1,55 @@
+# Trace oracle for sale.configure_pricelist_apply_to_order_line
+#
+# Hard: configure a new product.pricelist with a formula-based rule in
+# Sales > Products > Pricelists, then apply it to a brand-new quotation so
+# the SO line's price_unit recomputes via _compute_price_unit.
+
+required_ops: []
+
+optional_ops:
+  - product.pricelist.read
+  - product.pricelist.create
+  - product.pricelist.write
+  - product.pricelist.web_save
+  - product.pricelist.search_read
+  - product.pricelist.web_search_read
+  - product.pricelist.name_search
+  - product.pricelist.onchange
+  - product.pricelist.item.read
+  - product.pricelist.item.create
+  - product.pricelist.item.write
+  - product.pricelist.item.web_save
+  - product.pricelist.item.onchange
+  - sale.order.read
+  - sale.order.create
+  - sale.order.write
+  - sale.order.web_save
+  - sale.order.search_read
+  - sale.order.web_search_read
+  - sale.order.onchange
+  - sale.order.line.read
+  - sale.order.line.create
+  - sale.order.line.write
+  - sale.order.line.web_save
+  - sale.order.line.onchange
+  - product.product.read
+  - product.product.search_read
+  - product.product.name_search
+  - product.template.read
+  - product.template.search_read
+  - product.template.name_search
+  - res.partner.read
+  - res.partner.search_read
+  - ir.ui.view.get_views
+  - mail.message.create
+
+forbidden_ops:
+  - product.pricelist.unlink
+  - product.pricelist.item.unlink
+  - sale.order.unlink
+  - sale.order.line.unlink
+  - sale.order.action_confirm
+  - sale.order.action_cancel
+  - product.product.unlink
+  - product.template.unlink
+  - res.partner.unlink

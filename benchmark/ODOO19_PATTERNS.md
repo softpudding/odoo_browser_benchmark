@@ -2829,3 +2829,126 @@ Forgetting `remove_move_reconcile` before `action_draft` raises
 - The wizard stores the memo in `account.payment.register.communication`
   (Char, `string="Memo"`), which maps to `payment.memo` via
   `_create_payments` at `vals['memo'] = self.communication`.
+
+
+## product.pricelist — pricelist rule configuration + SO onchange (calibration notes)
+
+Cookbook notes from `sale.configure_pricelist_apply_to_order_line` (row 418,
+hard, tier 3). Browser-use passed single-shot (F1=1.0) with a ~8-step
+recovery loop — the workflow has traps for humans but BU eventually got
+through. Useful reference for anyone building pricelist-adjacent tasks.
+
+### The Pricelists menu is gated by `product.group_product_pricelist`
+
+Without this group enabled, (a) the Sales > Products > Pricelists menu
+item is hidden and (b) the `pricelist_id` field on `sale.order` is
+hidden. The group must be granted to **both admin AND user_root** in the
+seed, not just admin — because some pricelist computations (e.g.
+`_get_partner_pricelist_multi` short-circuits to empty if `user_root`
+lacks the group) run under root context during ORM writes, which silently
+breaks the SO's `_compute_pricelist_id` chain:
+
+```python
+pricelist_group = env.ref("product.group_product_pricelist")
+pricelist_group.sudo().write({
+    "user_ids": [(4, env.ref("base.user_admin").id),
+                 (4, env.ref("base.user_root").id)],
+})
+```
+
+The menu is at **Sales > Products > Pricelists** (NOT Configuration —
+common mistake in prompts). The URL path is `/odoo/pricelists` thanks to
+`<field name="path">pricelists</field>` on `product.product_pricelist_action2`.
+
+### `item_ids` opens a modal dialog, NOT inline editing
+
+The default `product.pricelist_view` form renders `item_ids` as a
+non-editable list (no `editable="bottom"` attribute). Clicking **Add a
+line** opens a full `product.pricelist.item` form in an X2Many dialog
+with **Save & Close** and **Discard** footer buttons (`o_form_button_save`,
+`o_form_button_cancel`). Oracles need to locate the modal after clicking
+Add a line:
+
+```python
+click_add_a_line(page)
+page.wait_for_selector(".modal:visible", timeout=10000)
+modal = page.locator(".modal:visible").last
+# ... fill fields ...
+modal.locator(".modal-footer button.o_form_button_save").first.click()
+```
+
+### Two "discount" fields — the classic human + agent trap
+
+The rule form has **two visually-similar Discount inputs** controlled by
+the `compute_price` radio:
+
+| `compute_price` | Visible field | Technical field |
+|---|---|---|
+| `percentage` (radio "Discount") | `<input>` labeled "Discount" + `%` | `percent_price` |
+| `formula` (radio "Formula") | `<input>` labeled "Discount" (inside the `pricelist_rule_base` group below) + `%` | `price_discount` |
+| `fixed` (default radio "Fixed Price") | `<input>` labeled "Price" | `fixed_price` |
+
+The Formula section (`name="pricelist_rule_base"`) is `invisible` until
+the agent clicks the Formula radio. A task that asks for "Formula with 10%"
+must spell out that the `price_discount` field is inside the formula
+sub-section — not the percentage-price input at the top. Browser-use
+correctly picked the Formula radio on the first try but then repeatedly
+failed to persist `price_discount=10` through "Save & Close" (~8 retry
+loop with "Oops" error dialogs) before it stuck. Oracle fix: focus the
+input, `fill("")`, `fill("10")`, `press("Tab")` before clicking Save &
+Close so the onchange resolves before save.
+
+### `applied_on='3_global'` is an onchange side-effect, not a direct radio
+
+The visible radio on the rule form is `display_applied_on`, which only
+exposes `1_product` and `2_product_category`. "All Products" is not a
+radio option — it's what `_onchange_display_applied_on` sets
+`applied_on` to when `display_applied_on='1_product'` AND the
+`product_tmpl_id` field is left empty:
+
+```python
+@api.onchange('display_applied_on')
+def _onchange_display_applied_on(self):
+    for item in self:
+        if not (item.product_tmpl_id or item.categ_id):
+            item.update({'applied_on': '3_global'})
+```
+
+Prompts should say "leave Apply To on Product (default) and leave the
+product field empty" — NOT "select All Products". This is the only way
+to hit `applied_on='3_global'` from the UI.
+
+### SO pricelist-driven `price_unit` flow
+
+With the seeded product `Bench Price Item` at `list_price=200` and a rule
+`(applied_on='3_global', compute_price='formula', base='list_price',
+price_discount=10)`:
+
+1. User sets `sale.order.partner_id = Bench Price Co` — triggers
+   `_compute_pricelist_id` which lands on the default pricelist (or the
+   partner's property, whichever is set).
+2. User sets `sale.order.pricelist_id = Bench 10% Off`.
+3. User adds a line with `product_template_id = Bench Price Item`.
+4. `sale.order.line._compute_price_unit` fires via the pricelist's
+   `_get_product_price_rule` → applies 10% formula → sets
+   `price_unit = 200 * (1 - 10/100) = 180.0`.
+
+Test this by asserting `abs(line.price_unit - 180.0) <= 0.01` in
+`check.py`. Also clear taxes (`taxes_id=[(5,0,0)]`) at seed time or
+`tax_included` variations will skew the expected number.
+
+### Why this task still passed browser-use (calibration note)
+
+Despite the two-stage workflow, the nested "Formula > Discount" trap,
+and the modal dialog, browser-use completed the task single-shot in
+44 steps / 326s (F1=1.0). To push this into a genuine trap consider:
+
+1. **Distractor pricelists** — seed `Bench 20% Off` + `Bench Fixed 150`
+   so name-matching the correct one actually matters.
+2. **Chained base** — require `base='pricelist'` + `base_pricelist_id`
+   pointing at a second pricelist (two-hop computation).
+3. **Tiered rule** — require a second rule row with `min_quantity=10`
+   for a volume discount, so the agent must add multiple rules and
+   the task validates qty=5 triggers rule A vs qty=15 triggers rule B.
+
+Simple single-rule formula pricelists are "hard-looking but BU-passable".
