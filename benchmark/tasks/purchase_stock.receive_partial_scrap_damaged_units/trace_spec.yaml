@@ -1,50 +1,19 @@
-# Trace oracle for purchase_stock.receive_partial_scrap_damaged_units
-#
-# Hard (side_effect_trap): partial receive (inline Done qty edit),
-# Scrap via cog Actions with non-default scrap_location, then Validate
-# with Create Backorder.
-
 required_ops:
-  - stock.picking.button_validate
+  - stock.scrap.create
   - stock.scrap.action_validate
 
 optional_ops:
-  - stock.picking.read
-  - stock.picking.write
-  - stock.picking.web_save
-  - stock.picking.search_read
-  - stock.picking.web_search_read
-  - stock.picking.action_confirm
-  - stock.picking.action_assign
-  - stock.picking.button_scrap
-  - stock.picking.onchange
-  - stock.move.read
-  - stock.move.write
-  - stock.move.web_save
-  - stock.move.line.read
-  - stock.move.line.write
-  - stock.move.line.web_save
-  - stock.scrap.create
-  - stock.scrap.write
-  - stock.scrap.read
-  - stock.scrap.web_save
-  - stock.scrap.do_scrap
-  - stock.scrap.onchange
-  - stock.location.read
-  - stock.location.name_search
-  - purchase.order.read
-  - purchase.order.web_save
-  - purchase.order.action_view_picking
-  - product.product.name_search
-  - product.product.read
-  - res.partner.name_search
-  - res.partner.read
-  - ir.ui.view.get_views
-  - stock.backorder.confirmation.create
+  - stock.picking.button_validate
   - stock.backorder.confirmation.process
+  - stock.move.write
+  - stock.move.line.write
+  - purchase.order.read
+  - purchase.order.write
+  - stock.picking.read
+  - ir.ui.view.get_views
 
 forbidden_ops:
-  - stock.picking.unlink
-  - stock.picking.action_cancel
   - purchase.order.button_cancel
   - purchase.order.unlink
+  - stock.picking.action_cancel
+  - stock.scrap.unlink

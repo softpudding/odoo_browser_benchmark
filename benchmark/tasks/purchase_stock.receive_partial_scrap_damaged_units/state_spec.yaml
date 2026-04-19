@@ -1,22 +1,16 @@
 models:
-  stock.picking:
+  purchase.order:
     match_key:
       - origin
-      - partner_id
-      - backorder_id
     fields:
       - origin
-      - partner_id
-      - state
-      - backorder_id
+      - receipt_status
     ignore_fields:
       - id
-      - name
       - create_date
       - write_date
-      - date_done
-      - scheduled_date
-      - date
+      - name
+      - partner_id
   stock.scrap:
     match_key:
       - product_id
@@ -24,10 +18,11 @@ models:
       - product_id
       - scrap_qty
       - state
-      - scrap_location_id
     ignore_fields:
       - id
       - name
       - create_date
       - write_date
       - date_done
+      - origin
+      - picking_id
