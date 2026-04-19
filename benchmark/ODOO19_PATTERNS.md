@@ -2269,6 +2269,25 @@ Source tasks: `hr_attendance.clock_in_out_kiosk_mode`,
   character outside `[A-Za-z0-9]` and anything longer than 18 chars.
   Seed values like `ATT-001` or `BADGE_42` raise `ValidationError`.
   Use `ATT001`, `BENCH01`, etc.
+- **There is no `badge_id` field on `hr.employee` in Odoo 19.** The
+  field labelled "Badge ID" in the employee form (Settings tab,
+  Attendance/Point of Sale group) is technically `barcode`
+  (`addons/hr/models/hr_employee.py:206` — `barcode = fields.Char(
+  string="Badge ID", ...)`). Writing `badge_id` in a seed silently
+  succeeds as an unknown-key no-op on environments with lax field
+  validation, making tests appear to "pass" without setting anything.
+  Always `grep -n "badge_id\|barcode" addons/hr/models/hr_employee*.py`
+  before building any badge-related task. Source task:
+  `hr.generate_employee_card_set_badge_id` (row 425).
+- The **Print Badge** button inside the HR Settings tab has
+  `invisible="not barcode"` so it is hidden until the barcode field
+  has been saved. Oracles/agents that want to click it must complete
+  the form save first — clicking it before the write is a no-op
+  against an invisible element. For medium-tier tasks that only assert
+  the field value, mark the Print Badge click as best-effort.
+- The HR "Settings" notebook tab on the employee form has
+  `name="hr_settings"` and `string="Settings"` (not "HR Settings") —
+  `click_tab(page, "Settings")` is the correct call.
 - `attendance_from_systray` on the company must be `False` when the
   intent is to force the kiosk workflow — otherwise the admin navbar
   grows a clock widget that the agent can (and will) click instead of
