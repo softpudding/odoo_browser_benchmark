@@ -1,0 +1,21 @@
+task_id: hr_expense.scan_submit_expense_from_mobile_portal
+module: hr_expense
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/expenses
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "From My Expenses, create a new Travel - Taxi expense with exact description, overridden total amount, today's date, then submit it to the manager through the Odoo 19 expense workflow."
+  checks_verify: "An hr.expense named 'Airport taxi' exists with total_amount=45.00, product_id=Travel - Taxi, state in ('reported','submitted','approved') and is owned by admin's employee record."
+  failure_pattern: "Agent picks the wrong product, forgets to override the auto-populated 25.00 total with 45.00, or saves without actually submitting to manager."
+  primary_track: true
+  tier: 2
