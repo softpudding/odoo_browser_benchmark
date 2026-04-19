@@ -1,335 +1,231 @@
 """Oracle for event_sale.multi_ticket_checkout_two_attendees.
 
-Public-portal multi-ticket purchase flow:
+Playwright UI-based oracle. Walks the real multi-modal flow:
 
-  /event -> event card -> Register -> ticket counter modal
-    (bump Standard & VIP by +1 each) -> Register submit
-    -> attendees modal (fill Alice's row + Bob's row) -> Confirm
-    -> /shop/checkout (skipped to /shop/payment if admin has address)
-    -> pick Wire Transfer -> Pay now -> /shop/confirmation.
-
-The flow is driven by Playwright; JSON-RPC is not used for the
-registration itself so the browser-use agent still has a realistic
-reference trace.
+  1. Open Sales -> create a new quotation.
+  2. Set the customer (Bench Summit Customer).
+  3. Add order line #1 for the Early Bird ticket product.
+     Setting a service_tracking=event product triggers the event
+     configurator wizard -> pick event + Early Bird ticket, Ok.
+  4. Add order line #2 for the VIP ticket product; configurator
+     fires again -> pick event + VIP ticket, Ok.
+  5. Save the quotation and click Confirm.
+  6. On Confirm, Odoo opens the registration editor wizard with TWO
+     rows (one per ticket). Fill each row's attendee name + email
+     (Alice for Early Bird, Bob for VIP) and click
+     Create/Update registrations.
 """
 
 from benchmark.oracle_helpers import (
-    full_url,
+    click_create,
+    click_tab,
     login,
     navigate,
     run_oracle,
+    save_form,
+    set_many2one,
+    set_o2m_many2one,
     _wait_for_ready,
     _wait_no_loading,
-    DB,
 )
 
 
-EVENT_NAME = "Bench Expo 2026"
-TICKET_STANDARD = "Standard"
+EVENT_NAME = "Bench Summit 2026"
+TICKET_EARLY = "Early Bird"
 TICKET_VIP = "VIP"
-ATTENDEE_STANDARD_NAME = "Alice Standard"
-ATTENDEE_STANDARD_EMAIL = "alice@benchexpo.test"
-ATTENDEE_VIP_NAME = "Bob VIP"
-ATTENDEE_VIP_EMAIL = "bob@benchexpo.test"
+PRODUCT_EARLY = "Bench Summit Early Bird Ticket"
+PRODUCT_VIP = "Bench Summit VIP Ticket"
+PARTNER_NAME = "Bench Summit Customer"
+
+ATTENDEE_EARLY_NAME = "Alice Summit Attendee"
+ATTENDEE_EARLY_EMAIL = "alice.summit@example.com"
+ATTENDEE_VIP_NAME = "Bob Summit Attendee"
+ATTENDEE_VIP_EMAIL = "bob.summit@example.com"
 
 
-def _portal_nav(page, path):
-    url = path
-    if DB:
-        sep = "&" if "?" in path else "?"
-        url = f"{path}{sep}db={DB}"
-    page.goto(full_url(url))
-    page.wait_for_load_state("load")
-    page.wait_for_timeout(1500)
-
-
-def _plus_ticket(page, ticket_name):
-    """Click the '+' button for the given ticket row in
-    #modal_ticket_registration. The row is selected by its
-    `name` attribute which equals the ticket name."""
-    row = page.locator(
-        f"#modal_ticket_registration .o_wevent_ticket_selector[name='{ticket_name}']"
-    ).first
-    row.wait_for(state="visible", timeout=10000)
-    plus = row.locator("button[data-increment-type='plus']").first
-    plus.scroll_into_view_if_needed()
-    plus.click()
-    page.wait_for_timeout(400)
-
-
-def _fill_attendee_section(page, section_idx, name, email):
-    """Fill the N-th attendee section inside #modal_attendees_registration.
-
-    section_idx is 0-based (counter 1 in the template is index 0)."""
-    # All attendee sections are modal-body divs that contain inputs
-    # `{counter}-{type}-{qid}`.  We match by the hidden input
-    # `{counter}-event_ticket_id` whose counter is the section number.
-    counter = section_idx + 1
-    name_input = page.locator(
-        f"#modal_attendees_registration input[name^='{counter}-name-']"
-    ).first
-    name_input.wait_for(state="visible", timeout=10000)
-    name_input.fill(name)
-    email_input = page.locator(
-        f"#modal_attendees_registration input[name^='{counter}-email-']"
-    ).first
-    email_input.fill(email)
-
-
-def _find_attendee_section_for_ticket(page, ticket_label):
-    """Return the counter index (1-based) of the attendee section whose
-    heading mentions the given ticket label (e.g., 'Standard' or 'VIP').
-    """
-    return page.evaluate(
-        """(ticketLabel) => {
-            const modal = document.querySelector('#modal_attendees_registration');
-            if (!modal) return null;
-            // Collect all heading texts like "Ticket #N - <ticket_name>"
-            const headings = modal.querySelectorAll('h5');
-            for (const h of headings) {
-                const text = h.textContent.trim();
-                if (text.includes(ticketLabel)) {
-                    // The heading contains e.g. "Ticket #2 - VIP". Pull out the
-                    // number after '#'.
-                    const match = text.match(/#\\s*(\\d+)/);
-                    if (match) return parseInt(match[1], 10);
-                }
-            }
-            return null;
-        }""",
-        ticket_label,
+def _click_add_a_line(page):
+    add_link = page.locator(
+        "a.o_field_x2many_list_row_add:visible, "
+        "td.o_field_x2many_list_row_add a:visible"
     )
+    add_link.first.click()
+    page.wait_for_timeout(500)
+    _wait_no_loading(page)
+
+
+def _modal_set_many2one(page, field_name, search_text):
+    modal = page.locator(".modal:visible").last
+    inp = modal.locator(
+        f".o_field_widget[name='{field_name}'] input"
+    ).first
+    inp.click()
+    inp.fill("")
+    inp.fill(search_text)
+    page.wait_for_timeout(800)
+    item = page.locator(
+        ".dropdown-menu .dropdown-item, .ui-autocomplete .ui-menu-item"
+    ).filter(has_text=search_text).first
+    item.click()
+    page.wait_for_timeout(500)
+    _wait_no_loading(page)
+
+
+def _modal_fill_row_field(page, row_idx, field_name, value):
+    """Fill a field in a specific row of a modal's data table."""
+    modal = page.locator(".modal:visible").last
+    rows = modal.locator(".o_data_row")
+    cell = rows.nth(row_idx).locator(
+        f"td[name='{field_name}'], .o_field_widget[name='{field_name}']"
+    ).first
+    cell.click()
+    page.wait_for_timeout(200)
+    inp = cell.locator("input").first
+    inp.fill("")
+    inp.fill(value)
+    inp.press("Tab")
+    page.wait_for_timeout(300)
+    _wait_no_loading(page)
+
+
+def _modal_get_row_ticket(page, row_idx):
+    """Read the event_ticket_id cell text for row_idx (for matching Early/VIP)."""
+    modal = page.locator(".modal:visible").last
+    rows = modal.locator(".o_data_row")
+    # Event ticket column might be labeled 'event_ticket_id'
+    cell = rows.nth(row_idx).locator(
+        "td[name='event_ticket_id'], .o_field_widget[name='event_ticket_id']"
+    ).first
+    if cell.count() == 0:
+        return rows.nth(row_idx).inner_text()
+    return cell.inner_text()
+
+
+def _handle_configurator(page, ticket_name):
+    """If the 'Configure an event' wizard is open, fill event + ticket."""
+    if page.locator(".modal:visible").count() == 0:
+        return
+    _modal_set_many2one(page, "event_id", EVENT_NAME)
+    _modal_set_many2one(page, "event_ticket_id", ticket_name)
+
+    ok_btn = page.locator(
+        ".modal:visible .modal-footer button:has-text('Ok'), "
+        ".modal:visible .modal-footer button:has-text('OK'), "
+        ".modal:visible .modal-footer button.btn-primary"
+    )
+    ok_btn.first.click()
+    page.wait_for_timeout(1000)
+    _wait_no_loading(page)
 
 
 def oracle(page):
-    # ==================================================================
-    # Phase 0 — log in so admin is the cart owner.
-    # ==================================================================
     login(page)
 
-    # ==================================================================
-    # Phase 1 — navigate to /event and open the event page.
-    # ==================================================================
-    _portal_nav(page, "/event")
+    # --------------------------------------------------------------
+    # Step 1: new quotation in Sales
+    # --------------------------------------------------------------
+    navigate(page, "/odoo/sales")
+    _wait_no_loading(page)
+    page.wait_for_timeout(500)
 
-    # Click the event card/title.
-    event_link = page.locator(f"a:has-text('{EVENT_NAME}')").first
-    event_link.wait_for(state="visible", timeout=15000)
-    event_link.click()
-    page.wait_for_load_state("load")
-    page.wait_for_timeout(2000)
+    click_create(page)
+    page.wait_for_timeout(500)
+    _wait_for_ready(page)
 
-    # ==================================================================
-    # Phase 2 — Open Register ticket modal.
-    # ==================================================================
-    register_btn = page.locator(
-        "button[data-bs-toggle='modal'][data-bs-target='#modal_ticket_registration']:visible"
-    ).first
-    if register_btn.count() == 0:
-        register_btn = page.locator(
-            "button:has-text('Register'):visible, a:has-text('Register'):visible"
-        ).first
-    register_btn.scroll_into_view_if_needed()
+    # Customer
+    set_many2one(page, "partner_id", PARTNER_NAME)
+    page.wait_for_timeout(500)
+    _wait_no_loading(page)
+
+    # Make sure we're on the Order Lines tab (default) then add a line
+    try:
+        click_tab(page, "Order Lines")
+    except Exception:
+        pass
     page.wait_for_timeout(300)
-    register_btn.click()
+
+    # --------------------------------------------------------------
+    # Step 2: Order line #1 - Early Bird Ticket
+    # --------------------------------------------------------------
+    _click_add_a_line(page)
+    page.wait_for_timeout(400)
+
+    set_o2m_many2one(page, 0, "product_template_id", PRODUCT_EARLY)
     page.wait_for_timeout(1500)
+    _wait_no_loading(page)
 
-    # Wait for the ticket modal to render its counters.
-    page.wait_for_selector(
-        "#modal_ticket_registration .o_wevent_ticket_selector",
-        timeout=10000,
-    )
+    _handle_configurator(page, TICKET_EARLY)
 
-    # Bump both counters by 1.
-    _plus_ticket(page, TICKET_STANDARD)
-    _plus_ticket(page, TICKET_VIP)
+    # --------------------------------------------------------------
+    # Step 3: Order line #2 - VIP Ticket
+    # --------------------------------------------------------------
+    # Press Escape to close any residual dropdown/datepicker before
+    # adding a fresh line.
+    page.keyboard.press("Escape")
+    page.wait_for_timeout(200)
+    _wait_no_loading(page)
 
-    # Submit the ticket modal.
-    ticket_submit = page.locator(
-        "#modal_ticket_registration button.a-submit"
-    ).first
-    page.wait_for_function(
-        """() => {
-            const b = document.querySelector(
-                '#modal_ticket_registration button.a-submit'
-            );
-            return b && !b.disabled;
-        }""",
-        timeout=10000,
-    )
-    ticket_submit.click()
-    page.wait_for_timeout(2500)
+    _click_add_a_line(page)
+    page.wait_for_timeout(400)
 
-    # ==================================================================
-    # Phase 3 — Attendees form.  Figure out which counter goes with which
-    # ticket (depends on DB ordering of event_ticket_ids) and fill it.
-    # ==================================================================
-    page.wait_for_selector(
-        "#modal_attendees_registration input[name*='-name-']",
-        timeout=15000,
-    )
+    set_o2m_many2one(page, 1, "product_template_id", PRODUCT_VIP)
+    page.wait_for_timeout(1500)
+    _wait_no_loading(page)
 
-    std_counter = _find_attendee_section_for_ticket(page, TICKET_STANDARD)
-    vip_counter = _find_attendee_section_for_ticket(page, TICKET_VIP)
+    _handle_configurator(page, TICKET_VIP)
 
-    # Fallback: if the headings don't mention the ticket label (e.g., no
-    # specific questions), the first section is the first ticket listed.
-    # Rely on the hidden `{counter}-event_ticket_id` input's value instead.
-    if std_counter is None or vip_counter is None:
-        mapping = page.evaluate(
-            """() => {
-                const modal = document.querySelector('#modal_attendees_registration');
-                if (!modal) return {};
-                const inputs = modal.querySelectorAll("input[name$='-event_ticket_id']");
-                const out = {};
-                for (const inp of inputs) {
-                    const m = inp.name.match(/^(\\d+)-event_ticket_id$/);
-                    if (m) out[m[1]] = inp.value;
-                }
-                return out;
-            }"""
-        )
-        # Get ticket id -> name mapping via the backend.
-        ticket_info = page.evaluate(
-            """async (eventName) => {
-                const res = await fetch('/web/dataset/call_kw', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    credentials: 'same-origin',
-                    body: JSON.stringify({
-                        jsonrpc: '2.0', method: 'call', params: {
-                            model: 'event.event',
-                            method: 'search_read',
-                            args: [[['name','=', eventName]], ['event_ticket_ids']],
-                            kwargs: { limit: 1 },
-                        }
-                    }),
-                });
-                const ev = (await res.json()).result;
-                if (!ev || !ev.length) return {};
-                const ticketIds = ev[0].event_ticket_ids;
-                const tRes = await fetch('/web/dataset/call_kw', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    credentials: 'same-origin',
-                    body: JSON.stringify({
-                        jsonrpc: '2.0', method: 'call', params: {
-                            model: 'event.event.ticket',
-                            method: 'read',
-                            args: [ticketIds, ['id','name']],
-                            kwargs: {},
-                        }
-                    }),
-                });
-                const tickets = (await tRes.json()).result;
-                const out = {};
-                for (const t of tickets) out[t.id] = t.name;
-                return out;
-            }""",
-            EVENT_NAME,
-        )
-        for counter_s, tid_s in mapping.items():
-            tname = ticket_info.get(str(tid_s)) or ticket_info.get(int(tid_s))
-            if tname == TICKET_STANDARD and std_counter is None:
-                std_counter = int(counter_s)
-            elif tname == TICKET_VIP and vip_counter is None:
-                vip_counter = int(counter_s)
+    # --------------------------------------------------------------
+    # Step 4: Save + Confirm
+    # --------------------------------------------------------------
+    page.keyboard.press("Escape")
+    page.wait_for_timeout(200)
+    save_form(page)
+    page.wait_for_timeout(1000)
+    _wait_no_loading(page)
 
-    if not std_counter:
-        std_counter = 1
-    if not vip_counter:
-        vip_counter = 2 if std_counter == 1 else 1
-
-    _fill_attendee_section(page, std_counter - 1, ATTENDEE_STANDARD_NAME, ATTENDEE_STANDARD_EMAIL)
-    _fill_attendee_section(page, vip_counter - 1, ATTENDEE_VIP_NAME, ATTENDEE_VIP_EMAIL)
-
-    # Submit the attendees form.  On paid events website_event_sale
-    # swaps the button label from 'Confirm Registration' to
-    # 'Go to Payment'; accept either by filtering on submit buttons
-    # inside the attendees modal and clicking the primary one.
     confirm_btn = page.locator(
-        "#modal_attendees_registration button[type='submit'].btn-primary"
-    ).last
-    confirm_btn.click()
-    page.wait_for_load_state("load")
-    page.wait_for_timeout(4000)
+        ".o_statusbar_buttons button[name='action_confirm']:visible, "
+        ".o_statusbar_buttons button:has-text('Confirm'):visible"
+    )
+    confirm_btn.first.click()
+    page.wait_for_timeout(2500)
+    _wait_no_loading(page)
 
-    # ==================================================================
-    # Phase 4 — Checkout / Payment.
-    # The registration_confirm handler on a paid cart redirects to
-    # /shop/checkout?try_skip_step=true; if admin has an address the
-    # controller will forward to /shop/payment automatically. If we land
-    # on /shop/checkout or /shop/address, click the primary Continue /
-    # Confirm button.
-    # ==================================================================
-    current_url = page.url
-    if "/shop/address" in current_url or "/shop/checkout" in current_url:
-        # Try to locate the "Save address" / continue button.
-        save_btn = page.locator(
-            "button:has-text('Save address'):visible, "
-            "button:has-text('Confirm'):visible, "
-            "button:has-text('Continue'):visible, "
-            "button[name='website_sale_main_button']:visible"
-        ).first
-        if save_btn.count() > 0:
-            try:
-                save_btn.click()
-                page.wait_for_load_state("load")
-                page.wait_for_timeout(2500)
-            except Exception:
-                pass
+    # --------------------------------------------------------------
+    # Step 5: Registration editor wizard - TWO rows, one per ticket.
+    # Match rows to tickets by reading the event_ticket_id cell text.
+    # --------------------------------------------------------------
+    if page.locator(".modal:visible").count() > 0:
+        # Read both rows' ticket labels to decide which is Early / VIP.
+        row0_text = _modal_get_row_ticket(page, 0) or ""
+        row1_text = _modal_get_row_ticket(page, 1) or ""
 
-    # Navigate to /shop/payment explicitly if we didn't land there.
-    if "/shop/payment" not in page.url and "/shop/confirmation" not in page.url:
-        page.goto(full_url("/shop/payment"))
-        page.wait_for_load_state("load")
+        # Default mapping assumes row 0 = Early Bird, row 1 = VIP.
+        early_row, vip_row = 0, 1
+        if TICKET_VIP in row0_text and TICKET_EARLY in row1_text:
+            early_row, vip_row = 1, 0
+        elif TICKET_EARLY in row0_text and TICKET_VIP in row1_text:
+            early_row, vip_row = 0, 1
+
+        # Fill Early Bird row (Alice).
+        _modal_fill_row_field(page, early_row, "name", ATTENDEE_EARLY_NAME)
+        _modal_fill_row_field(page, early_row, "email", ATTENDEE_EARLY_EMAIL)
+        page.wait_for_timeout(400)
+
+        # Fill VIP row (Bob).
+        _modal_fill_row_field(page, vip_row, "name", ATTENDEE_VIP_NAME)
+        _modal_fill_row_field(page, vip_row, "email", ATTENDEE_VIP_EMAIL)
+        page.wait_for_timeout(400)
+
+        action_btn = page.locator(
+            ".modal:visible .modal-footer "
+            "button[name='action_make_registration'], "
+            ".modal:visible .modal-footer "
+            "button:has-text('Create/Update'), "
+            ".modal:visible .modal-footer button.btn-primary"
+        )
+        action_btn.first.click()
         page.wait_for_timeout(2000)
-
-    # ==================================================================
-    # Phase 5 — Pick Wire Transfer + Pay now.
-    # ==================================================================
-    if "/shop/confirmation" not in page.url:
-        # Click the Wire Transfer payment option radio / card.
-        transfer_option = page.locator(
-            "input[name='o_payment_radio'][data-payment-option-label='Wire Transfer']"
-        ).first
-        if transfer_option.count() == 0:
-            transfer_option = page.locator(
-                "label:has-text('Wire Transfer'):visible, "
-                ".o_payment_option_card:has-text('Wire Transfer')"
-            ).first
-        try:
-            transfer_option.scroll_into_view_if_needed()
-            transfer_option.click()
-            page.wait_for_timeout(800)
-        except Exception:
-            pass
-
-        # Accept Terms if visible.
-        tos = page.locator("input#website_sale_tc_checkbox:visible")
-        if tos.count() > 0:
-            try:
-                tos.check()
-            except Exception:
-                pass
-
-        pay_btn = page.locator(
-            "button[name='o_payment_submit_button']:visible, "
-            "button:has-text('Pay now'):visible, "
-            "button:has-text('Pay Now'):visible"
-        ).first
-        pay_btn.scroll_into_view_if_needed()
-        pay_btn.click()
-        page.wait_for_load_state("load")
-        page.wait_for_timeout(5000)
-
-    # Phase 6 — wait for confirmation or retry.
-    if "/shop/confirmation" not in page.url:
-        # Some redirects land on the wire-transfer pending page; follow to
-        # confirmation by calling `/shop/payment/validate` directly.
-        page.goto(full_url("/shop/payment/validate"))
-        page.wait_for_load_state("load")
-        page.wait_for_timeout(3000)
+        _wait_no_loading(page)
 
 
 run_oracle(oracle)
