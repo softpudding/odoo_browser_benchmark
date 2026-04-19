@@ -1,0 +1,36 @@
+# Trace oracle for account.import_opening_balance_set_initial_equity.
+#
+# Agent creates a move_type='entry' journal entry with two balanced lines and
+# posts it. Browser-use routinely uses web_save instead of ORM create/write —
+# those live in optional_ops.
+
+required_ops: []
+
+optional_ops:
+  - account.move.create
+  - account.move.write
+  - account.move.web_save
+  - account.move.web_read
+  - account.move.read
+  - account.move.search_read
+  - account.move.action_post
+  - account.move.line.create
+  - account.move.line.write
+  - account.move.line.read
+  - account.move.line.search_read
+  - account.journal.read
+  - account.journal.search_read
+  - account.account.read
+  - account.account.search_read
+  - res.partner.read
+  - res.partner.search_read
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+  - mail.message.create
+  - mail.followers.create
+  - bus.bus.create
+
+forbidden_ops:
+  - account.move.unlink
+  - account.move.button_draft
+  - account.move.button_cancel
