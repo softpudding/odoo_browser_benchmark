@@ -3863,4 +3863,23 @@ uv pip install -r requirements.txt  # Odoo's full runtime deps
 uv pip install browser-use          # BU agent package (not in benchmark deps)
 ```
 
+---
+
+## Discuss channel create: public vs group via JSON-RPC
+
+`discuss.channel.create` accepts `channel_type='channel'` (public) or
+`'group'` (private) directly — no need to route through the private
+`/discuss/create_channel` store-fetch endpoint or the `_create_channel`
+ORM method. Just pass `{name, channel_type, channel_member_ids: [[0,0,{partner_id: ...}], ...]}`.
+
+The Discuss UI **`+` button next to Channels** → type name → Enter
+defaults to **public `channel_type='channel'`**. To create a private
+**group** channel via the same UI requires selecting the "Group" icon
+(second option in the inline suggestion list), NOT pressing Enter. Tasks
+that need to distinguish public-vs-private should pin that behavior in
+the prompt — browser agents default to pressing Enter after typing.
+
+See `mail.create_channel_invite_members_post_message/oracle.py` for the
+combined create + add_members + message_post JSON-RPC pattern.
+
 This should probably be baked into the skeleton.
