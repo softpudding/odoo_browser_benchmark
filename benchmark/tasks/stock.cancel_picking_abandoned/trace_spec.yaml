@@ -1,0 +1,34 @@
+# Trace oracle for stock.cancel_picking_abandoned
+#
+# Medium: cancel an assigned outgoing delivery via the statusbar Cancel
+# button + confirm the "Are you sure you want to cancel this transfer?"
+# dialog. Pure cancel — no replacement / return / backorder / validate.
+
+required_ops:
+  - stock.picking.action_cancel
+
+optional_ops:
+  - stock.picking.read
+  - stock.picking.write
+  - stock.picking.web_save
+  - stock.picking.search_read
+  - stock.picking.web_search_read
+  - stock.picking.onchange
+  - stock.move.read
+  - stock.move.search_read
+  - stock.move.line.read
+  - stock.move.line.search_read
+  - res.partner.read
+  - res.partner.search_read
+  - product.product.read
+  - product.product.search_read
+  - product.template.read
+  - product.template.search_read
+  - ir.ui.view.get_views
+  - mail.message.create
+  - mail.thread.message_post
+
+forbidden_ops:
+  - stock.picking.unlink
+  - stock.picking.button_validate
+  - stock.picking.do_unreserve

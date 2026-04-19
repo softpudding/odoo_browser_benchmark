@@ -894,6 +894,55 @@ If a task description implies offline-form configuration, map to `button_text` /
 
 ---
 
+## Chatter Delete action — body='' via /mail/message/update_content (not unlink)
+
+The per-message trash icon (or its overflow-menu "Delete" entry with
+`fa-trash`) on the chatter wires through the `delete` message action
+registered in `addons/mail/static/src/core/common/message_actions.js`.
+On confirm, it invokes `message.remove({removeFromThread})` which
+POSTs to `/mail/message/update_content` with `body: ""` —
+**it does NOT call `mail.message.unlink`**.
+
+Server side, `mail.thread._message_update_content` (mail_thread.py)
+writes the empty body, then calls `_clean_empty_message(message)`.
+The base `mail.thread._clean_empty_message` only unlinks the
+message's link previews — the `mail.message` row itself survives in
+the DB with `body=''`. Only the `discuss.channel` override actively
+cascades to unlink empty messages.
+
+Consequences for moderation/delete-comment tasks:
+
+- **check.py must accept both outcomes** (unlink OR body=''): gate on
+  "no surviving `mail.message` body containing the spam marker"
+  rather than record count on `model='<thread>', res_id=...`.
+- **Oracle short-circuit**: admin can call
+  `mail.message.unlink([id])` directly via JSON-RPC — it's cleaner
+  than driving DOM (hover → overflow → Delete → confirm) and the
+  post-state is equivalent for the check.
+- **trace_spec**: keep both `mail.message.unlink` AND
+  `mail.thread.message_update_content` / `/mail/message/update_content`
+  in `optional_ops` (neither is forbidden; both are valid deletion paths).
+- **`editable` getter** (`message_model.js:214-219`) returns True iff
+  `message_type === 'comment'` AND (`store.self.main_user_id?.is_admin
+  || isSelfAuthored`). Admin can delete any comment; non-admin only
+  own posts. Tasks that seed a comment under a non-admin author then
+  have admin delete it rely on the admin-bypass branch.
+- **Seeding admin-deletable chatter comments** on a business record:
+  `record.sudo().message_post(body='...', author_id=<partner>,
+  message_type='comment', subtype_xmlid='mail.mt_comment')`. The
+  `mail.mt_comment` subtype is load-bearing — `mail.mt_note` posts
+  land on the Log-note tab and share the same `editable` gate but
+  agents often mis-identify them as "system" messages.
+- **Reference task**: `website_blog.delete_comment_moderate` (row
+  482). Seeds two portal-authored comments (Reviewer Good + Spam Bot)
+  on a `blog.post`; agent deletes the spam via chatter. Calibration:
+  BU PASSed single-shot in 22 steps because `aria-label='Expand'` on
+  the overflow button and `aria-label='Delete'` on the dropdown item
+  expose the entire delete path — same aria-label-discoverable
+  dynamic as row 477 `website_forum.upvote_question_mark_as_answer`.
+
+---
+
 ## website_slides — sections, sequencing, and copy
 
 - `slide.slide.is_category=True` rows ARE the sections of a `slide.channel`; no separate section model.

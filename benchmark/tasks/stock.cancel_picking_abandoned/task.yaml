@@ -1,0 +1,21 @@
+task_id: stock.cancel_picking_abandoned
+module: stock
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/inventory
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: recovery_rollback
+  difficulty_level: medium
+  agent_interaction: "Navigate Inventory > Operations > Transfers, open the ready (assigned) outgoing delivery WH/OUT/BENCH-CANCEL for Bench Cancel Ship Co with 3 units of Bench Cancel Prod, click Cancel in the statusbar, and confirm the 'Are you sure you want to cancel this transfer?' dialog so state becomes 'cancel'."
+  checks_verify: "stock.picking named WH/OUT/BENCH-CANCEL still exists (not unlinked) with state='cancel', partner Bench Cancel Ship Co unchanged, single move for Bench Cancel Prod with demand=3 unchanged, and no additional outgoing picking was created for the customer."
+  failure_pattern: "Agent dismisses the cancel confirmation dialog, clicks Validate instead of Cancel (pushing to 'done'), clicks the breadcrumb Discard instead of the statusbar Cancel action, or deletes the picking via cog menu."
+  primary_track: true
+  tier: 2
