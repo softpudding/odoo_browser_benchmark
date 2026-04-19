@@ -1,0 +1,21 @@
+task_id: sale.duplicate_confirmed_order_edit_customer
+module: sale
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/sales
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "Open the CONFIRMED sale.order with client_order_ref BENCH-DUP for Bench Orig Co, open the cog/Actions menu and click Duplicate, on the resulting draft copy change the Customer many2one from Bench Orig Co to Bench Clone Co, and Save (do NOT confirm)."
+  checks_verify: "Exactly 2 sale.order rows exist: the original (client_order_ref='BENCH-DUP', partner_id=Bench Orig Co, state='sale', lines unchanged) plus a new draft copy (client_order_ref=False because sale.order.client_order_ref has copy=False, partner_id=Bench Clone Co, state='draft') with its two order lines copied from the source."
+  failure_pattern: "Agent may (a) cancel/reset the original instead of duplicating, (b) confirm the copy (forbidden — copy must stay draft), (c) only change the delivery address rather than the Customer field, or (d) click Duplicate repeatedly because the copy still displays the original customer in the breadcrumb before the agent finishes editing."
+  primary_track: true
+  tier: 2
