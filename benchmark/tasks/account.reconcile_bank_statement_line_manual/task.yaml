@@ -1,0 +1,18 @@
+task_id: account.reconcile_bank_statement_line_manual
+module: account
+difficulty: hard
+instruction: see prompt.md
+start_url: /odoo/accounting
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 480
+step_limit: 300
+metadata:
+  category: closed_loop_cross_module
+  failure_pattern: "Agent must open the bank reconciliation widget for a specific unreconciled bank statement line, manually match it to a specific open customer invoice (not let auto-match pick any invoice), and validate the reconciliation so the invoice becomes fully paid. Browser agents fail because the bank reconciliation widget is an unusual non-form UI with two side-by-side panels, and they confuse manual matching with Register Payment / auto-match on a different invoice."
+  primary_track: true
+  tier: 3

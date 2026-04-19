@@ -168,7 +168,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 156 | website.create_contact_form_block [hard] | Edit a website page to add and configure a contact form block | Done | PASS | FAIL/PASS | 0.5 |
 | 157 | stock.scrap_product_from_receipt [medium] | Open a stock receipt and scrap part of a received product from the operation flow | Done | PASS | PASS/PASS | 1.0 |
 | 158 | stock.adjust_inventory_with_location_filter [medium] | Adjust inventory for a target product in one location while leaving other locations unchanged | Done | PASS | PASS/PASS | 1.0 |
-| 159 | stock.receive_serial_tracked_product [hard] | Validate a receipt by assigning exact serial numbers to tracked units | WIP | — | — | — |
+| 159 | stock.receive_serial_tracked_product [hard] | Validate a receipt by assigning exact serial numbers to tracked units | Done | PASS | PASS/PASS | 1.0 |
 | 160 | mrp.update_bom_component_quantity [medium] | Update one component quantity on an existing bill of materials and save it | Done (dup of 257) | — | — | — |
 | 161 | mrp.create_mo_consume_produce_done [hard] | Create a manufacturing order, record component consumption, and mark production done | Done | PASS | PASS/PASS | 1.0 |
 | 162 | mrp.unbuild_product_partial [hard] | Unbuild part of a manufactured product quantity and verify the resulting stock moves | Done (near-dup of 256) | — | — | — |
@@ -186,13 +186,13 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 174 | mrp.create_routing_set_workcenter [medium] | Create a workcenter and link it as an operation on an existing BOM | Done | PASS | PASS | 1.0 |
 | 175 | mrp.scrap_component_during_production [hard] | Scrap one consumed component from a running MO via the component action menu | Done | PASS | PASS/PASS | 1.0 |
 | 176 | mrp.convert_bom_to_kit_type [easy] | Change an existing BOM's type from Manufacture This Product to Kit | Done | PASS | PASS | 1.0 |
-| 177 | mrp.create_variant_specific_bom [hard] | Create a BOM that applies only to a single product variant via attribute filter | WIP | — | — | — |
+| 177 | mrp.create_variant_specific_bom [hard] | Create a BOM that applies only to a single product variant via attribute filter | Done | PASS | FAIL/FAIL | 0.0 |
 | 178 | mrp.configure_mo_operation_time_finish [medium] | Open a work order on an MO, set expected duration, and mark it finished | Done | PASS | FAIL/PASS | 1.0 |
 | 179 | point_of_sale.sell_two_products_apply_discount [medium] | Ring up two POS products, apply a 10% line discount, pay cash | Done | PASS | PASS/PASS | 1.0 |
-| 180 | point_of_sale.refund_previous_order [hard] | Refund a prior POS order partially from the Orders menu | WIP | — | — | — |
+| 180 | point_of_sale.refund_previous_order [hard] | Refund a prior POS order partially from the Orders menu | Done | PASS | FAIL/FAIL | 0.0 |
 | 181 | point_of_sale.attach_customer_mid_sale [easy] | Open a POS session, add a product, attach existing customer, pay cash | Done | PASS | PASS/PASS | 1.0 |
 | 182 | point_of_sale.close_session_reconcile_cash_diff [medium] | Close a POS session with a counted cash amount different from expected | Done | PASS | PASS/FAIL | 0.5 |
-| 183 | website_sale.add_product_to_cart_checkout_portal [medium] | As a public user, add a product to cart and complete checkout with address | WIP | — | — | — |
+| 183 | website_sale.add_product_to_cart_checkout_portal [medium] | As a public user, add a product to cart and complete checkout with address | Done | PASS | FAIL/PASS | 0.5 |
 | 184 | website_sale.apply_promo_code_at_checkout [medium] | Create a coupon program in backend then apply the code on the storefront | Done | PASS | PASS/PASS | 1.0 |
 | 185 | website_sale.edit_product_image_gallery [easy] | Add an extra image to a published product via the shop editor | Done | PASS | PASS/PASS | 1.0 |
 | 186 | website_sale.configure_delivery_method_weight [medium] | Create a delivery method with weight-based pricing rules | Done | PASS | FAIL/PASS | 0.5 |
@@ -220,7 +220,7 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 208 | stock.count_inventory_apply_with_date [medium] | Make an inventory adjustment with a specific counted date | Done | PASS | FAIL/FAIL | 0.0 |
 | 209 | stock.set_storage_category_capacity [medium] | Define a storage category with capacity and assign it to a location | Done | PASS | FAIL/FAIL | 0.0 |
 | 210 | account.create_manual_journal_entry_balanced [hard] | Create a misc journal entry with three balanced debit/credit lines and post | Done | PASS | PASS/PASS | 1.0 |
-| 211 | account.reconcile_bank_statement_line_manual [hard] | Open a bank statement line and reconcile it against a suggested invoice | WIP | — | — | — |
+| 211 | account.reconcile_bank_statement_line_manual [hard] | Open a bank statement line and reconcile it against a suggested invoice | Done | PASS | FAIL/FAIL | 0.0 |
 | 212 | account.create_recurring_entry_template [medium] | Save a journal entry as a recurring entry template | Done | PASS | PASS/PASS | 1.0 |
 | 213 | account.lock_books_set_period_lock_date [medium] | Set the Non-Advisors Lock Date in accounting settings | Done | PASS | FAIL/FAIL | 0.0 |
 | 214 | crm.set_lost_reason_reassign_salesperson [medium] | Mark opportunity Lost with specific reason then reassign salesperson | Done | PASS | — | — |

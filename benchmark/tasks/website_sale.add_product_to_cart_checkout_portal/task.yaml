@@ -1,0 +1,21 @@
+task_id: website_sale.add_product_to_cart_checkout_portal
+module: website_sale
+difficulty: medium
+instruction: see prompt.md
+start_url: /shop
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "As a portal shopper, add 'Bench Portal Product' to the cart on /shop, navigate through checkout filling the delivery address (Bench Portal Customer at 12 Bench Street, Benchtown, 90001, United States), then confirm the order with the Wire Transfer offline payment provider so a sale.order is created and confirmed."
+  checks_verify: "One confirmed sale.order (state in ('sale','sent','done')) exists with website_id set, amount_total=25.00, a single order line for the 'Bench Portal Product' qty 1 at 25.00, and a partner_id named 'Bench Portal Customer' carrying the seeded delivery address."
+  failure_pattern: "Agents frequently bail out of the multi-page shop checkout (Address -> Delivery -> Payment) because the 'Pay now' button is gated behind the Wire Transfer radio toggle and the address form requires explicit country selection; many leave the order at draft without confirming."
+  primary_track: true
+  tier: 2

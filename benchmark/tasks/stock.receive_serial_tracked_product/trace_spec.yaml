@@ -1,0 +1,45 @@
+# Trace oracle for stock.receive_serial_tracked_product
+#
+# Hard (deep_ui_interaction): receive a serial-tracked product by
+# splitting a 3-unit move into three distinct move_lines with three
+# new serials, then validate.
+
+required_ops: []
+
+optional_ops:
+  - stock.picking.read
+  - stock.picking.write
+  - stock.picking.web_save
+  - stock.picking.search_read
+  - stock.picking.web_search_read
+  - stock.picking.button_validate
+  - stock.picking.action_confirm
+  - stock.picking.action_assign
+  - stock.picking.onchange
+  - stock.move.read
+  - stock.move.write
+  - stock.move.create
+  - stock.move.web_save
+  - stock.move.action_show_details
+  - stock.move.line.read
+  - stock.move.line.write
+  - stock.move.line.create
+  - stock.move.line.web_save
+  - stock.move.line.unlink
+  - stock.lot.create
+  - stock.lot.read
+  - stock.lot.name_create
+  - stock.lot.unlink
+  - stock.backorder.confirmation.create
+  - stock.backorder.confirmation.process
+  - stock.backorder.confirmation.process_cancel_backorder
+  - product.product.read
+  - product.product.name_search
+  - product.product.search_read
+  - ir.ui.view.get_views
+
+forbidden_ops:
+  - stock.picking.unlink
+  - stock.picking.action_cancel
+  - product.product.unlink
+  - product.template.unlink

@@ -1,0 +1,40 @@
+# Trace oracle for mrp.create_variant_specific_bom.
+#
+# HARD: create a mrp.bom with a variant-specific 'Apply on Variants'
+# field. Main difficulty is setting product_id to the Red variant.
+
+required_ops: []
+
+optional_ops:
+  - mrp.bom.create
+  - mrp.bom.write
+  - mrp.bom.web_save
+  - mrp.bom.read
+  - mrp.bom.search_read
+  - mrp.bom.web_search_read
+  - mrp.bom.onchange
+  - mrp.bom.line.create
+  - mrp.bom.line.write
+  - mrp.bom.line.read
+  - product.template.read
+  - product.template.search_read
+  - product.template.web_search_read
+  - product.template.name_search
+  - product.product.read
+  - product.product.search_read
+  - product.product.web_search_read
+  - product.product.name_search
+  - product.template.attribute.value.read
+  - product.template.attribute.value.search_read
+  - product.template.attribute.value.name_search
+  - product.attribute.read
+  - product.attribute.value.read
+  - ir.ui.view.get_views
+  - ir.actions.server.run
+
+forbidden_ops:
+  - mrp.bom.unlink
+  - product.template.unlink
+  - product.template.write
+  - product.attribute.unlink
+  - product.attribute.write
