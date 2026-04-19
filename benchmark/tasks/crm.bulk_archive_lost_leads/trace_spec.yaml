@@ -1,0 +1,28 @@
+# Trace oracle for crm.bulk_archive_lost_leads
+#
+# Medium: multi-select 3 leads in list view, cog Actions > Archive.
+# The archive action surfaces as `crm.lead.action_archive` (or the
+# generic `crm.lead.toggle_active`). Browser client may also use
+# `crm.lead.write` with active=False. Keep required_ops empty and
+# validate end state via check.py.
+
+required_ops: []
+
+optional_ops:
+  - crm.lead.action_archive
+  - crm.lead.toggle_active
+  - crm.lead.write
+  - crm.lead.web_save
+  - crm.lead.read
+  - crm.lead.search_read
+  - crm.lead.web_search_read
+  - ir.actions.server.run
+  - ir.actions.server.read
+  - ir.ui.view.get_views
+  - ir.actions.act_window.read
+  - mail.message.create
+  - mail.tracking.value.create
+  - bus.bus.create
+
+forbidden_ops:
+  - crm.lead.unlink
