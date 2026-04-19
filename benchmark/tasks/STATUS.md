@@ -482,6 +482,12 @@ Last eval: 2026-04-19 | Oracle: 167/167 (100%) | Browser-Use: 58/167 (34.7%) | N
 | 470 | crm.bulk_archive_lost_leads [medium] | Filter Lost leads + bulk archive | Done | PASS | PASS | 1.0 |
 | 471 | hr_holidays.request_time_off_with_attachment [hard] | Request leave and attach justification | Done | PASS | FAIL | 0.0 |
 | 472 | product.configure_stock_route_for_product [medium] | Enable MTO route on product | Done | PASS | PASS | 1.0 |
+| 473 | account.post_customer_invoice_with_tax_groups [medium] | Create customer invoice with tax, post | WIP | — | — | — |
+| 474 | sale.duplicate_confirmed_order_edit_customer [medium] | Duplicate confirmed SO, change customer | WIP | — | — | — |
+| 475 | mrp.unreserve_raw_material_on_mo [medium] | Unreserve components on confirmed MO | WIP | — | — | — |
+| 476 | hr.promote_employee_set_new_job_title_save [easy] | Update employee job title | WIP | — | — | — |
+| 477 | website_forum.upvote_question_mark_as_answer [medium] | Upvote forum question + accept answer | WIP | — | — | — |
+| 478 | account.refund_customer_invoice_cash_basis [hard] | Partial credit note with non-default mode | WIP | — | — | — |
 
 ---
 
