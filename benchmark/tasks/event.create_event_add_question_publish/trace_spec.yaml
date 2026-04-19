@@ -1,0 +1,38 @@
+# Agent uses create-from-scratch via web_save for event.event + o2m question
+# rows. We can't deterministically demand 'event.event.create' because the
+# browser client flattens to web_save. Rely on state diff + check.py.
+required_ops: []
+
+optional_ops:
+  - event.event.create
+  - event.event.write
+  - event.event.web_save
+  - event.event.read
+  - event.event.web_read
+  - event.event.search_read
+  - event.event.web_search_read
+  - event.event.web_read_group
+  - event.event.get_views
+  - event.event.onchange
+  - event.event.website_publish_button
+  - event.question.create
+  - event.question.write
+  - event.question.web_save
+  - event.question.read
+  - event.question.search_read
+  - event.question.web_search_read
+  - event.question.onchange
+  - event.question.answer.create
+  - event.question.answer.write
+  - event.question.answer.web_save
+  - event.question.answer.read
+  - event.tag.read
+  - event.type.read
+  - event.stage.read
+  - ir.ui.view.read
+
+forbidden_ops:
+  - event.event.unlink
+  - event.question.unlink
+  - event.registration.create
+  - event.registration.unlink

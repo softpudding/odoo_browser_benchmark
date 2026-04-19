@@ -114,6 +114,30 @@ if mod and mod.state != "installed":
 - New `event.event` records with no `event_type_id` auto-attach the three
   `is_default=True` questions (Name mandatory / Email mandatory / Phone optional) via
   `_compute_question_ids` fallback — no seed work needed for the portal form to render.
+- `event.event.question_ids` is a **Many2many** (with `_compute_question_ids`
+  inverse, `readonly=False`, `store=True`). The Questions tab renders it with a
+  plain `<list>` (NOT `editable`) so clicking **Add a line** opens a `SelectCreate`
+  m2m selector dialog. Inside, click **New** to surface the `event.question` form
+  (`event_question_view_form`). The form has radio `question_type`, nested notebook
+  **Answers** tab (invisible unless `question_type='simple_choice'`) with an inline-
+  editable one2many on `answer_ids`. **Save & New** chains to the next question;
+  **Save & Close** returns to the event form. BU handles this composite flow
+  cleanly single-shot (~19 steps) when the prompt names the radio labels ("Text
+  Input" / "Selection") and the checkbox labels ("Mandatory" / "Once per Order") —
+  the backend form's label text is unambiguous.
+- `event.question.question_type` values: `simple_choice` (label "Selection"),
+  `text_box` (label "Text Input"), `name`, `email`, `phone`, `company_name`. Tasks
+  that ask for a "textbox" field must use `text_box`, NOT `textbox` — the
+  underscore matters and check.py string-equality will silently miss the typo.
+- `event.question.once_per_order` / `is_mandatory_answer` booleans normalize to
+  `null` (not `false`) on the state diff engine's create path when False. Tasks
+  asserting `once_per_order=False` in `expected_state.json` must use
+  `"norm_value": null` to hit F1=1.0 — same gotcha as other boolean fields across
+  the benchmark. Validate via `check.py` for the True-vs-False distinction.
+- `event.event.website_publish_button()` (from `website.published.mixin`) is the
+  canonical method the Owl systray Published toggle calls. Writing
+  `is_published=True` directly ALSO flips `website_published=True` via the
+  `_inverse_is_published` hook; JSON-RPC oracles often do both for safety.
 
 ### Fleet
 
