@@ -1,0 +1,45 @@
+# Trace oracle for crm.duplicate_lead_convert_to_opportunity
+#
+# Medium workflow: duplicate (cog Actions menu) + convert-to-opportunity wizard.
+
+required_ops: []  # End state validated via check.py
+
+optional_ops:
+  - crm.lead.copy
+  - crm.lead.copy_multi
+  - crm.lead.create
+  - crm.lead.read
+  - crm.lead.write
+  - crm.lead.web_save
+  - crm.lead.search_read
+  - crm.lead.web_search_read
+  - crm.lead.web_read
+  - crm.lead.web_name_search
+  - crm.lead.convert_opportunity
+  - crm.lead2opportunity.partner.create
+  - crm.lead2opportunity.partner.read
+  - crm.lead2opportunity.partner.write
+  - crm.lead2opportunity.partner.action_apply
+  - crm.lead2opportunity.partner.web_save
+  - crm.lead2opportunity.partner.default_get
+  - crm.lead2opportunity.partner.onchange
+  - crm.stage.read
+  - crm.stage.search_read
+  - crm.team.read
+  - crm.team.search_read
+  - crm.tag.read
+  - crm.tag.search_read
+  - res.partner.create
+  - res.partner.name_create
+  - res.partner.read
+  - res.partner.web_read
+  - res.partner.search_read
+  - res.partner.web_search_read
+  - res.partner.web_name_search
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+
+forbidden_ops:
+  - crm.lead.unlink
+  - crm.lead.action_set_lost
+  - crm.lead.action_archive

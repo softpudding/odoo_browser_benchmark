@@ -506,6 +506,29 @@ if mod and mod.state != "installed":
   from the per-record **Enrich** form-header button (same label, same
   underlying method). Multi-select + Actions-menu pattern is solvable
   by browser-use in ~140s once rows are named uniquely.
+- `crm.lead.partner_id` on the **lead** form (type='lead') is gated by
+  `invisible="not is_partner_visible"` and `is_partner_visible` is
+  `bool(type == 'opportunity' or partner_id or is_debug_mode)`. So on a
+  lead that has no partner yet, the Customer m2o widget is NOT rendered.
+  Tasks that need to set the customer on a lead must either (a) convert
+  to opportunity first, or (b) set the customer inside the
+  `crm.lead2opportunity.partner` wizard via `action='exist'`.
+- `crm.lead2opportunity.partner` wizard: `_compute_name` auto-selects
+  `merge` when `_get_lead_duplicates(partner, email)` finds ≥2 hits
+  (include_lost=True). If you Duplicate a lead via the cog Actions menu,
+  the copy inherits `email_from`, so the wizard's auto-pick becomes
+  `merge` (not `convert`) — the agent/oracle must explicitly click the
+  **Convert to opportunity** radio. `_compute_action` sets the
+  `Related Customer` radio to `'exist'` only if `_find_matching_partner()`
+  returns a partner — otherwise it defaults to `'create'`. The
+  `action='create'` branch auto-generates a partner from
+  `contact_name`/`partner_name`, so tasks that require a *specific new
+  partner name* must pick `action='exist'` and quick-create in the
+  partner_id autocomplete (the `Create "<name>"` option calls
+  `res.partner.name_create`).
+- `crm.lead.copy()` (cog Actions → Duplicate) copies `email_from`,
+  `contact_name`, `description`, `tag_ids`, `expected_revenue`, and
+  `type`. The copy's default name is `<original_name> (copy)`.
 
 ---
 
