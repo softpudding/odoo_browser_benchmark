@@ -1,0 +1,30 @@
+# Trace oracle for product.configure_stock_route_for_product
+#
+# Medium (deep_ui_interaction): notebook-tab navigation + m2m_checkboxes.
+# The agent opens Bench MTO Item, switches to the Inventory tab, and ticks
+# the Replenish on Order (MTO) checkbox in the Routes group before saving.
+# Either write or web_save may fire depending on which save affordance the
+# browser client uses, so neither is required. Check.py owns the real
+# postcondition.
+
+required_ops: []
+
+optional_ops:
+  - product.template.read
+  - product.template.web_read
+  - product.template.write
+  - product.template.web_save
+  - product.template.search_read
+  - product.template.web_search_read
+  - product.template.onchange
+  - stock.route.read
+  - stock.route.search_read
+  - stock.route.web_search_read
+  - stock.route.name_search
+  - ir.ui.view.get_views
+
+forbidden_ops:
+  - product.template.unlink
+  - stock.route.unlink
+  - stock.route.write
+  - stock.route.create
