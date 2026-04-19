@@ -2015,6 +2015,52 @@ Source tasks: `hr_attendance.clock_in_out_kiosk_mode`,
 
 ---
 
+## account_followup — Follow-up Reports / Customer Statement is Enterprise-only in Odoo 19
+
+- The payment-reminder workflow (Follow-up Reports list, per-customer
+  follow-up card with **Send Email** / **Send Letter** / **Schedule
+  Activity** header buttons, configurable `account_followup.followup.line`
+  levels with per-level email template + delay days, the partner
+  `followup_status` / `followup_line_id` / `followup_next_action_date`
+  fields, and the `account_followup_manual_reminder` wizard) ships in the
+  **Enterprise** `account_followup` addon. Odoo 19 **Community** has NO
+  equivalent.
+- `grep -rn "account_followup" addons/` on `odoo_benchmark` returns
+  **zero** matches — no model, no view, no controller, no client action,
+  no i18n string. The `account_followup` source is not even shipped as a
+  stub. `ls addons/account_followup/` → "No such file or directory".
+- The only follow-up-adjacent Community artefact is the
+  `send_invoices_followups` upgrade_boolean at
+  `addons/account/views/res_config_settings_views.xml:115`, which
+  references `module_snailmail_account` (physical-mail invoicing) — NOT
+  a reminder workflow. Ticking it installs `snailmail_account`, which
+  adds a "Send by Post" option on invoices but does NOT add any
+  per-partner follow-up card, level logic, or reminder email template.
+- `/odoo/action-account_followup.*` is NOT a registered route in this
+  checkout — there is no `account_followup.followup.report` client
+  action, no `action_account_manual_followup` window action.
+- **Pre-flight for any `account_followup.*` task:** run
+  ```python
+  module = env["ir.module.module"].search(
+      [("name", "=", "account_followup")], limit=1)
+  assert module and module.state == "installed"
+  ```
+  If False, the task is BLOCKED — ship the standard BLOCKED skeleton
+  (seed / oracle / check short-circuit with diagnostics, empty
+  expected_state / state_spec / trace_spec, RESULT.md documenting the
+  absence). Precedent:
+  `account_followup.send_reminder_level_two_customers` (row 404),
+  `stock_barcode.receive_via_barcode_scan_validate` (row 401), and all
+  other Enterprise-only module blockers (rows 350, 351, 352, 387).
+- When scaffolding a fallback task for reminder-like behavior in
+  Community, pivot to the invoice chatter: open `account.move` →
+  chatter → **Send Message** → compose an email referencing the due
+  date. This uses the stock mail chatter path, does NOT escalate a
+  level, and does NOT attach invoice PDFs automatically. File the
+  re-scoped task under `account.*` or `mail.*`, not `account_followup.*`.
+
+---
+
 ## website_crm contact form: frontend submit -> crm.lead pipeline
 
 - `website_crm` has `auto_install: True` and depends on `website + crm`.
