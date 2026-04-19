@@ -494,6 +494,12 @@ Last eval: 2026-04-19 | Oracle: 168/168 (100%) | Browser-Use: 59/168 (35.1%) | N
 | 482 | website_blog.delete_comment_moderate [hard] | Delete a blog post comment via moderation | Done | PASS | PASS | 1.0 |
 | 483 | hr_recruitment.hire_candidate_refuse_another [hard] | Hire one applicant (Contract Signed → Create Employee → set Job Title → Save), refuse another with the 'Not a fit' reason among near-duplicate distractors | Done | PASS | PASS | 1.0 |
 | 484 | account.modify_account_move_line_label [medium] | Reset to draft, edit line label, repost | Done | PASS | FAIL | 0.0 |
+| 485 | website_sale.add_product_review_publish [medium] | Submit a product review on storefront | WIP | — | — | — |
+| 486 | sale.convert_quotation_to_order_verify_invoice_status [easy] | Confirm a draft quotation to SO | WIP | — | — | — |
+| 487 | project.assign_task_to_user_change_deadline [medium] | Assign task to user + change deadline | WIP | — | — | — |
+| 488 | stock.receive_serial_tracked_product_two_serials [hard] | Receive serial-tracked product with 2 serials | WIP | — | — | — |
+| 489 | website_sale.configure_free_shipping_threshold [medium] | Configure delivery carrier free shipping threshold | WIP | — | — | — |
+| 490 | account.import_opening_balance_set_initial_equity [hard] | Post opening balance journal entry | WIP | — | — | — |
 
 ---
 
