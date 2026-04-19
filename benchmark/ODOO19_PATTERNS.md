@@ -2128,3 +2128,34 @@ Source tasks: `hr_attendance.clock_in_out_kiosk_mode`,
   snapshot configuration). If your check expects `type='lead'` you must
   either enable `crm.group_use_lead` in the seed OR accept
   `type='opportunity'` as the expected value.
+
+## hr.leave.type / hr.leave.allocation — Odoo 19 allocation validation lifecycle
+
+From `hr_holidays.request_allocation_approve_self_book_day_off`.
+
+- `hr.leave.type.requires_allocation` is a **Selection**, not Boolean.
+  Valid values: `'yes'` / `'no'`. Seeding with `True`/`False` raises
+  `ValueError: Wrong value for hr.leave.type.requires_allocation`.
+- `hr.leave.type.allocation_validation_type` is a **Selection** with values
+  `'no_validation'` / `'manager'` / `'both'` / `'hr'`. The legacy Odoo ≤16
+  `'officer'` value no longer exists in Odoo 19 — writing it raises
+  `ValueError: Wrong value for hr.leave.type.allocation_validation_type:
+  'officer'`. Use `'hr'` for the HR-officer flow, `'manager'` for the
+  Time-Off-Responsible flow, or `'both'` if both roles must approve.
+- With `allocation_validation_type='hr'` an allocation needs two clicks:
+  **Confirm** (draft → `confirm`) then **Approve** (`confirm` → `validate`).
+  Many UI paths auto-confirm on create, so a single Approve click is
+  usually enough — oracles should defensively call `action_confirm` before
+  `action_approve` (confirm on an already-confirmed record is a no-op).
+- **Ordering constraint:** a `hr.leave.type` with `requires_allocation='yes'`
+  forces the matching `hr.leave` to have a validated allocation covering
+  the requested dates BEFORE `action_approve` will succeed; otherwise
+  approval raises with "The number of remaining time off is not sufficient
+  for this time off type". Tasks that test the allocation → leave flow
+  must seed the allocation-requiring type and leave the agent to create
+  the allocation first; oracles using RPC must call
+  `hr.leave.allocation.action_approve` before `hr.leave.create` + `action_approve`.
+- `hr.employee.parent_id` (reporting tree) and `hr.employee.leave_manager_id`
+  (who approves time off) are **separate fields**. For admin to approve an
+  employee's leaves, seed `leave_manager_id=admin.id`. `parent_id` alone
+  does not grant approval authority.
