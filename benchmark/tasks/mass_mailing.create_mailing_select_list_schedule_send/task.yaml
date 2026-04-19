@@ -1,0 +1,21 @@
+task_id: mass_mailing.create_mailing_select_list_schedule_send
+module: mass_mailing
+difficulty: hard
+instruction: see prompt.md
+start_url: /odoo/email-marketing
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 480
+step_limit: 260
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: hard
+  agent_interaction: "Create a new mailing.mailing from scratch (Subject=Spring Promo, body in the iframe WYSIWYG editor, Mailing List=Bench Newsletter Subs), then click Schedule, pick 2026-05-20 10:00 in the schedule.date datetime-widget wizard, and confirm. End state: state='in_queue', schedule_type='scheduled', schedule_date=2026-05-20 10:00 UTC, mailing_model_name='mailing.list', contact_list_ids includes the seeded list."
+  checks_verify: "Exactly one mailing.mailing exists with subject 'Spring Promo', state='in_queue', schedule_type='scheduled', schedule_date=2026-05-20 10:00 UTC, mailing_model_name='mailing.list', contact_list_ids includes 'Bench Newsletter Subs', and body_html contains 'Save 20%'."
+  failure_pattern: "Browser-use tends to (a) click the primary Send button instead of Schedule, (b) fail to type into the WYSIWYG iframe body editor leaving it empty, (c) leave the schedule wizard's pre-filled schedule_date and produce a wrong date, or (d) skip adding the Mailing List leaving contact_list_ids empty."
+  primary_track: true
+  tier: 3
