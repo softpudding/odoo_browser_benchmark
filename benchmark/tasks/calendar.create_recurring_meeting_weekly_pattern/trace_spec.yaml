@@ -1,0 +1,33 @@
+# Trace oracle for calendar.create_recurring_meeting_weekly_pattern.
+#
+# Agent must create a count-based weekly recurring event. We do not require any
+# specific ORM op (browser-use uses web_save); validation is via check.py.
+
+required_ops: []
+
+optional_ops:
+  - calendar.event.create
+  - calendar.event.write
+  - calendar.event.web_save
+  - calendar.event.read
+  - calendar.event.web_read
+  - calendar.event.search_read
+  - calendar.event.web_search_read
+  - calendar.event.onchange
+  - calendar.recurrence.create
+  - calendar.recurrence.write
+  - calendar.recurrence.read
+  - calendar.recurrence.search_read
+  - res.partner.read
+  - res.partner.search_read
+  - res.users.read
+  - res.users.search_read
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+  - mail.message.create
+  - mail.followers.create
+  - bus.bus.create
+
+forbidden_ops:
+  - calendar.event.unlink
+  - calendar.recurrence.unlink

@@ -896,6 +896,42 @@ email reminders. The `Notification - 1 Hours` record is the canonical
 
 ---
 
+## calendar.event — recurrence panel lives on the Options tab
+
+The recurrence controls (`recurrency` boolean_toggle, `rrule_type_ui` SelectMenu,
+`calendar_week_days` widget, `end_type` SelectMenu, `count`, `until`) are all
+inside the **Options** notebook tab in
+`addons/calendar/views/calendar_views.xml:250-289`, NOT on the main form body.
+
+Oracles that call `set_boolean(page, "recurrency", True)` before switching to the
+Options tab will time out (60s) waiting on
+`.o_field_widget[name='recurrency'] input[type='checkbox']`. Always
+`click_tab(page, "Options")` first.
+
+The week-day widget `.o_recurrent_weekdays` uses locale `weekStart`-indexed
+buttons. For the default US locale (weekStart=Sunday):
+`0=Sun 1=Mon 2=Tue 3=Wed 4=Thu 5=Fri 6=Sat`. The active-state class on each
+`.o_calendar_week_days_rounded` is `text-bg-action`; toggling is a simple
+`.click()`. The widget pre-selects today's weekday, so "Monday-only" oracles
+MUST iterate all 7 indices and explicitly deactivate every non-target day
+(same pattern as `calendar.schedule_recurring_steering_sync/oracle.py`).
+
+`end_type` + `count` end-type is a Selection rendered via the standard
+SelectMenu (options: "End date" / "Number of repetitions" / "Forever"). Agents
+that type `count` into a visible number input without first flipping `end_type`
+to "Number of repetitions" will have the `count` field invisible (gated by
+`invisible="end_type != 'count'"`).
+
+Additional quirk on harnesses where the browser's local tz ≠ admin's Odoo tz
+(e.g. Asia/Singapore host vs admin tz=UTC): the datetime widget interprets
+typed strings in the browser's local tz, not the admin's Odoo tz. Checks that
+compare stored UTC datetimes against a literal string will fail. Use the
+`calendar.configure_meeting_with_location_and_reminder` pattern: `pytz`-convert
+stored UTC to admin-local and compare the local date (± hour tolerance), not
+the absolute UTC string.
+
+---
+
 ## calendar.event.set_discuss_videocall_location is a no-op on the server
 
 In Odoo 19, `calendar.event.set_discuss_videocall_location()` is a no-op that returns True — the actual URL generation happens in JS (intercepted on the frontend). The private `_set_discuss_videocall_location()` does the real work but isn't callable via JSON-RPC.
