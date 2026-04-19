@@ -2203,6 +2203,61 @@ Source tasks: `hr_attendance.clock_in_out_kiosk_mode`,
 
 ---
 
+## documents — Documents app / Workspaces UI is Enterprise-only in Odoo 19
+
+- The entire Documents app (Kanban of folders, left **Workspaces**
+  tree, header **Upload** button with its hidden `<input type='file'>`,
+  drag-and-drop intake, right-hand **inspector** side-panel with
+  Folder / Tags / Owner / Activities / Versions / Share fields,
+  workflow-rules engine, request-document flow, split-PDF flow, and
+  the `documents.document` / `documents.folder` / `documents.facet` /
+  `documents.tag` / `documents.workflow.rule` models) ships in the
+  **Enterprise** `documents` addon. Odoo 19 **Community** has NO
+  equivalent.
+- `ls addons/documents/` on `odoo_benchmark` → "No such file or
+  directory". `ls addons/ | grep -i document` returns only
+  `l10n_latam_invoice_document` (unrelated LATAM fiscal document-type
+  module).
+- `grep -rn "documents.document" addons/` returns only 5 files of
+  **soft references** — all of them gate on
+  `env.get("documents.document")`, which is the canonical
+  optional-Enterprise-integration pattern used by cloud-storage
+  bridges and audit-trail linkers:
+  - `spreadsheet/static/tests/helpers/data.js` (mock JS record factory)
+  - `cloud_storage/models/ir_attachment.py`
+  - `cloud_storage_migration/models/ir_attachment.py`
+  - `account/tests/test_audit_trail.py`
+  - `account/models/ir_attachment.py`
+  None of these register the real model — they all early-return when
+  the Enterprise model is absent.
+- `/odoo/documents` is NOT a registered client action in this
+  checkout — there is no `documents_kanban` view, no
+  `documents_inspector` Owl component, no `documents_list` view.
+- **Pre-flight for any `documents.*` task:** run
+  ```python
+  module = env["ir.module.module"].search(
+      [("name", "=", "documents")], limit=1)
+  assert module and module.state == "installed"
+  ```
+  If False, the task is BLOCKED — ship the standard BLOCKED skeleton
+  (seed / oracle / check short-circuit with diagnostics, empty
+  expected_state / state_spec / trace_spec, RESULT.md documenting the
+  absence). Precedent:
+  `documents.upload_document_tag_assign_to_folder` (row 411),
+  `account_followup.send_reminder_level_two_customers` (row 404),
+  `stock_barcode.receive_via_barcode_scan_validate` (row 401), and all
+  other Enterprise-only module blockers (rows 350, 351, 352, 387).
+- When scaffolding a fallback task for upload-like behavior in
+  Community, pivot to the chatter: open any record (`res.partner`,
+  `account.move`, `project.task`, …) → chatter → **attach files**
+  paperclip → pick a file. This creates an `ir.attachment` linked to
+  the record via `res_model` / `res_id`, but does NOT place the file
+  in a Workspace, does NOT allow tag assignment, and does NOT surface
+  an Owner field. File the re-scoped task under `mail.*` (e.g.
+  `mail.send_email_with_attachment_log_as_note`), NOT `documents.*`.
+
+---
+
 ## website_crm contact form: frontend submit -> crm.lead pipeline
 
 - `website_crm` has `auto_install: True` and depends on `website + crm`.
