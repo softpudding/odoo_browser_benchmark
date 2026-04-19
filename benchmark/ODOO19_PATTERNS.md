@@ -390,6 +390,33 @@ if mod and mod.state != "installed":
 - Apply discount code from the website cart by POSTing to `/shop/pricelist?r=/shop/cart`
   with form fields `promo=<CODE>` and `csrf_token=<form token>`. The form is rendered
   by template `website_sale.coupon_form` (visible by default on `/shop/cart`).
+- **`program_type='coupons'` vs `'promo_code'`**: both accept a code at
+  checkout but store it differently. `'promo_code'` puts the code on
+  the `loyalty.rule` itself (`rule.code='FOO'`, `trigger='with_code'`)
+  and the SAME code redeems unlimited uses. `'coupons'` keeps the rule
+  codeless and stores EACH redeemable code as an individual
+  `loyalty.card` record (one-shot by default, `points=1` consumed per
+  use). For "pre-generated coupon code list" tasks, seed the program
+  with `program_type='coupons'`, `trigger='with_code'`, no `code` on
+  the rule, then create `loyalty.card` rows with explicit `code` + 
+  `points=1`. `sale.order._try_apply_code` will dispatch the
+  customer-typed string to the `loyalty.card` branch (same path as
+  gift cards).
+- **Auto-attached delivery line on /shop/payment**: even when the
+  checkout UI never surfaces a carrier picker, the base snapshot's
+  published shipping method (`Delivery_007 Standard delivery`)
+  attaches a zero-priced `sale.order.line` with `is_delivery=True` to
+  the SO during `/shop/payment`. `check.py` for any completed-checkout
+  task must filter `is_delivery` out of "unexpected extra product
+  lines" assertions (alongside `is_reward_line`), or a PASS run will
+  false-fail on the auto-attached line.
+- **`state_spec` match_key for a post-checkout `sale.order`**: when
+  the pre-task state has zero orders, a `match_key=[partner_id,
+  amount_total]` resolves to `(null, <total>)` in the observed diff
+  because the partner is not populated on create capture. The
+  `expected_state.json` entity_key MUST mirror `[null, <total>]` with
+  `op='create'` — using a name-based key gives F1=0 on an otherwise
+  perfect run.
 
 ### Website / website_forum
 

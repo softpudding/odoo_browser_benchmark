@@ -1,0 +1,36 @@
+models:
+  sale.order:
+    # Match on partner + final amount so the just-checked-out order is
+    # found reliably even if the SO `name` is auto-numbered (S00xxx).
+    match_key:
+      - partner_id
+      - amount_total
+    fields:
+      - amount_total
+    ignore_fields:
+      - state              # Wire Transfer may leave SO in 'sent'; check.py asserts
+      - id
+      - name
+      - create_date
+      - write_date
+      - date_order
+      - message_ids
+      - activity_ids
+      - transaction_ids
+      - payment_term_id
+      - team_id
+      - user_id
+      - access_token
+      - company_id
+      - website_id
+      - pricelist_id
+      - currency_id
+      - fiscal_position_id
+      - invoice_ids
+      - picking_ids
+      - procurement_group_id
+      - order_line
+      - partner_invoice_id
+      - partner_shipping_id
+      - partner_id
+      - client_order_ref
