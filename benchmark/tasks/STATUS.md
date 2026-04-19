@@ -423,6 +423,9 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 411 | documents.upload_document_tag_assign_to_folder [medium] | Upload a document to a folder, tag it, assign owner | Removed | FAIL (module unavailable) | — | — |
 | 412 | stock.create_scrap_order_for_damaged_qty [medium] | Create a scrap order for 3 damaged units from WH/Stock | WIP | — | — | — |
 | 413 | calendar.create_recurring_meeting_weekly_pattern [medium] | Create a recurring meeting with weekly pattern, 4 occurrences | WIP | — | — | — |
+| 414 | crm.duplicate_lead_convert_to_opportunity [medium] | Duplicate a lead, convert the copy to an opportunity | WIP | — | — | — |
+| 415 | mrp.scrap_consumed_component_during_production [hard] | During MO production, scrap 1 of 3 consumed units, validate MO | WIP | — | — | — |
+| 416 | account.reconcile_customer_payment_against_invoice [hard] | Register a customer payment and reconcile against an open invoice | WIP | — | — | — |
 
 ---
 
