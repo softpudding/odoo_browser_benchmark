@@ -1,0 +1,21 @@
+task_id: sale.edit_existing_quotation_add_optional_product
+module: sale
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/sales
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "Open draft quotation BENCH-ADD-LINE for Bench Add Co, stay on the Order Lines tab, click 'Add a product' in the list footer, pick 'Bench Extra Item' from the product dropdown, set qty=4 in the same new row, Tab-commit, Save (do NOT confirm)."
+  checks_verify: "Existing first line (Bench Existing Item qty=2 price=30) is unchanged; a NEW second order line has product=Bench Extra Item with product_uom_qty=4 and price_unit=15 (list_price, no pricelist discount). Quotation stays in state='draft' with exactly 2 sale.order.line rows."
+  failure_pattern: "Agent may (a) modify the existing line (change its product / qty) instead of appending a new one, (b) pick the wrong product from the m2o dropdown, (c) leave the default qty=1 on the new line instead of setting 4, or (d) accidentally click Confirm instead of Save."
+  primary_track: true
+  tier: 2
