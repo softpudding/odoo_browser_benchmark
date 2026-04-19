@@ -500,6 +500,12 @@ Last eval: 2026-04-19 | Oracle: 168/168 (100%) | Browser-Use: 59/168 (35.1%) | N
 | 488 | stock.receive_serial_tracked_product_two_serials [hard] | Receive serial-tracked product with 2 serials | Done | PASS | PASS | 1.0 |
 | 489 | website_sale.configure_free_shipping_threshold [medium] | Configure delivery carrier free shipping threshold | Done | PASS | PASS | 1.0 |
 | 490 | account.import_opening_balance_set_initial_equity [hard] | Post opening balance journal entry | Done | PASS | PASS | 1.0 |
+| 491 | stock.run_manual_replenishment_for_product [hard] | Run replenishment from Replenishment view | WIP | — | — | — |
+| 492 | mail.create_channel_invite_members_post_message [medium] | Create Discuss channel + invite + post | WIP | — | — | — |
+| 493 | project.complete_project_stage_reach_done_percent [medium] | Bulk move tasks to Done stage | WIP | — | — | — |
+| 494 | hr.change_employee_work_schedule [easy] | Assign working-hours resource to employee | WIP | — | — | — |
+| 495 | account.print_invoice_pdf_attach_to_partner [hard] | Print invoice PDF and attach to chatter | WIP | — | — | — |
+| 496 | crm.add_opportunity_product_quotation_send [medium] | Add products on opp + create quote | WIP | — | — | — |
 
 ---
 
