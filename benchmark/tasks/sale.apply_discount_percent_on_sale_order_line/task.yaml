@@ -1,0 +1,21 @@
+task_id: sale.apply_discount_percent_on_sale_order_line
+module: sale
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/sales
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "Open draft quotation BENCH-DISC for Bench Disc Co, click into the Disc.% cell on the first order line (Bench Product A), type 10.0, Tab-commit, Save (do NOT confirm)."
+  checks_verify: "First order line (Bench Product A qty=2) has discount=10.0; second order line (Bench Product B qty=3) still has discount=0; quotation stays in state=draft; amount_total reflects the discount (80 + 60 = 140 with 100 - 10% = 90 on line A, so 90 + 60 = 150... actually: A list_price=50 qty=2 => 100 subtotal, with 10% disc => 90; B list_price=20 qty=3 => 60 subtotal; amount_total=150)."
+  failure_pattern: "Agent may (a) leave the default Disc.% column invisible and skip the cell entirely (writes discount on wrong field), (b) apply the 10% to the wrong line (second line instead of first), or (c) accidentally confirm the quotation instead of just saving."
+  primary_track: true
+  tier: 2

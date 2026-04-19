@@ -1,0 +1,51 @@
+# Trace oracle for sale.apply_discount_percent_on_sale_order_line
+#
+# Medium: inline-edit the Disc.% cell on the first sale.order.line of an
+# existing draft quotation. Save (do NOT confirm).
+
+required_ops: []
+
+optional_ops:
+  - sale.order.read
+  - sale.order.write
+  - sale.order.web_save
+  - sale.order.search_read
+  - sale.order.web_search_read
+  - sale.order.web_read
+  - sale.order.onchange
+  - sale.order.name_search
+  - sale.order.line.read
+  - sale.order.line.write
+  - sale.order.line.create
+  - sale.order.line.web_save
+  - sale.order.line.search_read
+  - sale.order.line.onchange
+  - product.product.read
+  - product.product.search_read
+  - product.product.name_search
+  - product.product.web_name_search
+  - product.template.read
+  - product.template.search_read
+  - product.template.name_search
+  - product.template.web_name_search
+  - product.template.get_single_product_variant
+  - res.partner.read
+  - res.partner.search_read
+  - account.tax.read
+  - account.payment.term.read
+  - account.payment.term.search_read
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+  - ir.model.data.search_read
+  - mail.message.create
+  - mail.followers.create
+  - mail.thread.message_post
+  - bus.bus.create
+
+forbidden_ops:
+  - sale.order.unlink
+  - sale.order.line.unlink
+  - sale.order.action_confirm
+  - sale.order.action_cancel
+  - res.config.settings.web_save
+  - res.config.settings.execute
