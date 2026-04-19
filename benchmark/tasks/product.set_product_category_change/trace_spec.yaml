@@ -1,0 +1,26 @@
+# Trace oracle for product.set_product_category_change
+#
+# Easy task: agent opens Inventory > Products > Bench Cat Item, changes
+# the Product Category m2o to 'Office Supplies' via autocomplete, saves.
+
+required_ops: []
+
+optional_ops:
+  - product.template.read
+  - product.template.write
+  - product.template.web_save
+  - product.template.search_read
+  - product.template.web_search_read
+  - product.template.onchange
+  - product.category.name_search
+  - product.category.read
+  - product.category.search_read
+  - product.category.web_search_read
+  - ir.ui.view.get_views
+  - ir.actions.act_window.read
+
+forbidden_ops:
+  - product.template.unlink
+  - product.product.unlink
+  - product.category.create
+  - product.category.unlink

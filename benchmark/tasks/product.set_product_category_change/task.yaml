@@ -1,0 +1,20 @@
+task_id: product.set_product_category_change
+module: product
+difficulty: easy
+instruction: see prompt.md
+start_url: /odoo/inventory
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 300
+step_limit: 150
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: easy
+  agent_interaction: "Open Inventory > Products, open the seeded product 'Bench Cat Item', change the Product Category m2o from 'All' to 'Office Supplies' via autocomplete, and save."
+  checks_verify: "product.template 'Bench Cat Item' has categ_id pointing at the product.category named 'Office Supplies'."
+  primary_track: true
+  tier: 1
