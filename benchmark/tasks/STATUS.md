@@ -475,7 +475,7 @@ Last eval: 2026-04-19 | Oracle: 167/167 (100%) | Browser-Use: 58/167 (34.7%) | N
 | 463 | product.set_product_category_change [easy] | Change a product's category | Done | PASS | PASS | 1.0 |
 | 464 | calendar.create_meeting_invite_attendees_send [medium] | Create calendar meeting with 2 attendees | WIP | — | — | — |
 | 465 | hr.request_reimbursement_expense_report [hard] | Submit hr.expense + approve + post | WIP | — | — | — |
-| 466 | stock.set_putaway_rule_default_location [medium] | Create a putaway rule for a product | WIP | — | — | — |
+| 466 | stock.set_putaway_rule_default_location [medium] | Create a putaway rule for a product | Done | PASS | PASS | 1.0 |
 
 ---
 
@@ -5439,3 +5439,21 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Capability tested** | Two sequential statusbar actions gated by a native confirmation dialog. The design bet was that BU would (a) dismiss the confirm dialog by clicking the wrong button or (b) stop at `state='cancel'` without noticing the newly-rendered `Set to Quotation` button. |
 | **Notes** | **Calibration MISS — BU passed single-shot in 67.9s**. The prompt explicitly names both buttons ("Cancel" then "Set to Quotation") and BU followed the script verbatim, including clicking Ok on the confirmation modal. To escalate to tier 3 without redesigning from scratch: (a) seed posted draft `account.move` invoices tied to the SO so `action_cancel` triggers the `sale.order.cancel` wizard (has radio buttons for "Cancel and keep invoices" vs "Cancel and cancel invoices"); (b) combine with a "Customer Reference" edit on the now-draft order before the agent is allowed to leave the form — the mid-workflow field edit traps BU. **Quirks captured**: (1) The Cancel button's `confirm=...` attr triggers an Odoo `Dialog`, NOT a browser `window.confirm()`, so oracles must click a `.modal-footer button.btn-primary` — not handle a JS dialog. (2) `sale.order.action_draft` on a cancelled order fires `sale.order.write` on the tracked fields, so the state_spec only needs `state` in its fields list for the diff engine to record the `cancel→draft` transition; the `signature/signed_by/signed_on` resets must be added to `ignore_fields` or the diff engine reports extras. (3) `client_order_ref` is stable across the cancel/restore cycle (no `copy=False` issue since we're not duplicating), so using it as `match_key` gives a deterministic entity_key `["BENCH-CANCEL-RESTORE"]` that the diff engine reproduces exactly. |
 
+---
+
+## stock.set_putaway_rule_default_location
+
+| Field | Value |
+|---|---|
+| **Task ID** | `stock.set_putaway_rule_default_location` |
+| **Row** | 466 |
+| **Difficulty** | medium |
+| **Tier** | 2 |
+| **Status** | Done |
+| **Oracle** | PASS (F1=1.0, 34.6s wall clock, 4/4 atomic edits matched, 0 postcondition failures, 37 API calls, 17 non-forbidden writes, 0 forbidden, StrictClean=True) |
+| **Browser-Use** | PASS (F1=1.0, 91.7s wall clock single-shot, 4/4 atomic edits matched, 0 postcondition failures, 35 API calls, 15 non-forbidden writes, 0 forbidden, StrictClean=True). BU navigated Inventory → Configuration → Putaway Rules, clicked New, filled location_in_id + product_id + location_out_id inline, and saved. |
+| **F1** | 1.0 |
+| **Odoo modules** | Inventory (`stock`). Menu path is Inventory → Configuration → Putaway Rules (menu id `stock.menu_putaway`, groups=`stock.group_stock_multi_locations`). Action xmlid `stock.action_putaway_tree` → list view `stock.stock_putaway_list` (`editable="bottom"`). See `addons/stock/views/product_strategy_views.xml:3-117`. |
+| **Workflow** | Seed grants admin `stock.group_stock_multi_locations` (menu + Location columns visible) AND `stock.group_adv_location` (paired advanced-routing group). Creates storable product `Bench Putaway Item` (`type='consu' + is_storable=True`) and sub-location `WH/Stock/Shelf B` (`stock.location` with `usage='internal'`, `location_id=WH/Stock`, `name='Shelf B'`). No rule is pre-created. Agent: Inventory → Configuration → Putaway Rules (or `/odoo/action-stock.action_putaway_tree`) → New → inline row appears selected → fill `location_in_id=WH/Stock`, `product_id=Bench Putaway Item`, `location_out_id=WH/Stock/Shelf B` → save list. End state: one `stock.putaway.rule` with matching product_id + location_in_id + location_out_id, `category_id=False`, `sublocation='no'` (default). |
+| **Capability tested** | Configuration-submenu navigation + three-m2o inline row creation without leaving a phantom placeholder row. Product vs Product Category column disambiguation (mutually-readonly — filling one greys out the other, which turns out to be BU-friendly). |
+| **Notes** | **Calibration MISS — BU passed single-shot** at F1=1.0 in 91.7s, consistent with the prior finding on `stock.create_putaway_rule_for_specific_category` (documented in ODOO19_PATTERNS.md / its COOKBOOK_NOTES). With only three m2o fields to fill in a plainly-labelled editable-bottom list, BU has no trouble. This row was spec'd as medium (tier 2) — matches calibration: medium is the right label and the task primarily serves as a configuration-menu + multi-m2o reference point rather than a hard-tier trap. **Reused patterns**: the (entity_key, expected_state, state_spec) trio is cloned from `stock.create_putaway_rule_for_specific_category` with `product_id` and `category_id` roles swapped — a product-level rule uses entity_key `["Bench Putaway Item", null, "WH/Stock"]` (match_key `[product_id, category_id, location_in_id]` → `[name, null, complete_name]`). `check.py` asserts `category_id` is empty (not swapped) and guards against stray blank placeholder rows. **To push to hard tier** would require (a) adding a Storage Category dropdown that becomes required when `sublocation='closest_location'`, (b) multi-row creation (two rules in one save), or (c) forcing the non-default `sublocation='closest_location'` Selection field — same escalation ladder already noted in the category-rule COOKBOOK notes. **Commit**: `[ADD] benchmark: stock.set_putaway_rule_default_location (medium)`. |

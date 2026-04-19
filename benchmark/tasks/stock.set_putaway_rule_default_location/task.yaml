@@ -1,0 +1,21 @@
+task_id: stock.set_putaway_rule_default_location
+module: stock
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/inventory
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  tier: 2
+  agent_interaction: "Navigate Inventory > Configuration > Putaway Rules; click New to open an editable inline row; fill three many2one fields: product_id=Bench Putaway Item, location_in_id=WH/Stock (When product arrives in), location_out_id=WH/Stock/Shelf B (Store to); save the list."
+  checks_verify: "Exactly one stock.putaway.rule with product_id='Bench Putaway Item', location_in_id='WH/Stock', location_out_id='WH/Stock/Shelf B'; category_id empty; no stray empty placeholder rule."
+  failure_pattern: "Agent misses the Configuration menu (tries via product form smart button), fills the Product Category column instead of Product, swaps source/destination locations, or leaves a blank placeholder row behind after saving."
+  primary_track: true
