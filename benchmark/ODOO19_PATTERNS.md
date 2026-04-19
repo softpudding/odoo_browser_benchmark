@@ -3248,3 +3248,60 @@ page.locator("#developer_tool a:has-text('Activate the developer mode')") \
   `ir.attachment(res_model='res.partner', res_id in ids)` BEFORE
   `res.partner.unlink()`, else FK violations on `mail_message.res_id`
   fire. Fallback to `active=False` if unlink still fails.
+---
+
+## sale.order — Duplicate via cog, matching source vs copy in expected_state
+
+`sale.order.name` and `sale.order.client_order_ref` are BOTH declared with
+`copy=False` (`addons/sale/models/sale_order.py:54-58, :84`). A
+`sale.order.copy()` therefore leaves both empty on the duplicate:
+`name` falls back to `_('New')` → fresh sequence-assigned value, and
+`client_order_ref` lands as `False` → normalizes to `null`.
+
+Useful pattern when writing a "Duplicate via cog/Actions → edit copy →
+confirm" task (e.g. `sale.duplicate_quotation_edit_delivery_date_confirm`):
+
+- Seed the source SO with `client_order_ref=<SEED_TAG>` AND
+  `name=<SEED_TAG>` so the agent can find it by either column.
+- Use `match_key: [client_order_ref]` in `state_spec.yaml`.
+- Source entity_key = `[SEED_TAG]`; duplicate entity_key = `[null]`.
+- `expected_state.json` anchors the three "create" edits on `[null]`:
+  `client_order_ref=null`, `partner_id=<display_name>`, `state=sale|draft`.
+
+Side effect: if you list `client_order_ref` in `fields:` of state_spec,
+you MUST include the `null` edit in expected_state — otherwise the diff
+engine reports an "unexpected extra edit" because the copy introduces a
+new `null` value that didn't exist before.
+
+Contrast: `sale.duplicate_quotation_change_customer` side-steps the null
+entity_key by having the agent TYPE a new `client_order_ref` on the copy,
+so both match_keys are real strings. Pick the right approach based on
+whether your task requires the agent to re-type the reference.
+
+---
+
+## sale.order — /odoo/sales list-view flakiness in oracles
+
+The `/odoo/sales` action (`sale.action_quotations_with_onboarding`) ships
+`context={'search_default_my_quotation': 1}` with `view_mode='list,kanban,
+form,...'`. In practice, depending on asset cache state and a previous
+user's saved view, the first render can be kanban, not list, and
+`click_list_row()` can spend its entire 60s trying to find a list
+`.o_data_row` that never materializes (kanban cards are `.o_kanban_record`).
+
+Two solutions:
+
+1. `clear_search_filters(page)` → `ensure_list_view(page)` → wait for
+   `.o_list_view .o_data_row, .o_kanban_view .o_kanban_record` → then
+   `search_for(page, tag)`. Robust but adds ~3-5s per oracle.
+2. JSON-RPC `search_read` to resolve the SO id, then
+   `navigate(page, f"/odoo/sales/{so_id}")` to jump straight to the form.
+   Saves time, keeps the UI flow intact from that point onward
+   (Duplicate + Save + Confirm still all via UI). Oracles are allowed to
+   short-circuit record *lookup* this way — only the behaviour under
+   test must go through the browser.
+
+Option 2 is what `sale.duplicate_quotation_edit_delivery_date_confirm`
+uses. Pattern is reusable for any `sale.order` / `purchase.order` /
+`account.move` task that only needs the agent to land on a specific
+pre-seeded record form.
