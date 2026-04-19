@@ -1,0 +1,39 @@
+# Trace oracle for purchase.add_product_to_rfq_with_taxes
+#
+# Medium: add a new product line (Bench Taxable Item, qty=3) to seeded
+# draft RFQ BENCH-ADD-TAX and set the new line's Taxes column to
+# 'Bench Tax 5%' via the many2many_tax_tags widget. PO stays in draft.
+
+required_ops: []
+
+optional_ops:
+  - purchase.order.read
+  - purchase.order.write
+  - purchase.order.web_save
+  - purchase.order.search_read
+  - purchase.order.web_search_read
+  - purchase.order.onchange
+  - purchase.order.line.read
+  - purchase.order.line.write
+  - purchase.order.line.web_save
+  - purchase.order.line.create
+  - purchase.order.line.onchange
+  - product.product.read
+  - product.product.search_read
+  - product.product.name_search
+  - product.template.read
+  - product.template.search_read
+  - account.tax.read
+  - account.tax.search_read
+  - account.tax.name_search
+  - res.partner.read
+  - res.partner.search_read
+  - ir.ui.view.get_views
+  - mail.message.create
+  - mail.thread.message_post
+
+forbidden_ops:
+  - purchase.order.unlink
+  - purchase.order.line.unlink
+  - purchase.order.button_confirm
+  - purchase.order.button_cancel

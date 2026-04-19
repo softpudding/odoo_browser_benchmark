@@ -1,0 +1,21 @@
+task_id: purchase.add_product_to_rfq_with_taxes
+module: purchase
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/purchase
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "Open draft RFQ BENCH-ADD-TAX for vendor Bench Tax Vendor. Add a new product line (Bench Taxable Item, qty=3) and set the Taxes column on that new line to 'Bench Tax 5%' (a many2many tag). Save the form; do NOT confirm. The pre-existing Bench Other Item line (qty=2, no taxes) must remain unchanged."
+  checks_verify: "Draft purchase.order BENCH-ADD-TAX for Bench Tax Vendor, state='draft', exactly 2 lines: original Bench Other Item line (qty=2) preserved; new Bench Taxable Item line with product_qty=3 and tax_ids containing Bench Tax 5%."
+  failure_pattern: "Agent edits the existing line's Taxes column instead of adding a new line, OR adds the tax on the wrong row, OR forgets to set the tax entirely, OR confirms the PO."
+  primary_track: true
+  tier: 2
