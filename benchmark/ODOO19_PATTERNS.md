@@ -138,6 +138,18 @@ if mod and mod.state != "installed":
   canonical method the Owl systray Published toggle calls. Writing
   `is_published=True` directly ALSO flips `website_published=True` via the
   `_inverse_is_published` hook; JSON-RPC oracles often do both for safety.
+- `event.sponsor` + the **Sponsors** smart button on `event.event` live in
+  `website_event_exhibitor`, NOT `website_event`. Neither module is in the base
+  snapshot; seed must `button_immediate_install('website_event_exhibitor')` which
+  transitively installs `website_event`. Default `event.sponsor.type` records
+  `Bronze` / `Silver` / `Gold` ship with the exhibitor module's data files, so
+  seeds can rely on them existing post-install (no need to create levels). The
+  Sponsors smart button opens a kanban/list of `event.sponsor` with a
+  `search_default_event_id` filter — clicking **New** opens the FULL sponsor form
+  (there is no inline quick-create). Required fields on the sponsor form are
+  `partner_id` and `sponsor_type_id` (both Many2one). The per-sponsor publish
+  widget is `invisible="exhibitor_type == 'sponsor'"` (the default), so changing
+  `exhibitor_type` to `'exhibitor'` first is required to surface it.
 
 ### Fleet
 

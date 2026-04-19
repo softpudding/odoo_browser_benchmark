@@ -1,0 +1,20 @@
+task_id: website_event.add_sponsor_to_event_publish
+module: website_event
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/events
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "Open a seeded event, use its Sponsors smart button to create an event.sponsor linked to a seeded partner at Silver level, save, then flip the event's Published pill via the website_redirect_button -> website systray toggle."
+  checks_verify: "Exactly one event.sponsor row exists on the seeded event with partner=Bench Sponsor Inc and sponsor_type_id=Silver, and event.is_published becomes True (without mutating other event fields)."
+  primary_track: true
+  tier: 2
