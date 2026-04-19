@@ -1,0 +1,21 @@
+task_id: stock.adjust_inventory_count_apply_moves
+module: stock
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/inventory
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "In Inventory > Operations > Physical Inventory, find Bench Prod A (on-hand=20) and set Counted Quantity to 18; find Bench Prod B (on-hand=15) and set Counted Quantity to 16; click Apply (per row or Apply All) to post the inventory adjustment, which creates the stock.move entries."
+  checks_verify: "stock.quant.quantity=18 for Bench Prod A and 16 for Bench Prod B at WH/Stock; at least 2 stock.move records with is_inventory=True (one for -2 on Bench Prod A, one for +1 on Bench Prod B)."
+  failure_pattern: "Agent fails to commit inline edit in Counted Quantity cell, edits wrong cell (On Hand vs Counted), or applies without clicking through the follow-up confirmation wizard, leaving stock.quant.quantity unchanged."
+  primary_track: true
+  tier: 2

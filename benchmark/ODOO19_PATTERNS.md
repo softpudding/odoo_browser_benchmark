@@ -2159,3 +2159,90 @@ From `hr_holidays.request_allocation_approve_self_book_day_off`.
   (who approves time off) are **separate fields**. For admin to approve an
   employee's leaves, seed `leave_manager_id=admin.id`. `parent_id` alone
   does not grant approval authority.
+
+---
+
+## stock.quant Physical Inventory — Apply wizard & mirror quants
+
+### Applying an inventory count creates mirror quants at the virtual `Inventory adjustment` location
+
+Calling `stock.quant.action_apply_inventory` (or the header `Apply All` button
+on the Physical Inventory list) does three things:
+
+1. Writes `stock.quant.quantity` on the source quant to equal the new
+   `inventory_quantity` (Counted Qty) and resets `inventory_quantity_set=False`.
+2. Creates a done `stock.move` with `is_inventory=True` whose source/destination
+   is `WH/Stock` and the virtual `Virtual Locations/Inventory adjustment`
+   location (`stock.location_inventory`).
+3. Creates a mirror `stock.quant` row at the virtual `Inventory adjustment`
+   location carrying the move delta.
+
+This means any state-diff oracle tracking `stock.quant` with
+`match_key: [product_id, location_id]` will see **extra create edits** for
+every adjusted product at `(product, "Inventory adjustment")` — include them
+in `expected_state.json` or you will fail Precision.
+
+Sign convention: a downward adjustment (20 → 18) produces a mirror quant with
+`quantity = +2` at `Inventory adjustment` (units flowed OUT of WH/Stock into
+the virtual bucket). An upward adjustment (15 → 16) produces a mirror quant
+with `quantity = -1` at `Inventory adjustment` (units flowed FROM the virtual
+bucket into WH/Stock).
+
+```json
+{"model": "stock.quant",
+ "entity_key": ["Bench Prod A", "Inventory adjustment"],
+ "field": "quantity", "op": "create", "norm_value": 2.0}
+```
+
+### Counted Quantity column is `inventory_quantity`, NOT `quantity`
+
+On the Physical Inventory list (`action_view_quants` with
+`inventory_mode=True`), the editable cell labeled **Counted Quantity** binds
+to `stock.quant.inventory_quantity`, not to `quantity`. Selectors:
+
+```
+.o_data_row [name="inventory_quantity"]          /* the td / div */
+.o_data_row [name="inventory_quantity"] input    /* edit input */
+```
+
+Oracles that try to edit the `On Hand Quantity` column (`name="quantity"`)
+instead will not trigger an inventory adjustment — `quantity` is a stored
+computed that is only writable via `_update_available_quantity` or the Apply
+flow.
+
+### Apply flow: Apply All → confirmation dialog → primary Apply/Update Quantities
+
+Clicking `button[name="action_apply_all"]` in the list header opens a small
+modal `stock.inventory.adjustment.name` wizard asking for an adjustment
+reference. The primary footer button is labeled **Apply** (or **Update
+Quantities** in some localizations) — `button[name="action_apply"]` or
+`button.btn-primary` inside the `.modal:visible`. If the agent clicks `Save`
+without clicking through this dialog, `inventory_quantity_set=True` but
+`quantity` is unchanged (the adjustment is staged but not posted).
+
+Selector bundle that works across label variants:
+
+```
+.modal:visible button[name="action_apply"]:visible,
+.o_dialog:visible button[name="action_apply"]:visible,
+.modal:visible button:has-text("Update Quantities"):visible,
+.modal:visible button:has-text("Apply"):visible
+```
+
+### Postcondition gate: assert `stock.move.is_inventory=True`
+
+Without a `stock.move(is_inventory=True, state=done)` postcondition,
+a BU run that edits `stock.quant.quantity` directly via write / web_save
+(skipping the Apply flow) can score State-Diff F1=1.0 despite bypassing
+the user-visible Apply dialog. Always check:
+
+```python
+env["stock.move"].search([
+    ("product_id", "=", product.id),
+    ("is_inventory", "=", True),
+    ("state", "=", "done"),
+])
+```
+
+and sum signed deltas via `location_dest_id == WH/Stock ? +qty : -qty` to
+confirm the Apply path was exercised end-to-end.
