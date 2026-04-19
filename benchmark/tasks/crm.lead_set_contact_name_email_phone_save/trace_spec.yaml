@@ -1,0 +1,27 @@
+# Easy char-field edit task. Browser usually issues a web_save for the form
+# write — `write` is possible but not required (and some agents hit a
+# no-op save). We only forbid destructive actions; everything else is
+# tolerated as optional.
+
+required_ops: []
+
+optional_ops:
+  - crm.lead.read
+  - crm.lead.web_read
+  - crm.lead.search_read
+  - crm.lead.web_search_read
+  - crm.lead.write
+  - crm.lead.web_save
+  - crm.team.read
+  - crm.team.search_read
+  - res.users.read
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+  - mail.message.create
+  - mail.thread.message_post
+
+forbidden_ops:
+  - crm.lead.unlink
+  - crm.lead.action_archive
+  - crm.lead.toggle_active
+  - crm.lead.convert_opportunity

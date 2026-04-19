@@ -1,0 +1,21 @@
+task_id: crm.lead_set_contact_name_email_phone_save
+module: crm
+difficulty: easy
+instruction: see prompt.md
+start_url: /odoo/crm
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 300
+step_limit: 150
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: easy
+  agent_interaction: "Open the seeded lead 'Bench Lead Basic' from the CRM Leads list and fill three empty char fields (Contact Name, Email, Phone), then save."
+  checks_verify: "Lead type remains 'lead'; contact_name='Alice Example'; email_from='alice@example.com'; phone contains '555-0200'."
+  failure_pattern: "Agent forgets one of the three char fields or mistakes the Opportunities pipeline for the Leads list."
+  primary_track: true
+  tier: 1
