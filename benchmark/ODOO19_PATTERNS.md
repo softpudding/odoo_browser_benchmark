@@ -894,6 +894,9 @@ For mass_mailing oracles: prefer JSON-RPC `copy() + write()` over UI navigation 
 - To enable Discount button: `pos.config.module_pos_discount=True`, `iface_discount=True`, `discount_pc=<float>`, `discount_product_id` (data record `pos_discount.product_product_consumable`).
 - UI: Discount button lives inside the **Actions popup** (ellipsis `more-btn`), not the top bar. In Odoo 19 `control_buttons.xml` moves secondary actions (Pricelist, Refund, Fiscal position, Discount, etc.) into ControlButtonsPopup.
 - Oracle pattern: prefer JSON-RPC `call_kw` over UI-driven POS oracle — `o_technical_modal` sometimes stays in DOM and intercepts pointer events.
+- **pos_discount is PERCENT-only, never fixed currency.** `pos_discount.ControlButtons.clickDiscount` opens `NumberPopup` titled "Discount Percentage", clamped 0–100. To simulate a "fixed EUR" discount, seed `discount_pc` to the percentage that rounds to the target amount against the exact subtotal (e.g. 20+15=35, target -5.00 → `discount_pc=14.29` → 14.29%×35=5.0015 ≈ 5.00). The popup is **pre-filled** with `discount_pc`, so the agent just accepts the default. Confirmed easy-to-solve pattern for browser-use: `point_of_sale.apply_fixed_discount_before_payment` (row 420) passes F1=1.0 in 111s — even a non-default decimal like 14.29 is not a hard anchor. Escalation: split payment (Cash+Bank) with discount, non-default pct distinct from `discount_pc`, mid-order customer change forcing price recompute.
+- Check tolerances for pos_discount percent→EUR rounding: `amount_total ± 0.2`, discount line `price_subtotal_incl ± 0.5` absorbs the drift across oracle and UI paths.
+- Seed quirk: tax-free POS products need `taxes_id=[(5,0,0)]` on **both** `product.product` and `product.product_tmpl_id` — clearing only on product.product leaves the template with company defaults that re-apply on POS load.
 
 ---
 
