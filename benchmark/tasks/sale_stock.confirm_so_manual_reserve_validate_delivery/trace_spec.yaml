@@ -1,0 +1,44 @@
+# Trace oracle for sale_stock.confirm_so_manual_reserve_validate_delivery
+#
+# Medium: confirm draft SO, navigate to delivery, Check Availability
+# (manual reservation), then Validate the delivery. All 5 units should
+# be delivered in a single picking (no backorder).
+
+required_ops:
+  - sale.order.action_confirm
+
+optional_ops:
+  - sale.order.read
+  - sale.order.write
+  - sale.order.web_save
+  - sale.order.search_read
+  - sale.order.web_search_read
+  - sale.order.line.read
+  - sale.order.line.write
+  - sale.order.line.web_save
+  - sale.order.line.create
+  - stock.picking.read
+  - stock.picking.write
+  - stock.picking.web_save
+  - stock.picking.search_read
+  - stock.picking.web_search_read
+  - stock.picking.action_assign
+  - stock.picking.action_confirm
+  - stock.picking.button_validate
+  - stock.move.read
+  - stock.move.write
+  - stock.move.web_save
+  - stock.move.line.read
+  - stock.move.line.write
+  - stock.move.line.web_save
+  - stock.move.line.create
+  - stock.backorder.confirmation.process
+  - stock.backorder.confirmation.process_cancel_backorder
+  - ir.ui.view.get_views
+  - mail.message.create
+
+forbidden_ops:
+  - sale.order.unlink
+  - sale.order._action_cancel
+  - stock.picking.unlink
+  - stock.picking.action_cancel

@@ -1,0 +1,34 @@
+[
+  {
+    "model": "sale.order",
+    "entity_key": ["Bench SO Customer", 100.0],
+    "field": "state",
+    "op": "set",
+    "norm_value": "sale",
+    "note": "SO must be confirmed (state=sale)"
+  },
+  {
+    "model": "stock.picking",
+    "entity_key": ["S00001", "outgoing"],
+    "field": "origin",
+    "op": "create",
+    "norm_value": "S00001",
+    "note": "Outgoing delivery picking was created for the confirmed SO"
+  },
+  {
+    "model": "stock.picking",
+    "entity_key": ["S00001", "outgoing"],
+    "field": "state",
+    "op": "create",
+    "norm_value": "done",
+    "note": "Outgoing delivery picking must be validated (state=done)"
+  },
+  {
+    "model": "stock.picking",
+    "entity_key": ["S00001", "outgoing"],
+    "field": "picking_type_code",
+    "op": "create",
+    "norm_value": "outgoing",
+    "note": "Picking type is outgoing (delivery)"
+  }
+]

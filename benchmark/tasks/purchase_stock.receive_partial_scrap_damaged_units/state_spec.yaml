@@ -1,0 +1,31 @@
+models:
+  stock.picking:
+    match_key:
+      - origin
+      - picking_type_code
+    fields:
+      - origin
+      - picking_type_code
+      - state
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
+      - scheduled_date
+      - date_done
+
+  stock.scrap:
+    match_key:
+      - product_id
+      - scrap_qty
+    fields:
+      - product_id
+      - scrap_qty
+      - state
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
+      - name
+      - date_done
+      - picking_id
