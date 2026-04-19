@@ -363,13 +363,13 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 351 | helpdesk.team_sla_assign_escalate_close [hard] | Create a helpdesk team with SLA policy, process a ticket through assignment and escalation, then close it | WIP | — | — | — |
 | 352 | marketing_automation.tag_trigger_drip_campaign [hard] | Build a tag-triggered marketing automation flow with delayed actions and a stop condition | WIP | — | — | — |
 | 353 | event_product.sell_event_product_fill_attendee_details [medium] | Sell an event-linked product and complete attendee details for the generated registration | Done | PASS | PASS | 1.0 |
-| 354 | event_sale.multi_ticket_checkout_two_attendees [hard] | Configure two paid ticket types and complete one website checkout with separate attendee details | WIP | — | — | — |
+| 354 | event_sale.multi_ticket_checkout_two_attendees [hard] | Configure two paid ticket types and complete one website checkout with separate attendee details | Done | PASS | FAIL/PASS | 0.5 |
 | 355 | sale_loyalty.buy_x_get_y_reward_in_cart [hard] | Configure a Buy X Get Y promotion and verify the free-product reward appears in the cart | Done | PASS | PASS | 1.0 |
-| 356 | sale_purchase.mto_so_generate_po_change_vendor_confirm [hard] | Confirm an MTO sale order, inspect the generated PO, switch vendor, and continue the chain | WIP | — | — | — |
+| 356 | sale_purchase.mto_so_generate_po_change_vendor_confirm [hard] | Confirm an MTO sale order, inspect the generated PO, switch vendor, and continue the chain | Done | PASS | PASS | 1.0 |
 | 357 | sale_stock.confirm_so_manual_reserve_validate_delivery [medium] | Confirm a sale order, manually reserve stock on its delivery, and validate the transfer | Done | PASS | PASS | 1.0 |
 | 358 | website_blog.create_post_with_cta_seo_schedule [medium] | Create a blog post with a CTA, SEO metadata, and a scheduled publication date | Done | PASS | FAIL | 0.0 |
-| 359 | im_livechat.configure_channel_then_handle_widget_chat [hard] | Configure a live chat channel, open the website widget, accept the chat, and reply with a canned response | WIP | — | — | — |
-| 360 | website_hr_recruitment.apply_public_then_schedule_interview [hard] | Submit a public job application, then schedule that applicant’s interview from the backend | WIP | — | — | — |
+| 359 | im_livechat.configure_channel_then_handle_widget_chat [hard] | Configure a live chat channel, open the website widget, accept the chat, and reply with a canned response | Done | PASS | FAIL | 0.0 |
+| 360 | website_hr_recruitment.apply_public_then_schedule_interview [hard] | Submit a public job application, then schedule that applicant’s interview from the backend | Done | PASS | PASS | 1.0 |
 | 361 | purchase_stock.receive_partial_scrap_damaged_units [hard] | Receive part of a PO, scrap damaged units from the receipt, and finish the remainder correctly | Done | PASS | FAIL/PASS | 0.5 |
 | 362 | maintenance.create_request_from_equipment_schedule_followup [medium] | Create a maintenance request from an equipment record and schedule a follow-up activity | Done | PASS | FAIL | 0.0 |
 | 363 | point_of_sale.sell_pos_order_invoice_customer [hard] | Ring up a POS sale, attach a customer, toggle Invoice this Order, pay cash, and verify a posted account.move invoice was generated | Done | PASS | FAIL | 0.0 |

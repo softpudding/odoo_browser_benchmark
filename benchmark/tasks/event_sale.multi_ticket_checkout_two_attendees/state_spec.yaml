@@ -1,0 +1,31 @@
+models:
+  sale.order:
+    match_key:
+      - partner_id
+      - amount_total
+    fields:
+      - partner_id
+      - state
+      - amount_total
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
+      - name
+      - date_order
+  event.registration:
+    match_key:
+      - event_id
+      - partner_id
+      - name
+    fields:
+      - event_id
+      - partner_id
+      - name
+      - email
+      - state
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
+      - barcode

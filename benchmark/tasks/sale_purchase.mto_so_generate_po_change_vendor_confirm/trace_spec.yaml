@@ -1,0 +1,44 @@
+# Trace oracle for sale_purchase.mto_so_generate_po_change_vendor_confirm
+#
+# HARD: confirm an MTO sale order, switch the vendor on the auto-generated
+# RFQ, then confirm the PO.
+
+required_ops:
+  - sale.order.action_confirm
+  - purchase.order.button_confirm
+
+optional_ops:
+  - sale.order.read
+  - sale.order.write
+  - sale.order.web_save
+  - sale.order.search_read
+  - sale.order.web_search_read
+  - sale.order.line.read
+  - sale.order.line.write
+  - sale.order.line.web_save
+  - purchase.order.read
+  - purchase.order.write
+  - purchase.order.create
+  - purchase.order.web_save
+  - purchase.order.search_read
+  - purchase.order.web_search_read
+  - purchase.order.line.read
+  - purchase.order.line.write
+  - purchase.order.line.create
+  - purchase.order.line.web_save
+  - res.partner.read
+  - res.partner.search_read
+  - product.product.read
+  - ir.ui.view.get_views
+  - mail.message.create
+  - stock.route.read
+  - stock.rule.read
+  - stock.move.read
+  - stock.move.write
+  - stock.move.create
+
+forbidden_ops:
+  - sale.order.unlink
+  - sale.order._action_cancel
+  - purchase.order.unlink
+  - purchase.order.button_cancel
