@@ -3404,6 +3404,58 @@ skeleton committed with guard errors, same pattern as the appointment /
 helpdesk / marketing_automation removals (rows 350/351/352).
 ---
 
+## account.bank.statement — no reconciliation widget in Community
+
+The Odoo 19 **bank reconciliation widget** (`bank.rec.widget` model +
+the two-panel UI with suggested matches on the right and a `Validate`
+button) is shipped by the **Enterprise** `account_accountant` addon.
+That addon is not vendored in the Odoo Community checkout — grepping
+`addons/` for `account_accountant` returns nothing,
+`grep -r "bank.rec.widget\|action_open_bank_reconcile_widget"
+addons/account` returns no hits, and `ir.module.module` does not know
+the module exists.
+
+Community `account` only ships `account.bank.statement` +
+`account.bank.statement.line` records with plain list/form views and
+no `Validate` button. Matching a statement line to an invoice in
+Community has to go through the low-level reconcile engine:
+
+```python
+# Draft the statement line move, repoint its counterpart to the
+# invoice's receivable account, re-post, reconcile.
+stl.move_id.button_draft()
+counterpart = stl.move_id.line_ids.filtered(lambda l: l.credit > 0)
+counterpart.write({
+    "account_id": invoice_receivable_line.account_id.id,
+    "partner_id": invoice.partner_id.id,
+})
+stl.move_id.action_post()
+(invoice_receivable_line + counterpart).reconcile()
+```
+
+This works and moves the invoice to `payment_state='paid'` with
+`stl.is_reconciled=True` (that is exactly what row 211's
+`account.reconcile_bank_statement_line_manual` oracle does via
+JSON-RPC), but it is NOT the capability an Enterprise "widget +
+Validate" task is meant to probe — BU has no widget to find.
+
+Any benchmark task phrased as "Accounting → Bank → open statement →
+select line → pick matching invoice → **Validate**" cannot be
+implemented end-to-end against this checkout until `account_accountant`
+is vendored. Task authors should either:
+
+1. Mark BLOCKED with the standard skeleton (precedent: row 455
+   `account.reconcile_bank_statement_line_to_invoice` — same pattern
+   as rows 350/351/352/387/429), OR
+2. Re-scope to a Community-reachable capability (e.g., register-payment
+   wizard — rows 416/435) or to the low-level reconcile flow that
+   row 211 already occupies.
+
+Precedent (Removed): row 455
+(`account.reconcile_bank_statement_line_to_invoice`) — BLOCKED
+skeleton committed with guard errors identical to row 429's pattern.
+---
+
 ## account.payment.register — partial payment + multi-field override traps
 
 Cookbook from `account.register_partial_payment_reconcile_invoice`
