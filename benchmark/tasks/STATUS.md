@@ -488,6 +488,12 @@ Last eval: 2026-04-19 | Oracle: 168/168 (100%) | Browser-Use: 59/168 (35.1%) | N
 | 476 | hr.promote_employee_set_new_job_title_save [easy] | Update employee job title | Done | PASS | PASS | 1.0 |
 | 477 | website_forum.upvote_question_mark_as_answer [medium] | Upvote forum question + accept answer | Done | PASS | PASS | 1.0 |
 | 478 | account.refund_customer_invoice_cash_basis [hard] | Partial credit note via Reverse wizard + price_unit override on single-line invoice | Done | PASS | PASS | 1.0 |
+| 479 | im_livechat.send_message_to_operator [medium] | Open live chat widget and send a message | WIP | — | — | — |
+| 480 | crm.log_opportunity_note_internal [easy] | Log internal note on opportunity chatter | WIP | — | — | — |
+| 481 | stock.cancel_picking_abandoned [medium] | Cancel assigned picking with dialog | WIP | — | — | — |
+| 482 | website_blog.delete_comment_moderate [hard] | Delete a blog post comment via moderation | WIP | — | — | — |
+| 483 | hr_recruitment.hire_candidate_refuse_another [hard] | Hire one applicant, refuse another | WIP | — | — | — |
+| 484 | account.modify_account_move_line_label [medium] | Reset to draft, edit line label, repost | WIP | — | — | — |
 
 ---
 
