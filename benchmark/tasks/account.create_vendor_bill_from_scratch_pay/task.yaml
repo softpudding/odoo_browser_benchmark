@@ -1,0 +1,21 @@
+task_id: account.create_vendor_bill_from_scratch_pay
+module: account
+difficulty: hard
+instruction: see prompt.md
+start_url: /odoo/accounting
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 480
+step_limit: 260
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: hard
+  agent_interaction: "Navigate Accounting > Vendors > Bills > New. Fill Vendor=Bench Bill Vendor, Bill Date=05/10/2026, Reference=BENCH-VBILL-001. Enable the Product column via optional-columns gear, add a single line Bench Bill Item qty=2 price=75. Click Confirm (statusbar) to post. Click Pay (statusbar) to open the account.payment.register wizard. Accept all defaults and click the primary Create Payment button."
+  checks_verify: "account.move with move_type='in_invoice', ref='BENCH-VBILL-001', state='posted', payment_state='paid', single line qty=2 price=75 total=150; exactly one linked account.payment with amount=150, payment_type='outbound'."
+  failure_pattern: "Three sequential gates in one task: (1) create bill from scratch with EXACT vendor/date/ref/single line — phantom empty lines + Product-column hidden-by-default trap; (2) Confirm to post the bill; (3) click Pay header button and click primary Create Payment in the Register Payment wizard to create the outbound payment. Agents commonly leave a phantom empty second line, or forget the Product column, or stop after Confirm without paying, or click Discard in the wizard."
+  primary_track: true
+  tier: 3

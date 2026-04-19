@@ -3639,6 +3639,71 @@ Creating a payment creates its backing `account.move` with
 `[partner_id, ref]`, the entity_key in expected_state.json for the 5
 create edits must be the memo override, not the sequence.
 
+### Full-pay create-from-scratch: backing move ref collides with the bill → `#dup1` suffix
+
+Cookbook from `account.create_vendor_bill_from_scratch_pay` (row 467,
+hard, tier 3). When the agent creates a vendor bill from scratch with
+`ref='BENCH-VBILL-001'`, posts it, then pays in full via Register
+Payment WITHOUT touching the wizard's default memo, the wizard defaults
+`communication` to the bill's own ref. The resulting `account.payment`
+creates a backing `account.move` with `move_type='entry'` and
+`ref='BENCH-VBILL-001'` — **same ref as the bill itself**. The
+state-diff engine disambiguates by appending `#dup1` to the entity_key:
+
+```json
+// Bill (move_type='in_invoice')
+{"entity_key":["Bench Bill Vendor","BENCH-VBILL-001"],"field":"state","op":"create","norm_value":"posted"}
+// Payment's backing move (move_type='entry')
+{"entity_key":["Bench Bill Vendor","BENCH-VBILL-001","#dup1"],"field":"move_type","op":"create","norm_value":"entry"}
+{"entity_key":["Bench Bill Vendor","BENCH-VBILL-001","#dup1"],"field":"invoice_date","op":"create","norm_value":null}
+```
+
+The `#dup1` variant gets 6 create edits (partner_id, ref, state='posted',
+move_type='entry', payment_state='not_paid', invoice_date=null,
+amount_total=150.0) plus the bill's 7 edits (partner_id, ref,
+state='posted', move_type='in_invoice', payment_state='paid',
+invoice_date='2026-05-10', amount_total=150.0) plus 4 edits on
+`account.payment` (partner_id, amount=150.0, state='in_process',
+payment_type='outbound') — **18 edits total** for the full-pay flow.
+Do not try to suppress the `#dup1` half by omitting `invoice_date=null`
+— the engine is exhaustive; leave all observed edits in
+expected_state.json.
+
+### Vendor bill full-pay post-reconcile states
+
+For a brand-new vendor bill paid in full on the base snapshot's Bank
+journal:
+
+- `account.move.payment_state` → **`'paid'`** (not `'in_payment'`; the
+  journal has no outstanding account).
+- `account.payment.state` → **`'in_process'`** (NOT `'posted'` or
+  `'paid'`). The `state` field on account.payment reports `in_process`
+  right after `action_create_payments` even though the reconcile is
+  complete — the computed state only flips to `'paid'` after a downstream
+  reconcile event. Accept `posted|paid|in_process` in check.py.
+- `account.move.line.price_unit` / `quantity` / `amount_total` on the
+  bill all track normally.
+
+### Product-autocomplete commit trap on invoice/bill lines (BU failure mode)
+
+On `account.move` invoice/bill line forms, typing a product name into
+the `product_id` autocomplete WITHOUT explicitly clicking a dropdown
+option leaves `product_id=False` but fills the line's `name` / `quantity`
+/ `price_unit` directly. The bill totals still compute, Confirm still
+posts, and Register Payment still reconciles — so the observable
+accounting state (`amount_total`, `payment_state`) matches. But if
+your check.py filters lines by `l.product_id` to count product rows
+(standard pattern in `account.create_vendor_bill_confirm` check), the
+line is invisible and the count is 0.
+
+Browser-use exhibits this failure mode on single-shot runs of
+`account.create_vendor_bill_from_scratch_pay` — it completes all three
+gates (create + post + pay) with `payment_state='paid'` but zero
+`product_id`-bound lines. For hard tasks that require a specific
+product relation, always keep the `l.product_id` filter in check.py;
+oracles must select from the dropdown via `set_o2m_many2one` (which
+filters and clicks the matching option), NOT by raw `type + Tab`.
+
 ### Dependencies missing in pre-warmed worktrees
 
 If `.claude/worktree-skeleton/.venv/` was built with only the benchmark
