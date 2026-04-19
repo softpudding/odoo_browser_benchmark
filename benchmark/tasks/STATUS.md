@@ -418,6 +418,11 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 406 | event.create_event_add_question_publish [hard] | Create event, add registration question with required answer, publish | Done | PASS | PASS | 1.0 |
 | 407 | hr_expense.scan_submit_expense_from_mobile_portal [medium] | From My Expenses portal, create a simple expense and submit | WIP | — | — | — |
 | 408 | mail.send_email_with_attachment_log_as_note [medium] | On a partner form, send an email with attachment via chatter Send Message | WIP | — | — | — |
+| 409 | project.create_task_with_deadline_tags_assignees [medium] | Create a project task with deadline, 2 tags, and 2 assignees | WIP | — | — | — |
+| 410 | website_sale.checkout_portal_apply_coupon_complete [hard] | Add product to cart, apply coupon code at checkout, complete order | WIP | — | — | — |
+| 411 | documents.upload_document_tag_assign_to_folder [medium] | Upload a document to a folder, tag it, assign owner | WIP | — | — | — |
+| 412 | stock.create_scrap_order_for_damaged_qty [medium] | Create a scrap order for 3 damaged units from WH/Stock | WIP | — | — | — |
+| 413 | calendar.create_recurring_meeting_weekly_pattern [medium] | Create a recurring meeting with weekly pattern, 4 occurrences | WIP | — | — | — |
 
 ---
 
