@@ -1,0 +1,30 @@
+# Trace oracle for mail.send_email_with_attachment_log_as_note.
+#
+# The end state (a mail.message subtype_id=mt_comment with a non-empty
+# attachment_ids) is validated entirely via check.py.
+
+required_ops: []
+
+optional_ops:
+  - res.partner.read
+  - res.partner.search_read
+  - res.partner.web_save
+  - res.partner.write
+  - mail.thread.message_post
+  - mail.message.create
+  - mail.message.read
+  - mail.message.search_read
+  - mail.message.web_save
+  - mail.followers.create
+  - mail.followers.read
+  - ir.attachment.create
+  - ir.attachment.read
+  - ir.attachment.search_read
+  - ir.attachment.write
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+  - bus.bus.create
+
+forbidden_ops:
+  - res.partner.unlink
+  - mail.message.unlink

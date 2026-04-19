@@ -1,0 +1,21 @@
+task_id: mail.send_email_with_attachment_log_as_note
+module: mail
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/contacts
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "On a seeded res.partner form, open the chatter, toggle to Send Message (NOT Log note), type an exact body, upload a seeded text file via the chatter paperclip, and click Send so that a mail.message with message_type='comment', subtype_id=mail.mt_comment, and a non-empty attachment_ids is created."
+  checks_verify: "res.partner 'Bench Chatter Co' has a mail.message with message_type='comment', subtype_id=ref(mail.mt_comment) (NOT mail.mt_note), the body contains 'Attached our welcome kit', and attachment_ids has >=1 ir.attachment named welcome_kit.txt."
+  failure_pattern: "Chatter opens in Log Note by default; agent must click Send Message. File upload triggers a hidden <input type=file> which browser-use cannot drive reliably."
+  primary_track: true
+  tier: 2

@@ -611,6 +611,90 @@ See `project_todo.reorder_notes_add_due_dates_bulk/check.py` for a working refer
 
 ---
 
+## mail.message subtype_id — chatter Send message vs Log note
+
+The chatter composer's **Log note** and **Send message** tabs both
+produce `mail.message.message_type = 'comment'`, so filtering on
+`message_type` alone cannot tell them apart. The distinguishing field
+is `subtype_id`:
+
+| UI tab | `subtype_xmlid` | `is_internal` |
+|--------|-----------------|---------------|
+| Log note (default tab) | `mail.mt_note` | True |
+| Send message | `mail.mt_comment` | False |
+
+Checks that want to pin "the agent actually clicked Send message, not
+Log note" must gate on `msg.subtype_id == env.ref('mail.mt_comment')`
+— NOT on `message_type`, NOT on `is_internal` alone (which is stable
+but easy to misread as inverted).
+
+Oracle pattern to reproduce a Send-message post via JSON-RPC without
+driving the chatter UI:
+
+```js
+await callKw(
+    'res.partner',                  // or any thread model
+    'message_post',
+    [[threadId]],
+    {
+        body: 'Attached our welcome kit',
+        message_type: 'comment',
+        subtype_xmlid: 'mail.mt_comment',   // <-- critical
+        attachment_ids: [attachmentId],
+    },
+);
+```
+
+## res.partner Send-message posts can have empty partner_ids
+
+Out of the box in the benchmark base, a `res.partner` record does NOT
+auto-follow itself — `_message_get_auto_subscribe_followers` returns
+an empty recordset for res.partner. Consequence: a Send-message post
+via `message_post(subtype_xmlid='mail.mt_comment')` can legitimately
+land with `mail.message.partner_ids == Recordset()`. Gating the
+Send-vs-Log discrimination on `partner.id in msg.partner_ids.ids` is
+a false-positive trap that rejects even a correct oracle post. Pin
+the distinction on `subtype_id` alone.
+
+## Chatter paperclip file upload — hidden <input type=file>
+
+The chatter composer's paperclip (`button[aria-label="Attach files"]`)
+is wrapped in the `FileUploader` component
+(`addons/web/static/src/views/fields/file_handler.xml`). The button
+itself has `class="d-none"` — the clickable visible surface is a
+pseudo-button on the composer toolbar that forwards clicks. The actual
+`<input type="file">` is rendered with
+`class="o_input_file d-none"` and can be driven from Playwright with
+`set_input_files` even though it's not visible:
+
+```python
+input_el = page.locator(
+    ".o-mail-Composer input.o_input_file[type='file']"
+).first
+input_el.set_input_files("/abs/path/to/welcome_kit.txt")
+```
+
+Browser-use cannot drive it reliably, and the benchmark runner does
+NOT pass `available_file_paths=[...]` through to the Agent
+constructor, so BU's own upload fallback fails with
+`File path ... is not available`. Any task that requires uploading a
+seeded artifact through the chatter paperclip is effectively a BU
+calibration trap until the runner is updated.
+
+## Oracle bypass: ir.attachment res_model='mail.compose.message'
+
+To attach a file to a `message_post` call without driving the
+paperclip UI, create the `ir.attachment` with
+`res_model='mail.compose.message'` and `res_id=0`, then pass its id
+to `message_post(attachment_ids=[id])`. `_process_attachments_for_post`
+migrates the attachment onto the newly-created mail.message and
+rewrites `res_model`/`res_id` to the thread. Passing
+`res_model='<target_model>', res_id=<target_id>` directly creates the
+attachment on the thread's Files pane but does NOT automatically link
+it to the posted mail.message.
+
+---
+
 ## Parallel execution hygiene
 
 - The default `auto-isolate` mode in eval.py starts a dedicated Odoo process per run
