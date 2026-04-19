@@ -430,6 +430,11 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 418 | sale.configure_pricelist_apply_to_order_line [hard] | Create pricelist with rule, apply to SO, verify discount | Done | PASS | PASS | 1.0 |
 | 419 | mrp.unbuild_product_back_to_components [hard] | Unbuild 2 finished products and return components to stock | Done | PASS | PASS | 1.0 |
 | 420 | point_of_sale.apply_fixed_discount_before_payment [hard] | In POS, add 2 products, apply fixed 5 EUR discount, pay cash | Done | PASS | PASS | 1.0 |
+| 421 | mrp_account.mo_consume_and_close_check_valuation [hard] | Confirm MO with tracked cost components, close, verify stock.valuation.layer | WIP | — | — | — |
+| 422 | mail.create_alias_route_to_record [hard] | Create a mail alias pointing to a crm.team, incoming email creates a lead | WIP | — | — | — |
+| 423 | account.reverse_journal_entry_from_general_ledger [hard] | From GL, find posted entry, reverse it, verify reverse entry posted | WIP | — | — | — |
+| 424 | website_slides.duplicate_course_edit_add_slide [medium] | Duplicate an existing course, rename, add a new slide | WIP | — | — | — |
+| 425 | hr.generate_employee_card_set_badge_id [medium] | Set badge_id on an employee and generate employee badge PDF | WIP | — | — | — |
 
 ---
 
