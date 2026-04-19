@@ -1,0 +1,34 @@
+# Trace oracle for stock.create_physical_inventory_adjust_two_products.
+#
+# Medium (deep UI interaction): inline editable Counted Quantity cell in
+# Physical Inventory list; Apply creates stock.move(is_inventory=True).
+# Validate primarily via state diff + check.py; keep required_ops empty.
+
+required_ops: []
+
+optional_ops:
+  - stock.quant.read
+  - stock.quant.search_read
+  - stock.quant.web_search_read
+  - stock.quant.web_save
+  - stock.quant.write
+  - stock.quant.onchange
+  - stock.quant.action_apply_inventory
+  - stock.quant.action_apply_all
+  - stock.quant.action_set_inventory_quantity
+  - stock.move.create
+  - stock.move.write
+  - stock.move.read
+  - stock.move.line.create
+  - stock.move.line.write
+  - product.product.read
+  - product.product.search_read
+  - stock.location.read
+  - stock.location.search_read
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+
+forbidden_ops:
+  - stock.quant.unlink
+  - product.product.unlink
+  - stock.move.unlink

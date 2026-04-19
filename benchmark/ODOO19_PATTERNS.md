@@ -2676,6 +2676,32 @@ env["stock.move"].search([
 and sum signed deltas via `location_dest_id == WH/Stock ? +qty : -qty` to
 confirm the Apply path was exercised end-to-end.
 
+### Phantom new-row on inline editable list: recover via Discard
+
+When the agent clicks a `name="inventory_quantity"` cell and types, then
+presses Tab/Enter outside of an already-editable cell context, the
+Physical Inventory list (and other inline editable list views with
+`editable="bottom"`) can spawn a blank new-row at the bottom with all
+required fields empty. A subsequent click on `button[name="action_apply_all"]`
+then raises a client-side "Missing required fields" error and the Apply
+modal never opens.
+
+The reliable recovery is the **Discard** button in the list header
+(`button.o_list_button_discard`, label "Discard") which kills the
+phantom row and re-enables Apply All. This was observed in a BU
+single-shot run on `stock.create_physical_inventory_adjust_two_products`
+(row 427): BU clicked Discard after the first failed Apply All, then
+re-set the second Counted Quantity and Apply All succeeded. Oracles
+that drive this flow programmatically do not hit the bug (focus stays
+inside the quant's row), but browser agents routinely do — list this
+recovery as an acceptable fallback in task prompts when relevant, and
+do NOT include `button.o_list_button_discard` as a forbidden op.
+
+Related side-effect: when the inline list has a phantom new row, the
+`Apply All` button may be rendered but **disabled** (greyed). BU's
+"wait then click again" loop eventually succeeds once the row is
+discarded.
+
 ---
 
 ## `project.task.date_deadline` — Datetime stored in UTC, typed as a date
