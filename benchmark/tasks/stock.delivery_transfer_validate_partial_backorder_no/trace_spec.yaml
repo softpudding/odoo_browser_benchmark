@@ -1,0 +1,42 @@
+# Trace oracle for stock.delivery_transfer_validate_partial_backorder_no
+#
+# Medium (policy_trap): partial validate + Create Backorder dialog with
+# the SECONDARY 'No Backorder' button (the task's trap: the agent must
+# NOT click the default/primary 'Create Backorder' button).
+
+required_ops:
+  - stock.picking.button_validate
+
+optional_ops:
+  - stock.picking.action_assign
+  - stock.picking.action_confirm
+  - stock.picking.read
+  - stock.picking.write
+  - stock.picking.web_save
+  - stock.picking.web_read
+  - stock.picking.search_read
+  - stock.picking.web_search_read
+  - stock.picking.onchange
+  - stock.picking.do_unreserve
+  - stock.move.read
+  - stock.move.write
+  - stock.move.web_save
+  - stock.move.web_read
+  - stock.move.onchange
+  - stock.move.line.read
+  - stock.move.line.write
+  - stock.move.line.web_save
+  - stock.move.line.create
+  - stock.move.line.onchange
+  - stock.backorder.confirmation.create
+  - stock.backorder.confirmation.read
+  - stock.backorder.confirmation.web_save
+  - stock.backorder.confirmation.process_cancel_backorder
+  - res.partner.read
+  - product.product.read
+  - ir.ui.view.get_views
+
+forbidden_ops:
+  - stock.picking.unlink
+  - stock.picking.action_cancel
+  - stock.backorder.confirmation.process
