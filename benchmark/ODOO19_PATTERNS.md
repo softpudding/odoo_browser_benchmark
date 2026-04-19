@@ -821,6 +821,7 @@ If a task description implies offline-form configuration, map to `button_text` /
 - Same null-vs-false quirk applies to **create-and-schedule** (future `published_date` + keep `is_published=False`): both `is_published` and `website_published` diff as `op: "create"` / `norm_value: null`, not `false`. See `website_blog.create_post_with_cta_seo_schedule`.
 - `blog.post.content` is the Html body (`sanitize=False`), NOT `arch_db` (which belongs to `ir.ui.view`). Free-form HTML produces noisy diffs; keep it in `ignore_fields` and validate the CTA / keywords via a tolerant regex in `check.py` (accept any `<a href='...'>Label</a>` regardless of class attribute order).
 - `blog.post` also exposes the **Optimize SEO** cog dialog in the BACKEND form (via `website.seo.metadata` mixin + `OptimizeSEODialog`), not just on the frontend. Contrast with `website_sale` where the product SEO dialog is frontend-only.
+- **Pure author-swap on a pre-existing published post** does NOT trigger the null-vs-false quirk: when `is_published`/`website_published` are True before AND after the task (only `author_id` changes), the state diff emits exactly one `op: "set"` edit on `author_id` and nothing on the published flags. See `website_blog.change_author_republish_post` (row 430) — clean single-edit `expected_state.json`, no null sentinels needed. The null-vs-false trap only fires when a field is being **created** or **toggled False** in the same transaction as a record create.
 
 ---
 

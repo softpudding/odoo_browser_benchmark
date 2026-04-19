@@ -1,0 +1,27 @@
+# Trace oracle for website_blog.change_author_republish_post
+#
+# Medium: swap the Author many2one on an already-published blog.post
+# without unpublishing it. Browser client typically uses web_save instead
+# of write — both optional.
+
+required_ops: []
+
+optional_ops:
+  - blog.post.read
+  - blog.post.write
+  - blog.post.web_save
+  - blog.post.search_read
+  - blog.post.web_search_read
+  - res.partner.name_search
+  - res.partner.read
+  - res.partner.search_read
+  - res.partner.web_search_read
+  - res.users.read
+  - ir.ui.view.get_views
+
+forbidden_ops:
+  - blog.post.unlink
+  - blog.post.create
+  - res.partner.create
+  - res.users.create
+  - blog.post.action_archive

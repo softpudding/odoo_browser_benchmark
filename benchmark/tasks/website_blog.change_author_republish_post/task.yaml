@@ -1,0 +1,20 @@
+task_id: website_blog.change_author_republish_post
+module: website_blog
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/blog-post-pages
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "Open the seeded published blog post 'Bench Blog Post' and change its Author many2one from admin to the seeded internal user 'Bench Editor', without unpublishing it."
+  checks_verify: "blog.post.author_id = Bench Editor's partner; is_published/website_published remain True; name/blog/content unchanged; exactly one post with the seeded name."
+  primary_track: true
+  tier: 2
