@@ -1,0 +1,18 @@
+task_id: account.reconcile_customer_payment_against_invoice
+module: account
+difficulty: hard
+instruction: see prompt.md
+start_url: /odoo/accounting
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 480
+step_limit: 300
+metadata:
+  category: policy_trap
+  failure_pattern: "Agent must open the Register Payment wizard on a posted invoice, confirm amount 500 / journal Bank / Manual method, then click the 'Create Payment' primary button (not Discard). Must leave the invoice reconciled (payment_state paid or in_payment) and an account.payment with amount 500 and state posted linking to the invoice."
+  primary_track: true
+  tier: 3

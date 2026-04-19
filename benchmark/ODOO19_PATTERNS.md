@@ -2548,3 +2548,108 @@ of 1 expected → Precision 0.5, Recall 1.0 → F1 = 0.67). Always run the task
 against the oracle once and inspect `state_diff.json` for the full create-row
 set.
 
+
+## account.payment.register wizard on a posted customer invoice
+
+### Header-button label
+
+The invoice form's statusbar button that opens the Register Payment wizard
+is labeled **`Pay`**, not "Register Payment". The wizard's **title** is
+"Register Payment" but the actionable button the agent/oracle must click
+is `<button name="action_register_payment" string="Pay">`. Prompts that
+instruct the agent to click "Register Payment" will work because BU tends
+to match either; but oracle scripts MUST target the statusbar Pay button:
+
+```python
+pay_btn = page.locator(
+    ".o_statusbar_buttons button:has-text('Pay'):visible"
+)
+pay_btn.first.click(force=True)
+```
+
+### Wizard footer primary button
+
+The wizard footer has two primary buttons gated on `total_payments_amount`:
+
+- `string="Create Payments"` when `total_payments_amount != 1`
+- `string="Create Payment"` when `total_payments_amount == 1`
+
+Both call the same method `action_create_payments`. Target by name, not
+by text, to avoid picking "Discard":
+
+```python
+modal.locator("button.btn-primary[name='action_create_payments']").first.click()
+```
+
+### Default values are already correct for a full payment
+
+On a single posted invoice with no outstanding payments, the wizard's
+defaults are:
+
+- `journal_id` → first Bank journal in the company
+- `payment_method_line_id` → Manual
+- `amount` → `source_amount` (invoice `amount_residual`, e.g. 500.00)
+- `payment_date` → today
+- `communication` → the invoice's auto-assigned name (e.g. `INV/2026/00001`)
+
+**Consequence for task design:** "open invoice → click Pay → click Create
+Payment" is an Accept-Defaults flow and will not fail browser-use (empirically
+F1=1.0 single-shot). To make the wizard a real trap you must REQUIRE a
+non-default value: partial amount, back-dated `payment_date`, custom
+`communication` memo, or a non-default journal (seed two bank journals).
+
+### Post-reconcile state values
+
+After `action_create_payments` on a clean base snapshot:
+
+- `account.move.payment_state` goes **directly to `'paid'`** (not `'in_payment'`)
+  because the default Bank journal in `benchmark_base` has **no configured
+  `outstanding_account`** — so the payment posts straight to the receivable
+  account and the receivable line is reconciled in one step. A task that
+  expects `'in_payment'` must seed an outstanding account on the journal.
+- `account.payment.state` reports **`'paid'`** (not `'posted'`) once the
+  counterpart journal item is fully reconciled. Accept `posted|paid|in_process`
+  in `check.py`.
+
+### State-diff: the payment's backing journal entry is visible
+
+Creating an `account.payment` also creates its backing `account.move` with
+`move_type='entry'` and an auto-assigned name (e.g. `INV/2026/00001` from
+the next Miscellaneous-journal sequence, which can collide numerically with
+the invoice's name). If `state_spec.yaml` tracks `account.move` by
+`[partner_id, ref]` you will see **five extra create edits** in
+`state_diff.json` that must be baked into `expected_state.json`:
+
+```json
+{"model":"account.move","entity_key":["Bench Recon Co","INV/2026/00001"],"field":"partner_id","op":"create","norm_value":"Bench Recon Co"},
+{"model":"account.move","entity_key":["Bench Recon Co","INV/2026/00001"],"field":"ref","op":"create","norm_value":"INV/2026/00001"},
+{"model":"account.move","entity_key":["Bench Recon Co","INV/2026/00001"],"field":"state","op":"create","norm_value":"posted"},
+{"model":"account.move","entity_key":["Bench Recon Co","INV/2026/00001"],"field":"move_type","op":"create","norm_value":"entry"},
+{"model":"account.move","entity_key":["Bench Recon Co","INV/2026/00001"],"field":"payment_state","op":"create","norm_value":"not_paid"}
+```
+
+### Seed cleanup order for prior payment runs
+
+You cannot `unlink()` a posted `account.payment` whose counterpart line is
+reconciled. Sequence:
+
+```python
+for line in pay.move_id.line_ids.filtered(
+    lambda l: l.matched_debit_ids or l.matched_credit_ids
+):
+    line.remove_move_reconcile()
+pay.action_draft()     # state: posted → draft
+pay.action_cancel()    # state: draft → cancel (Odoo 19 has this on the payment)
+pay.unlink()
+```
+
+Forgetting `remove_move_reconcile` before `action_draft` raises
+`UserError("You can't modify a posted entry.")` at the reconcile engine.
+
+### Odoo 19 field renames relevant here
+
+- `account.payment.memo` (not `ref`) — prompts and check.py asserting the
+  memo must read `payment.memo`.
+- The wizard stores the memo in `account.payment.register.communication`
+  (Char, `string="Memo"`), which maps to `payment.memo` via
+  `_create_payments` at `vals['memo'] = self.communication`.

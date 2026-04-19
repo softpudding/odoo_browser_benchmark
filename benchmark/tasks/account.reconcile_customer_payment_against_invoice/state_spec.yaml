@@ -1,0 +1,31 @@
+models:
+  account.move:
+    match_key:
+      - partner_id
+      - ref
+    fields:
+      - partner_id
+      - ref
+      - state
+      - move_type
+      - payment_state
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
+      - __last_update
+
+  account.payment:
+    match_key:
+      - partner_id
+      - amount
+    fields:
+      - partner_id
+      - amount
+      - state
+      - payment_type
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
+      - __last_update
