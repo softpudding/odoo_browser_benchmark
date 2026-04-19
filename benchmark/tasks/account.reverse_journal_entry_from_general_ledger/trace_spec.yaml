@@ -1,0 +1,45 @@
+# Trace oracle for account.reverse_journal_entry_from_general_ledger
+#
+# Category 5: Deep UI interaction.
+# Agent must drill into the misc journal entry via the grouped
+# Miscellaneous Journal Items report, open the account.move form, click
+# the 'Reverse Entry' header button, and confirm the
+# account.move.reversal wizard with default date + journal.
+
+required_ops:
+  - account.move.reversal.refund_moves
+
+optional_ops:
+  - account.move.read
+  - account.move.web_read
+  - account.move.search_read
+  - account.move.web_search_read
+  - account.move.write
+  - account.move.web_save
+  - account.move.line.read
+  - account.move.line.search_read
+  - account.move.line.web_read_group
+  - account.move.line.web_save
+  - account.move.reversal.create
+  - account.move.reversal.read
+  - account.move.reversal.write
+  - account.move.create
+  - account.journal.read
+  - account.journal.search_read
+  - account.account.read
+  - account.account.search_read
+  - res.partner.read
+  - res.partner.search_read
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+  - ir.actions.act_window.load
+  - mail.message.create
+  - mail.followers.create
+  - bus.bus.create
+
+forbidden_ops:
+  - account.move.reversal.modify_moves
+  - account.move.button_draft
+  - account.move.button_cancel
+  - account.move.unlink
+  - account.move.action_reverse
