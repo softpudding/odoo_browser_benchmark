@@ -1,0 +1,31 @@
+# Trace oracle for mrp_account.mo_consume_and_close_check_valuation.
+#
+# Hard: open confirmed MO -> click Produce All (button_mark_done) with
+# qty_producing == product_qty so no backorder wizard -> done. stock_account
+# auto-values the stock moves (finished is_in, raw is_out) and generates the
+# account.move for inventory valuation.
+
+required_ops:
+  - mrp.production.button_mark_done
+
+optional_ops:
+  - mrp.production.read
+  - mrp.production.write
+  - mrp.production.web_save
+  - mrp.production.pre_button_mark_done
+  - mrp.production.search_read
+  - mrp.production.web_search_read
+  - mrp.production._action_done
+  - stock.move.read
+  - stock.move.write
+  - stock.move._action_done
+  - stock.move._set_value
+  - stock.move._create_account_move
+  - account.move.read
+  - account.move.search_read
+  - account.move.web_search_read
+  - ir.ui.view.get_views
+
+forbidden_ops:
+  - mrp.production.unlink
+  - mrp.production.action_cancel

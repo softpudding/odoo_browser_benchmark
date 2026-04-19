@@ -2976,3 +2976,63 @@ and the modal dialog, browser-use completed the task single-shot in
    the task validates qty=5 triggers rule A vs qty=15 triggers rule B.
 
 Simple single-rule formula pricelists are "hard-looking but BU-passable".
+
+## `stock.valuation.layer` removed in Odoo 19 — use `stock.move.value` + `product.value`
+
+Odoo 19 dropped the `stock.valuation.layer` model entirely. Code / task
+prompts that still reference it will raise `KeyError` from
+`env['stock.valuation.layer']`. The replacement surface:
+
+- `stock.move.value` — `fields.Monetary`, per-move cash value set by
+  `stock_account.stock_move._set_value()` during `_action_done`. Acts
+  as "the" valuation signal for incoming (`is_in=True`) AND outgoing
+  (`is_out=True`) moves; negative sign is encoded as `is_out` (value
+  itself stays positive).
+- `stock.move.is_in` / `is_out` / `is_valued` / `is_dropship` —
+  computed Booleans that classify a done move.
+- `product.value` — small history model (`addons/stock_account/models/
+  product_value.py`) for manual revaluations + lot / standard-price
+  updates.
+- `stock.move.remaining_qty` / `remaining_value` — carries the old
+  FIFO remaining-tail semantics that used to live on SVL.
+
+For MO-close tasks filter via
+`stock.move.production_id == mo` (finished) and
+`stock.move.raw_material_production_id == mo` (components), NOT via
+any SVL query.
+
+## `mrp_account._cal_price` is `cost_method`-gated
+
+`mrp_account/models/mrp_production.py::_cal_price` rolls consumed
+component values + workcenter cost + extra_cost into the finished
+stock.move's `price_unit` **only** when the finished product's
+`cost_method in ('fifo', 'average')`. For `cost_method='standard'`
+it short-circuits to `finished_move.price_unit = product.standard_price`
+and returns. A common seeding mistake in hard-tier valuation tasks is:
+
+- set finished `standard_price=0` ("cost should come from rollup")
+- leave category at default `property_cost_method='standard'`
+
+That combination makes `_cal_price` write 0 to the finished move's
+`price_unit`, and `_get_value_from_production` (`value = quantity *
+price_unit`) then returns 0, so `stock.move.value=0` on the finished
+move and the postcondition fails. Fix: seed
+`property_cost_method='average'` (or `'fifo'`) on the category.
+
+## Location `valuation_account_id` still mandatory even for move-value-only checks
+
+`stock_account.stock_move._action_done` unconditionally calls
+`_create_account_move()` on the move set. If `_should_create_account_move`
+raises (because `location_dest_id.valuation_account_id` and
+`location_id.valuation_account_id` are both NULL) the whole
+`action_done` aborts, leaving the MO stuck pre-done. Seed MUST set:
+
+- Production location (`usage='production'`) →
+  `500100 Cost of Production` (`account_type='expense'`).
+- Internal Stock location (`usage='internal'`) →
+  `140000 Stock Valuation` (`account_type='asset_current'`, also
+  written to `company.account_stock_valuation_id`).
+- `company.account_stock_journal_id` → any general journal.
+
+Seed both even when `check.py` only asserts on `stock.move.value`,
+because the `account_move` side is an *invariant* of `_action_done`.
