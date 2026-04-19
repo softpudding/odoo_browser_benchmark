@@ -1,0 +1,21 @@
+task_id: mrp.confirm_mo_produce_partial_keep_backorder
+module: mrp
+difficulty: hard
+instruction: see prompt.md
+start_url: /odoo/manufacturing
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 480
+step_limit: 260
+metadata:
+  category: policy_trap
+  difficulty_level: hard
+  failure_pattern: "Agent either leaves qty_producing at the default (product_qty) so no backorder wizard fires, OR clicks 'No Backorder' / 'Discard' on the Production Backorder dialog instead of the primary 'Create backorder' button, leaving behind no sibling MO for the remaining 6 units."
+  agent_interaction: "Open Manufacturing > Operations > Manufacturing Orders, open MO-BENCH-PARTIAL (10 Bench Widget), inline-edit the Quantity field (qty_producing) from 10 to 4, click Produce, then on the 'You produced less than the initial demand' backorder wizard click the primary 'Create backorder' button. End state: original MO state='done' with qty_producing=4 + product_qty=4, and a sibling backorder MO-BENCH-PARTIAL-001 for the remaining 6 units in state='confirmed' or 'to_close'."
+  checks_verify: "Exactly 2 mrp.production records in the MO-BENCH-PARTIAL procurement group: the original with state='done' and product_qty=4 + qty_produced=4; a backorder with state in (confirmed, to_close, progress), product_qty=6, backorder_sequence >= 2, procurement_group_id shared with the original."
+  primary_track: true
+  tier: 3

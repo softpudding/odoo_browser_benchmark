@@ -1,0 +1,33 @@
+# Trace oracle for mrp.confirm_mo_produce_partial_keep_backorder.
+#
+# HARD: open MO, set qty_producing=4, click Produce, then click the
+# PRIMARY 'Create backorder' button on the production-backorder wizard.
+
+required_ops:
+  - mrp.production.backorder.action_backorder
+
+optional_ops:
+  - mrp.production.read
+  - mrp.production.search_read
+  - mrp.production.web_save
+  - mrp.production.write
+  - mrp.production.button_mark_done
+  - mrp.production.pre_button_mark_done
+  - mrp.production.action_confirm
+  - mrp.production.action_assign
+  - mrp.production.onchange
+  - mrp.production.backorder.create
+  - mrp.production.backorder.read
+  - mrp.production.backorder.web_save
+  - stock.move.read
+  - stock.move.write
+  - stock.move.line.read
+  - stock.move.line.write
+  - ir.ui.view.get_views
+  - ir.actions.server.run
+
+forbidden_ops:
+  - mrp.production.backorder.action_close_mo
+  - mrp.production.action_cancel
+  - mrp.production.unlink
+  - mrp.bom.unlink
