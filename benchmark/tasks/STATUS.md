@@ -435,6 +435,11 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 423 | account.reverse_journal_entry_from_general_ledger [hard] | From GL, find posted entry, reverse it, verify reverse entry posted | Done | PASS | PASS | 1.0 |
 | 424 | website_slides.duplicate_course_edit_add_slide [medium] | Duplicate an existing course, rename, add a new slide | Done | PASS | PASS | 1.0 |
 | 425 | hr.generate_employee_card_set_badge_id [medium] | Set Badge ID (barcode) on an employee, optionally trigger Print Badge | Done | PASS | PASS | 1.0 |
+| 426 | sale.duplicate_quotation_edit_delivery_date_confirm [medium] | Duplicate a draft quotation, change delivery date, confirm | WIP | — | — | — |
+| 427 | stock.create_physical_inventory_adjust_two_products [medium] | From Inventory Adjustment menu, add 2 products with counted qty, Apply | WIP | — | — | — |
+| 428 | mail.schedule_activity_on_partner_with_note [medium] | Schedule a 'To Do' activity on a partner with note and deadline | WIP | — | — | — |
+| 429 | hr_timesheet.log_time_for_2_days_approve_via_manager [hard] | Log timesheets for 2 days, submit, approve via manager | WIP | — | — | — |
+| 430 | website_blog.change_author_republish_post [medium] | Change a published blog post's author to a different user | WIP | — | — | — |
 
 ---
 
