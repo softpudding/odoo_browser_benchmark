@@ -1,0 +1,39 @@
+models:
+  mail.alias:
+    match_key:
+      - alias_name
+    fields:
+      - alias_name
+      - alias_contact
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
+      - alias_defaults        # Free-form Python dict text — validated via check.py
+      - alias_force_thread_id
+      - alias_parent_model_id
+      - alias_parent_thread_id
+      - alias_status
+      - alias_bounced_content
+      - alias_domain_id
+      - alias_domain
+      - alias_model_id         # Many2one to ir.model — validated via check.py
+      - alias_incoming_local
+  crm.team:
+    match_key:
+      - name
+    fields:
+      - name
+      - active
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
+      - member_ids
+      - crm_team_member_ids
+      - alias_id
+      - alias_defaults
+      - alias_force_thread_id
+      - alias_domain_id
+      - alias_contact
+      - alias_name

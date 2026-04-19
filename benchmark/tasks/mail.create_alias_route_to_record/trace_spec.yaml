@@ -1,0 +1,33 @@
+# Trace oracle for mail.create_alias_route_to_record
+#
+# Category 5 (HARD): Deep UI interaction gated by developer mode.
+# End state (alias_model_id + alias_defaults dict) is validated via check.py;
+# the trace only enforces that the agent did NOT nuke the team or touch
+# unrelated configuration.
+
+required_ops: []
+
+optional_ops:
+  - mail.alias.create
+  - mail.alias.write
+  - mail.alias.web_save
+  - mail.alias.read
+  - mail.alias.search_read
+  - mail.alias.web_search_read
+  - mail.alias.domain.read
+  - mail.alias.domain.search_read
+  - ir.model.read
+  - ir.model.search_read
+  - ir.model.name_search
+  - res.users.read
+  - res.users.has_group
+  - crm.team.read
+  - crm.team.search_read
+  - ir.ui.menu.load_menus
+  - ir.ui.menu.load_web_menus
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+
+forbidden_ops:
+  - crm.team.unlink
+  - mail.alias.unlink

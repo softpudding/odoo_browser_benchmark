@@ -3039,3 +3039,94 @@ raises (because `location_dest_id.valuation_account_id` and
 
 Seed both even when `check.py` only asserts on `stock.move.value`,
 because the `account_move` side is an *invariant* of `_action_done`.
+
+---
+
+## Developer mode as a task gate (mail.alias, ir.ui.menu base.group_no_one)
+
+Some Odoo 19 configuration menus — notably **Settings → Technical →
+Email → Aliases** (`mail_alias_menu`), **Email Servers**, **Message
+Subtypes**, **Database Structure**, and anything else gated by
+`groups="base.group_no_one"` — are *hidden by default* even for admin.
+They only appear when the client session flag `debug` is truthy. Simply
+granting `base.group_no_one` to the user in the seed is **not enough**:
+
+- `res.users.has_group('base.group_no_one')` (see
+  `odoo/addons/base/models/res_users.py:1081`) explicitly returns
+  `False` unless `request.session.debug` is also truthy. The group is
+  described as "Technical Features" but its effective membership is
+  gated at request time.
+- There is no server-side `ir.config_parameter` or `res.users` write
+  that can persist `session.debug = True`. It is a per-browser cookie.
+
+To enable developer mode in a task:
+
+1. **Seed-side (necessary)**: add `base.group_no_one` to the target
+   user so they CAN see the menu once the session flag flips.
+
+   ```python
+   admin = env.ref("base.user_admin")
+   admin.sudo().write({"group_ids": [(4, env.ref("base.group_no_one").id)]})
+   ```
+
+2. **Agent-side (required)**: either
+   - click **Activate the developer mode** in the Developer Tools
+     panel at the bottom of `/odoo/settings` (widget
+     `res_config_dev_tool`, defined in
+     `addons/web/static/src/webclient/settings_form_view/widgets/
+     res_config_dev_tool.xml`), or
+   - navigate to a URL with `?debug=1` appended.
+
+   The widget calls
+   `router.pushState({ debug: 1 }, { reload: true })`, which triggers
+   a **full page reload**. Playwright must
+   `wait_for_url("**debug=1**")` AND re-wait for `.o_action_manager`
+   after the reload — `_wait_for_ready` alone is not sufficient. The
+   `.o_action_manager` re-renders after the reload regardless of
+   route; a bare `page.wait_for_load_state('load')` returns too early.
+
+### Three "Activate" links — disambiguate
+
+The Developer Tools panel renders up to three links depending on
+current state:
+
+1. "Activate the developer mode"
+2. "Activate the developer mode (with assets)"
+3. "Activate the developer mode (with tests assets)"
+
+A naive `page.locator("a:has-text('Activate the developer mode')")`
+selector matches all three. For normal tasks (plain debug=1) use:
+
+```python
+page.locator("#developer_tool a:has-text('Activate the developer mode')") \
+    .filter(has_not_text="assets") \
+    .filter(has_not_text="tests") \
+    .first
+```
+
+### mail.alias field-level quirks
+
+- `ir.model._description` for `crm.lead` is literally `"Lead"` (not
+  "Lead/Opportunity"). Typing "Lead/Opportunity" in an `alias_model_id`
+  many2one autocomplete returns zero real hits and only the quick-create
+  variants. Clicking a quick-create entry calls
+  `ir.model.name_create(['Lead/Opportunity'])`, spawning a new custom
+  model `x_lead_opportunity`. Use the **technical name** (`crm.lead`)
+  which uniquely matches via `_rec_names_search = ['name', 'model']`.
+- The autocomplete's Create / Search-More entries add the class
+  `o_m2o_dropdown_option` directly on the `<li>` (see
+  `addons/web/static/src/views/fields/relational_utils.js:489`).
+  Playwright's `has_not=page.locator(...)` filters by descendants, NOT
+  by a class on the element itself — the reliable filter is CSS's
+  `:not(.o_m2o_dropdown_option)` on the same element.
+- The generic `mail.alias` form renders `alias_contact` as a native
+  `<select>` (so `select_option(label='Everyone')` works) — unlike
+  `crm.team.alias_contact` which uses the custom `o_select_menu`
+  widget requiring the click-toggler-then-click-item pattern.
+- `alias_defaults` is a plain Text field rendered as a `<textarea>`.
+  After interacting with the m2o above, a leftover autocomplete
+  dropdown frequently covers it and Playwright reports `subtree
+  intercepts pointer events`. Dismiss via JS DOM removal + Escape,
+  then `click(force=True)` or focus via `el.evaluate('el => el.focus()')`.
+- `alias_defaults` is stored as a string; checks should parse with
+  `ast.literal_eval` and assert both the keys and their values.

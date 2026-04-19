@@ -1,0 +1,21 @@
+task_id: mail.create_alias_route_to_record
+module: mail
+difficulty: hard
+instruction: see prompt.md
+start_url: /odoo/settings
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 480
+step_limit: 300
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: hard
+  agent_interaction: "Enable developer mode via Settings > Developer Tools, navigate Settings > Technical > Email > Aliases, create a mail.alias with alias_name='benchalias', alias_model_id=`crm.lead`, alias_defaults routing to the seeded Sales Team 'Bench Alias Team'."
+  checks_verify: "A mail.alias record exists with alias_name 'benchalias' whose alias_model_id points at the 'crm.lead' ir.model and whose alias_defaults dict contains the seeded team_id for 'Bench Alias Team'."
+  failure_pattern: "Agent cannot find Settings > Technical because developer mode is OFF by default — the whole Technical menu (including Email > Aliases) is hidden until the agent clicks 'Activate the developer mode' in the Developer Tools section at the bottom of Settings. Even after toggling debug, the alias_defaults Python-dict field trips agents by accepting any text (silently creating a broken alias)."
+  primary_track: true
+  tier: 3
