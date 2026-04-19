@@ -1,0 +1,51 @@
+# Trace oracle for hr_recruitment.hire_candidate_refuse_another
+#
+# Hard: two applicants, two different flows.
+#  - Hire  = stage write (to hired_stage) + create_employee_from_applicant
+#            + hr.employee save (web_save).
+#  - Refuse = archive_applicant opens applicant.get.refuse.reason wizard
+#             followed by action_refuse_reason_apply.
+required_ops:
+  - hr.applicant.create_employee_from_applicant
+  - hr.applicant.archive_applicant
+  - applicant.get.refuse.reason.action_refuse_reason_apply
+
+optional_ops:
+  - hr.applicant.read
+  - hr.applicant.write
+  - hr.applicant.web_save
+  - hr.applicant.search_read
+  - hr.applicant.web_search_read
+  - hr.applicant.onchange
+  - hr.applicant.get_formview_id
+  - hr.applicant.get_formview_action
+  - hr.applicant.action_open_employee
+  - hr.applicant.action_open_applications
+  - hr.recruitment.stage.read
+  - hr.recruitment.stage.search_read
+  - hr.recruitment.stage.name_search
+  - hr.employee.create
+  - hr.employee.web_save
+  - hr.employee.read
+  - hr.employee.onchange
+  - hr.employee.copy
+  - hr.employee.name_create
+  - applicant.get.refuse.reason.create
+  - applicant.get.refuse.reason.web_save
+  - applicant.get.refuse.reason.onchange
+  - applicant.get.refuse.reason.read
+  - hr.applicant.refuse.reason.read
+  - hr.applicant.refuse.reason.name_search
+  - hr.applicant.refuse.reason.search_read
+  - hr.job.read
+  - hr.job.search_read
+  - hr.department.read
+  - ir.ui.view.get_views
+  - ir.actions.server.run
+
+forbidden_ops:
+  - hr.applicant.unlink
+  - hr.applicant.action_archive
+  - hr.applicant.reset_applicant
+  - hr.job.unlink
+  - hr.applicant.refuse.reason.unlink

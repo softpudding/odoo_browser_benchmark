@@ -1,0 +1,21 @@
+task_id: hr_recruitment.hire_candidate_refuse_another
+module: hr_recruitment
+difficulty: hard
+instruction: see prompt.md
+start_url: /odoo/recruitment
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 420
+step_limit: 220
+metadata:
+  category: policy_trap_wizard
+  difficulty_level: hard
+  agent_interaction: "Hire the Top Candidate (advance stage to Contract Signed, then click Create Employee) then open the Runner Up and Refuse them with the 'Not a fit' reason in the refuse-reason wizard."
+  checks_verify: "Top Candidate has an hr.employee created (employee_id set + date_closed set via hired_stage=True). Runner Up is refused (active=False) with refuse_reason_id 'Not a fit'."
+  failure_pattern: "Agent advances the wrong applicant, refuses the Top Candidate, forgets the Refuse wizard reason, or never clicks Create Employee after hiring (leaves employee_id empty)."
+  primary_track: true
+  tier: 3

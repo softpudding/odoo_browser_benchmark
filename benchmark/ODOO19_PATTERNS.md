@@ -1730,6 +1730,62 @@ PO record is just mutating its partner_id.
 
 ---
 
+## hr_recruitment — Hire flow (no Hire button; Contract Signed + Create Employee + two-phase save)
+
+- **There is NO "Hire" button on the `hr.applicant` form.** The
+  header only has `Create Employee`
+  (`name='create_employee_from_applicant'`) and `Refuse`
+  (`name='archive_applicant'`). The hire path is:
+  1. Click the `hired_stage=True` pill in the form status bar (demo
+     `Contract Signed`, sequence 5). Writing `stage_id` fires
+     `_compute_date_closed` which sets
+     `date_closed=fields.Datetime.now()`.
+  2. The conditionally-invisible `Create Employee` button unveils
+     because its invisible clause is `employee_id or not active or
+     not date_closed` (`hr_applicant_views.xml:92-93`). The web_ribbon
+     `Hired` simultaneously appears.
+  3. Click `Create Employee` — this is a **two-phase action**: it
+     creates+commits an `hr.employee`, populates `applicant.employee_id`
+     via `employee.write({'applicant_ids': self.ids})`, and *then*
+     returns `hr.open_view_employee_list` with `res_id=<new id>`. The
+     DB row exists before the agent lands on the form; a follow-up
+     `web_save` is only needed if the agent edits a field post-landing.
+- Flipping back to a non-hired stage resets `date_closed=False`
+  (clears `application_status='hired'`). `no_of_recruitment` on the
+  parent `hr.job` is decremented on hire and re-incremented on unhire.
+
+## hr_recruitment — Refuse wizard (`applicant.get.refuse.reason`)
+
+- `archive_applicant` (header button label `Refuse`, hotkey `d`) opens
+  the wizard `applicant.get.refuse.reason` — NOT `hr.applicant.refuse.reason`
+  (that's the config model holding the reasons themselves).
+- Wizard fields of note:
+  - `refuse_reason_id` — `widget="selection_badge"` with
+    `options="{'horizontal': true, 'no_create': True, 'no_open': True}"`.
+    Every seeded `hr.applicant.refuse.reason` renders as a coloured
+    badge; picking one is a single click.
+  - `send_mail` — boolean_toggle; `_compute_send_mail =
+    bool(refuse_reason_id.template_id) and not applicant_without_email`.
+    Seeding a reason WITHOUT `template_id` starts the toggle at False
+    (no email composer shown). Demo reasons ALL have templates
+    (`email_template_data_applicant_refuse` or
+    `email_template_data_applicant_not_interested`), so picking a
+    demo reason flips the composer on.
+  - `subject`/`body` — mail.composer.mixin fields, only visible once
+    `send_mail=True`; rendered by `html_mail` widget. `can_edit_body`
+    gates editability.
+  - Footer primary button is **ALSO labelled `Refuse`**
+    (`name='action_refuse_reason_apply'`, hotkey `q`). Header Refuse
+    opens the wizard; the wizard's internal Refuse applies. Agents
+    that rely on button-text matching ("I already clicked Refuse")
+    sometimes stop without applying the wizard.
+- `action_refuse_reason_apply` writes
+  `{refuse_reason_id, active=False, refuse_date=now()}` on all
+  applicants in `applicant_ids`, plus optionally chains a mail.message
+  via `_prepare_send_refusal_mails()` if `send_mail=True`.
+
+---
+
 ## maintenance.equipment — field inventory & duplicate-create BU failure
 
 - `maintenance.equipment` has **no `next_action_date`** field (not in Python
