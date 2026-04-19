@@ -210,6 +210,29 @@ if mod and mod.state != "installed":
   persists, or (2) re-navigate to `/odoo/bills/<id>` via a fresh action
   to force a clean form open. Agents that just type into the ref input
   and hit Confirm will see no state change.
+- **`purchase.order.invoice_status` transitions to `'to invoice'` at
+  receipt validation (not PO confirm) when product
+  `purchase_method='receive'`.** The field flows:
+  `stock.picking.button_validate` → moves flip to `done` → `_compute_qty_received`
+  populates `purchase.order.line.qty_received` → `_compute_qty_to_invoice`
+  flips `qty_to_invoice>0` → `_compute_invoice_status` flips `'no' →
+  'to invoice'`. This is the canonical "3-way match READY" signal.
+  With `purchase_method='purchase'` the flip happens at PO confirm
+  instead (2-way-match). Tasks that want to assert "received but
+  un-billed" MUST seed products with `purchase_method='receive'` AND
+  validate a receipt — asserting `invoice_status` after only
+  `button_confirm` will match `'no'`, not `'to invoice'`.
+- **Receive Products smart button = `action_view_picking`**, label
+  stable across Community/Enterprise. On a single-picking PO it
+  redirects straight to the form view (not a list). Oracle pattern:
+  `click_button_name(page, "action_view_picking")` with fallback
+  selector `.oe_stat_button:has-text('Receive')` works for both single-
+  and multi-picking cases. For full-demand receipts (every move's
+  demand matches product_uom_qty with stock available) Odoo
+  auto-fills `move.quantity = product_uom_qty` on `action_assign`, so
+  `button_validate` goes through cleanly with NO backorder dialog and
+  NO cell-edit required — the cleanest shape for a calibration-floor
+  medium task.
 
 ### Stock
 

@@ -1,0 +1,58 @@
+# Trace oracle for purchase.confirm_rfq_receive_full_three_way_match
+#
+# Medium (closed_loop_cross_module): open seeded RFQ, Confirm Order
+# (statusbar), click Receive Products smart button, Validate the receipt.
+# No bill creation.
+
+required_ops:
+  - purchase.order.button_confirm
+  - stock.picking.button_validate
+
+optional_ops:
+  - purchase.order.read
+  - purchase.order.write
+  - purchase.order.web_save
+  - purchase.order.web_read
+  - purchase.order.search_read
+  - purchase.order.web_search_read
+  - purchase.order.action_view_picking
+  - purchase.order.onchange
+  - purchase.order.line.read
+  - purchase.order.line.write
+  - purchase.order.line.web_save
+  - purchase.order.line.onchange
+  - stock.picking.read
+  - stock.picking.write
+  - stock.picking.web_save
+  - stock.picking.web_read
+  - stock.picking.search_read
+  - stock.picking.web_search_read
+  - stock.picking.action_confirm
+  - stock.picking.action_assign
+  - stock.picking.onchange
+  - stock.move.read
+  - stock.move.write
+  - stock.move.web_save
+  - stock.move.onchange
+  - stock.move.line.read
+  - stock.move.line.write
+  - stock.move.line.web_save
+  - res.partner.name_search
+  - res.partner.read
+  - product.product.name_search
+  - product.product.read
+  - product.template.read
+  - ir.ui.view.get_views
+  - mail.message.create
+  - bus.bus.create
+
+forbidden_ops:
+  - purchase.order.unlink
+  - purchase.order.button_cancel
+  - purchase.order.action_create_invoice
+  - stock.picking.unlink
+  - stock.picking.action_cancel
+  - account.move.create
+  - account.move.action_post
+  - account.move.write
+  - account.move.unlink

@@ -1,0 +1,21 @@
+task_id: purchase.confirm_rfq_receive_full_three_way_match
+module: purchase
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/purchase
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: closed_loop_cross_module
+  difficulty_level: medium
+  agent_interaction: "Open seeded RFQ BENCH-RFQ-3WAY-2 for vendor Bench Supplier Inc, click Confirm Order in the status bar, click the Receive Products smart button to open the auto-generated receipt, then click Validate so the incoming transfer completes in full. No wizard, no backorder, no bill."
+  checks_verify: "Target purchase.order state='purchase' and invoice_status='to invoice' (3-way match READY — received but not yet billed); the auto-generated stock.picking state='done' with Done quantities matching the ordered quantities on both lines; no vendor bill exists yet."
+  failure_pattern: "Agent either (a) tries to Confirm directly from the list-view button without opening the form, (b) clicks Create Bills from the list view when the task only requires receipt validation, or (c) misses the Receive Products smart button and validates receipt from Inventory breadcrumb, leaving invoice_status unchanged."
+  primary_track: true
+  tier: 2
