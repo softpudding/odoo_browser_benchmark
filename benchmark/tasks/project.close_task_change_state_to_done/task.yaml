@@ -1,0 +1,21 @@
+task_id: project.close_task_change_state_to_done
+module: project
+difficulty: easy
+instruction: see prompt.md
+start_url: /odoo/project
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 300
+step_limit: 150
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: easy
+  agent_interaction: "Open 'Bench Close Project', open the 'Review document' task, click the form-header state widget pill (currently 'In Progress'), select 'Done' from the dropdown, and save. This flips project.task.state from '01_in_progress' to '1_done' via the project_task_state_selection widget."
+  checks_verify: "project.task 'Review document' on 'Bench Close Project' has state='1_done' (was '01_in_progress'); stage_id, priority, tag_ids, user_ids unchanged; exactly one task on the project; task name unchanged."
+  primary_track: true
+  tier: 1
+  failure_pattern: "Agent may click the kanban stage pills (statusbar) changing stage_id instead of state, or pick 'Approved' / 'Cancelled' from the state dropdown by mistake; or miss the widget entirely and try to edit state via a search/save workaround."

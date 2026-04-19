@@ -1,0 +1,40 @@
+# Trace oracle for project.close_task_change_state_to_done.
+#
+# Easy: open an existing project.task, click the state widget pill and
+# select 'Done'. Browser-use usually writes via web_save; we leave
+# required_ops empty and validate outcomes via check.py + expected_state.json.
+
+required_ops: []
+
+optional_ops:
+  - project.task.read
+  - project.task.write
+  - project.task.web_save
+  - project.task.web_read
+  - project.task.search_read
+  - project.task.web_search_read
+  - project.task.onchange
+  - project.task.get_views
+  - project.task.name_search
+  - project.project.read
+  - project.project.search_read
+  - project.project.web_search_read
+  - project.task.type.read
+  - project.task.type.search_read
+  - res.users.read
+  - res.users.search_read
+  - res.users.web_search_read
+  - ir.ui.view.get_views
+  - mail.message.create
+
+forbidden_ops:
+  - project.task.unlink
+  - project.task.create
+  - project.project.unlink
+  - project.project.create
+  - project.task.type.unlink
+  - project.task.type.create
+  - project.tags.unlink
+  - project.tags.create
+  - project.task.copy
+  - project.task.toggle_active
