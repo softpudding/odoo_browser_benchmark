@@ -1,0 +1,35 @@
+# Trace oracle for sale.add_section_note_line_to_quotation
+#
+# Medium: add a section row ('Phase 1') and a note row
+# ('Delivery by end of month') to an existing draft quotation using the
+# 'Add a section' / 'Add a note' footer controls. Quotation stays draft.
+
+required_ops: []
+
+optional_ops:
+  - sale.order.read
+  - sale.order.write
+  - sale.order.web_save
+  - sale.order.search_read
+  - sale.order.web_search_read
+  - sale.order.onchange
+  - sale.order.line.read
+  - sale.order.line.write
+  - sale.order.line.create
+  - sale.order.line.web_save
+  - sale.order.line.onchange
+  - product.product.read
+  - product.product.search_read
+  - product.template.read
+  - product.template.search_read
+  - res.partner.read
+  - res.partner.search_read
+  - ir.ui.view.get_views
+  - mail.message.create
+  - mail.thread.message_post
+
+forbidden_ops:
+  - sale.order.unlink
+  - sale.order.line.unlink
+  - sale.order.action_confirm
+  - sale.order.action_cancel
