@@ -1,0 +1,33 @@
+# Trace oracle for mail.schedule_activity_on_partner_with_note.
+#
+# The end state (a single mail.activity row on the partner with matching
+# summary, date_deadline, and note HTML) is validated entirely via
+# check.py.
+
+required_ops: []
+
+optional_ops:
+  - res.partner.read
+  - res.partner.search_read
+  - res.partner.web_save
+  - res.partner.write
+  - mail.activity.schedule.create
+  - mail.activity.schedule.read
+  - mail.activity.schedule.write
+  - mail.activity.schedule.web_save
+  - mail.activity.schedule.action_schedule_activities
+  - mail.activity.create
+  - mail.activity.read
+  - mail.activity.search_read
+  - mail.activity.write
+  - mail.activity.web_save
+  - mail.activity.type.read
+  - mail.activity.type.search_read
+  - mail.message.create
+  - mail.thread.message_post
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+
+forbidden_ops:
+  - res.partner.unlink
+  - mail.activity.unlink

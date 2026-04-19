@@ -3156,3 +3156,53 @@ page.locator("#developer_tool a:has-text('Activate the developer mode')") \
   then `click(force=True)` or focus via `el.evaluate('el => el.focus()')`.
 - `alias_defaults` is stored as a string; checks should parse with
   `ast.literal_eval` and assert both the keys and their values.
+---
+
+## `mail.activity.schedule` chatter wizard (Odoo 19)
+
+- The chatter **Activity** button opens the `mail.activity.schedule`
+  TransientModel directly (no pre-dropdown). Default values are:
+  `activity_type_id` = the `To-Do` record (`mail.mail_activity_data_todo`,
+  stored as the Char name `"To-Do"` with a hyphen — see earlier note at
+  §account.move journal entries), `summary` = `activity_type.summary` (empty
+  for To-Do), `note` = `activity_type.default_note` (empty), `date_deadline`
+  = `today + activity_type.delay_count <delay_unit>` (To-Do's default is
+  `+5 days`, NOT today).
+- Fields in the wizard form:
+  - `activity_type_id` — many2one with domain
+    `['|', ('res_model','=',False), ('res_model','=', res_model)]`.
+  - `summary` — plain `fields.Char`.
+  - `note` — `fields.Html(sanitize_style=True)` rendered as an Owl
+    wysiwyg editor (NOT a `<textarea>`). Agents that do a generic
+    "type into first visible field" will land on summary. Playwright
+    selector: `.o_field_widget[name='note'] .note-editable` or
+    `textarea` fallback (see `benchmark.oracle_helpers.schedule_activity`).
+  - `date_deadline` — `fields.Date` rendered as a **button-to-input**
+    widget. Before first interaction the DOM shows a read-only button
+    labelled with the preview date (e.g. `"Apr 24"`). Clicking the
+    button flips the node to a visible `<input>` that accepts typed
+    dates in the user locale (US admin: `MM/DD/YYYY`). Typing directly
+    without clicking the button first will miss the input.
+  - `activity_user_id` — many2one, defaults to `env.user`.
+- Footer primary button label: **Schedule** (`action_schedule_activities`).
+  `_action_schedule_activities` delegates to
+  `self._get_applied_on_records().activity_schedule(activity_type_id,
+  summary, note, date_deadline, user_id)`, which creates the final
+  `mail.activity` row directly.
+- Oracle shortcut for tasks that just need the end state: call
+  `<model>.activity_schedule(activity_type_id=..., summary=..., note=...,
+  date_deadline=...)` via call_kw. The record's model only needs to
+  inherit `mail.activity.mixin` (which `res.partner` does).
+- check.py patterns for `note` HTML field:
+  - Typed plain text becomes `<p>Discuss Q2 plan</p>` after Owl wraps it.
+  - Either strip `<p>`/`<br>` tags with a small regex
+    (`re.sub(r"<[^>]+>", "", note_html)`) or substring-match the raw
+    HTML for the core text (e.g. `"Q2 plan" in note_html`).
+  - Do NOT compare `activity.note` to a verbatim HTML string — the
+    wrapper varies (`<p>` vs. `<div>` vs. trailing `<br/>`).
+- Cleanup ordering for partner-owned activities: unlink
+  `mail.activity(res_model='res.partner', res_id in ids)` +
+  `mail.message(model='res.partner', res_id in ids)` +
+  `ir.attachment(res_model='res.partner', res_id in ids)` BEFORE
+  `res.partner.unlink()`, else FK violations on `mail_message.res_id`
+  fire. Fallback to `active=False` if unlink still fails.
