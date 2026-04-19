@@ -470,6 +470,12 @@ Last eval: 2026-04-19 | Oracle: 166/166 (100%) | Browser-Use: 57/166 (34.3%) | N
 | 458 | purchase.add_product_to_rfq_with_taxes [medium] | Add new product line to RFQ with taxes | Done | PASS | PASS | 1.0 |
 | 459 | hr.create_public_holiday_calendar_entry [medium] | Add a public holiday entry for a specific date | Done | PASS | PASS | 1.0 |
 | 460 | mrp.create_bom_kit_type_for_product [hard] | Create a BoM of type Kit with 2 components | Done | PASS | FAIL | 0.0 |
+| 461 | website_blog.schedule_post_future_date_unpublish [hard] | Unpublish a blog post and reschedule for future | WIP | — | — | — |
+| 462 | sale.cancel_confirmed_order_restore_draft [medium] | Cancel confirmed SO then set back to draft | WIP | — | — | — |
+| 463 | product.set_product_category_change [easy] | Change a product's category | WIP | — | — | — |
+| 464 | calendar.create_meeting_invite_attendees_send [medium] | Create calendar meeting with 2 attendees | WIP | — | — | — |
+| 465 | hr.request_reimbursement_expense_report [hard] | Submit hr.expense + approve + post | WIP | — | — | — |
+| 466 | stock.set_putaway_rule_default_location [medium] | Create a putaway rule for a product | WIP | — | — | — |
 
 ---
 
