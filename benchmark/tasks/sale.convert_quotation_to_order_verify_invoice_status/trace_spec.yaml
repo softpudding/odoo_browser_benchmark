@@ -1,0 +1,45 @@
+# Trace oracle for sale.convert_quotation_to_order_verify_invoice_status
+#
+# Easy: single-click Confirm on a draft quotation. Only one record,
+# only one mutation (state draft → sale).
+
+required_ops:
+  - sale.order.action_confirm
+
+optional_ops:
+  - sale.order.read
+  - sale.order.web_read
+  - sale.order.search_read
+  - sale.order.web_search_read
+  - sale.order.write
+  - sale.order.web_save
+  - sale.order.onchange
+  - sale.order.line.read
+  - sale.order.line.search_read
+  - sale.order.line.write
+  - sale.order.line.web_save
+  - sale.order.line.onchange
+  - product.product.read
+  - product.product.search_read
+  - product.template.read
+  - product.template.search_read
+  - res.partner.read
+  - res.partner.search_read
+  - account.tax.read
+  - account.payment.term.read
+  - account.payment.term.search_read
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+  - ir.model.data.search_read
+  - mail.message.create
+  - mail.followers.create
+  - mail.thread.message_post
+  - bus.bus.create
+
+forbidden_ops:
+  - sale.order.unlink
+  - sale.order.line.unlink
+  - sale.order.action_cancel
+  - sale.order.copy
+  - sale.order.create
+  - sale.order.line.create

@@ -1,0 +1,21 @@
+task_id: sale.convert_quotation_to_order_verify_invoice_status
+module: sale
+difficulty: easy
+instruction: see prompt.md
+start_url: /odoo/sales
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 300
+step_limit: 150
+metadata:
+  category: simple_confirm
+  difficulty_level: easy
+  agent_interaction: "Open draft quotation BENCH-CONFIRM for Bench Confirm Co and click the Confirm button in the status bar to transition it to Sales Order (state='sale')."
+  checks_verify: "sale.order BENCH-CONFIRM for Bench Confirm Co exists, state='sale' (confirmed), exactly 1 order_line (Bench Confirm Item qty=1 price=100), and exactly 1 sale.order for Bench Confirm Co (no duplicates)."
+  failure_pattern: "Easy anchor: the agent must open the correct quotation and click a single status-bar button. Miss points only if the agent cancels, duplicates, or edits lines before confirming."
+  primary_track: true
+  tier: 1
