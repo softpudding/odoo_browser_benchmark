@@ -1,0 +1,38 @@
+# Trace oracle for stock.adjust_product_reorder_rule_min_max
+#
+# Medium (deep_ui_interaction): Product > Reordering Rules smart button >
+# editable-list New > fill Min=5 / Max=20 > save. The agent's persistence
+# gesture goes through web_save or create; the browser client may pick
+# either depending on which save affordance was used, so the create is
+# optional and the real postcondition lives in check.py.
+
+required_ops: []
+
+optional_ops:
+  - stock.warehouse.orderpoint.create
+  - stock.warehouse.orderpoint.write
+  - stock.warehouse.orderpoint.web_save
+  - stock.warehouse.orderpoint.read
+  - stock.warehouse.orderpoint.web_read
+  - stock.warehouse.orderpoint.search_read
+  - stock.warehouse.orderpoint.web_search_read
+  - stock.warehouse.orderpoint.onchange
+  - stock.warehouse.orderpoint.action_view_orderpoints
+  - product.product.read
+  - product.product.search_read
+  - product.product.web_read
+  - product.product.action_view_orderpoints
+  - product.template.read
+  - product.template.action_view_orderpoints
+  - stock.location.read
+  - stock.location.name_search
+  - stock.warehouse.read
+  - ir.ui.view.get_views
+
+forbidden_ops:
+  - stock.warehouse.orderpoint.unlink
+  - stock.warehouse.orderpoint.action_replenish
+  - stock.warehouse.orderpoint.action_replenish_auto
+  - purchase.order.button_confirm
+  - product.product.write
+  - product.template.write

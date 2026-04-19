@@ -1,0 +1,21 @@
+task_id: stock.adjust_product_reorder_rule_min_max
+module: stock
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/inventory
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  tier: 2
+  agent_interaction: "Open Inventory > Products, open product 'Bench Reorder Item' (currently with 0 reordering rules), click the Reordering Rules smart button which lands on the editable-list view, click New to open an inline row, set Min = 5.00 and Max = 20.00 (leaving Product and Location defaults), save."
+  checks_verify: "Exactly one stock.warehouse.orderpoint exists for Bench Reorder Item with product_min_qty=5.0, product_max_qty=20.0 and location_id=WH/Stock."
+  failure_pattern: "Agent misses the smart-button gate (tries to edit a field on the product form directly), enters Min/Max into the wrong numeric columns (e.g. qty_to_order instead of product_min_qty / product_max_qty), or forgets to save after filling the inline row so the orderpoint never persists."
+  primary_track: true
