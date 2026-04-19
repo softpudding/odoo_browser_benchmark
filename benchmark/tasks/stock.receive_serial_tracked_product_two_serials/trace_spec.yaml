@@ -1,0 +1,46 @@
+# Trace oracle for stock.receive_serial_tracked_product_two_serials
+#
+# Hard (deep_ui_interaction): open Detailed Operations popup on a
+# serial-tracked incoming receipt, add a 2nd move_line row, enter two
+# serials (SN-BENCH-A001, SN-BENCH-A002) one per row with qty=1 each,
+# save popup, Validate.
+
+required_ops:
+  - stock.picking.button_validate
+
+optional_ops:
+  - stock.picking.action_assign
+  - stock.picking.action_confirm
+  - stock.picking.read
+  - stock.picking.write
+  - stock.picking.web_save
+  - stock.picking.web_read
+  - stock.picking.search_read
+  - stock.picking.web_search_read
+  - stock.picking.onchange
+  - stock.move.read
+  - stock.move.write
+  - stock.move.web_save
+  - stock.move.web_read
+  - stock.move.onchange
+  - stock.move.action_show_details
+  - stock.move.line.read
+  - stock.move.line.write
+  - stock.move.line.web_save
+  - stock.move.line.create
+  - stock.move.line.onchange
+  - stock.move.line.unlink
+  - stock.lot.create
+  - stock.lot.read
+  - stock.lot.name_create
+  - stock.lot.search_read
+  - stock.quant.read
+  - stock.quant.search_read
+  - stock.quant.web_search_read
+  - res.partner.read
+  - product.product.read
+  - ir.ui.view.get_views
+
+forbidden_ops:
+  - stock.picking.unlink
+  - stock.picking.action_cancel

@@ -352,6 +352,22 @@ if mod and mod.state != "installed":
   confirmation. Skipping Check Availability in the UI triggers the
   Immediate Transfer wizard on Validate, NOT the Create Backorder
   dialog — a good hard-tier trap for partial-ship tasks.
+- **Serial-tracked incoming move + demand≥2 + `action_assign` pre-splits move_lines.**
+  On `stock.picking` with `tracking='serial'` and
+  `product_uom_qty=N≥2`, calling `action_confirm() + action_assign()`
+  pre-creates **N** empty `stock.move.line` rows (quantity=0,
+  lot_id=False, lot_name=False) — one per serial unit. The agent does
+  NOT need to click **Add a line** in the Detailed Operations popup;
+  both rows already exist. This **collapses** the "enter two serials"
+  task to ~8 clicks (tab into each existing row's lot_id combobox, pick
+  Create option, Save, Validate) — empirically BU solves it single-shot
+  (row 488 `stock.receive_serial_tracked_product_two_serials`, 16 steps
+  / 122s). To force the Add-a-line step, seed with `action_confirm()`
+  only (state=confirmed, zero move_lines) so the agent must click
+  **Check Availability**, OR make the agent create the picking from
+  scratch (pre-confirm has zero move_lines). The reference hard task
+  `stock.cancel_picking_create_replacement_with_serial` uses the
+  from-scratch path precisely for this reason.
 
 ### Website / website_sale
 
