@@ -1127,6 +1127,47 @@ On an **opportunity**, `team_id` is NOT in the main form header. Only editable c
 
 ---
 
+## product.template attribute_line_ids + variant auto-generation
+
+Configuring variants on a `product.template` via the Attributes & Variants
+tab writes `attribute_line_ids` with a `(0, 0, {attribute_id,
+value_ids:[(6,0,[…])]})` command. The ORM's `_create_variants` fires on
+save for every attribute whose `create_variant='always'` (the default),
+creating one `product.product` per combination of the cross-product of
+`value_ids` across all lines. There is no separate "generate variants"
+button — the save itself is sufficient.
+
+Seed + diff implications:
+
+1. **Do NOT pre-seed `product.product` rows** when the task is "add an
+   attribute line with N values" — let the template save create them.
+   Pre-seeding them would double up or mismatch the auto-generated set.
+2. **`product.attribute.value.match_key` must be `[attribute_id, name]`**
+   — value names collide across attributes in the base snapshot (e.g.,
+   the demo 'Legs' attribute has a 'Steel' value, and other attributes
+   might too). Keying on `name` alone causes cross-attribute entity-key
+   aliasing.
+3. **State diff after a "add one attribute line with 3 values" save**
+   emits exactly 9 atomic edits: `product.template.attribute_line_ids =
+   [1]`, `product.attribute.create×2` (name + create_variant), and 6
+   `product.attribute.value.create` rows (one `name` + one `attribute_id`
+   per value). `create_variant='always'` is the default but IS in the
+   diff because the attribute is a newly created record. Bake all 9 into
+   `expected_state.json` for F1=1.0.
+4. **Seed cleanup order matters**: to unlink a `product.attribute` that
+   has been used on another template, first unlink every
+   `product.template.attribute.line` referencing that attribute (across
+   all templates), then `value_ids.unlink()`, then `attribute.unlink()`.
+   Skipping the line unlink raises a PSQL FK error.
+5. **Quick-create of both the attribute and each value works from the
+   Attributes tab inline m2o / tags dropdowns** — typing a new name and
+   clicking "Create" spawns the record without leaving the form, which
+   is how BU completed this task single-shot in 269.7s.
+
+See `benchmark/tasks/product.configure_variant_attribute_two_values/`.
+
+---
+
 ## Discuss invite-by-email — no "Email tab" and SMTP is mandatory
 
 The channel Invite People side panel (`discuss.ChannelInvitation`) has a

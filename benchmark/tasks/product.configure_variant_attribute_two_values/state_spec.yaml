@@ -1,0 +1,35 @@
+models:
+  product.template:
+    match_key:
+      - name
+    fields:
+      - name
+      - attribute_line_ids
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
+
+  product.attribute:
+    match_key:
+      - name
+    fields:
+      - name
+      - create_variant
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
+
+  product.attribute.value:
+    match_key:
+      - attribute_id
+      - name
+    fields:
+      - name
+      - attribute_id
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
+      - sequence
