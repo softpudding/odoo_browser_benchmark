@@ -454,6 +454,16 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 442 | crm.assign_lead_salesperson_change_stage_won [medium] | Assign salesperson, move stage, mark Won | Done | PASS | PASS | 1.0 |
 | 443 | mass_mailing.create_mailing_select_list_schedule_send [hard] | Create mass mailing, pick list, schedule future send | Done | PASS | FAIL | 0.0 |
 | 444 | fleet.assign_vehicle_create_contract_active [medium] | Create vehicle contract, link to existing vehicle, activate | Done | PASS | FAIL | 0.0 |
+| 445 | sale.apply_discount_percent_on_sale_order_line [medium] | Apply percent discount on sale order line | WIP | — | — | — |
+| 446 | account.post_draft_invoice_send_to_customer [medium] | Post draft invoice then send by email | WIP | — | — | — |
+| 447 | stock.receipt_full_quantity_validate_no_backorder [easy] | Validate incoming shipment at full qty, no backorder | WIP | — | — | — |
+| 448 | project.close_task_change_state_to_done [easy] | Mark a project task as Done via state widget | WIP | — | — | — |
+| 449 | mrp.confirm_mo_produce_partial_keep_backorder [hard] | Confirm MO, produce partial qty, create production backorder | WIP | — | — | — |
+| 450 | purchase.set_vendor_product_code_on_po_line [medium] | Edit PO line description field | WIP | — | — | — |
+| 451 | hr_holidays.request_sick_leave_approve_self [hard] | Request sick leave and approve as manager | WIP | — | — | — |
+| 452 | website_event.add_sponsor_to_event_publish [medium] | Add sponsor to event and publish | WIP | — | — | — |
+| 453 | crm.lead_set_contact_name_email_phone_save [easy] | Fill contact name/email/phone on existing lead | WIP | — | — | — |
+| 454 | stock.adjust_product_reorder_rule_min_max [medium] | Set reordering rule min/max on product | WIP | — | — | — |
 
 ---
 
