@@ -1,0 +1,36 @@
+# Trace oracle for mrp.unreserve_raw_material_on_mo.
+#
+# MEDIUM: open MO, click the statusbar Unreserve button. The server
+# method is `mrp.production.do_unreserve` (type='object' in the view);
+# internally it cascades to `stock.move._do_unreserve` on each raw
+# move, which unlinks move_line_ids and recomputes state from
+# 'assigned' back to 'confirmed'.
+
+required_ops:
+  - mrp.production.do_unreserve
+
+optional_ops:
+  - mrp.production.read
+  - mrp.production.search_read
+  - mrp.production.web_read
+  - mrp.production.web_save
+  - mrp.production.write
+  - mrp.production.onchange
+  - stock.move.read
+  - stock.move.write
+  - stock.move.line.read
+  - stock.move.line.unlink
+  - stock.quant.read
+  - ir.ui.view.get_views
+  - ir.actions.server.run
+
+forbidden_ops:
+  - mrp.production.action_cancel
+  - mrp.production.button_mark_done
+  - mrp.production.button_plan
+  - mrp.production.action_assign
+  - mrp.production.unlink
+  - mrp.bom.unlink
+  - mrp.bom.write
+  - mrp.bom.line.unlink
+  - mrp.bom.line.write
