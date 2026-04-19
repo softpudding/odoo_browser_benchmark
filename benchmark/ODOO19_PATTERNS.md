@@ -168,6 +168,40 @@ if mod and mod.state != "installed":
   spawning phantom `fleet.vehicle.odometer` rows at 0.0025 each. Tasks
   that want this as a calibration trap should phrase the prompt with a
   bare-numeric value (`25000`) and enforce row-count in `check.py`.
+- **`fleet.vehicle.log.contract` has NO "Activate Contract" header
+  button.** The form header in `fleet_vehicle_log_contract_view_form`
+  contains ONLY `<field name="state" widget="statusbar"
+  options="{'clickable': '1'}"/>` — no `<button name="action_open"/>`
+  or "Activate" button. The only way to flip state between
+  `futur / open / expired / closed` (displayed as `New / Running /
+  Expired / Cancelled`) in the UI is to click the corresponding step on
+  the clickable statusbar. Tasks that reference "click Activate Contract"
+  must be rephrased to "click the Running step on the statusbar".
+- **Default `state='open'` on fresh contract create — the
+  write()-override flipper runs only on subsequent writes.** The
+  `FleetVehicleLogContract.write()` hook flips `state` to `futur` /
+  `open` / `expired` based on `start_date` vs today, but this override
+  fires ONLY on `write()`, NOT on `create()`. Consequence: a contract
+  created in the UI (create-then-save) with `start_date` in the future
+  still lands in `state='open'` (from the model default), NOT `'futur'`.
+  Tasks that want a "draft → activate" lifecycle must **pre-seed an
+  existing contract with `state='futur'`** (explicit `write` or
+  `action_draft()` call in seed) — you cannot get a draft state from the
+  create-from-scratch flow. Tasks that just want the agent to "confirm
+  Running" should be designed so the step is idempotent: the statusbar
+  button for the current state is rendered `disabled aria-current="step"`
+  and Playwright `click()` times out on it — oracle pattern is to check
+  `button[data-value='open'].aria-current == 'step'` and skip the click.
+- **Contract type autocomplete domain**: the `cost_subtype_id` field
+  ("Type" on the form) is a Many2one to `fleet.service.type` with
+  `domain=[('category', '=', 'contract')]`. `fleet.service.type` is
+  shared with service costs (which use `category='service'`) — seed must
+  create with `category='contract'` or the autocomplete will silently
+  return no results for the prompt-referenced type (e.g. "Leasing").
+- **Contract vendor field is `insurer_id`** (labeled "Vendor" on the
+  form) with `widget="many2one_avatar"` — standard Many2one to
+  `res.partner`. Not to be confused with the Service form's `vendor_id`
+  field on `fleet.vehicle.log.services`.
 
 ### Purchase / purchase_requisition
 
