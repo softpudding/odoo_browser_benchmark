@@ -476,6 +476,12 @@ Last eval: 2026-04-19 | Oracle: 167/167 (100%) | Browser-Use: 58/167 (34.7%) | N
 | 464 | calendar.create_meeting_invite_attendees_send [medium] | Create calendar meeting with 2 attendees | Done | PASS | FAIL | 0.0 |
 | 465 | hr.request_reimbursement_expense_report [hard] | Submit hr.expense + approve + post | Done | PASS | PASS | 1.0 |
 | 466 | stock.set_putaway_rule_default_location [medium] | Create a putaway rule for a product | Done | PASS | PASS | 1.0 |
+| 467 | account.create_vendor_bill_from_scratch_pay [hard] | Create vendor bill, post, register payment | WIP | — | — | — |
+| 468 | sale.edit_existing_quotation_add_optional_product [medium] | Add a new product line to draft SO | WIP | — | — | — |
+| 469 | stock.transfer_create_internal_transfer_validate [medium] | Create + validate internal transfer | WIP | — | — | — |
+| 470 | crm.bulk_archive_lost_leads [medium] | Filter Lost leads + bulk archive | WIP | — | — | — |
+| 471 | hr_holidays.request_time_off_with_attachment [hard] | Request leave and attach justification | WIP | — | — | — |
+| 472 | product.configure_stock_route_for_product [medium] | Enable MTO route on product | WIP | — | — | — |
 
 ---
 
