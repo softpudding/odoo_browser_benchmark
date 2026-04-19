@@ -1,0 +1,22 @@
+# Trace oracle for hr.promote_employee_set_new_job_title_save
+#
+# Easy task: agent opens Employees > Bench Promote Me, edits the
+# Job Title char field, and saves. Only hr.employee ops are expected.
+
+required_ops: []
+
+optional_ops:
+  - hr.employee.read
+  - hr.employee.write
+  - hr.employee.web_save
+  - hr.employee.search_read
+  - hr.employee.web_search_read
+  - hr.employee.onchange
+  - ir.ui.view.get_views
+  - ir.actions.act_window.read
+
+forbidden_ops:
+  - hr.employee.unlink
+  - hr.employee.toggle_active
+  - hr.job.create
+  - hr.job.unlink
