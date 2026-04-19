@@ -1,0 +1,25 @@
+# Trace oracle for website_blog.schedule_post_future_date_unpublish
+#
+# Hard: unpublish a published blog.post (pill toggle OFF) AND reschedule
+# the Publishing date to a future datetime in the same save. Browser
+# client typically hits web_save — both write and web_save are optional.
+
+required_ops: []
+
+optional_ops:
+  - blog.post.read
+  - blog.post.write
+  - blog.post.web_save
+  - blog.post.search_read
+  - blog.post.web_search_read
+  - blog.post.website_publish_button
+  - blog.blog.read
+  - blog.blog.search_read
+  - ir.ui.view.get_views
+
+forbidden_ops:
+  - blog.post.unlink
+  - blog.post.create
+  - blog.blog.create
+  - blog.blog.unlink
+  - blog.post.action_archive
