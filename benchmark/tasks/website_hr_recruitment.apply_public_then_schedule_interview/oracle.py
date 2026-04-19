@@ -1,212 +1,262 @@
-"""Pure JSON-RPC oracle for website_hr_recruitment.apply_public_then_schedule_interview.
+"""Oracle for website_hr_recruitment.apply_public_then_schedule_interview.
 
-This oracle does NOT use a browser. It proves the task is solvable by hitting
-Odoo's JSON-RPC endpoint directly:
-  1. Create an `hr.applicant` for the seeded "Senior Backend Engineer" job
-     with the expected partner_name / email_from / description (cover letter).
-  2. Create a `mail.activity` linked to that applicant with:
-       - activity_type_id  -> the "Meeting" type
-       - summary           -> "Interview"
-       - date_deadline     -> 2026-05-04
-       - user_id           -> admin
+Pure Playwright UI oracle — proves the task is solvable via the browser:
 
-Environment variables (set by eval.py --agent oracle):
-  BENCHMARK_BASE_URL   -- e.g. http://127.0.0.1:8069
-  BENCHMARK_DB         -- target database
-  BENCHMARK_LOGIN      -- login (default "admin")
-  BENCHMARK_PASSWORD   -- password (default "admin")
+  Phase 1 — Public website (no login):
+    1. Navigate to /jobs.
+    2. Open the "Senior Backend Engineer" posting.
+    3. Click Apply and fill the public application form.
+    4. Submit via the .s_website_form_send button.
+
+  Phase 2 — Back-office (admin login):
+    5. Log in as admin and open /odoo/recruitment.
+    6. Open the "Senior Backend Engineer" job pipeline.
+    7. Open Bench Candidate's kanban card.
+    8. Open the Activities button in the chatter, click the "Meeting" badge,
+       click Schedule to land on the calendar, then create a new
+       calendar.event named "Interview" on 2026-05-04. Saving the event
+       creates a linked mail.activity with
+           summary="Interview", activity_type_id=Meeting,
+           date_deadline=2026-05-04, res_model=hr.applicant.
+
+In Odoo 19, picking "Meeting" hides the summary / date_deadline inputs on
+the schedule-activity wizard and routes the user through the calendar so
+the activity's summary/date are derived from the calendar event.
 """
 
-from __future__ import annotations
+from benchmark.oracle_helpers import (
+    DB,
+    click_kanban_card,
+    full_url,
+    login,
+    navigate,
+    run_oracle,
+    save_form,
+    _wait_for_ready,
+    _wait_no_loading,
+)
 
-import json
-import os
-import sys
-import urllib.request
-
-BASE_URL = os.environ.get("BENCHMARK_BASE_URL", "http://127.0.0.1:8069").rstrip("/")
-DB = os.environ.get("BENCHMARK_DB", "")
-LOGIN = os.environ.get("BENCHMARK_LOGIN") or "admin"
-PASSWORD = os.environ.get("BENCHMARK_PASSWORD") or "admin"
 
 JOB_NAME = "Senior Backend Engineer"
 APPLICANT_NAME = "Bench Candidate"
 APPLICANT_EMAIL = "bench.candidate@example.com"
 APPLICANT_PHONE = "+1 555 0143"
 APPLICANT_LINKEDIN = "linkedin.com/in/bench-candidate"
-APPLICANT_INTRO = (
-    "Excited to interview for the Senior Backend Engineer role."
-)
+APPLICANT_INTRO = "Excited to interview for the Senior Backend Engineer role."
 ACTIVITY_SUMMARY = "Interview"
-ACTIVITY_DATE = "2026-05-04"
+TARGET_MONTH_LABEL = "May 2026"
+TARGET_DAY = "4"
 
 
-def jsonrpc_call(url: str, service: str, method: str, args: list):
-    """Low-level JSON-RPC call to Odoo."""
-    payload = {
-        "jsonrpc": "2.0",
-        "method": "call",
-        "params": {
-            "service": service,
-            "method": method,
-            "args": args,
-        },
-        "id": 1,
-    }
-    data = json.dumps(payload).encode("utf-8")
-    req = urllib.request.Request(
-        f"{url}/jsonrpc",
-        data=data,
-        headers={"Content-Type": "application/json"},
-        method="POST",
-    )
-    with urllib.request.urlopen(req, timeout=60) as resp:
-        body = json.loads(resp.read().decode("utf-8"))
-    if "error" in body:
-        raise RuntimeError(f"JSON-RPC error: {body['error']}")
-    return body.get("result")
+def _submit_public_application(page):
+    portal_url = "/jobs"
+    if DB:
+        portal_url = f"/jobs?db={DB}"
+    page.goto(full_url(portal_url))
+    page.wait_for_load_state("load")
+    page.wait_for_timeout(2000)
 
+    # Click the job link.
+    job_link = page.locator(f"a:has-text('{JOB_NAME}')").first
+    job_link.wait_for(timeout=15000)
+    job_link.scroll_into_view_if_needed()
+    page.wait_for_timeout(300)
+    job_link.click()
+    page.wait_for_load_state("load")
+    page.wait_for_timeout(2500)
 
-def authenticate(base_url: str, db: str, login: str, password: str) -> int:
-    uid = jsonrpc_call(base_url, "common", "authenticate", [db, login, password, {}])
-    if not uid:
-        raise RuntimeError(f"JSON-RPC auth failed for {login}@{db}")
-    return uid
+    # Click Apply / Apply Now.
+    apply_btn = page.locator(
+        "a.btn:has-text('Apply'), "
+        "a:has-text('Apply Now'), "
+        "button:has-text('Apply Now'), "
+        "a:has-text('Apply'), button:has-text('Apply')"
+    ).first
+    apply_btn.scroll_into_view_if_needed()
+    page.wait_for_timeout(300)
+    apply_btn.click()
+    page.wait_for_load_state("load")
+    page.wait_for_timeout(3000)
 
-
-def execute_kw(base_url, db, uid, password, model, method, args, kwargs=None):
-    return jsonrpc_call(
-        base_url, "object", "execute_kw",
-        [db, uid, password, model, method, args, kwargs or {}],
+    page.wait_for_selector(
+        "input[name='partner_name'], form#hr_recruitment_form",
+        timeout=15000,
     )
 
+    page.locator("input[name='partner_name']").first.fill(APPLICANT_NAME)
+    page.locator("input[name='email_from']").first.fill(APPLICANT_EMAIL)
+    page.locator("input[name='partner_phone']").first.fill(APPLICANT_PHONE)
 
-def main():
-    if not DB:
-        print("ERROR: BENCHMARK_DB is not set", file=sys.stderr)
-        sys.exit(1)
+    linkedin_input = page.locator("input[name='linkedin_profile']")
+    if linkedin_input.count() > 0:
+        linkedin_input.first.fill(APPLICANT_LINKEDIN)
 
-    uid = authenticate(BASE_URL, DB, LOGIN, PASSWORD)
+    intro_textarea = page.locator("textarea[name='short_introduction']")
+    if intro_textarea.count() > 0:
+        intro_textarea.first.fill(APPLICANT_INTRO)
+    page.wait_for_timeout(500)
 
-    # -----------------------------------------------------------------
-    # 1. Locate the seeded job.
-    # -----------------------------------------------------------------
-    jobs = execute_kw(
-        BASE_URL, DB, uid, PASSWORD,
-        "hr.job", "search_read",
-        [[("name", "=", JOB_NAME)]],
-        {"fields": ["id", "name", "department_id"], "limit": 1},
-    )
-    if not jobs:
-        raise RuntimeError(f"hr.job '{JOB_NAME}' not found (seed may have failed)")
-    job = jobs[0]
-    job_id = job["id"]
-    department_id = job["department_id"][0] if job.get("department_id") else False
-
-    # Ensure no stray applicant exists from a previous aborted oracle run.
-    existing = execute_kw(
-        BASE_URL, DB, uid, PASSWORD,
-        "hr.applicant", "search",
-        [[
-            "|",
-            ("partner_name", "=", APPLICANT_NAME),
-            ("email_from", "=", APPLICANT_EMAIL),
-        ]],
-        {},
-    )
-    if existing:
-        # Cancel linked activities first.
-        act_ids = execute_kw(
-            BASE_URL, DB, uid, PASSWORD,
-            "mail.activity", "search",
-            [[("res_model", "=", "hr.applicant"), ("res_id", "in", existing)]],
-            {},
-        )
-        if act_ids:
-            execute_kw(BASE_URL, DB, uid, PASSWORD, "mail.activity", "unlink", [act_ids])
-        execute_kw(BASE_URL, DB, uid, PASSWORD, "hr.applicant", "unlink", [existing])
-
-    # -----------------------------------------------------------------
-    # 2. Create the applicant (mirrors what /website/form/hr.applicant does).
-    # -----------------------------------------------------------------
-    applicant_vals = {
-        "partner_name": APPLICANT_NAME,
-        "email_from": APPLICANT_EMAIL,
-        "partner_phone": APPLICANT_PHONE,
-        "linkedin_profile": APPLICANT_LINKEDIN,
-        "job_id": job_id,
-    }
-    if department_id:
-        applicant_vals["department_id"] = department_id
-
-    applicant_id = execute_kw(
-        BASE_URL, DB, uid, PASSWORD,
-        "hr.applicant", "create",
-        [applicant_vals],
-    )
-    print(f"Created hr.applicant id={applicant_id}")
-
-    # Post the cover letter to the chatter so downstream checks that look at
-    # message_ids also pass (mirrors the public form's short_introduction).
-    execute_kw(
-        BASE_URL, DB, uid, PASSWORD,
-        "hr.applicant", "message_post",
-        [[applicant_id]],
-        {"body": APPLICANT_INTRO},
-    )
-
-    # -----------------------------------------------------------------
-    # 3. Schedule the "Meeting" activity named "Interview" on 2026-05-04.
-    # -----------------------------------------------------------------
-    meeting_type = execute_kw(
-        BASE_URL, DB, uid, PASSWORD,
-        "mail.activity.type", "search_read",
-        [[("name", "=", "Meeting")]],
-        {"fields": ["id", "name"], "limit": 1},
-    )
-    if not meeting_type:
-        # Fallback: some DBs localise to e.g. category "meeting"
-        meeting_type = execute_kw(
-            BASE_URL, DB, uid, PASSWORD,
-            "mail.activity.type", "search_read",
-            [[("category", "=", "meeting")]],
-            {"fields": ["id", "name"], "limit": 1},
-        )
-    if not meeting_type:
-        raise RuntimeError("mail.activity.type 'Meeting' not found")
-
-    applicant_model = execute_kw(
-        BASE_URL, DB, uid, PASSWORD,
-        "ir.model", "search_read",
-        [[("model", "=", "hr.applicant")]],
-        {"fields": ["id"], "limit": 1},
-    )
-    if not applicant_model:
-        raise RuntimeError("ir.model for hr.applicant not found")
-
-    activity_vals = {
-        "res_model": "hr.applicant",
-        "res_model_id": applicant_model[0]["id"],
-        "res_id": applicant_id,
-        "activity_type_id": meeting_type[0]["id"],
-        "summary": ACTIVITY_SUMMARY,
-        "date_deadline": ACTIVITY_DATE,
-        "user_id": uid,
-    }
-    activity_id = execute_kw(
-        BASE_URL, DB, uid, PASSWORD,
-        "mail.activity", "create",
-        [activity_vals],
-    )
-    print(f"Created mail.activity id={activity_id} on hr.applicant id={applicant_id}")
-    print("Oracle: PASS")
-
-
-if __name__ == "__main__":
+    send_btn = page.locator(
+        ".s_website_form_send:visible, "
+        "form#hr_recruitment_form button[type='submit']:visible, "
+        "button.s_website_form_send"
+    ).first
     try:
-        main()
-    except Exception as exc:  # noqa: BLE001
-        print(f"Oracle: FAIL - {exc}", file=sys.stderr)
-        import traceback
-        traceback.print_exc()
-        sys.exit(1)
+        send_btn.scroll_into_view_if_needed()
+    except Exception:
+        pass
+    page.wait_for_timeout(300)
+    send_btn.click()
+    page.wait_for_load_state("load")
+    page.wait_for_timeout(6000)
+
+    # Soft-wait for a confirmation signal.
+    try:
+        page.wait_for_selector(
+            ".s_website_form_end_message:visible, "
+            "span:has-text('Thank'):visible, "
+            "h1:has-text('Congratulations'):visible, "
+            "div:has-text('application has been'):visible",
+            timeout=10000,
+        )
+    except Exception:
+        pass
+
+
+def _open_applicant(page):
+    navigate(page, "/odoo/recruitment")
+    _wait_no_loading(page)
+    page.wait_for_timeout(1500)
+
+    # Open the job's applicant pipeline, then the applicant card.
+    click_kanban_card(page, JOB_NAME)
+    _wait_for_ready(page)
+    page.wait_for_timeout(1000)
+
+    click_kanban_card(page, APPLICANT_NAME)
+    _wait_for_ready(page)
+    page.wait_for_timeout(1500)
+
+
+def _open_schedule_activity_modal(page):
+    chatter = page.locator(".o-mail-Chatter, .o_chatter")
+    if chatter.count() > 0:
+        chatter.first.scroll_into_view_if_needed()
+        page.wait_for_timeout(500)
+
+    activity_btn = page.locator(
+        "button.o-mail-Chatter-activity:visible, "
+        ".o-mail-Chatter button:has-text('Activities'):visible, "
+        ".o-mail-Chatter button:has-text('Activity'):visible"
+    )
+    if activity_btn.count() == 0:
+        activity_btn = page.locator("button.o-mail-Chatter-activity")
+    activity_btn.first.click()
+    page.wait_for_timeout(2000)
+
+    page.wait_for_selector(".modal:visible", timeout=15000)
+
+
+def _pick_meeting_type_and_schedule(page):
+    modal = page.locator(".modal:visible").last
+    # In Odoo 19 the activity_type is a row of selection badges.
+    meeting_badge = modal.locator(
+        ".o_field_widget[name='activity_type_id'] "
+        ".o_selection_badge:has-text('Meeting')"
+    )
+    meeting_badge.first.click()
+    page.wait_for_timeout(1500)
+    _wait_no_loading(page)
+
+    # After picking Meeting, the only visible action is "Schedule".
+    modal = page.locator(".modal:visible").last
+    schedule_btn = modal.locator(
+        "button[name='action_create_calendar_event']:visible, "
+        ".modal-footer button.btn-primary:visible"
+    ).first
+    schedule_btn.click()
+    page.wait_for_load_state("load")
+    page.wait_for_timeout(4000)
+    _wait_no_loading(page)
+
+
+def _create_calendar_event(page):
+    # We are now on the applicant's calendar for the meeting activity.
+    new_btn = page.locator(
+        "button.o_list_button_add:visible, "
+        ".o_control_panel button:has-text('New'):visible"
+    ).first
+    new_btn.click()
+    page.wait_for_timeout(2500)
+    _wait_no_loading(page)
+
+    # Event title.
+    name_inp = page.locator(
+        ".o_field_widget[name='name'] input, "
+        ".o_field_widget[name='name'] textarea"
+    ).first
+    name_inp.click()
+    name_inp.fill(ACTIVITY_SUMMARY)
+    page.wait_for_timeout(500)
+
+    # Toggle "All day" so we only pick a date (no time component).
+    allday = page.locator(
+        ".o_field_widget[name='allday'] input[type='checkbox']"
+    ).first
+    if not allday.is_checked():
+        allday.click()
+        page.wait_for_timeout(1000)
+    _wait_no_loading(page)
+
+    # Open the start_date picker (button-based date range widget).
+    start_btn = page.locator("button[data-field='start_date']").first
+    start_btn.click()
+    page.wait_for_timeout(1200)
+
+    # Navigate the popover calendar to the target month.
+    for _ in range(36):
+        header = page.locator(
+            ".o_datetime_picker_header .o_header_part"
+        ).first
+        current = header.inner_text().strip() if header.count() > 0 else ""
+        if current == TARGET_MONTH_LABEL:
+            break
+        page.locator(".o_datetime_picker .o_next:visible").first.click()
+        page.wait_for_timeout(350)
+
+    # Click the target day cell (must match exactly to avoid 14/24/etc.).
+    day_cells = page.locator(".o_date_picker .o_date_item_cell")
+    clicked = False
+    for i in range(day_cells.count()):
+        cell = day_cells.nth(i)
+        if cell.inner_text().strip() == TARGET_DAY:
+            cls = cell.get_attribute("class") or ""
+            if "o_out_of_range" in cls:
+                continue
+            cell.click()
+            clicked = True
+            break
+    if not clicked:
+        raise RuntimeError(
+            f"Could not find day '{TARGET_DAY}' in month '{TARGET_MONTH_LABEL}'"
+        )
+    page.wait_for_timeout(800)
+
+    save_form(page)
+    page.wait_for_timeout(2500)
+    _wait_no_loading(page)
+
+
+def oracle(page):
+    # Phase 1 — Public website (no login).
+    _submit_public_application(page)
+
+    # Phase 2 — Back-office: log in then schedule the Meeting activity.
+    login(page)
+    _open_applicant(page)
+    _open_schedule_activity_modal(page)
+    _pick_meeting_type_and_schedule(page)
+    _create_calendar_event(page)
+
+
+run_oracle(oracle)

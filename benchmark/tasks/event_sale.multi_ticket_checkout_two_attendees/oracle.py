@@ -1,18 +1,33 @@
 """Oracle for event_sale.multi_ticket_checkout_two_attendees.
 
-Pure JSON-RPC oracle (allowed for oracle scripts). Reaches the target
-end state directly:
+Playwright UI-based oracle. Walks the real multi-modal flow:
 
-  1. Resolve seeded partner, event, and both tickets.
-  2. Create a single sale.order with TWO lines (one per ticket).
-  3. Call sale.order.action_confirm — Odoo auto-generates one
-     event.registration per ticket.
-  4. Write the correct attendee name/email on each registration so
-     they match the prompt. Ensure both registrations are in 'open'
-     state.
+  1. Open Sales -> create a new quotation.
+  2. Set the customer (Bench Summit Customer).
+  3. Add order line #1 for the Early Bird ticket product.
+     Setting a service_tracking=event product triggers the event
+     configurator wizard -> pick event + Early Bird ticket, Ok.
+  4. Add order line #2 for the VIP ticket product; configurator
+     fires again -> pick event + VIP ticket, Ok.
+  5. Save the quotation and click Confirm.
+  6. On Confirm, Odoo opens the registration editor wizard with TWO
+     rows (one per ticket). Fill each row's attendee name + email
+     (Alice for Early Bird, Bob for VIP) and click
+     Create/Update registrations.
 """
 
-from benchmark.oracle_helpers import login, navigate, run_oracle
+from benchmark.oracle_helpers import (
+    click_create,
+    click_tab,
+    login,
+    navigate,
+    run_oracle,
+    save_form,
+    set_many2one,
+    set_o2m_many2one,
+    _wait_for_ready,
+    _wait_no_loading,
+)
 
 
 EVENT_NAME = "Bench Summit 2026"
@@ -28,223 +43,189 @@ ATTENDEE_VIP_NAME = "Bob Summit Attendee"
 ATTENDEE_VIP_EMAIL = "bob.summit@example.com"
 
 
+def _click_add_a_line(page):
+    add_link = page.locator(
+        "a.o_field_x2many_list_row_add:visible, "
+        "td.o_field_x2many_list_row_add a:visible"
+    )
+    add_link.first.click()
+    page.wait_for_timeout(500)
+    _wait_no_loading(page)
+
+
+def _modal_set_many2one(page, field_name, search_text):
+    modal = page.locator(".modal:visible").last
+    inp = modal.locator(
+        f".o_field_widget[name='{field_name}'] input"
+    ).first
+    inp.click()
+    inp.fill("")
+    inp.fill(search_text)
+    page.wait_for_timeout(800)
+    item = page.locator(
+        ".dropdown-menu .dropdown-item, .ui-autocomplete .ui-menu-item"
+    ).filter(has_text=search_text).first
+    item.click()
+    page.wait_for_timeout(500)
+    _wait_no_loading(page)
+
+
+def _modal_fill_row_field(page, row_idx, field_name, value):
+    """Fill a field in a specific row of a modal's data table."""
+    modal = page.locator(".modal:visible").last
+    rows = modal.locator(".o_data_row")
+    cell = rows.nth(row_idx).locator(
+        f"td[name='{field_name}'], .o_field_widget[name='{field_name}']"
+    ).first
+    cell.click()
+    page.wait_for_timeout(200)
+    inp = cell.locator("input").first
+    inp.fill("")
+    inp.fill(value)
+    inp.press("Tab")
+    page.wait_for_timeout(300)
+    _wait_no_loading(page)
+
+
+def _modal_get_row_ticket(page, row_idx):
+    """Read the event_ticket_id cell text for row_idx (for matching Early/VIP)."""
+    modal = page.locator(".modal:visible").last
+    rows = modal.locator(".o_data_row")
+    # Event ticket column might be labeled 'event_ticket_id'
+    cell = rows.nth(row_idx).locator(
+        "td[name='event_ticket_id'], .o_field_widget[name='event_ticket_id']"
+    ).first
+    if cell.count() == 0:
+        return rows.nth(row_idx).inner_text()
+    return cell.inner_text()
+
+
+def _handle_configurator(page, ticket_name):
+    """If the 'Configure an event' wizard is open, fill event + ticket."""
+    if page.locator(".modal:visible").count() == 0:
+        return
+    _modal_set_many2one(page, "event_id", EVENT_NAME)
+    _modal_set_many2one(page, "event_ticket_id", ticket_name)
+
+    ok_btn = page.locator(
+        ".modal:visible .modal-footer button:has-text('Ok'), "
+        ".modal:visible .modal-footer button:has-text('OK'), "
+        ".modal:visible .modal-footer button.btn-primary"
+    )
+    ok_btn.first.click()
+    page.wait_for_timeout(1000)
+    _wait_no_loading(page)
+
+
 def oracle(page):
     login(page)
-    # Land on Sales so the oracle looks like an admin operator working
-    # through the sales module.
+
+    # --------------------------------------------------------------
+    # Step 1: new quotation in Sales
+    # --------------------------------------------------------------
     navigate(page, "/odoo/sales")
+    _wait_no_loading(page)
+    page.wait_for_timeout(500)
 
-    result = page.evaluate(
-        """async (payload) => {
-            const unwrapId = (v) => Array.isArray(v) ? v[0] : v;
-            const callKw = async (params) => {
-                const res = await fetch('/web/dataset/call_kw', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    credentials: 'same-origin',
-                    body: JSON.stringify({ jsonrpc: '2.0', method: 'call', params }),
-                });
-                const json = await res.json();
-                if (json.error) {
-                    throw new Error(json.error.data?.message || json.error.message);
-                }
-                return json.result;
-            };
+    click_create(page)
+    page.wait_for_timeout(500)
+    _wait_for_ready(page)
 
-            // 1. Resolve partner.
-            const partners = await callKw({
-                model: 'res.partner',
-                method: 'search_read',
-                args: [[['name', '=', payload.partnerName]], ['id']],
-                kwargs: { limit: 1 },
-            });
-            if (!partners.length) {
-                throw new Error('Partner not found: ' + payload.partnerName);
-            }
-            const partnerId = partners[0].id;
+    # Customer
+    set_many2one(page, "partner_id", PARTNER_NAME)
+    page.wait_for_timeout(500)
+    _wait_no_loading(page)
 
-            // 2. Resolve event.
-            const events = await callKw({
-                model: 'event.event',
-                method: 'search_read',
-                args: [[['name', '=', payload.eventName]], ['id']],
-                kwargs: { limit: 1 },
-            });
-            if (!events.length) {
-                throw new Error('Event not found: ' + payload.eventName);
-            }
-            const eventId = events[0].id;
+    # Make sure we're on the Order Lines tab (default) then add a line
+    try:
+        click_tab(page, "Order Lines")
+    except Exception:
+        pass
+    page.wait_for_timeout(300)
 
-            // 3. Resolve both tickets.
-            const tickets = await callKw({
-                model: 'event.event.ticket',
-                method: 'search_read',
-                args: [[
-                    ['event_id', '=', eventId],
-                    ['name', 'in', [payload.ticketEarly, payload.ticketVip]],
-                ], ['id', 'name', 'product_id', 'price']],
-                kwargs: {},
-            });
-            const earlyTicket = tickets.find(t => t.name === payload.ticketEarly);
-            const vipTicket = tickets.find(t => t.name === payload.ticketVip);
-            if (!earlyTicket || !vipTicket) {
-                throw new Error('Missing ticket(s) on ' + payload.eventName);
-            }
-            const earlyProductId = unwrapId(earlyTicket.product_id);
-            const vipProductId = unwrapId(vipTicket.product_id);
-            if (!earlyProductId || !vipProductId) {
-                throw new Error('Ticket(s) missing product_id');
-            }
+    # --------------------------------------------------------------
+    # Step 2: Order line #1 - Early Bird Ticket
+    # --------------------------------------------------------------
+    _click_add_a_line(page)
+    page.wait_for_timeout(400)
 
-            // 4. Create SO with two lines (one per ticket).
-            const orderIds = await callKw({
-                model: 'sale.order',
-                method: 'create',
-                args: [[{
-                    partner_id: partnerId,
-                    order_line: [
-                        [0, 0, {
-                            product_id: earlyProductId,
-                            product_uom_qty: 1.0,
-                            event_id: eventId,
-                            event_ticket_id: earlyTicket.id,
-                            tax_ids: [[5, 0, 0]],
-                        }],
-                        [0, 0, {
-                            product_id: vipProductId,
-                            product_uom_qty: 1.0,
-                            event_id: eventId,
-                            event_ticket_id: vipTicket.id,
-                            tax_ids: [[5, 0, 0]],
-                        }],
-                    ],
-                }]],
-                kwargs: {},
-            });
-            const orderId = unwrapId(orderIds);
+    set_o2m_many2one(page, 0, "product_template_id", PRODUCT_EARLY)
+    page.wait_for_timeout(1500)
+    _wait_no_loading(page)
 
-            // 5. Confirm the SO — this triggers automatic creation of
-            //    event.registration records, one per ticket.
-            await callKw({
-                model: 'sale.order',
-                method: 'action_confirm',
-                args: [[orderId]],
-                kwargs: {},
-            });
+    _handle_configurator(page, TICKET_EARLY)
 
-            // 6. Find the auto-generated registrations.
-            const regs = await callKw({
-                model: 'event.registration',
-                method: 'search_read',
-                args: [[
-                    ['event_id', '=', eventId],
-                    ['sale_order_id', '=', orderId],
-                ], ['id', 'state', 'partner_id', 'event_ticket_id']],
-                kwargs: {},
-            });
-            if (regs.length !== 2) {
-                throw new Error(
-                    'Expected 2 registrations for SO ' + orderId +
-                    ', got ' + regs.length);
-            }
-            const earlyReg = regs.find(
-                r => unwrapId(r.event_ticket_id) === earlyTicket.id);
-            const vipReg = regs.find(
-                r => unwrapId(r.event_ticket_id) === vipTicket.id);
-            if (!earlyReg || !vipReg) {
-                throw new Error('Failed to match registrations to tickets');
-            }
+    # --------------------------------------------------------------
+    # Step 3: Order line #2 - VIP Ticket
+    # --------------------------------------------------------------
+    # Press Escape to close any residual dropdown/datepicker before
+    # adding a fresh line.
+    page.keyboard.press("Escape")
+    page.wait_for_timeout(200)
+    _wait_no_loading(page)
 
-            // 7. Write the attendee details on each registration.
-            await callKw({
-                model: 'event.registration',
-                method: 'write',
-                args: [[earlyReg.id], {
-                    partner_id: partnerId,
-                    name: payload.attendeeEarlyName,
-                    email: payload.attendeeEarlyEmail,
-                }],
-                kwargs: {},
-            });
-            await callKw({
-                model: 'event.registration',
-                method: 'write',
-                args: [[vipReg.id], {
-                    partner_id: partnerId,
-                    name: payload.attendeeVipName,
-                    email: payload.attendeeVipEmail,
-                }],
-                kwargs: {},
-            });
+    _click_add_a_line(page)
+    page.wait_for_timeout(400)
 
-            // 8. Ensure both registrations are in 'open' state.
-            const regStates = await callKw({
-                model: 'event.registration',
-                method: 'read',
-                args: [[earlyReg.id, vipReg.id], ['state']],
-                kwargs: {},
-            });
-            const needConfirm = regStates
-                .filter(r => r.state !== 'open' && r.state !== 'done')
-                .map(r => r.id);
-            if (needConfirm.length) {
-                await callKw({
-                    model: 'event.registration',
-                    method: 'action_confirm',
-                    args: [needConfirm],
-                    kwargs: {},
-                });
-            }
+    set_o2m_many2one(page, 1, "product_template_id", PRODUCT_VIP)
+    page.wait_for_timeout(1500)
+    _wait_no_loading(page)
 
-            // 9. Sanity read.
-            const orderData = await callKw({
-                model: 'sale.order',
-                method: 'read',
-                args: [[orderId], ['state', 'amount_total']],
-                kwargs: {},
-            });
-            const regData = await callKw({
-                model: 'event.registration',
-                method: 'read',
-                args: [[earlyReg.id, vipReg.id], ['state', 'name', 'email', 'event_ticket_id']],
-                kwargs: {},
-            });
+    _handle_configurator(page, TICKET_VIP)
 
-            return { order: orderData[0], regs: regData };
-        }""",
-        {
-            "partnerName": PARTNER_NAME,
-            "eventName": EVENT_NAME,
-            "ticketEarly": TICKET_EARLY,
-            "ticketVip": TICKET_VIP,
-            "attendeeEarlyName": ATTENDEE_EARLY_NAME,
-            "attendeeEarlyEmail": ATTENDEE_EARLY_EMAIL,
-            "attendeeVipName": ATTENDEE_VIP_NAME,
-            "attendeeVipEmail": ATTENDEE_VIP_EMAIL,
-        },
+    # --------------------------------------------------------------
+    # Step 4: Save + Confirm
+    # --------------------------------------------------------------
+    page.keyboard.press("Escape")
+    page.wait_for_timeout(200)
+    save_form(page)
+    page.wait_for_timeout(1000)
+    _wait_no_loading(page)
+
+    confirm_btn = page.locator(
+        ".o_statusbar_buttons button[name='action_confirm']:visible, "
+        ".o_statusbar_buttons button:has-text('Confirm'):visible"
     )
+    confirm_btn.first.click()
+    page.wait_for_timeout(2500)
+    _wait_no_loading(page)
 
-    order = result["order"]
-    regs = result["regs"]
-    if order["state"] not in ("sale", "done"):
-        raise RuntimeError(
-            f"Oracle: order state is {order['state']}, expected sale/done"
+    # --------------------------------------------------------------
+    # Step 5: Registration editor wizard - TWO rows, one per ticket.
+    # Match rows to tickets by reading the event_ticket_id cell text.
+    # --------------------------------------------------------------
+    if page.locator(".modal:visible").count() > 0:
+        # Read both rows' ticket labels to decide which is Early / VIP.
+        row0_text = _modal_get_row_ticket(page, 0) or ""
+        row1_text = _modal_get_row_ticket(page, 1) or ""
+
+        # Default mapping assumes row 0 = Early Bird, row 1 = VIP.
+        early_row, vip_row = 0, 1
+        if TICKET_VIP in row0_text and TICKET_EARLY in row1_text:
+            early_row, vip_row = 1, 0
+        elif TICKET_EARLY in row0_text and TICKET_VIP in row1_text:
+            early_row, vip_row = 0, 1
+
+        # Fill Early Bird row (Alice).
+        _modal_fill_row_field(page, early_row, "name", ATTENDEE_EARLY_NAME)
+        _modal_fill_row_field(page, early_row, "email", ATTENDEE_EARLY_EMAIL)
+        page.wait_for_timeout(400)
+
+        # Fill VIP row (Bob).
+        _modal_fill_row_field(page, vip_row, "name", ATTENDEE_VIP_NAME)
+        _modal_fill_row_field(page, vip_row, "email", ATTENDEE_VIP_EMAIL)
+        page.wait_for_timeout(400)
+
+        action_btn = page.locator(
+            ".modal:visible .modal-footer "
+            "button[name='action_make_registration'], "
+            ".modal:visible .modal-footer "
+            "button:has-text('Create/Update'), "
+            ".modal:visible .modal-footer button.btn-primary"
         )
-    if abs(order["amount_total"] - 600.0) > 0.01:
-        raise RuntimeError(
-            f"Oracle: order amount_total is {order['amount_total']}, "
-            f"expected 600.0"
-        )
-    if len(regs) != 2:
-        raise RuntimeError(
-            f"Oracle: expected 2 registrations, got {len(regs)}"
-        )
-    for reg in regs:
-        if reg["state"] != "open":
-            raise RuntimeError(
-                f"Oracle: registration {reg['name']!r} state is "
-                f"{reg['state']}, expected open"
-            )
+        action_btn.first.click()
+        page.wait_for_timeout(2000)
+        _wait_no_loading(page)
 
 
 run_oracle(oracle)
