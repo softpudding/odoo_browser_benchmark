@@ -1,0 +1,18 @@
+task_id: account.refund_customer_invoice_cash_basis
+module: account
+difficulty: hard
+instruction: see prompt.md
+start_url: /odoo/accounting
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 480
+step_limit: 260
+metadata:
+  category: side_effect_trap
+  failure_pattern: "Agent must open posted invoice BENCH-REFUND-001 (single line, total 500.00), click the header 'Credit Note' button, leave the wizard defaults (reason 'Cash basis partial refund', today's date, default journal), click the primary 'Reverse' button (NOT 'Reverse and Create Invoice'), then on the generated draft out_refund EDIT the single copied line's price_unit from 500.00 down to 200.00 before clicking the header 'Confirm' button to post. The trap: unlike multi-line partial-refund tasks there is no line to delete — the agent must override price_unit on the lone copied line, a pattern most agents skip in favor of accepting the full-amount draft."
+  primary_track: true
+  tier: 3

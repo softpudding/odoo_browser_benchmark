@@ -1,0 +1,42 @@
+# Trace oracle for account.refund_customer_invoice_cash_basis
+#
+# Category 3: Side-effect trap (wizard).
+# Agent must use the Reverse wizard on a posted single-line invoice,
+# click the primary "Reverse" button (refund_moves, NOT modify_moves),
+# then edit the lone copied line's price_unit 500 -> 200 and post.
+
+required_ops:
+  - account.move.reversal.refund_moves
+  - account.move.action_post
+
+optional_ops:
+  - account.move.read
+  - account.move.web_read
+  - account.move.search_read
+  - account.move.web_search_read
+  - account.move.write
+  - account.move.web_save
+  - account.move.line.read
+  - account.move.line.search_read
+  - account.move.line.write
+  - account.move.reversal.create
+  - account.move.reversal.read
+  - account.move.reversal.write
+  - account.move.create
+  - res.partner.read
+  - res.partner.search_read
+  - account.journal.read
+  - account.journal.search_read
+  - product.product.read
+  - product.product.search_read
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+  - mail.message.create
+  - mail.followers.create
+  - bus.bus.create
+
+forbidden_ops:
+  - account.move.reversal.modify_moves
+  - account.move.button_draft
+  - account.move.button_cancel
+  - account.move.unlink
