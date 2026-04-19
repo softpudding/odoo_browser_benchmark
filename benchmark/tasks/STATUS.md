@@ -464,6 +464,12 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 452 | website_event.add_sponsor_to_event_publish [medium] | Add sponsor to event and publish | Done | PASS | PASS | 1.0 |
 | 453 | crm.lead_set_contact_name_email_phone_save [easy] | Fill contact name/email/phone on existing lead | Done | PASS | PASS | 1.0 |
 | 454 | stock.adjust_product_reorder_rule_min_max [medium] | Set reordering rule min/max on product | Done | PASS | PASS | 1.0 |
+| 455 | account.reconcile_bank_statement_line_to_invoice [hard] | Reconcile a bank statement line against a posted invoice | WIP | — | — | — |
+| 456 | sale.create_sale_quotation_from_opportunity_smart_button [medium] | Create quotation from CRM opportunity smart button | WIP | — | — | — |
+| 457 | stock.archive_old_product_set_inactive [easy] | Archive a product via cog Actions | WIP | — | — | — |
+| 458 | purchase.add_product_to_rfq_with_taxes [medium] | Add new product line to RFQ with taxes | WIP | — | — | — |
+| 459 | hr.create_public_holiday_calendar_entry [medium] | Add a public holiday entry for a specific date | WIP | — | — | — |
+| 460 | mrp.create_bom_kit_type_for_product [hard] | Create a BoM of type Kit with 2 components | WIP | — | — | — |
 
 ---
 
