@@ -1,0 +1,40 @@
+# Trace oracle for stock.create_scrap_order_for_damaged_qty
+#
+# Medium (deep_ui_interaction): Scrap Orders list > New > product +
+# quantity override + Validate. Required op is action_validate (the
+# 'Validate' header button) which is the non-default gesture the agent
+# must remember to perform after Save.
+
+required_ops:
+  - stock.scrap.action_validate
+
+optional_ops:
+  - stock.scrap.create
+  - stock.scrap.read
+  - stock.scrap.write
+  - stock.scrap.web_save
+  - stock.scrap.web_read
+  - stock.scrap.search_read
+  - stock.scrap.web_search_read
+  - stock.scrap.onchange
+  - stock.scrap.action_get_stock_picking
+  - stock.move.create
+  - stock.move.write
+  - stock.move.read
+  - stock.move.web_save
+  - stock.move.line.create
+  - stock.move.line.write
+  - stock.move.line.read
+  - stock.quant.read
+  - stock.quant.search_read
+  - stock.quant.web_read
+  - stock.location.read
+  - stock.location.name_search
+  - product.product.read
+  - product.product.name_search
+  - ir.ui.view.get_views
+
+forbidden_ops:
+  - stock.scrap.unlink
+  - stock.quant.unlink
+  - stock.quant.action_apply_inventory
