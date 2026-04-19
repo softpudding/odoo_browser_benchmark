@@ -1,0 +1,26 @@
+# Trace oracle for crm.assign_lead_salesperson_change_stage_won
+#
+# Medium: Assign salesperson (write/web_save) + mark won via status bar.
+# Odoo exposes the Won button as action_set_won_rainbowman (with rainbow man
+# effect) or the plain action_set_won; accept either.
+
+required_ops:
+  - crm.lead.action_set_won_rainbowman
+
+optional_ops:
+  - crm.lead.read
+  - crm.lead.write
+  - crm.lead.web_save
+  - crm.lead.search_read
+  - crm.lead.web_search_read
+  - crm.lead.action_set_won
+  - crm.lead.get_formview_id
+  - ir.ui.view.get_views
+  - res.users.name_search
+  - res.users.read
+
+forbidden_ops:
+  - crm.lead.unlink
+  - crm.lead.action_set_lost
+  - crm.lead.action_archive
+  - crm.lead.toggle_active
