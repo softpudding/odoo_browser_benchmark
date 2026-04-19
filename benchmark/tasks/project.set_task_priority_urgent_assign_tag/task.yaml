@@ -1,0 +1,21 @@
+task_id: project.set_task_priority_urgent_assign_tag
+module: project
+difficulty: easy
+instruction: see prompt.md
+start_url: /odoo/project
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 300
+step_limit: 150
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: easy
+  agent_interaction: "Open 'Bench Prio Project', open the 'Fix critical bug' task, click the FIRST priority star to toggle priority from '0' to '1' (exactly one filled star, Medium priority), add the existing 'Bug' tag in the Tags m2m field, and save."
+  checks_verify: "project.task 'Fix critical bug' on 'Bench Prio Project' has priority='1' (was '0') AND tag_ids contains the existing 'Bug' tag; no duplicate 'Bug' tag created; task count on project stays at 1."
+  primary_track: true
+  tier: 1
+  failure_pattern: "Agent may click 2 or 3 stars (overshoot to priority 2 or 3) instead of clicking only the first star; or quick-create a new 'Bug' tag via the Create 'Bug' autocomplete row instead of picking the existing one."

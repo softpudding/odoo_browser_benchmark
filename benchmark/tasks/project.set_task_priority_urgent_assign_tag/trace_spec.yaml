@@ -1,0 +1,40 @@
+# Trace oracle for project.set_task_priority_urgent_assign_tag.
+#
+# Easy: open an existing project.task, toggle the priority star (0 -> 1) and
+# add one existing tag. Browser-use normally writes via web_save; we leave
+# required_ops empty and validate outcomes via check.py + expected_state.json.
+
+required_ops: []
+
+optional_ops:
+  - project.task.read
+  - project.task.write
+  - project.task.web_save
+  - project.task.web_read
+  - project.task.search_read
+  - project.task.web_search_read
+  - project.task.onchange
+  - project.task.get_views
+  - project.task.name_search
+  - project.tags.name_search
+  - project.tags.read
+  - project.tags.search_read
+  - project.tags.web_search_read
+  - project.project.read
+  - project.project.search_read
+  - project.project.web_search_read
+  - project.task.type.read
+  - project.task.type.search_read
+  - res.users.read
+  - res.users.search_read
+  - res.users.web_search_read
+  - ir.ui.view.get_views
+  - mail.message.create
+
+forbidden_ops:
+  - project.task.unlink
+  - project.task.create
+  - project.tags.unlink
+  - project.tags.create
+  - project.project.unlink
+  - project.project.create

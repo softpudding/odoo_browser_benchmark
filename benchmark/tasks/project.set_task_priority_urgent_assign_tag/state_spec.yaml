@@ -1,0 +1,31 @@
+models:
+  project.task:
+    match_key:
+      - name
+      - project_id
+    fields:
+      - name
+      - project_id
+      - priority
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
+      - date_last_stage_update
+      # The following are validated via check.py (not as diff assertions):
+      - stage_id
+      - date_deadline
+      - tag_ids
+      - user_ids
+      - partner_id
+      - description
+      - kanban_state
+      - state
+      - sequence
+      - color
+      - active
+      - display_name
+      - portal_url
+      - access_url
+      - access_token
+      - access_warning
