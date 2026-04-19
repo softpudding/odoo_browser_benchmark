@@ -1,0 +1,37 @@
+# Trace oracle for mrp.create_bom_kit_type_for_product
+#
+# Hard: create a new mrp.bom from scratch with BoM Type=Kit (phantom,
+# non-default) + 2 inline BoM lines. Both oracle and browser agent end
+# with a single web_save (or create) on mrp.bom; BU may use web_save,
+# oracle uses UI save_form which triggers web_save.
+
+required_ops: []
+
+optional_ops:
+  - mrp.bom.create
+  - mrp.bom.write
+  - mrp.bom.web_save
+  - mrp.bom.read
+  - mrp.bom.search_read
+  - mrp.bom.web_search_read
+  - mrp.bom.onchange
+  - mrp.bom.line.create
+  - mrp.bom.line.write
+  - mrp.bom.line.read
+  - mrp.bom.line.onchange
+  - product.template.read
+  - product.template.search_read
+  - product.template.name_search
+  - product.product.read
+  - product.product.name_search
+  - ir.ui.view.get_views
+
+forbidden_ops:
+  - mrp.bom.unlink
+  - mrp.bom.line.unlink
+  - product.template.write
+  - product.template.unlink
+  - product.product.write
+  - product.product.unlink
+  - mrp.production.create
+  - mrp.production.action_confirm

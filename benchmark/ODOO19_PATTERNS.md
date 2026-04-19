@@ -1122,6 +1122,32 @@ On an **opportunity**, `team_id` is NOT in the main form header. Only editable c
   entity_key mismatch in state_diff AND a "MO not found" postcondition
   failure. BU may also hallucinate success by conflating Source with
   the MO reference in its memory log.
+- **`mrp.bom.type` renders as `widget="radio"`, NOT a Selection
+  dropdown.** The BoM form declares `<field name="type" widget="radio"/>`,
+  so the field is a `div.o_field_radio[name='type']` with one
+  `.o_radio_item` per Selection value. Oracle/test set via
+  `div[name='type'] label:has-text('Kit')`. Do NOT call
+  `set_selection(page, 'type', 'Kit')` — that invokes
+  `.select_option()` on a native `<select>` which does not exist
+  here; the call no-ops and the radio stays on the default
+  `Manufacture this Product` (→ `type='normal'`). Default selection
+  is always the first option (`normal`), making this the canonical
+  "non-default radio" trap for hard-tier create-BoM tasks (row 460
+  `mrp.create_bom_kit_type_for_product`). Visible labels map
+  `normal → "Manufacture this Product"`, `phantom → "Kit"`,
+  `subcontract → "Subcontracting"` (the third option only renders
+  when `mrp_subcontracting` is installed — it is, in the base DB).
+- **`mrp.bom._compute_display_name` depends on `code`.** The compute
+  is `f"{code + ': ' if code else ''}{product_tmpl_id.display_name}"`.
+  When the agent does NOT set `code`, the BoM display_name is just
+  the product template display name (e.g. `"Bench Kit Finished"`),
+  which means `mrp.bom.line.bom_id` normalizes to that same string
+  in the state-diff engine. Row 460 leaves `code` empty so the
+  entity_key for `bom_line_ids` is `["Bench Kit Finished", "<comp>"]`;
+  row 433 sets `code='BOM-REFERENCE'` so the entity_key becomes
+  `["BOM-REFERENCE: Bench Assembled Gadget", "<comp>"]`. Copying
+  entity_keys between tasks without recomputing display_name is a
+  frequent F1=0 cause even when norm_value is correct.
 
 ## mrp — work-order lifecycle + serial-tracked component consumption
 
