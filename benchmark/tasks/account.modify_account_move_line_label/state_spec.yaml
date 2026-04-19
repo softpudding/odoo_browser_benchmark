@@ -1,0 +1,45 @@
+models:
+  account.move:
+    match_key:
+      - partner_id
+      - ref
+    fields:
+      - partner_id
+      - ref
+      - state
+      - move_type
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
+      - __last_update
+      - payment_state
+      - is_move_sent
+      - name
+      - amount_residual
+      - amount_total
+      - amount_untaxed
+      - date
+      - invoice_date
+  account.move.line:
+    match_key:
+      - move_id
+      - product_id
+    fields:
+      - move_id
+      - product_id
+      - name
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
+      - __last_update
+      - date
+      - debit
+      - credit
+      - balance
+      - price_unit
+      - price_subtotal
+      - price_total
+      - amount_currency
+      - quantity
