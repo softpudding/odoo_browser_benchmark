@@ -440,6 +440,10 @@ Last eval: 2026-04-17 | Oracle: 165/165 (100%) | Browser-Use: 57/165 (34.5%) | N
 | 428 | mail.schedule_activity_on_partner_with_note [medium] | Schedule a 'To Do' activity on a partner with note and deadline | Done | PASS | PASS | 1.0 |
 | 429 | hr_timesheet.log_time_for_2_days_approve_via_manager [hard] | Log timesheets for 2 days, submit, approve via manager | WIP | — | — | — |
 | 430 | website_blog.change_author_republish_post [medium] | Change a published blog post's author to a different user | Done | PASS | PASS | 1.0 |
+| 431 | event.create_event_add_ticket_publish [medium] | Create an event with a specific date, add a paid ticket type, and set it to published | Done | PASS | PASS | 1.0 |
+| 432 | fleet.add_vehicle_log_odometer [easy] | Create a new vehicle record, then log an odometer reading via the dedicated odometer action | Done | PASS | PASS/FAIL | 0.5 |
+| 433 | mrp.create_bom_with_components [medium] | Create a Bill of Materials for a product with three specific components and quantities | Done | PASS | FAIL | 0.0 |
+| 434 | website_sale.publish_product_shop [easy] | Find an unpublished product in the backend, set its sales price and publish it to the shop | Done | PASS | PASS | 1.0 |
 
 ---
 

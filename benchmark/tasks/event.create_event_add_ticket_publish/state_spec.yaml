@@ -1,0 +1,31 @@
+models:
+  event.event:
+    match_key:
+      - name
+    fields:
+      - name
+      - is_published
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
+      - date_begin
+      - date_end
+      - date_begin_located
+      - date_end_located
+      - date_tz
+      - website_published
+  event.event.ticket:
+    match_key:
+      - event_id
+      - name
+    fields:
+      - event_id
+      - name
+      - price
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
+      - seats_limited
+      - seats_max
