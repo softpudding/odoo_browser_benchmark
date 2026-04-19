@@ -1,0 +1,41 @@
+# Trace oracle for mrp.unbuild_product_back_to_components.
+#
+# Hard: open Manufacturing > Products > Unbuild Orders, click New, pick
+# product=Bench Assembly, qty=2, click Unbuild (action_validate).
+
+required_ops:
+  - mrp.unbuild.action_validate
+
+optional_ops:
+  - mrp.unbuild.create
+  - mrp.unbuild.write
+  - mrp.unbuild.web_save
+  - mrp.unbuild.read
+  - mrp.unbuild.search_read
+  - mrp.unbuild.onchange
+  - mrp.unbuild._onchange_product_id
+  - mrp.unbuild._onchange_bom_id
+  - mrp.bom.read
+  - mrp.bom.search_read
+  - mrp.bom.name_search
+  - product.product.read
+  - product.product.search_read
+  - product.product.name_search
+  - stock.move.read
+  - stock.move.create
+  - stock.move.write
+  - stock.move.line.read
+  - stock.move.line.create
+  - stock.move.line.write
+  - stock.quant.read
+  - stock.quant.search_read
+  - ir.ui.view.get_views
+
+forbidden_ops:
+  - mrp.unbuild.unlink
+  - mrp.production.create
+  - mrp.production.action_confirm
+  - mrp.production.action_cancel
+  - mrp.production.unlink
+  - mrp.bom.unlink
+  - mrp.bom.write

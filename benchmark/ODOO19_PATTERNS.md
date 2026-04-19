@@ -1097,6 +1097,60 @@ On an **opportunity**, `team_id` is NOT in the main form header. Only editable c
   WO when the MO is marked done, so BU often gets away with a
   "happy path" that skips the WO Done button.
 
+## mrp.unbuild — product-driven vs MO-linked; action URL; BU-passable form
+
+- **Two flows, same model**: (a) *MO-linked unbuild* with `mo_id` set to a
+  Done MO — finished product is consumed from the MO's destination, BoM
+  comes from `mo.bom_id`, and unbuild `lot_id` defaults to the produced
+  lot. (b) *Product-driven unbuild* with `mo_id=False`, `product_id`
+  picked from the list of products with an active BoM, and `bom_id`
+  auto-filled by the `_onchange_product_id` handler to the first matching
+  normal BoM on that product. Both land in the same statusbar
+  `action_validate` (labeled **Unbuild**) with identical behavior.
+- **Menu entry lives under Products, not Operations**: in Odoo 19 the
+  `mrp.mrp_unbuild` action is reachable via Manufacturing > **Products**
+  > Unbuild Orders. The direct action URL `/odoo/action-mrp.mrp_unbuild`
+  is the stable deep-link for oracles (saves a menu click and dodges any
+  menu-reshuffle across Odoo minor versions).
+- **Form auto-completes everything**: picking `product_id` triggers
+  `_onchange_product_id` → fills `bom_id` to the first BoM found and
+  leaves `product_qty=1.0`, `location_id=WH/Stock` (primary warehouse
+  stock), `location_dest_id=WH/Stock`. The agent only needs to set
+  Quantity and click Unbuild. This makes the clean-path
+  product-driven-unbuild flow **tier 2 / medium-equivalent**: BU passed
+  `mrp.unbuild_product_back_to_components` F1=1.0 in 132s on a "hard"
+  calibration because there's no wizard, no radio dialog, no
+  cross-module navigation. To push to genuine tier 3 you need one of:
+  (a) two candidate BoMs on the same product (BoM picker ambiguity),
+  (b) `tracking='serial'` + a specific lot to select, (c) a non-default
+  destination like `WH/Stock/QC` requiring `stock.group_stock_multi_locations`.
+- **`mrp.unbuild.state` starts at `draft`, flips directly to `done`** on
+  `action_validate` — there is no intermediate `confirmed` state. The
+  state_diff will always be `field=state, op=create, norm_value=done`
+  for a successful task (never `set` transitions because the record is
+  born in this run).
+- **`mrp.unbuild.mo_id=False` shows up in state_diff as `norm_value:
+  null`, `op=create`**. Expected_state must include this explicitly —
+  omitting it means the diff engine reports an extra observed edit and
+  F1 drops below 1.0 (Precision=0.75 on a 3-edit expected / 4-edit
+  observed). Seen empirically on first oracle run of the unbuild task.
+- **`match_key: [product_id]`** works cleanly for product-driven unbuilds
+  (one unbuild per product in the task) and normalizes to the product's
+  display_name. Using `[mo_id]` as in the MO-linked unbuild task
+  normalizes to `null` when mo_id is False, so it only works as a key
+  when the task expects a non-null MO.
+- **Consumption**: `action_validate` creates two sets of `stock.move`s:
+  a consume-from-WH/Stock move for the finished product (qty =
+  `product_qty`), and N produce-to-WH/Stock moves (one per BoM line) at
+  `bom_line.product_qty * product_qty`. All moves are born `done`, not
+  `confirmed`. Postcondition can assert via
+  `stock.quant._get_available_quantity(product, stock_loc)` — no need
+  to walk the move graph.
+- **No forbidden-op risks** from the form alone: `action_validate`
+  doesn't call `mrp.production.create`, so a clean product-driven unbuild
+  leaves no stray MO. Listing `mrp.production.create` in `forbidden_ops`
+  makes a good "did the agent stray into creating an MO instead" trap.
+
 ## purchase_stock / sale_stock — origin and demand quirks on pickings
 
 - `stock.picking.origin` on a PO-generated receipt inherits from **`purchase.order.name`**, NOT from `purchase.order.origin`. If the task relies on a deterministic `origin` for `state_spec.match_key`, pin `po.name` in the seed (e.g. `name="P-BENCH-DMG-001"`). Same pattern as the previously documented `sale.order.name` → delivery `origin`.
