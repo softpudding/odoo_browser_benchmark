@@ -1,0 +1,21 @@
+task_id: account.post_customer_invoice_with_tax_groups
+module: account
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/accounting
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+  setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "Navigate Accounting > Customers > Invoices > New. Set Customer=Bench Tax Cust, Bill/Invoice Date=05/10/2026, add one line: Bench Tax Service qty=1 price=200 with Taxes column set to the many2many_tax_tags pill 'Bench Sale Tax 20%' (NOT the 10% distractor). Click Confirm (statusbar) to post."
+  checks_verify: "account.move with move_type='out_invoice', partner='Bench Tax Cust', invoice_date=2026-05-10, state='posted'. Single product line Bench Tax Service qty=1 price=200 whose tax_ids contains 'Bench Sale Tax 20%' and NOT 'Bench Sale Tax 10%'. amount_tax=40.0, amount_total=240.0."
+  failure_pattern: "Agent picks the wrong tax ('Bench Sale Tax 10%'), or both taxes, or forgets taxes entirely. Also common: phantom empty second line, wrong invoice date, or stopping in draft without Confirm."
+  primary_track: true
+  tier: 2

@@ -1,0 +1,49 @@
+# Trace oracle for account.post_customer_invoice_with_tax_groups.
+#
+# Medium (tier 2): create customer invoice from scratch with the correct
+# 20% sale tax (NOT the 10% distractor) and Confirm to post.
+# check.py is the authoritative validator.
+
+required_ops: []
+
+optional_ops:
+  - account.move.create
+  - account.move.write
+  - account.move.web_save
+  - account.move.read
+  - account.move.web_read
+  - account.move.search_read
+  - account.move.web_search_read
+  - account.move.onchange
+  - account.move.action_post
+  - account.move.line.create
+  - account.move.line.write
+  - account.move.line.web_save
+  - account.move.line.read
+  - account.move.line.search_read
+  - account.move.line.onchange
+  - account.tax.read
+  - account.tax.search_read
+  - account.tax.name_search
+  - res.partner.read
+  - res.partner.search_read
+  - res.partner.name_search
+  - product.product.read
+  - product.product.search_read
+  - product.product.name_search
+  - product.template.read
+  - product.template.search_read
+  - account.journal.read
+  - account.journal.search_read
+  - ir.ui.view.get_views
+  - ir.ui.view.read
+  - mail.message.create
+  - mail.followers.create
+  - bus.bus.create
+
+forbidden_ops:
+  - account.move.unlink
+  - account.move.button_cancel
+  - account.move.button_draft
+  - account.move.reversal.refund_moves
+  - account.move.reversal.modify_moves
