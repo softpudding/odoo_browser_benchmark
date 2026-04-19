@@ -1,0 +1,20 @@
+task_id: calendar.create_meeting_invite_attendees_send
+module: calendar
+difficulty: medium
+instruction: see prompt.md
+start_url: /odoo/calendar
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 360
+step_limit: 200
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: medium
+  agent_interaction: "Create a timed calendar event with a fixed name, start/stop datetime, and two seeded res.partner attendees added via the partner_ids many2many_tags autocomplete."
+  checks_verify: "A single non-recurring calendar.event named 'Team Sync' exists on 2026-05-20 10:00-11:00 local with exactly the two seeded partners Attendee Alpha and Attendee Beta linked via partner_ids / attendee_ids."
+  primary_track: true
+  tier: 2
