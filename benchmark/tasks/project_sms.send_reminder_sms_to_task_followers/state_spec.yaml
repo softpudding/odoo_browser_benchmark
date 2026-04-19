@@ -1,0 +1,43 @@
+models:
+  sms.sms:
+    match_key:
+      - number
+      - body
+    fields:
+      - number
+      - body
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
+      - uuid
+      - state
+      - failure_type
+      - mail_message_id
+      - partner_id
+      - sms_tracker_id
+      - to_delete
+  project.task:
+    match_key:
+      - name
+      - project_id
+    fields:
+      - name
+      - project_id
+      - partner_id
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
+      - message_ids
+      - message_follower_ids
+  project.project:
+    match_key:
+      - name
+    fields:
+      - name
+    ignore_fields:
+      - id
+      - create_date
+      - write_date
+      - message_ids

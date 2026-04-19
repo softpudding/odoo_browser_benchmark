@@ -1,0 +1,33 @@
+# Trace oracle for project_sms.send_reminder_sms_to_task_followers
+#
+# Medium: open project tasks list -> multi-select 2 tasks -> cog Actions
+# -> Send SMS -> fill body -> Send now.
+
+required_ops: []
+
+optional_ops:
+  - project.project.read
+  - project.project.web_read
+  - project.project.search_read
+  - project.project.web_search_read
+  - project.task.read
+  - project.task.web_read
+  - project.task.search_read
+  - project.task.web_search_read
+  - sms.composer.create
+  - sms.composer.read
+  - sms.composer.web_read
+  - sms.composer.web_save
+  - sms.composer.action_send_sms
+  - sms.composer.action_send_sms_mass_now
+  - sms.sms.create
+  - sms.sms.send
+  - mail.message.create
+  - mail.message._message_log_batch
+  - ir.ui.view.get_views
+  - ir.actions.act_window.read
+
+forbidden_ops:
+  - project.project.unlink
+  - project.task.unlink
+  - sms.sms.unlink

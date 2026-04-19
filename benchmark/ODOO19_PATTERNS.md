@@ -2045,6 +2045,47 @@ Implications for task authors:
 
 ---
 
+## project_sms — mass-mode SMS binding + project.task list cog action
+
+- `project_sms` is `auto_install=True` with `depends=['project','sms']`.
+  Neither `sms` nor `project_sms` is in `benchmark/base_modules.txt`;
+  installing `sms` alone (via `button_immediate_install`) pulls
+  `project_sms` in transitively.
+- The module exposes `Send SMS` only via `binding_model_id=project.task`
+  with `binding_view_types="list,kanban,form"`. The binding opens
+  `sms.composer` with `default_composition_mode='mass'` +
+  `default_mass_keep_log=True` + `default_res_ids=active_ids`. There is
+  no per-chatter Send SMS button on `project.task` — agents looking at
+  "chatter" will not find one.
+- Mass mode sends ONE `sms.sms` per selected record. The recipient
+  number comes from `_sms_get_recipients_info` → `_mail_get_partners`
+  → `partner_id.phone`. **Followers are NOT recipients in mass mode.**
+  To emit ≥N SMS deterministically, seed N tasks each with a distinct
+  `partner_id` and have the agent multi-select the N rows.
+- Mass-mode composer footer buttons: **`name='action_send_sms'`**
+  labelled *Put in queue* (primary highlighted — persists `sms.sms`
+  rows but does not call `.send()`), and **`name='action_send_sms_mass_now'`**
+  labelled *Send now* (secondary — writes `mass_force_send=True` then
+  calls `.send()` on each outgoing row). Both paths create the
+  `sms.sms` rows with `body`, `number`, `mail_message_id` populated
+  before any IAP interaction, so check.py should target row
+  persistence and ignore `state`/`failure_type`.
+- **Stage seeding trap for project.task list views**: `project.task`
+  uses `group_expand='_read_group_stage_ids'` on `stage_id`. If a
+  seeded task has `stage_id=False`, it falls into a virtual "None"
+  kanban column that is collapsed by default, AND the list view (after
+  clicking the list-switch button) inherits the same grouping and
+  keeps the rows hidden until the group is expanded. Always seed an
+  explicit stage pinned to the project
+  (`env["project.task.type"].create({'name':'Review','fold':False,`
+  `'project_ids':[(6,0,[project.id])]})`) and set `stage_id` on each
+  task so the tasks render immediately in both default kanban and list
+  views.
+- Project kanban cards run `<kanban action="action_view_tasks" type="object">`
+  so a plain card click on the Projects page navigates to
+  `/odoo/project/{id}/tasks` — the tasks action with
+  `search_default_open_tasks=1`. No need to open the project form.
+
 ## project.milestone — gating + embedded action entry point
 
 - `project.milestone` is gated per-project by
