@@ -1,0 +1,28 @@
+# Trace oracle for hr.change_employee_work_schedule
+#
+# Easy task: agent opens Employees > Bench Sched Me, switches to the
+# Payroll tab, changes the Working Hours m2o from 'Standard 40 hours/
+# week' to 'Part Time 20h' via autocomplete, and saves.
+
+required_ops: []
+
+optional_ops:
+  - hr.employee.read
+  - hr.employee.write
+  - hr.employee.web_save
+  - hr.employee.search_read
+  - hr.employee.web_search_read
+  - hr.employee.onchange
+  - resource.calendar.name_search
+  - resource.calendar.read
+  - resource.calendar.search_read
+  - resource.calendar.web_search_read
+  - ir.ui.view.get_views
+  - ir.actions.act_window.read
+
+forbidden_ops:
+  - hr.employee.unlink
+  - hr.employee.toggle_active
+  - resource.calendar.create
+  - resource.calendar.unlink
+  - resource.calendar.write

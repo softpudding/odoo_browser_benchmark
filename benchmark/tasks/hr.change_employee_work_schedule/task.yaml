@@ -1,0 +1,20 @@
+task_id: hr.change_employee_work_schedule
+module: hr
+difficulty: easy
+instruction: see prompt.md
+start_url: /odoo/employees
+login_context:
+  login: admin
+agent_interface: browser_only
+db_seed:
+  snapshot: benchmark_base
+setup_script: seed.py
+time_limit_sec: 300
+step_limit: 150
+metadata:
+  category: deep_ui_interaction
+  difficulty_level: easy
+  agent_interaction: "Open Employees > 'Bench Sched Me', switch to the Payroll tab, change the Working Hours many2one from the company default 'Standard 40 hours/week' to 'Part Time 20h', and save."
+  checks_verify: "hr.employee 'Bench Sched Me' has resource_calendar_id pointing at the 'Part Time 20h' resource.calendar."
+  primary_track: true
+  tier: 1
