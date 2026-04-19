@@ -3390,3 +3390,175 @@ Precedent (Removed): row 429
 (`hr_timesheet.log_time_for_2_days_approve_via_manager`) — BLOCKED
 skeleton committed with guard errors, same pattern as the appointment /
 helpdesk / marketing_automation removals (rows 350/351/352).
+---
+
+## account.payment.register — partial payment + multi-field override traps
+
+Cookbook from `account.register_partial_payment_reconcile_invoice`
+(row 435, hard). Builds on the Register-Payment section above — adds
+specifics for **partial amount**, **back-dated payment_date**, **custom
+memo**, and **non-default journal** overrides. All four overrides in one
+wizard is the hard-task recipe.
+
+### Field-order invariant (CRITICAL)
+
+The `account.payment.register` wizard wires onchanges on `journal_id`,
+`amount`, `payment_date`, and others. Two of them re-compute
+`communication` (the "Memo" field):
+
+- `_onchange_payment_date_or_amount` re-runs the wizard's
+  `_compute_communication` after either changes
+- `_onchange_journal_id` can also reset `communication` via installments
+  re-computation on partial amounts
+
+**Consequence:** if you fill Memo BEFORE filling Date (or before any
+later onchange fires), Date's onchange re-computes `communication` and
+**silently overwrites your override** with the invoice name default
+(e.g. `INV/2026/00001`). Tests then fail with:
+
+```
+Payment memo is 'INV/2026/00001', expected 'Partial 1 of 2 for …'
+```
+
+Correct fill order for a four-way override is **Journal → Amount →
+Date → Memo** (Memo LAST). Any subsequent interaction that triggers an
+onchange will overwrite the memo, so commit Memo with `press('Enter')`
+(not `Tab`) to avoid advancing focus to another field whose onchange
+could fire.
+
+### `payment_date` renders as a `<button>`, not an `<input>`
+
+Odoo 19's `o_field_date` widget renders the date as a button showing
+the currently-formatted value:
+
+```html
+<div name="payment_date" class="o_field_widget o_required_modifier o_field_date">
+  <div class="d-flex gap-2 align-items-center">
+    <button data-tooltip="04/19/2026" id="payment_date_0" data-field="payment_date"
+            class="o_input o_daterange_start w-100 text-start" value="04/19/2026">
+      Apr 19
+    </button>
+  </div>
+</div>
+```
+
+`date_widget.locator('input').first.click()` fails with a 60s timeout
+because there IS no input yet. You must first click the button to open
+the datepicker overlay, then type into the `page.keyboard` (the active
+element inside the overlay is an internal input the widget creates on
+demand):
+
+```python
+date_btn = date_widget.locator("button").first
+date_btn.click(force=True)
+page.wait_for_timeout(600)
+page.keyboard.press("Control+a")
+page.keyboard.press("Delete")
+page.keyboard.type("04/15/2026")
+```
+
+### Do NOT `page.press('body', 'Escape')` to close a datepicker inside a modal
+
+Escape closes the enclosing modal too. The modal is an `o-overlay-item`
+and the datepicker is ALSO an `o-overlay-item`, but Escape dismisses the
+top-most overlay which Odoo's focus-trap considers the modal. After
+Escape, subsequent `.modal:visible` locators return `last == stale`.
+
+Safe alternatives to dismiss the datepicker:
+
+1. **JS-remove only the popover** — target by popover-specific classes:
+   ```python
+   page.evaluate(
+       "document.querySelectorAll('.o_datetime_picker, .o_popover, "
+       ".o_daterange_picker').forEach(e => e.remove());"
+   )
+   ```
+   This does NOT touch the modal (which uses `.modal` + `.o-overlay-item`).
+   **Do NOT blanket-remove `.o-overlay-item`** — that removes the modal.
+2. Click a neutral area INSIDE the modal (e.g. `.modal-title`). Safe
+   and preserves focus.
+3. Press `Enter` on the memo field at the end (commits without closing).
+
+### Journal autocomplete substring trap
+
+If the seed creates `Bench Secondary Bank` alongside the default `Bank`
+journal, typing "Bank" into the journal autocomplete matches BOTH
+(substring). Iterate dropdown items and pick by exact string:
+
+```python
+dropdown = page.locator(".dropdown-menu:visible .dropdown-item")
+for i in range(dropdown.count()):
+    if dropdown.nth(i).inner_text().strip() == "Bank":
+        dropdown.nth(i).click()
+        break
+```
+
+`dropdown.filter(has_text='Bank').first.click()` picks the wrong one
+(often the secondary, because it sorts first by sequence).
+
+### Seeding a non-default bank journal
+
+To force the wizard's journal pick to a non-default, seed a new bank
+journal with a lower `sequence` than the existing Bank journal:
+
+```python
+default_bank = env["account.journal"].search(
+    [("company_id", "=", company.id), ("type", "=", "bank")],
+    order="sequence asc, id asc", limit=1,
+)
+lowest_seq = default_bank.sequence
+env["account.journal"].create({
+    "name": "Bench Secondary Bank",
+    "code": "BSB1",
+    "type": "bank",
+    "company_id": company.id,
+    "sequence": max(lowest_seq - 5, 1),
+})
+default_bank.write({"sequence": lowest_seq})  # keep original sequence
+```
+
+Cleanup must unlink the secondary journal only if unused (any
+`account.move.line` pinned to it keeps it around):
+
+```python
+refs = env["account.move.line"].search_count([
+    ("journal_id", "=", secondary.id)])
+if refs == 0:
+    secondary.unlink()
+```
+
+### `payment_state` after a PARTIAL reconcile
+
+- Invoice `account.move.payment_state` becomes **`'partial'`** (not
+  `'paid'`, not `'in_payment'`). This is the defining state for the
+  task.
+- Payment `account.payment.state` becomes **`'in_process'`** (not
+  `'posted'`, not `'paid'`) because the receivable line is only
+  partially matched — the counterpart move still has unmatched debit.
+  Accept `posted|paid|in_process` in check.py; expected_state.json
+  captures `'in_process'` for the partial case.
+
+### Partial-payment backing `account.move.ref` depends on the memo override
+
+Creating a payment creates its backing `account.move` with
+`move_type='entry'`. Its `ref` is assigned from the payment's
+`memo`/`communication`. If the memo override is
+`"Partial 1 of 2 for BENCH-PARTIAL-001"` then the backing journal entry's
+`ref` is that string (NOT the Miscellaneous-journal sequence like
+`INV/2026/00001`). When `state_spec.yaml` tracks `account.move` by
+`[partner_id, ref]`, the entity_key in expected_state.json for the 5
+create edits must be the memo override, not the sequence.
+
+### Dependencies missing in pre-warmed worktrees
+
+If `.claude/worktree-skeleton/.venv/` was built with only the benchmark
+Python deps (playwright + pyyaml), Odoo itself cannot import — the seed
+crashes with `ModuleNotFoundError: No module named 'babel'`. Fix once
+per worktree:
+
+```bash
+uv pip install -r requirements.txt  # Odoo's full runtime deps
+uv pip install browser-use          # BU agent package (not in benchmark deps)
+```
+
+This should probably be baked into the skeleton.
