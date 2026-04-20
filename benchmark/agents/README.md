@@ -84,7 +84,18 @@ Set `BENCHMARK_MODEL` to override the default model (default: `qwen3.6-plus`).
 | Alumnium | 0.0 | 110s | 6 | 2 |
 | WebSight | 0.0 | 240s | 3 | 1 |
 
-### Hard: sale_project.confirm_quote_and_update_generated_project (multi-step)
+### Medium: crm.mark_opportunity_won_update_revenue (set revenue, priority, mark won)
+
+| Agent | F1 | Wall Clock | API Calls | Writes | Notes |
+|-------|----|-----------|-----------|--------|-------|
+| Agent-E | 0.0 | 194s | 33 | 17 | 3/4 edits correct (revenue, won, probability). Only missed priority (1 vs 2 stars) |
+| Skyvern | 0.0 | 300s | 36 | 14 | Connected, navigated CRM |
+| OpenBrowser | 0.0 | 300s | 12 | 2 | Connected, navigated |
+| Alumnium | 0.0 | 29s | 6 | 1 | Minimal interaction |
+| WebSight | 0.0 | 300s | 5 | 1 | Minimal interaction |
+| Notte | 0.0 | 7s | 1 | 0 | Crashed early |
+
+### Hard: sale_project.confirm_quote_and_update_generated_project (5-step cross-app)
 
 | Agent | F1 | Wall Clock | API Calls | Writes | Notes |
 |-------|----|-----------|-----------|--------|-------|
