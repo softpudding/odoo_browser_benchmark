@@ -88,27 +88,27 @@ for Python agents, `claude-sonnet-4` for Magnitude).
 | Skyvern | qwen3.6-plus | 0.0 | 240s | 18 | 6 |
 | Alumnium | qwen3.6-plus | 0.0 | 110s | 6 | 2 |
 
-### Medium: crm.mark_opportunity_won_update_revenue (set revenue, priority, mark won)
+### Medium: purchase.duplicate_rfq_change_vendor_confirm (duplicate RFQ, change vendor, confirm)
 
 | Agent | LLM | F1 | Wall Clock | API Calls | Writes | Notes |
 |-------|-----|----|-----------|-----------|--------|-------|
-| Agent-E | qwen3.6-plus | 0.0 | 194s | 33 | 17 | 3/4 edits correct. Only missed priority (1 vs 2 stars) |
-| Magnitude | Claude Sonnet 4 | 0.0 | 300s | 142 | 49 | Very active (most API calls) but no edits landed |
-| Skyvern | qwen3.6-plus | 0.0 | 300s | 36 | 14 | Connected, navigated CRM |
-| OpenBrowser | qwen3.6-plus | 0.0 | 300s | 12 | 2 | Connected, navigated |
-| Alumnium | qwen3.6-plus | 0.0 | 29s | 6 | 1 | Minimal interaction |
-| Notte | qwen3.6-plus | 0.0 | 7s | 1 | 0 | Crashed early |
+| Magnitude | Claude Sonnet 4 | 0.0 | 300s | 63 | 24 | Active but didn't complete |
+| Skyvern | qwen3.6-plus | 0.0 | 300s | 39 | 13 | Navigated Purchase app |
+| Notte | qwen3.6-plus | 0.0 | 6s | 1 | 0 | Crashed early |
+| Alumnium | qwen3.6-plus | 0.0 | — | — | — | Crashed |
+| Agent-E | qwen3.6-plus | 0.0 | 0.1s | 0 | 0 | Server down |
+| OpenBrowser | qwen3.6-plus | 0.0 | — | — | — | Crashed |
 
-### Hard: sale_project.confirm_quote_and_update_generated_project (5-step cross-app)
+### Hard: sale.confirm_correct_order (find and confirm correct quotation among 4)
 
 | Agent | LLM | F1 | Wall Clock | API Calls | Writes | Notes |
 |-------|-----|----|-----------|-----------|--------|-------|
-| Magnitude | Claude Sonnet 4 | 0.0 | 420s | 142 | 49 | Confirmed SO (1/4 ops). 1/2 edits matched. |
-| Agent-E | qwen3.6-plus | 0.0 | 420s | 81 | 37 | Confirmed SO (1/4 required ops) |
-| OpenBrowser | qwen3.6-plus | 0.0 | 420s | 26 | 5 | Connected, navigated |
-| Skyvern | qwen3.6-plus | 0.0 | 420s | 24 | 8 | Connected, navigated |
-| Alumnium | qwen3.6-plus | 0.0 | 42s | 4 | 1 | Minimal interaction |
-| Notte | qwen3.6-plus | 0.0 | 7s | 0 | 0 | Crashed early |
+| **Magnitude** | Claude Sonnet 4 | **1.0** | **115s** | 63 | 24 | **PASS — identified correct quotation and confirmed it** |
+| Skyvern | qwen3.6-plus | 0.0 | 300s | 39 | 13 | Navigated Sales app |
+| OpenBrowser | qwen3.6-plus | 0.0 | 300s | 18 | 5 | Connected, navigated |
+| Alumnium | qwen3.6-plus | 0.0 | 28s | 8 | 2 | Minimal interaction |
+| Notte | qwen3.6-plus | 0.0 | 5s | 0 | 0 | Crashed |
+| Agent-E | qwen3.6-plus | 0.0 | 0.2s | 0 | 0 | Server down |
 
 ## Root cause analysis
 
