@@ -71,13 +71,26 @@ All wrappers use `_env_setup.py` to auto-detect LLM credentials:
 
 Set `BENCHMARK_MODEL` to override the default model (default: `qwen3.6-plus`).
 
-## Test results (contacts.update_contact_phone, qwen3.6-plus)
+## Test results (qwen3.6-plus)
 
-| Agent | Status | F1 | Wall Clock | API Calls | Writes |
-|-------|--------|----|-----------|-----------|--------|
-| Notte | **PASS** | 1.0 | 128.7s | 22 | 9 |
-| Agent-E | **PASS** | 1.0 | 240s | 23 | 9 |
-| OpenBrowser | **PASS** | 1.0 | 240s | 28 | 13 |
-| Skyvern | Connected | 0.0 | 240s | 18 | 6 |
-| Alumnium | Connected | 0.0 | 110s | 6 | 2 |
-| WebSight | Connected | 0.0 | 240s | 3 | 1 |
+### Easy: contacts.update_contact_phone (change one field)
+
+| Agent | F1 | Wall Clock | API Calls | Writes |
+|-------|----|-----------|-----------|--------|
+| Notte | **1.0** | 128.7s | 22 | 9 |
+| Agent-E | **1.0** | 240s | 23 | 9 |
+| OpenBrowser | **1.0** | 240s | 28 | 13 |
+| Skyvern | 0.0 | 240s | 18 | 6 |
+| Alumnium | 0.0 | 110s | 6 | 2 |
+| WebSight | 0.0 | 240s | 3 | 1 |
+
+### Hard: sale_project.confirm_quote_and_update_generated_project (multi-step)
+
+| Agent | F1 | Wall Clock | API Calls | Writes | Notes |
+|-------|----|-----------|-----------|--------|-------|
+| Agent-E | 0.0 | 420s | 81 | 37 | Confirmed SO (1/4 required ops), closest to completing |
+| OpenBrowser | 0.0 | 420s | 26 | 5 | Connected, navigated |
+| Skyvern | 0.0 | 420s | 24 | 8 | Connected, navigated |
+| WebSight | 0.0 | 420s | 4 | 1 | Minimal interaction |
+| Alumnium | 0.0 | 42s | 4 | 1 | Minimal interaction |
+| Notte | 0.0 | 7s | 0 | 0 | Crashed early |
