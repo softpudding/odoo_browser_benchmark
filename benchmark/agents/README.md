@@ -46,12 +46,12 @@ uv run benchmark-eval run <task> --agent command \
 | [Agent-E](https://github.com/EmergenceAI/Agent-E) | `run_agent_e.py` | Separate server in own venv (see wrapper header) | `python benchmark/agents/run_agent_e.py` |
 | [OpenBrowser](https://github.com/softpudding/OpenBrowser) | `run_openbrowser.py` | Server + Chrome extension + `OPENBROWSER_CHROME_UUID` | `python benchmark/agents/run_openbrowser.py` |
 
-### Require specific API keys (not DashScope-compatible)
+### Require specific API keys
 
 | Agent | Wrapper | Requirement | Run command |
 |-------|---------|-------------|-------------|
-| [Stagehand](https://github.com/browserbase/stagehand) | `run_stagehand.mjs` | `OPENAI_API_KEY` (hardcodes gpt-4.1-mini) | `node benchmark/agents/run_stagehand.mjs` |
-| [Magnitude](https://github.com/magnitudedev/browser-agent) | `run_magnitude.mjs` | `ANTHROPIC_API_KEY` (BAML-locked) | `node benchmark/agents/run_magnitude.mjs` |
+| [Stagehand](https://github.com/browserbase/stagehand) | `run_stagehand.mjs` | `ANTHROPIC_API_KEY` or `OPENAI_API_KEY`. Auto-detects Anthropic. But v2 hardcodes `gpt-4.1-mini` internally — ignores custom `modelName`. | `node benchmark/agents/run_stagehand.mjs` |
+| [Magnitude](https://github.com/magnitudedev/browser-agent) | `run_magnitude.mjs` | `ANTHROPIC_API_KEY`. BAML runtime error (`CreatePartialRecipe` undefined) — framework-level bug, not an API key issue. | `node benchmark/agents/run_magnitude.mjs` |
 
 ### Evaluated but excluded
 
@@ -105,3 +105,18 @@ Set `BENCHMARK_MODEL` to override the default model (default: `qwen3.6-plus`).
 | WebSight | 0.0 | 420s | 4 | 1 | Minimal interaction |
 | Alumnium | 0.0 | 42s | 4 | 1 | Minimal interaction |
 | Notte | 0.0 | 7s | 0 | 0 | Crashed early |
+
+## Root cause analysis
+
+Investigation with isolated super-simple tasks ("just log in to Odoo"):
+
+| Agent | Can log in? | Root cause of task failures |
+|-------|------------|----------------------------|
+| **Agent-E** | Yes | Best performer. AG2 multi-agent framework with Playwright. Slow but methodical. |
+| **Notte** | Yes (with local Session) | Crashes on complex tasks due to litellm/model config issues. Works well when it runs. |
+| **OpenBrowser** | Yes | Multimodal (screenshot-based). Works but slow; relies on Qwen VL model quality. |
+| **Skyvern** | Yes (verified) | Navigates and interacts with Odoo (18 API calls, 6 writes on easy task) but fails to edit specific form fields. Very slow (~90s/step). |
+| **Alumnium** | Yes (verified) | Step-level `do()` executes actions at DOM level but qwen3.6-plus can't reliably map NL to Odoo form field edits. Reports success even when field wasn't changed. |
+| **WebSight** | No | **Hallucinates execution.** Generates correct plans but claims task is complete on blank screenshots. VLM responses don't follow expected `<reasoning>/<action>` format. |
+| **Stagehand** | N/A | Hardcodes `gpt-4.1-mini` internally, ignores all model config. With Anthropic key, still uses OpenAI model. Framework bug. |
+| **Magnitude** | N/A | BAML runtime crash (`CreatePartialRecipe` undefined). Framework-level bug unrelated to API keys. |

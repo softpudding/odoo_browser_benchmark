@@ -31,7 +31,9 @@ const instruction = process.env.BENCHMARK_INSTRUCTION;
 const startUrl = process.env.BENCHMARK_START_URL;
 const login = process.env.BENCHMARK_LOGIN || "";
 const password = process.env.BENCHMARK_PASSWORD || "";
-const model = process.env.BENCHMARK_MODEL || "qwen3.6-plus";
+// Use Anthropic if ANTHROPIC_API_KEY is set, otherwise try OpenAI/DashScope
+const useAnthropic = !!process.env.ANTHROPIC_API_KEY;
+const model = process.env.BENCHMARK_MODEL || (useAnthropic ? "anthropic/claude-sonnet-4-20250514" : "qwen3.6-plus");
 
 if (!instruction || !startUrl) {
   console.error(
@@ -47,15 +49,16 @@ if (login) {
 fullInstruction += instruction;
 
 async function main() {
+  const clientOptions = useAnthropic
+    ? { apiKey: process.env.ANTHROPIC_API_KEY }
+    : { apiKey: process.env.OPENAI_API_KEY, baseURL: process.env.OPENAI_BASE_URL };
+
   const stagehand = new Stagehand({
     env: "LOCAL",
     headless: false,
     enableCaching: false,
     modelName: model,
-    modelClientOptions: {
-      apiKey: process.env.OPENAI_API_KEY,
-      baseURL: process.env.OPENAI_BASE_URL,
-    },
+    modelClientOptions: clientOptions,
   });
 
   await stagehand.init();
@@ -67,10 +70,7 @@ async function main() {
 
     const agent = stagehand.agent({
       modelName: model,
-      modelClientOptions: {
-        apiKey: process.env.OPENAI_API_KEY,
-        baseURL: process.env.OPENAI_BASE_URL,
-      },
+      modelClientOptions: clientOptions,
     });
     const result = await agent.execute({
       instruction: fullInstruction,

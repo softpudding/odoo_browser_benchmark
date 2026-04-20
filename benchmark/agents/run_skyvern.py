@@ -6,7 +6,7 @@ Setup:
 
 Usage:
     uv run benchmark-eval run <task> --agent command \
-        --cmd "python benchmark/agents/skyvern_agent.py"
+        --cmd "python benchmark/agents/run_skyvern.py"
 """
 
 import asyncio
@@ -55,11 +55,18 @@ async def main():
     )
 
     print(f"Skyvern result: {result}")
-    status = getattr(result, "status", None)
-    if status and "completed" in str(status).lower():
-        sys.exit(0)
-    else:
+
+    # Skyvern's run_task() returns the initial TaskResponse with status='created'.
+    # The actual task runs asynchronously in-process. Check the server logs for
+    # completion — the task status in the returned object is NOT the final status.
+    # Since the task runs synchronously within the local embedded server,
+    # by the time run_task() returns, it has actually completed.
+    # Exit 0 to let eval.py judge by DB state instead.
+    failure = getattr(result, "failure_reason", None)
+    if failure:
+        print(f"Skyvern failure: {failure}", file=sys.stderr)
         sys.exit(1)
+    sys.exit(0)
 
 
 if __name__ == "__main__":
