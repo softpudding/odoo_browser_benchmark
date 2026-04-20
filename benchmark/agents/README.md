@@ -93,6 +93,7 @@ for Python agents, `claude-sonnet-4` for Magnitude).
 | Agent | LLM | F1 | Wall Clock | API Calls | Writes | Notes |
 |-------|-----|----|-----------|-----------|--------|-------|
 | Agent-E | qwen3.6-plus | 0.0 | 194s | 33 | 17 | 3/4 edits correct. Only missed priority (1 vs 2 stars) |
+| Magnitude | Claude Sonnet 4 | 0.0 | 300s | 142 | 49 | Very active (most API calls) but no edits landed |
 | Skyvern | qwen3.6-plus | 0.0 | 300s | 36 | 14 | Connected, navigated CRM |
 | OpenBrowser | qwen3.6-plus | 0.0 | 300s | 12 | 2 | Connected, navigated |
 | Alumnium | qwen3.6-plus | 0.0 | 29s | 6 | 1 | Minimal interaction |
@@ -102,6 +103,7 @@ for Python agents, `claude-sonnet-4` for Magnitude).
 
 | Agent | LLM | F1 | Wall Clock | API Calls | Writes | Notes |
 |-------|-----|----|-----------|-----------|--------|-------|
+| Magnitude | Claude Sonnet 4 | 0.0 | 420s | 142 | 49 | Confirmed SO (1/4 ops). 1/2 edits matched. |
 | Agent-E | qwen3.6-plus | 0.0 | 420s | 81 | 37 | Confirmed SO (1/4 required ops) |
 | OpenBrowser | qwen3.6-plus | 0.0 | 420s | 26 | 5 | Connected, navigated |
 | Skyvern | qwen3.6-plus | 0.0 | 420s | 24 | 8 | Connected, navigated |
