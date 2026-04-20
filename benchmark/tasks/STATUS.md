@@ -4,7 +4,7 @@ Tracks all benchmark tasks. Update when adding new tasks or running evaluations.
 
 **Status values:** `WIP` — oracle or eval incomplete | `Done` — oracle passes, eval recorded
 
-Last eval: 2026-04-19 | Oracle: 169/169 (100%) | Browser-Use: 60/169 (35.5%) | New WIP: 84 (44 medium + 22 easy + 18 hard)
+Last eval: 2026-04-20 | Oracle: 179/179 (100%) | Browser-Use: 67/179 (37.4%) | New WIP: 74 (40 medium + 22 easy + 12 hard)
 
 ## Summary
 
@@ -516,16 +516,16 @@ Last eval: 2026-04-19 | Oracle: 169/169 (100%) | Browser-Use: 60/169 (35.5%) | N
 | 504 | event_sale.create_paid_event_register_invoice [hard] | Create event with paid ticket, register, generate and post invoice | WIP | — | — | — |
 | 505 | survey.create_scored_quiz_check_results [medium] | Create quiz with scored answers, preview-submit, check results | WIP | — | — | — |
 | 506 | im_livechat.create_channel_configure_operator [hard] | Create livechat channel, add operator, configure auto-message rule | WIP | — | — | — |
-| 507 | inventory.filtered_cycle_count_apply_single_line [medium] | Filter inventory adjustments to one product/location, enter counted quantity and apply only that line | WIP | — | — | — |
-| 508 | delivery.configure_carrier_margin_rule_apply_to_order [medium] | Configure a margin-based carrier and apply it to the target quotation | WIP | — | — | — |
-| 509 | mass_mailing.create_sms_mailing_filter_schedule_send [hard] | Create an SMS mailing with recipient filter and schedule it to send later | WIP | — | — | — |
-| 510 | website_slides.create_course_add_certification_toggle_visibility [medium] | Create an eLearning course, enable certification/public options, add content, and publish | WIP | — | — | — |
-| 511 | sale_loyalty.create_points_program_redeem_reward_on_quote [hard] | Create a points loyalty program and redeem its reward on a target quotation | WIP | — | — | — |
-| 512 | website_blog.duplicate_post_localize_seo_slug_publish [hard] | Duplicate a blog post, localize slug/SEO metadata, and publish only the copy | WIP | — | — | — |
-| 513 | repair.create_repair_order_add_fee_quotation_confirm [hard] | Create a repair order with a fee/quotation flow and confirm the correct commercial setup | WIP | — | — | — |
-| 514 | website_hr_recruitment.publish_job_set_interview_form_and_archive_old_posting [hard] | Publish a new job, configure application/interview form behavior, and archive an old posting | WIP | — | — | — |
-| 515 | event.create_event_mail_schedule_and_publish_registration [hard] | Create an event, prepare scheduled communication, and publish registration | WIP | — | — | — |
-| 516 | im_livechat.configure_channel_hours_operator_rules [medium] | Configure livechat channel availability hours and operator assignment rules | WIP | — | — | — |
+| 507 | inventory.filtered_cycle_count_apply_single_line [medium] | Filter inventory adjustments to one product/location, enter counted quantity and apply only that line | Done | PASS | FAIL | 0.0 |
+| 508 | delivery.configure_carrier_margin_rule_apply_to_order [medium] | Configure a margin-based carrier and apply it to the target quotation | Done | PASS | PASS | 1.0 |
+| 509 | mass_mailing.create_sms_mailing_filter_schedule_send [hard] | Create an SMS mailing with recipient filter and schedule it to send later | Done | PASS | PASS | 1.0 |
+| 510 | website_slides.create_course_add_certification_toggle_visibility [medium] | Create an eLearning course, enable certification/public options, add content, and publish | Done | PASS | PASS | 1.0 |
+| 511 | sale_loyalty.create_points_program_redeem_reward_on_quote [hard] | Create a points loyalty program and redeem its reward on a target quotation | Done | PASS | PASS | 1.0 |
+| 512 | website_blog.duplicate_post_localize_seo_slug_publish [hard] | Duplicate a blog post, localize slug/SEO metadata, and publish only the copy | Done | PASS | FAIL | 0.0 |
+| 513 | repair.create_repair_order_add_fee_quotation_confirm [hard] | Create a repair order with a fee/quotation flow and confirm the correct commercial setup | Done | PASS | FAIL | 0.5 |
+| 514 | website_hr_recruitment.publish_job_set_interview_form_and_archive_old_posting [hard] | Publish a new job, configure application/interview form behavior, and archive an old posting | Done | PASS | PASS | 1.0 |
+| 515 | event.create_event_mail_schedule_and_publish_registration [hard] | Create an event, prepare scheduled communication, and publish registration | Done | PASS | PASS | 1.0 |
+| 516 | im_livechat.configure_channel_hours_operator_rules [medium] | Configure livechat channel availability hours and operator assignment rules | Done | PASS | PASS | 1.0 |
 
 ---
 
@@ -6078,4 +6078,3 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Workflow** | Seed: create two internal users Bench Alice (`bench_alice`) + Bench Bob (`bench_bob`) with `base.group_user`, pre-create Administrator↔OdooBot DM so it's in the before-state snapshot. Agent: open `/odoo/discuss` → click `+` next to the **Channels** sidebar category → type `team-bench` → Enter or click "Create channel" suggestion (creates public `channel_type='channel'`, NOT `group`) → the newly opened channel shows → click **Invite People** icon in header → type + add Bench Alice and Bench Bob as chips → click Invite → click into composer at bottom → type `Welcome team!` → Enter. |
 | **Capability tested** | Combined **channel create + m2m member invite + message post** in a single workflow with Owl sidebar + header + composer interactions. Distinct from row 229 `mail.create_channel_invite_members` (private group, no message); row 167 `mail.create_channel_pin_message_invite_member` (private group + pin); row 323 `mail.invite_external_email_to_existing_channel` (pre-existing channel + email fallback); row 479 livechat widget flow. |
 | **Notes** | **Calibration MISS — BU solved single-shot on retry** at F1=1.0 in 195.5s (after a first env-crash timeout). Stated risk was medium. BU passed because (a) the sidebar `+ Channels` button is prominent, (b) pressing Enter after typing the name picks the default public channel type — no radio/wizard decision, (c) the Invite People picker accepts plain-text names, (d) the composer is the same textarea pattern BU handles in chatter tasks. Kept as medium/tier-2 — the workflow length (channel create + 2 invites + message post) justifies tier 2 even though each sub-step is individually easy. **To harden to hard**: (1) require a **private group channel** (must click the *second* icon, not press Enter — the Enter default creates a public channel); (2) require **exact ordering of invitees** (Alice before Bob in the member-chip list); (3) require **setting a channel description** on the same form before inviting (extra side-panel gesture); (4) require **pinning** the welcome message (extra message-hover → pin action). **Implementation quirks**: (a) `discuss.channel.create` with `channel_type='channel'` works directly via JSON-RPC — no need for the internal `_create_channel` RPC or the `/discuss/create_channel` store-fetch route (both are private). (b) The diff engine emits `op='create'` for both `name` and `channel_type` on a fresh channel, with `entity_key=['team-bench']` (match_key is `name`). (c) Pre-creating the OdooBot DM via `discuss.channel._get_or_create_chat(partners_to=[odoobot.id])` is required — otherwise first-time `/odoo/discuss` load auto-creates it mid-run and emits a stray `discuss.channel` create diff. (d) Admin's default partner name in the snapshot is `Mitchell Admin` (not `Administrator`) — `check.py` accepts either spelling. (e) `res.users.create` uses `group_ids` (plural) not `groups_id` for internal-group assignment (Odoo 19 rename). **Commit**: `[ADD] benchmark: mail.create_channel_invite_members_post_message (medium)`. |
-
