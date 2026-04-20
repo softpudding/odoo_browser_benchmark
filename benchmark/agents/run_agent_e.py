@@ -9,6 +9,15 @@ Setup:
 
     Set AGENT_E_URL to point to the running server (default: http://127.0.0.1:8000).
 
+    IMPORTANT: Start the server with nest_asyncio + asyncio loop (not uvloop):
+        cd Agent-E && PYTHONPATH=. .venv/bin/python3 -c "
+            import nest_asyncio; nest_asyncio.apply()
+            import asyncio; asyncio.set_event_loop_policy(None)
+            from ae.server.api_routes import app
+            import uvicorn
+            uvicorn.run(app, host='0.0.0.0', port=8000, loop='asyncio')
+        "
+
 Usage:
     uv run benchmark-eval run <task> --agent command \
         --cmd "python benchmark/agents/run_agent_e.py"

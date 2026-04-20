@@ -39,19 +39,19 @@ uv run benchmark-eval run <task> --agent command \
 | [WebSight](https://github.com/SuperAce100/websight) | `run_websight.py` | Python | `pip install websight` | `python benchmark/agents/run_websight.py` |
 | [Alumnium](https://github.com/alumnium-hq/alumnium) | `run_alumnium.py` | Python | `pip install alumnium` | `python benchmark/agents/run_alumnium.py` |
 
-### Require specific API keys
+### Require external setup
+
+| Agent | Wrapper | Requirement | Run command |
+|-------|---------|-------------|-------------|
+| [Agent-E](https://github.com/EmergenceAI/Agent-E) | `run_agent_e.py` | Separate server in own venv (see wrapper header) | `python benchmark/agents/run_agent_e.py` |
+| [OpenBrowser](https://github.com/softpudding/OpenBrowser) | `run_openbrowser.py` | Server + Chrome extension + `OPENBROWSER_CHROME_UUID` | `python benchmark/agents/run_openbrowser.py` |
+
+### Require specific API keys (not DashScope-compatible)
 
 | Agent | Wrapper | Requirement | Run command |
 |-------|---------|-------------|-------------|
 | [Stagehand](https://github.com/browserbase/stagehand) | `run_stagehand.mjs` | `OPENAI_API_KEY` (hardcodes gpt-4.1-mini) | `node benchmark/agents/run_stagehand.mjs` |
 | [Magnitude](https://github.com/magnitudedev/browser-agent) | `run_magnitude.mjs` | `ANTHROPIC_API_KEY` (BAML-locked) | `node benchmark/agents/run_magnitude.mjs` |
-| [Agent-E](https://github.com/EmergenceAI/Agent-E) | `run_agent_e.py` | Separate server + own venv (async conflicts) | `python benchmark/agents/run_agent_e.py` |
-
-### Not viable for automated benchmarking
-
-| Agent | Reason |
-|-------|--------|
-| [OpenBrowser](https://github.com/softpudding/OpenBrowser) | Requires Chrome extension connected via WebSocket |
 
 ### Evaluated but excluded
 
@@ -73,9 +73,11 @@ Set `BENCHMARK_MODEL` to override the default model (default: `qwen3.6-plus`).
 
 ## Test results (contacts.update_contact_phone, qwen3.6-plus)
 
-| Agent | Status | Wall Clock | API Calls | Writes |
-|-------|--------|-----------|-----------|--------|
-| Notte | **PASS (f1=1.0)** | 128.7s | 22 | 9 |
-| Skyvern | Connected | 240s | 18 | 6 |
-| WebSight | Connected | 240s | 3 | 1 |
-| Alumnium | Connected | 110s | 6 | 2 |
+| Agent | Status | F1 | Wall Clock | API Calls | Writes |
+|-------|--------|----|-----------|-----------|--------|
+| Notte | **PASS** | 1.0 | 128.7s | 22 | 9 |
+| Agent-E | **PASS** | 1.0 | 240s | 23 | 9 |
+| OpenBrowser | **PASS** | 1.0 | 240s | 28 | 13 |
+| Skyvern | Connected | 0.0 | 240s | 18 | 6 |
+| Alumnium | Connected | 0.0 | 110s | 6 | 2 |
+| WebSight | Connected | 0.0 | 240s | 3 | 1 |

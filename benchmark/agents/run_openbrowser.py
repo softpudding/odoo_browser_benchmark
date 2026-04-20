@@ -1,30 +1,134 @@
 #!/usr/bin/env python3
 """Benchmark wrapper for OpenBrowser (https://github.com/softpudding/OpenBrowser).
 
-*** NOT VIABLE FOR AUTOMATED BENCHMARKING ***
+Setup:
+    1. Start OpenBrowser server: cd OpenBrowser/server && python main.py start
+    2. Connect Chrome with the OpenBrowser extension
+    3. Set OPENBROWSER_CHROME_UUID to the browser's UUID token
 
-OpenBrowser requires:
-1. A running server (python main.py on port 8765)
-2. Chrome with the OpenBrowser extension installed
-3. A WebSocket connection from the extension to the server
-4. A chrome_uuid token from the connected browser
+    Set OPENBROWSER_URL (default: http://127.0.0.1:8765).
+    Uses DashScope/Qwen models natively (no OpenAI mapping needed).
 
-This architecture makes it impossible to run in an automated benchmark
-pipeline — it cannot launch its own browser or operate headlessly.
-
-The wrapper is kept here for documentation purposes only.
+Usage:
+    uv run benchmark-eval run <task> --agent command \
+        --cmd "python benchmark/agents/run_openbrowser.py"
 """
 
+import json
+import os
 import sys
+import urllib.request
+
+sys.path.insert(0, os.path.dirname(__file__))
+from _env_setup import get_env, build_instruction
+
+
+def request_json(url, method="GET", body=None, timeout=10):
+    headers = {"Content-Type": "application/json"}
+    data = json.dumps(body).encode() if body else None
+    req = urllib.request.Request(url, data=data, headers=headers, method=method)
+    with urllib.request.urlopen(req, timeout=timeout) as resp:
+        return json.loads(resp.read().decode())
+
 
 def main():
-    print(
-        "OpenBrowser is not compatible with automated benchmarking.\n"
-        "It requires a Chrome extension connected via WebSocket.\n"
-        "See run_openbrowser.py header for details.",
-        file=sys.stderr,
+    full_instruction = build_instruction()
+    server_url = os.environ.get("OPENBROWSER_URL", "http://127.0.0.1:8765")
+    chrome_uuid = os.environ.get("OPENBROWSER_CHROME_UUID", "")
+
+    if not chrome_uuid:
+        print("ERROR: OPENBROWSER_CHROME_UUID not set", file=sys.stderr)
+        print("Set it in env or ~/.zshrc after connecting Chrome with the extension", file=sys.stderr)
+        sys.exit(1)
+
+    # Verify server and browser connection
+    try:
+        status = request_json(f"{server_url}/api")
+        if not status.get("websocket_connected"):
+            print("ERROR: Chrome extension not connected to OpenBrowser server", file=sys.stderr)
+            sys.exit(1)
+
+        validity = request_json(f"{server_url}/browsers/{chrome_uuid}/valid")
+        if not validity.get("valid"):
+            print(f"ERROR: Browser UUID {chrome_uuid} is not valid", file=sys.stderr)
+            sys.exit(1)
+    except Exception as e:
+        print(f"ERROR: Cannot reach OpenBrowser server: {e}", file=sys.stderr)
+        sys.exit(1)
+
+    # Create a conversation
+    conv_data = request_json(
+        f"{server_url}/agent/conversations",
+        method="POST",
+        body={"browser_id": chrome_uuid},
     )
-    sys.exit(1)
+    conversation_id = conv_data["conversation_id"]
+    print(f"[conversation] {conversation_id}", flush=True)
+
+    # Send the task via SSE streaming
+    payload = json.dumps({
+        "text": full_instruction,
+        "browser_id": chrome_uuid,
+    }).encode()
+    req = urllib.request.Request(
+        f"{server_url}/agent/conversations/{conversation_id}/messages",
+        data=payload,
+        headers={
+            "Content-Type": "application/json",
+            "Accept": "text/event-stream",
+        },
+        method="POST",
+    )
+
+    completed = False
+    try:
+        with urllib.request.urlopen(req, timeout=600) as resp:
+            sse_event = None
+            sse_data = None
+            for raw_line in resp:
+                line = raw_line.decode("utf-8").rstrip("\n")
+                if not line:
+                    # End of SSE event
+                    if sse_event and sse_data:
+                        try:
+                            data = json.loads(sse_data)
+                        except json.JSONDecodeError:
+                            data = {"raw": sse_data}
+
+                        event_type = data.get("type", sse_event)
+                        # Print key events
+                        if event_type in ("MessageEvent", "message"):
+                            text = data.get("text", data.get("message", ""))
+                            print(f"[message] {text[:200]}", flush=True)
+                        elif event_type in ("ActionEvent", "action"):
+                            action = data.get("action", data)
+                            print(f"[action] {json.dumps(action)[:200]}", flush=True)
+                        elif event_type in ("ThoughtEvent", "thought"):
+                            print(f"[thought] {data.get('thought', '')[:200]}", flush=True)
+                        elif event_type == "complete":
+                            print(f"[complete] {data.get('message', '')}", flush=True)
+                            completed = True
+
+                    sse_event = None
+                    sse_data = None
+                    continue
+
+                if line.startswith("event:"):
+                    sse_event = line[6:].strip()
+                elif line.startswith("data:"):
+                    sse_data = line[5:].lstrip()
+
+    except Exception as e:
+        print(f"OpenBrowser streaming error: {e}", file=sys.stderr)
+
+    if completed:
+        print("OpenBrowser: task completed")
+        sys.exit(0)
+    else:
+        # Task may have completed even without "complete" event
+        print("OpenBrowser: stream ended without explicit completion signal")
+        sys.exit(0)  # Exit 0 — let eval.py judge by DB state
+
 
 if __name__ == "__main__":
     main()
