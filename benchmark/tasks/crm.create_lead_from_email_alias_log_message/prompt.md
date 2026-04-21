@@ -65,5 +65,5 @@ asked about.
 - The chatter text must appear as a **message** (Send message), not a
   **log note** — the distinction matters.
 - Do not convert the lead into an opportunity.
-- Do not set the priority to High (three stars) or Very High — the correct
-  value is exactly **one** star (Medium).
+- Do not set the priority to High (two stars) or Very High (three stars) —
+  the correct value is exactly **one** star (Medium).
