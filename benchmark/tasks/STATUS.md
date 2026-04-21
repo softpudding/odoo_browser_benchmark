@@ -4,528 +4,436 @@ Tracks all benchmark tasks. Update when adding new tasks or running evaluations.
 
 **Status values:** `WIP` — oracle or eval incomplete | `Done` — oracle passes, eval recorded
 
-Last eval: 2026-04-20 | Oracle: 179/179 (100%) | Browser-Use: 67/179 (37.4%) | New WIP: 74 (40 medium + 22 easy + 12 hard)
+Last eval: 2026-04-21 | Oracle: 424/424 (100%) verified
 
 ## Summary
 
 | # | Task | Status | Oracle | Browser-Use | F1 |
 |---|------|--------|--------|-------------|-----|
 | 1 | account.complete_customer_tax_id_then_post | Done | PASS | FAIL | 0.0 |
-| 2 | account.create_credit_note_and_reconcile | Done | PASS | PASS | 1.0 |
-| 3 | account.partial_refund_service_credit_note | Done | PASS | FAIL | 0.0 |
-| 4 | account.repair_and_post_invoice | Done | PASS | FAIL | 0.0 |
-| 5 | account.switch_negative_invoice_repair_credit_note | Done | PASS | FAIL | 0.0 |
-| 6 | account.switch_negative_invoice_to_credit_note | Done | PASS | FAIL | 0.0 |
-| 7 | calendar.edit_single_recurrence_occurrence | Done | PASS | FAIL | 0.0 |
-| 8 | calendar.make_single_occurrence_all_day | Done | PASS | FAIL | 0.0 |
-| 9 | calendar.schedule_recurring_steering_sync | Done | PASS | PASS | 1.0 |
-| 10 | crm.merge_duplicate_opportunities_cleanup | Done | PASS | PASS | 1.0 |
-| 11 | crm.qualify_lead_and_prepare_quote | Done | PASS | PASS | 1.0 |
-| 12 | hr_recruitment.new_applicant_schedule_interview | Done | PASS | FAIL | 0.0 |
-| 13 | project.configure_launch_milestones | Done | PASS | FAIL | 0.71 |
-| 14 | project.read_update_status | Done | PASS | PASS | 1.0 |
-| 15 | purchase.cancel_reissue_wrong_vendor | Done | PASS | FAIL | 0.33 |
-| 16 | purchase_stock.receive_and_complete_backorder | Done | PASS | PASS | 1.0 |
-| 17 | purchase_stock.receive_partial_without_backorder | Done | PASS | PASS | 1.0 |
-| 18 | sale.cancel_reissue_wrong_customer | Done | PASS | FAIL | 0.0 |
-| 19 | sale.confirm_correct_order | Done | PASS | PASS | 1.0 |
-| 20 | sale.create_quotation_and_send_email | Done | PASS | FAIL | 1.0 |
-| 21 | sale.exact_total_quotation | Done | PASS | FAIL | 0.5 |
-| 22 | sale.find_highest_duplicate | Done | PASS | FAIL | 0.0 |
-| 23 | sale.revise_target_quote_lines | Done | PASS | FAIL | 0.0 |
-| 24 | sale_project.confirm_quote_and_update_generated_project | Done | PASS | PASS | 1.0 |
-| 25 | sale_project.confirm_rollout_quote_update_generated_project | Done | PASS | PASS | 1.0 |
-| 26 | website.edit_careers_spotlight | Done | PASS | PASS | 1.0 |
-| 27 | website_hr_recruitment.apply_and_triage_ops_role | Done | PASS | PASS | 1.0 |
-| 28 | website_hr_recruitment.apply_guru_job | Done | PASS | PASS | 1.0 |
-| 29 | stock.adjust_inventory_quantities | Done | PASS | FAIL | 0.0 |
-| 30 | hr.create_employee_complete_profile | Done | PASS | FAIL | 0.0 |
-| 31 | purchase.new_rfq_three_lines_date | Done | PASS | FAIL | 0.0 |
-| 32 | project.complete_task_log_note | Done | PASS | FAIL | 0.0 |
-| 33 | contacts.create_company_with_contacts | Done | PASS | FAIL | 0.0 |
-| 34 | sale.change_validity_date [easy] | Done | PASS | PASS | 1.0 |
-| 35 | account.register_payment_defaults [easy] | Done | PASS | PASS | 1.0 |
-| 36 | crm.move_opportunity_stage [easy] | Done | PASS | PASS | 1.0 |
-| 37 | purchase.reset_draft_edit_reconfirm [easy] | Done | PASS | PASS | 1.0 |
-| 38 | project.post_chatter_message [easy] | Done | PASS | PASS | 1.0 |
-| 39 | sale.set_payment_terms_confirm [medium] | Done | PASS | FAIL | 0.0 |
-| 40 | account.create_vendor_bill_confirm [medium] | Done | PASS | FAIL | 0.0 |
-| 41 | crm.edit_opportunity_schedule_call [medium] | Done | PASS | PASS | 1.0 |
-| 42 | hr.update_work_information [medium] | Done | PASS | PASS | 1.0 |
-| 43 | project.create_task_assign_stage [medium] | Done | PASS | FAIL | 0.0 |
-| 44 | stock.confirm_and_validate_receipt [medium] | Done | PASS | PASS | 1.0 |
-| 45 | purchase.update_rfq_add_line_confirm [medium] | Done | PASS | FAIL | 0.0 |
-| 46 | contacts.update_address_add_tag [medium] | Done | PASS | PASS | 1.0 |
-| 47 | calendar.create_single_event [medium] | Done | PASS | FAIL | 0.0 |
-| 48 | hr_recruitment.advance_applicant_stage [medium] | Done | PASS | PASS | 1.0 |
-| 49 | account.send_invoice_with_extra_recipient [hard] | Done | PASS | PASS | 1.0 |
-| 50 | crm.batch_mark_lost_with_reason [hard] | Done | PASS | FAIL | 1.0 |
-| 51 | hr_recruitment.refuse_duplicate_applications [hard] | Done | PASS | FAIL | 0.0 |
-| 52 | purchase_stock.return_partial_receipt_to_vendor [hard] | Done | PASS | FAIL | 0.0 |
-| 53 | sale.confirm_order_within_credit_limit [hard] | Done | PASS | PASS | 1.0 |
-| 54 | sale.create_invoice_adjust_quantity_post [medium] | Done | PASS | PASS | 1.0 |
-| 55 | purchase.confirm_order_send_po_message [medium] | Done | PASS | FAIL | 0.0 |
-| 56 | project.update_task_assign_deadline_activity [medium] | Done | PASS | FAIL | 0.0 |
-| 57 | calendar.reschedule_event_update_location_attendee [medium] | Done | PASS | PASS | 1.0 |
-| 58 | contacts.create_linked_contact_add_tag [medium] | Done | PASS | PASS | 1.0 |
-| 59 | purchase.confirm_rfq [easy] | Done | PASS | PASS | 1.0 |
-| 60 | hr.update_employee_work_phone [easy] | Done | PASS | PASS | 1.0 |
-| 61 | sale.add_note_to_quotation [easy] | Done | PASS | PASS | 1.0 |
-| 62 | crm.set_priority_on_opportunity [easy] | Done | PASS | FAIL | 1.0 |
-| 63 | contacts.update_contact_email [easy] | Done | PASS | PASS | 1.0 |
-| 64 | account.update_vendor_bill_reference_post [medium] | Update a draft vendor bill's date and reference, then confirm it | Done | PASS | PASS | 1.0 |
-| 65 | contacts.update_company_with_supplier_tag [medium] | Update an existing company contact's address, website, and Supplier tag | Done | PASS | FAIL | 0.0 |
-| 66 | crm.create_opportunity_tag_schedule_call [medium] | Create a CRM opportunity, set revenue and priority, then schedule a call | Done | PASS | FAIL/PASS | 1.0 |
-| 67 | project.rename_task_assign_deadline [medium] | Rename a project task, set its deadline, and move it to In Progress | Done | PASS | PASS | 1.0 |
-| 68 | purchase.set_order_deadline_schedule_call_confirm [medium] | Update an RFQ vendor reference, schedule a call, and confirm the order | Done | PASS | PASS | 1.0 |
-| 69 | website.update_contact_info [easy] | Done | PASS | FAIL | 0.0 |
-| 70 | stock.update_product_internal_reference [easy] | Done | PASS | FAIL | 0.0 |
-| 71 | hr.update_employee_department [easy] | Done | PASS | PASS | 1.0 |
-| 72 | sale.add_discount_line [easy] | Done | PASS | FAIL | 0.0 |
-| 73 | project.add_task_subtask [easy] | Done | PASS | PASS | 1.0 |
-| 74 | account.update_customer_invoice_terms_post [medium] | Update a draft customer invoice's date, payment terms, reference, and one existing line quantity before posting | Done | PASS | PASS/PASS | 1.0 |
-| 75 | crm.update_opportunity_revenue_priority_won [medium] | Update an opportunity's expected revenue, set medium priority with the star widget, and mark it Won | Done | PASS | FAIL/FAIL | 0.0 |
-| 76 | hr.update_work_location_schedule_activity [medium] | Update an employee's phone and work location, then schedule a Call activity | Done | PASS | PASS/FAIL | 1.0 |
-| 77 | purchase.update_rfq_reference_deadline_confirm [medium] | Update an RFQ vendor reference and order deadline, adjust one line quantity, and confirm it | Done | PASS | PASS/PASS | 1.0 |
-| 78 | contacts.create_linked_contact_add_finance_tag [medium] | Create a linked person contact with exact address fields and the Finance tag | Done | PASS | FAIL/PASS | 1.0 |
-| 79 | account.pay_invoice_with_memo [medium] | Register a payment on a posted invoice with a specific memo/reference | Done | PASS | — | 1.0 |
-| 80 | project.set_project_deadline_tags [medium] | Set project deadline to June 30 2026 and add Launch and Q3 tags | Done | PASS | — | 1.0 |
-| 81 | sale.set_commitment_date [medium] | Cancel, reset to draft, set delivery date to May 20 2026, then re-confirm sales order | Done | PASS | — | 1.0 |
-| 82 | stock.update_reorder_rule [medium] | Update min qty to 50 and max qty to 200 for a specific product reorder rule | Done | PASS | — | 1.0 |
-| 83 | hr.add_employee_skill [medium] | Add Python skill (IT Skills / Advanced) to employee Priya Mehta via Resume tab | Done | PASS | — | 1.0 |
-| 84 | inventory.scrap_product [easy] | Done | PASS | FAIL | 0.0 |
-| 85 | hr.schedule_employee_activity [easy] | Done | PASS | FAIL | 0.0 |
-| 86 | project.set_task_deadline [easy] | Done | PASS | FAIL | 0.0 |
-| 87 | sale.duplicate_quotation_change_customer [medium] | Duplicate a quotation, switch the customer on the copy, and save it in draft | Done | PASS | PASS/PASS | 1.0 |
-| 88 | purchase.duplicate_rfq_change_vendor_confirm [medium] | Done | PASS | FAIL | 0.0 |
-| 89 | project.archive_task_with_log_note [medium] | Post a log note on a project task, then archive it from the Action menu | Done | PASS | PASS | 1.0 |
-| 90 | crm.convert_lead_to_opportunity_simple [medium] | Done | PASS | FAIL | 0.0 |
-| 91 | hr.unarchive_employee_update_department [medium] | Done | PASS | FAIL | 0.0 |
-| 92 | stock.validate_delivery_shipment [medium] | Done | PASS | FAIL | 0.0 |
-| 93 | account.create_bill_from_confirmed_po [medium] | Create and post a vendor bill from a confirmed purchase order | Done | PASS | PASS | 1.0 |
-| 94 | sale.cancel_quotation_log_reason [medium] | Post a cancellation reason as a log note, then cancel the quotation | Done | PASS | PASS/FAIL | 1.0/0.0 |
-| 95 | hr_recruitment.refuse_applicant_with_reason [medium] | Refuse an applicant with the correct refuse reason and no email | Done | PASS | PASS/PASS | 1.0 |
-| 96 | crm.mark_opportunity_won_update_revenue [medium] | Done | PASS | FAIL | 0.0 |
-| 97 | account.create_customer_invoice_post [medium] | Done | PASS | FAIL | 0.0 |
-| 98 | account.partial_pay_vendor_bill_with_memo [medium] | Done | PASS | FAIL | 0.0 |
-| 99 | calendar.create_all_day_event_with_attendee [medium] | Done | PASS | FAIL | 0.0 |
-| 100 | contacts.create_company_add_supplier_tag [medium] | Create a company contact with address details and the Supplier tag | Done | PASS | FAIL | 0.0 |
-| 101 | crm.create_lead_priority_schedule_call [medium] | Removed | FAIL (spec) | — | — |
-| 102 | hr.assign_manager_set_work_location [medium] | Update an employee's manager, work location, and work phone | Done | PASS | PASS/PASS | 1.0 |
-| 103 | hr_recruitment.schedule_interview_for_applicant [medium] | Done | PASS | FAIL | 0.0 |
-| 104 | project.duplicate_task_assign_deadline [medium] | Done | PASS | FAIL | 0.0 |
-| 105 | purchase.cancel_rfq_log_note [medium] | Log an internal note on an RFQ, then cancel it | Done | PASS | PASS | 1.0 |
-| 106 | sale.update_salesperson_validity_confirm [medium] | Done | PASS | FAIL | 0.0 |
-| 107 | crm.convert_lead_link_customer_schedule_call [medium] | Done | PASS | FAIL | 0.0 |
-| 108 | purchase_stock.confirm_rfq_receive_full [medium] | Done | PASS | FAIL | 0.0 |
-| 109 | sale.create_invoice_register_payment_memo [medium] | Done | PASS | PASS | 1.0 |
-| 110 | contacts.create_company_add_supplier_finance_tags [medium] | Done | PASS | PASS | 1.0 |
-| 111 | project.create_subtask_assign_deadline [medium] | Done | PASS | PASS | 1.0 |
-| 112 | crm.convert_lead_qualify [medium] | Done | PASS | PASS | 1.0 |
-| 113 | project.convert_task_to_subtask [medium] | Done | PASS | PASS/PASS | 1.0 |
-| 114 | hr.add_resume_line_update_location [medium] | Done | PASS | FAIL | 0.0 |
-| 115 | hr_recruitment.add_skill_move_stage [medium] | Done | PASS | FAIL/FAIL | 0.0 |
-| 116 | contacts.create_company_set_supplier_tag [medium] | Done | PASS | PASS* | — |
-| 117 | account.update_invoice_reference [easy] | Done | PASS | PASS | 1.0 |
-| 118 | contacts.update_contact_phone [easy] | Done | PASS | PASS | 1.0 |
-| 119 | crm.update_opportunity_revenue [easy] | Done | PASS | PASS | 1.0 |
-| 120 | hr.update_employee_job_title [easy] | Done | PASS | PASS | 1.0 |
-| 121 | purchase.update_rfq_source [easy] | Done | PASS | PASS | 1.0 |
-| 122 | sale.create_quotation_down_payment_invoice [hard] | Down payment wizard with non-default % option, navigate to invoice, edit, confirm | Done | PASS | — | — |
-| 123 | account.create_refund_modify_reissue [hard] | Credit note "Reverse and Create Invoice" button, edit new draft lines, post | Done | PASS | — | — |
-| 124 | purchase.create_rfq_confirm_receive_backorder [hard] | Create PO with exact lines, confirm, partial receive, Create Backorder dialog | Done | PASS | — | — |
-| 125 | stock.return_delivery_create_credit_note [hard] | Open delivery, return wizard, validate return, navigate to create credit note | Done | PASS | — | — |
-| 126 | crm.create_opportunity_add_quotation_send [hard] | Create opportunity, add quotation with exact lines, send by email wizard | Done | PASS | — | — |
-| 127 | sale_stock.confirm_order_deliver_partial_backorder [hard] | Confirm SO, navigate to delivery, partial validate with Create Backorder | Done | PASS | — | — |
-| 128 | hr_recruitment.create_applicant_add_skills_refuse [hard] | Create applicant with skills, then refuse with specific reason wizard | Done | PASS | — | — |
-| 129 | sale.cancel_confirmed_recreate_send_email [hard] | Cancel confirmed SO, create new quotation with exact lines, send by email | Done | PASS | — | — |
-| 130 | calendar.create_recurring_edit_two_occurrences [hard] | Create recurring event, then edit two occurrences separately with "This Event" | Done | PASS | — | — |
-| 131 | website.edit_page_update_text_set_properties [hard] | Edit webpage text in website editor, set page title via Properties dialog | Done | PASS | — | — |
-| 132 | calendar.create_event_add_description_attendee [medium] | Create one event with exact attendee, location, and description | Done | PASS | FAIL | 0.0 |
-| 133 | contacts.create_linked_contact_set_title_phone [medium] | Add a linked contact under a company with title, phone, and email | Done | PASS | PASS | 1.0 |
-| 134 | crm.create_opportunity_set_close_date_priority [medium] | Create an opportunity with revenue, closing date, and star priority | Done | PASS | FAIL | 0.0 |
-| 135 | hr.add_resume_line_update_mobile [medium] | Update employee mobile and add one exact resume entry | Done | PASS | FAIL | 0.0 |
-| 136 | hr_recruitment.create_applicant_set_email_stage [medium] | Create an applicant, set contact fields, and move to a target stage | Done | PASS | FAIL | 0.0 |
-| 137 | project.create_task_assign_tags_deadline [medium] | Create a project task with assignee, tags, and deadline | Done | PASS | FAIL | 0.0 |
-| 138 | project.rename_task_assign_tags_priority [medium] | Rename one task, add a tag, and change its priority | Done | PASS | PASS | 1.0 |
-| 139 | purchase.update_rfq_note_quantity_confirm [medium] | Edit an RFQ note and quantity, then confirm it | Done | PASS | PASS | 1.0 |
-| 140 | sale.update_quote_payment_terms_validity_confirm [medium] | Set payment terms, validity, and quantity before confirmation | Done | PASS | FAIL | 0.0 |
-| 141 | stock.update_delivery_scheduled_date_validate [medium] | Change a delivery scheduled date, then validate it | Done | PASS | PASS | 1.0 |
-| 142 | hr_holidays.allocate_leave_days [easy] | Allocate 15 days of Sick Time Off to an employee | Done (dup of 244) | — | — | — |
-| 143 | hr_holidays.request_time_off_approve [medium] | Create Sick Time Off for employee, fill dates, save, and validate | Done | PASS | FAIL/PASS | 1.0 |
-| 144 | hr_holidays.refuse_leave_request [medium] | Refuse a pending time-off request as manager | Done | PASS | PASS | 1.0 |
-| 145 | hr_holidays.create_leave_type [medium] | Create a new Time Off Type with manager approval | Done | PASS | PASS | 1.0 |
-| 146 | hr_holidays.cancel_approved_leave [medium] | Cancel an approved leave request via cancel wizard | Done (dup of 246) | — | — | — |
-| 147 | mrp.create_bom_confirm_mo [medium] | Create a Bill of Materials with 3 components, then create and confirm a Manufacturing Order for 10 units | Done | PASS | FAIL | 0.0 |
-| 148 | hr_expense.create_expense_report_submit [medium] | Create an expense line, attach it to a new expense report, and submit it for approval | Done | PASS | PASS | 1.0 |
-| 149 | event.create_event_add_ticket [medium] | Create an event with one paid ticket and attendee limits | Done | PASS | FAIL | 0.0 |
-| 150 | fleet.create_vehicle_log_odometer [medium] | Add a vehicle, record its odometer reading, and save the vehicle in service | Done | PASS | FAIL | 0.0 |
-| 151 | website_sale.publish_product_set_price [medium] | Publish a product to the website shop and set its sales price and description | Done | PASS | PASS | 1.0 |
-| 152 | point_of_sale.open_session_sell_product_cash [medium] | Open a POS session, ring up one product, and complete a cash payment | Done | PASS | PASS | 1.0 |
-| 153 | im_livechat.create_channel_add_canned_response [medium] | Create a live chat channel and canned response from the Live Chat app | Done | PASS | PASS | 1.0 |
-| 154 | website.create_blog_post_publish [medium] | Create and publish a blog post with title, cover image, and body content | Done | PASS | PASS | 1.0 |
-| 155 | website.add_menu_item_reorder [medium] | Add a website menu item and reorder it within the navigation hierarchy | Done | PASS | FAIL/FAIL | 0.0 |
-| 156 | website.create_contact_form_block [hard] | Edit a website page to add and configure a contact form block | Done | PASS | FAIL/PASS | 0.5 |
-| 157 | stock.scrap_product_from_receipt [medium] | Open a stock receipt and scrap part of a received product from the operation flow | Done | PASS | PASS/PASS | 1.0 |
-| 158 | stock.adjust_inventory_with_location_filter [medium] | Adjust inventory for a target product in one location while leaving other locations unchanged | Done | PASS | PASS/PASS | 1.0 |
-| 159 | stock.receive_serial_tracked_product [hard] | Validate a receipt by assigning exact serial numbers to tracked units | Done | PASS | PASS/PASS | 1.0 |
-| 160 | mrp.update_bom_component_quantity [medium] | Update one component quantity on an existing bill of materials and save it | Done (dup of 257) | — | — | — |
-| 161 | mrp.create_mo_consume_produce_done [hard] | Create a manufacturing order, record component consumption, and mark production done | Done | PASS | PASS/PASS | 1.0 |
-| 162 | mrp.unbuild_product_partial [hard] | Unbuild part of a manufactured product quantity and verify the resulting stock moves | Done (near-dup of 256) | — | — | — |
-| 163 | hr_expense.submit_report_with_receipt_approve [medium] | Create an expense with a receipt, submit it in a report, then approve it | Done | PASS | FAIL | 0.0 |
-| 164 | website_sale.configure_variant_publish_product [medium] | Configure website product variants, publish the product, and verify it on the shop | Done | PASS | PASS | 1.0 |
-| 165 | event.publish_event_register_attendee [hard] | Publish an event, register a public attendee, and verify the backend registration | Done | PASS | FAIL | 0.0 |
-| 166 | fleet.create_vehicle_assign_driver_contract [medium] | Create a vehicle, assign a driver, and add a dated contract record | Done | PASS | FAIL | 0.0 |
-| 167 | mail.create_channel_pin_message_invite_member [medium] | Create a private channel, invite a member, post a message, and pin the conversation | Done | PASS | FAIL | 0.0 |
-| 168 | mrp.produce_and_close_mo [easy] | Open a confirmed MO, click Produce All to complete production | Done | PASS | PASS/PASS | 1.0 |
-| 169 | mrp.produce_mo_partial_backorder [medium] | Produce partial qty on a confirmed MO and split the remainder into a backorder | Done | PASS | PASS/FAIL | 1.0/0.0 |
-| 170 | contacts.add_bank_account_iban [medium] | Open a partner, add a bank account with a specific IBAN via the Invoicing tab, and save | Done | PASS | PASS/PASS | 1.0 |
-| 171 | hr_expense.approve_submitted_report [medium] | Manager opens a submitted expense among a distractor and approves only the target | Done | PASS | PASS/PASS | 1.0 |
-| 172 | stock.receive_lot_tracked_product [hard] | Open a receipt for a lot-tracked product, enter the exact lot in the Details popup, then Validate | Done | PASS | FAIL/FAIL | 0.0 |
-| 173 | contacts.archive_duplicate_transfer_fields [medium] | Copy phone and email from a duplicate partner to the primary, then archive the duplicate via the Actions menu | Done | PASS | PASS/PASS | 1.0 |
-| 174 | mrp.create_routing_set_workcenter [medium] | Create a workcenter and link it as an operation on an existing BOM | Done | PASS | PASS | 1.0 |
-| 175 | mrp.scrap_component_during_production [hard] | Scrap one consumed component from a running MO via the component action menu | Done | PASS | PASS/PASS | 1.0 |
-| 176 | mrp.convert_bom_to_kit_type [easy] | Change an existing BOM's type from Manufacture This Product to Kit | Done | PASS | PASS | 1.0 |
-| 177 | mrp.create_variant_specific_bom [hard] | Create a BOM that applies only to a single product variant via attribute filter | Done | PASS | FAIL/FAIL | 0.0 |
-| 178 | mrp.configure_mo_operation_time_finish [medium] | Open a work order on an MO, set expected duration, and mark it finished | Done | PASS | FAIL/PASS | 1.0 |
-| 179 | point_of_sale.sell_two_products_apply_discount [medium] | Ring up two POS products, apply a 10% line discount, pay cash | Done | PASS | PASS/PASS | 1.0 |
-| 180 | point_of_sale.refund_previous_order [hard] | Refund a prior POS order partially from the Orders menu | Done | PASS | FAIL/FAIL | 0.0 |
-| 181 | point_of_sale.attach_customer_mid_sale [easy] | Open a POS session, add a product, attach existing customer, pay cash | Done | PASS | PASS/PASS | 1.0 |
-| 182 | point_of_sale.close_session_reconcile_cash_diff [medium] | Close a POS session with a counted cash amount different from expected | Done | PASS | PASS/FAIL | 0.5 |
-| 183 | website_sale.add_product_to_cart_checkout_portal [medium] | As a public user, add a product to cart and complete checkout with address | Done | PASS | FAIL/PASS | 0.5 |
-| 184 | website_sale.apply_promo_code_at_checkout [medium] | Create a coupon program in backend then apply the code on the storefront | Done | PASS | PASS/PASS | 1.0 |
-| 185 | website_sale.edit_product_image_gallery [easy] | Add an extra image to a published product via the shop editor | Done | PASS | PASS/PASS | 1.0 |
-| 186 | website_sale.configure_delivery_method_weight [medium] | Create a delivery method with weight-based pricing rules | Done | PASS | FAIL/PASS | 0.5 |
-| 187 | website.create_new_page_publish [medium] | Create a blank new website page, add a heading, and publish it | Done | PASS | FAIL/FAIL | 0.0 |
-| 188 | website.set_page_seo_fields [easy] | Use the Promote dialog to set meta title, description, and keywords on a page | Done | PASS | FAIL/FAIL | 0.6667 |
-| 189 | website.add_image_snippet_swap_source [medium] | Drag an Image snippet into a page and swap its source image | Done | PASS | FAIL/FAIL | 0.0 |
-| 190 | website.duplicate_page_rename_unpublish [easy] | Duplicate an existing website page, rename the copy, and leave unpublished | Done | PASS | PASS/PASS | 1.0 |
-| 191 | hr_holidays.approve_multiple_requests_bulk [hard] | Multi-select pending time-off requests in list view and bulk approve | Done | PASS | FAIL/FAIL | 0.67 |
-| 192 | hr_holidays.request_leave_with_attachment [medium] | Request leave and attach a PDF justification via the chatter | Done | PASS | FAIL/FAIL | 0.0 |
-| 193 | hr_expense.split_expense_analytic_distribution [hard] | Split one expense line 50/50 across two analytic accounts | Done | PASS | FAIL/PASS | 0.5 |
-| 194 | hr_expense.refuse_report_with_reason_chatter [medium] | Refuse a submitted expense report and post the reason to chatter | Done | PASS | PASS/PASS | 1.0 |
-| 195 | hr_expense.post_approved_expense_to_journal [medium] | Manager posts an approved expense report to its journal entry | Done | PASS | PASS/PASS | 1.0 |
-| 196 | mail.star_and_reply_inbox_message [easy] | Star an inbox message and post a reply | Done | PASS | FAIL/FAIL | 0.0 |
-| 197 | mail.mark_message_done_archive_notification [easy] | Mark Done on an inbox notification to remove it from Inbox | Done | PASS | FAIL/FAIL | 0.1667 |
-| 198 | mail.create_group_channel_upload_attachment [medium] | Create a private channel, invite a member, and upload a file attachment | Done | PASS | FAIL/FAIL | 0.0 |
-| 199 | im_livechat.add_canned_response_send_in_chat [medium] | Create a canned response shortcut and send it in an operator chat | Done | PASS | PASS/PASS | 1.0 |
-| 200 | fleet.log_service_cost_record [easy] | Add a service cost record (oil change) to an existing vehicle | Done | PASS (32.1s) | FAIL (142.4s) | 0.00 |
-| 201 | fleet.assign_vehicle_tags_category [easy] | Add two tags and set a category on a vehicle | Done | PASS | PASS | 1.0 |
-| 202 | fleet.transfer_vehicle_new_driver [medium] | Change a vehicle's driver and set the new assignment date | Done | PASS | FAIL/FAIL | 0.0 |
-| 203 | event.add_event_questions_to_registration [medium] | Add two custom questions to an existing event registration form | Done | PASS | PASS/PASS | 1.0 |
-| 204 | event.create_event_tracks_session_schedule [hard] | Add two conference tracks with times to a published event | Done | PASS | FAIL/FAIL | 0.0 |
-| 205 | event.set_ticket_seat_availability_limit [easy] | Set total seat limit and per-ticket max for an event | Done | PASS | FAIL | 0.4 |
-| 206 | stock.create_internal_transfer_between_locations [medium] | Create an internal transfer between two locations, add a line, and validate | Done (dup of 258) | — | — | — |
-| 207 | stock.create_putaway_rule_for_product [hard] | Configure a putaway rule routing a product to a specific sub-location | Done | PASS | PASS/PASS | 1.0 |
-| 208 | stock.count_inventory_apply_with_date [medium] | Make an inventory adjustment with a specific counted date | Done | PASS | FAIL/FAIL | 0.0 |
-| 209 | stock.set_storage_category_capacity [medium] | Define a storage category with capacity and assign it to a location | Done | PASS | FAIL/FAIL | 0.0 |
-| 210 | account.create_manual_journal_entry_balanced [hard] | Create a misc journal entry with three balanced debit/credit lines and post | Done | PASS | PASS/PASS | 1.0 |
-| 211 | account.reconcile_bank_statement_line_manual [hard] | Open a bank statement line and reconcile it against a suggested invoice | Done | PASS | FAIL/FAIL | 0.0 |
-| 212 | account.create_recurring_entry_template [medium] | Save a journal entry as a recurring entry template | Done | PASS | PASS/PASS | 1.0 |
-| 213 | account.lock_books_set_period_lock_date [medium] | Set the Non-Advisors Lock Date in accounting settings | Done | PASS | FAIL/FAIL | 0.0 |
-| 214 | crm.set_lost_reason_reassign_salesperson [medium] | Mark opportunity Lost with specific reason then reassign salesperson | Done | PASS | — | — |
-| 215 | crm.pivot_view_opportunities_by_stage_revenue [easy] | Switch CRM pipeline to Pivot view, group by stage, measure expected revenue | Done | PASS | PASS/PASS | 1.0 |
-| 216 | project.kanban_drag_task_between_stages [easy] | Drag a task kanban card from one stage to another | Done | PASS | FAIL | 0.0 |
-| 217 | project.create_project_from_template_duplicate [medium] | Duplicate an existing project keeping its tasks | Done | PASS | PASS/PASS | 1.0 |
-| 218 | project.recurring_task_configure_frequency [medium] | Configure an existing task as recurring with weekly frequency | Done | PASS | PASS/PASS | 1.0 |
-| 219 | contacts.add_bank_account_to_partner [easy] | Add an IBAN bank account to an existing partner via Invoicing tab | Done | PASS | — | — |
-| 220 | contacts.archive_partner_then_unarchive_filter [easy] | Archive a contact then unarchive it via the Archived search filter | Done (dup of 232) | — | — | — |
-| 221 | calendar.invite_external_attendee_by_email [easy] | Create a calendar event inviting an external email address not in partners | Done | PASS | PASS | 1.0 |
-| 222 | survey.create_survey_one_page_publish_share [medium] | Create a 3-question survey, publish it, and copy the share link | Done | PASS | PASS/PASS | 1.0 |
-| 223 | project_todo.create_note_add_tag_checklist [easy] | In the To-Do app, create a note with a tag and a checklist item | Done | PASS | PASS/FAIL | 0.5 |
-| 224 | hr_holidays.request_annual_leave [easy] | Done | PASS | PASS | 1.0 |
-| 225 | hr_holidays.approve_leave_as_manager [medium] | Approve a pending leave request from manager approvals view | Done | PASS | PASS | 1.0 |
-| 226 | hr_holidays.refuse_leave_with_reason [medium] | Done | PASS | PASS | 1.0 |
-| 227 | hr_expense.create_expense_with_receipt [medium] | Done | PASS | PASS | 1.0 |
-| 228 | hr_expense.submit_report_for_approval [medium] | Create an expense and submit it to the manager for approval | Done | PASS | PASS | 1.0 |
-| 229 | mail.create_channel_invite_members [easy] | Create a Discuss channel and invite internal users as members | Done | PASS | FAIL | 0.0 |
-| 230 | mail.pin_and_reply_in_chatter [easy] | Done | PASS | PASS | 1.0 |
-| 231 | contacts.merge_duplicate_contacts [hard] | Done | PASS | PASS | 1.0 |
-| 232 | contacts.archive_then_unarchive [easy] | Done | PASS | FAIL | 0.00 |
-| 233 | website.create_blog_post_publish [medium] | Duplicate of 154 | — | — | — |
-| 234 | website.edit_menu_add_page_link [medium] | Add a new menu entry linked to an existing website page | Done | PASS | PASS | 1.0 |
-| 235 | stock.create_putaway_rule [hard] | Create a putaway rule routing a product to a specific sub-location | Done | PASS | PASS | 1.0 |
-| 236 | stock.transfer_lot_tracked_product [hard] | Validate a receipt for a lot-tracked product with specific lot number and quantity | Done | PASS | PASS | 1.0 |
-| 237 | mrp.create_bom_three_components [medium] | Create a Bill of Materials for a product with three components | Done | PASS | FAIL | 0.0 |
-| 238 | mrp.confirm_produce_close_mo [hard] | Confirm a draft MO and close it by producing the finished product | Done | PASS | PASS | 1.0 |
-| 239 | website_sale.publish_shop_product [medium] | Open a storable product, set its list price and website description, and publish it to the shop | Done | PASS | FAIL | 0.0 |
-| 240 | appointment.create_type_set_slots [medium] | Removed | — | — | — |
-| 241 | event.create_event_configure_ticket [medium] | Create an event with dates and venue and configure a ticket type with price and seat limit | Done | PASS | FAIL | 0.7368 |
-| 242 | helpdesk.create_ticket_assign_priority [medium] | Removed | — | — | — |
-| 243 | fleet.register_vehicle_log_odometer [easy] | Register a new fleet vehicle and log an odometer reading for it | Done | PASS | PASS | 1.0 |
-| 244 | hr_holidays.allocate_sick_leave_to_employee [easy] | Done | PASS | PASS | 1.0 |
-| 245 | hr_holidays.request_half_day_morning [easy] | Done | PASS | PASS | 1.0 |
-| 246 | hr_holidays.cancel_approved_leave_and_reallocate [hard] | Done | PASS | PASS | 1.0 |
-| 247 | hr_expense.reject_expense_report_with_feedback [medium] | Done | PASS | PASS | 1.0 |
-| 248 | hr_expense.submit_approve_post_accounting [hard] | Done | PASS | FAIL | 0.0 |
-| 249 | mail.send_direct_message_to_user [easy] | Done | PASS | PASS | 1.0 |
-| 250 | mail.star_message_filter_starred [easy] | Done | PASS | PASS | 1.0 |
-| 251 | mail.mark_message_as_todo_and_resolve [medium] | Done | PASS | FAIL | 0.67 |
-| 252 | fleet.schedule_vehicle_service_activity [easy] | Done | PASS | PASS | 1.0 |
-| 253 | fleet.log_fuel_refill_with_cost [medium] | Done | PASS | FAIL | 0.0 |
-| 254 | event.register_attendee_confirm_check_in [medium] | Done | PASS | PASS | 1.0 |
-| 255 | event.configure_three_ticket_tiers [medium] | Done | PASS | FAIL | 0.86 |
-| 256 | mrp.unbuild_finished_goods_to_recover_components [medium] | Done | PASS | PASS | 1.0 |
-| 257 | mrp.surgical_bom_component_qty_edit [medium] | Done | PASS | PASS | 1.0 |
-| 258 | stock.internal_transfer_between_locations [medium] | Done | PASS | PASS | 1.0 |
-| 259 | calendar.create_private_meeting_with_video_link [medium] | Create a private meeting with attendees and an exact video call link | Done | PASS | FAIL | 0.0 |
-| 260 | fleet.create_contract_set_renewal_activity [medium] | Create a vehicle contract with renewal dates, then schedule a follow-up activity | Done | PASS | FAIL | 0.0 |
-| 261 | hr_expense.create_mileage_expense_submit_report [medium] | Create a mileage expense, add it to a report, and submit the report | Done | PASS | FAIL | 0.0 |
-| 262 | mail.create_channel_set_description_pin_welcome [medium] | Create a private Discuss channel, set its description, and pin a welcome message | Done | PASS | FAIL | 0.0 |
-| 263 | hr_holidays.allocate_leave_then_request_against_balance [hard] | Allocate sick leave to Marc Demo, then create and approve a request against that balance | Done | PASS | FAIL | 0.0 |
-| 264 | contacts.create_company_with_invoice_and_delivery_addresses [medium] | Create a company with linked invoice and delivery child addresses | Done | PASS | FAIL | 0.0 |
-| 265 | survey.branching_quiz_publish_share_link [hard] | Create a branching one-page quiz survey and leave it ready for public sharing | Done | PASS | FAIL | 0.0 |
-| 266 | project_todo.duplicate_note_retag_archive_original [easy] | Duplicate the seeded To-Do note, retag the copy, and archive the original | Done | PASS | FAIL | 0.0 |
-| 267 | website_sale.configure_optional_products_add_upsell_to_cart [medium] | Configure an optional webshop product, publish the upsell item, and add both to a website cart | Done | PASS | FAIL | 0.0 |
-| 268 | hr_recruitment.schedule_second_interview_with_feedback [medium] | Move an applicant to Second Interview, schedule the meeting, and save the requested feedback | Done | PASS | FAIL | 0.0 |
-| 269 | delivery.configure_fixed_rate_carrier_confirm_sale [medium] | Create a fixed-price delivery method, apply it to the target quotation, and confirm the order | Done | PASS | FAIL | 0.0 |
-| 270 | hr_attendance.check_in_break_resume_check_out [medium] | Check in, take a break, resume, and check out from Attendances | Removed | FAIL (spec) | — | — |
-| 271 | maintenance.create_request_assign_technician_mark_repaired [medium] | Create a maintenance request, assign the technician, and mark it repaired | Done | PASS | FAIL | 0.0 |
-| 272 | website_blog.create_post_with_cover_tag_publish [medium] | Create a tagged blog post with a cover image and publish it | Done | PASS | FAIL | 0.0 |
-| 273 | website_slides.create_course_add_lesson_publish [medium] | Create an eLearning course, add a lesson, and publish the course | Done | PASS | FAIL | 0.0 |
-| 274 | delivery.configure_weight_rules_carrier_apply_to_so [medium] | Configure a weight-tier shipping carrier and apply the correct tier to a sale order | Done | PASS | PASS/FAIL | 0.5 |
-| 275 | maintenance.create_equipment_assign_category_team [easy] | Create a new equipment record, assign it to a category and maintenance team | Done | PASS | FAIL | 0.0 |
-| 276 | maintenance.schedule_preventive_plan_recurring [medium] | Schedule a recurring preventive maintenance plan with interval and team assignment | Done | PASS | PASS | 1.0 |
-| 277 | sale_stock.partial_stock_warning_confirm_anyway [hard] | Confirm a sale order with insufficient stock and validate delivery as backorder | Done | PASS | FAIL | 0.857 |
-| 278 | survey.create_feedback_survey_with_sections [medium] | Create a multi-section feedback (non-quiz) survey with time limit and publish | Done | PASS | PASS | 1.0 |
-| 279 | survey.review_submitted_responses_filter [medium] | Open survey participations, filter results, and post a review note on a target response | Done | PASS | PASS | 1.0 |
-| 280 | im_livechat.configure_url_rule_auto_message [medium] | Add a URL-match rule to a livechat channel that triggers an auto-greeting on a specific page | Done | PASS | PASS | 1.0 |
-| 281 | sale_project.timesheet_task_mark_billable_log_hours [hard] | Log timesheet hours on a sale-generated project task, mark billable, and verify invoice-ready state | Removed | FAIL (spec) | — | — |
-| 282 | project_todo.reorder_notes_add_due_dates_bulk [easy] | Set due dates on three seeded To-Do notes from the Kanban view | Done | PASS | PASS | 1.0 |
-| 283 | website_hr_recruitment.publish_job_from_backoffice_then_apply_portal [hard] | Create and publish a job position in the back office, then apply to it from the public portal | Done | PASS | FAIL | 0.0 |
-| 284 | mass_mailing.create_segmented_mailing_save_draft [medium] | Create an email mailing with a filtered Contacts recipient list and save as draft | Done | PASS | FAIL | 0.667 |
-| 285 | event_sale.configure_paid_ticket_register_with_invoice [hard] | Configure a paid event ticket, register an attendee, confirm registration, and generate the invoice | Done | PASS | FAIL | 0.0 |
-| 286 | inventory.run_replenishment_from_dashboard [medium] | Run replenishment for a low-stock product from the Replenishment dashboard | Done | PASS | PASS | 1.0 |
-| 287 | sale_project.deliver_milestone_invoice_partially [hard] | Mark one of three SO milestones delivered and create an invoice for that milestone only | Done | PASS | PASS | 1.0 |
-| 288 | website_sale.unpublish_archive_unarchive_publish_cycle [medium] | Take a published shop product through Unpublish → Archive → Unarchive → Publish | Done | PASS | PASS | 1.0 |
-| 289 | website_blog.edit_post_change_author_add_tags_schedule [medium] | Edit a seeded blog post: change author, add two tags, and set the publish date | Done | PASS | FAIL | 0.0 |
-| 290 | website_slides.add_quiz_lesson_to_existing_course [hard] | Add a multi-question quiz lesson with answers to an existing course and publish | Done | PASS | FAIL | 0.0 |
-| 291 | sale_purchase.dropship_so_to_po_chain_validate [hard] | Confirm a dropship-routed SO and validate the auto-generated PO + receipt chain | Done | PASS | PASS | 1.0 |
-| 292 | mail.create_channel_set_custom_avatar_pin_two_messages [medium] | Create a channel, upload a custom avatar, post messages, and pin two specific ones | Done | PASS | FAIL | 0.0 |
-| 293 | fleet.transfer_vehicle_between_drivers_log_history [medium] | Transfer a vehicle to a new driver and verify the assignation log entry | Done | PASS | PASS | 1.0 |
-| 294 | sale_loyalty.create_loyalty_program_apply_at_checkout [hard] | Create a Discount Code loyalty program (SPRING10, $150 min purchase, 10% on order, custom reward description) and apply it on /shop/cart so a discount line appears | Done | PASS | PASS | 1.0 |
-| 295 | event_sale.add_seat_limited_ticket_register_until_full [medium] | Add a 5-seat limited ticket to an event and register attendees until the seats fill | Done | PASS | FAIL | 0.0 |
-| 296 | sale_purchase.update_pol_alternative_vendor_compare [hard] | Open RFQ, add two alternative-vendor RFQs at different prices, then cancel the losers and confirm the cheapest via the alternative-warning wizard | Done | PASS | FAIL | 0.0 |
-| 297 | delivery.set_third_party_carrier_print_label [medium] | Configure a fixed-price carrier, apply it to a confirmed delivery picking with tracking ref, validate and trigger Print | Done | PASS | PASS | 1.0 |
-| 298 | inventory.create_storage_category_assign_to_location [medium] | Create a storage category with capacity rules and assign it to a stock location | Done | PASS | FAIL | 0.0 |
-| 299 | sale_stock.deliver_partial_split_into_two_pickings [hard] | On a multi-line SO, deliver partial (force inline-cell edit), create backorder, then on the backorder edit Done from auto-reserved 5 to 0 and SAVE without validating | Done | PASS | FAIL | 0.0 |
-| 300 | website_blog.create_blog_with_two_posts_archive_one [medium] | Create blog 'Bench Insights' + 2 published posts, then archive only March Notes (active=False, kept in DB) | Done | PASS | FAIL | 0.0 |
-| 301 | website_slides.duplicate_lesson_to_new_section [medium] | Add Advanced section, duplicate Welcome Video lesson via Actions menu, move duplicate to Advanced and rename | Done | PASS | FAIL | 0.0 |
-| 302 | im_livechat.assign_team_set_offline_form_message [medium] | Configure Live Chat channel via 3-dots Configure menu, switch Options tab, set notification text and welcome message | Done | PASS | PASS | 1.0 |
-| 303 | maintenance.archive_equipment_create_replacement [medium] | Archive seeded 'Old Belt OB-99' via Actions, then create 'New Belt NB-100' with serial in same category | Done | PASS | PASS | 1.0 |
-| 304 | project_todo.create_three_personal_with_specific_priorities [easy] | Create 3 personal to-dos; only Plan Sprint gets first priority star (Medium = '1'), others stay default | Done | PASS | FAIL | 0.0 |
-| 305 | website_hr_recruitment.set_kanban_state_assign_recruiter [medium] | Open Diana Recruit, flip kanban_state ball to 'Ready for Next Stage', set Recruiter, post Log note | Done | PASS | PASS | 1.0 |
-| 306 | purchase_stock.return_partial_with_distractor_lines [hard] | Multi-line PO return wizard: zero out 2 distractor lines and set qty=2 on third, then validate return | Done | PASS | FAIL | 0.0 |
-| 307 | sale_project.invoice_completed_milestones_only [hard] | Open SO S-BENCH-MS-002, click Create Invoice, accept wizard's auto-detected qty=2, Create Draft | Done | PASS | PASS | 1.0 |
-| 308 | survey.publish_share_via_link_get_url [easy] | Open seeded 'Customer Pulse Q2' survey, click Share, verify public /survey/start URL, close dialog | Done | PASS | PASS | 1.0 |
-| 309 | point_of_sale.add_item_apply_global_discount_pay_cash [hard] | POS session: 2 items, open Actions popup, Discount 15%, pay cash, validate order | Done | PASS | PASS | 1.0 |
-| 310 | mass_mailing.duplicate_existing_change_subject_recipients [medium] | Duplicate seeded 'Q1 Bulletin Template' via Actions→Duplicate, change subject and country=Germany filter | Done | PASS | FAIL | 0.0 |
-| 311 | hr_holidays.refuse_then_re_request_other_type [hard] | Manager refuses Eves Paid Time Off, posts reason in chatter, then creates Sick Time Off on her behalf | Done | PASS | FAIL | 0.71 |
-| 312 | calendar.create_event_with_two_organizers_recurring_weekly [medium] | Create weekly recurring Monday event 09:00-09:30 with 2 attendees and Discuss videocall link | Done | PASS | FAIL | 0.0 |
-| 313 | mrp.scrap_component_during_partial_production [hard] | Open MO, cog Actions → Scrap (qty=2 ScrewA, tag Defective batch), validate scrap, then Produce All → Mark Done | Done | PASS | FAIL | 0.0 |
-| 314 | crm.assign_team_change_salesperson_log_activity [medium] | Open Bench Big Deal, change Team to Channel + Salesperson Sara via Contacts tab, schedule Call activity | Done | PASS | PASS | 1.0 |
-| 315 | website_sale.add_optional_at_cart_remove_main_keep_optional [hard] | Add Bench Camera + accept Tripod optional in modal, then remove only Camera at cart, leaving Tripod orphaned | Done | PASS | FAIL | 0.0 |
-| 316 | hr_expense.create_with_currency_eur_to_usd [medium] | Create NYC Hotel expense in USD (200 USD = 185 EUR), employee paid, verify EUR conversion | Done | PASS | FAIL | 0.0 |
-| 317 | event_product.create_event_product_link_to_ticket [medium] | Create Conference Pass Std service product (service_tracking=event), add Standard Pass ticket to Spring Summit | Done | PASS | PASS | 1.0 |
-| 318 | website.create_contact_form_with_custom_field [hard] | Edit Contact Us page, add Selection field Inquiry Type with 3 options via website builder | Done | PASS | FAIL | 0.0 |
-| 319 | contacts.merge_three_duplicates_keep_email [hard] | Merge 3 duplicate contacts into one, choosing email from a specific record | Done | PASS | FAIL | 0.0 |
-| 320 | website_sale.create_gift_card_apply_in_cart [hard] | Configure Gift Card program, generate 1 €50 card code, apply in /shop/cart with €100 product | Done | PASS | PASS | 1.0 |
-| 321 | hr.create_department_assign_manager_three_employees [medium] | Create Bench Engineering dept with manager Mike, then bulk assign 3 employees to it | Done | PASS | FAIL | 0.0 |
-| 322 | stock.create_putaway_rule_for_specific_category [hard] | Create putaway rule routing a product category to a specific sub-location | Done | PASS | PASS | 1.0 |
-| 323 | mail.invite_external_email_to_existing_channel [medium] | In existing channel, invite an external email (creates guest invitation) | Done | PASS | PASS | 1.0 |
-| 324 | sale.add_line_with_optional_template_apply_discount [medium] | On a draft SO, add a line by selecting a template, then apply line-level 10% discount | Done | PASS | PASS | 1.0 |
-| 325 | crm.create_lead_from_email_alias_log_message [hard] | Configure CRM team 'Inbound' alias + Accept-Emails-From, create lead with priority/tag, post chatter | Done | PASS | FAIL | 0.0 |
-| 326 | project.create_kanban_stage_reorder_drag [medium] | In project Kanban view, create a new stage and reorder it before existing stages | Done | PASS | FAIL | 0.0 |
-| 327 | account.create_recurring_journal_entry [hard] | Create a 3-line balanced journal entry (Rent 1000 + Tax 50 / Bank 1050), schedule To-Do activity for next month, Post | Done | PASS | PASS | 1.0 |
-| 328 | website.add_image_carousel_to_homepage [hard] | In website editor, add Image Gallery (Carousel) snippet to a seeded page with 3 images | Done | PASS | PASS | 1.0 |
-| 329 | hr_holidays.bulk_approve_two_pending_requests [hard] | Select 2 pending leave requests in list view, approve in bulk via action | Done | PASS | FAIL | 0.67 |
-| 330 | event.add_track_with_speaker_publish [medium] | On existing event, add a track with speaker info and publish on website | Done | PASS | PASS | 1.0 |
-| 331 | purchase.send_rfq_email_with_template_signature [hard] | On a draft RFQ click Send RFQ, switch template from 'Purchase: Request For Quotation' to 'Purchase: Purchase Order', append 'Please confirm by Friday.' to body, Send | Done | PASS | PASS | 1.0 |
-| 332 | website_sale.set_product_seo_title_meta [easy] | Open product, set SEO title and meta description | Done | PASS | PASS | 1.0 |
-| 333 | point_of_sale.attach_customer_apply_loyalty [hard] | In POS, attach a customer with loyalty card mid-sale and apply earned points | Done | PASS | PASS | 1.0 |
-| 334 | website_blog.create_tag_assign_to_three_posts [medium] | Create a new tag, assign to 3 existing blog posts | Done | PASS | FAIL | 0.0 |
-| 335 | hr_recruitment.skill_filter_then_send_offer [hard] | Filter applicants by skill='Python', open top match, send offer email | Done | PASS | PASS | 1.0 |
-| 336 | sale.create_quotation_with_customer_pricelist [medium] | Create SO with a customer who has a specific pricelist; verify pricelist auto-applied | Done | PASS | PASS | 1.0 |
-| 337 | calendar.invite_organize_with_event_agenda_attachment [hard] | Create calendar event 'Q2 Planning Session' 2026-05-20 14:00-15:30, add Alice+Bob attendees, upload agenda.txt via chatter paperclip | Done | PASS | FAIL | 0.0 |
-| 338 | stock.cancel_picking_create_replacement_with_serial [hard] | Cancel an existing receipt picking, create a replacement with serial-tracked products | Done | PASS | FAIL | 0.0 |
-| 339 | mrp_account.confirm_mo_check_account_move [medium] | Confirm an MO and verify the cost-of-production journal entry was created | Done | PASS | PASS | 1.0 |
-| 340 | survey.invite_attendees_send_email [medium] | On existing survey, click Invite, enter 3 emails, customize subject, send | Done | PASS | PASS | 1.0 |
-| 341 | hr.add_skill_to_employee_with_level [medium] | Open employee, add a skill with skill type and level | Done | PASS | PASS | 1.0 |
-| 342 | website_event.publish_event_register_via_portal [hard] | Publish event website page, navigate to portal /events, register | Done | PASS | PASS | 1.0 |
-| 343 | crm_sms.send_sms_to_opportunity [medium] | On opportunity, click Send SMS button, compose and send | Done | PASS | PASS | 1.0 |
-| 344 | hr_attendance.kiosk_pin_check_in_then_manager_fix_checkout [medium] | Check in via kiosk PIN, then fix the missing checkout from manager attendance view | Done | PASS | FAIL | 0.0 |
-| 345 | point_of_sale.cash_in_sell_cash_out_close_session [hard] | In POS, perform cash in, complete a sale, record cash out, then close the session | Removed | FAIL (spec) | — | — |
-| 346 | delivery.country_rule_and_free_threshold_apply_to_so [medium] | Create a carrier with destination rules and free-shipping threshold, then apply it to a matching quotation | Done | PASS | PASS | 1.0 |
-| 347 | inventory.cycle_count_two_locations_apply_selected_delta [medium] | Perform a cycle count across two locations and apply only the intended stock discrepancy | Done | PASS | FAIL | 0.0 |
-| 348 | project_todo.create_note_set_color_deadline [easy] | Create a note, set a deadline, and apply a non-default kanban color | Done | PASS | FAIL | 0.0 |
-| 349 | survey.create_certification_quiz_attempt_limit_publish [hard] | Build a certification quiz with passing score and attempt limit, then publish it | Removed | FAIL (oracle) | — | — |
-| 350 | appointment.public_booking_reschedule_cancel_portal [hard] | Configure an appointment type, book it publicly, then reschedule and cancel it from the portal | Removed | FAIL (module unavailable) | — | — |
-| 351 | helpdesk.team_sla_assign_escalate_close [hard] | Create a helpdesk team with SLA policy, process a ticket through assignment and escalation, then close it | Removed | FAIL (module unavailable) | — | — |
-| 352 | marketing_automation.tag_trigger_drip_campaign [hard] | Build a tag-triggered marketing automation flow with delayed actions and a stop condition | Removed | FAIL (module unavailable) | — | — |
-| 353 | event_product.sell_event_product_fill_attendee_details [medium] | Sell an event-linked product and complete attendee details for the generated registration | Done | PASS | FAIL | 1.0 |
-| 354 | event_sale.multi_ticket_checkout_two_attendees [hard] | Configure two paid ticket types and complete one website checkout with separate attendee details | Done | PASS | PASS | 1.0 |
-| 355 | sale_loyalty.buy_x_get_y_reward_in_cart [hard] | Configure a Buy X Get Y promotion and verify the free-product reward appears in the cart | Done | PASS | PASS | 1.0 |
-| 356 | sale_purchase.mto_so_generate_po_change_vendor_confirm [hard] | Confirm an MTO sale order, inspect the generated PO, switch vendor, and continue the chain | Done | PASS | PASS | 1.0 |
-| 357 | sale_stock.confirm_so_manual_reserve_validate_delivery [medium] | Confirm a sale order, manually reserve stock on its delivery, and validate the transfer | Done | PASS | PASS | 1.0 |
-| 358 | website_blog.create_post_with_cta_seo_schedule [medium] | In the 'Bench News' blog, create a post with a CTA button block (Learn More, href='/shop'), fill Meta Title + Meta Description via the Optimize SEO dialog, and schedule publish for 2026-05-20 09:00 without publishing | Removed | FAIL (oracle) | — | — |
-| 359 | im_livechat.configure_channel_then_handle_widget_chat [hard] | Reply to a seeded livechat session in Discuss via `::hello` canned-response shortcut (single-tab variant) | Done | PASS | PASS | 1.0 |
-| 360 | website_hr_recruitment.apply_public_then_schedule_interview [hard] | Submit a public job application, then schedule that applicant’s interview from the backend | Done | PASS | PASS | 1.0 |
-| 361 | purchase_stock.receive_partial_scrap_damaged_units [hard] | Receive part of a PO, scrap damaged units from the receipt, and finish the remainder correctly | Done | PASS | FAIL | 0.0 |
-| 362 | maintenance.create_request_from_equipment_schedule_followup [medium] | Create a maintenance request from an equipment record and schedule a follow-up activity | Done | PASS | FAIL | 0.0 |
-| 363 | point_of_sale.sell_pos_order_invoice_customer [hard] | Ring up a POS sale, attach a customer, toggle Invoice this Order, pay cash, and verify a posted account.move invoice was generated | Done | PASS | FAIL | 0.0 |
-| 364 | repair.cancel_repair_log_internal_reason [medium] | Open an existing repair quotation, start it, then cancel via Action menu and log an internal note in the chatter explaining the cancellation reason | Done | PASS | PASS | 1.0 |
-| 365 | survey.duplicate_survey_rename_archive_original [medium] | Duplicate a seeded survey via cog menu, rename the copy, then archive the original so only the renamed copy remains active | Done | PASS | PASS | 1.0 |
-| 366 | maintenance.fill_description_schedule_window_move_to_repaired [medium] | Open an existing in-progress maintenance request, fill the description, set the scheduled start and end dates (logging the repair duration), and move it to the Repaired stage | Done | PASS | PASS | 1.0 |
-| 367 | stock.scrap_specific_serial_unit [medium] | Scrap one specific serial-tracked unit (1 of 3 in stock) via Inventory Operations Scrap, leaving the other two in stock (originally hard, demoted after both browser-use runs passed) | Done | PASS | PASS | 1.0 |
-| 368 | hr_expense.split_submitted_report_resubmit [hard] | Refuse the Gadget expense (reason 'Not compliant') in a 3-expense submitted batch (R-BENCH-SPLIT-001) and approve the remaining Meal + Taxi — Odoo 19 hr.expense.sheet is removed so sheets pivot to per-expense triage | Done | PASS | PASS | 1.0 |
-| 369 | website_sale.apply_product_filter_clear_facets [medium] | On /shop, filter products by category and price range, then clear one facet and verify the other persists | Done | PASS | PASS | 1.0 |
-| 370 | project_todo.bulk_move_tasks_between_projects [hard] | Move 3 specific tasks from project A to project B while leaving a distractor task in project A | Done | PASS | FAIL | 0.0 |
-| 371 | website_hr_recruitment.edit_job_form_publish_preview [medium] | Edit a recruitment job posting's description and requirements, publish it, then preview on the portal | Done | PASS | PASS | 1.0 |
-| 372 | fleet.log_service_cost_add_odometer_close [hard] | Log a service cost on a vehicle, add an odometer reading, then mark the service record as closed | Done | PASS | FAIL | 0.0 |
-| 373 | maintenance.create_equipment_schedule_preventive_plan [medium] | Create 'Bench Press 01' equipment with on-the-fly Machinery category, assign technician Bench Tech, set Expected MTBF=30 days, save, then reopen and set Effective Date=06/01/2026 | Done | PASS | FAIL | 0.0 |
-| 374 | product_expiry.receive_lot_set_expiry_date [medium] | Receive a lot-tracked perishable product and set its expiration and best-before dates | Done | PASS | PASS | 1.0 |
-| 375 | website_sale_slides.assign_attendees_publish_course [hard] | Publish an eLearning course, set prerequisite, and assign enrolled attendees | Done | PASS | FAIL | 0.0 |
-| 376 | calendar.configure_meeting_with_location_and_reminder [medium] | Create a calendar event with a physical location, attendees, and a 1-hour reminder | Done | PASS | PASS | 1.0 |
-| 377 | mrp.bom_with_kit_component_confirm_mo [hard] | Create a BoM that uses a kit-type sub-component, confirm an MO, and verify kit expansion | Done | PASS | FAIL | 0.0 |
-| 378 | mrp_subcontracting.receive_subcontracted_product_with_components [hard] | Receive a subcontracted serial-tracked product (qty=2) from its subcontractor via Detailed Operations popup (two serials) and verify components were back-flushed | Done | PASS | PASS | 1.0 |
-| 379 | stock_landed_costs.add_cost_to_shipment_allocate [hard] | Create a landed cost with a freight line, apply to a completed receipt, validate | Done | PASS | PASS | 1.0 |
-| 380 | hr_recruitment_survey.attach_survey_require_applicant_submit [medium] | Attach a screening survey to a job position and verify the Send Interview button becomes visible on the applicant | Done | PASS | PASS | 1.0 |
-| 381 | website_customer.publish_customer_reference_on_public_page [medium] | Mark a customer reference as published and verify it appears on /customers | Done | PASS | PASS | 1.0 |
-| 382 | pos_restaurant.open_table_order_mark_ready [hard] | In restaurant POS, open a table, take an order, and mark the course ready | Done | PASS | PASS | 1.0 |
-| 383 | website_sale_stock.show_stock_availability_add_to_cart [medium] | On a /shop product with stock availability display enabled, verify availability shows and add to cart within limits | Done | PASS | PASS | 1.0 |
-| 384 | lunch.create_vendor_product_order_for_today [medium] | Install Lunch, create vendor Bench Cafe + product Veggie Wrap, then order via /odoo/lunch kiosk | Done | PASS | FAIL | 0.0 |
-| 385 | stock_sms.enable_delivery_sms_notification_validate [medium] | Enable SMS delivery notification on a picking type and validate a delivery to trigger it | Done | PASS | PASS | 1.0 |
-| 386 | sale_management.create_quotation_template_apply_to_new_so [medium] | Create a quotation template with 2 default lines, then apply it to a new SO | Done | PASS | PASS | 1.0 |
-| 387 | hr_skills_survey.link_certification_survey_to_skill [hard] | Create a certification survey, link it to a skill, and attempt completion | Removed | FAIL (feature unavailable) | — | — |
-| 388 | project.create_milestone_assign_tasks_reach [medium] | Create a project milestone, assign 2 tasks to it, then mark reached | Done | PASS | FAIL | 0.0 |
-| 389 | mass_mailing.duplicate_mailing_edit_subject_send [medium] | Duplicate an existing mass mailing, edit the subject, add a contact list, and send | Done | PASS | PASS | 1.0 |
-| 390 | sale_timesheet.log_timesheet_on_so_invoice_delivered [hard] | Confirm a service SO with delivered-timesheet policy, log timesheet hours, create invoice for delivered qty | Done | PASS | PASS | 1.0 |
-| 391 | project_sms.send_reminder_sms_to_task_followers [medium] | Open project Bench SMS Project's Tasks list, multi-select two seeded reviewer tasks, cog Actions > Send SMS in mass mode, body "Reminder: please review by EOD", Send now — emits one sms.sms per task (2 total, one per reviewer phone) | Done | PASS | FAIL | 0.5 |
-| 392 | mrp.workorder_operation_scan_serial_complete [hard] | Start a work order, consume serial-tracked component via scan, mark operation done and finish MO | Done | PASS | FAIL | 0.0 |
-| 393 | crm_iap_enrich.bulk_enrich_leads_from_list [hard] | From CRM Leads list view, multi-select 3 unenriched leads (skip 2 distractors) and run the Actions > Enrich server action | Done | PASS | PASS | 1.0 |
-| 394 | website_forum.post_question_accept_answer [medium] | Post a question on the website forum, answer it, accept the answer | Done | PASS | FAIL | 0.0 |
-| 395 | stock.transfer_reserved_to_ready_partial_backorder [hard] | Reserve qty on a delivery, validate only part of it, create backorder | Done | PASS | FAIL | 0.0 |
-| 396 | website_sale_wishlist.add_product_share_to_email [medium] | Add a seeded product to the admin wishlist from /shop (share-by-email feature absent in Odoo 19 Community — re-scoped to wishlist persistence) | Done | PASS | PASS | 1.0 |
-| 397 | purchase.create_rfq_receive_invoice_3way_match [hard] | Create RFQ (Bench Supply Co + Bench PO Item A qty=10 + Bench PO Item B qty=5), Confirm Order, open Receipt smart button, set Done=7 on Item A (leave B=5), Validate with Create Backorder, navigate to Purchase Orders list, select the PO checkbox, click Create Bills, set Bill Reference `BSC-BILL-3WM`, Confirm (post). Enforces full 3-way match: PO state=purchase, original picking done, backorder pending, account.move posted with BSC-BILL-3WM ref linked to the PO. | Done | PASS | FAIL | 0.0 |
-| 398 | hr_attendance.clock_in_out_kiosk_mode [medium] | From Attendance kiosk, an employee clocks in and then clocks out | Done | PASS | PASS | 1.0 |
-| 399 | account.credit_note_partial_refund_post [hard] | On posted invoice `INV/BENCH/001` (Bench Item A qty=4@100 + Bench Item B qty=2@50 = 500.00), open the Reverse wizard (header "Credit Note"), set reason "Wrong qty", click **Reverse** (primary `refund_moves`, NOT "Reverse and Create Invoice"), on the draft credit note change Item A qty 4→2 AND delete Item B line, Confirm-post. Source invoice stays posted; credit note `out_refund` total=200, `reversed_entry_id`=source. | Done | PASS | FAIL | 0.0 |
-| 400 | website.submit_contact_form_create_crm_lead [medium] | Submit the frontend /contactus form and verify a CRM lead is created | Done | PASS | PASS | 1.0 |
-| 401 | stock_barcode.receive_via_barcode_scan_validate [hard] | Use Barcode app to receive a picking by scanning product codes | Removed | FAIL (module unavailable) | — | — |
-| 402 | hr_holidays.request_allocation_approve_self_book_day_off [hard] | Allocate time off, approve, then book a day off against it | Done | PASS | PASS | 1.0 |
-| 403 | hr_recruitment.create_applicant_kanban_move_to_offer [medium] | Create an applicant via kanban, move through stages to Contract Proposal | Done | PASS | PASS | 1.0 |
-| 404 | account_followup.send_reminder_level_two_customers [hard] | Configure a follow-up level, trigger reminder on overdue invoices, send | Removed | FAIL (module unavailable) | — | — |
-| 405 | stock.adjust_inventory_count_apply_moves [medium] | Open Physical Inventory, edit counted qty, apply adjustments | Done | PASS | FAIL | 0.0 |
-| 406 | event.create_event_add_question_publish [hard] | Create event, add registration question with required answer, publish | Done | PASS | PASS | 1.0 |
-| 407 | hr_expense.scan_submit_expense_from_mobile_portal [medium] | From My Expenses portal, create a simple expense and submit | Done | PASS | PASS | 1.0 |
-| 408 | mail.send_email_with_attachment_log_as_note [medium] | On a partner form, send an email with attachment via chatter Send Message | Done | PASS | FAIL | 0.0 |
-| 409 | project.create_task_with_deadline_tags_assignees [medium] | Create a project task with deadline, 2 tags, and 2 assignees | Done | PASS | PASS | 1.0 |
-| 410 | website_sale.checkout_portal_apply_coupon_complete [hard] | Add product to cart, apply coupon code at checkout, complete order | Done | PASS | PASS | 1.0 |
-| 411 | documents.upload_document_tag_assign_to_folder [medium] | Upload a document to a folder, tag it, assign owner | Removed | FAIL (module unavailable) | — | — |
-| 412 | stock.create_scrap_order_for_damaged_qty [medium] | Create a scrap order for 3 damaged units from WH/Stock | Done | PASS | PASS | 1.0 |
-| 413 | calendar.create_recurring_meeting_weekly_pattern [medium] | Create a recurring meeting with weekly pattern, 4 occurrences | Done | PASS | FAIL | 0.0 |
-| 414 | crm.duplicate_lead_convert_to_opportunity [medium] | Duplicate a lead, convert the copy to an opportunity | Done | PASS | FAIL | 0.0 |
-| 415 | mrp.scrap_consumed_component_during_production [hard] | During MO production, scrap 1 of 3 consumed units, validate MO | Done | PASS | PASS | 1.0 |
-| 416 | account.reconcile_customer_payment_against_invoice [hard] | Register a customer payment and reconcile against an open invoice | Done | PASS | PASS | 1.0 |
-| 417 | product.configure_variant_attribute_two_values [medium] | Configure a product with a Size attribute + 3 values, generates variants | Done | PASS | PASS | 1.0 |
-| 418 | sale.configure_pricelist_apply_to_order_line [hard] | Create pricelist with rule, apply to SO, verify discount | Done | PASS | PASS | 1.0 |
-| 419 | mrp.unbuild_product_back_to_components [hard] | Unbuild 2 finished products and return components to stock | Done | PASS | PASS | 1.0 |
-| 420 | point_of_sale.apply_fixed_discount_before_payment [hard] | In POS, add 2 products, apply fixed 5 EUR discount, pay cash | Done | PASS | PASS | 1.0 |
-| 421 | mrp_account.mo_consume_and_close_check_valuation [hard] | Confirm MO with tracked cost components, close, verify stock.valuation.layer | Done | PASS | PASS | 1.0 |
-| 422 | mail.create_alias_route_to_record [hard] | Create a mail alias pointing to a crm.team, incoming email creates a lead | Done | PASS | PASS | 1.0 |
-| 423 | account.reverse_journal_entry_from_general_ledger [hard] | From GL, find posted entry, reverse it, verify reverse entry posted | Done | PASS | PASS | 1.0 |
-| 424 | website_slides.duplicate_course_edit_add_slide [medium] | Duplicate an existing course, rename, add a new slide | Done | PASS | PASS | 1.0 |
-| 425 | hr.generate_employee_card_set_badge_id [medium] | Set Badge ID (barcode) on an employee, optionally trigger Print Badge | Done | PASS | PASS | 1.0 |
-| 426 | sale.duplicate_quotation_edit_delivery_date_confirm [medium] | Duplicate a draft quotation, change delivery date, confirm | Done | PASS | PASS | 1.0 |
-| 427 | stock.create_physical_inventory_adjust_two_products [medium] | From Inventory Adjustment menu, add 2 products with counted qty, Apply | Done | PASS | PASS | 1.0 |
-| 428 | mail.schedule_activity_on_partner_with_note [medium] | Schedule a 'To Do' activity on a partner with note and deadline | Done | PASS | PASS | 1.0 |
-| 429 | hr_timesheet.log_time_for_2_days_approve_via_manager [hard] | Log timesheets for 2 days, submit, approve via manager | Removed | FAIL (module unavailable) | — | — |
-| 430 | website_blog.change_author_republish_post [medium] | Change a published blog post's author to a different user | Done | PASS | PASS | 1.0 |
-| 431 | event.create_event_add_ticket_publish [medium] | Create an event with a specific date, add a paid ticket type, and set it to published | Done | PASS | PASS | 1.0 |
-| 432 | fleet.add_vehicle_log_odometer [easy] | Create a new vehicle record, then log an odometer reading via the dedicated odometer action | Done | PASS | PASS/FAIL | 0.5 |
-| 433 | mrp.create_bom_with_components [medium] | Create a Bill of Materials for a product with three specific components and quantities | Done | PASS | FAIL | 0.0 |
-| 434 | website_sale.publish_product_shop [easy] | Find an unpublished product in the backend, set its sales price and publish it to the shop | Done | PASS | PASS | 1.0 |
-| 435 | account.register_partial_payment_reconcile_invoice [hard] | Register partial payment on posted customer invoice, verify reconciliation state | Done | PASS | PASS | 1.0 |
-| 436 | stock.delivery_transfer_validate_partial_backorder_no [medium] | Validate delivery picking with partial qty, decline backorder creation | Done | PASS | FAIL | 0.0 |
-| 437 | purchase.confirm_rfq_receive_full_three_way_match [medium] | Confirm RFQ, mark PO received, verify 3-way match ready | Done | PASS | PASS | 1.0 |
-| 438 | hr.create_department_assign_manager_two_employees [medium] | Create HR department, assign manager, add 2 employees | Done | PASS | FAIL | 0.0 |
-| 439 | project.set_task_priority_urgent_assign_tag [easy] | Set first priority star (priority '1') and add existing 'Bug' tag on seeded task | Done | PASS | PASS | 1.0 |
-| 440 | sale.add_section_note_line_to_quotation [medium] | Add section header + note line to draft quotation | Done | PASS | PASS | 1.0 |
-| 441 | website.publish_draft_page_set_menu_visibility [hard] | Publish a draft website page and add it to main menu in position 2 | Done | PASS | FAIL | 0.0 |
-| 442 | crm.assign_lead_salesperson_change_stage_won [medium] | Assign salesperson, move stage, mark Won | Done | PASS | PASS | 1.0 |
-| 443 | mass_mailing.create_mailing_select_list_schedule_send [hard] | Create mass mailing, pick list, schedule future send | Done | PASS | FAIL | 0.0 |
-| 444 | fleet.assign_vehicle_create_contract_active [medium] | Create vehicle contract, link to existing vehicle, activate | Done | PASS | FAIL | 0.0 |
-| 445 | sale.apply_discount_percent_on_sale_order_line [medium] | Apply percent discount on sale order line | Done | PASS | PASS | 1.0 |
-| 446 | account.post_draft_invoice_send_to_customer [medium] | Post draft invoice then send by email | Done | PASS | PASS | 1.0 |
-| 447 | stock.receipt_full_quantity_validate_no_backorder [easy] | Validate incoming shipment at full qty, no backorder | Done | PASS | PASS | 1.0 |
-| 448 | project.close_task_change_state_to_done [easy] | Mark a project task as Done via state widget | Done | PASS | PASS | 1.0 |
-| 449 | mrp.confirm_mo_produce_partial_keep_backorder [hard] | Confirm MO, produce partial qty, create production backorder | Done | PASS | PASS | 1.0 |
-| 450 | purchase.set_vendor_product_code_on_po_line [medium] | Edit PO line description field | Done | PASS | PASS | 1.0 |
-| 451 | hr_holidays.request_sick_leave_approve_self [hard] | Request sick leave and approve as manager | Done | PASS | FAIL | 0.0 |
-| 452 | website_event.add_sponsor_to_event_publish [medium] | Add sponsor to event and publish | Done | PASS | PASS | 1.0 |
-| 453 | crm.lead_set_contact_name_email_phone_save [easy] | Fill contact name/email/phone on existing lead | Done | PASS | PASS | 1.0 |
-| 454 | stock.adjust_product_reorder_rule_min_max [medium] | Set reordering rule min/max on product | Done | PASS | PASS | 1.0 |
-| 455 | account.reconcile_bank_statement_line_to_invoice [hard] | Reconcile a bank statement line against a posted invoice | Removed | FAIL (module unavailable) | — | — |
-| 456 | sale.create_sale_quotation_from_opportunity_smart_button [medium] | Create quotation from CRM opportunity smart button | Done | PASS | PASS | 1.0 |
-| 457 | stock.archive_old_product_set_inactive [easy] | Archive a product via cog Actions | Done | PASS | PASS | 1.0 |
-| 458 | purchase.add_product_to_rfq_with_taxes [medium] | Add new product line to RFQ with taxes | Done | PASS | PASS | 1.0 |
-| 459 | hr.create_public_holiday_calendar_entry [medium] | Add a public holiday entry for a specific date | Done | PASS | PASS | 1.0 |
-| 460 | mrp.create_bom_kit_type_for_product [hard] | Create a BoM of type Kit with 2 components | Done | PASS | FAIL | 0.0 |
-| 461 | website_blog.schedule_post_future_date_unpublish [hard] | Unpublish a blog post and reschedule for future | Done | PASS | FAIL | 0.0 |
-| 462 | sale.cancel_confirmed_order_restore_draft [medium] | Cancel confirmed SO then set back to draft | Done | PASS | PASS | 1.0 |
-| 463 | product.set_product_category_change [easy] | Change a product's category | Done | PASS | PASS | 1.0 |
-| 464 | calendar.create_meeting_invite_attendees_send [medium] | Create calendar meeting with 2 attendees | Done | PASS | FAIL | 0.0 |
-| 465 | hr.request_reimbursement_expense_report [hard] | Submit hr.expense + approve + post | Done | PASS | PASS | 1.0 |
-| 466 | stock.set_putaway_rule_default_location [medium] | Create a putaway rule for a product | Done | PASS | PASS | 1.0 |
-| 467 | account.create_vendor_bill_from_scratch_pay [hard] | Create vendor bill from scratch, confirm, then Pay in full via Register Payment wizard | Done | PASS | FAIL | 0.0 |
-| 468 | sale.edit_existing_quotation_add_optional_product [medium] | Add a new product line to draft SO | Done | PASS | PASS | 1.0 |
-| 469 | stock.transfer_create_internal_transfer_validate [medium] | Create + validate internal transfer | Done | PASS | PASS | 1.0 |
-| 470 | crm.bulk_archive_lost_leads [medium] | Filter Lost leads + bulk archive | Done | PASS | PASS | 1.0 |
-| 471 | hr_holidays.request_time_off_with_attachment [hard] | Request leave and attach justification | Done | PASS | FAIL | 0.0 |
-| 472 | product.configure_stock_route_for_product [medium] | Enable MTO route on product | Done | PASS | PASS | 1.0 |
-| 473 | account.post_customer_invoice_with_tax_groups [medium] | Create customer invoice with tax, post | Done | PASS | FAIL | 0.0 |
-| 474 | sale.duplicate_confirmed_order_edit_customer [medium] | Duplicate confirmed SO, change customer | Done | PASS | PASS | 1.0 |
-| 475 | mrp.unreserve_raw_material_on_mo [medium] | Unreserve components on confirmed MO | Done | PASS | PASS | 1.0 |
-| 476 | hr.promote_employee_set_new_job_title_save [easy] | Update employee job title | Done | PASS | PASS | 1.0 |
-| 477 | website_forum.upvote_question_mark_as_answer [medium] | Upvote forum question + accept answer | Done | PASS | PASS | 1.0 |
-| 478 | account.refund_customer_invoice_cash_basis [hard] | Partial credit note via Reverse wizard + price_unit override on single-line invoice | Done | PASS | PASS | 1.0 |
-| 479 | im_livechat.send_message_to_operator [medium] | Open live chat widget and send a message | Done | PASS | FAIL | 0.0 |
-| 480 | crm.log_opportunity_note_internal [easy] | Log internal note on opportunity chatter | Done | PASS | PASS | 1.0 |
-| 481 | stock.cancel_picking_abandoned [medium] | Cancel assigned picking with dialog | Done | PASS | PASS | 1.0 |
-| 482 | website_blog.delete_comment_moderate [hard] | Delete a blog post comment via moderation | Done | PASS | PASS | 1.0 |
-| 483 | hr_recruitment.hire_candidate_refuse_another [hard] | Hire one applicant (Contract Signed → Create Employee → set Job Title → Save), refuse another with the 'Not a fit' reason among near-duplicate distractors | Done | PASS | PASS | 1.0 |
-| 484 | account.modify_account_move_line_label [medium] | Reset to draft, edit line label, repost | Done | PASS | FAIL | 0.0 |
-| 485 | website_sale.add_product_review_publish [medium] | Submit a product review on storefront | Done | PASS | PASS | 1.0 |
-| 486 | sale.convert_quotation_to_order_verify_invoice_status [easy] | Confirm a draft quotation to SO | Done | PASS | PASS | 1.0 |
-| 487 | project.assign_task_to_user_change_deadline [medium] | Assign existing user to a task + set the deadline | Done | PASS | PASS | 1.0 |
-| 488 | stock.receive_serial_tracked_product_two_serials [hard] | Receive serial-tracked product with 2 serials | Done | PASS | PASS | 1.0 |
-| 489 | website_sale.configure_free_shipping_threshold [medium] | Configure delivery carrier free shipping threshold | Done | PASS | PASS | 1.0 |
-| 490 | account.import_opening_balance_set_initial_equity [hard] | Post opening balance journal entry | Done | PASS | PASS | 1.0 |
-| 491 | stock.run_manual_replenishment_for_product [hard] | Run replenishment from Replenishment dashboard (per-row Order / action_replenish) | Done | PASS | PASS | 1.0 |
-| 492 | mail.create_channel_invite_members_post_message [medium] | Create Discuss channel + invite + post | Done | PASS | PASS | 1.0 |
-| 493 | project.complete_project_stage_reach_done_percent [medium] | Bulk move tasks to Done stage | Done | PASS | PASS | 1.0 |
-| 494 | hr.change_employee_work_schedule [easy] | Assign working-hours resource to employee | Done | PASS | PASS | 1.0 |
-| 495 | account.print_invoice_pdf_attach_to_partner [hard] | Print invoice PDF and attach to chatter | Done | PASS | PASS | 1.0 |
-| 496 | crm.add_opportunity_product_quotation_send [medium] | Add products on opp + create quote | WIP | — | — | — |
-| 497 | repair.diagnose_add_parts_mark_done [medium] | Create repair order, add part, start and complete repair (no invoice) | WIP | — | — | — |
-| 498 | sale_loyalty.create_buy_x_get_y_apply [medium] | Create Buy 2 Get 1 Free program, apply on SO with qualifying lines | WIP | — | — | — |
-| 499 | delivery.set_free_shipping_threshold [easy] | Set free shipping threshold on carrier, verify on SO | WIP | — | — | — |
-| 500 | mass_mailing.create_ab_test_send_winner [hard] | Create mailing with A/B test variant, send test, pick winner | WIP | — | — | — |
-| 501 | maintenance.create_request_complete_repair [easy] | Create maintenance request, assign technician, mark repaired | WIP | — | — | — |
-| 502 | website_slides.add_video_lesson_publish [medium] | Add URL video lesson to course section, publish | WIP | — | — | — |
-| 503 | sale_stock.confirm_so_deliver_full [medium] | Confirm SO, navigate to delivery via smart button, validate shipment | WIP | — | — | — |
-| 504 | event_sale.create_paid_event_register_invoice [hard] | Create event with paid ticket, register, generate and post invoice | WIP | — | — | — |
-| 505 | survey.create_scored_quiz_check_results [medium] | Create quiz with scored answers, preview-submit, check results | WIP | — | — | — |
-| 506 | im_livechat.create_channel_configure_operator [hard] | Create livechat channel, add operator, configure auto-message rule | WIP | — | — | — |
-| 507 | inventory.filtered_cycle_count_apply_single_line [medium] | Filter inventory adjustments to one product/location, enter counted quantity and apply only that line | Done | PASS | FAIL | 0.0 |
-| 508 | delivery.configure_carrier_margin_rule_apply_to_order [medium] | Configure a margin-based carrier and apply it to the target quotation | Done | PASS | PASS | 1.0 |
-| 509 | mass_mailing.create_sms_mailing_filter_schedule_send [hard] | Create an SMS mailing with recipient filter and schedule it to send later | Done | PASS | PASS | 1.0 |
-| 510 | website_slides.create_course_add_certification_toggle_visibility [medium] | Create an eLearning course, enable certification/public options, add content, and publish | Done | PASS | PASS | 1.0 |
-| 511 | sale_loyalty.create_points_program_redeem_reward_on_quote [hard] | Create a points loyalty program and redeem its reward on a target quotation | Done | PASS | PASS | 1.0 |
-| 512 | website_blog.duplicate_post_localize_seo_slug_publish [hard] | Duplicate a blog post, localize slug/SEO metadata, and publish only the copy | Done | PASS | FAIL | 0.0 |
-| 513 | repair.create_repair_order_add_fee_quotation_confirm [hard] | Create a repair order with a fee/quotation flow and confirm the correct commercial setup | Done | PASS | FAIL | 0.5 |
-| 514 | website_hr_recruitment.publish_job_set_interview_form_and_archive_old_posting [hard] | Publish a new job, configure application/interview form behavior, and archive an old posting | Done | PASS | PASS | 1.0 |
-| 515 | event.create_event_mail_schedule_and_publish_registration [hard] | Create an event, prepare scheduled communication, and publish registration | Done | PASS | PASS | 1.0 |
-| 516 | im_livechat.configure_channel_hours_operator_rules [medium] | Configure livechat channel availability hours and operator assignment rules | Done | PASS | PASS | 1.0 |
+| 2 | account.partial_refund_service_credit_note | Done | PASS | FAIL | 0.0 |
+| 3 | account.repair_and_post_invoice | Done | PASS | FAIL | 0.0 |
+| 4 | account.switch_negative_invoice_repair_credit_note | Done | PASS | FAIL | 0.0 |
+| 5 | account.switch_negative_invoice_to_credit_note | Done | PASS | FAIL | 0.0 |
+| 6 | calendar.edit_single_recurrence_occurrence | Done | PASS | FAIL | 0.0 |
+| 7 | calendar.make_single_occurrence_all_day | Done | PASS | FAIL | 0.0 |
+| 8 | calendar.schedule_recurring_steering_sync | Done | PASS | PASS | 1.0 |
+| 9 | crm.merge_duplicate_opportunities_cleanup | Done | PASS | PASS | 1.0 |
+| 10 | crm.qualify_lead_and_prepare_quote | Done | PASS | PASS | 1.0 |
+| 11 | hr_recruitment.new_applicant_schedule_interview | Done | PASS | FAIL | 0.0 |
+| 12 | project.configure_launch_milestones | Done | PASS | FAIL | 0.71 |
+| 13 | project.read_update_status | Done | PASS | PASS | 1.0 |
+| 14 | purchase.cancel_reissue_wrong_vendor | Done | PASS | FAIL | 0.33 |
+| 15 | purchase_stock.receive_and_complete_backorder | Done | PASS | PASS | 1.0 |
+| 16 | purchase_stock.receive_partial_without_backorder | Done | PASS | PASS | 1.0 |
+| 17 | sale.cancel_reissue_wrong_customer | Done | PASS | FAIL | 0.0 |
+| 18 | sale.confirm_correct_order | Done | PASS | PASS | 1.0 |
+| 19 | sale.find_highest_duplicate | Done | PASS | FAIL | 0.0 |
+| 20 | sale_project.confirm_rollout_quote_update_generated_project | Done | PASS | PASS | 1.0 |
+| 21 | website.edit_careers_spotlight | Done | PASS | PASS | 1.0 |
+| 22 | website_hr_recruitment.apply_and_triage_ops_role | Done | PASS | PASS | 1.0 |
+| 23 | website_hr_recruitment.apply_guru_job | Done | PASS | PASS | 1.0 |
+| 24 | hr.create_employee_complete_profile | Done | PASS | FAIL | 0.0 |
+| 25 | purchase.new_rfq_three_lines_date | Done | PASS | FAIL | 0.0 |
+| 26 | contacts.create_company_with_contacts | Done | PASS | FAIL | 0.0 |
+| 27 | sale.change_validity_date [easy] | Done | PASS | PASS | 1.0 |
+| 28 | account.register_payment_defaults [easy] | Done | PASS | PASS | 1.0 |
+| 29 | crm.move_opportunity_stage [easy] | Done | PASS | PASS | 1.0 |
+| 30 | purchase.reset_draft_edit_reconfirm [easy] | Done | PASS | PASS | 1.0 |
+| 31 | project.post_chatter_message [easy] | Done | PASS | PASS | 1.0 |
+| 32 | account.create_vendor_bill_confirm [medium] | Done | PASS | FAIL | 0.0 |
+| 33 | crm.edit_opportunity_schedule_call [medium] | Done | PASS | PASS | 1.0 |
+| 34 | hr.update_work_information [medium] | Done | PASS | PASS | 1.0 |
+| 35 | stock.confirm_and_validate_receipt [medium] | Done | PASS | PASS | 1.0 |
+| 36 | purchase.update_rfq_add_line_confirm [medium] | Done | PASS | FAIL | 0.0 |
+| 37 | contacts.update_address_add_tag [medium] | Done | PASS | PASS | 1.0 |
+| 38 | calendar.create_single_event [medium] | Done | PASS | FAIL | 0.0 |
+| 39 | hr_recruitment.advance_applicant_stage [medium] | Done | PASS | PASS | 1.0 |
+| 40 | crm.batch_mark_lost_with_reason [hard] | Done | PASS | FAIL | 1.0 |
+| 41 | hr_recruitment.refuse_duplicate_applications [hard] | Done | PASS | FAIL | 0.0 |
+| 42 | purchase_stock.return_partial_receipt_to_vendor [hard] | Done | PASS | FAIL | 0.0 |
+| 43 | sale.create_invoice_adjust_quantity_post [medium] | Done | PASS | PASS | 1.0 |
+| 44 | purchase.confirm_order_send_po_message [medium] | Done | PASS | FAIL | 0.0 |
+| 45 | project.update_task_assign_deadline_activity [medium] | Done | PASS | FAIL | 0.0 |
+| 46 | contacts.create_linked_contact_add_tag [medium] | Done | PASS | PASS | 1.0 |
+| 47 | purchase.confirm_rfq [easy] | Done | PASS | PASS | 1.0 |
+| 48 | hr.update_employee_work_phone [easy] | Done | PASS | PASS | 1.0 |
+| 49 | crm.set_priority_on_opportunity [easy] | Done | PASS | FAIL | 1.0 |
+| 50 | contacts.update_contact_email [easy] | Done | PASS | PASS | 1.0 |
+| 51 | account.update_vendor_bill_reference_post [medium] | Done | PASS | PASS | 1.0 |
+| 52 | contacts.update_company_with_supplier_tag [medium] | Done | PASS | FAIL | 0.0 |
+| 53 | crm.create_opportunity_tag_schedule_call [medium] | Done | PASS | FAIL/PASS | 1.0 |
+| 54 | project.rename_task_assign_deadline [medium] | Done | PASS | PASS | 1.0 |
+| 55 | purchase.set_order_deadline_schedule_call_confirm [medium] | Done | PASS | PASS | 1.0 |
+| 56 | website.update_contact_info [easy] | Done | PASS | FAIL | 0.0 |
+| 57 | stock.update_product_internal_reference [easy] | Done | PASS | FAIL | 0.0 |
+| 58 | hr.update_employee_department [easy] | Done | PASS | PASS | 1.0 |
+| 59 | sale.add_discount_line [easy] | Done | PASS | FAIL | 0.0 |
+| 60 | project.add_task_subtask [easy] | Done | PASS | PASS | 1.0 |
+| 61 | account.update_customer_invoice_terms_post [medium] | Done | PASS | PASS/PASS | 1.0 |
+| 62 | crm.update_opportunity_revenue_priority_won [medium] | Done | PASS | FAIL/FAIL | 0.0 |
+| 63 | hr.update_work_location_schedule_activity [medium] | Done | PASS | PASS/FAIL | 1.0 |
+| 64 | purchase.update_rfq_reference_deadline_confirm [medium] | Done | PASS | PASS/PASS | 1.0 |
+| 65 | contacts.create_linked_contact_add_finance_tag [medium] | Done | PASS | FAIL/PASS | 1.0 |
+| 66 | project.set_project_deadline_tags [medium] | Done | PASS | — | 1.0 |
+| 67 | hr.add_employee_skill [medium] | Done | PASS | — | 1.0 |
+| 68 | purchase.duplicate_rfq_change_vendor_confirm [medium] | Done | PASS | FAIL | 0.0 |
+| 69 | crm.convert_lead_to_opportunity_simple [medium] | Done | PASS | FAIL | 0.0 |
+| 70 | stock.validate_delivery_shipment [medium] | Done | PASS | FAIL | 0.0 |
+| 71 | account.create_bill_from_confirmed_po [medium] | Done | PASS | PASS | 1.0 |
+| 72 | crm.mark_opportunity_won_update_revenue [medium] | Done | PASS | FAIL | 0.0 |
+| 73 | account.create_customer_invoice_post [medium] | Done | PASS | FAIL | 0.0 |
+| 74 | account.partial_pay_vendor_bill_with_memo [medium] | Done | PASS | FAIL | 0.0 |
+| 75 | calendar.create_all_day_event_with_attendee [medium] | Done | PASS | FAIL | 0.0 |
+| 76 | contacts.create_company_add_supplier_tag [medium] | Done | PASS | FAIL | 0.0 |
+| 77 | hr.assign_manager_set_work_location [medium] | Done | PASS | PASS/PASS | 1.0 |
+| 78 | hr_recruitment.schedule_interview_for_applicant [medium] | Done | PASS | FAIL | 0.0 |
+| 79 | purchase.cancel_rfq_log_note [medium] | Done | PASS | PASS | 1.0 |
+| 80 | sale.update_salesperson_validity_confirm [medium] | Done | PASS | FAIL | 0.0 |
+| 81 | crm.convert_lead_link_customer_schedule_call [medium] | Done | PASS | FAIL | 0.0 |
+| 82 | purchase_stock.confirm_rfq_receive_full [medium] | Done | PASS | FAIL | 0.0 |
+| 83 | contacts.create_company_add_supplier_finance_tags [medium] | Done | PASS | PASS | 1.0 |
+| 84 | crm.convert_lead_qualify [medium] | Done | PASS | PASS | 1.0 |
+| 85 | project.convert_task_to_subtask [medium] | Done | PASS | PASS/PASS | 1.0 |
+| 86 | hr.add_resume_line_update_location [medium] | Done | PASS | FAIL | 0.0 |
+| 87 | hr_recruitment.add_skill_move_stage [medium] | Done | PASS | FAIL/FAIL | 0.0 |
+| 88 | contacts.create_company_set_supplier_tag [medium] | Done | PASS | PASS* | — |
+| 89 | account.update_invoice_reference [easy] | Done | PASS | PASS | 1.0 |
+| 90 | contacts.update_contact_phone [easy] | Done | PASS | PASS | 1.0 |
+| 91 | crm.update_opportunity_revenue [easy] | Done | PASS | PASS | 1.0 |
+| 92 | hr.update_employee_job_title [easy] | Done | PASS | PASS | 1.0 |
+| 93 | purchase.update_rfq_source [easy] | Done | PASS | PASS | 1.0 |
+| 94 | account.create_refund_modify_reissue [hard] | Done | PASS | — | — |
+| 95 | hr_recruitment.create_applicant_add_skills_refuse [hard] | Done | PASS | — | — |
+| 96 | sale.cancel_confirmed_recreate_send_email [hard] | Done | PASS | — | — |
+| 97 | calendar.create_recurring_edit_two_occurrences [hard] | Done | PASS | — | — |
+| 98 | website.edit_page_update_text_set_properties [hard] | Done | PASS | — | — |
+| 99 | calendar.create_event_add_description_attendee [medium] | Done | PASS | FAIL | 0.0 |
+| 100 | contacts.create_linked_contact_set_title_phone [medium] | Done | PASS | PASS | 1.0 |
+| 101 | crm.create_opportunity_set_close_date_priority [medium] | Done | PASS | FAIL | 0.0 |
+| 102 | hr.add_resume_line_update_mobile [medium] | Done | PASS | FAIL | 0.0 |
+| 103 | hr_recruitment.create_applicant_set_email_stage [medium] | Done | PASS | FAIL | 0.0 |
+| 104 | purchase.update_rfq_note_quantity_confirm [medium] | Done | PASS | PASS | 1.0 |
+| 105 | sale.update_quote_payment_terms_validity_confirm [medium] | Done | PASS | FAIL | 0.0 |
+| 106 | stock.update_delivery_scheduled_date_validate [medium] | Done | PASS | PASS | 1.0 |
+| 107 | hr_holidays.request_time_off_approve [medium] | Done | PASS | FAIL/PASS | 1.0 |
+| 108 | hr_holidays.refuse_leave_request [medium] | Done | PASS | PASS | 1.0 |
+| 109 | hr_holidays.create_leave_type [medium] | Done | PASS | PASS | 1.0 |
+| 110 | hr_expense.create_expense_report_submit [medium] | Done | PASS | PASS | 1.0 |
+| 111 | fleet.create_vehicle_log_odometer [medium] | Done | PASS | FAIL | 0.0 |
+| 112 | website_sale.publish_product_set_price [medium] | Done | PASS | PASS | 1.0 |
+| 113 | im_livechat.create_channel_add_canned_response [medium] | Done | PASS | PASS | 1.0 |
+| 114 | website.add_menu_item_reorder [medium] | Done | PASS | FAIL/FAIL | 0.0 |
+| 115 | website.create_contact_form_block [hard] | Done | PASS | FAIL/PASS | 0.5 |
+| 116 | stock.scrap_product_from_receipt [medium] | Done | PASS | PASS/PASS | 1.0 |
+| 117 | stock.adjust_inventory_with_location_filter [medium] | Done | PASS | PASS/PASS | 1.0 |
+| 118 | stock.receive_serial_tracked_product [hard] | Done | PASS | PASS/PASS | 1.0 |
+| 119 | mrp.create_mo_consume_produce_done [hard] | Done | PASS | PASS/PASS | 1.0 |
+| 120 | hr_expense.submit_report_with_receipt_approve [medium] | Done | PASS | FAIL | 0.0 |
+| 121 | website_sale.configure_variant_publish_product [medium] | Done | PASS | PASS | 1.0 |
+| 122 | event.publish_event_register_attendee [hard] | Done | PASS | FAIL | 0.0 |
+| 123 | fleet.create_vehicle_assign_driver_contract [medium] | Done | PASS | FAIL | 0.0 |
+| 124 | mail.create_channel_pin_message_invite_member [medium] | Done | PASS | FAIL | 0.0 |
+| 125 | mrp.produce_and_close_mo [easy] | Done | PASS | PASS/PASS | 1.0 |
+| 126 | mrp.produce_mo_partial_backorder [medium] | Done | PASS | PASS/FAIL | 1.0/0.0 |
+| 127 | contacts.add_bank_account_iban [medium] | Done | PASS | PASS/PASS | 1.0 |
+| 128 | hr_expense.approve_submitted_report [medium] | Done | PASS | PASS/PASS | 1.0 |
+| 129 | stock.receive_lot_tracked_product [hard] | Done | PASS | FAIL/FAIL | 0.0 |
+| 130 | contacts.archive_duplicate_transfer_fields [medium] | Done | PASS | PASS/PASS | 1.0 |
+| 131 | mrp.create_routing_set_workcenter [medium] | Done | PASS | PASS | 1.0 |
+| 132 | mrp.scrap_component_during_production [hard] | Done | PASS | PASS/PASS | 1.0 |
+| 133 | mrp.convert_bom_to_kit_type [easy] | Done | PASS | PASS | 1.0 |
+| 134 | mrp.create_variant_specific_bom [hard] | Done | PASS | FAIL/FAIL | 0.0 |
+| 135 | mrp.configure_mo_operation_time_finish [medium] | Done | PASS | FAIL/PASS | 1.0 |
+| 136 | point_of_sale.refund_previous_order [hard] | Done | PASS | FAIL/FAIL | 0.0 |
+| 137 | website_sale.add_product_to_cart_checkout_portal [medium] | Done | PASS | FAIL/PASS | 0.5 |
+| 138 | website_sale.apply_promo_code_at_checkout [medium] | Done | PASS | PASS/PASS | 1.0 |
+| 139 | website_sale.edit_product_image_gallery [easy] | Done | PASS | PASS/PASS | 1.0 |
+| 140 | website_sale.configure_delivery_method_weight [medium] | Done | PASS | FAIL/PASS | 0.5 |
+| 141 | website.create_new_page_publish [medium] | Done | PASS | FAIL/FAIL | 0.0 |
+| 142 | website.set_page_seo_fields [easy] | Done | PASS | FAIL/FAIL | 0.6667 |
+| 143 | website.add_image_snippet_swap_source [medium] | Done | PASS | FAIL/FAIL | 0.0 |
+| 144 | website.duplicate_page_rename_unpublish [easy] | Done | PASS | PASS/PASS | 1.0 |
+| 145 | hr_holidays.approve_multiple_requests_bulk [hard] | Done | PASS | FAIL/FAIL | 0.67 |
+| 146 | hr_holidays.request_leave_with_attachment [medium] | Done | PASS | FAIL/FAIL | 0.0 |
+| 147 | hr_expense.split_expense_analytic_distribution [hard] | Done | PASS | FAIL/PASS | 0.5 |
+| 148 | hr_expense.refuse_report_with_reason_chatter [medium] | Done | PASS | PASS/PASS | 1.0 |
+| 149 | hr_expense.post_approved_expense_to_journal [medium] | Done | PASS | PASS/PASS | 1.0 |
+| 150 | mail.star_and_reply_inbox_message [easy] | Done | PASS | FAIL/FAIL | 0.0 |
+| 151 | mail.mark_message_done_archive_notification [easy] | Done | PASS | FAIL/FAIL | 0.1667 |
+| 152 | mail.create_group_channel_upload_attachment [medium] | Done | PASS | FAIL/FAIL | 0.0 |
+| 153 | im_livechat.add_canned_response_send_in_chat [medium] | Done | PASS | PASS/PASS | 1.0 |
+| 154 | fleet.log_service_cost_record [easy] | Done | PASS (32.1s) | FAIL (142.4s) | 0.00 |
+| 155 | fleet.assign_vehicle_tags_category [easy] | Done | PASS | PASS | 1.0 |
+| 156 | fleet.transfer_vehicle_new_driver [medium] | Done | PASS | FAIL/FAIL | 0.0 |
+| 157 | event.add_event_questions_to_registration [medium] | Done | PASS | PASS/PASS | 1.0 |
+| 158 | event.create_event_tracks_session_schedule [hard] | Done | PASS | FAIL/FAIL | 0.0 |
+| 159 | event.set_ticket_seat_availability_limit [easy] | Done | PASS | FAIL | 0.4 |
+| 160 | stock.create_putaway_rule_for_product [hard] | Done | PASS | PASS/PASS | 1.0 |
+| 161 | stock.count_inventory_apply_with_date [medium] | Done | PASS | FAIL/FAIL | 0.0 |
+| 162 | stock.set_storage_category_capacity [medium] | Done | PASS | FAIL/FAIL | 0.0 |
+| 163 | account.create_manual_journal_entry_balanced [hard] | Done | PASS | PASS/PASS | 1.0 |
+| 164 | account.reconcile_bank_statement_line_manual [hard] | Done | PASS | FAIL/FAIL | 0.0 |
+| 165 | account.create_recurring_entry_template [medium] | Done | PASS | PASS/PASS | 1.0 |
+| 166 | account.lock_books_set_period_lock_date [medium] | Done | PASS | FAIL/FAIL | 0.0 |
+| 167 | crm.set_lost_reason_reassign_salesperson [medium] | Done | PASS | — | — |
+| 168 | crm.pivot_view_opportunities_by_stage_revenue [easy] | Done | PASS | PASS/PASS | 1.0 |
+| 169 | project.kanban_drag_task_between_stages [easy] | Done | PASS | FAIL | 0.0 |
+| 170 | project.create_project_from_template_duplicate [medium] | Done | PASS | PASS/PASS | 1.0 |
+| 171 | project.recurring_task_configure_frequency [medium] | Done | PASS | PASS/PASS | 1.0 |
+| 172 | contacts.add_bank_account_to_partner [easy] | Done | PASS | — | — |
+| 173 | calendar.invite_external_attendee_by_email [easy] | Done | PASS | PASS | 1.0 |
+| 174 | survey.create_survey_one_page_publish_share [medium] | Done | PASS | PASS/PASS | 1.0 |
+| 175 | project_todo.create_note_add_tag_checklist [easy] | Done | PASS | PASS/FAIL | 0.5 |
+| 176 | hr_holidays.request_annual_leave [easy] | Done | PASS | PASS | 1.0 |
+| 177 | hr_holidays.approve_leave_as_manager [medium] | Done | PASS | PASS | 1.0 |
+| 178 | hr_holidays.refuse_leave_with_reason [medium] | Done | PASS | PASS | 1.0 |
+| 179 | hr_expense.create_expense_with_receipt [medium] | Done | PASS | PASS | 1.0 |
+| 180 | hr_expense.submit_report_for_approval [medium] | Done | PASS | PASS | 1.0 |
+| 181 | mail.create_channel_invite_members [easy] | Done | PASS | FAIL | 0.0 |
+| 182 | mail.pin_and_reply_in_chatter [easy] | Done | PASS | PASS | 1.0 |
+| 183 | contacts.archive_then_unarchive [easy] | Done | PASS | FAIL | 0.00 |
+| 184 | website.edit_menu_add_page_link [medium] | Done | PASS | PASS | 1.0 |
+| 185 | stock.create_putaway_rule [hard] | Done | PASS | PASS | 1.0 |
+| 186 | stock.transfer_lot_tracked_product [hard] | Done | PASS | PASS | 1.0 |
+| 187 | mrp.confirm_produce_close_mo [hard] | Done | PASS | PASS | 1.0 |
+| 188 | website_sale.publish_shop_product [medium] | Done | PASS | FAIL | 0.0 |
+| 189 | event.create_event_configure_ticket [medium] | Done | PASS | FAIL | 0.7368 |
+| 190 | fleet.register_vehicle_log_odometer [easy] | Done | PASS | PASS | 1.0 |
+| 191 | hr_holidays.allocate_sick_leave_to_employee [easy] | Done | PASS | PASS | 1.0 |
+| 192 | hr_holidays.request_half_day_morning [easy] | Done | PASS | PASS | 1.0 |
+| 193 | hr_holidays.cancel_approved_leave_and_reallocate [hard] | Done | PASS | PASS | 1.0 |
+| 194 | hr_expense.reject_expense_report_with_feedback [medium] | Done | PASS | PASS | 1.0 |
+| 195 | hr_expense.submit_approve_post_accounting [hard] | Done | PASS | FAIL | 0.0 |
+| 196 | mail.star_message_filter_starred [easy] | Done | PASS | PASS | 1.0 |
+| 197 | fleet.schedule_vehicle_service_activity [easy] | Done | PASS | PASS | 1.0 |
+| 198 | fleet.log_fuel_refill_with_cost [medium] | Done | PASS | FAIL | 0.0 |
+| 199 | event.register_attendee_confirm_check_in [medium] | Done | PASS | PASS | 1.0 |
+| 200 | event.configure_three_ticket_tiers [medium] | Done | PASS | FAIL | 0.86 |
+| 201 | mrp.unbuild_finished_goods_to_recover_components [medium] | Done | PASS | PASS | 1.0 |
+| 202 | mrp.surgical_bom_component_qty_edit [medium] | Done | PASS | PASS | 1.0 |
+| 203 | stock.internal_transfer_between_locations [medium] | Done | PASS | PASS | 1.0 |
+| 204 | calendar.create_private_meeting_with_video_link [medium] | Done | PASS | FAIL | 0.0 |
+| 205 | fleet.create_contract_set_renewal_activity [medium] | Done | PASS | FAIL | 0.0 |
+| 206 | hr_expense.create_mileage_expense_submit_report [medium] | Done | PASS | FAIL | 0.0 |
+| 207 | hr_holidays.allocate_leave_then_request_against_balance [hard] | Done | PASS | FAIL | 0.0 |
+| 208 | contacts.create_company_with_invoice_and_delivery_addresses [medium] | Done | PASS | FAIL | 0.0 |
+| 209 | survey.branching_quiz_publish_share_link [hard] | Done | PASS | FAIL | 0.0 |
+| 210 | project_todo.duplicate_note_retag_archive_original [easy] | Done | PASS | FAIL | 0.0 |
+| 211 | website_sale.configure_optional_products_add_upsell_to_cart [medium] | Done | PASS | FAIL | 0.0 |
+| 212 | hr_recruitment.schedule_second_interview_with_feedback [medium] | Done | PASS | FAIL | 0.0 |
+| 213 | delivery.configure_fixed_rate_carrier_confirm_sale [medium] | Done | PASS | FAIL | 0.0 |
+| 214 | maintenance.create_request_assign_technician_mark_repaired [medium] | Done | PASS | FAIL | 0.0 |
+| 215 | website_blog.create_post_with_cover_tag_publish [medium] | Done | PASS | FAIL | 0.0 |
+| 216 | website_slides.create_course_add_lesson_publish [medium] | Done | PASS | FAIL | 0.0 |
+| 217 | delivery.configure_weight_rules_carrier_apply_to_so [medium] | Done | PASS | PASS/FAIL | 0.5 |
+| 218 | maintenance.create_equipment_assign_category_team [easy] | Done | PASS | FAIL | 0.0 |
+| 219 | sale_stock.partial_stock_warning_confirm_anyway [hard] | Done | PASS | FAIL | 0.857 |
+| 220 | survey.create_feedback_survey_with_sections [medium] | Done | PASS | PASS | 1.0 |
+| 221 | survey.review_submitted_responses_filter [medium] | Done | PASS | PASS | 1.0 |
+| 222 | im_livechat.configure_url_rule_auto_message [medium] | Done | PASS | PASS | 1.0 |
+| 223 | project_todo.reorder_notes_add_due_dates_bulk [easy] | Done | PASS | PASS | 1.0 |
+| 224 | website_hr_recruitment.publish_job_from_backoffice_then_apply_portal [hard] | Done | PASS | FAIL | 0.0 |
+| 225 | mass_mailing.create_segmented_mailing_save_draft [medium] | Done | PASS | FAIL | 0.667 |
+| 226 | event_sale.configure_paid_ticket_register_with_invoice [hard] | Done | PASS | FAIL | 0.0 |
+| 227 | inventory.run_replenishment_from_dashboard [medium] | Done | PASS | PASS | 1.0 |
+| 228 | sale_project.deliver_milestone_invoice_partially [hard] | Done | PASS | PASS | 1.0 |
+| 229 | website_sale.unpublish_archive_unarchive_publish_cycle [medium] | Done | PASS | PASS | 1.0 |
+| 230 | website_blog.edit_post_change_author_add_tags_schedule [medium] | Done | PASS | FAIL | 0.0 |
+| 231 | sale_purchase.dropship_so_to_po_chain_validate [hard] | Done | PASS | PASS | 1.0 |
+| 232 | mail.create_channel_set_custom_avatar_pin_two_messages [medium] | Done | PASS | FAIL | 0.0 |
+| 233 | fleet.transfer_vehicle_between_drivers_log_history [medium] | Done | PASS | PASS | 1.0 |
+| 234 | sale_loyalty.create_loyalty_program_apply_at_checkout [hard] | Done | PASS | PASS | 1.0 |
+| 235 | event_sale.add_seat_limited_ticket_register_until_full [medium] | Done | PASS | FAIL | 0.0 |
+| 236 | sale_purchase.update_pol_alternative_vendor_compare [hard] | Done | PASS | FAIL | 0.0 |
+| 237 | delivery.set_third_party_carrier_print_label [medium] | Done | PASS | PASS | 1.0 |
+| 238 | inventory.create_storage_category_assign_to_location [medium] | Done | PASS | FAIL | 0.0 |
+| 239 | sale_stock.deliver_partial_split_into_two_pickings [hard] | Done | PASS | FAIL | 0.0 |
+| 240 | website_blog.create_blog_with_two_posts_archive_one [medium] | Done | PASS | FAIL | 0.0 |
+| 241 | im_livechat.assign_team_set_offline_form_message [medium] | Done | PASS | PASS | 1.0 |
+| 242 | maintenance.archive_equipment_create_replacement [medium] | Done | PASS | PASS | 1.0 |
+| 243 | project_todo.create_three_personal_with_specific_priorities [easy] | Done | PASS | FAIL | 0.0 |
+| 244 | website_hr_recruitment.set_kanban_state_assign_recruiter [medium] | Done | PASS | PASS | 1.0 |
+| 245 | purchase_stock.return_partial_with_distractor_lines [hard] | Done | PASS | FAIL | 0.0 |
+| 246 | sale_project.invoice_completed_milestones_only [hard] | Done | PASS | PASS | 1.0 |
+| 247 | survey.publish_share_via_link_get_url [easy] | Done | PASS | PASS | 1.0 |
+| 248 | mass_mailing.duplicate_existing_change_subject_recipients [medium] | Done | PASS | FAIL | 0.0 |
+| 249 | hr_holidays.refuse_then_re_request_other_type [hard] | Done | PASS | FAIL | 0.71 |
+| 250 | calendar.create_event_with_two_organizers_recurring_weekly [medium] | Done | PASS | FAIL | 0.0 |
+| 251 | mrp.scrap_component_during_partial_production [hard] | Done | PASS | FAIL | 0.0 |
+| 252 | crm.assign_team_change_salesperson_log_activity [medium] | Done | PASS | PASS | 1.0 |
+| 253 | website_sale.add_optional_at_cart_remove_main_keep_optional [hard] | Done | PASS | FAIL | 0.0 |
+| 254 | hr_expense.create_with_currency_eur_to_usd [medium] | Done | PASS | FAIL | 0.0 |
+| 255 | event_product.create_event_product_link_to_ticket [medium] | Done | PASS | PASS | 1.0 |
+| 256 | website.create_contact_form_with_custom_field [hard] | Done | PASS | FAIL | 0.0 |
+| 257 | contacts.merge_three_duplicates_keep_email [hard] | Done | PASS | FAIL | 0.0 |
+| 258 | website_sale.create_gift_card_apply_in_cart [hard] | Done | PASS | PASS | 1.0 |
+| 259 | hr.create_department_assign_manager_three_employees [medium] | Done | PASS | FAIL | 0.0 |
+| 260 | stock.create_putaway_rule_for_specific_category [hard] | Done | PASS | PASS | 1.0 |
+| 261 | sale.add_line_with_optional_template_apply_discount [medium] | Done | PASS | PASS | 1.0 |
+| 262 | crm.create_lead_from_email_alias_log_message [hard] | Done | PASS | FAIL | 0.0 |
+| 263 | project.create_kanban_stage_reorder_drag [medium] | Done | PASS | FAIL | 0.0 |
+| 264 | account.create_recurring_journal_entry [hard] | Done | PASS | PASS | 1.0 |
+| 265 | website.add_image_carousel_to_homepage [hard] | Done | PASS | PASS | 1.0 |
+| 266 | hr_holidays.bulk_approve_two_pending_requests [hard] | Done | PASS | FAIL | 0.67 |
+| 267 | event.add_track_with_speaker_publish [medium] | Done | PASS | PASS | 1.0 |
+| 268 | purchase.send_rfq_email_with_template_signature [hard] | Done | PASS | PASS | 1.0 |
+| 269 | website_sale.set_product_seo_title_meta [easy] | Done | PASS | PASS | 1.0 |
+| 270 | website_blog.create_tag_assign_to_three_posts [medium] | Done | PASS | FAIL | 0.0 |
+| 271 | hr_recruitment.skill_filter_then_send_offer [hard] | Done | PASS | PASS | 1.0 |
+| 272 | sale.create_quotation_with_customer_pricelist [medium] | Done | PASS | PASS | 1.0 |
+| 273 | calendar.invite_organize_with_event_agenda_attachment [hard] | Done | PASS | FAIL | 0.0 |
+| 274 | stock.cancel_picking_create_replacement_with_serial [hard] | Done | PASS | FAIL | 0.0 |
+| 275 | mrp_account.confirm_mo_check_account_move [medium] | Done | PASS | PASS | 1.0 |
+| 276 | survey.invite_attendees_send_email [medium] | Done | PASS | PASS | 1.0 |
+| 277 | hr.add_skill_to_employee_with_level [medium] | Done | PASS | PASS | 1.0 |
+| 278 | website_event.publish_event_register_via_portal [hard] | Done | PASS | PASS | 1.0 |
+| 279 | crm_sms.send_sms_to_opportunity [medium] | Done | PASS | PASS | 1.0 |
+| 280 | delivery.country_rule_and_free_threshold_apply_to_so [medium] | Done | PASS | PASS | 1.0 |
+| 281 | inventory.cycle_count_two_locations_apply_selected_delta [medium] | Done | PASS | FAIL | 0.0 |
+| 282 | project_todo.create_note_set_color_deadline [easy] | Done | PASS | FAIL | 0.0 |
+| 283 | event_sale.multi_ticket_checkout_two_attendees [hard] | Done | PASS | PASS | 1.0 |
+| 284 | sale_stock.confirm_so_manual_reserve_validate_delivery [medium] | Done | PASS | PASS | 1.0 |
+| 285 | website_hr_recruitment.apply_public_then_schedule_interview [hard] | Done | PASS | PASS | 1.0 |
+| 286 | purchase_stock.receive_partial_scrap_damaged_units [hard] | Done | PASS | FAIL | 0.0 |
+| 287 | maintenance.create_request_from_equipment_schedule_followup [medium] | Done | PASS | FAIL | 0.0 |
+| 288 | repair.cancel_repair_log_internal_reason [medium] | Done | PASS | PASS | 1.0 |
+| 289 | survey.duplicate_survey_rename_archive_original [medium] | Done | PASS | PASS | 1.0 |
+| 290 | maintenance.fill_description_schedule_window_move_to_repaired [medium] | Done | PASS | PASS | 1.0 |
+| 291 | stock.scrap_specific_serial_unit [medium] | Done | PASS | PASS | 1.0 |
+| 292 | hr_expense.split_submitted_report_resubmit [hard] | Done | PASS | PASS | 1.0 |
+| 293 | website_sale.apply_product_filter_clear_facets [medium] | Done | PASS | PASS | 1.0 |
+| 294 | project_todo.bulk_move_tasks_between_projects [hard] | Done | PASS | FAIL | 0.0 |
+| 295 | website_hr_recruitment.edit_job_form_publish_preview [medium] | Done | PASS | PASS | 1.0 |
+| 296 | maintenance.create_equipment_schedule_preventive_plan [medium] | Done | PASS | FAIL | 0.0 |
+| 297 | product_expiry.receive_lot_set_expiry_date [medium] | Done | PASS | PASS | 1.0 |
+| 298 | website_sale_slides.assign_attendees_publish_course [hard] | Done | PASS | FAIL | 0.0 |
+| 299 | calendar.configure_meeting_with_location_and_reminder [medium] | Done | PASS | PASS | 1.0 |
+| 300 | mrp.bom_with_kit_component_confirm_mo [hard] | Done | PASS | FAIL | 0.0 |
+| 301 | mrp_subcontracting.receive_subcontracted_product_with_components [hard] | Done | PASS | PASS | 1.0 |
+| 302 | stock_landed_costs.add_cost_to_shipment_allocate [hard] | Done | PASS | PASS | 1.0 |
+| 303 | hr_recruitment_survey.attach_survey_require_applicant_submit [medium] | Done | PASS | PASS | 1.0 |
+| 304 | website_customer.publish_customer_reference_on_public_page [medium] | Done | PASS | PASS | 1.0 |
+| 305 | website_sale_stock.show_stock_availability_add_to_cart [medium] | Done | PASS | PASS | 1.0 |
+| 306 | stock_sms.enable_delivery_sms_notification_validate [medium] | Done | PASS | PASS | 1.0 |
+| 307 | sale_management.create_quotation_template_apply_to_new_so [medium] | Done | PASS | PASS | 1.0 |
+| 308 | project.create_milestone_assign_tasks_reach [medium] | Done | PASS | FAIL | 0.0 |
+| 309 | mass_mailing.duplicate_mailing_edit_subject_send [medium] | Done | PASS | PASS | 1.0 |
+| 310 | project_sms.send_reminder_sms_to_task_followers [medium] | Done | PASS | FAIL | 0.5 |
+| 311 | mrp.workorder_operation_scan_serial_complete [hard] | Done | PASS | FAIL | 0.0 |
+| 312 | crm_iap_enrich.bulk_enrich_leads_from_list [hard] | Done | PASS | PASS | 1.0 |
+| 313 | stock.transfer_reserved_to_ready_partial_backorder [hard] | Done | PASS | FAIL | 0.0 |
+| 314 | hr_attendance.clock_in_out_kiosk_mode [medium] | Done | PASS | PASS | 1.0 |
+| 315 | account.credit_note_partial_refund_post [hard] | Done | PASS | FAIL | 0.0 |
+| 316 | website.submit_contact_form_create_crm_lead [medium] | Done | PASS | PASS | 1.0 |
+| 317 | hr_holidays.request_allocation_approve_self_book_day_off [hard] | Done | PASS | PASS | 1.0 |
+| 318 | hr_recruitment.create_applicant_kanban_move_to_offer [medium] | Done | PASS | PASS | 1.0 |
+| 319 | stock.adjust_inventory_count_apply_moves [medium] | Done | PASS | FAIL | 0.0 |
+| 320 | event.create_event_add_question_publish [hard] | Done | PASS | PASS | 1.0 |
+| 321 | mail.send_email_with_attachment_log_as_note [medium] | Done | PASS | FAIL | 0.0 |
+| 322 | website_sale.checkout_portal_apply_coupon_complete [hard] | Done | PASS | PASS | 1.0 |
+| 323 | stock.create_scrap_order_for_damaged_qty [medium] | Done | PASS | PASS | 1.0 |
+| 324 | calendar.create_recurring_meeting_weekly_pattern [medium] | Done | PASS | FAIL | 0.0 |
+| 325 | crm.duplicate_lead_convert_to_opportunity [medium] | Done | PASS | FAIL | 0.0 |
+| 326 | mrp.scrap_consumed_component_during_production [hard] | Done | PASS | PASS | 1.0 |
+| 327 | account.reconcile_customer_payment_against_invoice [hard] | Done | PASS | PASS | 1.0 |
+| 328 | product.configure_variant_attribute_two_values [medium] | Done | PASS | PASS | 1.0 |
+| 329 | sale.configure_pricelist_apply_to_order_line [hard] | Done | PASS | PASS | 1.0 |
+| 330 | mrp.unbuild_product_back_to_components [hard] | Done | PASS | PASS | 1.0 |
+| 331 | mrp_account.mo_consume_and_close_check_valuation [hard] | Done | PASS | PASS | 1.0 |
+| 332 | mail.create_alias_route_to_record [hard] | Done | PASS | PASS | 1.0 |
+| 333 | account.reverse_journal_entry_from_general_ledger [hard] | Done | PASS | PASS | 1.0 |
+| 334 | hr.generate_employee_card_set_badge_id [medium] | Done | PASS | PASS | 1.0 |
+| 335 | sale.duplicate_quotation_edit_delivery_date_confirm [medium] | Done | PASS | PASS | 1.0 |
+| 336 | stock.create_physical_inventory_adjust_two_products [medium] | Done | PASS | PASS | 1.0 |
+| 337 | mail.schedule_activity_on_partner_with_note [medium] | Done | PASS | PASS | 1.0 |
+| 338 | website_blog.change_author_republish_post [medium] | Done | PASS | PASS | 1.0 |
+| 339 | event.create_event_add_ticket_publish [medium] | Done | PASS | PASS | 1.0 |
+| 340 | fleet.add_vehicle_log_odometer [easy] | Done | PASS | PASS/FAIL | 0.5 |
+| 341 | mrp.create_bom_with_components [medium] | Done | PASS | FAIL | 0.0 |
+| 342 | website_sale.publish_product_shop [easy] | Done | PASS | PASS | 1.0 |
+| 343 | account.register_partial_payment_reconcile_invoice [hard] | Done | PASS | PASS | 1.0 |
+| 344 | stock.delivery_transfer_validate_partial_backorder_no [medium] | Done | PASS | FAIL | 0.0 |
+| 345 | purchase.confirm_rfq_receive_full_three_way_match [medium] | Done | PASS | PASS | 1.0 |
+| 346 | hr.create_department_assign_manager_two_employees [medium] | Done | PASS | FAIL | 0.0 |
+| 347 | project.set_task_priority_urgent_assign_tag [easy] | Done | PASS | PASS | 1.0 |
+| 348 | sale.add_section_note_line_to_quotation [medium] | Done | PASS | PASS | 1.0 |
+| 349 | website.publish_draft_page_set_menu_visibility [hard] | Done | PASS | FAIL | 0.0 |
+| 350 | crm.assign_lead_salesperson_change_stage_won [medium] | Done | PASS | PASS | 1.0 |
+| 351 | mass_mailing.create_mailing_select_list_schedule_send [hard] | Done | PASS | FAIL | 0.0 |
+| 352 | fleet.assign_vehicle_create_contract_active [medium] | Done | PASS | FAIL | 0.0 |
+| 353 | sale.apply_discount_percent_on_sale_order_line [medium] | Done | PASS | PASS | 1.0 |
+| 354 | account.post_draft_invoice_send_to_customer [medium] | Done | PASS | PASS | 1.0 |
+| 355 | stock.receipt_full_quantity_validate_no_backorder [easy] | Done | PASS | PASS | 1.0 |
+| 356 | project.close_task_change_state_to_done [easy] | Done | PASS | PASS | 1.0 |
+| 357 | mrp.confirm_mo_produce_partial_keep_backorder [hard] | Done | PASS | PASS | 1.0 |
+| 358 | purchase.set_vendor_product_code_on_po_line [medium] | Done | PASS | PASS | 1.0 |
+| 359 | hr_holidays.request_sick_leave_approve_self [hard] | Done | PASS | FAIL | 0.0 |
+| 360 | website_event.add_sponsor_to_event_publish [medium] | Done | PASS | PASS | 1.0 |
+| 361 | crm.lead_set_contact_name_email_phone_save [easy] | Done | PASS | PASS | 1.0 |
+| 362 | stock.adjust_product_reorder_rule_min_max [medium] | Done | PASS | PASS | 1.0 |
+| 363 | sale.create_sale_quotation_from_opportunity_smart_button [medium] | Done | PASS | PASS | 1.0 |
+| 364 | stock.archive_old_product_set_inactive [easy] | Done | PASS | PASS | 1.0 |
+| 365 | purchase.add_product_to_rfq_with_taxes [medium] | Done | PASS | PASS | 1.0 |
+| 366 | hr.create_public_holiday_calendar_entry [medium] | Done | PASS | PASS | 1.0 |
+| 367 | mrp.create_bom_kit_type_for_product [hard] | Done | PASS | FAIL | 0.0 |
+| 368 | website_blog.schedule_post_future_date_unpublish [hard] | Done | PASS | FAIL | 0.0 |
+| 369 | sale.cancel_confirmed_order_restore_draft [medium] | Done | PASS | PASS | 1.0 |
+| 370 | product.set_product_category_change [easy] | Done | PASS | PASS | 1.0 |
+| 371 | calendar.create_meeting_invite_attendees_send [medium] | Done | PASS | FAIL | 0.0 |
+| 372 | hr.request_reimbursement_expense_report [hard] | Done | PASS | PASS | 1.0 |
+| 373 | stock.set_putaway_rule_default_location [medium] | Done | PASS | PASS | 1.0 |
+| 374 | account.create_vendor_bill_from_scratch_pay [hard] | Done | PASS | FAIL | 0.0 |
+| 375 | sale.edit_existing_quotation_add_optional_product [medium] | Done | PASS | PASS | 1.0 |
+| 376 | stock.transfer_create_internal_transfer_validate [medium] | Done | PASS | PASS | 1.0 |
+| 377 | crm.bulk_archive_lost_leads [medium] | Done | PASS | PASS | 1.0 |
+| 378 | product.configure_stock_route_for_product [medium] | Done | PASS | PASS | 1.0 |
+| 379 | account.post_customer_invoice_with_tax_groups [medium] | Done | PASS | FAIL | 0.0 |
+| 380 | sale.duplicate_confirmed_order_edit_customer [medium] | Done | PASS | PASS | 1.0 |
+| 381 | mrp.unreserve_raw_material_on_mo [medium] | Done | PASS | PASS | 1.0 |
+| 382 | hr.promote_employee_set_new_job_title_save [easy] | Done | PASS | PASS | 1.0 |
+| 383 | account.refund_customer_invoice_cash_basis [hard] | Done | PASS | PASS | 1.0 |
+| 384 | im_livechat.send_message_to_operator [medium] | Done | PASS | FAIL | 0.0 |
+| 385 | crm.log_opportunity_note_internal [easy] | Done | PASS | PASS | 1.0 |
+| 386 | stock.cancel_picking_abandoned [medium] | Done | PASS | PASS | 1.0 |
+| 387 | website_blog.delete_comment_moderate [hard] | Done | PASS | PASS | 1.0 |
+| 388 | hr_recruitment.hire_candidate_refuse_another [hard] | Done | PASS | PASS | 1.0 |
+| 389 | account.modify_account_move_line_label [medium] | Done | PASS | FAIL | 0.0 |
+| 390 | sale.convert_quotation_to_order_verify_invoice_status [easy] | Done | PASS | PASS | 1.0 |
+| 391 | project.assign_task_to_user_change_deadline [medium] | Done | PASS | PASS | 1.0 |
+| 392 | stock.receive_serial_tracked_product_two_serials [hard] | Done | PASS | PASS | 1.0 |
+| 393 | website_sale.configure_free_shipping_threshold [medium] | Done | PASS | PASS | 1.0 |
+| 394 | account.import_opening_balance_set_initial_equity [hard] | Done | PASS | PASS | 1.0 |
+| 395 | stock.run_manual_replenishment_for_product [hard] | Done | PASS | PASS | 1.0 |
+| 396 | mail.create_channel_invite_members_post_message [medium] | Done | PASS | PASS | 1.0 |
+| 397 | project.complete_project_stage_reach_done_percent [medium] | Done | PASS | PASS | 1.0 |
+| 398 | hr.change_employee_work_schedule [easy] | Done | PASS | PASS | 1.0 |
+| 399 | account.print_invoice_pdf_attach_to_partner [hard] | Done | PASS | PASS | 1.0 |
+| 400 | inventory.filtered_cycle_count_apply_single_line [medium] | Done | PASS | FAIL | 0.0 |
+| 401 | mass_mailing.create_sms_mailing_filter_schedule_send [hard] | Done | PASS | PASS | 1.0 |
+| 402 | website_slides.create_course_add_certification_toggle_visibility [medium] | Done | PASS | PASS | 1.0 |
+| 403 | sale_loyalty.create_points_program_redeem_reward_on_quote [hard] | Done | PASS | PASS | 1.0 |
+| 404 | website_blog.duplicate_post_localize_seo_slug_publish [hard] | Done | PASS | FAIL | 0.0 |
+| 405 | repair.create_repair_order_add_fee_quotation_confirm [hard] | Done | PASS | FAIL | 0.5 |
+| 406 | website_hr_recruitment.publish_job_set_interview_form_and_archive_old_posting [hard] | Done | PASS | PASS | 1.0 |
+| 407 | event.create_event_mail_schedule_and_publish_registration [hard] | Done | PASS | PASS | 1.0 |
+| 408 | im_livechat.configure_channel_hours_operator_rules [medium] | Done | PASS | PASS | 1.0 |
+| 409 | contacts.update_contact_mobile [easy] | Done | PASS | — | — |
+| 410 | contacts.update_contact_website [easy] | Done | PASS | — | — |
+| 411 | crm.update_lead_email [easy] | Done | PASS | — | — |
+| 412 | crm.update_lead_phone [easy] | Done | PASS | — | — |
+| 413 | hr.update_employee_mobile [easy] | Done | PASS | — | — |
+| 414 | hr.update_employee_work_email [easy] | Done | PASS | — | — |
+| 415 | im_livechat.configure_offline_form_and_test_widget [hard] | Done | PASS | — | — |
+| 416 | mass_mailing.build_campaign_send_test_schedule [medium] | Done | PASS | — | — |
+| 417 | mrp.plan_workorder_block_resume_finish_mo [hard] | Done | PASS | — | — |
+| 418 | project.update_task_priority [easy] | Done | PASS | — | — |
+| 419 | purchase.update_rfq_deadline [easy] | Done | PASS | — | — |
+| 420 | purchase.update_rfq_note [easy] | Done | PASS | — | — |
+| 421 | repair.create_repair_order_add_parts_complete_invoice [hard] | Done | PASS | — | — |
+| 422 | sale.update_quote_reference [easy] | Done | PASS | — | — |
+| 423 | sale_loyalty.create_program_apply_reward_on_quotation [hard] | Done | PASS | — | — |
+| 424 | stock.package_products_validate_delivery [hard] | Done | PASS | — | — |
 
 ---
 
@@ -543,19 +451,6 @@ Last eval: 2026-04-20 | Oracle: 179/179 (100%) | Browser-Use: 67/179 (37.4%) | N
 
 ---
 
-## account.create_credit_note_and_reconcile
-
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | PASS |
-| **F1** | 1.0 |
-| **Odoo modules** | Accounting — Invoices |
-| **Workflow** | Open posted invoice `CN-TARGET-01`. Create a partial credit note via wizard (exact reason text + specific date). Edit the generated draft: reduce quantity from 18 to 10. Post. |
-| **Capability tested** | Multi-field wizard interaction (reason + date); post-wizard editing of a generated draft; similar customer names as distractors (Lakeview Partners vs Lakeview Projects). |
-
----
 
 ## account.partial_refund_service_credit_note
 
@@ -795,33 +690,7 @@ Last eval: 2026-04-20 | Oracle: 179/179 (100%) | Browser-Use: 67/179 (37.4%) | N
 
 ---
 
-## sale.create_quotation_and_send_email
 
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | FAIL |
-| **F1** | 1.0 (state match) |
-| **Odoo modules** | Sales, Email |
-| **Workflow** | Create a new quotation from scratch (customer, two product lines with exact qty/price, expiration date). Send via "Send by Email" compose wizard. Final status must be "Quotation Sent". |
-| **Capability tested** | Full quotation creation; email compose wizard interaction. Note: Browser-Use FAIL is a side-effect check failure (state matches but email delivery check fails). |
-
----
-
-## sale.exact_total_quotation
-
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | FAIL |
-| **F1** | 0.5 |
-| **Odoo modules** | Sales, Products |
-| **Workflow** | For each product on a draft quotation, open the product form and read the Internal Notes field to find the correct unit price. Return to the quotation and fix each line's price. Save without confirming. |
-| **Capability tested** | Cross-module data lookup (quotation → product Internal Notes → back); reading a value from a non-standard field; multi-line price correction. |
-
----
 
 ## sale.find_highest_duplicate
 
@@ -837,33 +706,7 @@ Last eval: 2026-04-20 | Oracle: 179/179 (100%) | Browser-Use: 67/179 (37.4%) | N
 
 ---
 
-## sale.revise_target_quote_lines
 
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | FAIL |
-| **F1** | 0.0 |
-| **Odoo modules** | Sales, Products |
-| **Workflow** | Find quotation `OPS-042` among several Aurora Interiors quotations. For each product, look up Sales Description to get the line description text and discount. Apply both to every line. Set Payment Terms. Save. |
-| **Capability tested** | Cross-module data lookup (quotation lines → product Sales Description); per-line discount and description override; Payment Terms selection. |
-
----
-
-## sale_project.confirm_quote_and_update_generated_project
-
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | PASS |
-| **F1** | 1.0 |
-| **Odoo modules** | Sales, Project |
-| **Workflow** | Confirm quotation `SERV-PROJ-17`. Open the auto-generated project. Rename two tasks and move them to specific stages. Write description text. Return to SO and update Customer Reference. |
-| **Capability tested** | Cross-module round-trip (Sales → auto-generated Project → back to Sales); task rename + stage change; multi-step navigation across two modules. |
-
----
 
 ## sale_project.confirm_rollout_quote_update_generated_project
 
@@ -921,19 +764,6 @@ Last eval: 2026-04-20 | Oracle: 179/179 (100%) | Browser-Use: 67/179 (37.4%) | N
 
 ---
 
-## stock.adjust_inventory_quantities
-
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | PASS/PASS |
-| **F1** | 1.0 |
-| **Odoo modules** | Inventory (stock) |
-| **Workflow** | Navigate to Operations > Physical Inventory. Set on-hand quantities for 3 specific products (Steel Bracket 12", Copper Wire 100m, Safety Harness XL) to exact target values while leaving 2 distractor products unchanged. Click Apply All. |
-| **Capability tested** | Inline tree editing — agent must click into quantity cells in a list view and type values; fails by entering wrong row or not interacting with inline-editable cells correctly. |
-
----
 
 ## hr.create_employee_complete_profile
 
@@ -963,19 +793,6 @@ Last eval: 2026-04-20 | Oracle: 179/179 (100%) | Browser-Use: 67/179 (37.4%) | N
 
 ---
 
-## project.complete_task_log_note
-
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | PASS/FAIL |
-| **F1** | 1.0/0.0 |
-| **Odoo modules** | Project |
-| **Workflow** | In project "Omega Platform Launch", find task "Write API integration spec" in In Progress stage. Move it to Done stage. Then post an internal log note (not a regular message) with exact text via the chatter. |
-| **Capability tested** | Chatter "Log note" vs "Send message" distinction (unexploited pattern) — agent uses wrong chatter button or skips the note step after moving the stage. |
-
----
 
 ## contacts.create_company_with_contacts
 
@@ -1061,19 +878,6 @@ Last eval: 2026-04-20 | Oracle: 179/179 (100%) | Browser-Use: 67/179 (37.4%) | N
 
 ---
 
-## sale.set_payment_terms_confirm
-
-| Field | Value |
-|---|---|
-| **Status** | WIP |
-| **Oracle** | PASS |
-| **Browser-Use** | — |
-| **F1** | — |
-| **Odoo modules** | Sales — Quotations |
-| **Workflow** | Find draft quotation BENCH-PMT-01 for Azure Interior. Set Payment Terms to "30 Net Days", change Desk Organizer line quantity from 5 to 12, update Customer Reference to "AZ-2026-Q2", and click Confirm. |
-| **Capability tested** | Multi-field form edit (relational field + inline line qty + text field) followed by confirmation action. No cross-module hop, but requires correct interaction with payment terms dropdown and order line editing. |
-
----
 
 ## account.create_vendor_bill_confirm
 
@@ -1117,19 +921,6 @@ Last eval: 2026-04-20 | Oracle: 179/179 (100%) | Browser-Use: 67/179 (37.4%) | N
 
 ---
 
-## project.create_task_assign_stage
-
-| Field | Value |
-|---|---|
-| **Status** | WIP |
-| **Oracle** | PASS |
-| **Browser-Use** | — |
-| **F1** | — |
-| **Odoo modules** | Project |
-| **Workflow** | In "Omega Platform Launch" project, create task "Design Landing Page Mockup" with assignee Administrator, deadline May 15, 2026, priority Urgent, and description text. Place in "In Progress" stage. |
-| **Capability tested** | Multi-field task creation with stage placement — agent must fill 5+ fields and ensure the task ends up in the correct kanban column. |
-
----
 
 ## stock.confirm_and_validate_receipt
 
@@ -1243,19 +1034,6 @@ Last eval: 2026-04-20 | Oracle: 179/179 (100%) | Browser-Use: 67/179 (37.4%) | N
 
 ---
 
-## calendar.reschedule_event_update_location_attendee
-
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | PASS |
-| **F1** | 1.0 |
-| **Odoo modules** | Calendar |
-| **Workflow** | Open one-time event `Warehouse Safety Briefing` on April 17, 2026. Set Location to `Training Room`, add Marc Demo as an attendee, and save. |
-| **Capability tested** | Editing an existing event through the calendar surface and managing attendees without touching recurrence. Distinct from creating a new event and from recurrence-dialog tasks. |
-
----
 
 ## contacts.create_linked_contact_add_tag
 
@@ -1299,19 +1077,6 @@ Last eval: 2026-04-20 | Oracle: 179/179 (100%) | Browser-Use: 67/179 (37.4%) | N
 
 ---
 
-## sale.add_note_to_quotation
-
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | PASS |
-| **F1** | 1.0 |
-| **Odoo modules** | Sales — Quotations |
-| **Workflow** | Open draft quotation BENCH-NOTE-01 for Azure Interior. Click Log note in the chatter (NOT Send message). Type exact text and click Log. |
-| **Capability tested** | Chatter "Log note" vs "Send message" distinction — agent must select the correct chatter tab and post an internal note. Different from project.post_chatter_message (Send message) and project.complete_task_log_note (stage change + log note). |
-
----
 
 ## crm.set_priority_on_opportunity
 
@@ -1481,61 +1246,9 @@ Last eval: 2026-04-20 | Oracle: 179/179 (100%) | Browser-Use: 67/179 (37.4%) | N
 
 ---
 
-## inventory.scrap_product
 
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | FAIL |
-| **F1** | 0.0 |
-| **Odoo modules** | Inventory (stock) |
-| **Workflow** | Navigate to product `Steel Bracket 12` from the Products list. Click the Scrap button. In the Scrap dialog, set Quantity to `5` and accept the defaults. Click **Scrap** to confirm. |
-| **Capability tested** | Accept-defaults wizard flow in Inventory: open the scrap dialog, enter one quantity, and confirm without changing other product data. |
 
----
 
-## hr.schedule_employee_activity
-
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | FAIL |
-| **F1** | 0.0 |
-| **Odoo modules** | Employees (hr) |
-| **Workflow** | Find employee `Sofia Chen`. Click **Schedule Activity** in the chatter. Set Activity Type to `Call`, Due Date to `May 10, 2026`, Summary to `Annual review discussion`, then click **Schedule Activity**. |
-| **Capability tested** | Activity scheduling through the chatter modal with multiple fields in a compact dialog, distinct from simple employee form edits. |
-
----
-
-## project.set_task_deadline
-
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | FAIL |
-| **F1** | 0.0 |
-| **Odoo modules** | Project — Tasks |
-| **Workflow** | Open project `Omega Platform Launch`, find task `Design Landing Page Mockup`, change the Deadline to `May 20, 2026` via the date picker, and save. |
-| **Capability tested** | Existing-task date edit through the Project UI, focused on date-picker interaction without additional chatter or stage changes. |
-
----
-
-## sale.duplicate_quotation_change_customer
-
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | PASS/PASS |
-| **F1** | 1.0 |
-| **Odoo modules** | Sales — Quotations |
-| **Workflow** | Open draft quotation `BENCH-DUP-01`, duplicate it via the Action menu, change the customer on the copy to a different partner, set a new customer reference, and save the duplicate in draft. |
-| **Capability tested** | Action-menu Duplicate flow combined with swapping a many2one field on the copy while leaving the original untouched. |
-
----
 
 ## purchase.duplicate_rfq_change_vendor_confirm
 
@@ -1551,19 +1264,6 @@ Last eval: 2026-04-20 | Oracle: 179/179 (100%) | Browser-Use: 67/179 (37.4%) | N
 
 ---
 
-## project.archive_task_with_log_note
-
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | PASS |
-| **F1** | 1.0 |
-| **Odoo modules** | Project |
-| **Workflow** | Open project `Nexus Platform Launch`, open the task `Retire beta build`, post a specific internal log note, then archive via the Action menu. |
-| **Capability tested** | Combined chatter Log-note posting and Action-menu Archive on a project task with another task on the same project as distractor. |
-
----
 
 ## crm.convert_lead_to_opportunity_simple
 
@@ -1579,19 +1279,6 @@ Last eval: 2026-04-20 | Oracle: 179/179 (100%) | Browser-Use: 67/179 (37.4%) | N
 
 ---
 
-## hr.unarchive_employee_update_department
-
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | FAIL |
-| **F1** | 0.0 |
-| **Odoo modules** | HR — Employees |
-| **Workflow** | Apply the Archived filter, open employee `Avery Collins`, use Action menu Unarchive, then set Department to Engineering and save. |
-| **Capability tested** | Filter toggle + Action-menu Unarchive + subsequent field edit, distinct from other hr tasks that only edit an active employee. |
-
----
 
 ## stock.validate_delivery_shipment
 
@@ -1621,33 +1308,7 @@ Last eval: 2026-04-20 | Oracle: 179/179 (100%) | Browser-Use: 67/179 (37.4%) | N
 
 ---
 
-## sale.cancel_quotation_log_reason
 
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | PASS/FAIL |
-| **F1** | 1.0/0.0 |
-| **Odoo modules** | Sales — Quotations |
-| **Workflow** | Open draft quotation `BENCH-CANCEL-01` among two distractors, post a specific internal log note, then click Cancel and confirm the dialog. |
-| **Capability tested** | Chatter Log-note posting combined with a state-changing Cancel action while keeping distractor quotations untouched. |
-
----
-
-## hr_recruitment.refuse_applicant_with_reason
-
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | PASS/PASS |
-| **F1** | 1.0 |
-| **Odoo modules** | Recruitment |
-| **Workflow** | Open job `Senior Platform Engineer`, open applicant `Marcus Whitfield`, click Refuse, set Refuse Reason to `Does not fit the job requirements` in the wizard, uncheck Send Email, apply. |
-| **Capability tested** | Refuse-wizard interaction with a non-default many2one and an explicit email-off toggle, distinct from applicant-creation and stage-move tasks. |
-
----
 
 ## crm.mark_opportunity_won_update_revenue
 
@@ -1719,20 +1380,6 @@ Last eval: 2026-04-20 | Oracle: 179/179 (100%) | Browser-Use: 67/179 (37.4%) | N
 
 ---
 
-## crm.create_lead_priority_schedule_call
-
-| Field | Value |
-|---|---|
-| **Status** | Removed |
-| **Oracle** | FAIL (spec) |
-| **Browser-Use** | — |
-| **F1** | — |
-| **Notes** | Removed because standard Odoo lead UI does not expose `expected_revenue` for records that remain `type = lead`, so the requested workflow is not browser-solvable without changing the task spec. |
-| **Odoo modules** | CRM — Leads |
-| **Workflow** | Create lead `Apex Warehouse Expansion`, set expected revenue and 2-star priority, then schedule a Call activity with exact summary and due date. |
-| **Capability tested** | Lead creation plus star-priority control and activity scheduling, distinct from opportunity editing and from lead-conversion tasks. |
-
----
 
 ## hr.assign_manager_set_work_location
 
@@ -1762,19 +1409,6 @@ Last eval: 2026-04-20 | Oracle: 179/179 (100%) | Browser-Use: 67/179 (37.4%) | N
 
 ---
 
-## project.duplicate_task_assign_deadline
-
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | FAIL |
-| **F1** | 0.0 |
-| **Odoo modules** | Project |
-| **Workflow** | Open task `Prepare webinar outline`, duplicate it from the Action menu, rename the copy to `Prepare webinar outline - APAC`, set a deadline, and move it to `In Progress`. |
-| **Capability tested** | Project-task duplication followed by edits on the copy only, distinct from fresh task creation, subtask creation, and archive/log-note tasks. |
-
----
 
 ## purchase.cancel_rfq_log_note
 
@@ -1832,19 +1466,6 @@ Last eval: 2026-04-20 | Oracle: 179/179 (100%) | Browser-Use: 67/179 (37.4%) | N
 
 ---
 
-## sale.create_invoice_register_payment_memo
-
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | PASS |
-| **F1** | 1.0 |
-| **Odoo modules** | Sales, Accounting |
-| **Workflow** | Open confirmed sales order `PAYFLOW-01`, create the draft invoice, confirm it, then register payment with the exact date `05/21/2026` and memo `PAYFLOW-MAY-SETTLEMENT`. |
-| **Capability tested** | Sales-to-accounting document handoff with sequential invoice and payment wizards, distinct from quote confirmation and invoice line-adjustment tasks. |
-
----
 
 ## contacts.create_company_add_supplier_finance_tags
 
@@ -1860,19 +1481,6 @@ Last eval: 2026-04-20 | Oracle: 179/179 (100%) | Browser-Use: 67/179 (37.4%) | N
 
 ---
 
-## project.create_subtask_assign_deadline
-
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | PASS |
-| **F1** | 1.0 |
-| **Odoo modules** | Project |
-| **Workflow** | Open task `Prepare onboarding checklist`, create subtask `Draft kickoff agenda` from the Sub-tasks tab, assign it to `Administrator`, move it to `In Progress`, and save. |
-| **Capability tested** | Inline one2many subtask creation with assignee and stage updates on the child task only, distinct from top-level task editing, duplication, or chatter-note project flows. |
-
----
 
 ## crm.convert_lead_qualify
 
@@ -2014,33 +1622,7 @@ Note: difficulty calibration used a shared-port browser-use validation on `bench
 
 ---
 
-## project.create_task_assign_tags_deadline
 
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | FAIL |
-| **F1** | 0.0 |
-| **Odoo modules** | Project |
-| **Workflow** | Open a target project, create one task with an exact title, assign it, add specified tags, set a deadline, and save. |
-| **Capability tested** | New task creation with many2many tag entry and a deadline picker, distinct from subtask and archive-note project tasks. |
-
----
-
-## project.rename_task_assign_tags_priority
-
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | PASS |
-| **F1** | 1.0 |
-| **Odoo modules** | Project |
-| **Workflow** | Open an existing task, rename it, assign one tag, change its priority, and save without changing its stage. |
-| **Capability tested** | Targeted task editing with the star-priority widget and tag autocomplete, distinct from task-creation and activity-scheduling project tasks. |
-
----
 
 ## purchase.update_rfq_note_quantity_confirm
 
@@ -2084,19 +1666,6 @@ Note: difficulty calibration used a shared-port browser-use validation on `bench
 
 ---
 
-## sale.create_quotation_down_payment_invoice
-
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | — |
-| **F1** | — |
-| **Odoo modules** | Sales, Accounting |
-| **Workflow** | Create new quotation for Ridgeline Automation with 2 exact product lines ($1200 + $350), confirm, open Create Invoice wizard, select "Down payment (percentage)" (not default "Regular invoice"), set 30%, create draft, set invoice date, confirm. |
-| **Capability tested** | Non-default radio selection in wizard (advance_payment_method = 'percentage'), create-from-scratch with exact lines, cross-module Sales → Accounting navigation. |
-
----
 
 ## account.create_refund_modify_reissue
 
@@ -2112,61 +1681,9 @@ Note: difficulty calibration used a shared-port browser-use validation on `bench
 
 ---
 
-## purchase.create_rfq_confirm_receive_backorder
 
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | — |
-| **F1** | — |
-| **Odoo modules** | Purchase, Inventory |
-| **Workflow** | Create new RFQ with 3 exact product lines, confirm, navigate to receipt via smart button, set partial done quantities, validate with "Create Backorder" dialog. |
-| **Capability tested** | Create-from-scratch with 3 exact lines (phantom line issue), cross-module Purchase → Stock, backorder dialog with non-default choice, inline quantity editing. |
 
----
 
-## stock.return_delivery_create_credit_note
-
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | — |
-| **F1** | — |
-| **Odoo modules** | Inventory, Sales, Accounting |
-| **Workflow** | Open done delivery, create partial return via wizard (4 of 10 units, skip other product), validate return, navigate to SO's invoice, create credit note with reason and date, confirm. |
-| **Capability tested** | Return wizard quantity editing, cross-module Stock → Sales → Accounting round-trip, credit note creation from reversed invoice. |
-
----
-
-## crm.create_opportunity_add_quotation_send
-
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | — |
-| **F1** | — |
-| **Odoo modules** | CRM, Sales |
-| **Workflow** | Create CRM opportunity with exact fields, move to Qualified, click New Quotation, add 2 exact product lines ($8500 + $12000), set ref and expiration, send by email with custom subject. |
-| **Capability tested** | Cross-module CRM → Sales, create-from-scratch quotation lines, email compose wizard, kanban quick-create then full form editing. |
-
----
-
-## sale_stock.confirm_order_deliver_partial_backorder
-
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | — |
-| **F1** | — |
-| **Odoo modules** | Sales, Inventory |
-| **Workflow** | Confirm draft SO with 3 lines, navigate to delivery via smart button, set partial done quantities (15/25, 40/40, 6/20), validate, choose "Create Backorder". |
-| **Capability tested** | Cross-module Sales → Stock via smart button, inline quantity editing on stock moves, backorder dialog with non-default choice. |
-
----
 
 ## hr_recruitment.create_applicant_add_skills_refuse
 
@@ -2223,17 +1740,6 @@ Note: difficulty calibration used a shared-port browser-use validation on `bench
 | **Capability tested** | Website editor iframe interaction, text editing in complex DOM, Page Properties dialog, combined content + metadata editing. |
 
 ---
-
-## point_of_sale.sell_pos_order_invoice_customer
-
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | FAIL |
-| **F1** | 0.0 |
-
-Hard task. Browser-use must open POS, ring up an order, attach a customer, enable the Invoice toggle on the payment screen, and validate to generate an actual posted account.move. Both runs failed at the kiosk POS UI: run 1 timed out after 7 stalled payment attempts, run 2 reached 401s with the order stuck in draft and no invoice generated.
 
 ## repair.cancel_repair_log_internal_reason
 
@@ -2370,20 +1876,6 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 ---
 
-## point_of_sale.split_payment_email_receipt
-
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | FAIL |
-| **F1** | 0.0 |
-| **Odoo modules** | Point of Sale |
-| **Workflow** | Open a POS session, ring up a sale, split the payment across two methods, and email the receipt to the customer. |
-| **Capability tested** | Full-screen kiosk interaction, keypad payment entry, multi-payment flow, and receipt-delivery workflow. |
-| **Notes** | Oracle passes. Browser-use gave up immediately with zero steps in this environment. |
-
----
 
 ## website_sale.configure_optional_products_add_upsell_to_cart
 
@@ -2445,20 +1937,6 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 ---
 
-## mail.create_channel_set_description_pin_welcome
-
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | FAIL |
-| **F1** | 0.0 |
-| **Odoo modules** | Discuss |
-| **Workflow** | Create a discussion channel, set its description, post a welcome message, and pin that message. |
-| **Capability tested** | Discuss channel creation plus channel-settings edit and in-thread message pinning. |
-| **Notes** | Oracle passes. Browser-use gave up immediately with zero steps in this environment. |
-
----
 
 ## hr_expense.create_mileage_expense_submit_report
 
@@ -2565,20 +2043,6 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 ---
 
-## hr_attendance.check_in_break_resume_check_out
-
-| Field | Value |
-|---|---|
-| **Status** | Removed |
-| **Oracle** | FAIL (spec) |
-| **Browser-Use** | — |
-| **F1** | — |
-| **Odoo modules** | Attendances |
-| **Workflow** | Check in, start a break, resume work, and check out in the attendance interface. |
-| **Capability tested** | Time-clock style attendance interactions with sequential status transitions. |
-| **Notes** | Removed because this checkout's `hr_attendance` addon does not expose a break/resume workflow to implement or validate. |
-
----
 
 ## hr_attendance.clock_in_out_kiosk_mode
 
@@ -2741,20 +2205,6 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 ---
 
-## hr_holidays.allocate_leave_days [easy]
-
-| Field | Value |
-|---|---|
-| **Status** | WIP |
-| **Oracle** | — |
-| **Browser-Use** | — |
-| **F1** | — |
-| **Odoo modules** | Time Off |
-| **Workflow** | Create a leave allocation for a specific employee for Annual Leave and approve it. |
-| **Capability tested** | Leave allocation form creation and manager approval action. |
-
----
-
 ## delivery.configure_weight_rules_carrier_apply_to_so
 
 | Field | Value |
@@ -2785,20 +2235,6 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 ---
 
-## maintenance.schedule_preventive_plan_recurring
-
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | PASS |
-| **F1** | 1.0 |
-| **Odoo modules** | Maintenance |
-| **Workflow** | Open the seeded "Conveyor Belt CB-7" equipment, set Expected MTBF=120, then create a Preventive maintenance request with recurring 30-day interval. |
-| **Capability tested** | Editing a numeric equipment field plus creating a request with the non-default Preventive maintenance_type radio. |
-| **Notes** | Calibrated below medium tier — both browser-use runs passed (target was ~60%). Odoo 19 dropped the legacy `period` field; task adapted to use `expected_mtbf` + recurring toggle. |
-
----
 
 ## sale_stock.partial_stock_warning_confirm_anyway
 
@@ -2860,20 +2296,6 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 ---
 
-## sale_project.timesheet_task_mark_billable_log_hours
-
-| Field | Value |
-|---|---|
-| **Status** | Removed |
-| **Oracle** | FAIL (spec) |
-| **Browser-Use** | — |
-| **F1** | — |
-| **Odoo modules** | Sales, Project (Sale-Project, Timesheet) |
-| **Workflow** | Open the auto-generated project task from a confirmed services SO, log timesheet hours, and verify the SO line's delivered quantity updates so an invoice can be created. |
-| **Capability tested** | Cross-module billable-time round-trip across Sales, Project, Timesheet, and Invoicing surfaces. |
-| **Notes** | Aborted — the benchmark base snapshot does not include `hr_timesheet` or `sale_timesheet`, so service products cannot use `service_policy='delivered_timesheet'` and project tasks have no Timesheets tab. Re-enable when those modules are added to base_modules.txt. |
-
----
 
 ## project_todo.reorder_notes_add_due_dates_bulk
 
@@ -2995,20 +2417,6 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 ---
 
-## website_slides.add_quiz_lesson_to_existing_course
-
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | FAIL (re-run after env crashes) |
-| **F1** | 0.0 |
-| **Odoo modules** | Website (eLearning) |
-| **Workflow** | Open seeded "Bench Onboarding Course" → Add Content → set Type=Quiz, title "Chapter 1 Quiz" → in Questions tab, add 3 questions each with 3 answers, mark exact correct answer (Blue, Daily, Platform) → publish slide. Distractor "Welcome Video" must remain unchanged. |
-| **Capability tested** | Nested polymorphic form (slide.question + slide.answer rows) with correct-answer flag per question. |
-| **Notes** | Well-calibrated hard. Re-run BU marked wrong correct answer (Never instead of Daily on Q2) and timed out at 480s on a third try. Initial parallel runs crashed environmentally. |
-
----
 
 ## sale_purchase.dropship_so_to_po_chain_validate
 
@@ -3146,20 +2554,6 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 ---
 
-## website_slides.duplicate_lesson_to_new_section
-
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | FAIL |
-| **F1** | 0.0 |
-| **Odoo modules** | Website (eLearning) |
-| **Workflow** | Open Bench Onboarding Course (seeded with Intro section + Welcome Video lesson). Add new section Advanced, then duplicate Welcome Video via the cog/Actions menu, move the copy into Advanced via the section Many2one, and rename it to Advanced Welcome. |
-| **Capability tested** | Sub-resource duplication via cog/Actions Duplicate menu plus section reassignment of a slide.slide whose section is sequence-derived, not a directly editable Many2one. |
-| **Notes** | Well-calibrated medium. Browser-use duplicated the entire course three times instead of the lesson — exactly the cog-menu navigation hazard the task targets. Oracle uses copy() + sequence rewrite because slide.slide.category_id is computed from sequence ordering. |
-
----
 
 ## sale_stock.deliver_partial_split_into_two_pickings
 
@@ -3296,20 +2690,6 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 ---
 
-## point_of_sale.add_item_apply_global_discount_pay_cash
-
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | PASS |
-| **F1** | 1.0 |
-| **Odoo modules** | Point of Sale (+ pos_discount installed on demand) |
-| **Workflow** | Open POS session, add Bench POS Widget × 2 (€40), click Actions (ellipsis) → Discount, enter 15%, confirm (€34), pay Bench Cash, validate. |
-| **Capability tested** | POS kiosk UI with ellipsis-hidden Discount button. |
-| **Notes** | Calibration: easier than hard. BU solved cleanly on first shot (15 steps, 128s). Oracle uses JSON-RPC call_kw bypass (UI hangs on stale o_technical_modal). Would need split payment + discount combo to regain hard tier. |
-
----
 
 ## calendar.create_event_with_two_organizers_recurring_weekly
 
@@ -3521,20 +2901,6 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 ---
 
-## mail.invite_external_email_to_existing_channel
-
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | PASS (F1=1.0, 0 postcondition failures, 230.4s wall clock) |
-| **F1** | 1.0 |
-| **Odoo modules** | Discuss |
-| **Workflow** | Open seeded private group channel 'project-discussion'. In channel header click "Invite People" icon. In unified search input type `external-guest@bench.test`, wait for the envelope-icon email-fallback row to appear, click it to select, then click "Invite to Group Chat". This triggers `discuss.channel.invite_by_email` and creates a `mail.mail`. |
-| **Capability tested** | Non-default selectable row in an Owl side panel — the email fallback only appears after a complete valid email is typed and no partner matches. Distinct from the typical "add internal member" pathway. |
-| **Notes** | Odoo 19 has NO "Email tab" in the invite dialog (despite row 323 task-spec text) — only a single unified input; restructured the prompt to "click the envelope row" instead. Seed spins up a detached aiosmtpd sink on 127.0.0.1:2525 and registers an ir.mail_server pointing at it, plus sets admin.partner_id.email and mail.catchall.domain/mail.default.from ICPs, because invite_by_email calls `.send(raise_exception=True)` which rolls back the mail.mail on any SMTP or sender-missing failure. BU solved on first attempt (230s) — calibrated EASIER than medium, but keeps pathway coverage (invite_by_email vs the usual add_members). Also discovered and fixed two worktree-infra issues: (a) the copied skeleton .venv's `_editable_impl_odoo_benchmark.pth` pointed at the original skeleton-source worktree and needed to be rewritten to the current worktree root before oracle/check subprocess scripts could `import benchmark`; (b) `/tmp/benchmark_snapshots/benchmark_base.dump` was a 16KB stub restored from an uninitialised DB — re-dumped from a healthy per-task DB. See COOKBOOK_NOTES.md for the full aiosmtpd + ir.mail_server seed pattern. |
-
----
 
 ## hr_holidays.bulk_approve_two_pending_requests
 
@@ -3596,20 +2962,6 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 ---
 
-## point_of_sale.attach_customer_apply_loyalty
-
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | PASS (F1=1.0, 0 postcondition failures, 91.5s wall clock) |
-| **F1** | 1.0 |
-| **Odoo modules** | Point of Sale, loyalty, pos_loyalty (auto-installed via sale_loyalty in base) |
-| **Workflow** | Open the seeded Bench Loyalty POS register, add Bench POS Item x3 (EUR 60.00), click Customer on the action pad and pick Loyal Larry, open the Rewards popup and redeem the '10% on your order' loyalty-funded reward for 50 points (-EUR 6.00), then pay Bench Loyalty Cash 54.00 and validate. |
-| **Capability tested** | POS kiosk UI: attach a seeded customer mid-sale, open the Rewards popup, redeem a discount reward funded by the customer's loyalty.card point balance, pay cash, validate. Cross-module loyalty + POS. |
-| **Notes** | pos_loyalty auto-installs when both point_of_sale and loyalty are present; both are in base via sale_loyalty, no module install needed in seed. Seed creates a loyalty.program (program_type='loyalty', applies_on='both', reward=10% order discount at 50 points) scoped to the new POS config via pos_config_ids, and mints a loyalty.card for Loyal Larry with 100 points (exactly enough for one redemption, not two). Oracle uses the JSON-RPC call_kw bypass pattern. Calibration: browser-use solved on the first 91s run (F1=1.0) — the Rewards popup and customer autocomplete are well labelled, so the combined customer-attach + loyalty-redeem + cash-pay flow does NOT stack into a hard pattern. Earn-rule side note: reward_point_amount=1 on the order earn-rule means the POS awards 1 point on the same order the reward is redeemed, so the card ends at 51 points (100 + 1 earn - 50 redeem); check.py accepts ~51. To re-harden, require a non-default reward among multiple listed rewards, combine with a per-line discount, or add a cash reconciliation mismatch on session close. |
-
----
 
 ## website_blog.create_tag_assign_to_three_posts
 
@@ -3806,140 +3158,14 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 ---
 
-## appointment.public_booking_reschedule_cancel_portal
 
-| Field | Value |
-|---|---|
-| **Status** | Removed |
-| **Oracle** | FAIL (module unavailable) |
-| **Browser-Use** | — |
-| **F1** | — |
-| **Odoo modules** | Appointments (enterprise-only), Website/Portal |
-| **Workflow** | Seed `appointment.type` 'Bench Intro Call' with a 30-min slot + 1 seeded user resource. Phase 1 (back-office): agent verifies config. Phase 2 (public portal): navigate to `/appointment/<slug>`, pick a slot next week, submit form (name=Bench Visitor, email=visitor@bench.test). Phase 3: open returned confirmation URL, click Reschedule to next-week+1, then Cancel. |
-| **Capability tested** | Multi-phase public-portal workflow with reschedule + cancel (two separate portal actions post-booking). Tests backend-to-portal handoff + two distinct portal actions on a single booking record. |
-| **Notes** | Blocked — `ir.module.module` reports `state='uninstallable'` for `appointment` on the current `odoo_benchmark` branch (Odoo Community Edition checkout does not ship the `appointment` addon source; no manifest found under `addons/`). Seed would need `button_immediate_install`, but that raises UserError on an uninstallable record. Calendar's `/calendar/meeting/view` portal only exposes Accept/Decline, not Reschedule/Cancel, so the workflow cannot be cleanly re-scoped onto `calendar.event`. Task skeleton (seed/check/oracle) is committed with clear BLOCKED guards that short-circuit with a diagnostic error instead of silently passing. Re-enable once enterprise `appointment` (+ `website_appointment` + `appointment_account_payment`) addons are vendored into the repo. Matches the precedent set by the earlier sibling task `appointment.portal_reschedule_and_cancel_booking` (also removed for the same reason). |
 
----
 
-## helpdesk.team_sla_assign_escalate_close
 
-| Field | Value |
-|---|---|
-| **Status** | Removed |
-| **Oracle** | FAIL (module unavailable) |
-| **Browser-Use** | — |
-| **F1** | — |
-| **Odoo modules** | Helpdesk (Enterprise-only) |
-| **Workflow** | Seed `helpdesk.team` 'Bench Support', create `helpdesk.sla` policy 'Bench 1hr Response' targeting High priority with time=1h on stage='In Progress'. Create a High-priority ticket 'Critical bug', assign to team user, move to In Progress (SLA timer starts), then move to Solved stage and mark Closed. |
-| **Capability tested** | Multi-step configuration (team + SLA policy) + record lifecycle across stages with SLA status tracking. |
-| **Notes** | Removed because the `helpdesk` addon is not present in this checkout (Odoo 19 Community — `helpdesk` is an Enterprise-only module). Verified: no `helpdesk`, `helpdesk_*`, `ticket`, or `support` directories under `addons/`; `benchmark/base_modules.txt` contains no `helpdesk` reference; follows same precedent as `helpdesk.create_ticket_tag_schedule_activity_resolve` (also Removed for module unavailability). Task cannot be implemented or validated on branch `odoo_benchmark` in the current environment. |
 
----
 
-## marketing_automation.tag_trigger_drip_campaign
 
-| Field | Value |
-|---|---|
-| **Status** | Removed |
-| **Oracle** | FAIL (module unavailable) |
-| **Browser-Use** | — |
-| **F1** | — |
-| **Odoo modules** | Marketing Automation (Enterprise-only) |
-| **Workflow** | Seed `res.partner.category` 'Bench Leads'. Create `marketing.automation` 'Welcome Drip' targeting model=`res.partner`, filter=category contains 'Bench Leads'. Add Activity 1: send `mailing.mailing` 'Welcome Day 1' (trigger=immediate, `trigger_type='begin'`). Add Activity 2: send 'Day 3 Follow-up' (trigger=3 days after Activity 1 opened, `trigger_type='mail_open'` + `interval_number=3` + `interval_type='days'`). |
-| **Capability tested** | Multi-activity marketing automation builder with parent-child trigger chaining (begin → mail_open delay). |
-| **Notes** | Removed because the `marketing_automation` addon is not present in this checkout (Odoo 19 Community — `marketing_automation` is an Enterprise-only module; see `skills/expand-benchmark-coverage.md` which explicitly lists it under Enterprise-only alongside `appointment` and `helpdesk`). Verified: no `marketing_automation` directory under `addons/` (only `marketing_card` exists); no module declares `_name = 'marketing.automation'` or `'marketing.activity'`; `benchmark/base_modules.txt` contains no `marketing_automation` reference. Follows the same precedent as `helpdesk.create_ticket_tag_schedule_activity_resolve`, `helpdesk.team_sla_assign_escalate_close`, and `appointment.portal_reschedule_and_cancel_booking` (all Removed for module unavailability). Task cannot be implemented or validated on branch `odoo_benchmark` in the current environment. |
 
----
-
-## event_product.sell_event_product_fill_attendee_details
-
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS (F1=1.0, 40.5s) |
-| **Browser-Use** | FAIL (strict, gave_up=True at 360s wall-clock; StateDiffF1=1.0, 0 postcondition failures) |
-| **F1** | 1.0 |
-| **Odoo modules** | Sales, Events (event_product / event_sale auto-installed bridge) |
-| **Workflow** | Seed creates customer `Bench Attendee Co`, a service product `Bench Summit Ticket` with `service_tracking='event'` / `list_price=100` / `invoice_policy='order'`, and event `Bench Summit` with one paid ticket `Standard Pass` linked to that product (price=100) plus the auto-default `Registration for Bench Summit` placeholder (backed by the built-in `EVENT_REG` product). Agent opens `/odoo/sales`, creates a new quotation for Bench Attendee Co, adds `Bench Summit Ticket` to Order Lines — the `event_configurator` wizard fires (because `product.event_ok=True`) — picks `Bench Summit` + `Standard Pass` and clicks Ok. Confirms the SO, which opens the `registration.editor` wizard pre-filled from the buyer's name/email; overwrites Name=`Alice Attendee` / Email=`alice@bench.test` and clicks Create/Update registrations. |
-| **Capability tested** | Chain of two modal wizards triggered by SO actions (configurator on product pick, registration editor on confirm) + overriding pre-filled o2m row fields before submitting the second wizard. |
-| **Notes** | Oracle deterministic PASS. Browser-use reached the correct final state (all 9 atomic edits match, postcondition check passes) but used the full 360s budget chaining the two wizards, so `gave_up=True` flipped strict to FAIL. Medium calibration matches the expected behaviour: the attendee tab must be filled, not just saved. New cookbook notes: (1) `product.event_ok` triggers the `event_configurator` wizard on SO line product pick (no explicit UI action needed). (2) `registration.editor` is a one2many wizard pre-filled from partner email/name — clicking the primary footer button without editing the row saves with buyer defaults, which is the intended calibration trap. (3) Seed-scoping: only `event.registration` + `sale.order` in state_spec avoids the base snapshot's Gift Card product.template duplicate-key nondeterminism and keeps the diff narrowly on what the agent mutates. (4) Pre-seeding both `Standard Pass` and `Registration for Bench Summit` tickets on `event.event.event_ticket_ids` via `(0, 0, …)` stops the auto-default ticket from polluting the diff. |
-
----
-
-## sale_loyalty.buy_x_get_y_reward_in_cart
-
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS (F1=1.0, 47.2s) |
-| **Browser-Use** | PASS (F1=1.0, 0 postcondition failures, 139.8s single-shot) |
-| **F1** | 1.0 |
-| **Odoo modules** | Sales, Loyalty (sale_loyalty + website_sale_loyalty) |
-| **Workflow** | Back-office `/odoo/discount-loyalty`, create program `Buy 2 Widgets Get 1 Gadget` with `program_type='promotion'`, `trigger='auto'`. Open the default rule and set Minimum Quantity=2 + Among-products=`Bench Widget`. Open the default reward and switch Reward type selection from the default "discount" to "Free Product" (the "Among" group then appears), pick `Bench Gadget`, set Quantity rewarded=1, Description="Free Bench Gadget". Save. Portal phase: navigate `/shop/cart` — the seeded cart has 2 Bench Widgets; `website_sale_loyalty.Cart.cart` auto-fires `_update_programs_and_rewards()` + `_auto_apply_rewards()`, attaching a free Bench Gadget reward line (discount=100%, price_subtotal=0). |
-| **Capability tested** | Buy-X-Get-Y promotion configuration using cascading loyalty-rule + loyalty-reward dialogs (reward-type dropdown flips the visible field group), plus implicit auto-apply side effect on /shop/cart via website_sale_loyalty controller. |
-| **Notes** | Calibration FAILED: BU solved it first-shot F1=1.0 in 139.8s (16 steps) — it handled both cascading dropdowns (rule editor + reward editor with reward_type switch) without getting stuck. Kept at tier 3 anyway since the reward-type switch is a genuine cascade test that fails intermittently on other runs. New cookbook entries added to ODOO19_PATTERNS.md: (1) Free-product reward lines have `price_unit=list_price` and `discount=100`, NOT `price_unit=0` — check.py must assert `price_subtotal`/`discount==100`. (2) `website_sale_loyalty.Cart.cart` auto-invokes `_update_programs_and_rewards` + `_auto_apply_rewards` on every /shop/cart GET — a single-reward `trigger='auto'` promotion with a satisfied rule attaches the reward line just by visiting /shop/cart. (3) JSON-RPC `reward_product_id` must be a `product.product` (variant) id, not `product.template` — resolve via `product.template.product_variant_id`. |
-
----
-
-## point_of_sale.cash_in_sell_cash_out_close_session
-
-| Field | Value |
-|---|---|
-| **Status** | Removed |
-| **Oracle** | FAIL (spec) |
-| **Browser-Use** | — |
-| **F1** | — |
-| **Notes** | Removed during oracle recheck because the current task wiring is not deterministic against the live POS UI. The seeded `opening_control` session is graded by `check.py`, but the browser UI entry points can open and close a different session for the same config, leaving the seeded session in `opening_control`. In repeated Playwright runs the UI closed a session successfully, yet `check.py` still saw the stale opening-control session with no cash-move lines. Re-enable only after the seed/check pair pins the exact session the UI operates on. |
-| **Odoo modules** | Point of Sale |
-| **Workflow** | Open the register `Benchmark Cash Desk`, perform Cash In `20.00`, sell one `Bench Snack Crate`, pay with `Bench Cash`, perform Cash Out `5.00`, and close the register with counted cash `27.00`. |
-| **Capability tested** | Full POS kiosk cycle combining burger-menu cash moves, payment flow, and session close / cash-count reconciliation. |
-
----
-
-## survey.create_certification_quiz_attempt_limit_publish
-
-| Field | Value |
-|---|---|
-| **Status** | Removed |
-| **Oracle** | FAIL (oracle) |
-| **Browser-Use** | — |
-| **F1** | — |
-| **Notes** | Removed during oracle recheck because the task no longer had a verified browser-faithful oracle after JSON-RPC shortcuts were disallowed. The remaining implementation depends on the Survey question/section builder's nested one2many editing dialogs, and no passing pure-UI oracle was completed in the current environment. Re-enable once a Playwright-only oracle is validated end-to-end. |
-| **Odoo modules** | Survey |
-| **Workflow** | Create certification survey `Forklift Safety Certification`, configure one-page-per-section, invited-only access, scoring/certification, 80% passing score, 2-attempt limit, and add the exact two sections plus four multiple-choice questions and answers. |
-| **Capability tested** | Survey builder composition across the main form, Options notebook, and nested question/answer editors. |
-
----
-
-## website_blog.create_post_with_cta_seo_schedule
-
-| Field | Value |
-|---|---|
-| **Status** | Removed |
-| **Oracle** | FAIL (oracle) |
-| **Browser-Use** | — |
-| **F1** | — |
-| **Odoo modules** | Website Blog |
-| **Workflow** | In the Blog kanban pick `Bench News`. Create a new post titled `Bench Releases Q2 Features`. In the body, insert a CTA button block with label `Learn More` whose href is `/shop`. Open the **Optimize SEO** dialog (cog Actions > Optimize SEO) and set Meta Title = `Q2 Releases - Bench` and Meta Description = `Read about our Q2 release highlights and what it means for customers.`. Set the Publishing date to `05/20/2026 09:00:00` (future). Save; leave the post unpublished (scheduled). |
-| **Capability tested** | Three unrelated surfaces stacked into one medium task: drag/insert a CTA button snippet in the HTML editor, fill the Optimize SEO modal, and set a future Publishing date without toggling Publish. |
-| **Notes** | Removed during oracle recheck because the old oracle still relied on JSON-RPC shortcuts and no passing pure-UI replacement was completed in the current environment. The unresolved piece is the combined backend-form + website-editor CTA insertion flow. Re-enable once a Playwright-only oracle is validated end-to-end. |
-
----
-
-## sale_purchase.mto_so_generate_po_change_vendor_confirm
-
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | PASS |
-| **F1** | 1.0 |
-| **Odoo modules** | Sales, Purchase, Stock (MTO + Buy via sale_purchase_stock bridge) |
-| **Workflow** | Seed creates a confirmed SO for a storable product wired with MTO + Buy routes and two vendors (Acme 50.00 / Brook 40.00). Confirming the SO auto-generates a draft RFQ for Acme (first vendor by sequence). Agent opens the SO, clicks the Purchase smart button, changes `partner_id` to Brook Trading Ltd so `_compute_price_unit_and_date_planned_and_name` recomputes the line to 40.00, saves, and clicks Confirm Order. |
-| **Capability tested** | Closed-loop cross-module navigation (Sales → Purchase via smart button) + edit-the-generated-RFQ vs create-a-new-PO + vendor-driven price recompute. |
-| **Notes** | Calibrated under target — both oracle (24s) and browser-use (169s) pass F1=1.0. Could be escalated by hiding the smart-button hint or seeding distractor RFQs. Seed had to flip MTO.active, buy_route.product_selectable, warehouse.buy_to_resupply + re-run `_create_or_update_route()`, and force `procure_method='make_to_order'` on MTO rules — otherwise `action_confirm` silently produces no RFQ. MTO+Buy (non-dropship) PO lines do NOT carry `sale_line_id`; the SO↔PO link runs through `stock.reference.purchase_ids` (sale_purchase_stock override). check.py uses `purchase.order.origin == SO.name`. Vendor-swap on a partner_id match_key surfaces in the diff as `delete(old_partner) + create(new_partner)`, NOT as a single `set` edit. |
-
----
 
 ## event_sale.multi_ticket_checkout_two_attendees
 
@@ -3986,20 +3212,6 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 ---
 
-## im_livechat.configure_channel_then_handle_widget_chat
-
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | PASS (F1=1.0, 69.5s, 9 steps) |
-| **F1** | 1.0 |
-| **Odoo modules** | Live Chat, Discuss, Mail |
-| **Workflow** | Seed pre-creates the `im_livechat.channel` 'Bench Support' (admin as operator) with a URL rule, a `mail.canned.response` shortcut `hello` -> `Hi, thanks for reaching out!`, and a `discuss.channel` (channel_type='livechat') named 'Visitor #BENCH-359' with admin + anonymous visitor as members plus one waiting `mail.message` from the visitor body 'Hi there'. Agent opens `/odoo/discuss`, clicks the livechat session in the 'Bench Support' sidebar category, types `::hello` in the composer, picks the `hello` option from the suggestion popover (which substitutes the shortcut with the full text), and sends with Enter/Send. |
-| **Capability tested** | Triggering the Odoo 19 Discuss canned-response suggestion popover via the `::` delimiter and selecting the substitution (not sending the literal shortcut text); plus sidebar navigation into a livechat session inside the auto-collapsing `im_livechat.channel` sidebar category. Multi-tab widget flow calibrated down to single-tab per backlog guidance (Playwright multi-tab is fragile). |
-| **Notes** | Canned responses in Odoo 19 are triggered by **double-colon `::`**, NOT single-colon (single colon triggers the emoji picker); backlog spec said `:hello` and was corrected to `::hello`. Cookbook quirk discovered & documented in ODOO19_PATTERNS.md: `mail.canned.response` visibility in the `/mail/data` webclient endpoint is gated by `create_uid = env.user.id OR group_ids in user.all_group_ids.ids`. Odoo shell runs as `__system__` (id=1), NOT admin (id=2), so a naive `env["mail.canned.response"].create({...})` yields a record admin cannot see. Seed MUST `with_user(admin).create({..., "group_ids": [(6, 0, [base.group_user.id])]})`. Browser-use solved the task on the first try (9 steps, 69.5s) — calibration slots this as "easier" than hard tier. |
-
----
 
 ## project_todo.bulk_move_tasks_between_projects
 
@@ -4046,20 +3258,6 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 ---
 
-## fleet.log_service_cost_add_odometer_close
-
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS (F1=1.0, 41.2s, 8/8 edits) |
-| **Browser-Use** | FAIL (F1=0.0, 3 postcondition failures, 270.7s single-shot) |
-| **F1** | 0.0 |
-| **Odoo modules** | Fleet |
-| **Workflow** | Seed creates vehicle `BENCH-TRUCK-01` (Benchmark Auto / Benchmark Truck, admin as driver) + vendor `Bench Garage` + service type `Oil Change`, flips `env.company.currency_id` to EUR (activating the currency record if needed) so the Cost monetary widget renders with the prompted EUR symbol. Agent must open the vehicle, click the **Services** smart button, **New** → fill `Service Type=Oil Change`, `Date=04/15/2026`, `Cost=120.00`, `Vendor=Bench Garage`, `Odometer Value=25000` (entering 25000 with NO thousands separator), leave description/notes empty, **Save**, then click **Done** on the clickable-statusbar `state` field. Filling the `odometer` field on the service form auto-materialises one `fleet.vehicle.odometer` row via the inverse `_set_odometer`. |
-| **Capability tested** | Three-trap stack: (1) odometer field location/skip — the field is in the RIGHT column of the service form, easy to miss; (2) decimal-separator parsing — typing `25,000` yields `value=0.0025` in Owl's numeric parser; (3) clickable-statusbar state transition — agents often stop after Save and forget to advance the stage. Plus an implicit quad-count check on `fleet.vehicle.log.services` and `fleet.vehicle.odometer` to catch the "create, then create again" spiral. |
-| **Notes** | BU spiralled exactly as predicted: created 4 service records (3 without vendor) + 6 odometer rows (3 phantom at 0.0025 from the `25,000` → `0.0025` parse, plus 3 legit 25000.0 on successive retries). F1=0.0, 3 postcondition failures. New cookbook entries added to ODOO19_PATTERNS.md § Fleet: (a) `fleet.vehicle.log.services.odometer` is a computed Float with `_set_odometer` inverse that creates an `fleet.vehicle.odometer` row — no separate navigation needed; `create()` drops `odometer=0` so zero-value fills silently no-op. (b) `state` uses `widget="statusbar"` with `clickable=1` (values `new/running/done/cancelled`) — click target `.o_statusbar_status button.o_arrow_button:has-text('Done')`, no confirmation dialog. (c) `currency_id` is `related='company_id.currency_id'` (readonly); seed must flip `env.company.currency_id` to EUR and activate the currency (inactive by default in base snapshot). (d) **Comma-as-decimal trap**: typing `25,000` into a Float widget yields 0.0025 — BU retries 3+ times, spawning phantom odometer rows; tasks should use bare-numeric prompts and enforce row-count in check.py. |
-
----
 
 ## maintenance.create_equipment_schedule_preventive_plan
 
@@ -4166,20 +3364,6 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 ---
 
-## pos_restaurant.open_table_order_mark_ready
-
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS |
-| **Browser-Use** | PASS |
-| **F1** | 1.0 |
-| **Odoo modules** | Point of Sale, pos_restaurant (installed on demand — not in base snapshot) |
-| **Workflow** | Open Point of Sale, open the seeded `Bench Restaurant` register, click table `T1` on the `Main Floor` floor plan, add `Starter Salad` (€15) x1, click the `Course` action-pad button to wrap Starter Salad into Course 1 + create an empty Course 2, add `Main Steak` (€20) x1 (lands in Course 2), click the primary Send/Order button on the action pad to fire Course 1 to the kitchen (`restaurant.order.course.fired=True`). No payment step. |
-| **Capability tested** | Restaurant POS kiosk UI: floor-plan table click, course split (Course button), action-pad Send vs Pay distinction, kitchen-fire ("mark ready") state via `fired=True` flag on `restaurant.order.course`. Cross-module install: `pos_restaurant` is not in the base snapshot and must be installed on demand by the seed. |
-| **Notes** | `pos_restaurant` is NOT in `benchmark/base_modules.txt`, so seed runs `button_immediate_install()` on demand. `pos.config.module_pos_restaurant=True` auto-spawns a default floor + T1 table via `_setup_default_floor` — seed detaches and replaces those with a deterministic `Main Floor` / T1 (table_number=1) pair to stabilise the floor-plan display name `Main Floor, 1` used as the state-diff `match_key`. The Odoo 19 "kitchen ready / mark ready" concept is implemented as `restaurant.order.course.fired` (Boolean, with matching `fired_date`). In the UI, clicking the primary action-pad button labelled with the category-count summary (class `.submit-order`, also referred to as the Send/Order button) fires the first non-fired course (`sendOrderInPreparationUpdateLastChange` in `pos_restaurant/pos_store.js` sets `firstCourse.fired=true`). Calibration: browser-use SOLVES this task in a single shot (wall clock 102.7s, 13 steps). BU successfully navigates the floor plan → order → Course split → Send flow. First state-diff match-key used (`pos_reference`) diverged between oracle (explicit string) and BU (auto-generated `<config>-<session>-<seq>`), so match-key switched to `table_id` for stable cross-run F1. POS kiosk is a clearly labeled Owl surface; harder failure modes would require non-default course choices, guests count, or a split-bill / transfer workflow. |
-
----
 
 ## website_customer.publish_customer_reference_on_public_page
 
@@ -4226,20 +3410,6 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 ---
 
-## hr_skills_survey.link_certification_survey_to_skill
-
-| Field | Value |
-|---|---|
-| **Status** | Removed |
-| **Oracle** | FAIL (feature unavailable) |
-| **Browser-Use** | — |
-| **F1** | — |
-| **Odoo modules** | HR Skills, Survey, hr_skills_survey bridge (Enterprise extension missing) |
-| **Workflow** | Seed `survey.survey` 'Bench Python Cert' (`survey_type='certification'`, `scoring_type='scoring_with_answers'`, `scoring_success_min>=70`, 2 scored simple_choice questions). Seed `hr.skill.type` 'Programming Languages' + `hr.skill` 'Python'. Agent opens skill Python, picks 'Bench Python Cert' in the skill's Certification (survey_id) many2one, saves. Optional: admin takes the survey via the Test link, scores pass, and the admin's `hr.resume.line` / `hr.employee.skill` surfaces a certified entry via the `_mark_done()` hook. |
-| **Capability tested** | Configure-then-certify chain: survey creation with scoring config + cross-model Many2one link (skill → survey) + side-effect observation on the employee's resume when the cert is awarded. |
-| **Notes** | Blocked — Odoo 19 **Community** `hr_skills_survey` does NOT extend `hr.skill` with a `survey_id` / Certification field. Inspection of `addons/hr_skills_survey/models/` shows only: readonly `survey_id` on `hr.resume.line` (populated automatically by `survey.user_input._mark_done()`), `certification_validity_months` on `survey.survey`, and a `_mark_done()` override that writes resume lines. `grep '_inherit.*hr\\.skill'` across all addons returns zero hits — no module adds a survey Many2one on `hr.skill`. The "link survey to skill" UI is an Enterprise-only extension not vendored in this checkout. Task skeleton (seed/oracle/check) is committed with clear BLOCKED guards that short-circuit with diagnostic errors instead of silently passing. Follows the same precedent as rows 350 (appointment), 351 (helpdesk), 352 (marketing_automation) — all Removed for Enterprise-only feature unavailability. Re-enable once the enterprise skill-certification link is vendored into `addons/`. See the task's RESULT.md for full evidence and re-enabling steps. |
-
----
 
 ## sale_management.create_quotation_template_apply_to_new_so
 
@@ -4286,20 +3456,6 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 ---
 
-## lunch.create_vendor_product_order_for_today
-
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS (F1=1.0, 48.2s, 13/13 edits) |
-| **Browser-Use** | FAIL (F1=0.0, 2 postcondition failures, wall clock 360s) |
-| **F1** | 0.0 |
-| **Odoo modules** | Lunch (installed on demand; not in base snapshot) |
-| **Workflow** | Seed installs `lunch`, seeds a `Bench Cafe Partner` res.partner, and pre-sets admin's `last_lunch_location_id` + `lunch_minimum_threshold=100`. Agent must: (1) `/odoo/lunch-vendors-menu` → New vendor → pick partner FIRST (the vendor `name` field is `related='partner_id.name', readonly=False` so picking after typing clobbers what was typed), retype name `Bench Cafe`, set phone, change `delivery` via `o_select_menu` to `Delivery`, flip Sat/Sun on the `week_days` table widget so the supplier is available every day, save. (2) `/odoo/lunch-product-menu` → New product → Veggie Wrap / Sandwich / Bench Cafe / 8.00, save. (3) `/odoo/lunch` kiosk dashboard → click Veggie Wrap kanban card (triggers `lunch_open_order` bus event → `lunch.order` modal form) → type Note=`no onions` → click Add To Cart footer button (form `web_save` creates the order with `state='new'`) → back on sidebar click **Order Now** (POST `/lunch/pay` → `action_order()` → `state='ordered'`). |
-| **Capability tested** | Non-standard kiosk UI navigation: LunchKanbanRecord onGlobalClick opens a modal, but clicking the is_favorite star corner of the card is a trap. Two-phase submission (Add To Cart in the dialog, then Order Now on the sidebar) — forgetting the sidebar step leaves the order at `new` and fails the postcondition. Odoo 19 `o_select_menu` widget on `delivery` (not native `<select>`) breaks the generic `set_selection` helper. Related-field partner/name rewrite order must be "partner first, then name". `order_deadline_passed` + `display_add_button` gates on the Add To Cart button require the supplier's weekday flag for today + company `lunch_minimum_threshold >= price`. |
-| **Notes** | Well-calibrated medium. Oracle PASS 48s single-shot. BU created THREE duplicate `lunch.supplier` rows (retry loop triggered by the `o_select_menu` on `delivery` — BU kept failing to commit "Delivery" and re-created the vendor) and never reached the product step; final state had one vendor with `delivery=no_delivery` and no product/order. Calibration predicted "kiosk-style UI confuses BU" — matches. New cookbook section `ODOO19_PATTERNS.md § lunch`: (a) model is `lunch.supplier` (not `lunch.vendor`); (b) `name=related('partner_id.name', readonly=False)` → pick partner first; (c) `delivery` uses `o_select_menu` (same pattern as crm.team `alias_contact`); (d) `week_days` widget renders as table with unnamed `<CheckBox>` — use column-index lookup; (e) Add To Cart button is gated by supplier's weekday-today AND company threshold — seed must bump `lunch_minimum_threshold` and all-week availability or the task silently fails on weekends; (f) `add_to_cart` Python method is a no-op; the record persistence happens via the form's `web_save` before the object method runs. (g) `lunch.product.supplier_id` normalises to `{supplier.name} {phone}` when phone is set — pin in `expected_state.json`. |
-
----
 
 ## mass_mailing.duplicate_mailing_edit_subject_send
 
@@ -4346,53 +3502,8 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 ---
 
-## sale_timesheet.log_timesheet_on_so_invoice_delivered
 
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS (F1=1.0, 58.0s) |
-| **Browser-Use** | PASS (F1=1.0, 182.7s single-shot, 0 postcondition failures) |
-| **F1** | 1.0 |
-| **Odoo modules** | Sales, hr_timesheet, sale_timesheet (both installed on demand — neither in base) |
-| **Workflow** | Seed installs `hr_timesheet` then `sale_timesheet` via `button_immediate_install`, creates service product `Bench Consulting` (`SERV-BENCH-TS`) with `invoice_policy='delivery' + service_type='timesheet' + service_tracking='task_in_project'` (i.e. `service_policy='delivered_timesheet'`) at 150.00/h, a distractor service `Bench Widget Supply` (`SERV-BENCH-MAN`) with `service_type='manual'`, and partner `Bench Services Co`. Creates SO `S-BENCH-TS-001` (10 h × 150.00, no taxes) and pre-confirms it via `action_confirm` — confirmation's `_timesheet_service_generation()` hook auto-creates a `project.project` + single `project.task` tied to the SO line. Agent: Sales > open `S-BENCH-TS-001` > click combined Projects/**Tasks** smart button (`oe_stat_button` with `name='action_view_project_ids'`) > open the sole task > **Timesheets** tab > Add two rows (4h on 2026-04-15 + 2h on 2026-04-19, both Administrator) > save task > breadcrumb back to SO > verify Delivered=6.00 on the `Bench Consulting` line > **Create Invoice** > keep **"Regular invoice"** radio (NOT down-payment) > click **Create Draft** (primary, `name='create_invoices'`). |
-| **Capability tested** | Cross-model chain SO → auto-generated project.task → account.analytic.line timesheet rows → delivered-qty gating (`sale.order.line.qty_delivered` computed from `sum(timesheet.unit_amount)`) → return to SO → Create Invoice wizard with 3 radio options (Regular invoice / Down payment percentage / Down payment fixed). Requires the agent to navigate from Sales into Project territory via a smart button and back. |
-| **Notes** | Calibration: **easier than hard** — BU found a shortcut. Single-shot BU PASS in 182.7s with F1=1.0 and 0 postcondition failures. The Timesheets-tab "Add a line" editable list was navigable for BU without tripping the between-rows save quirk (see cookbook). To escalate to genuine hard-tier: (a) require a non-default `Down payment (percentage)` wizard branch with a custom percent, (b) require a non-admin employee (seed a second `hr.employee` e.g. "Bench Consultant" and make ONE of the two rows use them), (c) add a second task on the project with its own Timesheets tab as a navigation trap, or (d) force the agent to enter hours as `0.5` for a decimal parse trap. Kept as documented primary_track=false hard for coverage. New cookbook entries in `ODOO19_PATTERNS.md` (sale_timesheet + hr_timesheet section): (1) install order + `service_policy='delivered_timesheet'` = `invoice_policy='delivery'+service_type='timesheet'`, (2) `product.template` has NO `uom_po_id` in Odoo 19 (seed crash), (3) combined Projects+Tasks smart button is one widget `name='action_view_project_ids'`, (4) `editable="top"` timesheet_ids o2m loses the first row if you Add a line twice without an intermediate save, (5) auto-task generation from `service_tracking='task_in_project'` at SO confirm time, (6) `account.analytic.line.unit_amount` accepts `4:00` / `4.0` via `timesheet_uom` widget. |
 
----
-
-## website_forum.post_question_accept_answer
-
-| | |
-|---|---|
-| **Row** | 394 |
-| **Difficulty** | medium |
-| **Tier** | 2 |
-| **Status** | Done |
-| **Oracle** | PASS (F1=1.0, 11.5s, 7/7 edits) |
-| **Browser-Use** | FAIL (F1=0.0, 1 postcondition failure, 360s timeout, 0 gave-up step) |
-| **F1** | 0.0 |
-| **Odoo modules** | `website_forum` (installed on demand; not in base snapshot) |
-| **Workflow** | Seed installs `website_forum`, creates a public forum `Bench Q&A` (mode=`discussions`, multi-answer), a portal user `benchbot` with karma 5000, and a seeded question `How to configure Bench module?` by benchbot plus two candidate answers by benchbot (one canonical — content mentions `button_immediate_install` — and one decoy — suggests editing `odoo.conf`). Agent opens `/forum`, enters Bench Q&A, opens the question, posts their own answer in the Your Answer textarea (≥50 chars required), then clicks the circle-check Accept icon on benchbot's canonical answer. |
-| **Capability tested** | Frontend forum UI (not backend form). Small SVG Accept checkmark on the left of the answer vote column (`.o_wforum_validate_toggler > i.fa-check-circle-o`) is the failure locus. Parent/child `forum.post` hierarchy (question has `parent_id=False`, answers have `parent_id=question.id`). Own-post acceptance guard: `/forum/.../toggle_correct` rejects `request.env.uid == post.create_uid.id` → the accepted answer MUST be authored by a different user than admin, hence the benchbot pre-seed. |
-| **Notes** | Single-shot BU FAIL (expected). BU successfully (a) navigated `/forum` → Bench Q&A, (b) logged in, (c) posted the admin answer via Your Answer form (state-diff picked up all 6 `create` edits on the new `forum.post`), then spent ≈50 loop-detected steps hunting for the Accept checkmark on the canonical benchbot answer: tried `a[data-href*='mark_as_best']`, `.fa-check-circle`, `.o_wforum_validate`, opened the More dropdown, opened About/Help, and eventually tried to log out as admin and log back in as benchbot — none of which hit the real selector `.o_wforum_validate_toggler`. Loop-detection nudges started firing at step 15 and never recovered. Karma was NOT a blocker (admin has `is_admin()` True, bypassing all `karma_answer_accept_*` thresholds in `forum.post._compute_post_karma_rights`). BU even recognized "Mitchell Admin is not the question author" and incorrectly concluded that was the reason (it isn't; `karma_answer_accept_all` handles that). New cookbook entries for `ODOO19_PATTERNS.md § website_forum`: (1) `website_forum` NOT in base snapshot — `button_immediate_install` required in seed; (2) frontend `toggle_correct` controller blocks self-accept unconditionally (karma-independent), so any "agent posts answer + accepts" task must seed a non-admin user to author the answer to be accepted; (3) answer `content` textarea has `minlength="50"` — prompts must supply ≥50-char answer string or HTML; (4) admin is `is_admin()` in forum karma compute — no need to grant `karma_ask / karma_answer / karma_answer_accept_*` explicitly; (5) state-diff match_key for `forum.post` must include `name + parent_id + create_uid`, and seeded peer answers need DISTINCT `name` values to be individually addressable (backend `forum.post.name` on answers is normally `Re: <question title>` but the frontend only shows content, so we pin per-answer names like `Bench Bot canonical answer` / `Bench Bot decoy answer` without affecting the UX); (6) `forum.post` creation on admin-posted answers emits 6 `create` edits (name, parent_id, forum_id, is_correct=null, state=active, create_uid) — the `is_correct=null` (not `false`) is the same null-vs-false quirk already documented for `blog.post` booleans. |
-
----
-
-## website_sale_wishlist.add_product_share_to_email
-
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS (F1=1.0, 48.7s, 2/2 create edits matched) |
-| **Browser-Use** | PASS (F1=1.0, 82.1s single-shot, 0 postcondition failures) |
-| **F1** | 1.0 |
-| **Odoo modules** | Website eCommerce (`website_sale`) + Wishlist (`website_sale_wishlist`) |
-| **Workflow** | Seed creates one consumable product `Bench Wishlist Item` (list_price 25.00, is_published=True, no taxes, no variants). Agent logs in as admin, navigates `/shop`, clicks the product tile to land on `/shop/bench-wishlist-item-<id>`, clicks the **heart** button (labelled *Add to wishlist*) rendered by `website_sale_wishlist.product_add_to_wishlist` inside `#product_option_block` — selector `a.o_add_wishlist_dyn`. The JS handler (`AddProductToWishlistButton.addProduct`) POSTs `/shop/wishlist/add` which calls `ProductWishlist._add_to_wishlist` and persists a `product.wishlist` row with `partner_id=admin.partner_id.id` (because the user is authenticated) + `website_id=current.id`. Agent finally navigates `/shop/wishlist` to render the wishlist page and confirm the product card is listed. |
-| **Capability tested** | Frontend heart-icon click + /shop → product detail → /shop/wishlist navigation + login-driven ownership (wishlist row lands with `partner_id` set because admin is logged in; a public session would leave `partner_id=False` and the row would be orphaned to `request.session['wishlist_ids']`). check.py asserts exactly one admin-owned wishlist row referencing the seeded product, guards against partner_id=False (public-session heart click), and rejects extra admin wishlist rows (agent scatter-hearting unrelated products). |
-| **Notes** | **DEVIATION from original backlog description.** The backlog row called for a "Share via email" dialog on `/shop/wishlist` emitting a `mail.mail` with recipient=`recipient@bench.test`. Pre-flight grep (`grep -rn "share" addons/website_sale_wishlist/`) returned NO hits — the module in Odoo 19 Community ships no share controller (no `/shop/wishlist/share` route), no share template in `website_sale_wishlist_template.xml`, no share JS in `static/src/interactions/`. Per instructions the task was re-scoped to wishlist-persistence verification (product.wishlist row with `partner_id` set), which IS observable at the DB level and still exercises the heart-icon frontend click + header wishlist link navigation. Calibration: EASY-leaning medium (BU PASS single-shot in 82s, F1=1.0) — the heart button has a clear text label ("Add to wishlist"), only one product is published so no disambiguation is needed, and the JS handler updates `.fa-heart-o` → `.fa-heart` + badge counter for unambiguous visual feedback. A harder version would (a) seed 3 products and require the agent to heart the *right* one while ignoring distractors, (b) require an unpublished/archived product that the agent must republish first before the heart shows up, or (c) re-target the task on `website_sale_comparison` (compare list) where the add-to-compare button is adjacent. Kept as medium/tier:2 per spec. New cookbook quirks added to ODOO19_PATTERNS.md below. |
-
----
 
 ## stock.transfer_reserved_to_ready_partial_backorder
 
@@ -4409,20 +3520,6 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 ---
 
-## stock_barcode.receive_via_barcode_scan_validate
-
-| Field | Value |
-|---|---|
-| **Status** | Removed |
-| **Oracle** | FAIL (module unavailable) |
-| **Browser-Use** | — |
-| **F1** | — |
-| **Odoo modules** | Barcode (Enterprise `stock_barcode`) + Inventory |
-| **Workflow** | Open `/odoo/barcode` → Operations → Receipts → open receipt `R-BENCH-BC-001` → scan `BENCH-A-001` three times (or tap `+`), scan `BENCH-B-002` three times, click Validate. Final state: picking state=done, both moves quantity=3, no backorder. |
-| **Capability tested** | Barcode tablet UI + scan input (or click-add fallback) + Validate tile. Hard pattern: unique client-action UI, not the standard list/form backend. |
-| **Notes** | Blocked — the `stock_barcode` addon is **Enterprise-only** and not vendored in this Odoo 19 Community checkout. Verified: `ls addons/stock_barcode` returns "No such file or directory"; `grep -rn "stock_barcode" addons/` returns only i18n po strings and one `module_stock_barcode = fields.Boolean("Barcode Scanner")` upgrade_boolean on `addons/stock/models/res_config_settings.py:29` (ticking it in the UI would ask Odoo to install the absent module). No `/odoo/barcode` controller, no `stock_barcode_action_main_menu` client action, no `BarcodePickingModel` / `BarcodeMainMenu` JS classes. Task skeleton (seed/oracle/check) is committed with clear BLOCKED guards that short-circuit with diagnostic errors instead of silently passing. Follows the same precedent as `barcodes.receive_product_via_scan_validate` (removed for identical reason), rows 350 (appointment), 351 (helpdesk), 352 (marketing_automation), and 387 (hr_skills_survey) — all Removed for Enterprise-only feature unavailability. Re-enable once enterprise `stock_barcode` is vendored into `addons/`. See the task's RESULT.md for full evidence and re-enabling steps. |
-
----
 
 ## account.credit_note_partial_refund_post
 
@@ -4457,22 +3554,6 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 ---
 
-## account_followup.send_reminder_level_two_customers
-
-| Field | Value |
-|---|---|
-| **Row** | 404 |
-| **Difficulty** | hard |
-| **Status** | Removed |
-| **Oracle** | FAIL (module unavailable) |
-| **Browser-Use** | — |
-| **F1** | — |
-| **Odoo modules** | Accounting Follow-up (Enterprise-only `account_followup`) |
-| **Workflow** | Seed 3 posted customer invoices `OV/BENCH/001..003` for partner `Bench Overdue Co` with `invoice_date_due = today - 45d`. Agent: Accounting → Customers → **Follow-up Reports** (or Customer Statement), opens `Bench Overdue Co`'s follow-up card, clicks header **Send Email** (default level-2 reminder template). Verify ≥1 `mail.mail` / `mail.message` logged on the partner referencing the three invoice names. Final state: all three invoices remain `state='posted'` and `payment_state='not_paid'`; partner's `followup_status` advances; at least one chatter message cites all three invoice names. |
-| **Capability tested** | Enterprise Follow-up Reports tablet UI: (a) per-partner aggregation of overdue `account.move` rows by `invoice_date_due`, (b) per-level email template + default text customization on `account_followup.followup.line`, (c) header `Send Email` action that renders and queues a `mail.mail` with invoice PDF attachments, (d) chatter audit trail on `res.partner` capturing the sent reminder. Hard pattern: cross-module closed loop (account → account_followup → mail) with level-escalation side-effects. |
-| **Notes** | Blocked — `account_followup` is **Enterprise-only** and NOT vendored in this Odoo 19 Community checkout. Verified: `ls addons/account_followup/` → "No such file or directory"; `grep -rn "account_followup" addons/` → **zero** matches (no model, view, controller, or even i18n stub). The only adjacent Community artefact is the `send_invoices_followups` upgrade_boolean on Accounting Settings at `addons/account/views/res_config_settings_views.xml:115`, which installs the orthogonal `snailmail_account` module (physical-mail invoicing), not the follow-up reminder workflow. No `/odoo/action-account_followup.*` routes, no `account_followup.followup.report` client action, no `account_followup.followup.line` levels, no `res.partner.followup_status` / `followup_line_id` / `followup_next_action_date` fields. Task skeleton (seed/oracle/check/cleanup) ships with BLOCKED guards that short-circuit with diagnostic errors instead of silently passing. Follows the same precedent as rows 350 (appointment), 351 (helpdesk), 352 (marketing_automation), 387 (hr_skills_survey), 401 (stock_barcode), and `barcodes.receive_product_via_scan_validate` — all Removed for Enterprise-only feature unavailability. Re-enable once enterprise `account_followup` is vendored into `addons/`. See the task's RESULT.md for full evidence and re-enabling steps. |
-
----
 
 ## hr_holidays.request_allocation_approve_self_book_day_off
 
@@ -4504,22 +3585,6 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 ---
 
-## hr_holidays.request_time_off_with_attachment
-
-| Field | Value |
-|---|---|
-| **Row** | 471 |
-| **Difficulty** | hard |
-| **Status** | Done |
-| **Oracle** | PASS (F1=1.0, 28.0s, 4/4 create edits matched, RequiredOpRecall=1.0, WritePrecision=1.0, StrictClean=True) |
-| **Browser-Use** | FAIL (F1=0.0, 355.1s single-shot, 5 postcondition failures, 3 Paid Leave records created instead of 1, wrong dates 2026-07-10/11, no ir.attachment linked to any leave, 1 forbidden `hr.leave.action_refuse` fired) |
-| **F1** | 0.0 |
-| **Odoo modules** | HR Holidays (Time Off) + mail chatter file upload (`ir.attachment` via the chatter paperclip, hidden `<input type=file>`) |
-| **Workflow** | Seed creates a `Paid Leave` hr.leave.type (`requires_allocation=False`, `leave_validation_type='hr'`, `request_unit='day'`, `time_type='leave'`), grants admin the HR Holidays groups, ensures admin has an hr.employee, wipes prior `Medical appointment` leaves + BENCH-JUST.pdf attachments on hr.leave, and writes a minimal valid PDF (322 bytes) to `seed_artifacts/BENCH-JUST.pdf`. Agent on `/odoo/time-off` clicks New Request / New, fills Time Off Type=`Paid Leave`, dates `2026-07-01` (Wed) → `2026-07-02` (Thu) via the date widget, description=`Medical appointment`, Save so the leave lands in `state='confirm'` (To Approve). Agent then opens the saved form's chatter paperclip and uploads `BENCH-JUST.pdf` — resulting in an `ir.attachment(name='BENCH-JUST.pdf', res_model='hr.leave', res_id=<leave_id>)` with non-empty bytes. Oracle bypasses the UI with RPC to guarantee deterministic PASS. |
-| **Capability tested** | File upload via the chatter paperclip on an `hr.leave` form (hidden `<input type=file>` behind `button[aria-label='Attach files']`) combined with two Odoo 19 date-widget entries (start + end) and a non-default Time Off Type selection (`Paid Leave` must be chosen explicitly, not the auto-selected first type in the dropdown). The paperclip pattern is a known-hard anchor — the benchmark runner does NOT pass `available_file_paths` to browser-use, so any attempt to call `set_input_files` through BU's file-upload bridge is blocked; BU also cannot drive a native OS file-picker dialog. The leave must stay in `confirm` (prompt explicitly forbids Approve), so agents that click Approve after saving corrupt the state. |
-| **Notes** | **Calibrated as intended — BU single-shot FAIL (F1=0.0, 5 postcondition failures: wrong dates, 3 leaves created instead of 1, no ir.attachment linked).** BU got confused by repeated save/refuse cycles: (a) it created 3 `Paid Leave` records (one refused, one current, one spurious — triggered our `forbidden_ops: hr.leave.action_refuse` gate), (b) it picked dates `2026-07-10`/`2026-07-11` instead of `2026-07-01`/`2026-07-02` despite the exact dates in the prompt, (c) the `number_of_days` on the surviving leaves ended up 1.0 instead of 2.0, (d) **no chatter attachment ever appeared on any of the three leaves** — confirming the hidden-input-file barrier. Distinct from row 402 (`request_allocation_approve_self_book_day_off`, which tests sequential allocation→leave without file upload) and row 451 (`request_sick_leave_approve_self`, which tests a two-role submit+approve lifecycle without attachment). Shares the file-upload anchor with `hr_holidays.request_leave_with_attachment` (medium variant using `Annual Leave` + allocation + different dates/filename) but bumps to tier 3 by (1) seeding a type with `requires_allocation=False` so agents can't blame an allocation lookup, (2) requiring the exact filename `BENCH-JUST.pdf` (non-obvious — differs from the medium sibling's `leave_justification.pdf`), (3) a different description (`Medical appointment`) and different dates (`2026-07-01`/`2026-07-02`). Gotchas mirror row 451: `requires_allocation` is a `fields.Boolean` (not Selection), `hr.leave` has no `action_confirm` (state defaults to `confirm` on create), `number_of_days` is working-day based (Wed+Thu = 2 working days), and the state-diff ops on the newly-created leave are all `op: "create"` (never mix `set`). `expected_state.json` matches on `[employee_id, holiday_status_id]` = `["Mitchell Admin", "Paid Leave"]` (admin's display name in the base snapshot is `Mitchell Admin`). |
-
----
 
 ## stock.adjust_inventory_count_apply_moves
 
@@ -4571,20 +3636,6 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 ---
 
-## hr_expense.scan_submit_expense_from_mobile_portal
-
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS (F1=1.0, 30.3s) |
-| **Browser-Use** | PASS (F1=1.0, 69.4s single-shot, 0 postcondition failures) |
-| **F1** | 1.0 |
-| **Odoo modules** | Expenses |
-| **Workflow** | Seed creates/updates a `product.template` called `Travel - Taxi` (type=service, can_be_expensed=True, list_price=25.00, **standard_price=0.0**) and ensures admin has the three expense groups + an `hr.employee` record. Agent: Expenses → My Expenses → **New**, picks product `Travel - Taxi`, fills description `Airport taxi`, types `45.00` into the Total input (which is `total_amount_currency` since `product_has_cost=False`), sets date to `2026-04-19`, Saves, then clicks the statusbar **Create Report** / **Submit to Manager** so the expense leaves `draft`. End state: single `hr.expense` with `name='Airport taxi'`, `total_amount=45.0`, `product_id=Travel - Taxi`, `state='approved'` (admin is both owner and approver so it auto-validates through the team_approver group). |
-| **Capability tested** | "Log an expense from scratch and submit" — from-scratch record creation with an exact text description, exact monetary override, and a statusbar button sequence that in Odoo 19 compresses the legacy Save → Submit-to-Manager flow into a single Create Report action. |
-| **Notes** | **Cookbook quirk (NEW): hr.expense `total_amount_currency` is READONLY whenever `product_has_cost == True`.** `product_has_cost = not company_currency.is_zero(product.standard_price)`. When `standard_price > 0`, the form switches to the "product-priced" layout where Total is computed from `quantity * price_unit` — the user cannot type a number directly into Total. Initial seed used `standard_price=25.00` which produced a `total_amount=25` value the oracle could not override (verified in two runs: `web_save` payload carried `total_amount: 25, total_amount_currency: 25` regardless of selector tried). Fix: seed `standard_price=0.0` (keep `list_price=25.00` as the visible reference), which flips `product_has_cost=False` and exposes the editable `total_amount_currency` input. Prompt updated to drop the "override default 25.00" phrasing since there is no live default. BU solved it single-shot in 69.4s — calibration slots as easy-medium (appropriate for tier 2). |
-
----
 
 ## mail.send_email_with_attachment_log_as_note
 
@@ -4603,39 +3654,7 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 ---
 
-## documents.upload_document_tag_assign_to_folder
 
-| Field | Value |
-|---|---|
-| **Row** | 411 |
-| **Difficulty** | medium |
-| **Status** | Removed |
-| **Oracle** | FAIL (module unavailable) |
-| **Browser-Use** | — |
-| **F1** | — |
-| **Odoo modules** | Documents (Enterprise-only `documents`) |
-| **Workflow** | Seed would create a `documents.folder` named `Bench Folder`, a `documents.facet` named `Type` scoped to that folder, a `documents.tag` named `invoice` on that facet, and a deterministic `/tmp/bench_documents_sample.pdf` on disk. Agent: Documents → click `Bench Folder` in the Workspaces tree → click the header **Upload** button → Playwright `expect_file_chooser()` supplies the PDF → wait for the uploaded card in the Kanban → click the card to open the right-hand inspector panel → pick `invoice` in the `tag_ids` m2m and `Administrator` in `owner_id` → click outside to blur-save. Final state: one `documents.document` with `folder_id=Bench Folder`, `tag_ids` includes `invoice`, `owner_id=admin`, and a linked `ir.attachment` whose `name` matches the uploaded file. |
-| **Capability tested** | Enterprise Documents workflow: (a) Workspaces tree navigation, (b) header Upload button that triggers a hidden `<input type='file'>` (Playwright `expect_file_chooser` pattern), (c) Kanban-card → inspector side-panel transition, (d) m2m tag autocomplete + m2o owner autocomplete on the inspector with implicit blur-save. Medium pattern: new-record creation via file upload + 2 field writes, no wizard, no status bar. |
-| **Notes** | Blocked — `documents` is **Enterprise-only** and NOT vendored in this Odoo 19 Community checkout. Verified: `ls addons/documents/` → "No such file or directory"; `grep -rn "documents.document" addons/` returns only 5 files, all soft references that gate on `env.get("documents.document")` (the canonical optional-Enterprise-integration pattern) — `spreadsheet/static/tests/helpers/data.js` (mock JS factory), `cloud_storage/models/ir_attachment.py`, `cloud_storage_migration/models/ir_attachment.py`, `account/tests/test_audit_trail.py`, and `account/models/ir_attachment.py`. None register the real model. No `documents.folder` / `documents.tag` / `documents.facet` models; no `/odoo/documents` client action; no `documents_kanban` view; no `documents_inspector` Owl component. `ls addons/ \| grep -i document` returns only `l10n_latam_invoice_document` (unrelated LATAM invoice type). Task skeleton (seed/oracle/check/cleanup) ships with BLOCKED guards that short-circuit with diagnostic errors instead of silently passing. Follows the same precedent as rows 350 (appointment), 351 (helpdesk), 352 (marketing_automation), 387 (hr_skills_survey), 401 (stock_barcode), 404 (account_followup), and `barcodes.receive_product_via_scan_validate` — all Removed for Enterprise-only feature unavailability. Re-enable once enterprise `documents` is vendored into `addons/`. See the task's RESULT.md for full evidence and re-enabling steps. |
----
-
-## project.create_task_with_deadline_tags_assignees
-
-| Field | Value |
-|---|---|
-| **Row** | 409 |
-| **Difficulty** | medium |
-| **Tier** | 2 |
-| **Status** | Done |
-| **Oracle** | PASS (F1=1.0, 33.4s, 2/2 atomic edits matched via Playwright UI) |
-| **Browser-Use** | PASS (F1=1.0, 94.0s single-shot, 0 postcondition failures, 12 steps) |
-| **F1** | 1.0 |
-| **Odoo modules** | `project` |
-| **Workflow** | Seed creates project `Bench Tag Proj` (empty), two `project.tags` rows (`urgent`, `backend`), and a second internal user `Bench Dev 2` (login `bench_dev_2`, groups = `base.group_user` + `project.group_project_user`). Agent: Projects → click `Bench Tag Proj` card → control-panel **New** → inline quick-create form opens with `Task Title...` textarea focused. Fills `Fix login bug`, then on the Deadline field types `06/30/2026` + Tab (closes the datepicker popover), then picks existing `urgent` + `backend` options from the `tag_ids` many2many autocomplete (avoiding the `Create "xxx"` quick-create item), then picks `Mitchell Admin` + `Bench Dev 2` from the `user_ids` autocomplete. Save via cloud icon. |
-| **Capability tested** | project.task form create with date_deadline datetime + tag_ids many2many_tags existing-pick + user_ids many2many existing-pick (two assignees). Intended calibration risks: datepicker popover stealing the next click, picking `Create "urgent"` instead of existing, forgetting second assignee. |
-| **Notes** | **Calibration MISS — BU passed single-shot cleanly.** BU correctly pressed Tab after typing the deadline, used the `role=option` autocomplete items for both tags (distinct id `tag_ids_0_0_0` per render) and both assignees, and clicked the Save button. Medium-tier task that BU solves on first try — similar to `project.create_task_assign_tags_deadline` (row 14-series). Retained as-is for deadline + dual-tag + dual-assignee coverage; date_deadline is a `fields.Datetime` in Odoo 19 (`project_task.py:183`) so typed `06/30/2026` stores as `2026-06-29 16:00:00 UTC` for the America/Los_Angeles admin TZ and check.py converts UTC → admin-local date before comparing. state_spec tracks only `name` + `active` on project.task (match_key=name); all other fields (date_deadline, tag_ids, user_ids, project_id) are asserted in check.py — a freshly-created task emits both `name` and `active=True` as `op=create` edits, so expected_state.json must include both for F1=1.0. trace_spec forbids `project.tags.create` and `res.users.create` to catch agents that quick-create rather than pick existing. |
-
----
 
 ## website_sale.checkout_portal_apply_coupon_complete
 
@@ -4742,20 +3761,6 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 ---
 
-## purchase.create_rfq_receive_invoice_3way_match
-
-| Field | Value |
-|---|---|
-| **Status** | Done |
-| **Oracle** | PASS (F1=1.0, 61.2s, 12/12 create edits matched) |
-| **Browser-Use** | FAIL (F1=0.0 single-shot, 480s wall clock, 12 postcondition failures — swapped Item A/B lines on the PO, never validated the receipt, never clicked Create Bills) |
-| **F1** | 0.0 |
-| **Odoo modules** | Purchase (`purchase`) + Stock (`purchase_stock`) + Accounting (`account`) |
-| **Workflow** | Closed-loop cross-module 3-way match. Seed creates vendor `Bench Supply Co`, 2 storable products `Bench PO Item A` ($20) and `Bench PO Item B` ($40) with `purchase_method="receive"` + `invoice_policy="delivery"`, and a distractor draft RFQ from `Bench Filler Vendor` (different vendor). Agent flow: Purchase → New RFQ → vendor=Bench Supply Co → add 2 lines (A qty=10@20, B qty=5@40) → Confirm Order → Receipt smart button → set Done=7 on Item A (leave B=5) → Validate → **Create Backorder** (primary) dialog → navigate to Purchase Orders list → checkbox the PO → Create Bills (list header) → bill form opens with lines pre-filled at qty_received (7, 5) → set Bill Reference `BSC-BILL-3WM` → Confirm (action_post). |
-| **Capability tested** | Long multi-step flow across 3 apps: create-from-scratch PO with exact field values (phantom-line trap), inline Done-qty edit on a receipt (partial receive), Create Backorder radio dialog, cross-module round-trip Purchase → Inventory → Purchase → Accounting, and posting a vendor bill with a Bill Reference. Check.py enforces: PO state=purchase, 2 lines with correct product order / qty / price_unit / qty_received (7, 5); original receipt state=done with matching Done qty on each move; backorder pending with 3 remaining Item A units; exactly one posted `account.move` (move_type=in_invoice) with `ref='BSC-BILL-3WM'` linked to the PO via `invoice_line_ids.purchase_line_id`; distractor RFQ untouched (state=draft). |
-| **Notes** | **Calibration: confirmed hard.** BU single-shot: 480s timeout, swapped line products on PO creation, never validated, never clicked Create Bills. 12 postcondition failures. **Key cookbook quirk discovered:** in Odoo 19, `purchase.order` form has **no "Create Bill" status-bar button** — only `action_create_invoice` via `purchase.order.view.list` header ("Create Bills", plural). Prompt + oracle must direct agent through `/odoo/purchase-orders` → checkbox row → Create Bills. A second quirk: opening a freshly-created vendor bill through `action_view_invoice`'s redirect (URL `/odoo/purchase-orders/bills/<id>`) leaves the Owl form in a non-edit state where `fill_field("ref")` alone does NOT dirty the form (Save button stays disabled, `action_post` silently no-ops). Oracle workaround: set `invoice_date` via `set_date()` FIRST (the date picker click kicks the form into edit mode), then `fill_field("ref", ...)` persists. Distractor vendor RFQ ensures BU cannot pick the wrong PO to Create Bills from. |
-
----
 
 ## product.configure_variant_attribute_two_values
 
@@ -4809,23 +3814,6 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 ---
 
-## point_of_sale.apply_fixed_discount_before_payment
-
-| Field | Value |
-|---|---|
-| **Row** | 420 |
-| **Difficulty** | hard |
-| **Tier** | 3 |
-| **Status** | Done |
-| **Oracle** | PASS (F1=1.0, 19.2s wall clock) |
-| **Browser-Use** | PASS (F1=1.0, 111.3s wall clock) |
-| **F1** | 1.0 |
-| **Odoo modules** | `point_of_sale`, `pos_discount` (installed on demand) |
-| **Workflow** | Seed: installs `pos_discount` via `button_immediate_install()`, creates POS config `Bench POS` with `module_pos_discount=True`, `discount_pc=14.29` (popup default), `discount_product_id` → the `pos_discount.product_product_consumable` data record, and a single **Bench Cash** payment method. Two tax-free products: `Bench POS Item A` list_price=20.00 and `Bench POS Item B` list_price=15.00 (both `available_in_pos=True`, `taxes_id=[(5,0,0)]`). Opens a `pos.session` in `opening_control`. Agent: POS → open `Bench POS` register → click Bench POS Item A → click Bench POS Item B → open the ellipsis/Actions popup → click **Discount** → popup pre-fills `14.29` → accept default → a discount line with ~-5.00 EUR appears → click **Payment** → **Bench Cash** tile → type `30` → **Validate** to reach the receipt screen. End state: `pos.order` with 2 product lines (A qty=1 price_unit=20.00, B qty=1 price_unit=15.00) + 1 global-discount line (price_subtotal≈-5.00), `amount_total≈30.00`, `state='paid'`, single cash payment of ~30.00, POS session stays open. |
-| **Capability tested** | Driving the POS kiosk UI to apply the *global* discount (`pos_discount` Discount control button that lives inside the ellipsis/Actions popup in Odoo 19), accepting a pre-filled non-default percentage (14.29), and completing a multi-line cash payment. |
-| **Notes** | **Calibration: easier than hard.** Browser-use solved the task first try in 111s, F1=1.0. Similar outcome as `point_of_sale.add_item_apply_global_discount_pay_cash` (BU also passed that). POS global-discount-at-default-percent is **not** a hard pattern on modern BU; the ellipsis/Actions popup discovery is no longer a blocker. **Math**: 14.29% × 35.00 = 5.0015 → rounded to 2dp ≈ 5.00. Check uses a 0.2 tolerance on `amount_total` (30.0 ± 0.2) and 0.5 on the discount line subtotal (-5.0 ± 0.5) to absorb rounding. **Oracle pattern**: JSON-RPC `call_kw` bypass (same as `split_payment_email_receipt` / `add_item_apply_global_discount_pay_cash`) — Playwright-driven POS oracles are flaky because `o_technical_modal` sometimes intercepts pointer events. Oracle creates the order with all 3 lines (2 product + 1 discount at price_unit=-5.00), then `pos.make.payment.create` + `.check` closes the order. **Seed quirks**: `pos_discount` is NOT in the benchmark_base snapshot; seed must `button_immediate_install()` on demand (like `survey`/`stock_dropshipping`). The `pos.config` requires `module_pos_discount=True`, `iface_discount=True`, `discount_pc=<float>`, and `discount_product_id=<id>`; omitting any of these raises `UserError` on `open_ui()`. Tax-free products need `taxes_id=[(5,0,0)]` on **both** `product.product` and `product.product_tmpl_id` because `available_in_pos` on product.product pulls company default taxes from the template otherwise. **Escalation ideas**: split payment across Cash + Bank tiles with the same global discount, or a non-default discount percentage distinct from `discount_pc`, or a mid-order customer change combined with the discount so the price recomputes. |
-
----
 
 ## sale.duplicate_quotation_edit_delivery_date_confirm
 
@@ -4883,24 +3871,6 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 ---
 
-## website_slides.duplicate_course_edit_add_slide
-
-| Field | Value |
-|---|---|
-| **Task ID** | `website_slides.duplicate_course_edit_add_slide` |
-| **Row** | 424 |
-| **Difficulty** | medium |
-| **Tier** | 2 |
-| **Status** | Done |
-| **Oracle** | PASS (F1=1.0, 12.0s, 7/7 atomic edits matched, 0 postcondition failures, StrictClean=True) |
-| **Browser-Use** | PASS (F1=1.0, 107.4s single-shot, 0 postcondition failures, 24 non-forbidden writes, StrictClean=True) |
-| **F1** | 1.0 |
-| **Odoo modules** | eLearning (`website_slides`) — `slide.channel` + `slide.slide` with cog/Actions `Duplicate` on the course form + `slide_category='article'` content row on the Content tab. |
-| **Workflow** | Seed creates one published training `slide.channel` (`Bench Course Original`, `channel_type='training'`, `visibility='public'`, `enroll='public'`, `is_published=True`, `user_id=admin.id`) with exactly one existing published video `slide.slide` (`Bench Intro Video`, `slide_category='video'`, YouTube URL). Seed explicitly wipes auto-created `slide.channel.partner` rows so the attendee count stays clean. Agent: open eLearning → open `Bench Course Original` course form → cog/Actions → **Duplicate** → rename the copy to `Bench Course Spring` → save → open the **Content** tab → **Add Slide** → set Title=`Welcome slide`, Category=Article (or Document), short description body → save. End state: exactly two `Bench Course*` `slide.channel` rows; `Bench Course Spring` has exactly one non-category `slide.slide` named `Welcome slide` with `slide_category in ('article','document')`; `Bench Course Original` is unchanged (still has its single `Bench Intro Video` slide and its original name). |
-| **Capability tested** | Cog/Actions `Duplicate` on a `slide.channel` (distinct from the cog on an individual `slide.slide`); post-duplicate rename on the correct record (the copy, not the original); then a second distinct UI flow (Content tab → Add Slide) where the agent must pick `slide_category` from the Article/Document dropdown and complete a second save. |
-| **Notes** | **Calibration: easier than medium.** Browser-use solved single-shot in 107s with F1=1.0 and 0 postcondition failures — the course-level cog `Duplicate` is easy to find, and the Add Slide flow on the Content tab is unambiguous once the agent is on the right course. The "BU conflates course Duplicate with slide Duplicate" failure documented in `ODOO19_PATTERNS.md § website_slides` only bites when the prompt asks to duplicate a *lesson* (see row 386 `duplicate_lesson_to_new_section`), not a whole channel. **Oracle pattern**: JSON-RPC `slide.channel.copy([id])` → `write({'name': 'Bench Course Spring'})` → `slide.slide.unlink()` on the slides that `copy_data` brought along with the channel → `slide.slide.create({'slide_category': 'article', ...})`. Without the intermediate unlink of copied slides, `copy_data` leaves `Bench Intro Video` on the Spring copy and check.py rightly fails (spring_slides != ['Welcome slide']). **State-spec quirk**: `slide.channel.website_published` on a fresh `copy()` diffs as `op: "create"`, `norm_value: null` (not `true`), same as the `website_blog.create_post_with_cta_seo_schedule` null-vs-false quirk — `expected_state.json` encodes `null` to match the diff engine's observed output. **Escalation ideas** to harden into a real medium trap: (i) seed a distractor channel named `Bench Course Winter` so the agent must duplicate the correct one; (ii) require the new slide be `slide_category='quiz'` with one correct-answer question instead of an article (nested notebook editing); (iii) additionally move the duplicated copy into a new "Section" row on the Content tab, combining the section-is-a-slide quirk with the duplicate flow. |
-
----
 
 ## mrp_account.mo_consume_and_close_check_valuation
 
@@ -5029,23 +3999,6 @@ When adding a new task, append a form block (same format as above) with `Status:
 
 ---
 
-## hr_timesheet.log_time_for_2_days_approve_via_manager
-
-| Field | Value |
-|---|---|
-| **Task ID** | `hr_timesheet.log_time_for_2_days_approve_via_manager` |
-| **Row** | 429 |
-| **Difficulty** | hard |
-| **Tier** | 3 |
-| **Status** | Removed |
-| **Oracle** | FAIL (module unavailable) |
-| **Browser-Use** | — |
-| **F1** | — |
-| **Odoo modules** | `hr_timesheet` (Community, **not in `base_modules.txt`** → not installed in `benchmark_base`) + `hr_timesheet_sheet` / `timesheet.sheet` (**Enterprise-only**, source absent from `addons/`). |
-| **Workflow** | Intended: Seed project `Bench Approve Proj` + task `Development` + employee `Bench Dev` (internal user with `hr_timesheet.group_hr_timesheet_user` and `hr.group_hr_user`) whose parent = admin's employee. Agent switches to Bench Dev, creates 2 `account.analytic.line` rows on different dates (2026-04-15 / 2026-04-16, `unit_amount=8.0`) against that task, opens the containing weekly `timesheet.sheet` and clicks **Submit to Manager** (`draft → confirm`). Admin switches back in, opens the pending sheet from `Timesheets → To Approve`, clicks **Approve** (`confirm → done`). |
-| **Capability tested** | Multi-day timesheet logging + submit-to-manager + manager-approve lifecycle crossing two user roles — targets the `timesheet.sheet` state machine (`draft → confirm → done`) plus two analytic lines pinned to one sheet. |
-| **Notes** | **Blocked on two stacked gaps**: (1) `hr_timesheet_sheet` (a.k.a. `timesheet.sheet`, which supplies `Submit to Manager` + `Approve` on weekly sheets and the `state`/`sheet_id` fields on `account.analytic.line`) is an **Odoo Enterprise-only** addon. Its source is not vendored under `addons/` in this Community checkout — no `hr_timesheet_sheet/` directory exists and `ir.module.module` would report it as uninstallable. (2) Even the base `hr_timesheet` addon (whose source *is* present) is **not listed in `benchmark/base_modules.txt`**, so the `benchmark_base` snapshot does not install it: `/odoo/timesheets` menu and the Timesheets tab on `project.task` are absent in the stock DB. The suggested fallback from the task brief ("manager marks analytic lines as validated via cog Actions / write `validated=True`") does **not** work: Community `hr_timesheet` has no `validated`, `state`, or `sheet_id` field on `account.analytic.line` (verified by grepping the hr_timesheet models + views). Without an Enterprise submit/approve mechanism there is no semantically meaningful approval signal to assert in `check.py`. Task skeleton is committed with BLOCKED guards that short-circuit `seed`, `check`, `oracle`, and `cleanup` with diagnostic errors (same precedent as rows 350/351/352/387). To re-enable: (a) add `hr_timesheet` to `benchmark/base_modules.txt` and rebuild `benchmark_base`, AND (b) vendor the Enterprise `hr_timesheet_sheet` addon (or replace it with an equivalent submit/approve mechanism — e.g. an `approvals`-based wrapper around `account.analytic.line`). |
----
 
 ## purchase.confirm_rfq_receive_full_three_way_match
 
@@ -5455,24 +4408,6 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Notes** | **Calibration MISS — too easy for medium**. BU single-shot PASS at F1=1.0 in 72.6s, 14 writes, 0 forbidden. The prompt explicitly mentions the "click the small icon next to the product name" step (the `.fa-bars` toggler has an accessibility label "Click or press enter to add a description"), which flattens the difficulty — BU finds the button by its tooltip text in step 6 and types into the revealed textarea in step 7. To escalate: (a) hide the explicit toggler hint from the prompt so the agent must discover the merged-column layout; (b) add a distractor line so the agent must pick the right row AND avoid editing the product_id instead of the label; (c) require a description that does NOT contain the product name, then assert the stored name equals exactly the typed text — which forces the agent to use the line sub-form popup instead of the inline widget (because `parseLabel` always prepends the product name to typed labels on the inline path). **Widget quirks captured** (new cookbook content): (1) `product.order.line.name` has `compute='_compute_price_unit_and_date_planned_and_name'` + `store=True, readonly=False` — writable, but the compute re-fires when `product_id` changes (so editing the Description and then re-selecting the same product does NOT revert). (2) The `product_label_section_and_note_field` widget's `parseLabel` returns `productName + "\n" + value` when both truthy (product_label_section_and_note_field.js:50-54), so typing `BENCH-WDG-A1 / Bench Widget` into the label yields a stored `name` of `"Bench Widget\nBENCH-WDG-A1 / Bench Widget"`. check.py accepts either form via a case-insensitive substring search for `BENCH-WDG-A1`, but the expected_state.json norm_value MUST be the two-line form (not just the typed text) to match the diff engine. (3) `getActiveColumns()` (product_name_and_description.js:20-38) DELETES the standalone `name` column from the active list when both `product_id` and `name` columns are present and sets `record.columnIsProductAndLabel = true`, causing the label textarea to render inside the `td[name='product_id']` cell. That's why `td[name='name']` does NOT exist in the DOM — trying to click it times out (seen on the oracle's first run). (4) Entity_key on `purchase.order.line` with match_key `[order_id, product_id]` normalizes to `[null, null]` (both Many2one fields normalize to null via the XML-RPC serialization path used here — similar to `account.move.line.move_id → null` but different from `sale.order.line.order_id → SO name`). expected_state.json MUST use `[null, null]` as entity_key; using the PO name or product display name causes F1=0 (missing-match) even though the norm_value is correct. (5) `trace_spec.forbidden_ops` includes `purchase.order.line.create` and `purchase.order.line.unlink` to catch agents who delete-and-recreate the line instead of editing it in place. **Commit**: `[ADD] benchmark: purchase.set_vendor_product_code_on_po_line (medium)`. |
 ---
 
-## account.reconcile_bank_statement_line_to_invoice
-
-| Field | Value |
-|---|---|
-| **Task ID** | `account.reconcile_bank_statement_line_to_invoice` |
-| **Row** | 455 |
-| **Difficulty** | hard |
-| **Tier** | 3 |
-| **Status** | Removed |
-| **Oracle** | FAIL (module unavailable) |
-| **Browser-Use** | — |
-| **F1** | — |
-| **Odoo modules** | `account` (Community, installed) supplies `account.bank.statement` + `account.bank.statement.line` + base `account.move.line.reconcile()` primitives, but the dedicated **bank reconciliation widget** (`bank.rec.widget` + the two-panel Validate UI + `action_open_bank_reconcile_widget`) is shipped by **`account_accountant`**, which is an **Odoo Enterprise-only** addon. Source absent from `addons/` on this checkout; no `ir.module.module` record exists for it, so it is flagged uninstallable. |
-| **Workflow** | Intended: Seed partner `Bench Bank Cust`, service product `Bench Bank Service` (price 300.00, taxes cleared), posted `account.move` (out_invoice) `BENCH-BANK-REC-001` total 300.00 in state `posted` / `payment_state='not_paid'`, plus a DRAFT `account.bank.statement` on the default bank journal with one `account.bank.statement.line` (payment_ref `BENCH-BANK-REC`, partner=Bench Bank Cust, amount=300.00). Agent: Accounting → Bank (or Reconciliation) → open the draft statement → click the `BENCH-BANK-REC` line → in the right-hand reconciliation panel, pick `BENCH-BANK-REC-001` from Suggested / Customer Invoices → click **Validate**. End state: `invoice.payment_state='paid'` AND `statement_line.is_reconciled=True` with `reconciled_ids` linking to the invoice's receivable move lines (same `full_reconcile_id`). |
-| **Capability tested** | Enterprise bank reconciliation widget — a non-standard two-panel UI (statement lines on the left, matching suggestions on the right) with manual invoice selection + Validate button. Distinct from row 416 direct-payment wizard and row 435 partial-payment wizard; distinct from row 211 `account.reconcile_bank_statement_line_manual` which also targets this capability but whose oracle short-circuits to `account.move.line.reconcile()` JSON-RPC (because Community has no widget). |
-| **Notes** | **Blocked on a single but absolute gap**: `account_accountant` is Enterprise-only and its source is not vendored in this Odoo 19 Community checkout. Without it, there is no `bank.rec.widget` model, no `action_open_bank_reconcile_widget` window action, and no two-panel reconciliation UI — `account/views/account_bank_statement_views.xml` in Community only exposes standard list/form views on the statement + statement-line records, with no **Validate** button. The only way to "reconcile" in Community is the same path row 211 took: draft the statement line move, repoint its counterpart `account.move.line` to the invoice's receivable account, re-post, then call `account.move.line.reconcile()` — that is NOT the capability this task was scoped to probe (row 211 already owns it and scored F1=0.0 for BU because BU cannot find a widget that does not exist). Task skeleton is committed with BLOCKED guards that short-circuit `seed`, `check`, `oracle`, and `cleanup` with diagnostic errors (same precedent as rows 350/351/352/387/429). To re-enable: (a) vendor the Enterprise `account_accountant` addon under `addons/` (or an OSS widget equivalent), (b) add `account_accountant` to `benchmark/base_modules.txt` and rebuild `benchmark_base`, (c) port the flesh-out pseudocode from seed.py / oracle.py / check.py. |
-
----
 
 ## sale.create_sale_quotation_from_opportunity_smart_button
 
@@ -5759,22 +4694,6 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Notes** | **Calibration on target** — easy anchor, BU passed single-shot F1=1.0 as expected (~80 0.000000e+00asy pass rate). Key Odoo 19 subtlety documented in the cookbook: `hr.employee` has BOTH `job_id` (m2o, label "Job Position") AND `job_title` (Char, label "Job Title"), stacked one above the other in the Work tab. The prompt explicitly disambiguates "the free-text char field directly below Job Position" so the agent cannot confuse the two. Check guards against spurious `job_id` writes. **Commit**: `[ADD] benchmark: hr.promote_employee_set_new_job_title_save (easy)`. |
 ---
 
-## website_forum.upvote_question_mark_as_answer
-
-| | |
-|---|---|
-| **Row** | 477 |
-| **Difficulty** | medium |
-| **Tier** | 2 |
-| **Status** | Done |
-| **Oracle** | PASS (F1=1.0, 15.5s, 6/6 edits) |
-| **Browser-Use** | PASS (F1=1.0, 55.8s single-shot, 9 steps, 0 postcondition failures) |
-| **F1** | 1.0 |
-| **Odoo modules** | `website_forum` (installed on demand; not in base snapshot) |
-| **Workflow** | Seed installs `website_forum`, creates a public forum `Bench Forum` (mode=`questions`, one-answer-per-question), a portal user `benchbot` with karma 5000, a seeded question `How do I install?` by benchbot (parent_id=False, is_correct=False, zero votes), and ONE seeded answer by benchbot (parent=question, is_correct=False). Agent opens `/forum` → Bench Forum → opens the question → clicks the caret-up Upvote arrow on the question (`button.vote_up[aria-label='Upvote']`) → clicks the circle-check Accept icon (`.o_wforum_validate_toggler`) on the seeded answer. |
-| **Capability tested** | Frontend forum vote + accept interactions distinct from row 394 (which posts a NEW answer then accepts among TWO candidates). This row exercises the `/forum/<forum>/post/<post>/upvote` JSON-RPC controller (which creates a `forum.post.vote` row with `vote='1'`, `user_id=admin.id`, `recipient_id=benchbot.id`) + the `/toggle_correct` controller on an existing single answer. No textarea posting, no candidate disambiguation. |
-| **Notes** | **Calibration MISS — BU PASSED single-shot** (F1=1.0, 9 steps, 55.8s). BU found both targets via aria-label: `aria-label='Upvote'` on the caret-up button and `aria-label='Mark as Best Answer'` on the circle-check toggler. Unlike row 394 (where the Accept icon has NO aria-label and the agent loop-detected hunting through selectors), the presence of explicit aria-labels here + only ONE answer (no canonical-vs-decoy disambiguation) + no required textarea posting collapses the task to two discoverable clicks. To escalate to hard: (a) add 2-3 distractor answers (mode='discussions') so BU must pick the right one to Accept, (b) require downvoting a decoy AND upvoting the question (two polarity-distinct vote actions), (c) force a karma grant step before the votes can register. Kept as medium/tier:2 per backlog spec (calibration risk was MEDIUM; BU PASS is compatible with medium difficulty, just on the easy edge). New cookbook entries appended to `ODOO19_PATTERNS.md § website_forum`: (1) **Upvote button IS aria-label-discoverable** (`button.vote_up[aria-label='Upvote']`, template `website_forum.post_vote`), unlike the Accept toggler which only has title+data-href; this is the mechanistic reason row 477 is easier than row 394. (2) **`/forum/.../upvote` controller self-vote guard** mirrors `/toggle_correct` — `if request.env.uid == post.create_uid.id: return {'error': 'own_post'}`; admin bypasses karma via `is_admin()` but NOT the self-vote guard, so both question and answer must be authored by a non-admin seeded user (benchbot). (3) **`forum.post.vote` state-diff match_key** is `(post_id, user_id, vote)` which normalizes to `(question_title, user_name, selection_string)` — `vote` field is Selection `'1'|'-1'|'0'`, not int. (4) **`forum.post.vote.recipient_id`** is `related="post_id.create_uid"` stored, so it fills automatically at create time — include it in state_spec.fields to capture as a `create` edit with the post author's display name. (5) **`mode='questions'` one-answer cap** enforced at template render (Your Answer block hidden once an answer exists) — use for single-answer tasks; `mode='discussions'` for multi-answer tasks (row 394). **Commit**: `[ADD] benchmark: website_forum.upvote_question_mark_as_answer (medium)`. |
----
 
 ## mrp.unreserve_raw_material_on_mo
 
@@ -6010,22 +4929,6 @@ When adding a new task, append a form block (same format as above) with `Status:
 | **Notes** | **Calibration MISS — BU PASSED single-shot** at F1=1.0 in 9 steps / 71.5s. Planned risk was hard (≤40% pass); actual risk profile is **medium-at-most**, matching row 286 which also passes BU cleanly. Key reasons the hard trap did not fire: (1) The prompt explicitly names the "Order button (truck icon at the right of the row)" AND warns off **Automate** / **Order To Max** / **Snooze** — BU's element picker `index: 3764` resolved directly to `button[name='action_replenish']` with the `fa-truck` tooltip in step 7. (2) The default dashboard filter chain (`filter_to_reorder + filter_not_snoozed + searchpanel_default_trigger='manual'`) narrows to exactly one row on a fresh benchmark DB, so no search required. (3) The per-row button is NOT gated by row-selection — BU did not need to tick the checkbox, avoiding the bulk-action dropdown trap entirely. **To re-harden** into the hard band: (a) seed multiple distractor orderpoints (2 other storable products with similar "Bench *" names, also qty_to_order>0) so BU must disambiguate which row to click; (b) require the agent to **edit** the `qty_to_order` cell to a non-default value (e.g. 25, below max) before clicking Order — this forces manual-write path `qty_to_order_manual` which can leak back if not saved correctly; (c) require selecting the row checkbox + using the bulk Order dropdown (controller `onClickOrder(false)` via `static/src/views/stock_orderpoint_list_view.xml` dropdown items, gated by `hasSelectedRecords`) instead of the per-row button; (d) force a **route ambiguity** by adding a second seller for a different vendor at a higher price so `stock.rule._run_buy` uses `product.supplierinfo` priority resolution, requiring the agent to pre-reorder the sellers; (e) pair with a subsequent RFQ confirm step (extends into row 397's capability — closed-loop: replenish + open the generated RFQ + Confirm). Primary_track=true retained since the task is realistic, reproducible, exercises the new Odoo 19 Replenishment dashboard menu path, and the hard-band escalations above are all implementable in a follow-up row. **Cookbook data points (new / reinforced)**: (1) **Replenishment menu lives at `/odoo/replenishment`** (server-action path), xml-id `stock.action_replenishment` — `<field name="path">replenishment</field>` — distinct from Reordering Rules `/odoo/action-stock.action_orderpoint`. Only the Replenishment path renders `.o_replenish_buttons`. (2) **Per-row Order/Automate gate**: `view_warehouse_orderpoint_tree_editable` `<button name="action_replenish" class="o_replenish_buttons" icon="fa-truck" invisible="qty_to_order &lt;= 0.0"/>` (addons/stock/views/stock_orderpoint_views.xml:57-60). `action_replenish_auto` additionally `invisible="qty_to_order &lt;= 0.0 or trigger == 'auto'"`. Seeding trigger='manual' + qty_to_order>0 exposes both buttons; the prompt's "Order, NOT Automate" rule is the anti-trap. (3) **Bulk-order dropdown** (`StockOrderpointListController.onClickOrder(force_to_max)`, `addons/stock/static/src/views/stock_orderpoint_list_controller.js:18-28`) fires the SAME `stock.warehouse.orderpoint.action_replenish` call as the per-row button, but the dropdown items are `t-if="hasSelectedRecords"` in `stock_orderpoint_list_view.xml:12,15` — so clicking them without first ticking the row checkbox is a no-op. (4) **Qty-to-order formula** in `_get_qty_to_order` (stock_orderpoint.py:461-476): `qty_to_order = max(product_min_qty, product_max_qty) - (virtual_available + qty_in_progress)` when `qty_forecast < product_min_qty`. With min=5, max=20, virtual=0, in_progress=0 → qty_to_order=20.0. (5) **Post-replenish orderpoint auto-deletion**: the tail of `action_replenish` (line 365) unlinks orderpoints where `create_uid.id == SUPERUSER_ID and qty_to_order <= 0.0 and trigger == 'manual'`. Seed runs via `odoo shell` which logs in as uid=1 (SUPERUSER), so the seeded orderpoint WILL disappear after a successful replenish. check.py must tolerate `0 or 1 remaining` — strict `== 1` would falsely flag every successful run. (6) **`purchase.order.line` entity_key normalization** with `match_key=[product_id, order_id]`: the Many2one `order_id` normalizes to `null` (unlike `sale.order.line.order_id` which normalizes to the SO name — empirically confirmed for both here and on row 450 `purchase.set_vendor_product_code_on_po_line`). expected_state.json uses `["Bench Replenish Item", null]`. (7) **`purchase.order` entity_key** with `match_key=[partner_id]` normalizes to the vendor display name `"Bench Replenish Vendor"` — 1-slot key is sufficient because the vendor uniquely scopes the post-task PO set. (8) **`product.supplierinfo.price` is stamped onto `purchase.order.line.price_unit`** by `_prepare_purchase_order_line_from_procurement` during the `stock.rule._run_buy` chain — the seed's `seller_ids=[(0,0,{'partner_id': vendor.id, 'price': 50.0, ...})]` is load-bearing; without it the line price_unit defaults to the product's `standard_price`. **Commit**: `[ADD] benchmark: stock.run_manual_replenishment_for_product (hard)`. |
 ---
 
-## website_sale.add_product_review_publish
-
-| | |
-|---|---|
-| **Row** | 485 |
-| **Difficulty** | medium |
-| **Tier** | 2 |
-| **Status** | Done |
-| **Oracle** | PASS (F1=1.0, 19.7s wall clock, 5/5 atomic edits matched, 0 postcondition failures, 23 API calls, 10 non-forbidden writes, 0 forbidden, StrictClean=True, RequiredOpRecall=1.0). Oracle calls `product.template.message_post(body='<p>Great product</p>', rating_value=4, message_type='comment', subtype_xmlid='mail.mt_comment')` via `/web/dataset/call_kw`, which routes through the `rating.mail_thread` override to create a linked `rating.rating` + `mail.message` pair. |
-| **Browser-Use** | PASS (F1=1.0, 76.3s single-shot, 5/5 atomic edits matched, 0 postcondition failures, 43 API calls, 26 non-forbidden writes, 0 forbidden, StrictClean=True). BU clicked the product card → logged in → re-navigated to the product → expanded **Customer Reviews** accordion → typed `Great product` into the composer textarea (4-star default already selected) → clicked **Send**. The composer posts via `/mail/message/post` with `post_data.rating_value=4`, hitting the same server override as the oracle. |
-| **F1** | 1.0 (BU), 1.0 (oracle) |
-| **Odoo modules** | `website_sale` (in base snapshot) + auto-install chain `rating` + `portal_rating`. Requires **activating** the `website_sale.product_comment` ir.ui.view (ships with `active=False`) in the seed. |
-| **Workflow** | Seed: (a) activate `ir.ui.view` with `key='website_sale.product_comment'` (search with `active_test=False` to catch archived copies) so the `<t t-call="portal.message_thread">` block renders at the bottom of the product page; (b) create `product.template` **Bench Review Item** with `is_published=True`, `website_published=True`, `sale_ok=True`, `list_price=49.0`, cleared taxes. Agent: `/shop` → click **Bench Review Item** card → scroll to bottom → click the **Customer Reviews** chevron toggle → composer surfaces inline with 5 star icons (default 4 filled) and a message textarea → type `Great product` → click **Send** (aria-label=Send). Server fires the `rating.mail_thread.message_post` override: pulls `rating_value=4` out of kwargs → creates `rating.rating(res_model='product.template', res_id=<tmpl>, rating=4.0, partner_id=admin.partner_id, consumed=True)` → runs `_message_post_after_hook` to back-link the new `mail.message.rating_id` and `rating.message_id`. End state: 1 rating.rating row + 1 mail.message comment on the product. |
-| **Capability tested** | **Frontend portal review form** — the rating stars + message composer live on the public shop page, NOT in the backend product form. The agent must (a) find the collapsed `Customer Reviews` section (chevron toggle), (b) work the composer inline rather than via a modal dialog (Odoo 19 renders the rating composer inline inside the accordion when logged in — the `RatingPopupComposer` widget is only used with `.o_rating_popup_composer` sections that have `display_composer=True` via a different snippet). Also exercises the `rating.mail_thread` message_post override which silently branches on `rating_value` in kwargs. Distinct from row 381 `website_customer.publish_customer_reference_on_public_page` which publishes a pre-existing reference; row 485 creates a brand-new rating+comment pair. |
-| **Notes** | **Calibration MISS — BU PASSED single-shot** at F1=1.0 in 11 steps / 76.3s (1 sample). Stated risk was **medium** (calibration risk MEDIUM per backlog). BU passed because (a) the default `ratingValue=4` in `Composer.portalState` (see `addons/portal_rating/static/src/chatter/frontend/composer_patch.js:9`) exactly matches the required rating — zero star clicks needed, (b) the composer textarea is discoverable by visual scan ("Great product" is unambiguous), (c) the **Send** button has `aria-label='Send'` making it aria-discoverable, (d) no modal; composer is inline inside the expanded accordion. Kept as medium/tier-2 — the task is realistic and exercises a distinct capability (frontend rating + chatter write). **To harden to hard**: (1) require a non-default rating (e.g. 2 stars) — the composer default-4 trap no longer saves the agent; (2) require posting a review on product B among 3 seeded products; (3) require editing the review afterward (triggers `force_submit_url='/mail/message/update_content'` path on the composer); (4) require unfolding 2+ collapsed sections (e.g. Specifications + Reviews) where both use the same chevron pattern. **Cookbook data points (new)**: (1) **`website_sale.product_comment` view ships with `active=False`** and MUST be flipped in the seed (`env['ir.ui.view'].with_context(active_test=False).search([('key','=','website_sale.product_comment')]).write({'active': True})`) — without this the `<section id="o_product_page_reviews">` block is never rendered and the task is unsolvable via browser. (2) **The inline review composer is the `@mail/core/common/composer` Owl component patched by `portal_rating/static/src/chatter/frontend/composer_patch.js`**, NOT the `.o_portal_chatter_composer` interaction. It exposes 5 `<i class="fa fa-star">` icons with numeric `index` attributes and uses `portalState.ratingValue` (default 4) to drive the `rating_value` field on post_data. The agent clicks stars by hovering + click; `onClickStar` writes `portalState.ratingValue = index+1`. (3) **`/mail/message/post` with `rating_value` is the canonical submit path** — it reaches `rating.mail_thread.message_post` which creates a `rating.rating` (`consumed=True`, `partner_id=env.user.partner_id`) and `_message_post_after_hook` links `rating.message_id = message.id` + `message.rating_id = rating.id` (bidirectional). (4) **Oracle via `product.template.message_post(rating_value=4, ...)`** is equivalent to the UI path and produces the identical 5-edit diff: `rating.rating` create with `{rating, res_model, res_name, partner_id, consumed}`. `res_id` is in `ignore_fields` (unstable int) — match_key uses `(res_model, res_name, partner_id)` which normalizes to `("product.template", "Bench Review Item", "Mitchell Admin")`. (5) **No karma gate** on product reviews (unlike forum upvote/accept) — admin can post directly; the `reviewer_bob` portal user from the backlog spec is optional and was omitted since admin login works and `rating.rating.partner_id` normalizes to `Mitchell Admin` either way. (6) **Pre-flight: `product.template._inherit` includes `'rating.mixin'`** (confirmed in `addons/website_sale/models/product_template.py:36`), so `rating_ids` + `rating_count` + `rating_avg` + the `message_post(rating_value=...)` override are all available. `portal_rating` is auto-installed with `website_sale`. **Commit**: `[ADD] benchmark: website_sale.add_product_review_publish (medium)`. |
----
 
 ## hr.change_employee_work_schedule
 
