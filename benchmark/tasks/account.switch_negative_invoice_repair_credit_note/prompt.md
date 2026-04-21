@@ -10,7 +10,7 @@ For that document:
 1. Use the **Action** menu to switch it into a **credit note / refund**.
 2. From **Invoicing > Customers > Products**, open each product from the document and read its **Sales Description** field.
 3. The Sales Description gives the correct **Quantity** and **Discount** for that product in the format `Qty=X | Discount=Y`.
-4. Return to the credit note and fix every product line so the quantity and discount match the instruction.
+4. Return to the credit note and fix every product line so the quantity and discount match the instruction. Also ensure each line's unit price is **positive** (the switch may leave prices negative).
 5. Open **Other Info** and set **Customer Reference** to `RET-508-READY`.
 6. Post the credit note.
 

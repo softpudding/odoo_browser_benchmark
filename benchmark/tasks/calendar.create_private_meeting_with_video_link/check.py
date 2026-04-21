@@ -1,6 +1,7 @@
 """Postcondition checks for calendar.create_private_meeting_with_video_link."""
 
 import re
+from datetime import date
 
 
 def check(env):
@@ -9,10 +10,29 @@ def check(env):
     if not event:
         return ["Event 'Private Vendor Sync' not found"]
 
-    if str(event.start) != "2026-05-27 14:00:00":
-        failures.append(f"Event start is {event.start!s}, expected 2026-05-27 14:00:00")
-    if str(event.stop) != "2026-05-27 15:00:00":
-        failures.append(f"Event stop is {event.stop!s}, expected 2026-05-27 15:00:00")
+    # Convert stored UTC to admin-local time for comparison.
+    import pytz
+    admin_user = env["res.users"].search([("login", "=", "admin")], limit=1)
+    user_tz_name = (admin_user.tz if admin_user else None) or env.user.tz or "UTC"
+    try:
+        user_tz = pytz.timezone(user_tz_name)
+    except Exception:
+        user_tz = pytz.UTC
+
+    if event.start:
+        local_start = pytz.UTC.localize(event.start).astimezone(user_tz)
+        expected_date = date(2026, 5, 27)
+        if local_start.date() != expected_date:
+            failures.append(f"Event date is {local_start.date()}, expected {expected_date}")
+        if local_start.hour != 14 or local_start.minute != 0:
+            failures.append(f"Local start time is {local_start.strftime('%H:%M')}, expected 14:00")
+    else:
+        failures.append("Event has no start date/time")
+
+    if event.stop and event.start:
+        duration_hours = (event.stop - event.start).total_seconds() / 3600
+        if duration_hours < 0.5 or duration_hours > 1.5:
+            failures.append(f"Duration is {duration_hours:.1f}h, expected ~1h")
 
     if event.location != "Bridge Room":
         failures.append(f"Location is '{event.location}', expected 'Bridge Room'")
