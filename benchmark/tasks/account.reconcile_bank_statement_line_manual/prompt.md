@@ -18,9 +18,8 @@ so the invoice becomes fully paid.
 ## Steps
 
 1. Open the **Accounting** app.
-2. Navigate to **Accounting → Journal Entries → Bank Statement Lines**
-   (or the Bank journal's transactions list). Find the unreconciled line
-   with label `Bench Reconcile 500` for `Bench Reconcile Customer`.
+2. Find the unreconciled bank statement line with label `Bench Reconcile 500`
+   for `Bench Reconcile Customer`.
 3. Open / select that bank statement line so you can edit its
    reconciliation. In the reconciliation view, the right-hand panel shows
    suggested matches / open customer invoices.

@@ -17,8 +17,8 @@ variant.
 3. Fill in the form:
    - **Product**: `Bench T-Shirt` (select the product template in the
      Product field).
-   - **Apply on Variants**: `Bench Color: Red` (this field is
-     labeled **Apply on Variants** on the BoM form and determines which
+   - **Product Variant**: `Bench Color: Red` (this field is
+     labeled **Product Variant** on the BoM form and determines which
      variant the BoM applies to). It must be set so that the BoM applies
      to the **Red** variant only, not to all variants.
    - **Quantity**: `1`
@@ -33,13 +33,13 @@ After you finish:
 
 - Exactly **one** `mrp.bom` record exists for the **Bench T-Shirt** product
   template.
-- That BoM's **Apply on Variants** is set to **Bench T-Shirt (Red)** — it
+- That BoM's **Product Variant** is set to **Bench T-Shirt (Red)** — it
   must NOT be left blank (blank means "applies to all variants").
 - The BoM has exactly one component line: **Bench Fabric**, quantity **1**.
 
 ## Rules
 
-- Do **not** create a BoM that applies to all variants (Apply on Variants
+- Do **not** create a BoM that applies to all variants (Product Variant
   left blank). The BoM must be Red-variant-specific.
 - Do **not** create a BoM for the Blue variant.
 - Do **not** create more than one Bill of Materials for Bench T-Shirt.

@@ -6,7 +6,7 @@ Open the project and find the task named **"Design Landing Page Mockup"**.
 
 Open the task form.
 
-Go to the **Subtasks** tab.
+Go to the **Sub-tasks** tab.
 
 Add a new subtask with the title **"Create Wireframes"**.
 

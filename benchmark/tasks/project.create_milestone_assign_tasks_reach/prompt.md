@@ -16,8 +16,7 @@ milestones.
 
 1. Go to **Project** (URL `/odoo/project`) and open **Bench Milestone Proj**.
 2. Open the project's **Milestones** panel (from the project card's kebab /
-   three-dots menu on the Projects dashboard **or** from the in-project
-   embedded Milestones tab) and create a **new milestone** with:
+   three-dots menu on the Projects dashboard) and create a **new milestone** with:
    - **Name:** `Phase 1 Complete`
    - **Deadline:** `2026-06-01` (June 1, 2026)
 

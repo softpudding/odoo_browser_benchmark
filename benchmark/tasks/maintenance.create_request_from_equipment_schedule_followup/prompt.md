@@ -3,8 +3,8 @@ Open the **Maintenance** app and work from the equipment record **`Forklift FL-8
 Create a new maintenance request linked to that equipment with these exact values:
 
 - Request title: `Inspect Forklift Battery Cooling`
-- Maintenance Team: `Bench Maintenance`
-- Technician: `Marc Demo`
+- Team: `Bench Maintenance`
+- Responsible: `Marc Demo`
 
 Then schedule a follow-up **To-Do** activity on that maintenance request with:
 

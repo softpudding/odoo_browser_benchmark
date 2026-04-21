@@ -2,7 +2,7 @@ Open the **eLearning** app.
 
 Create a new course with these values:
 - **Course Name**: `Compliance Badge Basics`
-- **Short Description**: `Core rules for badge-ready warehouse operations.`
+- **Description**: `Core rules for badge-ready warehouse operations.`
 - **Visibility**: `Members`
 - **Enrollment**: `On Invitation`
 

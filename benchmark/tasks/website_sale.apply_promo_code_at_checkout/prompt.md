@@ -17,10 +17,7 @@ From the **Discounts & Loyalty** list, create a new program with these exact val
 
 Open **Sales > Orders > Quotations** and find the draft quotation **`SO-BENCH-001`** (customer: `Bench Promo Customer`).
 
-On the order form, apply the promo code `BENCH10`. Depending on the UI this is done via:
-
-- The **"Send Coupon"** / **"Promotion Code"** action in the cog menu / header, OR
-- The inline promo-code field on the Order Lines section (if the **Coupons & Promotions** section is visible)
+On the order form, apply the promo code `BENCH10` using the **Coupon Code** button in the form header.
 
 After applying, a new order line should appear labeled as a **Discount** (reward line) with a **negative** amount of **-€10.00**. The order **Total** should drop from €100.00 to **€90.00**. **Save** the order.
 

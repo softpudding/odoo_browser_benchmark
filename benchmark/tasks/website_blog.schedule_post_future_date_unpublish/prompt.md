@@ -10,9 +10,9 @@ site and reschedule it for a future release.
    `/odoo/blog-post-pages`).
 2. Open the existing blog post titled `Bench Future Post` (it lives in
    the blog `Bench News`).
-3. On the backend blog-post form, toggle the **Published** pill to
-   **OFF** so the post becomes unpublished. The pill is in the top-right
-   area of the form (widget `website_publish_button`).
+3. Unpublish the post. You can click the website indicator in the
+   top-right of the form to go to the website preview, then toggle the
+   publish switch OFF in the website systray.
 4. In the Publishing Options group on the right-hand side, change the
    **Publishing date** (field label "Publishing date", internal name
    `post_date`) to `08/15/2026 12:00:00`. This date is in the future —

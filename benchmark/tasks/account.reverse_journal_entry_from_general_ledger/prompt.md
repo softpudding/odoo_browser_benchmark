@@ -8,7 +8,7 @@ The accountant wants this entry **reversed** (a mirrored journal entry posted to
 
 Your job:
 
-1. In the Invoicing/Accounting top menu, go to **Accounting → Miscellaneous Operations** (the Miscellaneous journal items report — rows are grouped by journal entry).
+1. Find the posted journal entry with reference `BENCH-GL-REV` (the Miscellaneous journal items report — rows are grouped by journal entry).
 2. The list is grouped. Expand the group whose entry reference is `BENCH-GL-REV` by clicking the group-header row. You will see its two journal items (Rent debit 100, Bank credit 100).
 3. Click the entry reference (`BENCH-GL-REV`) to open the **`account.move` form** for the entry.
 4. On the entry form header, click the **Reverse Entry** statusbar button. This is a header button on posted misc entries (it is NOT the `Credit Note` button, which only appears on customer/vendor invoices, and it is NOT in the cog Actions menu for form view). Clicking it opens the `Reverse Journal Entry` wizard (`account.move.reversal`).

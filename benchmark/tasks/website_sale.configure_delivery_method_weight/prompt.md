@@ -18,14 +18,12 @@ On the form, open the **Pricing** tab (it only appears for the **Based on Rules*
 **Rule 1 - up to 5 kg**
 
 - **Condition**: `Weight` `<=` `5.00`
-- **Sale Base Price**: `10.00`
-- Leave **Sale Price** at `0.00` (no per-kg component)
+- **Delivery Cost**: `10.00` + `0.00` * Weight (set the fixed part to `10.00`, leave the per-unit multiplier at `0.00`)
 
 **Rule 2 - above 5 kg**
 
 - **Condition**: `Weight` `>` `5.00`
-- **Sale Base Price**: `20.00`
-- Leave **Sale Price** at `0.00`
+- **Delivery Cost**: `20.00` + `0.00` * Weight (set the fixed part to `20.00`, leave the per-unit multiplier at `0.00`)
 
 Both rules should end up with `variable_factor = Weight` (the default). **Save** the delivery method.
 
@@ -36,4 +34,4 @@ Both rules should end up with `variable_factor = Weight` (the default). **Save**
 - The method must be **published** (`is_published=True`).
 - There must be **exactly two** `delivery.price.rule` rows linked to this carrier, with the thresholds and base prices above.
 - Do **not** create any other delivery method, do **not** edit or archive existing delivery methods, do **not** change the seeded `Bench Delivery Product`.
-- Do **not** set **Sale Price** to `10` or `20` on either rule (that column is a per-unit multiplier; the fixed fee belongs in **Sale Base Price**).
+- Do **not** set the per-unit multiplier to `10` or `20` on either rule (that value is a per-unit multiplier; the fixed fee belongs in the first part of the **Delivery Cost** formula).

@@ -1,6 +1,6 @@
 Go to the **Inventory** app.
 
-Open **Operations -> Inventory Adjustments**.
+Open **Operations -> Physical Inventory**.
 
 Find the inventory adjustment line for product **`Bench Cycle Rotor`** at location **`WH/Cycle Bin`**.
 There is another `Bench Cycle Rotor` line in a different location that is a distractor.

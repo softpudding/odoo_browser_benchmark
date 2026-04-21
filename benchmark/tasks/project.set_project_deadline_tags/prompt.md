@@ -6,7 +6,7 @@ Open the project settings (click the three-dot menu ⋮ on the project card and 
 
 Make the following changes to the project:
 
-1. Set the **Deadline** to **06/30/2026**.
+1. Set the **Planned Date** to **06/30/2026**.
 2. Add two tags to the **Tags** field:
    - `Launch`
    - `Q3`

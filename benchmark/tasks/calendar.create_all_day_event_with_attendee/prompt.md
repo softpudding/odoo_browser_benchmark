@@ -7,7 +7,7 @@ Create a new all-day calendar event.
 3. Mark it as **All Day**.
 4. Set the date to `June 18, 2026`.
 5. Set **Location** to `Mountain View Campus`.
-6. Set the description to `Annual planning offsite for operations leads.`
+6. Set the description to `Annual planning offsite for operations leads.` (on the **Options** tab).
 7. Add `Marc Demo` as an attendee.
 8. Save the event.
 

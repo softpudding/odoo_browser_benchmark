@@ -1,7 +1,6 @@
 Go to the **Sales** app.
 
-Find the draft quotation with Customer Reference **"BENCH-PMT-02"** for
-customer **Azure Interior**.
+Find the draft quotation **BENCH-SO-PMT-02** for customer **Azure Interior**.
 
 Make these changes:
 

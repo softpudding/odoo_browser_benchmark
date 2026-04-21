@@ -6,7 +6,7 @@ Open her employee form and navigate to the **Resume** tab.
 
 In the **Skills** section (the lower part of the Resume tab), add a new skill:
 
-1. Click **Add a skill** (or the "+" button in the Skills table).
+1. Click **Pick a skill from the list** (the button in the Skills section).
 2. Set **Skill Type** to **"IT Skills"**.
 3. Set **Skill** to **"Python"**.
 4. Set **Level** to **"Advanced"**.

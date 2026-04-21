@@ -15,11 +15,8 @@ walk-in guest needs to be registered and checked in.
    - **Name**: `Sofia Reyes`
    - **Email**: `sofia.reyes@partner.example`
    - **Phone**: `+44 20 7946 0312`
-4. Save. The registration is initially in **Unconfirmed** state.
-5. **Confirm** the registration (click **Confirm** in the statusbar or
-   the Confirm action). The registration moves to **Registered**
-   state.
-6. **Check in** the attendee: click the **Attended** / **Check in**
+4. Save. The registration is in **Registered** state.
+5. **Check in** the attendee: click the **Attended** / **Check in**
    statusbar button. The registration moves to **Attended** state
    (backend state `done`).
 

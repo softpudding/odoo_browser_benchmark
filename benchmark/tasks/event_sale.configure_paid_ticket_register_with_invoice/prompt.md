@@ -61,7 +61,7 @@ Back on the confirmed sales order:
 1. Click the **Create Invoice** button at the top.
 2. The **Create invoices** wizard opens. Keep the default
    **Regular invoice** option (do **NOT** pick a down payment option).
-3. Click **Create Draft Invoice** in the wizard footer.
+3. Click **Create Draft** in the wizard footer.
 
 The wizard creates a customer invoice in the **Draft** state and
 navigates you to it. **Stop here.** Do not confirm, post, validate or

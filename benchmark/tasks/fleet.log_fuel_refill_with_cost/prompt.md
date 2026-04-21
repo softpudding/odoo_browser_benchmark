@@ -17,7 +17,7 @@ goes on the vehicle's running tally.
    - **Service Type**: `Refueling`  (create the service type on the fly
      if it is not offered by the dropdown).
    - **Vendor**: `BP Express Holloway`
-   - **Total Price**: `87.50`
+   - **Cost**: `87.50`
    - **Date**: `2026-05-20`
    - **Notes** (description/notes field): `42 L unleaded at £2.08/L`
 5. Save the service record. It should be listed as one more service

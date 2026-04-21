@@ -9,17 +9,19 @@ following details.
 
 **Work Information tab:**
 - Work Location: **Home**
+
+**Payroll tab:**
 - Working Hours: **Standard 40 hours/week**
 
-**Private Information tab:**
+**Personal tab:**
 - Certificate Level: **Bachelor**
 - Marital Status: **Single**
 
 Save the employee record.
 
 **Rules:**
-- You must fill fields in ALL three areas above: main form, Work Information
-  tab, and Private Information tab
+- You must fill fields in ALL four areas above: main form, Work Information
+  tab, Payroll tab, and Personal tab
 - Use exact values as listed
 - Do not fill any fields not specified above
 - Do not add the employee to any HR department

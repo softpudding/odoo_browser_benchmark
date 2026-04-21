@@ -7,7 +7,7 @@ Log a service record against an existing fleet vehicle.
 5. Fill these fields:
    - **Service Type**: `Oil Change` (create it on the fly if the dropdown does not offer it)
    - **Vendor**: `Beacon Auto Shop`
-   - **Total Price**: `150.00`
+   - **Cost**: `150.00`
    - **Date**: `05/10/2026`
 6. Save the service record.
 

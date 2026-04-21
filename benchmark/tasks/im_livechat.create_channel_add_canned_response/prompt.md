@@ -10,7 +10,7 @@ Save the channel.
 Then open **Canned Responses** from the Live Chat app and create a canned response with:
 
 - **Shortcut**: `checkout_help`
-- **Content**: `Hello, thanks for contacting checkout support.`
+- **Substitution**: `Hello, thanks for contacting checkout support.`
 
 **Rules:**
 - Do not rename the channel after saving it

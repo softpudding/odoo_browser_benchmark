@@ -7,7 +7,7 @@ Fill in the following applicant details:
 1. **Applicant's Name**: `Cameron Blake`
 2. **Email**: `cameron.blake@techmail.example.com`
 3. **Phone**: `+1 555 0147`
-4. **Responsible**: `Administrator`
+4. **Recruiter**: `Administrator`
 
 Then go to the **Skills** tab and add exactly one skill:
 

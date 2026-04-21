@@ -15,7 +15,8 @@ backorder.
 3. On the form, change **Quantity Producing** (the editable quantity
    field near the top, sometimes labeled "Quantity") from **10** to
    **6**.
-4. Click **Produce All** (or **Mark as Done**) in the form header.
+4. Click **Produce** in the form header (the button label reflects the
+   partial quantity).
 5. A dialog will appear asking what to do with the remaining quantity.
    Select **Create Backorder** so the remaining 4 units are kept as a
    new manufacturing order.

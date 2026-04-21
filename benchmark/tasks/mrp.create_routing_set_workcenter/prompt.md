@@ -4,10 +4,10 @@ Create a new work center and link it as an operation on an existing Bill of Mate
    Set **Name** = `Benchmark Assembly Station`. Save.
 2. Go to **Manufacturing** → **Products** → **Bills of Materials**. Open the
    BOM for product **Benchmark Frame Assembly**.
-3. Click the **Operations** tab. Click **Add a line**. In the new row set:
+3. Click the **Operations** tab. Add a new operation with:
    - **Operation** = `Final Assembly`
    - **Work Center** = `Benchmark Assembly Station`
-   - **Expected Duration** = `30` minutes
+   - **Default Duration** = `30` minutes
 4. Save the BOM.
 
 **Rules:**

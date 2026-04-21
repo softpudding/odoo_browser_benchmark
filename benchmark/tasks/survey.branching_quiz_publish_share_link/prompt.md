@@ -1,6 +1,7 @@
 Go to the **Surveys** app and create a new survey with these exact settings:
 
 - **Survey Title**: `Dock Safety Branching Quiz`
+- **Survey Type**: `Custom` (the default — do **not** change it to "Survey")
 - **Pagination**: `One page with all the questions`
 - **Scoring**: enabled as a quiz
 - **Access**: public share link

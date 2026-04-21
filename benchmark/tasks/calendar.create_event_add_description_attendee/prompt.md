@@ -7,7 +7,7 @@ Create a new calendar event with these details:
 3. **Start time**: 11:00 AM
 4. **End time**: 12:30 PM
 5. **Location**: "Room 204"
-6. **Description**: "Review kickoff agenda and confirm owners for the vendor rollout."
+6. **Description** (on the **Options** tab): "Review kickoff agenda and confirm owners for the vendor rollout."
 7. Add **Marc Demo** as an attendee.
 
 Save the event.

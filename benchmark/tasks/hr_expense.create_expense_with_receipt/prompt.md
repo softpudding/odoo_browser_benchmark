@@ -15,7 +15,7 @@ not reimbursable to the employee).
    - **Expense Date**: `05/12/2026`
    - **Paid By**: select **Company** (not Employee)
    - **Vendor**: `Harborview Restaurant Group`
-3. Under **Internal Notes**, enter exactly:
+3. In the notes area, enter exactly:
 
    ```
    Q2 client retention dinner - VIP attendee list on file

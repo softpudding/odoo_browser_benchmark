@@ -13,7 +13,7 @@ Complete all three stages in order:
 1. **Submit** the draft expense:
    - Find the expense **TRV-2026-04 — April client visit** in the
      **My Expenses** view.
-   - Open it (it is in **Draft** state) and click **Submit to Manager**.
+   - Open it (it is in **Draft** state) and click **Submit**.
    - The expense moves to the **Submitted** state.
 
 2. **Approve** the submitted expense:

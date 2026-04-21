@@ -5,7 +5,7 @@ Create and submit a mileage expense in Odoo Expenses.
 3. Use category `Mileage`.
 4. Set the expense title to `Client Visit Mileage`.
 5. Set the expense date to `04/14/2026`.
-6. Set the total to `128.40`.
+6. Set the quantity (distance) to `128.40`.
 7. Save the expense.
 8. Submit the expense for approval.
 

@@ -16,7 +16,6 @@ Steps:
    - **Product:** `Bench Sensor Module`
    - **Lot/Serial Number:** `SN-A002` (this MUST be the middle serial — not SN-A001, not SN-A003)
    - **Quantity:** `1`
-   - **Reason:** type `Manufacturer recall - middle batch only` in the reason / description text.
    - Leave Source Location at the default (`WH/Stock`).
 4. Click **Validate** to confirm the scrap.
 

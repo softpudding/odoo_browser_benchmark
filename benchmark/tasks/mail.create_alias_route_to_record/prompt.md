@@ -37,7 +37,7 @@ Fill in the form exactly as follows:
 1. **Alias name** (the large inline input before the `@` at the top of the
    form): type `benchalias`. Leave the domain (the right-hand dropdown
    after `@`) at its existing default value.
-2. **Document Model** (`alias_model_id` field): set to the `crm.lead`
+2. **Aliased Model** (`alias_model_id` field): set to the `crm.lead`
    model. Type `crm.lead` into the field; the autocomplete shows one
    entry whose label is **Lead** (the `_description` of `crm.lead`).
    Click that entry. Do NOT pick any "Create ..." autocomplete option —

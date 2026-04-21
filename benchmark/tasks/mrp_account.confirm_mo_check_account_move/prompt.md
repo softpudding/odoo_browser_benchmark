@@ -8,9 +8,9 @@ automatically generate a posted journal entry for the production cost.
 
 1. Go to **Manufacturing -> Manufacturing Orders**, find and open the
    MO **M-BENCH-ACC-001**.
-2. Click **Produce** in the form header, then click **Mark as Done**
-   (accept the default on any confirmation dialog) so the MO moves to
-   the **Done** state with 5 units produced.
+2. Click **Produce All** in the form header (accept the default on any
+   confirmation dialog) so the MO moves to the **Done** state with
+   5 units produced.
 3. Now switch to the **Accounting** app and open **Accounting ->
    Journal Entries** (the Journal Entries list, NOT Customer Invoices).
    Confirm that a new journal entry (`account.move`, `move_type='entry'`)

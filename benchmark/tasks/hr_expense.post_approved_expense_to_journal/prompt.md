@@ -9,11 +9,11 @@ that the accounting entry is generated.
 ## What to do
 
 1. Open the **Expenses** app.
-2. Navigate to **Expenses > All Expenses** (the full expense list that
+2. Navigate to **Expenses > My Expenses** (the full expense list that
    shows every state).
 3. Find the approved expense named **Bench Taxi Fare** by
    **Dana Silverstein** — it is currently in the **Approved** state
-   with an amount of **42.50 €**.
+   with an amount of **42.50**.
 4. Open the expense.
 5. In the statusbar, click the **Post Journal Entries** button.
 6. A **Post Expenses** dialog appears showing a Journal and an

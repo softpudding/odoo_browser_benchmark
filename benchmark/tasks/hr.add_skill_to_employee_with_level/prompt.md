@@ -2,7 +2,7 @@ Go to the **Employees** app.
 
 Find the employee named **"Tech Tom"**.
 
-Open his employee form and navigate to the **Skills** tab (in the Resume tab group, the lower Skills section).
+Open his employee form and navigate to the **Resume** tab (the lower Skills section).
 
 Add a new skill entry with the following values:
 

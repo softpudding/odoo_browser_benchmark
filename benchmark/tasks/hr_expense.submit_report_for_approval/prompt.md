@@ -7,7 +7,7 @@ Create a new expense with these exact values:
 - **Total**: `250.00`
 - **Expense Date**: `03/12/2026`
 
-Save the expense, then click **Submit to Manager** (the status-bar button that moves the expense from Draft to Submitted).
+Save the expense, then click **Submit** (the status-bar button that moves the expense from Draft to Submitted).
 
 **Rules:**
 - Do not create more than one expense named `Hotel in Paris`.

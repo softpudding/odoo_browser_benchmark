@@ -7,6 +7,8 @@ On the duplicate only:
 - change the title to `Warehouse Safety Primer EU`
 - set the **SEO Title** to `Warehouse Safety Primer for EU Teams`
 - set the **SEO Description** to `Safety baseline for EU warehouse operations and dock checks.`
+  (You may need to enable developer mode or use the website frontend
+  "Optimize SEO" dialog to access these fields.)
 - publish the duplicate
 
 Rules:

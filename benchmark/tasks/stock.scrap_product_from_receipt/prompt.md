@@ -14,7 +14,7 @@ Two of those received units are damaged and need to be scrapped.
    - **Quantity:** `2`
    - Leave **Source Location** at the default (`WH/Stock`).
    - Leave **Scrap Location** at the default (`Virtual Locations/Scrap`).
-5. Click **Done** / **Save** inside the scrap dialog to create the scrap, then click **Validate** on the scrap record (the scrap record's status bar should change to **Done**).
+5. Click **Scrap Products** in the dialog to confirm. The scrap record will be created and validated in one step (status **Done**).
 
 ## Rules
 

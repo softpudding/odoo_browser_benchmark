@@ -11,8 +11,8 @@ only** of **June 15, 2026**, because of a doctor's appointment.
    on My Time Off).
 2. Fill in the request:
    - **Time Off Type**: `Paid Time Off`
-   - Enable the **Half Day** toggle / checkbox (this reveals a Morning/
-     Afternoon selector).
+   - The form should show a **Half Day** / Morning/Afternoon selector
+     (the leave type is configured for half-day requests).
    - **Date**: `June 15, 2026`
    - **Morning/Afternoon**: `Morning`
    - **Description**: `Doctor appointment`
