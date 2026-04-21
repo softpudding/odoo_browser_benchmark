@@ -5,7 +5,7 @@ Create a new **opportunity** with the following details:
 1. **Opportunity**: `Vertex Renewal Expansion`
 2. **Customer**: `Azure Interior`
 3. **Expected Revenue**: `42000`
-4. Set **Priority** to **High** (**3 stars**)
+4. Set **Priority** to **Very High** (**3 stars**)
 5. Save the opportunity
 
 After saving, schedule a new activity:

@@ -24,11 +24,9 @@ the event must be visible on the public website.
 
 ## Step 3 — Publish the event on the website
 
-- With the event record still open, flip the **Published** toggle at the
-  top right of the form (the small switch next to the "Go to Website"
-  button in the breadcrumb/header area). The toggle should end up in the
-  **Published** (green/on) state.
-- Save the record if the form is still in edit mode.
+- With the event record still open, click **Go to Website** to open the
+  event's public page. On the frontend, use the publish toggle in the
+  top bar to set the event to **Published** (green/on) state.
 
 ## Final state
 

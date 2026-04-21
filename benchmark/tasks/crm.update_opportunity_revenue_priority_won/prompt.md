@@ -5,7 +5,7 @@ Find the opportunity **Northwind Renewal Review**.
 Update that opportunity as follows:
 
 1. Set **Expected Revenue** to **21000**.
-2. Set **Priority** to **Medium** (**2 stars**).
+2. Set **Priority** to **High** (**2 stars**).
 3. Click **Won**.
 
 **Rules:**

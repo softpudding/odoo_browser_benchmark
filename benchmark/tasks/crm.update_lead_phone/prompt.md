@@ -6,11 +6,11 @@ In that Leads list search bar, search for **Summit Energy Expansion** and open t
 
 If a custom filter panel appears, close it and return to the list results.
 
-Click **Edit** in the lead form, set **Phone** to:
+Set the **Phone** field to:
 
 `+1 555 0222`
 
-Click **Save**.
+Save the record.
 
 **Rules:**
 - Do not change the lead name, email, or stage.
