@@ -27,7 +27,8 @@ navigation path. That's fine — figuring out the UI is part of the test.
 - Flag field label vs technical field name differences
 - Add more instructions to make the task easier
 
-**You ARE here to find cases where the prompt is factually wrong:**
+**You ARE here to find cases where the prompt is factually wrong or
+incomplete in a way that causes failure:**
 - Prompt names a button/action that **does not exist** in the UI
   (e.g., "click Create Bill" when the button is actually "Upload Bill" and does
   something completely different)
@@ -37,10 +38,20 @@ navigation path. That's fine — figuring out the UI is part of the test.
 - Prompt references a menu item or view that **doesn't exist**
 - Prompt instructs a step order that would **cause an error** (e.g., "confirm
   before saving" when unsaved changes would be lost)
+- Prompt **omits a critical step** that the oracle performs and check.py
+  validates (e.g., prompt says fix qty/discount but oracle also fixes prices
+  from negative to positive, and check requires positive total)
+- Prompt specifies **wrong data values** (wrong amount, wrong label for a
+  priority level, wrong date) compared to what oracle fills and check validates
+- **check.py has a bug** that would fail correct UI work (e.g., timezone
+  comparison inconsistency vs. other tasks in the same module)
+- Two tasks are **exact duplicates** (same prompt, oracle, check, target
+  record name) — they'd conflict on the same DB snapshot
 
-The bar is high: **would a competent Odoo user get stuck or do the wrong thing
-because the prompt is factually incorrect?** If yes, flag it. If they'd just
-need to explore the UI a bit, that's fine — it's a benchmark.
+The bar is high: **would a competent Odoo user get stuck, do the wrong thing,
+or fail the automated check because the prompt is factually incorrect or
+incomplete?** If yes, flag it. If they'd just need to explore the UI a bit,
+that's fine — it's a benchmark.
 
 ---
 
@@ -193,12 +204,19 @@ print(f"Workers: {dict(workers)}")
 
 ## Auditing — Per-Task Process
 
-For each claimed task, read both files:
+For each claimed task, read all three files:
 
 ```
 Read: benchmark/tasks/{task_name}/prompt.md
 Read: benchmark/tasks/{task_name}/oracle.py
+Read: benchmark/tasks/{task_name}/check.py
 ```
+
+Reading check.py is essential — it tells you what actually gets validated. If
+the oracle fixes a field that the prompt never mentions, check.py tells you
+whether that matters (if check.py validates it, the omission is a real problem).
+Also watch for check.py bugs like missing timezone conversion or wrong expected
+values.
 
 ### What to check
 
@@ -214,6 +232,28 @@ Only flag **obvious discrepancies** — things that are factually wrong:
 
 3. **Wrong target/destination**: Prompt says to navigate somewhere that leads to
    the wrong view entirely.
+
+4. **Data value mismatches**: Compare EVERY concrete value (amounts, dates,
+   names, emails, references) between prompt and oracle. If prompt says "500"
+   but oracle fills "5000", that's a discrepancy. Also check for **missing
+   critical data steps** — if the oracle fixes a field (e.g., flipping negative
+   prices to positive) that the prompt never mentions, and check.py validates
+   that field, then the prompt is incomplete and an agent following it would
+   fail.
+
+5. **check.py bugs**: Read check.py too (not just prompt + oracle). If check.py
+   validates something differently from how a UI agent would produce it (e.g.,
+   comparing raw UTC times without timezone conversion when other similar checks
+   do convert), flag it. A check.py bug means correct UI work gets marked wrong.
+
+6. **Duplicate / conflicting tasks**: If two task directories have identical or
+   near-identical prompt.md, oracle.py, and check.py (same contact name, same
+   values), flag both. They would conflict if run on the same database snapshot.
+
+7. **Task name vs content mismatch**: If the directory name implies one thing
+   (e.g., "update_contact_mobile") but the prompt/oracle/check all operate on a
+   completely different field (e.g., website), flag it. This indicates a
+   copy-paste error during task creation.
 
 ### What NOT to flag
 
