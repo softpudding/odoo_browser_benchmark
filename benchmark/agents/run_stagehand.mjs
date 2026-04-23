@@ -52,6 +52,39 @@ if (login) {
 }
 fullInstruction += instruction;
 
+// Wraps fetch so every JSON body going to DashScope's OpenAI-compat endpoint
+// gets `enable_thinking: false` injected. qwen3.6-plus defaults to reasoning
+// mode, and its <think> prose breaks Stagehand's strict tool-call JSON parse.
+// AI SDK doesn't expose `extra_body`, so we intercept at the fetch layer.
+function fetchWithoutThinking(originalFetch = globalThis.fetch) {
+  let counter = 0;
+  return async (url, init) => {
+    if (init && typeof init.body === "string") {
+      try {
+        const body = JSON.parse(init.body);
+        if (body && typeof body === "object" && !Array.isArray(body)) {
+          body.enable_thinking = false;
+          init = { ...init, body: JSON.stringify(body) };
+        }
+      } catch {
+        // non-JSON body — leave untouched
+      }
+    }
+    const resp = await originalFetch(url, init);
+    if (process.env.STAGEHAND_DEBUG_LLM) {
+      const n = ++counter;
+      const cloned = resp.clone();
+      cloned
+        .text()
+        .then((t) =>
+          console.error(`[llm-resp ${n}] ${t.slice(0, 2000)}`)
+        )
+        .catch(() => {});
+    }
+    return resp;
+  };
+}
+
 async function main() {
   const clientOptions = useAnthropic
     ? { apiKey: process.env.ANTHROPIC_API_KEY, baseURL: process.env.ANTHROPIC_BASE_URL }
@@ -60,11 +93,21 @@ async function main() {
   for (const k of Object.keys(clientOptions)) {
     if (clientOptions[k] === undefined) delete clientOptions[k];
   }
+  // Only DashScope (the one reasoning-mode backend we route through) needs the
+  // enable_thinking override. Apply it whenever baseURL points at dashscope.
+  const isDashscope =
+    clientOptions.baseURL && clientOptions.baseURL.includes("dashscope");
+  if (isDashscope) {
+    clientOptions.fetch = fetchWithoutThinking();
+  }
   // Stagehand v3 takes `model: { modelName, ...clientOptions }` on both the
   // constructor and agent(); `modelName`/`modelClientOptions` top-level are
   // ignored (the constructor silently falls back to openai/gpt-4.1-mini).
   const modelConfig = { modelName: model, ...clientOptions };
-  console.log(`Stagehand: using ${model} via ${clientOptions.baseURL ?? "provider default"}`);
+  console.log(
+    `Stagehand: using ${model} via ${clientOptions.baseURL ?? "provider default"}` +
+      (isDashscope ? " (enable_thinking=false)" : "")
+  );
 
   const stagehand = new Stagehand({
     env: "LOCAL",

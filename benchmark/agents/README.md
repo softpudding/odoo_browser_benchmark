@@ -51,7 +51,7 @@ uv run benchmark-eval run <task> --agent command \
 | Agent | Wrapper | Issue |
 |-------|---------|-------|
 | [WebSight](https://github.com/SuperAce100/websight) | `run_websight.py` | Hallucinates execution — claims task complete on blank screenshots. VLM response parsing is broken. |
-| [Stagehand](https://github.com/browserbase/stagehand) | `run_stagehand.mjs` | v2 hardcodes `gpt-4.1-mini` internally, ignores all `modelName` config. Framework bug. |
+| [Stagehand](https://github.com/browserbase/stagehand) | `run_stagehand.mjs` | Blocked on DashScope Responses-API bug with qwen3.6-plus — see below. |
 
 ### Evaluated but excluded
 
@@ -123,7 +123,41 @@ Investigation with isolated super-simple tasks ("just log in to Odoo"):
 | **Skyvern** | Yes | Navigates Odoo (18+ API calls) but can't reliably edit specific form fields. ~90s/step. |
 | **Alumnium** | Yes | DOM-level `do()` works for login but qwen3.6-plus can't map NL to Odoo form edits. Silently claims success. |
 | **WebSight** | No | Hallucinates — claims task complete on blank screenshots. Broken VLM response parsing. |
-| **Stagehand** | N/A | Hardcodes `gpt-4.1-mini`, ignores all model config including Anthropic. Framework bug. |
+| **Stagehand** | Yes (step 1) | Blocked by DashScope server-side bug on multi-turn tool calls, see below. |
+
+## Known-broken agent: Stagehand on DashScope qwen3.6-plus
+
+`run_stagehand.mjs` now routes correctly (v3 takes `model: { modelName, apiKey, baseURL }`
+— not top-level `modelName`, which the old wrapper passed and which was silently ignored,
+letting Stagehand fall back to `openai/gpt-4.1-mini`). With the fix, Stagehand authenticates
+against DashScope and completes **one** tool call (`ariaTree`) cleanly.
+
+On the **second** tool-call round the wrapper observes:
+
+```
+<50004> InternalError.Algo.QwenAgentError: Internal Error during qwen agent.
+The error message is [Object of type MMGPT3Item is not JSON serializable]
+```
+
+— a 500 from DashScope's Responses-API implementation. Stagehand v3 routes through
+AI SDK's `openai.responses(model)` (confirmed by response shape: `"object":"response"`,
+`"type":"function_call"`); DashScope's Responses-API pipeline for qwen3.6-plus crashes
+when asked to process a tool-result round trip. Not a Stagehand bug and not a wrapper
+bug — this is a server-side problem with DashScope's qwen agent serialization.
+
+**Workarounds** (none tried yet):
+- Force Stagehand onto `chat.completions` instead of the Responses API (requires
+  patching Stagehand or swapping AI SDK's provider call).
+- Use a different qwen variant whose Responses-API path is stable.
+- Wait for DashScope to fix `MMGPT3Item` serialization.
+
+The wrapper retains an `enable_thinking: false` fetch middleware (qwen3.6-plus defaults
+to reasoning mode, which produces `<think>…</think>`-wrapped output that breaks
+Stagehand's strict JSON parse on step 1). Set `STAGEHAND_DEBUG_LLM=1` to dump raw LLM
+response bodies to stderr if you want to re-investigate.
+
+Stagehand is **excluded from current evaluation runs** until the DashScope issue is
+resolved or a chat-completions workaround is implemented.
 
 ## Troubleshooting
 
