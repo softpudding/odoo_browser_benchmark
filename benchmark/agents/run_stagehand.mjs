@@ -31,9 +31,13 @@ const instruction = process.env.BENCHMARK_INSTRUCTION;
 const startUrl = process.env.BENCHMARK_START_URL;
 const login = process.env.BENCHMARK_LOGIN || "";
 const password = process.env.BENCHMARK_PASSWORD || "";
-// Use Anthropic if ANTHROPIC_API_KEY is set, otherwise try OpenAI/DashScope
-const useAnthropic = !!process.env.ANTHROPIC_API_KEY;
-const model = process.env.BENCHMARK_MODEL || (useAnthropic ? "anthropic/claude-sonnet-4-20250514" : "qwen3.6-plus");
+// Stagehand v3 requires "provider/model" form. Default to openai/qwen3.6-plus
+// and point the OpenAI AI-SDK client at DashScope's compatible endpoint.
+const useAnthropic = !!process.env.ANTHROPIC_API_KEY && !process.env.OPENAI_API_KEY;
+const rawModel = process.env.BENCHMARK_MODEL || (useAnthropic ? "claude-sonnet-4-20250514" : "qwen3.6-plus");
+const model = rawModel.includes("/")
+  ? rawModel
+  : (useAnthropic ? `anthropic/${rawModel}` : `openai/${rawModel}`);
 
 if (!instruction || !startUrl) {
   console.error(
@@ -50,15 +54,23 @@ fullInstruction += instruction;
 
 async function main() {
   const clientOptions = useAnthropic
-    ? { apiKey: process.env.ANTHROPIC_API_KEY }
+    ? { apiKey: process.env.ANTHROPIC_API_KEY, baseURL: process.env.ANTHROPIC_BASE_URL }
     : { apiKey: process.env.OPENAI_API_KEY, baseURL: process.env.OPENAI_BASE_URL };
+  // Strip undefined baseURL so Stagehand falls back to provider default.
+  for (const k of Object.keys(clientOptions)) {
+    if (clientOptions[k] === undefined) delete clientOptions[k];
+  }
+  // Stagehand v3 takes `model: { modelName, ...clientOptions }` on both the
+  // constructor and agent(); `modelName`/`modelClientOptions` top-level are
+  // ignored (the constructor silently falls back to openai/gpt-4.1-mini).
+  const modelConfig = { modelName: model, ...clientOptions };
+  console.log(`Stagehand: using ${model} via ${clientOptions.baseURL ?? "provider default"}`);
 
   const stagehand = new Stagehand({
     env: "LOCAL",
     headless: false,
     enableCaching: false,
-    modelName: model,
-    modelClientOptions: clientOptions,
+    model: modelConfig,
   });
 
   await stagehand.init();
@@ -68,10 +80,7 @@ async function main() {
     const page = pages[0];
     await page.goto(startUrl);
 
-    const agent = stagehand.agent({
-      modelName: model,
-      modelClientOptions: clientOptions,
-    });
+    const agent = stagehand.agent({ model: modelConfig });
     const result = await agent.execute({
       instruction: fullInstruction,
       maxSteps: parseInt(process.env.BENCHMARK_MAX_STEPS || "200", 10),

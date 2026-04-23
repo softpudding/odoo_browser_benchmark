@@ -28,8 +28,29 @@ if (!instruction || !startUrl) {
   process.exit(1);
 }
 
-// Build LLM config based on available API keys
+// Build LLM config based on available API keys.
+// Magnitude's BAML anthropic provider ignores baseUrl, so when ANTHROPIC_BASE_URL
+// points at a non-Anthropic host (e.g. DashScope's Anthropic-compat shim), we can't
+// use the 'anthropic' provider. Prefer 'openai-generic' against DashScope's
+// OpenAI-compat endpoint whenever a DashScope/OpenAI key is available.
 function buildLlmConfig() {
+  const dashKey = process.env.DASHSCOPE_API_KEY || process.env.BAILIAN_API_KEY;
+  if (dashKey || process.env.OPENAI_API_KEY) {
+    const apiKey = process.env.OPENAI_API_KEY || dashKey;
+    const baseUrl =
+      process.env.OPENAI_BASE_URL ||
+      process.env.DASHSCOPE_BASE_URL ||
+      process.env.BAILIAN_BASE_URL ||
+      "https://dashscope.aliyuncs.com/compatible-mode/v1";
+    return {
+      provider: "openai-generic",
+      options: {
+        model: process.env.BENCHMARK_MODEL || "qwen3.6-plus",
+        apiKey,
+        baseUrl,
+      },
+    };
+  }
   if (process.env.ANTHROPIC_API_KEY) {
     return {
       provider: "anthropic",
@@ -48,16 +69,9 @@ function buildLlmConfig() {
       },
     };
   }
-  if (process.env.OPENAI_API_KEY) {
-    return {
-      provider: "openai",
-      options: {
-        model: process.env.BENCHMARK_MODEL || "gpt-4o",
-        apiKey: process.env.OPENAI_API_KEY,
-      },
-    };
-  }
-  console.error("ERROR: Set ANTHROPIC_API_KEY, GOOGLE_API_KEY, or OPENAI_API_KEY");
+  console.error(
+    "ERROR: Set DASHSCOPE_API_KEY / OPENAI_API_KEY / ANTHROPIC_API_KEY / GOOGLE_API_KEY"
+  );
   process.exit(1);
 }
 
