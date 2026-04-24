@@ -1,0 +1,54 @@
+Plan:
+1. Here is a minimal, sequential execution plan:
+2. 1. **Access & Login**: Open `http://127.0.0.1:50802/odoo`, authenticate with 
+`admin` / `admin`.
+3. 2. **Open App**: Click the **Invoicing** (Accounting) app on the dashboard.
+4. 3. **Locate Target Invoice**: Navigate to **Customer Invoices**, filter/scan 
+for **Draft** status, and open the invoice where **Source Document** = 
+`VAT-302`. *(Explicitly ignore the second draft invoice.)*
+5. 4. **Extract VAT**: On the **Invoice Lines** tab, scroll down to the **Terms 
+and Conditions** section and copy the exact VAT value listed.
+6. 5. **Update Customer Tax ID**: Click the **Customer** name to open their 
+partner record. Locate the **Tax ID** field, paste the copied VAT value, and 
+click **Save**.
+7. 6. **Return to Invoice**: Click the top breadcrumb trail (e.g., `Invoicing > 
+Customers > Invoices > INV/...`) to return directly to the `VAT-302` draft 
+invoice form.
+8. 7. **Set Reference**: Find the **Customer Reference** field, enter 
+`VAT-302-CLEAR`, and ensure it saves.
+9. 8. **Post**: Click the **Post** (or Confirm) button. Verify the status 
+changes to **Posted** and confirm the other draft invoice remains untouched in 
+**Draft** state.
+Reasoning: The current screen is blank, indicating the browser is at the start 
+or an empty page. The first step in the provided plan is to access the Odoo 
+instance. Therefore, I need to navigate to the specified URL to begin the login 
+process.
+Action: Go to http://127.0.0.1:50802/odoo
+Reasoning: 
+Action: <action>fill('234', 'admin')
+</action>
+Reasoning: The previous action filled the username field. Now I need to fill the
+password field with 'admin' and then click the 'Log in' button to access the 
+Odoo dashboard.
+Action: fill('239', 'admin')
+Reasoning: 
+Action: <action>click('247')
+</action>
+Reasoning: The current screenshot shows the Odoo login page with empty fields 
+for Email and Password. The history indicates that previous actions attempted to
+fill these fields and click the login button, but the current state (empty 
+fields) suggests these actions did not persist or the page refreshed. To proceed
+with Step 1 of the plan (Access & Login), I need to successfully authenticate. I
+will start by filling the email field with 'admin'. I will assume the element ID
+'234' corresponds to the email input based on the history, or simply target the 
+email field.
+Action: fill('234', 'admin')
+Reasoning: The current screen shows the Odoo login page with empty fields. The 
+previous attempts to log in have not succeeded, likely because the page 
+refreshed or the actions didn't take effect. I need to start the login process 
+from scratch. The first step is to enter the username 'admin' into the Email 
+field. Based on the history, the ID for the email field is likely '234'.
+Action: fill('234', 'admin')
+Reasoning: 
+Action: <action>fill('234', 'admin')
+</action>
