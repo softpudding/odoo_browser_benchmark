@@ -1,0 +1,64 @@
+=== Benchmark Evaluation ===
+  Task:   hr_expense.create_expense_report_submit
+  Agent:  command
+  DB:     bench_fr_14e1c13d  (auto-isolated)
+  URL:    http://127.0.0.1:63065
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/hr_expense.create_expense_report_submit__1777051044
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_14e1c13d from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 63065
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 38 calls captured (16 writes, 22 reads)
+   State: 0 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     6 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      6 edits
+  Extra:        0 edits
+  Wall clock:   600.1s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   38
+  Writes:            16 non-forbidden, 0 forbidden
+  Required ops MISSED: ['hr.expense.action_submit']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/hr_expense.create_expense_report_submit__1777051044/
+
+  Postcondition failures:
+    - Expected exactly 1 expense named 'Summit hotel stay', found 0
+  Missing expected edits:
+    - hr.expense.date = 2026-07-02
+    - hr.expense.employee_id = Administrator
+    - hr.expense.name = Summit hotel stay
+    - hr.expense.product_id = Hotel Stay
+    - hr.expense.state = approved
+    - hr.expense.total_amount = 245.0
