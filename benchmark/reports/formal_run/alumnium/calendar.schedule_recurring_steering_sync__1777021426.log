@@ -1,0 +1,57 @@
+=== Benchmark Evaluation ===
+  Task:   calendar.schedule_recurring_steering_sync
+  Agent:  command
+  DB:     bench_fr_2d312564  (auto-isolated)
+  URL:    http://127.0.0.1:56374
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/alumnium/calendar.schedule_recurring_steering_sync__1777021426
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_2d312564 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 56374
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=37.1s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 4 calls captured (1 writes, 3 reads)
+   State: 0 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     0 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   37.1s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   4
+  Writes:            1 non-forbidden, 0 forbidden
+  Required ops MISSED: ['calendar.event.web_save']
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/alumnium/calendar.schedule_recurring_steering_sync__1777021426/
+
+  Postcondition failures:
+    - Expected exactly 3 recurring events, found 0

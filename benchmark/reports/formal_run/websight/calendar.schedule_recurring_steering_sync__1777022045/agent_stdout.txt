@@ -1,0 +1,70 @@
+Plan:
+1. Here is a minimal, step-by-step execution plan:
+2. **1. Access & Authenticate**
+3. - Open browser → navigate to `http://127.0.0.1:58456/odoo/calendar`
+4. - Log in: Username `admin` / Password `admin`
+5. - Verify Calendar app is active
+6. **2. Create Initial Event**
+7. - Click `New` or click the time slot at `14:30` on `2026-05-07`
+8. - Ensure `All Day` toggle is **OFF**
+9. - Fill fields:
+10.   - Title: `Northwind Steering Sync`
+11.   - Start: `2026-05-07 14:30` | End: `2026-05-07 15:15`
+12.   - Location: `War Room B`
+13.   - Description: `Escalate blockers before launch freeze.`
+14.   - Attendees: Add `Avery Stone`. Verify `Morgan Tate` is **not** listed.
+15. **3. Set Recurrence & Save**
+16. - Open the Recurrence/Repeat settings
+17. - Configure:
+18.   - Repeat: `Weekly` on `Thursday`
+19.   - Ends: `After` `3` occurrences
+20. - Click `Save` to create the recurring series
+21. **4. Modify Second Occurrence Only**
+22. - Navigate calendar to the week of `2026-05-14`
+23. - Open the `Northwind Steering Sync` event falling on `May 14`
+24. - Change Location field to `War Room C`
+25. - Click `Save`
+26. - ⚠️ **Prompt Handling:** When Odoo asks how to apply the change, select 
+`This event only` (or `Only this occurrence`). Do not select "All events" or 
+"This and future events".
+27. **5. Verify & Finalize**
+28. - Confirm occurrences show:
+29.   - `May 07` → Location: `War Room B`
+30.   - `May 14` → Location: `War Room C`
+31.   - `May 21` → Location: `War Room B`
+32. - Ensure no duplicate or extra `Northwind Steering Sync` entries exist in 
+the calendar.
+Reasoning: The current screen is blank, indicating the browser is at the start 
+state. The first step in the plan is to navigate to the Odoo calendar URL. I 
+will initiate this navigation.
+Action: go_to_url("http://127.0.0.1:58456/odoo/calendar")
+Reasoning: 
+Action: <action>
+fill("Email", "admin")
+</action>
+<action>
+fill("Password", "admin")
+</action>
+<action>
+click("Log in")
+</action>
+Reasoning: The current screen displays the Odoo login page. Although the history
+indicates that navigation and login actions were attempted, the visible 
+placeholders in the Email and Password fields suggest that the form is currently
+empty and the user is not yet authenticated. To proceed with the task of 
+creating a calendar event, I must successfully log in. I will fill the 'Email' 
+field with 'admin', the 'Password' field with 'admin', and then click the 'Log 
+in' button.
+Action: fill("Email", "admin")
+Reasoning: The current screen shows the Odoo login page. The Email and Password 
+fields are visible with placeholder text, indicating they need to be filled. The
+URL includes a redirect parameter to `/odoo/calendar`, which means successful 
+login should take me directly to the Calendar app. To proceed with the task, I 
+need to authenticate using the provided credentials ('admin'/'admin'). I will 
+fill in the email and password fields and click the "Log in" button.
+Action: fill("Email", "admin")
+Reasoning: The current screen shows the Odoo login page with empty Email and 
+Password fields. To proceed with the task of creating a calendar event, I must 
+first authenticate. I will fill the 'Email' field with 'admin', the 'Password' 
+field with 'admin', and then click the 'Log in' button to access the system.
+Action: fill("Email", "admin")
