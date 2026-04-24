@@ -1,0 +1,52 @@
+=== Benchmark Evaluation ===
+  Task:   delivery.configure_fixed_rate_carrier_confirm_sale
+  Agent:  command
+  DB:     bench_fr_7e8acbb9  (auto-isolated)
+  URL:    http://127.0.0.1:57352
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/delivery.configure_fixed_rate_carrier_confirm_sale__1777035813
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_7e8acbb9 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 57352
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=0.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   0.1s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/delivery.configure_fixed_rate_carrier_confirm_sale__1777035813/
+
+  Postcondition failures:
+    - Delivery method 'Harbor Flat Freight' not found
+  Missing expected edits:
+    - delivery.carrier.delivery_type = fixed
+    - delivery.carrier.name = Harbor Flat Freight
