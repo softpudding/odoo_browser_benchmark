@@ -54,10 +54,7 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[2]
 QUEUE_PATH = REPO_ROOT / "benchmark/reports/formal_run/queue.jsonl"
 LOCK_PATH = REPO_ROOT / "benchmark/reports/formal_run/.queue.lock"
-SYSTEM_PY = os.environ.get(
-    "BENCHMARK_SYSTEM_PY",
-    str(REPO_ROOT / ".venv/bin/python3"),
-)
+SYSTEM_PY = str(REPO_ROOT / ".venv/bin/python3")
 MITMDUMP = "/Users/yangxiao/miniforge3/bin/mitmdump"
 DASHSCOPE_UPSTREAM = "https://dashscope.aliyuncs.com"
 TOKEN_LOGGER_ADDON = "benchmark/agents/token_logger.py"
