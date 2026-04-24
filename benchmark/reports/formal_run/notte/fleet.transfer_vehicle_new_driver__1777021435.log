@@ -1,0 +1,56 @@
+=== Benchmark Evaluation ===
+  Task:   fleet.transfer_vehicle_new_driver
+  Agent:  command
+  DB:     bench_fr_fd299282  (auto-isolated)
+  URL:    http://127.0.0.1:52751
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/notte/fleet.transfer_vehicle_new_driver__1777021435
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_fd299282 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 52751
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=0.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 2 records across 2 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      4 edits
+  Extra:        0 edits
+  Wall clock:   0.1s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/notte/fleet.transfer_vehicle_new_driver__1777021435/
+
+  Postcondition failures:
+    - Vehicle driver is 'Old Driver Bob', expected 'New Driver Alice'
+    - 'Old Driver Bob' assignation log was not closed (date_end is empty)
+    - Expected exactly 1 assignation log entry for 'New Driver Alice', found 0
+  Missing expected edits:
+    - fleet.vehicle.driver_id = New Driver Alice
+    - fleet.vehicle.assignation.log.date_start = 2026-03-15
+    - fleet.vehicle.assignation.log.driver_id = New Driver Alice
+    - fleet.vehicle.assignation.log.vehicle_id = Tesla/Model 3/BENCH-01
