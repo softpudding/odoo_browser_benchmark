@@ -1,0 +1,64 @@
+=== Benchmark Evaluation ===
+  Task:   event.create_event_add_ticket_publish
+  Agent:  browser-use
+  DB:     bench_fr_71387d5c  (auto-isolated)
+  URL:    http://127.0.0.1:63863
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/browser-use/event.create_event_add_ticket_publish__1777069357
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_71387d5c from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 63863
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 2 models
+   API trace recording: STARTED
+3. Running agent (browser-use)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 48 calls captured (14 writes, 34 reads)
+   State: 1 records across 2 models
+5. Computing state diff...
+   2 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     5 edits
+  Observed:     2 edits
+  Matching:     1 edits
+  Missing:      4 edits
+  Extra:        1 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   48
+  Writes:            14 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/browser-use/event.create_event_add_ticket_publish__1777069357/
+
+  Postcondition failures:
+    - Event is_published is False — expected True
+    - Expected exactly 1 ticket on 'Bench Summer Summit 2026', found 0: []
+  Missing expected edits:
+    - event.event.ticket.event_id = Bench Summer Summit 2026
+    - event.event.ticket.name = General Admission
+    - event.event.ticket.price = 50.0
+    - event.event.is_published = True
+  Unexpected extra edits:
+    + event.event.is_published = None
