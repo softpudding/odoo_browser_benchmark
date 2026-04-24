@@ -1,0 +1,62 @@
+Plan:
+1. Here is a minimal, step-by-step execution plan:
+2. ### **Phase 1: Access & Authentication**
+3. 1. Navigate to `http://127.0.0.1:52582/odoo/discount-loyalty`.
+4. 2. Log in with username `admin` and password `admin`. Wait for the Discount &
+Loyalty program list to load.
+5. 3. Visually confirm `Holiday Bonus 5%` is present. Do **not** interact with 
+it.
+6. ### **Phase 2: Create Loyalty Program**
+7. 4. Click **New** (or **Create**) to open a blank program form.
+8. 5. Set **Program Name** to `Spring 10% Discount`.
+9. 6. Set **Program Type** to `Discount Code`.
+10. 7. Under **Conditional rule**, enter:
+11.    - **Code**: `SPRING10`
+12.    - **Minimum Purchase**: `150.00`
+13. 8. Under **Reward**, configure:
+14.    - **Discount Value**: `10` (ensure `%` is selected)
+15.    - **Discount Applicability**: `Order`
+16.    - **Description**: `Spring Sale Discount`
+17. 9. Click **Save**. Verify the new program appears in the list. Ensure 
+exactly one new program was created and `Holiday Bonus 5%` remains unchanged.
+18. ### **Phase 3: Apply Code in Public Cart**
+19. 10. Navigate directly to `http://127.0.0.1:52582/odoo/shop/cart`.
+20. 11. Confirm the cart contains exactly `Spring Lawn Chair` × 2 and `Spring 
+Garden Light` × 1 (subtotal ~$200). Do **not** modify quantities or lines.
+21. 12. Locate the **Discount code...** input field on the cart summary.
+22. 13. Type `SPRING10` and click **Apply**.
+23. 14. Verify a success toast appears and a new discount line (≈ `-$20.00`) is 
+added below the subtotal.
+24. ### **Phase 4: Completion**
+25. 15. Stop execution. Leave the cart/draft order as-is. Do not proceed to 
+checkout, confirm, or pay.
+Reasoning: 
+Action: <action>
+{"action": "navigate", "url": "http://127.0.0.1:52582/odoo/discount-loyalty"}
+</action>
+Reasoning: The current screen is the login page. The previous action navigated 
+to the discount-loyalty URL, which redirected to the login page because the user
+is not authenticated. The next step in the plan is to log in with the provided 
+credentials (`admin`/`admin`). I will start by entering the email.
+Action: {"action": "type", "text": "admin"}
+Reasoning: The previous action typed "admin" into the email field. To proceed 
+with the login, I need to enter the password. The password field is clearly 
+visible below the email field. I will click on the password input field to focus
+it, and then I will be ready to type the password "admin".
+Action: {"action": "click", "target": "password"}
+Reasoning: 
+Action: <action>
+{"action": "type", "text": "admin"}
+</action>
+Reasoning: 
+Action: <action>
+{"action": "click", "target": "Log in"}
+</action>
+Reasoning: The previous action in the history was clicking "Log in", but the 
+current screenshot shows the login page with empty "Email" and "Password" fields
+(indicated by the placeholders "Enter your email" and "Enter your password"). 
+This suggests that the previous typing actions did not successfully populate the
+fields, likely due to focus issues or a page reset. To proceed with the plan 
+(Phase 1: Access & Authentication), I need to re-attempt the login. I will start
+by clicking the Email field to focus it, so I can type the username "admin".
+Action: {"action": "click", "target": "Enter your email"}
