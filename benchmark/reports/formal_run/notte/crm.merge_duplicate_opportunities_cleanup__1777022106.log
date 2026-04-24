@@ -1,0 +1,57 @@
+=== Benchmark Evaluation ===
+  Task:   crm.merge_duplicate_opportunities_cleanup
+  Agent:  command
+  DB:     bench_fr_4c0ba5c3  (auto-isolated)
+  URL:    http://127.0.0.1:58812
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/notte/crm.merge_duplicate_opportunities_cleanup__1777022106
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_4c0ba5c3 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 58812
+   Done.
+2. Capturing pre-task state...
+   Captured 4 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=379.1s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 46 calls captured (19 writes, 27 reads)
+   State: 3 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     0 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   379.1s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  0.3333
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   46
+  Writes:            19 non-forbidden, 0 forbidden
+  Required ops MISSED: ['crm.lead.write', 'mail.activity.create']
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/notte/crm.merge_duplicate_opportunities_cleanup__1777022106/
+
+  Postcondition failures:
+    - Merged expected revenue is 9000.0, expected 24000.0
