@@ -1,0 +1,81 @@
+Plan:
+1. Here is a minimal, step-by-step execution plan:
+2. **Phase 1: Access & Login**
+3. 1. Open `http://127.0.0.1:58446/odoo/sales` in browser.
+4. 2. Log in with Username: `admin`, Password: `admin`.
+5. 3. Wait for the Sales dashboard/app to load.
+6. **Phase 2: Open Target Order**
+7. 4. Use the search bar to filter for: `Name: S-BENCH-MS-002`.
+8. 5. Click the order to open its form view.
+9. 6. *Guard Check:* Confirm order is in `Sales Order` state. Verify 
+project/milestone tab shows:
+10.    - M1 Setup: `Reached` ✅
+11.    - M2 Build: `Reached` ✅
+12.    - M3 Test: `Unreached` ❌
+13.    - M4 Launch: `Unreached` ❌
+14.    *(Do not modify these states under any circumstances.)*
+15. **Phase 3: Generate Draft Invoice**
+16. 7. Click the **Create Invoice** button in the top action menu.
+17. 8. In the `Create Invoices` wizard:
+18.    - Ensure **Regular invoice** is selected (default).
+19.    - Verify the `Quantity` field auto-populates to `2.00`. *(If it shows 4, 
+do NOT proceed; abort and check milestone states.)*
+20.    - Click **Create Draft** (or **Create Invoice** depending on Odoo version
+label).
+21. 9. Wait for redirect to the new invoice form.
+22. **Phase 4: Final Verification & Halt**
+23. 10. On the invoice view, verify:
+24.     - State: `Draft`
+25.     - Customer: `Bench Quad Milestone Client`
+26.     - Line: Qty `2.00`, Unit Price `500.00`, Subtotal `1000.00`
+27. 11. Navigate back to `S-BENCH-MS-002` and verify the order line now shows 
+**Delivered Qty: 2.00**.
+28. 12. Confirm milestones remain unchanged (M1/M2 reached, M3/M4 unreached).
+29. 13. **Stop.** Do not validate/post the invoice. Leave it in `Draft` state.
+Reasoning: I will start by navigating to the Odoo Sales app URL to begin the 
+process.
+Action: goto http://127.0.0.1:58446/odoo/sales
+Reasoning: The current page is the Odoo login screen, triggered because the user
+tried to access the restricted `/odoo/sales` URL. The instructions require 
+logging in with 'admin' / 'admin'. I will first fill in the email field, then 
+the password field, and finally click the login button.
+Action: fill  with admin
+Reasoning: The user is on the Odoo login page. The email field has already been 
+filled with 'admin' in the previous step. The next required step to log in is to
+enter the password 'admin' into the password field. After that, I will need to 
+click the 'Log in' button to proceed to the Sales app.
+Action: fill  with admin
+Reasoning: 
+Action: <action>fill  with admin</action>
+Reasoning: The current screenshot shows the Odoo login page with empty email and
+password fields (placeholders are visible). The history indicates previous 
+attempts to fill these fields, but the current state suggests they are not 
+populated. To proceed with the instruction to log in as 'admin', I need to fill 
+the email field first.
+Action: fill  with admin
+Reasoning: 
+Action: <action>fill  with admin</action>
+Reasoning: The current screenshot shows the Odoo login page. The email field is 
+focused (indicated by the pink border), which aligns with the last action in the
+history (`fill  with admin`). Although the placeholder text "Enter your email" 
+is still visible, this often happens immediately after focusing or filling an 
+input before the UI fully updates or if the value is present but the placeholder
+logic is specific. The password field is clearly empty with the placeholder 
+"Enter your password" visible. Following the plan to log in with 
+'admin'/'admin', and assuming the email has been entered in the previous step, 
+the next logical action is to fill the password field.
+Action: fill  with admin
+Reasoning: The user is on the login page. The history indicates that the email 
+and password have been filled with 'admin'. The next step in the plan is to log 
+in. The "Log in" button is visible on the screen. I need to click it to proceed 
+to the Sales dashboard.
+Action: click 
+Reasoning: The current screenshot shows the Odoo login page. The email and 
+password fields display their placeholder text ("Enter your email", "Enter your 
+password"), indicating they are currently empty. The history shows that previous
+attempts were made to fill these fields and click "Log in", but the page state 
+suggests those actions did not persist or succeed (likely the fields were not 
+actually populated). The pink border on the email field suggests a validation 
+state or focus. To proceed with the plan to log in as 'admin', I need to ensure 
+the email field is populated. I will fill the email field with 'admin'.
+Action: fill  with admin
