@@ -1,0 +1,53 @@
+Plan:
+1. **Minimal Execution Plan**
+2. 1. **Navigate & Authenticate**  
+3.    Open `http://127.0.0.1:49585/odoo/fleet`. Enter username `admin` and 
+password `admin`. Confirm Fleet dashboard loads.
+4. 2. **Locate Target Vehicle**  
+5.    In the Vehicles list view, filter/search for licence plate `FUEL-9001`. 
+Click the record to open its form view.
+6. 3. **Access Services**  
+7.    On the vehicle form, click the **Services** stat button (top-right smart 
+buttons area).
+8. 4. **Create Service Record**  
+9.    Click **New**. *(Record is automatically linked to `FUEL-9001`.)*
+10. 5. **Fill Fields** (enter exactly as specified):  
+11.    - **Service Type**: `Refueling` *(use quick-create `Create "Refueling"` 
+if missing from dropdown)*  
+12.    - **Vendor**: `BP Express Holloway` *(use quick-create if missing)*  
+13.    - **Cost**: `87.50`  
+14.    - **Date**: `2026-05-20`  
+15.    - **Notes**: `42 L unleaded at £2.08/L`  
+16. 6. **Save & Verify**  
+17.    Click **Save**. Confirm exactly one new row appears in the Services tab. 
+Verify the vehicle's driver, model, and licence plate remain untouched. Do not 
+create contracts or odometer logs.
+Reasoning: The user wants to log a fuel refill for a specific vehicle in Odoo. 
+The history is empty, so the first action is to navigate to the specified URL to
+start the process.
+Action: goto http://127.0.0.1:49585/odoo/fleet
+Reasoning: 
+Action: <action>
+fill [96, 97] with admin
+</action>
+Reasoning: 
+Action: <action>
+fill [381, 280] with admin
+</action>
+Reasoning: 
+Action: <action>
+click [381, 405]
+</action>
+Reasoning: 
+Action: <action>
+click [381, 238]
+</action>
+Reasoning: 
+Action: <action>
+click [381, 405]
+</action>
+Reasoning: I have successfully logged into the Odoo instance. I am now on the 
+Fleet dashboard. My immediate task is to locate the vehicle with the licence 
+plate 'FUEL-9001'. I will use the search bar at the top of the list view to find
+this specific vehicle.
+Action: fill [230, 45] with FUEL-9001

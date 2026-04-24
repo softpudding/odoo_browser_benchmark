@@ -1,0 +1,60 @@
+=== Benchmark Evaluation ===
+  Task:   contacts.create_linked_contact_set_title_phone
+  Agent:  command
+  DB:     bench_fr_bc69d9e3  (auto-isolated)
+  URL:    http://127.0.0.1:49475
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/contacts.create_linked_contact_set_title_phone__1777055187
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_bc69d9e3 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 49475
+   Done.
+2. Capturing pre-task state...
+   Captured 9 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 35 calls captured (15 writes, 20 reads)
+   State: 10 records across 1 models
+5. Computing state diff...
+   5 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     5 edits
+  Observed:     5 edits
+  Matching:     4 edits
+  Missing:      1 edits
+  Extra:        1 edits
+  Wall clock:   600.1s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   35
+  Writes:            15 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/contacts.create_linked_contact_set_title_phone__1777055187/
+
+  Postcondition failures:
+    - Phone is 'False', expected '+1 415 555 0147'
+  Missing expected edits:
+    - res.partner.phone = +1 415 555 0147
+  Unexpected extra edits:
+    + res.partner.phone = None

@@ -1,0 +1,55 @@
+Plan:
+1. 1. Open `http://127.0.0.1:63495/odoo/calendar` in a browser.
+2. 2. Log in with username `admin` and password `admin`.
+3. 3. Ensure the view is set to **Week**, then navigate to the week containing 
+**Monday, April 27, 2026**.
+4. 4. Click the **"Ops Standup"** event on Monday, April 27 at 09:00 to open its
+form.
+5. 5. Click **Edit** (if required), change the **Location** field from `Main 
+Office` to `Building B Room 4`, and leave all other fields untouched.
+6. 6. Click **Save**. When the recurrence prompt appears, strictly select 
+**"This Event"**.
+7. 7. Confirm the April 27 instance now shows `Building B Room 4`, and verify 
+the Apr 13, Apr 20, and May 4 instances still show `Main Office`.
+Reasoning: 
+Action: <action>
+{"action": "navigate", "url": "http://127.0.0.1:63495/odoo/calendar"}
+</action>
+Reasoning: 
+Action: <action>
+{"action": "type", "text": "admin"}
+</action>
+<action>
+{"action": "key", "keys": ["tab"]}
+</action>
+<action>
+{"action": "type", "text": "admin"}
+</action>
+<action>
+{"action": "key", "keys": ["enter"]}
+</action>
+Reasoning: 
+Action: <action>
+{"action": "click", "element": "button", "text": "Log in"}
+</action>
+Reasoning: The previous action history indicates a login attempt, but the 
+current screenshot still shows the login form. I need to click the "Log in" 
+button to proceed to the Odoo backend. Once logged in, I will navigate to the 
+Calendar app.
+Action: {"action": "click", "element": "button", "text": "Log in"}
+Reasoning: 
+Action: <action>
+{"action": "click", "element": "input", "placeholder": "Enter your email"}
+</action>
+<action>
+{"action": "type", "text": "admin"}
+</action>
+<action>
+{"action": "click", "element": "input", "placeholder": "Enter your password"}
+</action>
+<action>
+{"action": "type", "text": "admin"}
+</action>
+<action>
+{"action": "click", "element": "button", "text": "Log in"}
+</action>

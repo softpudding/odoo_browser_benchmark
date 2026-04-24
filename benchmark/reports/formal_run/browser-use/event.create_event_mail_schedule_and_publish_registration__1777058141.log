@@ -1,0 +1,58 @@
+=== Benchmark Evaluation ===
+  Task:   event.create_event_mail_schedule_and_publish_registration
+  Agent:  browser-use
+  DB:     bench_fr_372487be  (auto-isolated)
+  URL:    http://127.0.0.1:61064
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/browser-use/event.create_event_mail_schedule_and_publish_registration__1777058141
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_372487be from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Starting Odoo...
+   Odoo ready on port 61064
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (browser-use)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 32 calls captured (15 writes, 17 reads)
+   State: 0 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   32
+  Writes:            15 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/browser-use/event.create_event_mail_schedule_and_publish_registration__1777058141/
+
+  Postcondition failures:
+    - Event not found
+  Missing expected edits:
+    - event.event.name = Dock Systems Expo 2026
+    - event.event.website_published = True

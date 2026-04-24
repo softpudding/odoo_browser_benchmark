@@ -1,0 +1,73 @@
+Plan:
+1. Here is a minimal, step-by-step plan:
+2. 1. **Access & Login**: Open `http://127.0.0.1:50608/odoo/contacts` in your 
+browser and log in with username `admin` and password `admin`.
+3. 2. **Open App**: From the Odoo dashboard, click the **Contacts** app.
+4. 3. **Initiate Creation**: Click the **Create** button.
+5. 4. **Set Type**: Ensure the contact type is set to **Person/Individual** 
+(uncheck "Is a Company" if visible).
+6. 5. **Enter Details**:
+7.    - `Name`: `Leah Morgan`
+8.    - `Company` (or Parent Company): Type and select exactly `Seabird 
+Logistics` (verify it does **not** say "Seabird Logistics West")
+9.    - `Job Position`: `Operations Coordinator`
+10.    - `Email`: `leah.morgan@seabird.example.com`
+11.    - `Phone`: `+1 415 555 0147`
+12. 6. **Save**: Click the **Save** button.
+13. 7. **Verify**: Confirm the new record appears in the list as an individual 
+contact, linked only to `Seabird Logistics`, and that no existing company 
+records were altered.
+Reasoning: I will navigate to the Odoo contacts URL, log in with the provided 
+credentials, create a new contact record ensuring it is set as a person 
+(individual) and not a company, enter the specified details for Leah Morgan 
+linking her to the correct parent company "Seabird Logistics", and save the 
+record.
+Action: Navigate to http://127.0.0.1:50608/odoo/contacts
+Reasoning: I am currently on the Odoo login page. To proceed with the task of 
+creating a contact, I first need to authenticate. I will enter the username 
+'admin' and password 'admin' into the respective fields and click the 'Log in' 
+button. This should redirect me to the Contacts app as indicated by the URL 
+parameter `redirect=%2Fodoo%2Fcontacts%3F`.
+Action: type('admin', into='Email')
+type('admin', into='Password')
+click('Log in')
+Reasoning: The current screenshot shows the Odoo login page. The email and 
+password fields are empty (showing placeholders). The previous history indicates
+an attempt to log in, but the current state suggests I am still on the login 
+screen. I need to enter the credentials 'admin' for both username and password 
+and then click the 'Log in' button to proceed to the Contacts app.
+Action: type('admin', into='Email')
+type('admin', into='Password')
+click('Log in')
+Reasoning: 
+Action: <action>
+type('admin', into='Enter your email')
+type('admin', into='Enter your password')
+click('Log in')
+</action>
+Reasoning: 
+Action: <action>
+type('admin', into='Enter your email')
+type('admin', into='Enter your password')
+click('Log in')
+</action>
+Reasoning: 
+Action: <action>
+type('admin', into='Enter your email')
+type('admin', into='Enter your password')
+click('Log in')
+</action>
+Reasoning: The previous attempts to log in using `type('admin', into='...')` 
+have not resulted in a state change (the screenshot still shows the login page 
+with empty fields). This suggests that either the selectors were not matched 
+correctly or the input fields require focus before typing. To resolve this, I 
+will break down the login process into atomic steps: first clicking the email 
+field to focus it, then typing the username, then clicking the password field, 
+typing the password, and finally clicking the 'Log in' button. I will use the 
+placeholder text 'Enter your email' and 'Enter your password' as selectors for 
+the input fields, as they are visible and unique.
+Action: click('Enter your email')
+type('admin')
+click('Enter your password')
+type('admin')
+click('Log in')

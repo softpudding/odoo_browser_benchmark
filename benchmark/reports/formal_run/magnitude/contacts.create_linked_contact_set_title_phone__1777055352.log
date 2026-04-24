@@ -1,0 +1,62 @@
+=== Benchmark Evaluation ===
+  Task:   contacts.create_linked_contact_set_title_phone
+  Agent:  command
+  DB:     bench_fr_5e5e0b6e  (auto-isolated)
+  URL:    http://127.0.0.1:50150
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/contacts.create_linked_contact_set_title_phone__1777055352
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_5e5e0b6e from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 50150
+   Done.
+2. Capturing pre-task state...
+   Captured 9 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 11 calls captured (3 writes, 8 reads)
+   State: 9 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     5 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      5 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   11
+  Writes:            3 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/contacts.create_linked_contact_set_title_phone__1777055352/
+
+  Postcondition failures:
+    - Expected exactly 1 'Leah Morgan' contact, found 0
+  Missing expected edits:
+    - res.partner.email = leah.morgan@seabird.example.com
+    - res.partner.function = Operations Coordinator
+    - res.partner.name = Leah Morgan
+    - res.partner.parent_id = Seabird Logistics
+    - res.partner.phone = +1 415 555 0147
