@@ -1,0 +1,56 @@
+=== Benchmark Evaluation ===
+  Task:   account.print_invoice_pdf_attach_to_partner
+  Agent:  command
+  DB:     bench_fr_d25a7ff7  (auto-isolated)
+  URL:    http://127.0.0.1:50118
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/websight/account.print_invoice_pdf_attach_to_partner__1777053853
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_d25a7ff7 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 50118
+   Done.
+2. Capturing pre-task state...
+   Captured 4 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 4 calls captured (1 writes, 3 reads)
+   State: 4 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     0 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   4
+  Writes:            1 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/websight/account.print_invoice_pdf_attach_to_partner__1777053853/
+
+  Postcondition failures:
+    - No outbound Send-wizard mail.message found on the invoice. Messages present (subtype/message_type): [('Invoice Created', 'notification')]. Expected a mail.message with subtype 'mail.mt_comment' AND message_type in ('email','comment','email_outgoing'). Did the agent click Discard, or uncheck Email before Send?

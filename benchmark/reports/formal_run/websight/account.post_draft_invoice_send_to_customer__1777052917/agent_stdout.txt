@@ -1,0 +1,35 @@
+Plan:
+1. 1. **Access & Authenticate**: Navigate to 
+`http://127.0.0.1:62713/odoo/accounting/customer-invoices` and log in with 
+username `admin` and password `admin`.
+2. 2. **Locate Draft**: In the **Customers → Invoices** list, open invoice 
+`BENCH-POST-SEND-001` (Bench Post Co, 200.00). Verify status reads `Draft`.
+3. 3. **Post Invoice**: Click the **Confirm** button in the header. Wait for 
+status to flip to `Posted` and an `INV/.../...` number to populate.
+4. 4. **Send via Email**: Click the **Send** button. In the "Send" wizard, 
+confirm fields are pre-filled and the **Email** checkbox remains selected. Click
+the primary **Send** button at the bottom-left. *(Do not click Discard or 
+uncheck Email)*.
+5. 5. **Final Check**: Verify the invoice state is `Posted`, the header **Send**
+button is greyed out, and the outbound email is recorded in the chatter.
+Reasoning: I need to start by navigating to the specified URL to access the Odoo
+instance. The instruction is to go to the customer invoices list. Once there, I 
+will likely need to log in, then find the specific draft invoice 
+`BENCH-POST-SEND-001`.
+Action: navigate(http://127.0.0.1:62713/odoo/accounting/customer-invoices)
+Reasoning: The current screen is the Odoo login page. According to the 
+instructions, I need to log in with username 'admin' and password 'admin'. The 
+first step to logging in is to interact with the email input field to enter the 
+username. Once logged in, I can navigate to the Accounting app to find the draft
+invoice.
+Action: click(x=433, y=219)
+Reasoning: 
+Action: <action>fill(x=433, y=219, value='admin')</action>
+Reasoning: 
+Action: <action>click(x=433, y=321)</action>
+Reasoning: I've already clicked on the password field in the previous step. Now 
+I need to type the password 'admin' to proceed with the login process. Once the 
+password is entered, I will be ready to click the 'Log in' button.
+Action: fill(x=433, y=321, value='admin')
+Reasoning: 
+Action: <action>click(x=496, y=418)</action>

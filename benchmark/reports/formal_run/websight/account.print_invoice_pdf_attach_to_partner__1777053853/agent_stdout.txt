@@ -1,0 +1,51 @@
+Plan:
+1. **Minimal Plan**
+2. 1. **Access & Authenticate:** Open 
+`http://127.0.0.1:50118/odoo/accounting/customer-invoices` in your browser. Log 
+in with `admin` / `admin`.
+3. 2. **Locate & Open Target:** In the Customer Invoices list, find and click 
+the invoice with reference `BENCH-PRINT-001` (Customer: Bench Print Co). Verify 
+the status reads **Posted**.
+4. 3. **Launch Send Wizard:** Click the **Send** button in the form header bar.
+5. 4. **Confirm & Dispatch:** In the "Send" dialog, verify that "by Email" is 
+ticked, the recipient is pre-filled, and the invoice PDF appears in the 
+attachment strip. Leave all defaults untouched and click the blue **Send** 
+button. (Do not click Discard or change the sending method.)
+6. 5. **Verify Chatter Attachment:** Wait for the dialog to close. Scroll to the
+right-side **Chatter** panel and confirm a new outgoing email message is posted 
+with a `.pdf` attachment linked to the invoice. Ensure the invoice remains 
+**Posted** with no edits to partner, lines, or totals.
+Reasoning: The plan instructs me to open the Customer Invoices list at 
+`http://127.0.0.1:50118/odoo/accounting/customer-invoices` and log in. This is 
+the first step to access the target invoice `BENCH-PRINT-001`. I will navigate 
+to this URL to begin.
+Action: goto http://127.0.0.1:50118/odoo/accounting/customer-invoices
+Reasoning: The previous navigation attempt led to the login page because I am 
+not authenticated. To access the Customer Invoices list as planned, I must first
+log in. I will enter the username `admin` and password `admin` into the 
+respective fields and submit the form.
+Action: fill('18', 'admin')
+Reasoning: The previous action filled the username field with 'admin'. To 
+complete the login process, I need to enter the password 'admin' into the 
+password field and then click the "Log in" button. This will authenticate me and
+allow me to access the Customer Invoices list as per the plan.
+Action: fill('23', 'admin')
+Reasoning: The previous action filled the username field with 'admin'. To 
+complete the login process, I need to enter the password 'admin' into the 
+password field and then click the "Log in" button. This will authenticate me and
+allow me to access the Customer Invoices list as per the plan.
+Action: fill('23', 'admin')
+Reasoning: The screenshot shows the login page with the "Email" field focused 
+(indicated by the purple border). The history shows that `fill('18', 'admin')` 
+and `fill('23', 'admin')` were executed, suggesting the username and password 
+fields were targeted. However, the password field appears empty in the 
+screenshot, which might indicate the fill action didn't persist visually or the 
+focus remained on the email field. Pressing "Enter" is the standard way to 
+advance through form fields or submit the form. Since the email field is 
+currently focused, pressing Enter will likely move the focus to the password 
+field. If the password was successfully filled by the previous action (despite 
+the visual placeholder), this will position the cursor in the password field, 
+ready for a subsequent Enter press to submit. If the password field is empty, 
+this action will still move focus there, allowing for further interaction. This 
+is the most logical next step to progress towards logging in.
+Action: press('Enter')
