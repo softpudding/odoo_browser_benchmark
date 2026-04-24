@@ -1,0 +1,70 @@
+=== Benchmark Evaluation ===
+  Task:   hr_holidays.allocate_leave_then_request_against_balance
+  Agent:  command
+  DB:     bench_fr_cd160f78  (auto-isolated)
+  URL:    http://127.0.0.1:53438
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/hr_holidays.allocate_leave_then_request_against_balance__1777045352
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_cd160f78 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 53438
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 41 calls captured (21 writes, 20 reads)
+   State: 0 records across 2 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     12 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      12 edits
+  Extra:        0 edits
+  Wall clock:   600.1s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   41
+  Writes:            21 non-forbidden, 0 forbidden
+  Required ops MISSED: ['hr.leave.action_approve', 'hr.leave.allocation.action_approve']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/hr_holidays.allocate_leave_then_request_against_balance__1777045352/
+
+  Postcondition failures:
+    - No allocation found with description 'Quarter-End Sick Leave Buffer'
+  Missing expected edits:
+    - hr.leave.allocation.employee_id = Marc Demo
+    - hr.leave.allocation.holiday_status_id = Sick Time Off
+    - hr.leave.allocation.name = Quarter-End Sick Leave Buffer
+    - hr.leave.allocation.number_of_days = 4.0
+    - hr.leave.allocation.state = validate
+    - hr.leave.employee_id = Marc Demo
+    - hr.leave.holiday_status_id = Sick Time Off
+    - hr.leave.name = Warehouse flu recovery
+    - hr.leave.number_of_days = 2.0
+    - hr.leave.request_date_from = 2026-06-23
+    - hr.leave.request_date_to = 2026-06-24
+    - hr.leave.state = validate

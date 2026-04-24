@@ -1,0 +1,54 @@
+Plan:
+1. **Minimal Execution Plan**
+2. 1. **Navigate & Login**  
+3.    Open `http://127.0.0.1:52959/odoo/expenses`. When prompted, log in with 
+username `admin` and password `admin`.
+4. 2. **Access Approval Queue**  
+5.    Navigate directly to `http://127.0.0.1:52959/odoo/expenses-to-process`.
+6. 3. **Locate Target Record**  
+7.    In the list view, find and click to open the expense titled **Alpha 
+project travel 2026** (submitted by Priya Mehta).
+8. 4. **Approve**  
+9.    Verify the status bar shows `Submitted`, then click the **Approve** button
+in the form header/statusbar.
+10. 5. **Verify & Constrain**  
+11.    - Confirm the expense status updates to `Approved`.  
+12.    - Confirm **Beta client lunch 2026** (by Ethan Brooks) remains completely
+untouched in `Submitted` state.  
+13.    - Do not interact with any other buttons, tabs, or records.
+Reasoning: 
+Action: <action>
+click('986, 351')
+</action>
+Reasoning: The user is logged in as Administrator in the Odoo 19 Expenses app. 
+The history shows a previous click at `(986, 351)`, which likely opened the 
+"Expenses" app from the dashboard. The current screen is blank, suggesting the 
+app is loading or the view is initializing. The goal is to approve "Alpha 
+project travel 2026", which is in the "Expenses to Process" queue. According to 
+the plan, I need to navigate to `/odoo/expenses-to-process`. In the Odoo 
+Expenses app, there is typically a "Expenses to Approve" or "Expenses to 
+Process" menu item or dashboard tile. Based on standard Odoo layout and the plan
+to access the approval queue, clicking the area around `(186, 156)` corresponds 
+to the "Expenses to Process" menu item or the "Expenses to Approve" dashboard 
+tile, which will take me to the list of expenses awaiting approval.
+Action: click('186, 156')
+Reasoning: The previous click at `(186, 156)` corresponds to the "My Expenses" 
+menu item in the Odoo sidebar. Since the screen is blank (or shows no records), 
+it confirms that the Admin user has no personal expenses to submit. To find the 
+expenses submitted by Priya Mehta and Ethan Brooks, I must navigate to the 
+"Expenses to Approve" (or "Expenses to Process") menu, which is the next item 
+down in the sidebar. Based on standard Odoo spacing, this item is located 
+approximately 60 pixels lower than the previous click, around `Y=216`.
+Action: click('186, 216')
+Reasoning: The user is currently in the Odoo Expenses app, likely on the 
+"Expenses to Approve" (or "Expenses to Process") list view after the previous 
+navigation step. The goal is to approve "Alpha project travel 2026". I need to 
+locate this specific expense in the list and click it to open the form view. 
+Based on the instruction, this expense is submitted by Priya Mehta. It is likely
+the first item in the list. I will click on the first row of the list view to 
+open the expense form.
+Action: click('400, 178')
+Reasoning: 
+Action: <action>
+click('570, 178')
+</action>
