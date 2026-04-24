@@ -1,0 +1,63 @@
+=== Benchmark Evaluation ===
+  Task:   event.add_event_questions_to_registration
+  Agent:  command
+  DB:     bench_fr_acfddc55  (auto-isolated)
+  URL:    http://127.0.0.1:57498
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/notte/event.add_event_questions_to_registration__1777041053
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_acfddc55 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 57498
+   Done.
+2. Capturing pre-task state...
+   Captured 3 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 27 calls captured (10 writes, 17 reads)
+   State: 3 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      4 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   27
+  Writes:            10 non-forbidden, 0 forbidden
+  Required ops MISSED: ['event.question.create']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/notte/event.add_event_questions_to_registration__1777041053/
+
+  Postcondition failures:
+    - Missing question titled 'What is your job title?' on event (found: ['Email', 'Name', 'Phone'])
+    - Missing question titled 'How many years of experience?' on event (found: ['Email', 'Name', 'Phone'])
+  Missing expected edits:
+    - event.question.question_type = simple_choice
+    - event.question.title = How many years of experience?
+    - event.question.question_type = text_box
+    - event.question.title = What is your job title?
