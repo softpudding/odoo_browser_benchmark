@@ -1,0 +1,54 @@
+=== Benchmark Evaluation ===
+  Task:   website_event.add_sponsor_to_event_publish
+  Agent:  command
+  DB:     bench_fr_c7e2cd1e  (auto-isolated)
+  URL:    http://127.0.0.1:60002
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/website_event.add_sponsor_to_event_publish__1777062729
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_c7e2cd1e from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Starting Odoo...
+   Odoo ready on port 60002
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=1.5s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 1 records across 2 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      4 edits
+  Extra:        0 edits
+  Wall clock:   1.5s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/website_event.add_sponsor_to_event_publish__1777062729/
+
+  Postcondition failures:
+    - Event 'Bench Conf 2026' is_published is False, expected True
+    - Expected exactly 1 event.sponsor on 'Bench Conf 2026', found 0
+  Missing expected edits:
+    - event.sponsor.event_id = Bench Conf 2026
+    - event.sponsor.partner_id = Bench Sponsor Inc
+    - event.sponsor.sponsor_type_id = Silver
+    - event.event.is_published = True
