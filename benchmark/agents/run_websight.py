@@ -76,6 +76,10 @@ def main():
     max_steps = int(os.environ.get("BENCHMARK_MAX_STEPS", "200"))
 
     agent = Agent(show_browser=True)
+    # Odoo pages (fleet, stock, etc.) can take >30s to paint on cold Odoo
+    # under parallel load; raise the navigation timeout so the agent gets
+    # a real chance rather than crashing in goto_url.
+    agent.browser.active_page.set_default_navigation_timeout(120_000)
     result = agent.run(task=full_instruction, max_iterations=max_steps)
 
     print(f"WebSight result: {result}")
