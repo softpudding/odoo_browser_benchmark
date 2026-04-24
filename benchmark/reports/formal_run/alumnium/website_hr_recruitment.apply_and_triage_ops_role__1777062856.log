@@ -1,0 +1,66 @@
+=== Benchmark Evaluation ===
+  Task:   website_hr_recruitment.apply_and_triage_ops_role
+  Agent:  command
+  DB:     bench_fr_4e07ae76  (auto-isolated)
+  URL:    http://127.0.0.1:60720
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/alumnium/website_hr_recruitment.apply_and_triage_ops_role__1777062856
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_4e07ae76 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 60720
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=65.4s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 4 calls captured (1 writes, 3 reads)
+   State: 0 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     8 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      8 edits
+  Extra:        0 edits
+  Wall clock:   65.4s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   4
+  Writes:            1 non-forbidden, 0 forbidden
+  Required ops MISSED: ['hr.applicant.create', 'hr.applicant.write']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/alumnium/website_hr_recruitment.apply_and_triage_ops_role__1777062856/
+
+  Postcondition failures:
+    - No hr.applicant found for Jack Doe / jack@doe.com
+  Missing expected edits:
+    - hr.applicant.department_id = Customer Success
+    - hr.applicant.email_from = jack@doe.com
+    - hr.applicant.job_id = Customer Success Specialist
+    - hr.applicant.linkedin_profile = linkedin.com/in/jack-doe
+    - hr.applicant.partner_name = Jack Doe
+    - hr.applicant.partner_phone = 118.712
+    - hr.applicant.priority = 3
+    - hr.applicant.stage_id = Qualification
