@@ -1,0 +1,64 @@
+=== Benchmark Evaluation ===
+  Task:   fleet.add_vehicle_log_odometer
+  Agent:  browser-use
+  DB:     bench_fr_9795b4fb  (auto-isolated)
+  URL:    http://127.0.0.1:59376
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/browser-use/fleet.add_vehicle_log_odometer__1777036489
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_9795b4fb from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 59376
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 2 models
+   API trace recording: STARTED
+3. Running agent (browser-use)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 44 calls captured (21 writes, 23 reads)
+   State: 2 records across 2 models
+5. Computing state diff...
+   5 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     5 edits
+  Observed:     5 edits
+  Matching:     2 edits
+  Missing:      3 edits
+  Extra:        3 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   44
+  Writes:            21 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/browser-use/fleet.add_vehicle_log_odometer__1777036489/
+
+  Postcondition failures:
+    - Expected exactly 1 odometer log with value 15000.0 on 2026-04-15 for vehicle 'FLEET-ADD-01', found 0 matching (total logs=1, values=[0.0015], dates=['2026-04-24'])
+  Missing expected edits:
+    - fleet.vehicle.odometer.date = 2026-04-15
+    - fleet.vehicle.odometer.value = 15000.0
+    - fleet.vehicle.odometer.vehicle_id = Tesla Motors/Model 3/FLEET-ADD-01
+  Unexpected extra edits:
+    + fleet.vehicle.odometer.date = 2026-04-24
+    + fleet.vehicle.odometer.value = 0.0015
+    + fleet.vehicle.odometer.vehicle_id = Tesla Motors/Model 3/FLEET-ADD-01
