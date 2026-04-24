@@ -1,0 +1,53 @@
+=== Benchmark Evaluation ===
+  Task:   inventory.cycle_count_two_locations_apply_selected_delta
+  Agent:  command
+  DB:     bench_fr_a14d8a95  (auto-isolated)
+  URL:    http://127.0.0.1:55010
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/inventory.cycle_count_two_locations_apply_selected_delta__1777052649
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_a14d8a95 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 55010
+   Done.
+2. Capturing pre-task state...
+   Captured 3 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 3 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/inventory.cycle_count_two_locations_apply_selected_delta__1777052649/
+
+  Postcondition failures:
+    - WH/Stock quantity is 10.0, expected 12.0
+    - Inventory adjustment quant is -16.0, expected -18.0
+  Missing expected edits:
+    - stock.quant.quantity = -18.0
+    - stock.quant.quantity = 12.0
