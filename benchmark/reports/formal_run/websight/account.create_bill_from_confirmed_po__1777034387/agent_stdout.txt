@@ -1,0 +1,43 @@
+Plan:
+1. ### Minimal Execution Plan
+2. 1. **Login**  
+3.    Open `http://127.0.0.1:59997/odoo/purchase` → Enter `admin` / `admin`.
+4. 2. **Navigate**  
+5.    Click **Purchase** app → **Orders** → **Purchase Orders**.
+6. 3. **Locate & Select PO**  
+7.    Use the search/filter to find Vendor Reference `BENCH-BILL-PO` (Vendor: 
+`Meridian Supply Co.`) → Check the box next to the matching record.
+8. 4. **Generate Draft Bill**  
+9.    In the list action header, click **Create Bills** → Confirm the wizard if 
+prompted.
+10. 5. **Update Draft Bill Fields**  
+11.    On the generated vendor bill:
+12.    - Set **Bill Date** → `May 3, 2026`
+13.    - Set **Bill Reference** → `MSC-BILL-9921`
+14.    *(Leave all product lines, quantities, and unit prices untouched.)*
+15. 6. **Confirm & Stop**  
+16.    Click **Confirm** to post the bill → **Do not** register payment, edit 
+the original PO, or modify line items. Task complete.
+Reasoning: 
+Action: <action>
+{
+  "action": "navigate",
+  "url": "http://127.0.0.1:59997/odoo/purchase"
+}
+</action>
+Reasoning: The current screen is the login page for the Odoo instance. The plan 
+requires logging in with 'admin' / 'admin'. I need to first enter the email 
+address.
+Action: [{"action": "click", "coordinates": [498, 219]}, {"action": "type", 
+"text": "admin"}]
+Reasoning: I have successfully entered the username 'admin'. Now I need to enter
+the password 'admin' into the password field. The password field is located 
+below the email field.
+Action: {"action": "click", "coordinates": [498, 336]}
+Reasoning: 
+Action: <action>
+[
+  {"action": "type", "text": "admin"},
+  {"action": "click", "coordinates": [498, 419]}
+]
+</action>
