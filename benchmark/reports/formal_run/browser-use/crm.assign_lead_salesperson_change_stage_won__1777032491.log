@@ -1,0 +1,62 @@
+=== Benchmark Evaluation ===
+  Task:   crm.assign_lead_salesperson_change_stage_won
+  Agent:  browser-use
+  DB:     bench_fr_1b9899ce  (auto-isolated)
+  URL:    http://127.0.0.1:64234
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/browser-use/crm.assign_lead_salesperson_change_stage_won__1777032491
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_1b9899ce from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 64234
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (browser-use)...
+
+
+   Agent finished: steps=0, wall_clock=448.5s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 56 calls captured (29 writes, 27 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   8 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     8 edits
+  Matching:     3 edits
+  Missing:      0 edits
+  Extra:        5 edits
+  Wall clock:   448.5s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   56
+  Writes:            29 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/browser-use/crm.assign_lead_salesperson_change_stage_won__1777032491/
+
+  Postcondition failures:
+    - Expected exactly one 'Bench Big Deal' opportunity, found 2
+  Unexpected extra edits:
+    + crm.lead.active = True
+    + crm.lead.name = Bench Big Deal
+    + crm.lead.probability = 10.0
+    + crm.lead.stage_id = New
+    + crm.lead.user_id = None
