@@ -1,0 +1,64 @@
+Plan:
+1. **Minimal Execution Plan**
+2. 1. **Insert Snippet:** Open the left **Add Blocks** sidebar → navigate to the
+**Content** category → locate **Image** → drag and drop it onto the page body 
+directly below the `Our Image Showcase` heading.
+3. 2. **Open Replace Dialog:** Click the newly dropped image placeholder → click
+**Replace** in the right-hand options panel (or double-click the image).
+4. 3. **Swap Source:** In the Media Dialog, switch to the **Images** tab → 
+locate and select the image with technical path 
+`/web/image/website.library_image_10` → confirm selection.
+5. 4. **Save & Verify:** Click **Save** (top-right corner) → verify the `Our 
+Image Showcase` heading is untouched and the rendered page contains `<img 
+src="/web/image/website.library_image_10">`.
+Reasoning: 
+Action: <action>
+dragAndDrop(
+    source={type: "xpath", selector: "//a"},
+    target={type: "xpath", selector: "//h1/.."}
+)
+</action>
+Reasoning: The previous history shows that the "Image" block was dragged and 
+dropped onto the page, targeting the section containing the "Our Image Showcase"
+heading. Based on standard Odoo behavior for block snippets, this creates a new 
+section immediately following the target section. The next step in the plan is 
+to open the replace dialog to swap the image source. The instruction suggests 
+double-clicking the inserted image to open the media dialog directly. Therefore,
+I will double-click the image inside the section that follows the heading 
+section.
+Action: doubleClick(
+    selector="//section[.//h1]/following-sibling::section[1]//img"
+)
+Reasoning: The previous action successfully double-clicked the inserted image 
+placeholder, which opened the media dialog (the "Replace" dialog). According to 
+the plan, the next step is to switch to the "Images" tab within this dialog to 
+access the library and locate the specific image `library_image_10`. I will 
+click the "Images" tab to proceed.
+Action: click(
+    selector="//div//a"
+)
+Reasoning: The previous actions successfully opened the media dialog and 
+switched to the "Images" tab. The next step is to locate the specific image 
+`library_image_10`. Since I cannot visually identify the image from the 
+thumbnails without more context, and the instruction provides a specific 
+technical path/name, the most reliable method is to use the search functionality
+within the media dialog. I will type "library_image_10" into the search bar to 
+filter the images. Once the image appears, I will select it, click the "Select" 
+button to confirm the choice, and finally click "Save" in the top-right corner 
+of the editor to persist the changes.
+Action: type(
+    selector="//div//input",
+    text="library_image_10"
+)
+Reasoning: 
+Action: <action>
+click(
+    selector="//div//img"
+)
+</action>
+Reasoning: 
+Action: <action>
+click(
+    selector="//div//button"
+)
+</action>
