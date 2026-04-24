@@ -1,0 +1,53 @@
+=== Benchmark Evaluation ===
+  Task:   sale_project.invoice_completed_milestones_only
+  Agent:  browser-use
+  DB:     bench_fr_15231c51  (auto-isolated)
+  URL:    http://127.0.0.1:51560
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/browser-use/sale_project.invoice_completed_milestones_only__1777046209
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_15231c51 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 51560
+   Done.
+2. Capturing pre-task state...
+   Captured 6 records across 4 models
+   API trace recording: STARTED
+3. Running agent (browser-use)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 154 calls captured (91 writes, 63 reads)
+   State: 7 records across 4 models
+5. Computing state diff...
+   6 atomic edits observed
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  1.0
+  Precision:    1.0
+  Recall:       1.0
+  Expected:     6 edits
+  Observed:     6 edits
+  Matching:     6 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   154
+  Writes:            91 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/browser-use/sale_project.invoice_completed_milestones_only__1777046209/
+
