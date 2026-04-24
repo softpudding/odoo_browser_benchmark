@@ -1,0 +1,56 @@
+=== Benchmark Evaluation ===
+  Task:   fleet.transfer_vehicle_new_driver
+  Agent:  browser-use
+  DB:     bench_fr_066d2d17  (auto-isolated)
+  URL:    http://127.0.0.1:58011
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/browser-use/fleet.transfer_vehicle_new_driver__1777023341
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_066d2d17 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 58011
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 2 models
+   API trace recording: STARTED
+3. Running agent (browser-use)...
+
+
+   Agent finished: steps=0, wall_clock=224.0s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 43 calls captured (23 writes, 20 reads)
+   State: 3 records across 2 models
+5. Computing state diff...
+   4 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     4 edits
+  Matching:     4 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   224.0s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   43
+  Writes:            23 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/browser-use/fleet.transfer_vehicle_new_driver__1777023341/
+
+  Postcondition failures:
+    - 'Old Driver Bob' assignation log was not closed (date_end is empty)

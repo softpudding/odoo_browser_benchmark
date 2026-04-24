@@ -1,0 +1,43 @@
+Plan:
+1. 1. **Access & Authenticate:** Navigate to `http://127.0.0.1:57421/odoo` and 
+log in with `admin` / `admin`.
+2. 2. **Open App:** Launch the **Invoicing** (Accounting) app.
+3. 3. **Locate Target:** Go to **Customers > Invoices**, filter/search for 
+**Lumen Works**, and open the draft invoice with Source Document `RET-204`. 
+*(Leave the other invoice closed/untouched.)*
+4. 4. **Convert:** Click the **Action** menu (⋮/⚙️) and select **Credit Note / 
+Refund** (or **Convert to Credit Note**).
+5. 5. **Confirm Conversion:** In the dialog, accept defaults and click the 
+confirmation button to generate the credit note draft.
+6. 6. **Edit Reference:** On the new draft credit note form, set the **Customer 
+Reference** field to `RET-204-REFUND`.
+7. 7. **Post:** Click **Confirm** (or **Post**) to validate the document.
+8. 8. **Verify:** Ensure the status changes to **Posted** and confirm no changes
+were made to the other draft invoice.
+Reasoning: The first step in the plan is to navigate to the Odoo instance at 
+`http://127.0.0.1:57421/odoo`. The current page is blank (`about:blank`), so I 
+need to load the target URL to begin the process.
+Action: {"name": "navigate", "arguments": {"url": 
+"http://127.0.0.1:57421/odoo"}}
+Reasoning: 
+Action: <action>
+{"name": "type", "arguments": {"text": "admin", "selector": "input"}}
+</action>
+Reasoning: The previous action entered the username 'admin' into the login 
+field. The next step in the authentication process is to enter the password 
+'admin' into the password field. The selector for the password field in Odoo is 
+typically `input`.
+Action: {"name": "type", "arguments": {"text": "admin", "selector": "input"}}
+Reasoning: 
+Action: <action>
+{"name": "click", "arguments": {"selector": "button"}}
+</action>
+Reasoning: The previous actions attempted to log in but the screenshot shows the
+login page with empty fields, meaning the inputs were not populated. I need to 
+re-enter the username. I will use the visible placeholder "Enter your email" to 
+select the correct input field and type "admin".
+Action: {"name": "type", "arguments": {"text": "admin", "selector": "input"}}
+Reasoning: 
+Action: <action>
+{"name": "type", "arguments": {"text": "admin", "selector": "input"}}
+</action>
