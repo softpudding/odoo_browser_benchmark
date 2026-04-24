@@ -1,0 +1,54 @@
+=== Benchmark Evaluation ===
+  Task:   project_sms.send_reminder_sms_to_task_followers
+  Agent:  command
+  DB:     bench_fr_fa592509  (auto-isolated)
+  URL:    http://127.0.0.1:56671
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/project_sms.send_reminder_sms_to_task_followers__1777056289
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_fa592509 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 56671
+   Done.
+2. Capturing pre-task state...
+   Captured 3 records across 3 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 3 records across 3 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      4 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/project_sms.send_reminder_sms_to_task_followers__1777056289/
+
+  Postcondition failures:
+    - No sms.sms record found with number in ['+16175551200', '+16175551201'] — Send SMS was not invoked on the seeded tasks.
+  Missing expected edits:
+    - sms.sms.body = Reminder: please review by EOD
+    - sms.sms.number = +16175551200
+    - sms.sms.body = Reminder: please review by EOD
+    - sms.sms.number = +16175551201

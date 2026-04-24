@@ -1,0 +1,61 @@
+=== Benchmark Evaluation ===
+  Task:   project_sms.send_reminder_sms_to_task_followers
+  Agent:  browser-use
+  DB:     bench_fr_0f60cfd4  (auto-isolated)
+  URL:    http://127.0.0.1:55439
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/browser-use/project_sms.send_reminder_sms_to_task_followers__1777056140
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_0f60cfd4 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 55439
+   Done.
+2. Capturing pre-task state...
+   Captured 3 records across 3 models
+   API trace recording: STARTED
+3. Running agent (browser-use)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 83 calls captured (35 writes, 48 reads)
+   State: 3 records across 3 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      4 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   83
+  Writes:            35 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/browser-use/project_sms.send_reminder_sms_to_task_followers__1777056140/
+
+  Postcondition failures:
+    - No sms.sms record found with number in ['+16175551200', '+16175551201'] — Send SMS was not invoked on the seeded tasks.
+  Missing expected edits:
+    - sms.sms.body = Reminder: please review by EOD
+    - sms.sms.number = +16175551200
+    - sms.sms.body = Reminder: please review by EOD
+    - sms.sms.number = +16175551201

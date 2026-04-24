@@ -1,0 +1,61 @@
+=== Benchmark Evaluation ===
+  Task:   project.add_task_subtask
+  Agent:  command
+  DB:     bench_fr_753575ea  (auto-isolated)
+  URL:    http://127.0.0.1:54750
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/project.add_task_subtask__1777056046
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_753575ea from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 54750
+   Done.
+2. Capturing pre-task state...
+   Captured 3 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 44 calls captured (20 writes, 24 reads)
+   State: 3 records across 2 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      3 edits
+  Extra:        0 edits
+  Wall clock:   600.1s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   44
+  Writes:            20 non-forbidden, 0 forbidden
+  Required ops MISSED: ['project.task.web_save']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/project.add_task_subtask__1777056046/
+
+  Postcondition failures:
+    - Subtask 'Create Wireframes' not found
+  Missing expected edits:
+    - project.task.name = Create Wireframes
+    - project.task.parent_id = Design Landing Page Mockup
+    - project.task.project_id = Omega Platform Launch
