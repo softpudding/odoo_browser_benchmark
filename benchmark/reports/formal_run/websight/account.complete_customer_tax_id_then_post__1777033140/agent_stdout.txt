@@ -1,0 +1,53 @@
+Plan:
+1. 1. **Login & Navigate**: Open `http://127.0.0.1:54967/odoo`, log in as 
+`admin`/`admin`, and click the **Invoicing** app.
+2. 2. **Open Target Draft**: Go to **Customers > Customer Invoices**, filter by 
+`Status: Draft`, and open the invoice where **Source Document** = `VAT-302`.
+3. 3. **Read VAT Value**: Switch to the **Invoice Lines** tab, scroll to the 
+bottom, and note/copy the exact text in the **Terms and Conditions** field.
+4. 4. **Update Customer**: Click the **Customer** name on the invoice header to 
+open their record. Edit the form, paste the exact VAT value into the **Tax ID** 
+field, and save.
+5. 5. **Return & Update Reference**: Use the top breadcrumbs (e.g., `Invoicing >
+Customer Invoices > VAT-302`) to navigate back to the draft invoice. Edit it, 
+change **Customer Reference** to `VAT-302-CLEAR`, and save.
+6. 6. **Post Invoice**: Click the **Post** (or Confirm) button. Verify the state
+changes to `Posted` and confirm no other invoices or customers were touched.
+Reasoning: I am at the beginning of the task. I need to navigate to the Odoo 
+instance, log in, and access the Invoicing app to start working on the draft 
+invoice VAT-302.
+Action: {"action": "goto", "url": "http://127.0.0.1:54967/odoo"}
+Reasoning: I am currently on the Odoo login page. The first step of the plan is 
+to log in as 'admin'. I need to enter the username 'admin' into the Email field.
+Action: fill, "enter your email", "admin"
+Reasoning: I am currently on the Odoo login page. The previous step involved 
+filling in the email with 'admin'. Now I need to fill in the password field with
+'admin' and then click the 'Log in' button to access the dashboard.
+Action: fill, "Enter your password", "admin"
+Reasoning: 
+Action: <action>click, "Log in"</action>
+Reasoning: The current screenshot shows the Odoo login page with the URL 
+`http://127.0.0.1:54967/web/login`. The history indicates that previous attempts
+were made to fill the fields and click "Log in", but the fields in the 
+screenshot appear empty (placeholders "Enter your email" and "Enter your 
+password" are visible). This suggests the previous actions did not persist or 
+the page refreshed. To proceed with the plan (Login & Navigate), I need to 
+successfully log in. I will start by filling the Email field. I will use the 
+label "Email" as the selector to be precise.
+Action: fill, "Email", "admin"
+Reasoning: I am currently on the Odoo login page. The previous attempts to log 
+in were unsuccessful, as the fields are still empty. I need to restart the login
+process. I will fill the Email field with 'admin' first.
+Action: fill, "Email", "admin"
+Reasoning: 
+Action: <action>fill, "Email", "admin"</action>
+Reasoning: I am on the Odoo login page. The previous step in the history 
+indicates an attempt to fill the email field. To proceed with logging in as 
+'admin', I need to fill the password field with 'admin'. The placeholder text 
+"Enter your password" clearly identifies the field. After filling the password, 
+the next step will be to click the "Log in" button.
+Action: fill, "Enter your password", "admin"
+Reasoning: I have successfully filled in the email and password fields with the 
+credentials 'admin'. The next step to proceed with the plan is to submit the 
+login form by clicking the "Log in" button.
+Action: click, "Log in"
