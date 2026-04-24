@@ -1,0 +1,38 @@
+Plan:
+1. 1. **Navigate & Login**  
+2.    Open `http://127.0.0.1:63071/odoo/accounting/customer-invoices`. Log in 
+with `admin` / `admin`.
+3. 2. **Locate Invoice**  
+4.    Go to **Customers → Invoices**. Click to open invoice `BENCH-EDIT-001` 
+(Customer: Bench Edit Co). Confirm the status badge shows `Posted`.
+5. 3. **Reset to Draft**  
+6.    Click the **Reset to Draft** button in the form header. Wait for the 
+status to update to `Draft`.
+7. 4. **Edit Label**  
+8.    In the invoice lines table, click the **Label** field of the single line. 
+Delete `Service` and type exactly `Corrected description`. Do not touch Product,
+Quantity, Price, or Taxes.
+9. 5. **Confirm & Verify**  
+10.    Click the **Confirm** button in the header. Verify:
+11.    - Status is back to `Posted`
+12.    - Line label reads exactly `Corrected description`
+13.    - Total remains `100.00`
+Reasoning: 
+Action: 
+<action>go_to_url(url='http://127.0.0.1:63071/odoo/accounting/customer-invoices'
+)</action>
+Reasoning: The current page is the Odoo login screen. According to the 
+instructions, I need to log in with username 'admin' and password 'admin' to 
+access the Accounting app and edit the invoice. I will start by entering the 
+email and password.
+Action: <type(text='admin', ref='10')>
+<type(text='admin', ref='14')>
+<click(button='Log in', ref='16')>
+Reasoning: The history indicates that the login actions (typing admin/admin and 
+clicking Log in) were just performed. The instruction states "You are in the 
+Odoo 19 Accounting app logged in as Administrator", implying the login was 
+successful and I am now redirected to the Customer Invoices list (as per the URL
+redirect parameter in the login screen image). My next task is to locate the 
+specific invoice `BENCH-EDIT-001`. I will search for this reference number to 
+find and open the invoice.
+Action: <search(text='BENCH-EDIT-001')>
