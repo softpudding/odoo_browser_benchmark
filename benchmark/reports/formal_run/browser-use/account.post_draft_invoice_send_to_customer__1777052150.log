@@ -1,0 +1,53 @@
+=== Benchmark Evaluation ===
+  Task:   account.post_draft_invoice_send_to_customer
+  Agent:  browser-use
+  DB:     bench_fr_c4dac58e  (auto-isolated)
+  URL:    http://127.0.0.1:59485
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/browser-use/account.post_draft_invoice_send_to_customer__1777052150
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_c4dac58e from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 59485
+   Done.
+2. Capturing pre-task state...
+   Captured 4 records across 1 models
+   API trace recording: STARTED
+3. Running agent (browser-use)...
+
+
+   Agent finished: steps=0, wall_clock=216.2s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 53 calls captured (25 writes, 28 reads)
+   State: 4 records across 1 models
+5. Computing state diff...
+   1 atomic edits observed
+6. Scoring...
+
+==================================================
+  RESULT: PASS  (Strict: PASS)
+  StateDiffF1:  1.0
+  Precision:    1.0
+  Recall:       1.0
+  Expected:     1 edits
+  Observed:     1 edits
+  Matching:     1 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   216.2s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   53
+  Writes:            25 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/browser-use/account.post_draft_invoice_send_to_customer__1777052150/
+

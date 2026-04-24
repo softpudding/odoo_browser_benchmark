@@ -1,0 +1,53 @@
+Plan:
+1. Here is a minimal, sequential execution plan:
+2. 1. **Navigate & Authenticate**
+3.    - Open `http://127.0.0.1:54816/odoo/accounting`
+4.    - Log in: Username `admin`, Password `admin`
+5. 2. **Access Target Invoice**
+6.    - Enter the **Invoicing (Accounting)** app
+7.    - Navigate to **Customers › Invoices**
+8.    - Search for `CN-SERVICE-01` and open it
+9. 3. **Initiate Credit Note**
+10.    - Click the **Credit Note** button on the form
+11. 4. **Configure Wizard**
+12.    - Set **Reason:** `Warehouse Audit session canceled`
+13.    - Set **Credit Note Date:** `2026-05-05`
+14.    - Click **Create Credit Note** (or **Reverse**)
+15. 5. **Edit Draft Credit Note**
+16.    - Remove/delete the `Onsite Training` line
+17.    - Change the `Warehouse Audit` line **Quantity** to `1`
+18. 6. **Post & Finalize**
+19.    - Click **Confirm** to post the document
+20.    - Verify: Posted credit note contains exactly one line (`Warehouse 
+Audit`, qty `1`), date is `2026-05-05`, and `CN-SERVICE-02` remains untouched.
+Reasoning: 
+Action: <action>
+open(url="http://127.0.0.1:54816/odoo/accounting")
+</action>
+Reasoning: I am currently at the login screen for the Odoo instance. The 
+instruction requires me to log in with username 'admin' and password 'admin' to 
+proceed with the accounting tasks. I will first fill in the credentials and 
+submit the form.
+Action: fill(by='xpath //input', value='admin')
+fill(by='xpath //input', value='admin')
+click(by='xpath //button')
+Reasoning: I have just submitted the login credentials. The system should now 
+redirect me to the Odoo dashboard or the Accounting app directly due to the 
+redirect URL. My next goal is to locate the specific invoice `CN-SERVICE-01`. I 
+will first ensure I am in the Invoicing app, then navigate to the Customer 
+Invoices list, search for the reference `CN-SERVICE-01`, and open the record.
+Action: click(by='text: Invoicing')
+click(by='text: Customers')
+click(by='text: Invoices')
+fill(by='xpath //input', value='CN-SERVICE-01')
+click(by='xpath //a')
+Reasoning: The previous steps successfully navigated to the invoice list and 
+presumably opened the invoice `CN-SERVICE-01`. I am now on the invoice form. My 
+immediate goal is to initiate the credit note process. I need to click the 
+"Credit Note" button, which is typically found in the header actions or a 
+dropdown. After clicking, a wizard will appear where I need to input the reason 
+and date. I will perform these actions in sequence.
+Action: click(by='text: Credit Note')
+fill(by='xpath //input', value='Warehouse Audit session canceled')
+fill(by='xpath //input', value='2026-05-05')
+click(by='text: Reverse')

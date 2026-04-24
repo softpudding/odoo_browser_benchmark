@@ -1,0 +1,64 @@
+=== Benchmark Evaluation ===
+  Task:   account.post_customer_invoice_with_tax_groups
+  Agent:  command
+  DB:     bench_fr_ff127998  (auto-isolated)
+  URL:    http://127.0.0.1:55981
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/notte/account.post_customer_invoice_with_tax_groups__1777051226
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_ff127998 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 55981
+   Done.
+2. Capturing pre-task state...
+   Captured 3 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=246.6s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 24 calls captured (7 writes, 17 reads)
+   State: 3 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     7 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      7 edits
+  Extra:        0 edits
+  Wall clock:   246.6s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   24
+  Writes:            7 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/notte/account.post_customer_invoice_with_tax_groups__1777051226/
+
+  Postcondition failures:
+    - No customer invoice (out_invoice) found for 'Bench Tax Cust'. Did the agent click New and save?
+  Missing expected edits:
+    - account.move.amount_tax = 40.0
+    - account.move.amount_total = 240.0
+    - account.move.amount_untaxed = 200.0
+    - account.move.invoice_date = 2026-05-10
+    - account.move.move_type = out_invoice
+    - account.move.partner_id = Bench Tax Cust
+    - account.move.state = posted
