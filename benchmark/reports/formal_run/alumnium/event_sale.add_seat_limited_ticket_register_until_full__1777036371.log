@@ -1,0 +1,74 @@
+=== Benchmark Evaluation ===
+  Task:   event_sale.add_seat_limited_ticket_register_until_full
+  Agent:  command
+  DB:     bench_fr_0d0a32d9  (auto-isolated)
+  URL:    http://127.0.0.1:58981
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/alumnium/event_sale.add_seat_limited_ticket_register_until_full__1777036371
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_0d0a32d9 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 58981
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=0.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 1 records across 2 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     24 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      24 edits
+  Extra:        0 edits
+  Wall clock:   0.1s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/alumnium/event_sale.add_seat_limited_ticket_register_until_full__1777036371/
+
+  Postcondition failures:
+    - Expected exactly 1 'VIP Seat' ticket on 'Spring Q2 Workshop', found 0
+  Missing expected edits:
+    - event.event.ticket.event_id = Spring Q2 Workshop
+    - event.event.ticket.name = VIP Seat
+    - event.event.ticket.price = 200.0
+    - event.event.ticket.seats_max = 5
+    - event.registration.event_id = Spring Q2 Workshop
+    - event.registration.event_ticket_id = VIP Seat
+    - event.registration.name = VIP-1
+    - event.registration.state = open
+    - event.registration.event_id = Spring Q2 Workshop
+    - event.registration.event_ticket_id = VIP Seat
+    - event.registration.name = VIP-2
+    - event.registration.state = open
+    - event.registration.event_id = Spring Q2 Workshop
+    - event.registration.event_ticket_id = VIP Seat
+    - event.registration.name = VIP-3
+    - event.registration.state = open
+    - event.registration.event_id = Spring Q2 Workshop
+    - event.registration.event_ticket_id = VIP Seat
+    - event.registration.name = VIP-4
+    - event.registration.state = open
+    - event.registration.event_id = Spring Q2 Workshop
+    - event.registration.event_ticket_id = VIP Seat
+    - event.registration.name = VIP-5
+    - event.registration.state = open
