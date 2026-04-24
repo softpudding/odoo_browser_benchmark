@@ -1,0 +1,40 @@
+Plan:
+1. ### Minimal Execution Plan
+2. 1. **Access & Authenticate**  
+3.    Open `http://127.0.0.1:58268/odoo/expenses` → Log in with `admin` / 
+`admin`.
+4. 2. **Locate Target Record**  
+5.    In the Expenses manager list, find **SUMMIT-2026 — overpriced hotel 
+night** (Employee: *Alice Benchmark*) → Click to open.
+6. 3. **Verify State**  
+7.    Confirm the form shows status: `Submitted`.
+8. 4. **Refuse with Reason**  
+9.    Click **Refuse** (status bar) → In the dialog, enter exactly:  
+10.    `Hotel rate exceeds company cap — please resubmit with itemised receipts 
+under $200/night.`  
+11.    → Click **Refuse Expense** / **Send**.
+12. 5. **Validate & Complete**  
+13.    Confirm status updates to `Refused` and the reason appears in the 
+chatter.  
+14.    ⚠️ **Stop here.** Do not interact with any other expenses, and do not 
+approve/post/pay/delete.
+Reasoning: I am starting the process by navigating to the specified URL 
+`http://127.0.0.1:58268/odoo/expenses`. The page shows a login screen for Odoo, 
+which is expected.
+Action: visit('http://127.0.0.1:58268/odoo/expenses')
+Reasoning: I am currently on the Odoo login page. According to the plan and 
+instructions, I need to log in with the username 'admin' and password 'admin'. 
+The first step is to enter the email/username into the appropriate field.
+Action: fill("input", "admin")
+Reasoning: The previous step successfully filled the email field with 'admin'. 
+Now, following the login sequence, I need to enter the password 'admin' into the
+password field to proceed with authentication. The password field is clearly 
+visible below the email field.
+Action: fill("input", "admin")
+Reasoning: 
+Action: <action>click("button")</action>
+Reasoning: 
+Action: <action>wait_for_load_state('networkidle')</action>
+Reasoning: 
+Action: <action>click("tr:has-text('SUMMIT-2026 — overpriced hotel 
+night'):has-text('Alice Benchmark')")</action>

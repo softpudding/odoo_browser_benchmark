@@ -1,0 +1,65 @@
+Plan:
+1. Here is a minimal, step-by-step execution plan:
+2. 1. **Access & Authenticate**
+3.    - Open `http://127.0.0.1:62730/odoo/calendar` in the browser.
+4.    - Log in with Username: `admin`, Password: `admin`.
+5. 2. **Initialize Event**
+6.    - Click the **+ New** button in the top-left, or click directly on the 
+`May 14, 2026, 10:00 AM` time slot in the calendar grid to open the event form.
+7. 3. **Enter Core Details**
+8.    - **Title**: `Benchmark Strategy Sync`
+9.    - **Start**: `May 14, 2026 10:00 AM`
+10.    - **End**: `May 14, 2026 11:00 AM`
+11.    - Ensure **Location**, **Description**, **All Day**, and **Recurrence** 
+are left blank/disabled.
+12. 4. **Add External Attendee (On-the-Fly)**
+13.    - Click into the **Attendees** field and type exactly: 
+`vendor.partner@example.com`
+14.    - In the autocomplete dropdown, explicitly click the **"Create..."** 
+option (e.g., `Create "vendor.partner@example.com"`). *Do not select any 
+pre-existing partner.*
+15.    - If a Quick Create/Contact dialog opens, verify the **Email** field 
+shows `vendor.partner@example.com`, then click **Save/Confirm** inside the 
+dialog.
+16. 5. **Finalize**
+17.    - Click **Save** on the event form.
+18.    - Verify the attendees list contains only `admin` (Organizer) and the 
+newly created `vendor.partner@example.com` partner.
+Reasoning: The user wants to create a calendar event in Odoo. The first step is 
+to navigate to the Odoo calendar application URL. Since the history is empty, 
+this is the initial action. The provided URL is 
+`http://127.0.0.1:62730/odoo/calendar`.
+Action: goto("http://127.0.0.1:62730/odoo/calendar")
+Reasoning: 
+Action: <action>
+click(selector="#login")
+</action>
+Reasoning: 
+Action: <action>
+fill(selector="input", text="admin")
+</action>
+<action>
+fill(selector="input", text="admin")
+</action>
+<action>
+click(selector="button")
+</action>
+Reasoning: The history indicates that login actions were performed (filling 
+username/password and clicking submit). The screenshot shows the login page, 
+which might be the state before the actions or if they failed. However, assuming
+the standard flow, the next step is to ensure we are on the Calendar page. The 
+instruction explicitly says "Go to http://127.0.0.1:62730/odoo/calendar". Even 
+if we are redirected there after login, navigating there again ensures we are in
+the right place. Once there, I need to create a new event. I will start by 
+navigating to the calendar URL.
+Action: goto("http://127.0.0.1:62730/odoo/calendar")
+Reasoning: 
+Action: <action>
+fill(selector="input", text="admin")
+</action>
+<action>
+fill(selector="input", text="admin")
+</action>
+<action>
+click(selector="button")
+</action>

@@ -1,0 +1,60 @@
+Plan:
+1. Here is a minimal, execution-ready plan distilled for direct UI/automation 
+use:
+2. ### 🔹 Phase 1: Auth & Event Creation
+3. 1. **Navigate & Login** → Open `http://127.0.0.1:65070/odoo/events`. 
+Authenticate with `admin` / `admin`.
+4. 2. **New Record** → Click **New**.
+5. 3. **Set Base Fields**:
+6.    - `Event Name`: `Bench 2026 Conference`
+7.    - `Start`: `07/15/2026 09:00:00`
+8.    - `End`: `07/16/2026 17:00:00`
+9.    - ⛔ Leave all other fields (Organizer, Company, Tags, Limits, 
+Description) at defaults.
+10. ### 🔹 Phase 2: Attach Registration Questions
+11. 4. **Open Questions Tab** → Scroll to notebook → click **Questions**.
+12. 5. **Add Q1 (Company)** → Click *Add a line* → Set:
+13.    - `Question`: `Company`
+14.    - `Type`: `Text Input` (`text_box`)
+15.    - `Mandatory`: ✅ Checked
+16.    - `Once per Order`: ❌ Unchecked
+17.    - → Save/Confirm line.
+18. 6. **Add Q2 (Experience Level)** → Click *Add a line* → Set:
+19.    - `Question`: `Experience Level`
+20.    - `Type`: `Selection` (`simple_choice`)
+21.    - `Mandatory`: ✅ Checked
+22.    - `Once per Order`: ❌ Unchecked
+23.    - → Save/Confirm line.
+24. 7. **Set Q2 Answers** → Open answer list for Q2 → Add **exactly**:
+25.    1. `Beginner`
+26.    2. `Intermediate`
+27.    3. `Expert`
+28. 8. **Verify Defaults** → Ensure auto-generated `Name`, `Email`, `Phone` 
+questions remain untouched and in their default state.
+29. ### 🔹 Phase 3: Save & Publish
+30. 9. **Save Event** → Click top-left **Save**.
+31. 10. **Open Preview** → Click the **Unpublished** status widget (top header).
+Opens public site preview.
+32. 11. **Publish** → In preview systray (top-right), toggle switch from 
+`Unpublished` → **Published**.
+33. 12. **Confirm State** → `is_published = True`, `website_published = True`. 
+Close preview.
+34. ### 📋 Constraint Checklist
+35. - [ ] Zero extra events or `event.registration` records created.
+36. - [ ] Q1 type = `text_box`, Q2 type = `simple_choice`.
+37. - [ ] Both new: `is_mandatory_answer=True`, `once_per_order=False`.
+38. - [ ] Q2 has exactly 3 answers in specified order.
+39. - [ ] Default questions preserved as-is.
+Reasoning: 
+Action: <action>
+{"thoughts": "Start by navigating to the Odoo login page or the events page 
+directly to trigger the login redirect.", "action": {"type": "go", "url": 
+"http://127.0.0.1:65070/odoo/events"}}
+</action>
+Reasoning: I am currently on the login page. The first step is to authenticate 
+using the provided credentials. I need to fill in the email field with 'admin'.
+Action: {"type": "fill", "field": "Email", "value": "admin"}
+Reasoning: 
+Action: <action>
+{"type": "fill", "field": "Password", "value": "admin"}
+</action>

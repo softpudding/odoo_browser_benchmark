@@ -1,0 +1,68 @@
+=== Benchmark Evaluation ===
+  Task:   event.create_event_add_question_publish
+  Agent:  command
+  DB:     bench_fr_73703a8b  (auto-isolated)
+  URL:    http://127.0.0.1:64576
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/event.create_event_add_question_publish__1777038665
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_73703a8b from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 64576
+   Done.
+2. Capturing pre-task state...
+   Captured 3 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 24 calls captured (8 writes, 16 reads)
+   State: 3 records across 2 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     11 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      11 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   24
+  Writes:            8 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/event.create_event_add_question_publish__1777038665/
+
+  Postcondition failures:
+    - No event.event named 'Bench 2026 Conference' — agent did not create it
+  Missing expected edits:
+    - event.event.is_published = True
+    - event.event.name = Bench 2026 Conference
+    - event.event.website_published = True
+    - event.question.is_mandatory_answer = True
+    - event.question.once_per_order = None
+    - event.question.question_type = text_box
+    - event.question.title = Company
+    - event.question.is_mandatory_answer = True
+    - event.question.once_per_order = None
+    - event.question.question_type = simple_choice
+    - event.question.title = Experience Level

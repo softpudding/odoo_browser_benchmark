@@ -1,0 +1,62 @@
+=== Benchmark Evaluation ===
+  Task:   im_livechat.send_message_to_operator
+  Agent:  command
+  DB:     bench_fr_b67002d2  (auto-isolated)
+  URL:    http://127.0.0.1:64646
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/notte/im_livechat.send_message_to_operator__1777045427
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_b67002d2 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 64646
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 59 calls captured (16 writes, 43 reads)
+   State: 3 records across 1 models
+5. Computing state diff...
+   2 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     2 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        2 edits
+  Wall clock:   600.1s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   59
+  Writes:            16 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/notte/im_livechat.send_message_to_operator__1777045427/
+
+  Postcondition failures:
+    - No discuss.channel of type 'livechat' exists for 'Bench Help'. The widget flow did not create a session.
+  Missing expected edits:
+    - discuss.channel.channel_type = livechat
+    - discuss.channel.livechat_channel_id = Bench Help
+  Unexpected extra edits:
+    + discuss.channel.channel_type = chat
+    + discuss.channel.livechat_channel_id = None
