@@ -1,0 +1,63 @@
+Plan:
+1. ### Minimal Execution Plan
+2. **1. Access & Authenticate**
+3. - Navigate to `http://127.0.0.1:51829/odoo/crm`
+4. - Log in: `admin` / `admin`
+5. **2. Configure View & Filter**
+6. - Top Menu: `CRM` → `Leads` → `Leads`
+7. - View Switcher: Click **List** icon (horizontal lines) if Kanban is active
+8. - Clear all active filter chips (e.g., `Unassigned`)
+9. - Search Bar: Type `Bench Enrich` → Press `Enter`
+10. **3. Exact Multi-Select**
+11. - Tick the leftmost checkboxes for **only** these 3 rows:
+12.   - `Bench Enrich Target Alpha` (`BENCH-ENRICH-001`)
+13.   - `Bench Enrich Target Bravo` (`BENCH-ENRICH-002`)
+14.   - `Bench Enrich Target Charlie` (`BENCH-ENRICH-003`)
+15. - ⛔ **Verify**: `Bench Enrich Already Delta` & `Bench Enrich Manual Echo` 
+remain **unchecked**
+16. **4. Run Bulk Action**
+17. - Control Panel: Click `Actions` (⚙) dropdown
+18. - Select: `Enrich Contact(s)` (or `Enrich`)
+19. - Wait for execution to complete. Dismiss any "no-credit" toast if it 
+appears.
+20. **5. Validation**
+21. - Open each of the 3 selected leads:
+22.   - Confirm `iap_enrich_done` flag = `True`
+23.   - Confirm latest chatter note contains `"No company data found"`
+24. - Spot-check the 2 unselected leads: Verify `iap_enrich_done` unchanged & no
+new chatter notes added.
+Reasoning: The user wants to bulk enrich three specific CRM leads. I need to 
+start by navigating to the Odoo CRM URL provided in the instructions. The 
+screenshot is currently blank, confirming I am at the start. The first step is 
+to access the CRM application.
+Action: go to http://127.0.0.1:51829/odoo/crm
+Reasoning: 
+Action: <action>fill('414', 'admin')
+</action>
+Reasoning: 
+Action: <action>fill('419', 'admin')
+</action>
+Reasoning: 
+Action: <action>click('427', 'Log in')
+</action>
+Reasoning: The user has just submitted the login form. The page should now be 
+loading the Odoo dashboard or redirecting to the CRM module as per the URL 
+parameter. I need to wait for the page to load and then locate the CRM 
+application to proceed with the task of enriching leads. The next step is to 
+click on the CRM app.
+Action: click('CRM')
+Reasoning: The current screenshot shows the Odoo login page with empty fields, 
+despite the history indicating previous attempts to fill them and click login. 
+This suggests the previous actions may not have persisted or the page reset. I 
+need to re-perform the login sequence: fill the email, fill the password, and 
+click the login button. Once logged in, I will proceed to the CRM app.
+Action: fill('Enter your email', 'admin')
+Reasoning: 
+Action: <action>fill('Enter your password', 'admin')
+</action>
+Reasoning: The previous actions in the history indicate that the email and 
+password fields have been filled with 'admin'. The current screenshot shows the 
+login page. The next logical step to proceed with the task is to submit the 
+login form by clicking the "Log in" button. This will authenticate the user and 
+redirect them to the CRM module as specified in the URL redirect parameter.
+Action: click('Log in')
