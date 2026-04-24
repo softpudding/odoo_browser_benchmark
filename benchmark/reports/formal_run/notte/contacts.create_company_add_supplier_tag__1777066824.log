@@ -1,0 +1,57 @@
+=== Benchmark Evaluation ===
+  Task:   contacts.create_company_add_supplier_tag
+  Agent:  command
+  DB:     bench_fr_9930b16d  (auto-isolated)
+  URL:    http://127.0.0.1:49685
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/notte/contacts.create_company_add_supplier_tag__1777066824
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_9930b16d from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 49685
+   Done.
+2. Capturing pre-task state...
+   Captured 8 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=280.4s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 32 calls captured (14 writes, 18 reads)
+   State: 9 records across 1 models
+5. Computing state diff...
+   4 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     4 edits
+  Matching:     4 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   280.4s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   32
+  Writes:            14 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/notte/contacts.create_company_add_supplier_tag__1777066824/
+
+  Postcondition failures:
+    - Street is 'False', expected '1450 Harbor Rd'
+    - Supplier tag is missing on target company

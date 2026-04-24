@@ -1,0 +1,61 @@
+=== Benchmark Evaluation ===
+  Task:   contacts.archive_then_unarchive
+  Agent:  command
+  DB:     bench_fr_6a5c5263  (auto-isolated)
+  URL:    http://127.0.0.1:64727
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/alumnium/contacts.archive_then_unarchive__1777066476
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_6a5c5263 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 64727
+   Done.
+2. Capturing pre-task state...
+   Captured 9 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 4 calls captured (1 writes, 3 reads)
+   State: 9 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   4
+  Writes:            1 non-forbidden, 0 forbidden
+  Required ops MISSED: ['res.partner.action_archive', 'res.partner.action_unarchive']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/alumnium/contacts.archive_then_unarchive__1777066476/
+
+  Postcondition failures:
+    - Contact 'Wilder Ferris (Bench-Archive-01)' is still active; expected archived
+    - Contact 'Talon Vega (Bench-Archive-02)' is still archived; expected active
+  Missing expected edits:
+    - res.partner.active = True
+    - res.partner.active = None
