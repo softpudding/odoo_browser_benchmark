@@ -1,0 +1,65 @@
+Plan:
+1. # Minimal Execution Plan
+2. **Target:** `Bench Worker` | **Kiosk PIN:** `1234` | **Date:** Today 
+(2026-04-24)
+3. 1. **Access System**  
+4.    → Navigate to `http://127.0.0.1:51107/odoo/attendances`  
+5.    → Log in: Username `admin` | Password `admin`
+6. 2. **Open Attendances**  
+7.    → Click the **Attendances** app icon from the dashboard.
+8. 3. **Launch Kiosk Interface**  
+9.    → In the left sidebar, click **Kiosk Mode**.  
+10.    → Wait for the tablet-style employee grid to load.
+11. 4. **Execute Clock-In**  
+12.    → Click the **`Bench Worker`** employee card.  
+13.    → On the PIN pad, type `1234` and press **OK**.  
+14.    → Confirm the on-screen **Check In** greeting.
+15. 5. **Return to Grid**  
+16.    → Click **OK** on the greeting screen (or wait for auto-return) to 
+restore the employee grid.
+17. 6. **Execute Clock-Out**  
+18.    → Click the **`Bench Worker`** card again.  
+19.    → Type `1234` on the PIN pad and press **OK**.  
+20.    → Confirm the on-screen **Check Out** greeting.
+21. 7. **Completion**  
+22.    → Return to the grid and exit Kiosk Mode.  
+23.    → *Verification:* Ensure the system shows a completed daily attendance 
+record for `Bench Worker` dated today.
+Reasoning: 
+Action: <action>
+call: 
+default_api:browser_navigate({"url":"http://127.0.0.1:51107/odoo/attendances"})
+</action>
+Reasoning: 
+Action: <action>
+fill: locator("xpath=//input") -> admin
+fill: locator("xpath=//input") -> admin
+click: locator("xpath=//button")
+</action>
+Reasoning: The current screenshot shows the Odoo login page at 
+`http://127.0.0.1:51107/web/login`. The input fields for Email and Password are 
+empty. The history indicates that a navigation and a login attempt (filling 
+`admin`/`admin` and clicking "Log in") were previously executed. Since the page 
+is still showing the login form with empty fields, it implies that the previous 
+login attempt either failed (causing a page reset) or did not complete 
+successfully. To proceed with the plan of accessing the Attendances app, I must 
+successfully authenticate. I will retry filling the credentials and clicking the
+"Log in" button.
+Action: fill: locator("xpath=//input") -> admin
+fill: locator("xpath=//input") -> admin
+click: locator("xpath=//button")
+Reasoning: 
+Action: <action>
+fill: locator("xpath=//input") -> admin
+fill: locator("xpath=//input") -> admin
+click: locator("xpath=//button")
+</action>
+Reasoning: The browser is currently on the login page. Previous attempts to log 
+in appear to have failed or not persisted, as the fields are empty. I need to 
+successfully authenticate with `admin`/`admin` to proceed to the Attendances 
+app. Once logged in, I will be redirected to the target URL. Then I will locate 
+the Kiosk Mode, perform the clock-in for "Bench Worker" with PIN "1234", 
+wait/return, and then perform the clock-out with the same PIN.
+Action: fill: locator("xpath=//input") -> admin
+fill: locator("xpath=//input") -> admin
+click: locator("xpath=//button")

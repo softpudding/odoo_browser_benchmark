@@ -1,0 +1,62 @@
+=== Benchmark Evaluation ===
+  Task:   hr_recruitment.add_skill_move_stage
+  Agent:  command
+  DB:     bench_fr_e8f46e5a  (auto-isolated)
+  URL:    http://127.0.0.1:51809
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/notte/hr_recruitment.add_skill_move_stage__1777044943
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_e8f46e5a from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 51809
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=360.2s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 55 calls captured (16 writes, 39 reads)
+   State: 1 records across 2 models
+5. Computing state diff...
+   1 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     5 edits
+  Observed:     1 edits
+  Matching:     1 edits
+  Missing:      4 edits
+  Extra:        0 edits
+  Wall clock:   360.2s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   55
+  Writes:            16 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/notte/hr_recruitment.add_skill_move_stage__1777044943/
+
+  Postcondition failures:
+    - Expected 1 Python skill entry, found 0
+    - Expected exactly 1 applicant skill entry, found 0
+  Missing expected edits:
+    - hr.applicant.skill.applicant_id = Jordan Park
+    - hr.applicant.skill.skill_id = Python
+    - hr.applicant.skill.skill_level_id = Advanced
+    - hr.applicant.skill.skill_type_id = IT Skills

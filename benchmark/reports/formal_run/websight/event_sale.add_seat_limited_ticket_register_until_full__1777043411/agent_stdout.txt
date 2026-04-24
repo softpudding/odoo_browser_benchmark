@@ -1,0 +1,49 @@
+Plan:
+1. ### Minimal Execution Plan
+2. **1. Access & Authentication**
+3. - Navigate to `http://127.0.0.1:63201/odoo/events`
+4. - Log in: `admin` / `admin`
+5. **2. Configure Ticket**
+6. - Open event **Spring Q2 Workshop**
+7. - Go to **Tickets** tab → click **Add a line**
+8. - Set: `Name`=`VIP Seat`, `Price`=`200`, `Seats Max`=`5`
+9. - Click **Save**
+10. **3. Register 5 Attendees**
+11. - Click **Attendees** smart button → **New**
+12. - Loop `i = 1` to `5`:
+13.   - `Event Ticket`: `VIP Seat`
+14.   - `Name`: `VIP-{i}`
+15.   - **Save** → Verify state = `Registered`
+16.   - Return to event form via breadcrumb
+17. **4. Validate Capacity Block**
+18. - From Attendees list → **New**
+19. - Set `Event Ticket` = `VIP Seat`, `Name` = `VIP-6`
+20. - Click **Save** → Confirm Odoo error: *"There are not enough seats 
+available for Spring Q2 Workshop"*
+21. - Click **Discard**
+22. **5. Final State Verification**
+23. - ✅ Exactly 1 ticket on event: `VIP Seat` (max 5, price 200)
+24. - ✅ Exactly 5 registrations: `VIP-1`…`VIP-5`, all `Registered`, linked to 
+`VIP Seat`
+25. - ✅ No record for `VIP-6` exists
+26. - ✅ Event name & dates remain unchanged
+Reasoning: The user wants me to start by navigating to the Odoo events page and 
+logging in. The history is empty, so I need to initiate the session. I will go 
+to the specified URL.
+Action: goto http://127.0.0.1:63201/odoo/events
+Reasoning: I am currently on the login page. To proceed with the plan, I must 
+first authenticate as 'admin' to access the Odoo backend and the Events app. I 
+will enter the credentials 'admin' for both the email and password fields and 
+submit the form.
+Action: fill("input", "admin")
+Reasoning: 
+Action: <action>fill("input", "admin")</action>
+Reasoning: 
+Action: <action>click("button:has-text('Log in')")</action>
+Reasoning: 
+Action: <action>click("text='Events'")</action>
+Reasoning: I am currently on the Odoo login page (`/web/login`). The URL 
+indicates a redirect to `/odoo/events` upon successful login. To proceed with 
+the plan, I must first authenticate. The input fields are empty. I will fill in 
+the email and password with 'admin' and click the 'Log in' button.
+Action: fill("input", "admin")
