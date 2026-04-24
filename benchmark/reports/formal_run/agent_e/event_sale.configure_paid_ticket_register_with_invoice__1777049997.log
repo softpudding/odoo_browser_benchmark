@@ -1,0 +1,68 @@
+=== Benchmark Evaluation ===
+  Task:   event_sale.configure_paid_ticket_register_with_invoice
+  Agent:  command
+  DB:     bench_fr_8f4c4327  (auto-isolated)
+  URL:    http://127.0.0.1:57587
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/event_sale.configure_paid_ticket_register_with_invoice__1777049997
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_8f4c4327 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 57587
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 4 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=222.6s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 1 records across 4 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     18 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      18 edits
+  Extra:        0 edits
+  Wall clock:   222.6s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/event_sale.configure_paid_ticket_register_with_invoice__1777049997/
+
+  Postcondition failures:
+    - Expected exactly 1 'Professional Pass' ticket on 'Spring Dev Summit 2026', found 0
+  Missing expected edits:
+    - account.move.amount_total = 150.0
+    - account.move.move_type = out_invoice
+    - account.move.partner_id = Bench Summit Attendee Inc
+    - account.move.state = draft
+    - sale.order.amount_total = 150.0
+    - sale.order.partner_id = Bench Summit Attendee Inc
+    - sale.order.state = sale
+    - event.registration.email = berta@benchsummit.test
+    - event.registration.event_id = Spring Dev Summit 2026
+    - event.registration.event_ticket_id = Professional Pass
+    - event.registration.name = Berta Attendee
+    - event.registration.sale_order_id = S00001
+    - event.registration.state = open
+    - event.event.ticket.event_id = Spring Dev Summit 2026
+    - event.event.ticket.name = Professional Pass
+    - event.event.ticket.price = 150.0
+    - event.event.ticket.product_id = Dev Summit Pro Product
+    - event.event.ticket.seats_max = 50
