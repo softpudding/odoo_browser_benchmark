@@ -1,0 +1,58 @@
+Plan:
+1. Here is a minimal, step-by-step execution plan:
+2. 1. **Access & Login**
+3.    - Navigate to `http://127.0.0.1:49181/odoo/accounting`
+4.    - Log in with `admin` / `admin`
+5.    - Click **Invoicing** to open the app
+6. 2. **Open Source Invoice**
+7.    - Go to **Customers › Invoices**
+8.    - Open `INV/BENCH/001` (Customer: Bench AR Co)
+9.    - Confirm status is `Posted`
+10. 3. **Initiate Reversal**
+11.    - Click the **Credit Note** button in the header
+12.    - In the wizard modal:
+13.      - **Reason**: `Wrong qty`
+14.      - **Reversal date**: `2026-04-24` (leave default)
+15.      - **Journal**: (leave default)
+16.      - Click **Reverse** (primary button only)
+17. 4. **Edit Draft Credit Note**
+18.    - In the newly opened draft `Customer Credit Note`, locate the lines 
+table
+19.    - **Bench Item A**: Change Quantity from `4` → `2`
+20.    - **Bench Item B**: Click the trash/delete icon to remove the row
+21.    - Verify the **Total** field reads `200.00`
+22. 5. **Post & Validate**
+23.    - Click **Confirm** in the header to post the CN
+24.    - Quick verification checklist:
+25.      - CN Status: `Posted`
+26.      - CN Lines: Exactly 1 (`Bench Item A`, Qty: `2`)
+27.      - CN Total: `200.00`
+28.      - Source Invoice `INV/BENCH/001`: Remains `Posted`
+Reasoning: 
+Action: <action>
+{"action": "click", "coords": [450, 540]}
+</action>
+Reasoning: 
+Action: The current screen is blank (`about:blank`), indicating that the browser
+has not yet navigated to the target URL. The previous action was a click in the 
+lower-middle area of the screen (`[450, 540]`), which likely did not trigger 
+navigation. To proceed with the plan ("Navigate to 
+`http://127.0.0.1:49181/odoo/accounting`"), I need to interact with the 
+browser's address bar. I will click in the top-center area of the screen to 
+focus the address bar so I can type the URL.
+
+<action>
+{"action": "click", "coords": [450, 45]}
+</action>
+Reasoning: The current screen displays the Odoo login page at the target URL. To
+proceed with the plan, I need to log in. I will start by clicking the 'Email' 
+input field to focus it, so I can then type the username 'admin'.
+Action: {"action": "click", "coords": [377, 215]}
+Reasoning: 
+Action: <action>
+{"action": "type", "text": "admin"}
+</action>
+Reasoning: 
+Action: <action>
+{"action": "click", "coords": [395, 336]}
+</action>

@@ -1,0 +1,85 @@
+Plan:
+1. ### MINIMAL EXECUTION PLAN
+2. **1. Access & Authenticate**
+3. - Open `http://127.0.0.1:61207/odoo/accounting`
+4. - Log in: `admin` / `admin`
+5. **2. Initiate & Fill Header**
+6. - Navigate: `Vendors → Bills`
+7. - Click `New`
+8. - Set fields:
+9.   - **Vendor**: `Bench Bill Vendor`
+10.   - **Bill Date**: `05/10/2026`
+11.   - **Bill Reference**: `BENCH-VBILL-001`
+12. **3. Add Invoice Line**
+13. - In the lines table, add exactly **1 row**:
+14.   - **Product**: `Bench Bill Item`
+15.   - **Quantity**: `2`
+16.   - **Unit Price**: `75.00`
+17.   *(Click ⚙️ on the table header to enable the Product column if missing)*
+18. **4. Post the Bill**
+19. - Click `Confirm`
+20. - Verify: Status = `Posted`, Number auto-assigns (`BILL/2026/...`)
+21. **5. Register Full Payment**
+22. - Click `Pay` (appears after posting)
+23. - In the **Register Payment** modal: **Do not edit any fields**. Accept 
+defaults (Amount: `150.00`, Date: Today, Journal: Bank, Memo: auto).
+24. - Click `Create Payment` (⚠️ Never click Discard)
+25. **6. Validation Checkpoints**
+26. - ✅ Bill state: `Posted` & `Paid` (`payment_state = 'paid'`)
+27. - ✅ Total: `150.00` (2 × 75.00)
+28. - ✅ Exactly 1 payment linked: Outbound, `150.00`, status `Posted/Paid/In 
+Process`
+29. - ✅ No extra lines, payments, or post-pay edits
+Reasoning: The user wants me to execute a plan to create a vendor bill in Odoo. 
+The history is empty, so I need to start by navigating to the Odoo instance. The
+plan specifies opening `http://127.0.0.1:61207/odoo/accounting` and logging in. 
+Even though the instruction says "You are in the Odoo 19 Accounting app logged 
+in as Administrator", the plan explicitly lists "Access & Authenticate" as step 
+1. To be safe and ensure I'm on the right page, I will navigate to the specified
+URL.
+Action: {
+  "action": "go_to_url",
+  "url": "http://127.0.0.1:61207/odoo/accounting"
+}
+Reasoning: 
+Action: <action>
+{
+  "action": "type",
+  "text": "admin",
+  "clear": true,
+  "field_name": "login"
+}
+</action>
+Reasoning: I have navigated to the Odoo login page. According to the plan, I 
+need to log in with username 'admin' and password 'admin'. The previous step in 
+the history was to type the username. Now I need to enter the password into the 
+password field. After entering the password, I will need to click the 'Log in' 
+button.
+Action: {
+  "action": "type",
+  "text": "admin",
+  "clear": true,
+  "field_name": "password"
+}
+Reasoning: I have successfully navigated to the login page and entered the 
+username 'admin' and password 'admin' in the respective fields. The next step to
+proceed with the plan is to submit the login form by clicking the "Log in" 
+button. This will authenticate me and grant access to the Odoo Accounting app.
+Action: {
+  "action": "click",
+  "selector": "button:contains('Log in')"
+}
+Reasoning: 
+Action: <action>
+{
+  "action": "click",
+  "selector": "button:contains('Log in')"
+}
+</action>
+Reasoning: 
+Action: <action>
+{
+  "action": "click",
+  "selector": "a"
+}
+</action>

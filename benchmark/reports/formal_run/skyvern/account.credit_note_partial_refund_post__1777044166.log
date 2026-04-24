@@ -1,0 +1,68 @@
+=== Benchmark Evaluation ===
+  Task:   account.credit_note_partial_refund_post
+  Agent:  command
+  DB:     bench_fr_eab33dff  (auto-isolated)
+  URL:    http://127.0.0.1:62830
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/account.credit_note_partial_refund_post__1777044166
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_eab33dff from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 62830
+   Done.
+2. Capturing pre-task state...
+   Captured 4 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 36 calls captured (15 writes, 21 reads)
+   State: 5 records across 1 models
+5. Computing state diff...
+   5 atomic edits observed
+   Postconditions: 5 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     6 edits
+  Observed:     5 edits
+  Matching:     3 edits
+  Missing:      3 edits
+  Extra:        2 edits
+  Wall clock:   600.1s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.5
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   36
+  Writes:            15 non-forbidden, 0 forbidden
+  Required ops MISSED: ['account.move.action_post']
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/account.credit_note_partial_refund_post__1777044166/
+
+  Postcondition failures:
+    - Credit note state is 'draft', expected 'posted'
+    - Expected 1 product line on credit note, found 2
+    - Bench Item B should NOT appear on the credit note (agent must delete it)
+    - Credit note amount_total is 500.0, expected 200.0
+    - Credit note amount_untaxed is 500.0, expected 200.0
+  Missing expected edits:
+    - account.move.payment_state = partial
+    - account.move.payment_state = paid
+    - account.move.state = posted
+  Unexpected extra edits:
+    + account.move.payment_state = not_paid
+    + account.move.state = draft
