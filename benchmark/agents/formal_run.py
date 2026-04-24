@@ -305,6 +305,54 @@ def kill_orphans(marker: str, keep_pid: int | None = None) -> int:
     return killed
 
 
+# Chrome for Testing and related browser processes that agents launch.
+# chrome_crashpad_handler in particular is deliberately detached (PPID=1
+# from the moment it starts) so it survives a crashing browser and
+# collects minidumps. That makes it invisible to any cleanup that walks
+# from the subprocess tree, so we sweep for it explicitly.
+_BROWSER_SIGNATURES = (
+    "Chrome for Testing",
+    "ms-playwright/chromium",
+    "/temp/skyvern_browser_",
+    "browser_use_local.py",
+    "playwright/driver/node",
+)
+
+
+def reap_orphaned_browsers() -> int:
+    """Kill any benchmark-browser process whose parent is PID 1.
+
+    Safe to call between runs even with concurrent lanes: a process is
+    only targeted if its parent is already gone (PPID==1), which can
+    only be true for detached helpers (crashpad_handler) or for browsers
+    whose launching agent already died. Legitimate in-flight lanes have
+    their Chrome children parented to live wrappers.
+    """
+    try:
+        out = subprocess.check_output(
+            ["ps", "-eo", "pid=,ppid=,command="], text=True
+        )
+    except subprocess.CalledProcessError:
+        return 0
+    killed = 0
+    import re as _re
+    for line in out.splitlines():
+        m = _re.match(r"\s*(\d+)\s+(\d+)\s+(.*)", line)
+        if not m:
+            continue
+        pid, ppid, cmd = m.groups()
+        if int(ppid) != 1:
+            continue
+        if not any(sig in cmd for sig in _BROWSER_SIGNATURES):
+            continue
+        try:
+            os.kill(int(pid), 9)
+            killed += 1
+        except (ProcessLookupError, PermissionError):
+            pass
+    return killed
+
+
 def run_one(agent: str, task: str, base_env: dict, worker: str) -> dict:
     ts = int(time.time())
     db = short_db(agent, task)
@@ -350,6 +398,11 @@ def run_one(agent: str, task: str, base_env: dict, worker: str) -> dict:
         # `uv run` parent was reaped — they're invisible to a ppid walk
         # but their argv still has `--output-dir=<outdir>`.
         killed = kill_orphans(str(outdir), keep_pid=os.getpid())
+        # Chrome's crashpad_handler deliberately detaches with PPID=1
+        # at launch, so marker-based cleanup misses it. Reap any
+        # browser-family process whose parent is gone — harmless to
+        # concurrent lanes since their browsers have live parents.
+        killed += reap_orphaned_browsers()
     finally:
         stop_run_proxy(proxy_proc)
 
