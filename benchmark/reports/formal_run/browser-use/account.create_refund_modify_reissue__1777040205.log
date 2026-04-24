@@ -1,0 +1,53 @@
+=== Benchmark Evaluation ===
+  Task:   account.create_refund_modify_reissue
+  Agent:  browser-use
+  DB:     bench_fr_9bc51326  (auto-isolated)
+  URL:    http://127.0.0.1:64683
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/browser-use/account.create_refund_modify_reissue__1777040205
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_9bc51326 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 64683
+   Done.
+2. Capturing pre-task state...
+   Captured 5 records across 1 models
+   API trace recording: STARTED
+3. Running agent (browser-use)...
+
+
+   Agent finished: steps=0, wall_clock=295.4s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 58 calls captured (22 writes, 36 reads)
+   State: 7 records across 1 models
+5. Computing state diff...
+   9 atomic edits observed
+6. Scoring...
+
+==================================================
+  RESULT: PASS  (Strict: PASS)
+  StateDiffF1:  1.0
+  Precision:    1.0
+  Recall:       1.0
+  Expected:     9 edits
+  Observed:     9 edits
+  Matching:     9 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   295.4s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   58
+  Writes:            22 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/browser-use/account.create_refund_modify_reissue__1777040205/
+

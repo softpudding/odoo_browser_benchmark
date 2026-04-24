@@ -1,0 +1,61 @@
+=== Benchmark Evaluation ===
+  Task:   account.create_refund_modify_reissue
+  Agent:  command
+  DB:     bench_fr_c9964445  (auto-isolated)
+  URL:    http://127.0.0.1:65512
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/account.create_refund_modify_reissue__1777040386
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_c9964445 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 65512
+   Done.
+2. Capturing pre-task state...
+   Captured 5 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 37 calls captured (16 writes, 21 reads)
+   State: 7 records across 1 models
+5. Computing state diff...
+   9 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     9 edits
+  Observed:     9 edits
+  Matching:     8 edits
+  Missing:      1 edits
+  Extra:        1 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.5
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   37
+  Writes:            16 non-forbidden, 0 forbidden
+  Required ops MISSED: ['account.move.action_post']
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/account.create_refund_modify_reissue__1777040386/
+
+  Postcondition failures:
+    - No new posted invoice found for Harborlight Engineering (the modify workflow should create a replacement draft that gets confirmed)
+  Missing expected edits:
+    - account.move.state = posted
+  Unexpected extra edits:
+    + account.move.state = draft
