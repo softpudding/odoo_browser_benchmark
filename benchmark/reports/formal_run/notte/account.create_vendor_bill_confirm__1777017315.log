@@ -1,0 +1,61 @@
+=== Benchmark Evaluation ===
+  Task:   account.create_vendor_bill_confirm
+  Agent:  command
+  DB:     bench_fr_f20793c7
+  URL:    http://127.0.0.1:8069
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/notte/account.create_vendor_bill_confirm__1777017315
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_f20793c7 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready (2s)
+   Done.
+2. Capturing pre-task state...
+   Captured 3 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=397.9s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 93 calls captured (23 writes, 70 reads)
+   State: 4 records across 1 models
+5. Computing state diff...
+   6 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     6 edits
+  Observed:     6 edits
+  Matching:     5 edits
+  Missing:      1 edits
+  Extra:        1 edits
+  Wall clock:   397.9s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   93
+  Writes:            23 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/notte/account.create_vendor_bill_confirm__1777017315/
+
+  Postcondition failures:
+    - Cable Tray line not found
+    - Junction Box line not found
+  Missing expected edits:
+    - account.move.amount_total = 1897.5
+  Unexpected extra edits:
+    + account.move.amount_total = 1650.0

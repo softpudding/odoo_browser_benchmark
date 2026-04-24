@@ -1,0 +1,308 @@
+Plan:
+1. ### Minimal Execution Plan: Create, Post & Pay Vendor Bill
+2. | Phase | Action | Details / Values | Guardrails |
+3. |-------|--------|------------------|------------|
+4. | **1. Initialize** | Navigate & Create | `Accounting` → `Vendors` → `Bills` 
+→ Click `[New]` (top-left) | Start fresh. Do not duplicate or edit existing 
+records. |
+5. | **2. Populate** | Header | • Vendor: `Bench Bill Vendor`<br>• Bill Date: 
+`05/10/2026`<br>• Reference: `BENCH-VBILL-001` | Match exact strings. Enable 
+"Product" column if hidden. |
+6. |  | Line | Add **exactly one** row:<br>`Product`: Bench Bill Item \| `Qty`: 
+2 \| `Unit Price`: 75.00 | Remove any empty/phantom lines. Total must calculate 
+to `150.00`. |
+7. | **3. Post** | Confirm | Click `[Confirm]` in header. Wait for status → 
+`Posted` & journal # assigned. | Do not skip. Status must show `Posted` before 
+proceeding. |
+8. | **4. Pay** | Register Payment | Click `[Pay]` → In modal: **leave all 
+defaults untouched** → Click `[Create Payment]` | Full amount only. Do NOT click
+`Discard`. Do NOT edit fields. |
+9. | **5. Verify** | Confirm State | UI shows `Paid` badge. Total = `150.00`. 
+One outbound payment linked. | Matches expected end-state. Do not reset, cancel,
+or refund. |
+10. **Execution Notes:**
+11. - Click sequentially; wait for DOM/UI state transitions between steps.
+12. - All values, labels, and button names match Odoo 19 Accounting defaults.
+13. - Constraints are inline: exact 1 line, exact header values, default payment
+wizard, final state = `posted` + `paid`.
+Reasoning: I need to start by navigating to the Odoo instance and logging in. 
+The URL is provided as `http://127.0.0.1:8069/odoo/accounting`. I will enter the
+credentials `admin` / `admin` and then navigate to the Accounting app, then 
+Vendors -> Bills to begin the process.
+Action: [
+  {
+    "tool": "browser_navigate",
+    "url": "http://127.0.0.1:8069/odoo/accounting"
+  },
+  {
+    "tool": "browser_type",
+    "selector": "input",
+    "text": "admin"
+  },
+  {
+    "tool": "browser_type",
+    "selector": "input",
+    "text": "admin"
+  },
+  {
+    "tool": "browser_click",
+    "selector": "button"
+  },
+  {
+    "tool": "browser_wait_for",
+    "selector": ".o_action_manager",
+    "timeout": 10000
+  }
+]
+Reasoning: 
+Action: <action>
+[
+  {
+    "tool": "browser_click",
+    "selector": "a:contains('Vendors')",
+    "description": "Click on Vendors in the sidebar"
+  },
+  {
+    "tool": "browser_click",
+    "selector": "a:contains('Bills')",
+    "description": "Click on Bills submenu"
+  },
+  {
+    "tool": "browser_click",
+    "selector": "button.btn-primary:contains('New')",
+    "description": "Click the New button to create a new bill"
+  },
+  {
+    "tool": "browser_type",
+    "selector": "input",
+    "text": "Bench Bill Vendor",
+    "description": "Enter Vendor name"
+  },
+  {
+    "tool": "browser_wait_for",
+    "selector": ".ui-menu-item-wrapper:contains('Bench Bill Vendor')",
+    "description": "Wait for vendor suggestion"
+  },
+  {
+    "tool": "browser_click",
+    "selector": ".ui-menu-item-wrapper:contains('Bench Bill Vendor')",
+    "description": "Select the vendor"
+  },
+  {
+    "tool": "browser_type",
+    "selector": "input",
+    "text": "05/10/2026",
+    "description": "Set Bill Date"
+  },
+  {
+    "tool": "browser_type",
+    "selector": "input",
+    "text": "BENCH-VBILL-001",
+    "description": "Set Bill Reference"
+  },
+  {
+    "tool": "browser_click",
+    "selector": "button.o_list_button_add",
+    "description": "Click Add a line"
+  },
+  {
+    "tool": "browser_click",
+    "selector": "td input",
+    "description": "Click on the product field in the new line"
+  },
+  {
+    "tool": "browser_type",
+    "selector": "td input",
+    "text": "Bench Bill Item",
+    "description": "Enter Product name"
+  },
+  {
+    "tool": "browser_wait_for",
+    "selector": ".ui-menu-item-wrapper:contains('Bench Bill Item')",
+    "description": "Wait for product suggestion"
+  },
+  {
+    "tool": "browser_click",
+    "selector": ".ui-menu-item-wrapper:contains('Bench Bill Item')",
+    "description": "Select the product"
+  },
+  {
+    "tool": "browser_type",
+    "selector": "td input",
+    "text": "2",
+    "description": "Set Quantity to 2"
+  },
+  {
+    "tool": "browser_type",
+    "selector": "td input",
+    "text": "75.00",
+    "description": "Set Unit Price to 75.00"
+  },
+  {
+    "tool": "browser_click",
+    "selector": "button.btn-primary:contains('Confirm')",
+    "description": "Click Confirm to post the bill"
+  },
+  {
+    "tool": "browser_wait_for",
+    "selector": ".o_statusbar_status .badge-success:contains('Posted')",
+    "description": "Wait for status to be Posted"
+  },
+  {
+    "tool": "browser_click",
+    "selector": "button.btn-primary:contains('Pay')",
+    "description": "Click Pay button"
+  },
+  {
+    "tool": "browser_click",
+    "selector": "button.btn-primary:contains('Create Payment')",
+    "description": "Click Create Payment in the wizard"
+  }
+]
+</action>
+Reasoning: The current screen shows the Odoo login page. The previous history 
+indicates an attempt to navigate and login, but we are still at the login 
+screen. I need to perform the login first, then proceed with the entire workflow
+of creating, posting, and paying the vendor bill as per the instructions. I will
+chain the actions: Login -> Navigate to Vendors/Bills -> Create Bill -> Fill 
+Details -> Confirm -> Pay.
+Action: [
+  {
+    "tool": "browser_type",
+    "selector": "input",
+    "text": "admin"
+  },
+  {
+    "tool": "browser_type",
+    "selector": "input",
+    "text": "admin"
+  },
+  {
+    "tool": "browser_click",
+    "selector": "button"
+  },
+  {
+    "tool": "browser_wait_for",
+    "selector": ".o_action_manager",
+    "timeout": 10000
+  },
+  {
+    "tool": "browser_click",
+    "selector": "a:contains('Vendors')"
+  },
+  {
+    "tool": "browser_click",
+    "selector": "a:contains('Bills')"
+  },
+  {
+    "tool": "browser_click",
+    "selector": "button.btn-primary:contains('New')"
+  },
+  {
+    "tool": "browser_type",
+    "selector": "input",
+    "text": "Bench Bill Vendor"
+  },
+  {
+    "tool": "browser_wait_for",
+    "selector": ".ui-menu-item-wrapper:contains('Bench Bill Vendor')"
+  },
+  {
+    "tool": "browser_click",
+    "selector": ".ui-menu-item-wrapper:contains('Bench Bill Vendor')"
+  },
+  {
+    "tool": "browser_type",
+    "selector": "input",
+    "text": "05/10/2026"
+  },
+  {
+    "tool": "browser_type",
+    "selector": "input",
+    "text": "BENCH-VBILL-001"
+  },
+  {
+    "tool": "browser_click",
+    "selector": "button.o_list_button_add"
+  },
+  {
+    "tool": "browser_click",
+    "selector": "td input"
+  },
+  {
+    "tool": "browser_type",
+    "selector": "td input",
+    "text": "Bench Bill Item"
+  },
+  {
+    "tool": "browser_wait_for",
+    "selector": ".ui-menu-item-wrapper:contains('Bench Bill Item')"
+  },
+  {
+    "tool": "browser_click",
+    "selector": ".ui-menu-item-wrapper:contains('Bench Bill Item')"
+  },
+  {
+    "tool": "browser_type",
+    "selector": "td input",
+    "text": "2"
+  },
+  {
+    "tool": "browser_type",
+    "selector": "td input",
+    "text": "75.00"
+  },
+  {
+    "tool": "browser_click",
+    "selector": "button.btn-primary:contains('Confirm')"
+  },
+  {
+    "tool": "browser_wait_for",
+    "selector": ".o_statusbar_status .badge-success:contains('Posted')"
+  },
+  {
+    "tool": "browser_click",
+    "selector": "button.btn-primary:contains('Pay')"
+  },
+  {
+    "tool": "browser_click",
+    "selector": "button.btn-primary:contains('Create Payment')"
+  }
+]
+Reasoning: 
+Action: <action>
+[
+  {"tool": "browser_type", "selector": "input", "text": "admin"},
+  {"tool": "browser_type", "selector": "input", "text": "admin"},
+  {"tool": "browser_click", "selector": "button"},
+  {"tool": "browser_wait_for", "selector": ".o_action_manager", "timeout": 
+15000},
+  {"tool": "browser_click", "selector": "a:contains('Vendors')"},
+  {"tool": "browser_click", "selector": "a:contains('Bills')"},
+  {"tool": "browser_click", "selector": "button.o_list_button_add"},
+  {"tool": "browser_type", "selector": "input", "text": "Bench Bill Vendor"},
+  {"tool": "browser_wait_for", "selector": 
+".ui-menu-item-wrapper:contains('Bench Bill Vendor')", "timeout": 5000},
+  {"tool": "browser_click", "selector": ".ui-menu-item-wrapper:contains('Bench 
+Bill Vendor')"},
+  {"tool": "browser_type", "selector": "input", "text": "05/10/2026"},
+  {"tool": "browser_type", "selector": "input", "text": "BENCH-VBILL-001"},
+  {"tool": "browser_click", "selector": "button.o_list_button_add"},
+  {"tool": "browser_click", "selector": "td input"},
+  {"tool": "browser_type", "selector": "td input", "text": "Bench Bill Item"},
+  {"tool": "browser_wait_for", "selector": 
+".ui-menu-item-wrapper:contains('Bench Bill Item')", "timeout": 5000},
+  {"tool": "browser_click", "selector": ".ui-menu-item-wrapper:contains('Bench 
+Bill Item')"},
+  {"tool": "browser_type", "selector": "td input", "text": "2"},
+  {"tool": "browser_type", "selector": "td input", "text": "75.00"},
+  {"tool": "browser_click", "selector": 
+"button.btn-primary:contains('Confirm')"},
+  {"tool": "browser_wait_for", "selector": ".o_statusbar_status 
+.badge-success:contains('Posted')", "timeout": 10000},
+  {"tool": "browser_click", "selector": "button.btn-primary:contains('Pay')"},
+  {"tool": "browser_wait_for", "selector": ".modal.show", "timeout": 5000},
+  {"tool": "browser_click", "selector": "button.btn-primary:contains('Create 
+Payment')"}
+]
+</action>
