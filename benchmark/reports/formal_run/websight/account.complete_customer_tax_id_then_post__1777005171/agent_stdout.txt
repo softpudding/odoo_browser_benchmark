@@ -1,0 +1,47 @@
+Plan:
+1. Here is a minimal, step-by-step execution plan:
+2. 1. **Access & Authenticate**  
+3.    - Navigate to `http://127.0.0.1:8069/odoo`  
+4.    - Log in with username `admin` / password `admin`  
+5.    - Open the **Invoicing** (Accounting) app from the main dashboard  
+6. 2. **Locate & Open Target Invoice**  
+7.    - Go to **Customers > Draft Invoices**  
+8.    - Find and open the draft invoice where **Source Document** = `VAT-302`  
+9. 3. **Extract VAT Value**  
+10.    - Click the **Invoice Lines** tab  
+11.    - Scroll down to the **Terms and Conditions** section  
+12.    - Read and copy the exact VAT number displayed  
+13. 4. **Update Customer Tax ID**  
+14.    - Click the linked **Customer** name on the invoice to open their contact
+form  
+15.    - Edit the record, paste the exact VAT number into the **Tax ID** field  
+16.    - **Save** the customer record  
+17. 5. **Return, Update Reference & Post**  
+18.    - Use the top **breadcrumbs** to navigate back to the `VAT-302` draft 
+invoice  
+19.    - Locate the **Customer Reference** field and set it to `VAT-302-CLEAR`  
+20.    - **Save** the invoice  
+21.    - Click the **Post** (or Confirm) button to finalize  
+22. ⚠️ *Constraint Check:* Verify that only the `VAT-302` invoice and its 
+associated customer were modified. Leave the other draft invoice and customer 
+completely untouched.
+Reasoning: 
+Action: <action>
+{"action": "navigate", "url": "http://127.0.0.1:8069/odoo"}
+</action>
+Reasoning: The current screen is the Odoo login page. To proceed with the plan, 
+I need to authenticate. The username field is the first input field visible. I 
+will click on it and type 'admin'.
+Action: {"action": "type", "text": "admin"}
+Reasoning: 
+Action: <action>
+{"action": "click", "target": ""}
+</action>
+Reasoning: The previous action clicked the password input field, so the cursor 
+is now positioned there. According to the plan, I need to log in with username 
+'admin' and password 'admin'. Since the username step (typing 'admin') was 
+presumably handled in the history (though the screenshot shows the placeholder, 
+I must trust the history flow or assume the field is ready), and the password 
+field is now active, I will type 'admin' into the password field. After this, I 
+will need to click the "Log in" button.
+Action: {"action": "type", "text": "admin"}

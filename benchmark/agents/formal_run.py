@@ -384,21 +384,38 @@ def run_one(agent: str, task: str, base_env: dict, worker: str) -> dict:
 
 
 def git_commit_push(worker: str, completed: int) -> None:
+    """Stage the whole formal_run/ tree and push.
+
+    Queue rows are authoritative for "what's done", but per-run artifacts
+    (score.json, trace.json, trace_summary.json, tokens.jsonl, agent
+    stdout/result, etc.) are needed for paper analysis — traces feed the
+    required-ops / write-precision columns that the queue row only
+    summarizes. Root .gitignore's `.*` keeps .worker_id and .queue.lock
+    out.
+    """
     try:
-        subprocess.run(["git", "add", "benchmark/reports/formal_run/queue.jsonl"],
+        subprocess.run(["git", "add", "benchmark/reports/formal_run/"],
                        check=True, cwd=str(REPO_ROOT))
+        # Nothing to commit (e.g. artifacts all gitignored somehow, or
+        # git_commit_push called back-to-back) is not an error.
+        status = subprocess.run(
+            ["git", "diff", "--cached", "--quiet"],
+            cwd=str(REPO_ROOT),
+        )
+        if status.returncode == 0:
+            return
         msg = f"formal_run: {worker} checkpoint ({completed} runs done)"
         subprocess.run(["git", "commit", "-m", msg], check=True, cwd=str(REPO_ROOT))
     except subprocess.CalledProcessError as e:
         print(f"[git] commit skipped: {e}", file=sys.stderr)
         return
-    for attempt in (1, 2):
+    for attempt in (1, 2, 3):
         try:
             subprocess.run(["git", "push"], check=True, cwd=str(REPO_ROOT))
             return
         except subprocess.CalledProcessError as e:
             print(f"[git] push attempt {attempt} failed: {e}", file=sys.stderr)
-            time.sleep(5)
+            time.sleep(5 * attempt)
 
 
 def main() -> int:
