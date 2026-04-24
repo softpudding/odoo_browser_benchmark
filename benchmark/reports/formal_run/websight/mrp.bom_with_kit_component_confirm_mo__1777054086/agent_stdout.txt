@@ -1,0 +1,63 @@
+Plan:
+1. ### Minimal Execution Plan
+2. 1. **Navigate & Log In**
+3.    - Open `http://127.0.0.1:62091/odoo/manufacturing` in a browser.
+4.    - Log in with `admin` / `admin`.
+5.    - Ensure you are inside the **Manufacturing** app.
+6. 2. **Create MO**
+7.    - Go to **Operations → Manufacturing Orders** and click **New**.
+8. 3. **Fill Fields**
+9.    - **Reference:** `M-BENCH-KIT-001`
+10.    - **Product:** Select `Bench Assembly`
+11.    - **Quantity:** `1` (leave default)
+12.    - **Bill of Material:** Select the auto-suggested BoM for `Bench 
+Assembly`
+13. 4. **Save**
+14.    - Click the **Save** (cloud icon) or press `Ctrl+S`. MO enters `Draft` 
+state.
+15. 5. **Confirm**
+16.    - Click the **Confirm** button on the form status bar. MO transitions to 
+`Confirmed`.
+17. 6. **Verify & Halt**
+18.    - Open the **Components** tab. Verify exactly **3 rows** are present: 
+`Bench Sub-A`, `Bench Sub-B`, and `Bench Frame`.
+19.    - **Do NOT** edit tabs, change quantity, click Produce/Mark as 
+Done/Cancel, or close the MO. Leave it open in the `Confirmed` state.
+Reasoning: The plan requires navigating to the Odoo instance, logging in, 
+creating a Manufacturing Order for "Bench Assembly" with a specific reference, 
+saving it, and then confirming it. The key verification step is ensuring the 
+Components tab shows the expanded phantom BoM components (Bench Sub-A, Bench 
+Sub-B) along with the regular component (Bench Frame). I will start by 
+navigating to the login page.
+Action: Navigate to http://127.0.0.1:62091/odoo/manufacturing
+Reasoning: The current screen is the Odoo login page. The first step is to log 
+in using the provided credentials ('admin' / 'admin'). Once logged in, I will be
+able to access the Manufacturing app and proceed with creating the Manufacturing
+Order as instructed. I will start by clicking the Email field to begin the login
+process.
+Action: click
+Reasoning: The current screen is the Odoo login page. To proceed with the plan, 
+I need to authenticate first. I will click on the 'Email' field to enter the 
+username 'admin'.
+Action: click on the Email input field
+Reasoning: The previous action was clicking on the email input field, which is 
+now focused. The next step is to type the username 'admin' into this field. This
+aligns with the instruction to log in with username 'admin' and password 
+'admin'.
+Action: fill("email", "admin")
+Reasoning: The email 'admin' has been entered. The next step in the login 
+sequence is to enter the password. I need to click on the password input field 
+to focus it, then type the password 'admin'.
+Action: click on the Password input field
+Reasoning: The email field has been successfully filled with 'admin'. The next 
+step in the authentication process is to enter the password. The password field 
+is currently visible and ready for input. I need to type 'admin' into the 
+password field to complete the login credentials entry. After this, I will need 
+to click the 'Log in' button.
+Action: fill("password", "admin")
+Reasoning: The previous action filled the password field with 'admin'. Now, to 
+complete the login process and access the Odoo instance, I need to click the 
+'Log in' button. This will authenticate the user and redirect them to the 
+Manufacturing app (as specified in the URL redirect parameter). Once inside, I 
+can proceed with creating the Manufacturing Order.
+Action: click the "Log in" button

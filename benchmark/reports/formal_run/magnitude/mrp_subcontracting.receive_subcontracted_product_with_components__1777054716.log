@@ -1,0 +1,64 @@
+=== Benchmark Evaluation ===
+  Task:   mrp_subcontracting.receive_subcontracted_product_with_components
+  Agent:  command
+  DB:     bench_fr_70a0de33  (auto-isolated)
+  URL:    http://127.0.0.1:64569
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/mrp_subcontracting.receive_subcontracted_product_with_components__1777054716
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_70a0de33 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 64569
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 3 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=1.8s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 2 records across 3 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 6 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     9 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      9 edits
+  Extra:        0 edits
+  Wall clock:   1.8s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/mrp_subcontracting.receive_subcontracted_product_with_components__1777054716/
+
+  Postcondition failures:
+    - Receipt state is 'assigned', expected 'done'
+    - Missing serials on receipt move_lines: ['BSA-2026-01', 'BSA-2026-02'] (found [])
+    - Subcontract MO(s) not all 'done': states=['confirmed']
+    - Total produced qty across done subcontract MOs is 0, expected 2.0
+    - stock.lot record 'BSA-2026-01' for 'Bench Sub Assembly' was not created
+    - stock.lot record 'BSA-2026-02' for 'Bench Sub Assembly' was not created
+  Missing expected edits:
+    - stock.lot.name = BSA-2026-01
+    - stock.lot.product_id = Bench Sub Assembly
+    - stock.lot.name = BSA-2026-02
+    - stock.lot.product_id = Bench Sub Assembly
+    - mrp.production.product_id = Bench Sub Assembly
+    - mrp.production.state = done
+    - mrp.production.subcontractor_id = Bench Subcontractor Inc
+    - mrp.production.state = done
+    - stock.picking.state = done
