@@ -1,0 +1,51 @@
+Plan:
+1. ### Minimal Execution Plan
+2. **1. Authentication & Navigation**
+3. - Navigate to `http://127.0.0.1:51972/odoo/accounting`
+4. - Log in: `admin` / `admin`
+5. - Launch **Invoicing (Accounting)** app
+6. **2. Open Target Invoice**
+7. - Go to `Invoicing` → `Customers` → `Invoices`
+8. - Search & open posted invoice: **Reference** `HLE-MOD-01` (Customer: 
+Harborlight Engineering)
+9. **3. Execute Reversal Wizard**
+10. - Click **Credit Note**
+11. - In wizard modal:
+12.   - `Reason`: `Quantity correction for project phase 2`
+13.   - `Reversal Date`: `04/10/2026`
+14.   - ⚠️ Click **Reverse and Create Invoice** *(do not click default 
+"Reverse")*
+15. **4. Correct Draft Replacement**
+16. - Wait for redirect to new **Draft** invoice
+17. - In invoice lines:
+18.   - `Technical Audit` → Change `Quantity` from `8` to `5` *(Price remains 
+$200)*
+19.   - `Site Inspection` → Leave unchanged *(Qty 3 @ $150)*
+20. - Set `Invoice Date` to `06/10/2026`
+21. **5. Post & Verify**
+22. - Click **Confirm** to post the corrected invoice
+23. - **Expected State Check:**
+24.   - `HLE-MOD-01`: `payment_state = "reversed"`
+25.   - Credit Note: Posted
+26.   - New Invoice: Posted, Technical Audit qty = `5`, Site Inspection qty = 
+`3`
+Reasoning: I need to start by navigating to the provided URL and logging into 
+the system with the given credentials. Then I will proceed to open the Invoicing
+app to find the specific invoice mentioned in the instructions.
+Action: Navigate to http://127.0.0.1:51972/odoo/accounting
+Reasoning: The current screen is the login page for the Odoo instance. According
+to the instructions, I need to log in with username 'admin' and password 
+'admin'. The Email field is currently empty. I will first click on the Email 
+field and type 'admin'.
+Action: click element at [499, 222]
+Reasoning: The current screen shows the login page with the Email field focused 
+(indicated by the purple border and previous action history). The instruction 
+requires logging in with 'admin' and 'admin'. The next step is to type the 
+username 'admin' into the Email field.
+Action: type with text 'admin'
+Reasoning: 
+Action: <action>type with text 'admin'</action>
+Reasoning: 
+Action: <action>click element at [499, 342]</action>
+Reasoning: 
+Action: <action>type with text 'admin'</action>
