@@ -1,0 +1,68 @@
+=== Benchmark Evaluation ===
+  Task:   contacts.add_bank_account_iban
+  Agent:  command
+  DB:     bench_fr_56cf9ac5  (auto-isolated)
+  URL:    http://127.0.0.1:49300
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/notte/contacts.add_bank_account_iban__1777021796
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_56cf9ac5 from snapshot 'benchmark_base'...
+Traceback (most recent call last):
+  File "/Users/yangxiao/odoo_browser_benchmark/.venv/bin/benchmark-eval", line 10, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/Users/yangxiao/odoo_browser_benchmark/benchmark/eval.py", line 1682, in main
+    cmd_run(args)
+    ~~~~~~~^^^^^^
+  File "/Users/yangxiao/odoo_browser_benchmark/benchmark/eval.py", line 1271, in cmd_run
+    return _run_episode(
+        task_dir=task_dir,
+    ...<19 lines>...
+        output_dir=output_dir,
+    )
+  File "/Users/yangxiao/odoo_browser_benchmark/benchmark/eval.py", line 1334, in _run_episode
+    _prepare_episode(
+    ~~~~~~~~~~~~~~~~^
+        db,
+        ^^^
+    ...<4 lines>...
+        conf_path=conf_path,
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/yangxiao/odoo_browser_benchmark/benchmark/eval.py", line 981, in _prepare_episode
+    dbm.restore_snapshot(restore_snapshot, db)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/yangxiao/odoo_browser_benchmark/benchmark/db.py", line 108, in restore_snapshot
+    if self.database_exists(target_db):
+       ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+  File "/Users/yangxiao/odoo_browser_benchmark/benchmark/db.py", line 65, in database_exists
+    result = self._run([
+        "psql", "-tAc",
+        f"SELECT 1 FROM pg_database WHERE datname = '{db_name}'",
+        "postgres",
+    ])
+  File "/Users/yangxiao/odoo_browser_benchmark/benchmark/db.py", line 60, in _run
+    return subprocess.run(
+           ~~~~~~~~~~~~~~^
+        cmd, env=self._pg_env(), capture_output=True, text=True, **kwargs,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/yangxiao/miniforge3/lib/python3.13/subprocess.py", line 554, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/yangxiao/miniforge3/lib/python3.13/subprocess.py", line 1039, in __init__
+    self._execute_child(args, executable, preexec_fn, close_fds,
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        pass_fds, cwd, env,
+                        ^^^^^^^^^^^^^^^^^^^
+    ...<5 lines>...
+                        gid, gids, uid, umask,
+                        ^^^^^^^^^^^^^^^^^^^^^^
+                        start_new_session, process_group)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/yangxiao/miniforge3/lib/python3.13/subprocess.py", line 1991, in _execute_child
+    raise child_exception_type(errno_num, err_msg, err_filename)
+FileNotFoundError: [Errno 2] No such file or directory: 'psql'
