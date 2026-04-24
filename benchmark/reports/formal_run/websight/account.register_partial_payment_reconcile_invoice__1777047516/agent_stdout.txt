@@ -1,0 +1,52 @@
+Plan:
+1. **Minimal Execution Plan**
+2. 1. **Login & Navigate**
+3.    - Open `http://127.0.0.1:60763/odoo/accounting`
+4.    - Log in with `admin` / `admin`
+5.    - Go to **Accounting** → **Customers** → **Invoices**
+6. 2. **Select Correct Invoice**
+7.    - Filter/search for Customer Reference `BENCH-PARTIAL-001`
+8.    - Open the invoice (Customer: `Bench Partial Co`, Total: `500.00`)
+9.    - ⚠️ **Confirm it is NOT `BENCH-PARTIAL-DISTRACT`**
+10. 3. **Configure Payment Wizard**
+11.    - Click **Pay** in the invoice header
+12.    - In the `Register Payment` modal, apply exactly these 4 overrides:
+13.      - `Amount`: `200.00` (change from `500.00`)
+14.      - `Journal`: `Bank` (change from `Bench Secondary Bank`)
+15.      - `Memo`: `Partial 1 of 2 for BENCH-PARTIAL-001`
+16.      - `Payment Date`: `04/15/2026`
+17.    - Leave `Payment Method` at default (`Manual`)
+18. 4. **Post & Verify**
+19.    - Click **Create Payment**
+20.    - Confirm the invoice `payment_state` changes to `Partial`
+21.    - Verify exactly one `account.payment` exists with: `amount=200.00`, 
+`date=2026-04-15`, `journal=Bank`, `memo="Partial 1 of 2 for 
+BENCH-PARTIAL-001"`, `payment_type=inbound`
+22.    - ⚠️ **Do not open, edit, or interact with `BENCH-PARTIAL-DISTRACT`**
+Reasoning: 
+Action: <action>
+goto('http://127.0.0.1:60763/odoo/accounting')
+</action>
+Reasoning: I am currently on the login page. The first step of the plan is to 
+log in. I will enter 'admin' in the Email field, 'admin' in the Password field, 
+and click the 'Log in' button.
+Action: fill('input', 'admin')
+Reasoning: 
+Action: <action>
+fill('input', 'admin')
+</action>
+Reasoning: I have filled in the credentials (admin/admin). Now I need to submit 
+the login form to access the Odoo backend. The "Log in" button is clearly 
+visible below the password field.
+Action: click('button:has-text("Log in")')
+Reasoning: I have just logged in. The redirect URL indicates I should be taken 
+to the Accounting module. I need to navigate to the Customer Invoices list to 
+find the specific invoice `BENCH-PARTIAL-001`.
+The plan is to go to Accounting -> Customers -> Invoices.
+I will first try to click on the "Accounting" app/menu to ensure I am in the 
+correct module, then navigate to Customers and Invoices.
+Action: click('Accounting')
+Reasoning: 
+Action: <action>
+click('Customers')
+</action>

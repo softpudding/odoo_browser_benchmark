@@ -1,0 +1,55 @@
+=== Benchmark Evaluation ===
+  Task:   calendar.create_event_add_description_attendee
+  Agent:  command
+  DB:     bench_fr_91e326ad  (auto-isolated)
+  URL:    http://127.0.0.1:62244
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/calendar.create_event_add_description_attendee__1777047893
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_91e326ad from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 62244
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=3.4s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 0 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     5 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      5 edits
+  Extra:        0 edits
+  Wall clock:   3.4s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/calendar.create_event_add_description_attendee__1777047893/
+
+  Postcondition failures:
+    - Event 'Vendor Kickoff Briefing' not found
+  Missing expected edits:
+    - calendar.event.allday = None
+    - calendar.event.location = Room 204
+    - calendar.event.name = Vendor Kickoff Briefing
+    - calendar.event.start = 2026-05-22 03:00:00
+    - calendar.event.stop = 2026-05-22 04:30:00
