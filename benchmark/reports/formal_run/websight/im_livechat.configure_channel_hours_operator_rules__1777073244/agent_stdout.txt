@@ -1,0 +1,71 @@
+Plan:
+1. 1. Open `http://127.0.0.1:52817/odoo/livechat` in your browser.
+2. 2. Log in with username `admin` and password `admin`.
+3. 3. Click to open the **Live Chat** app.
+4. 4. Click **New** to create a channel.
+5. 5. Configure the main settings:
+6.    - **Channel Name**: `Support Routing`
+7.    - **Notification Text**: `Talk to support now`
+8.    - **Agents**: Add exactly `Administrator` and `Demo User`
+9.    - **Max Sessions Mode**: Set to **Limited**
+10.    - **Max Sessions**: `1`
+11. 6. Switch to the **Rules** tab/page.
+12. 7. Add exactly one rule:
+13.    - **URL Regex**: `/support`
+14.    - **Action**: Display the chat button (leave "Hide" unchecked)
+15. 8. Click **Save**.
+Reasoning: 
+Action: <action>
+{
+  "action_type": "goto",
+  "url": "http://127.0.0.1:52817/odoo/livechat"
+}
+</action>
+Reasoning: I am currently on the login page. To proceed with the instructions, I
+need to log in using the provided credentials (`admin` / `admin`). After logging
+in, I will be redirected to the Live Chat app (as per the URL redirect 
+parameter). I will start by entering the email and password.
+Action: {
+  "action_type": "type",
+  "text": "admin",
+  "element": "Email"
+}
+Reasoning: 
+Action: ```json
+{
+  "action_type": "type",
+  "text": "admin",
+  "element": "Password"
+}
+```
+Reasoning: 
+Action: ```json
+{
+  "action_type": "click",
+  "element": "Log in"
+}
+```
+Reasoning: I have successfully logged in. The URL redirect parameter suggests I 
+should be redirected to the Live Chat app. Assuming the redirect works, I am now
+on the Live Chat dashboard. The next step in the plan is to create a new 
+channel. I need to click the "New" button to open the channel creation form.
+Action: {
+  "action_type": "click",
+  "element": "New"
+}
+Reasoning: I have clicked the "New" button. The next step is to fill in the 
+details for the new channel. I will start by entering the channel name "Support 
+Routing".
+Action: {
+  "action_type": "type",
+  "text": "Support Routing",
+  "element": "Channel Name"
+}
+Reasoning: I have successfully entered the Channel Name. Now I need to enter the
+Notification Text as specified in the instructions ("Talk to support now"). I 
+will look for the input field corresponding to Notification Text.
+Action: {
+  "action_type": "type",
+  "text": "Talk to support now",
+  "element": "Notification Text"
+}
