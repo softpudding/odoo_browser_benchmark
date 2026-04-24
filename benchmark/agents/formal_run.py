@@ -42,6 +42,7 @@ import fcntl
 import hashlib
 import json
 import os
+import re
 import socket
 import subprocess
 import sys
@@ -371,6 +372,10 @@ def run_one(agent: str, task: str, base_env: dict, worker: str) -> dict:
     cmd = build_cmd(agent, task, db, outdir, env)
 
     run_start = time.time()
+    # Sanity check will be performed after the run: verify eval.py
+    # printed "URL: http://127.0.0.1:<port>" with port != 8069. If it
+    # didn't, auto-isolation failed and concurrent runs are sharing one
+    # Odoo, which silently corrupts state capture + traces.
     try:
         with log.open("wb") as lf:
             proc = subprocess.Popen(
@@ -420,6 +425,22 @@ def run_one(agent: str, task: str, base_env: dict, worker: str) -> dict:
         f1 = 0.0
         wall = run_end - run_start
 
+    # Isolation sanity check. eval.py's auto-isolation must allocate a
+    # free port per run — if it falls back to 8069, every concurrent run
+    # shares one Odoo instance and all state captures / traces become
+    # meaningless. This happened in the aborted first sweep: passing
+    # --db disabled auto-isolation and every run landed on :8069.
+    log_text = log.read_text(errors="replace") if log.exists() else ""
+    url_match = re.search(r"URL:\s+http://127\.0\.0\.1:(\d+)", log_text)
+    isolated_port = int(url_match.group(1)) if url_match else None
+    if isolated_port is None or isolated_port == 8069:
+        verdict = "ERROR"
+        # Leave a breadcrumb in the row so the re-run loop knows these
+        # shouldn't count.
+        isolation_failed = True
+    else:
+        isolation_failed = False
+
     row = {
         "agent": agent, "task": task,
         "status": "done", "worker": worker,
@@ -428,7 +449,8 @@ def run_one(agent: str, task: str, base_env: dict, worker: str) -> dict:
         "wall_clock": wall,
         "total_tokens": token_summary.get("total_tokens", 0),
         "output_dir": str(outdir.relative_to(REPO_ROOT)),
-        "trace_clean": False,  # parallel runs share the trace module
+        "isolated_port": isolated_port,
+        "isolation_failed": isolation_failed,
         "orphans_killed": killed,
         "rc": rc,
     }

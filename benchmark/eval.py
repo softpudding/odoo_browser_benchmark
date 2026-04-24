@@ -1216,7 +1216,14 @@ def cmd_run(args: argparse.Namespace) -> dict | None:
     keep_server = getattr(args, "keep_server", False)
     explicit_db = (args.db != DEFAULT_DB)
     explicit_url = (args.base_url != DEFAULT_BASE_URL)
-    auto_isolate = not no_isolate and not explicit_db and not explicit_url
+    # Auto-isolation gives this run its own Odoo process on a free port +
+    # its own per-run config. It's disabled ONLY if the caller explicitly
+    # opts out (--no-isolate) or points at an external Odoo (--base-url).
+    # Passing --db on its own does NOT disable isolation — callers often
+    # want to control the DB name (e.g. keep it short enough for Postgres)
+    # while still getting port/process isolation so concurrent runs don't
+    # tromp on each other.
+    auto_isolate = not no_isolate and not explicit_url
 
     odoo_proc: OdooProcess | None = None
     run_id: str | None = None
@@ -1225,7 +1232,11 @@ def cmd_run(args: argparse.Namespace) -> dict | None:
     if auto_isolate:
         run_id = f"{os.getpid()}_{int(time.time()) % 100000}"
         port = _find_free_port()
-        db = f"benchmark_{task_id}_{run_id}"
+        # Respect --db when explicit; otherwise generate a unique-per-run
+        # name. Auto-generated names are long enough for some task IDs to
+        # exceed Postgres's 63-char DB-name limit, so explicit override is
+        # sometimes required.
+        db = args.db if explicit_db else f"benchmark_{task_id}_{run_id}"
         base_url = f"http://127.0.0.1:{port}"
         conf_path = str(_write_run_config(run_id, port, db))
         odoo_proc = OdooProcess(db, port, conf_path, run_id)
