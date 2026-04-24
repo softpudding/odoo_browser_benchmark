@@ -1,0 +1,44 @@
+Plan:
+1. ### Minimal Execution Plan
+2. 1. **Access & Authenticate**
+3.    - Navigate to `http://127.0.0.1:64599/shop`.
+4.    - Log in with username: `admin`, password: `admin`.
+5. 2. **Add Primary Product & Accessory**
+6.    - From the `/shop` homepage, locate and click **Bench Camera** to open its
+product page.
+7.    - Click **Add to Cart**.
+8.    - When the optional-product modal appears, click to add **Bench Tripod** 
+to the same cart.
+9. 3. **Navigate to Cart**
+10.    - Go to `/shop/cart`.
+11.    - Verify two lines are present:
+12.      - `Bench Camera` (qty 1)
+13.      - `Bench Tripod` (qty 1)
+14. 4. **Orphan the Accessory**
+15.    - On the cart page, locate the **Bench Camera** line.
+16.    - Click its **delete / trash icon** to remove it. *(Do not interact with 
+the `Bench Tripod` line.)*
+17. 5. **Final Verification**
+18.    - Confirm the cart contains exactly one line: `Bench Tripod` (qty 1).
+19.    - Ensure the underlying sale order remains in `draft` state.
+20.    - Stop execution.
+21. **⚠️ Guardrails**
+22. - ❌ Do not click "Clear/Empty Cart"
+23. - ❌ Do not modify quantities
+24. - ❌ Do not proceed to checkout/payment
+25. - ❌ Do not rename or create new products/orders
+Reasoning: 
+Action: <action>
+type admin
+</action>
+Reasoning: The previous action entered the username 'admin'. To complete the 
+login process as instructed, I need to enter the password 'admin' next. The 
+current screen state (though blank in the snapshot) implies the login form is 
+active or the next input field is ready. I will type the password.
+Action: type admin
+Reasoning: The history shows that the username 'admin' was typed, and then the 
+password 'admin' was typed. The login credentials are now entered. The next step
+is to submit the login form by clicking the "Log in" button to access the 
+backend or the shop interface. After logging in, I will need to navigate to the 
+`/shop` page as per the instructions.
+Action: click Login
