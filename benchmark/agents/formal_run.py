@@ -505,34 +505,49 @@ def stream_claim(worker: str, n_tasks: int, agents: list[str] | None) -> int:
     """Claim (N tasks × chosen agents) with stream-safe git coordination.
 
     Protocol per attempt:
-      1. git fetch + rebase to get latest queue.jsonl
+      1. reset local queue.jsonl to origin/<branch> (discarding any prior
+         failed-claim commit) and pull the latest remote state
       2. recompute "unclaimed" = tasks not in any claimed/done row yet
-      3. pick N task slugs
+      3. pick up to N unclaimed task slugs (FEWER if fewer remain)
       4. append (agent, task) claim rows for each (agents × N tasks)
       5. commit, push
-      6. on push rejection: reset the commit, rebase, and retry —
-         some other worker grabbed some of our pairs, so we drop the
-         collisions and refill from the fresh unclaimed set
+      6. on push rejection: another worker beat us to pushing. "Give in"
+         — hard-reset to remote, loop back to step 1. The next iteration
+         will see the other worker's claims and pick DIFFERENT tasks
+         from the freshly-shrunk unclaimed set. No retrying the same
+         picks.
     """
     if agents is None:
         agents = ACTIVE_AGENTS
     all_tasks = list_tasks()
 
-    for attempt in range(1, 8):
-        # 1. sync with upstream
-        subprocess.run(["git", "fetch", "origin"], check=False, cwd=str(REPO_ROOT))
-        rc = subprocess.run(["git", "pull", "--rebase", "origin",
-                             subprocess.run(["git", "rev-parse", "--abbrev-ref", "HEAD"],
-                                            capture_output=True, text=True, cwd=str(REPO_ROOT)).stdout.strip()],
-                            cwd=str(REPO_ROOT))
-        if rc.returncode != 0:
-            print(f"[claim] attempt {attempt}: rebase failed; aborting", file=sys.stderr)
-            subprocess.run(["git", "rebase", "--abort"], cwd=str(REPO_ROOT))
-            return 1
+    branch = subprocess.run(
+        ["git", "rev-parse", "--abbrev-ref", "HEAD"],
+        capture_output=True, text=True, cwd=str(REPO_ROOT),
+    ).stdout.strip()
 
-        # 2. compute tasks that have no claimed/done row yet (for *any* agent
-        # in the chosen set). We only claim whole-task rows, not per-agent,
-        # to keep the queue interleavable without fighting.
+    for attempt in range(1, 8):
+        # 1. fetch + reset-hard to remote so queue.jsonl matches upstream.
+        # On attempt > 1 this also discards our stale claim commit.
+        subprocess.run(["git", "fetch", "origin"], check=False, cwd=str(REPO_ROOT))
+        if attempt > 1:
+            subprocess.run(
+                ["git", "reset", "--hard", f"origin/{branch}"],
+                check=False, cwd=str(REPO_ROOT),
+            )
+        else:
+            # First attempt: preserve any unrelated local work; just rebase.
+            rc = subprocess.run(
+                ["git", "pull", "--rebase", "origin", branch],
+                cwd=str(REPO_ROOT),
+            )
+            if rc.returncode != 0:
+                print(f"[claim] attempt {attempt}: rebase failed; aborting",
+                      file=sys.stderr)
+                subprocess.run(["git", "rebase", "--abort"], cwd=str(REPO_ROOT))
+                return 1
+
+        # 2. compute what's taken from the fresh remote queue
         rows = load_queue()
         taken_by_agent: dict[str, set[str]] = {a: set() for a in agents}
         for r in rows:
@@ -542,7 +557,7 @@ def stream_claim(worker: str, n_tasks: int, agents: list[str] | None) -> int:
             if r.get("status") in ("claimed", "done"):
                 taken_by_agent[a].add(t)
 
-        # "unclaimed" task = at least one chosen agent hasn't been run on it
+        # 3. pick fresh unclaimed tasks (never re-pick from the prior attempt)
         unclaimed_tasks = [
             t for t in all_tasks
             if any(t not in taken_by_agent[a] for a in agents)
@@ -554,7 +569,7 @@ def stream_claim(worker: str, n_tasks: int, agents: list[str] | None) -> int:
         picked = unclaimed_tasks[:n_tasks]
         now = datetime.now(timezone.utc).isoformat()
 
-        # 3–4. write claim rows locally (interleaved by agent for readability)
+        # 4. write claim rows (skip any agent slot already taken)
         new_rows: list[dict] = []
         for t in picked:
             for a in agents:
@@ -565,7 +580,8 @@ def stream_claim(worker: str, n_tasks: int, agents: list[str] | None) -> int:
                     "status": "claimed", "worker": worker, "ts": now,
                 })
         if not new_rows:
-            print("[claim] all agent×task slots already claimed", file=sys.stderr)
+            print("[claim] all agent×task slots already claimed",
+                  file=sys.stderr)
             return 0
 
         with LOCK_PATH.open("w") as lk:
@@ -577,10 +593,12 @@ def stream_claim(worker: str, n_tasks: int, agents: list[str] | None) -> int:
         # 5. commit + push
         subprocess.run(["git", "add", "benchmark/reports/formal_run/queue.jsonl"],
                        check=True, cwd=str(REPO_ROOT))
-        msg = f"formal_run: {worker} claims {len(new_rows)} pairs ({len(picked)} tasks × {len(agents)} agents)"
+        msg = (f"formal_run: {worker} claims {len(new_rows)} pairs "
+               f"({len(picked)} tasks × {len(agents)} agents)")
         commit = subprocess.run(["git", "commit", "-m", msg], cwd=str(REPO_ROOT))
         if commit.returncode != 0:
-            print("[claim] nothing to commit; already up to date", file=sys.stderr)
+            print("[claim] nothing to commit; already up to date",
+                  file=sys.stderr)
             return 0
         push = subprocess.run(["git", "push"], cwd=str(REPO_ROOT))
         if push.returncode == 0:
@@ -588,17 +606,11 @@ def stream_claim(worker: str, n_tasks: int, agents: list[str] | None) -> int:
                   file=sys.stderr)
             return 0
 
-        # 6. push rejected — someone else pushed first. Undo the local
-        # commit, rebase, retry. Any pair they took will already show up
-        # as "claimed" in the next iteration and be skipped.
-        print(f"[claim] attempt {attempt}: push rejected; rebase+retry",
-              file=sys.stderr)
-        subprocess.run(["git", "reset", "--soft", "HEAD~1"],
-                       check=False, cwd=str(REPO_ROOT))
-        # Undo the local append too so we don't double-append on retry.
-        rows_now = load_queue()
-        kept = [r for r in rows_now if r not in new_rows]
-        rewrite_queue(kept)
+        # 6. push rejected — "give in", hard-reset to remote, and next
+        # iteration picks fresh unclaimed tasks (never the same picks).
+        print(f"[claim] attempt {attempt}: push rejected; giving up these "
+              f"{len(picked)} task(s) and claiming new ones from the "
+              f"post-rebase unclaimed set", file=sys.stderr)
         time.sleep(1.5 * attempt)
 
     print("[claim] exhausted retries", file=sys.stderr)
