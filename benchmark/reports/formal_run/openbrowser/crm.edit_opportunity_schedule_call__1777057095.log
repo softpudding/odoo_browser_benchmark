@@ -1,0 +1,54 @@
+=== Benchmark Evaluation ===
+  Task:   crm.edit_opportunity_schedule_call
+  Agent:  command
+  DB:     bench_fr_b09c42c2  (auto-isolated)
+  URL:    http://127.0.0.1:57263
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/openbrowser/crm.edit_opportunity_schedule_call__1777057095
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_b09c42c2 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 57263
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=0.2s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   0.2s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/openbrowser/crm.edit_opportunity_schedule_call__1777057095/
+
+  Postcondition failures:
+    - Expected revenue is 50000.0, expected 75000
+    - Probability is 40.0, expected 60
+    - No Call activity found on the opportunity
+  Missing expected edits:
+    - crm.lead.expected_revenue = 75000.0
+    - crm.lead.probability = 60.0

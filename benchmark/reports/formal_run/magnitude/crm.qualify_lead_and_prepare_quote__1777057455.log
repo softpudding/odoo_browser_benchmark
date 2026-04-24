@@ -1,0 +1,77 @@
+=== Benchmark Evaluation ===
+  Task:   crm.qualify_lead_and_prepare_quote
+  Agent:  command
+  DB:     bench_fr_9b4396a7  (auto-isolated)
+  URL:    http://127.0.0.1:58704
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/crm.qualify_lead_and_prepare_quote__1777057455
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_9b4396a7 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 58704
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 3 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 10 calls captured (3 writes, 7 reads)
+   State: 2 records across 3 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 7 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     13 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      13 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   10
+  Writes:            3 non-forbidden, 0 forbidden
+  Required ops MISSED: ['crm.lead.write', 'crm.lead2opportunity.partner.action_apply', 'crm.quotation.partner.action_apply', 'mail.activity.create', 'sale.order.write']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/crm.qualify_lead_and_prepare_quote__1777057455/
+
+  Postcondition failures:
+    - Target lead type is 'lead', expected 'opportunity'
+    - Target lead partner is False, expected 'Northwind Advisory East'
+    - Target lead stage is 'New', expected 'Qualified'
+    - Target lead expected revenue is 0.0, expected 24000.0
+    - Target lead is missing tag 'Executive Review'
+    - Expected exactly 1 target activity, found 0
+    - Expected exactly 1 target quotation, found 0
+  Missing expected edits:
+    - sale.order.client_order_ref = CRM-HANDOFF-24
+    - sale.order.opportunity_id = Northwind Advisory Platform Rollout
+    - sale.order.partner_id = Northwind Advisory East
+    - sale.order.state = draft
+    - sale.order.validity_date = 2026-05-20
+    - crm.lead.expected_revenue = 24000.0
+    - crm.lead.partner_id = Northwind Advisory East
+    - crm.lead.stage_id = Qualified
+    - crm.lead.type = opportunity
+    - mail.activity.activity_type_id = Call
+    - mail.activity.date_deadline = 2026-05-06
+    - mail.activity.res_model = crm.lead
+    - mail.activity.summary = Northwind discovery handoff

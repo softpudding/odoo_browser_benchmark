@@ -1,0 +1,51 @@
+Plan:
+1. Here is a minimal, step-by-step execution plan:
+2. 1. **Access & Authenticate**
+3.    - Open `http://127.0.0.1:61018/odoo/delivery-methods`
+4.    - Log in with username: `admin`, password: `admin`
+5. 2. **Create Delivery Method**
+6.    - Click **New** on the Delivery Methods list.
+7.    - Set **Delivery Method** name to `US Harbor Freight`
+8.    - Set **Provider** to `Fixed Price`
+9.    - For **Delivery Product**, trigger the create dialog, select **Service** 
+type, name it `US Harbor Shipping`, and save the product.
+10.    - Enter **Fixed Price**: `15.00`
+11.    - Set **Countries** restriction to `United States`
+12.    - Enable **Free if order amount is above** and set **Amount** to `100.00`
+13.    - Click **Save**
+14. 3. **Navigate & Locate Quotation**
+15.    - Open the **Sales** app.
+16.    - Filter/Find the draft quotation with Customer Reference `SHIP-US-100` 
+and open it. *(Strictly ignore `SHIP-CA-100`)*
+17. 4. **Apply Delivery & Verify**
+18.    - Add/Select `US Harbor Freight` as the delivery method for this 
+quotation.
+19.    - Verify exactly **one** new delivery line appears with a price of `0.00`
+(triggered by the untaxed amount ≥ `100.00`).
+20.    - Confirm **no changes** were made to the customer, existing lines, or 
+other delivery methods.
+21. 5. **Finalize**
+22.    - Click **Confirm** to convert the draft quotation to a confirmed sales 
+order.
+Reasoning: 
+Action: <action>
+click('http://127.0.0.1:61018/odoo/delivery-methods')
+</action>
+Reasoning: I am currently on the login page. The first step of the plan is to 
+log in with the provided credentials ('admin' / 'admin'). I will start by 
+clicking the email input field to enter the username.
+Action: click('434, 220')
+Reasoning: I am currently on the login page with the email field focused (based 
+on the previous click action). The plan requires me to log in with username 
+'admin' and password 'admin'. The first step is to enter the username into the 
+email field.
+Action: type('admin')
+Reasoning: I have successfully entered the username 'admin' into the email 
+field. The next step in the login process is to enter the password. I need to 
+click on the password input field to focus it so I can type the password 
+'admin'.
+Action: click('434, 341')
+Reasoning: 
+Action: <action>
+type('admin')
+</action>
