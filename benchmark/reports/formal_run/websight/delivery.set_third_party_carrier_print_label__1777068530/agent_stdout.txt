@@ -1,0 +1,65 @@
+Plan:
+1. ### Minimal Execution Plan
+2. 1. **Access & Authenticate**
+3.    - Open `http://127.0.0.1:59329/odoo` and log in with `admin` / `admin`.
+4.    - Navigate to **Inventory → Configuration → Shipping Methods** (or open 
+the direct link provided).
+5. 2. **Create Delivery Method**
+6.    - Click **New**.
+7.    - **Delivery Method**: `Bench Express`
+8.    - **Provider**: `Fixed Price`
+9.    - **Delivery Product**: Use the create-and-edit shortcut to name it `Bench
+Express Shipping`, save, and select it.
+10.    - **Fixed Price**: `12.00`
+11.    - Click **Save**.
+12. 3. **Locate Target Picking**
+13.    - Switch to the **Inventory** app → **Transfers**.
+14.    - Search/Filter for Source Document: `S-BENCH-DLV-002`.
+15.    - Open the matching outgoing picking (must be in **Ready** state with 
+`Bench Express Crate` × 3 reserved).
+16. 4. **Update & Validate**
+17.    - Scroll to **Additional Info** / **Shipping Information**.
+18.    - Set **Shipping Method** to `Bench Express`.
+19.    - Set **Tracking Reference** to exactly `BX-TRACK-002`.
+20.    - Click **Validate**. If a quantity dialog appears, accept defaults and 
+continue.
+21.    - Wait for the picking status to change to **Done**.
+22. 5. **Print Delivery Slip**
+23.    - Click the **Print** button in the header and select **Delivery Slip**. 
+(Stop after clicking; do not save/download the PDF.)
+24. ✅ **Rules Verified:** Customer/lines untouched, only one delivery method 
+created, picking ends in Done, tracking reference matches exactly.
+Reasoning: 
+Action: <action>
+{"action": "navigate", "url": "http://127.0.0.1:59329/odoo"}
+</action>
+Reasoning: The current screen is the Odoo login page. To proceed with the plan, 
+I first need to authenticate. I will enter the username 'admin' into the Email 
+field and the password 'admin' into the Password field, then click the 'Log in' 
+button.
+Action: {"action": "type", "text": "admin", "clear": true, "field": "Email"}
+Reasoning: The previous action filled the 'Email' field with 'admin'. Now I need
+to fill the 'Password' field with 'admin' and click the 'Log in' button to 
+authenticate. After successful login, I will navigate to the delivery methods 
+URL to create the new method.
+Action: {"action": "type", "text": "admin", "field": "Password"}
+Reasoning: The username and password have been entered. The next step is to 
+submit the login form by clicking the "Log in" button to authenticate and access
+the Odoo backend.
+Action: {"action": "click", "text": "Log in"}
+Reasoning: 
+Action: <action>
+{"action": "click", "text": "Inventory"}
+</action>
+Reasoning: 
+Action: <action>
+{"action": "navigate", "url": "http://127.0.0.1:59329/odoo/delivery-methods"}
+</action>
+Reasoning: 
+Action: <action>
+{"action": "click", "text": "Log in"}
+</action>
+Reasoning: 
+Action: <action>
+{"action": "type", "text": "admin", "field": "Email"}
+</action>
