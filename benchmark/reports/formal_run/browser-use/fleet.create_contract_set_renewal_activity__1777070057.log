@@ -1,0 +1,56 @@
+=== Benchmark Evaluation ===
+  Task:   fleet.create_contract_set_renewal_activity
+  Agent:  browser-use
+  DB:     bench_fr_00749647  (auto-isolated)
+  URL:    http://127.0.0.1:51241
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/browser-use/fleet.create_contract_set_renewal_activity__1777070057
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_00749647 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 51241
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 2 models
+   API trace recording: STARTED
+3. Running agent (browser-use)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 54 calls captured (25 writes, 29 reads)
+   State: 2 records across 2 models
+5. Computing state diff...
+   7 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     7 edits
+  Observed:     7 edits
+  Matching:     7 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   54
+  Writes:            25 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/browser-use/fleet.create_contract_set_renewal_activity__1777070057/
+
+  Postcondition failures:
+    - Expected exactly 1 Contract to Renew activity, found 0
