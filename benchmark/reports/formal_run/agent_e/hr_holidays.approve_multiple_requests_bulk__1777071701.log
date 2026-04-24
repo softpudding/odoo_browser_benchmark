@@ -1,0 +1,55 @@
+=== Benchmark Evaluation ===
+  Task:   hr_holidays.approve_multiple_requests_bulk
+  Agent:  command
+  DB:     bench_fr_1ba5914e  (auto-isolated)
+  URL:    http://127.0.0.1:60475
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/hr_holidays.approve_multiple_requests_bulk__1777071701
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_1ba5914e from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 60475
+   Done.
+2. Capturing pre-task state...
+   Captured 4 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 4 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      3 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/hr_holidays.approve_multiple_requests_bulk__1777071701/
+
+  Postcondition failures:
+    - Bench Alice vacation: state is 'confirm', expected 'validate' (bulk approve should have moved it from confirm to validate)
+    - Bench Bob vacation: state is 'confirm', expected 'validate' (bulk approve should have moved it from confirm to validate)
+    - Bench Carol vacation: state is 'confirm', expected 'validate' (bulk approve should have moved it from confirm to validate)
+  Missing expected edits:
+    - hr.leave.state = validate
+    - hr.leave.state = validate
+    - hr.leave.state = validate
