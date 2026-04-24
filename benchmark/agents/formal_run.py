@@ -54,7 +54,13 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[2]
 QUEUE_PATH = REPO_ROOT / "benchmark/reports/formal_run/queue.jsonl"
 LOCK_PATH = REPO_ROOT / "benchmark/reports/formal_run/.queue.lock"
-SYSTEM_PY = str(REPO_ROOT / ".venv/bin/python3")
+# Honor $BENCHMARK_SYSTEM_PY so each worker can point at the python
+# where their agent packages (notte, skyvern, alumnium, websight) live.
+# On xiao-cffef8 they're in miniforge3; on xiao-4dc953 they're in .venv.
+SYSTEM_PY = os.environ.get(
+    "BENCHMARK_SYSTEM_PY",
+    str(REPO_ROOT / ".venv/bin/python3"),
+)
 MITMDUMP = "/Users/yangxiao/miniforge3/bin/mitmdump"
 DASHSCOPE_UPSTREAM = "https://dashscope.aliyuncs.com"
 TOKEN_LOGGER_ADDON = "benchmark/agents/token_logger.py"
