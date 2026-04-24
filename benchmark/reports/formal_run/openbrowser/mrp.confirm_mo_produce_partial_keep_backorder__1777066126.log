@@ -1,0 +1,65 @@
+=== Benchmark Evaluation ===
+  Task:   mrp.confirm_mo_produce_partial_keep_backorder
+  Agent:  command
+  DB:     bench_fr_6d07d194  (auto-isolated)
+  URL:    http://127.0.0.1:61066
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/openbrowser/mrp.confirm_mo_produce_partial_keep_backorder__1777066126
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_6d07d194 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 61066
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=0.2s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     15 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      15 edits
+  Extra:        0 edits
+  Wall clock:   0.2s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/openbrowser/mrp.confirm_mo_produce_partial_keep_backorder__1777066126/
+
+  Postcondition failures:
+    - Manufacturing order 'MO-BENCH-PARTIAL' still exists under its original name (state='confirmed'). Expected it to have been renamed to 'MO-BENCH-PARTIAL-001' by Odoo's backorder split after clicking the primary 'Create backorder' button.
+  Missing expected edits:
+    - mrp.production.backorder_sequence = 0
+    - mrp.production.name = MO-BENCH-PARTIAL
+    - mrp.production.product_qty = 10.0
+    - mrp.production.qty_produced = 0.0
+    - mrp.production.state = confirmed
+    - mrp.production.backorder_sequence = 1
+    - mrp.production.name = MO-BENCH-PARTIAL-001
+    - mrp.production.product_qty = 4.0
+    - mrp.production.qty_produced = 4.0
+    - mrp.production.state = done
+    - mrp.production.backorder_sequence = 2
+    - mrp.production.name = MO-BENCH-PARTIAL-002
+    - mrp.production.product_qty = 6.0
+    - mrp.production.qty_produced = 0.0
+    - mrp.production.state = confirmed

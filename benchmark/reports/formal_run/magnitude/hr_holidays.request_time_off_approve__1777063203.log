@@ -1,0 +1,62 @@
+=== Benchmark Evaluation ===
+  Task:   hr_holidays.request_time_off_approve
+  Agent:  command
+  DB:     bench_fr_0c810b4c  (auto-isolated)
+  URL:    http://127.0.0.1:49545
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/hr_holidays.request_time_off_approve__1777063203
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_0c810b4c from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 49545
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=110.0s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 26 calls captured (11 writes, 15 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   1 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     1 edits
+  Observed:     1 edits
+  Matching:     0 edits
+  Missing:      1 edits
+  Extra:        1 edits
+  Wall clock:   110.0s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    0.9091
+  HarmfulWriteRate:  0.0909
+  StrictClean:       False
+  Total API calls:   26
+  Writes:            10 non-forbidden, 1 forbidden
+  Required ops MISSED: ['hr.leave.action_approve']
+  Forbidden ops FIRED: ['hr.leave.action_refuse']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/hr_holidays.request_time_off_approve__1777063203/
+
+  Postcondition failures:
+    - Leave state is 'refuse', expected 'validate'
+  Missing expected edits:
+    - hr.leave.state = validate
+  Unexpected extra edits:
+    + hr.leave.state = refuse

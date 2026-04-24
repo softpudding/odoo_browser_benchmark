@@ -1,0 +1,81 @@
+Plan:
+1. **1. Navigate & Authenticate**
+2. - Open `http://127.0.0.1:56118/odoo/email-marketing`
+3. - Log in with `admin` / `admin`
+4. **2. Initiate Blank Mailing**
+5. - Click **New** (do not duplicate or use any existing template)
+6. **3. Configure Header & Recipients**
+7. - **Subject**: Enter exactly `Spring Promo`
+8. - **Mailing Type**: Leave default `Email` (unchanged)
+9. - **Recipients**: Leave default `Mailing List` (unchanged)
+10. - **Mailing Lists**: Type `Bench Newsletter Subs`, wait for autocomplete, 
+and click the exact seeded record (do NOT trigger quick-create)
+11. **4. Set Email Body**
+12. - Click inside the rich-text editor, delete all placeholder/default text
+13. - Type exactly: `Save 20%`
+14. **5. Schedule**
+15. - Click the **Schedule** button in the top control panel (ignore Send / Send
+a Sample Mail)
+16. - In the `"When do you want to send your mailing?"` dialog:
+17.   - Clear the pre-filled **Send on** field
+18.   - Input exactly `05/20/2026 10:00:00`
+19. - Click the dialog's primary **Schedule** button
+20. **6. Final Verification**
+21. - Confirm form status updates to **In Queue** and displays the scheduled 
+date
+22. - Ensure exactly one `Spring Promo` mailing exists in the database
+23. - Verify no seeded records or lists were modified
+Reasoning: I need to navigate to the Odoo Email Marketing URL, log in, create a 
+new mailing with specific details, and schedule it. The user has provided a very
+specific plan which I will follow.
+1. Navigate to `http://127.0.0.1:56118/odoo/email-marketing`.
+2. Login with `admin` / `admin`.
+3. Click "New" to create a mailing.
+4. Fill in Subject: "Spring Promo".
+5. Ensure Recipients is "Mailing List" and select "Bench Newsletter Subs" from 
+the list.
+6. Edit the body to say "Save 20%".
+7. Click "Schedule", set the date to "05/20/2026 10:00:00", and confirm.
+Action: Go to http://127.0.0.1:56118/odoo/email-marketing.
+Reasoning: 
+Action: <action>
+click('')
+</action>
+Reasoning: I am currently on the login page. The email field is focused. I need 
+to enter the username 'admin' into the email field as the first step of the 
+login process.
+Action: fill('', 'admin')
+Reasoning: 
+Action: <action>
+fill('', 'admin')
+</action>
+Reasoning: 
+Action: <action>
+click('button:has-text("Log in")')
+</action>
+Reasoning: The user has successfully entered credentials and clicked the "Log 
+in" button. The next step is to navigate to the specific Email Marketing 
+application URL as instructed (`/odoo/email-marketing`) to begin creating the 
+new mailing. I will wait for the page to load after login and then navigate to 
+the target URL.
+Action: goto('http://127.0.0.1:56118/odoo/email-marketing')
+Reasoning: The current screenshot shows the login page for Odoo. The URL 
+contains a redirect parameter `%2Fodoo%2Femail-marketing`, which means after a 
+successful login, the system will redirect me to the Email Marketing app. The 
+fields are currently empty (placeholders visible). I need to enter the 
+credentials 'admin' for both username (email) and password, and then click the 
+"Log in" button.
+
+The previous history indicates attempts to fill fields using `data-mark-key` 
+which might have been incorrect or the state wasn't persisted, as the screenshot
+shows empty fields. I will use standard attribute selectors based on the visible
+placeholders to ensure the fields are filled correctly.
+Action: fill('input', 'admin')
+fill('input', 'admin')
+click('button:has-text("Log in")')
+Reasoning: 
+Action: <action>
+fill('input', 'admin')
+fill('input', 'admin')
+click('button:has-text("Log in")')
+</action>

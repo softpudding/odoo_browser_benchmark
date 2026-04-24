@@ -1,0 +1,43 @@
+Plan:
+1. ### Minimal Execution Plan
+2. **1. Login & Navigation**
+3. - Navigate to `http://127.0.0.1:64569/odoo/recruitment-applications`
+4. - Authenticate with `admin` / `admin`
+5. - Switch to **list view** (grid icon → list icon)
+6. **2. Filter & Identify**
+7. - Click the search bar, type `Python`, and select the **Skills** autocomplete
+option.
+8. - Scan the filtered rows to locate the single applicant matching:
+9.   - **Job Position:** `QA Lead`
+10.   - **Tag:** `Senior`
+11. **3. Select & Dispatch Email**
+12. - Tick the checkbox for **only** that applicant’s row. (Verify exactly 1 row
+is selected)
+13. - Click the ⚙ **Actions** dropdown → **Send Email**
+14. - **Subject:** Clear field, type exactly `Job Offer - QA Lead`
+15. - **Body:** Enter text containing `2026-06-01` (e.g., `Welcome aboard. Your 
+expected start date is 2026-06-01.`)
+16. - Click **Send**
+17. **4. Constraints & Verification**
+18. - ✅ Only one checkbox ticked
+19. - ✅ No modifications to stages, tags, skills, or other records
+20. - ✅ Chatter on the target applicant shows the new message with exact 
+subject and `2026-06-01` in body
+21. - ✅ Zero emails sent to other applicants
+Reasoning: 
+Action: <action>
+{"action": "navigate", "args": {"url": 
+"http://127.0.0.1:64569/odoo/recruitment-applications"}}
+</action>
+Reasoning: 
+Action: <action>
+{"action": "type", "args": {"xpath": "//input", "text": "admin"}}
+</action>
+Reasoning: 
+Action: <action>
+{"action": "type", "args": {"xpath": "//input", "text": "admin"}}
+</action>
+Reasoning: 
+Action: <action>
+{"action": "click", "xpath": "//button"}
+</action>
