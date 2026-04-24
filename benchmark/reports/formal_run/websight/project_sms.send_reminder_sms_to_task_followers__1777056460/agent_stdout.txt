@@ -1,0 +1,38 @@
+Plan:
+1. **Objective:** Send a reminder SMS to both reviewers in the *Bench SMS 
+Project*.
+2. **Endpoint:** `http://127.0.0.1:57817/odoo/project` | **Auth:** `admin` / 
+`admin`
+3. ### Execution Steps
+4. 1. **Login & Navigate** → Open URL → log in → open **Project** app → click 
+**Bench SMS Project** card → switch to **List view**.
+5. 2. **Select Records** → Tick checkboxes for both:
+6.    - `Urgent Review Request — Reviewer A`
+7.    - `Urgent Review Request — Reviewer B`
+8. 3. **Trigger Action** → Click **Actions** (cog icon) → select **Send SMS**.
+9. 4. **Configure & Send** → In the dialog, set **Message** to exactly: 
+`Reminder: please review by EOD` → click **Send now**.
+10. ### Critical Constraints
+11. - ✅ Keep both tasks selected until the dialog opens.
+12. - ✅ Do not alter recipient phone numbers or customer fields.
+13. - ✅ Send exactly once via **Send now** (do not use *Put in queue*).
+14. - ✅ Stay on the *Bench SMS Project* list until completion.
+Reasoning: The current screen is blank, indicating I am likely at the start of 
+the session or a blank page. The first step is to navigate to the provided URL 
+`http://127.0.0.1:57817/odoo/project` to begin the workflow.
+Action: {"action": "goto", "url": "http://127.0.0.1:57817/odoo/project"}
+Reasoning: I am currently on the login screen. I need to authenticate using the 
+provided credentials (admin/admin) to access the Odoo backend and proceed with 
+the task of sending SMS reminders. I will start by entering the username in the 
+email field and the password in the password field.
+Action: fill('255', 'admin')
+Reasoning: The email field has been filled with 'admin' in the previous step. I 
+now need to enter the password 'admin' into the password field to complete the 
+login credentials. After filling the password, the next step will be to click 
+the 'Log in' button.
+Action: fill('input', 'admin')
+Reasoning: Based on the history, the username 'admin' and password 'admin' have 
+been entered into the login form. The current screenshot shows the login page 
+with the "Log in" button visible. The next logical step to proceed with the task
+is to submit the login form by clicking the "Log in" button.
+Action: click('button', 'Log in')
