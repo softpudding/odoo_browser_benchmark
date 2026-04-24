@@ -1,0 +1,37 @@
+Plan:
+1. **Minimal Execution Plan**
+2. 1. **Access & Authenticate**
+3.    - Open `http://127.0.0.1:57199/odoo/inventory`
+4.    - Log in with `admin` / `admin`
+5.    - Enter the **Inventory** app if not auto-redirected
+6. 2. **Navigate to Adjustment List**
+7.    - Go to **Operations** → **Physical Inventory**
+8. 3. **Identify Target Line**
+9.    - Locate the row for `Bench Cycle Rotor` at location `WH/Cycle Bin`
+10.    - *Note:* Ignore the `Bench Cycle Rotor` line in `WH/Stock` (distractor)
+11. 4. **Update Target Line Only**
+12.    - Set **Counted Quantity** to `11`
+13.    - Set **Counted Date** to `05/15/2026`
+14.    - Trigger the **Apply** (or Update/Validate) action **specifically for 
+this row only**
+15. 5. **Final Verification**
+16.    - Confirm `WH/Cycle Bin` line reflects the new quantity and date
+17.    - Verify `WH/Stock` line remains untouched
+18.    - Ensure no new adjustment lines were created and the product name is 
+unchanged
+Reasoning: The current screen is blank, indicating that no page has been loaded 
+yet. The instruction requires me to go to the Odoo inventory URL, log in, and 
+access the Inventory app. Therefore, the first step is to navigate to the 
+specified URL.
+Action: go_to("http://127.0.0.1:57199/odoo/inventory")
+Reasoning: The current screen is the Odoo login page. The instruction requires 
+logging in with the credentials 'admin' and 'admin' before accessing the 
+Inventory app. I need to input the username and password into the respective 
+fields and submit the form.
+Action: type("admin", "Email")
+Reasoning: 
+Action: <action>type("admin", "Password")</action>
+Reasoning: 
+Action: <action>click("Log in")</action>
+Reasoning: 
+Action: <action>click("Inventory")</action>
