@@ -1,0 +1,45 @@
+Plan:
+1. **Minimal Execution Plan**
+2. 1. **Navigate & Login**
+3.    - Open `http://127.0.0.1:55598/odoo/recruitment`
+4.    - Log in with `admin` / `admin`
+5. 2. **Open Job Form**
+6.    - Click the **Recruitment** app
+7.    - Navigate to **Job Positions**
+8.    - Switch to **List View** via the view switcher/breadcrumb
+9.    - Click the row for **Bench Recruit Lead**
+10. 3. **Attach Survey**
+11.    - Open the **Recruitment** (or **Details**) tab
+12.    - Click the **Interview Form** field, type `Bench`, and select the 
+existing **Bench Screening** option from the dropdown
+13.    - Click **Save**
+14. 4. **Verify Applicant**
+15.    - Click the **Applicants** smart button (or go to **Recruitment > 
+Applicants**)
+16.    - Open the form for **Alice Candidate**
+17.    - Confirm the header button **Send Interview** is rendered
+18.    - **Stop.** (Do not click, modify, or change any other fields/data)
+Reasoning: 
+Action: <action>
+navigate(url='http://127.0.0.1:55598/odoo/recruitment')
+</action>
+Reasoning: The current page is the login screen for the Odoo instance. The URL 
+indicates a redirect to `/odoo/recruitment` after login. The first step in the 
+plan is to log in with 'admin' / 'admin'. I see the Email and Password fields. I
+will start by entering the email address 'admin' into the email field.
+Action: fill(field='Enter your email', value='admin')
+Reasoning: 
+Action: <action>
+fill(field='Enter your password', value='admin')
+</action>
+Reasoning: 
+Action: <action>
+click(element='Log in')
+</action>
+Reasoning: The login credentials ('admin' / 'admin') have been entered and the 
+'Log in' button was clicked in the previous step. Assuming successful 
+authentication, the page should have redirected to the Odoo backend dashboard. 
+The next step in the execution plan is to open the **Recruitment** app. I will 
+look for the app icon labeled "Recruitment" on the dashboard and click it to 
+proceed to the recruitment module.
+Action: click(element='Recruitment')
