@@ -1,0 +1,64 @@
+=== Benchmark Evaluation ===
+  Task:   account.partial_refund_service_credit_note
+  Agent:  command
+  DB:     bench_fr_9e882595  (auto-isolated)
+  URL:    http://127.0.0.1:52452
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/account.partial_refund_service_credit_note__1777050299
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_9e882595 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 52452
+   Done.
+2. Capturing pre-task state...
+   Captured 5 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 31 calls captured (12 writes, 19 reads)
+   State: 5 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     5 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      5 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   31
+  Writes:            12 non-forbidden, 0 forbidden
+  Required ops MISSED: ['account.move.action_post', 'account.move.reversal.refund_moves']
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/account.partial_refund_service_credit_note__1777050299/
+
+  Postcondition failures:
+    - CN-SERVICE-01 payment_state is 'not_paid', expected 'partial'
+    - No credit note found linked to CN-SERVICE-01
+  Missing expected edits:
+    - account.move.payment_state = partial
+    - account.move.partner_id = Greenfield Manufacturing
+    - account.move.payment_state = paid
+    - account.move.ref = Reversal of: INV/2026/00001, Warehouse Audit session canceled
+    - account.move.state = posted
