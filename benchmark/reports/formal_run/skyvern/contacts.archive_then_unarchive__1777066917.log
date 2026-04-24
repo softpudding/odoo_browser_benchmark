@@ -1,0 +1,59 @@
+=== Benchmark Evaluation ===
+  Task:   contacts.archive_then_unarchive
+  Agent:  command
+  DB:     bench_fr_948b3dc1  (auto-isolated)
+  URL:    http://127.0.0.1:50161
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/contacts.archive_then_unarchive__1777066917
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_948b3dc1 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 50161
+   Done.
+2. Capturing pre-task state...
+   Captured 9 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 36 calls captured (19 writes, 17 reads)
+   State: 9 records across 1 models
+5. Computing state diff...
+   1 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     1 edits
+  Matching:     1 edits
+  Missing:      1 edits
+  Extra:        0 edits
+  Wall clock:   600.1s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.5
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   36
+  Writes:            19 non-forbidden, 0 forbidden
+  Required ops MISSED: ['res.partner.action_unarchive']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/contacts.archive_then_unarchive__1777066917/
+
+  Postcondition failures:
+    - Contact 'Talon Vega (Bench-Archive-02)' is still archived; expected active
+  Missing expected edits:
+    - res.partner.active = True
