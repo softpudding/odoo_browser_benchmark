@@ -1,0 +1,67 @@
+=== Benchmark Evaluation ===
+  Task:   account.repair_and_post_invoice
+  Agent:  command
+  DB:     bench_fr_528198e2  (auto-isolated)
+  URL:    http://127.0.0.1:56976
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/alumnium/account.repair_and_post_invoice__1777065089
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_528198e2 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 56976
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=52.0s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 5 calls captured (1 writes, 4 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 8 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   52.0s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   5
+  Writes:            1 non-forbidden, 0 forbidden
+  Required ops MISSED: ['account.move.action_post', 'account.move.line.write', 'account.move.write']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/alumnium/account.repair_and_post_invoice__1777065089/
+
+  Postcondition failures:
+    - Target invoice state is draft, expected posted
+    - Acoustic Panel quantity is 1.0, expected 2.0
+    - Acoustic Panel discount is 0.0, expected 5.0
+    - Focus Lamp quantity is 3.0, expected 1.0
+    - Focus Lamp discount is 0.0, expected 15.0
+    - Desk Shelf quantity is 1.0, expected 3.0
+    - Desk Shelf discount is 10.0, expected 0.0
+    - Customer Reference is False, expected 'APR-OPS-READY'
+  Missing expected edits:
+    - account.move.ref = APR-OPS-READY
+    - account.move.state = posted

@@ -1,0 +1,72 @@
+Plan:
+1. Here is a minimal, step-by-step execution plan:
+2. 1. **Login & App Access**
+3.    - Open `http://127.0.0.1:56992/odoo`
+4.    - Log in with `admin` / `admin`
+5.    - Launch the **Invoicing** app
+6. 2. **Locate Target Invoice**
+7.    - Go to **Customers > Invoices** (or **Dashboard > Invoices**)
+8.    - Filter by Customer: `Beacon Design` & Status: `Draft`
+9.    - Open the invoice where **Source Document** / **Invoice Origin** = 
+`APR-OPS` (leave the other draft untouched)
+10. 3. **Extract Correct Line Values**
+11.    - Note every product listed on the invoice lines
+12.    - Navigate to **Invoicing > Customers > Products**
+13.    - Open each noted product, locate the **Sales Description** field
+14.    - Parse the format `Qty=X | Discount=Y` and record the correct Quantity 
+and Discount for each product
+15. 4. **Update Invoice Lines**
+16.    - Return to the `APR-OPS` invoice and click **Edit**
+17.    - For each line, replace the existing **Quantity** and **Discount (%)** 
+with the recorded values
+18.    - Save the line changes
+19. 5. **Set Reference & Post**
+20.    - Click the **Other Info** tab
+21.    - Set **Customer Reference** to `APR-OPS-READY`
+22.    - Click **Post** (or **Confirm**)
+23. 6. **Verification**
+24.    - Confirm invoice status changed to `Posted`
+25.    - Verify the second `Beacon Design` draft invoice remains completely 
+unchanged
+Reasoning: The user has provided a detailed plan. I need to start by navigating 
+to the Odoo instance and logging in. The first step is to go to the specified 
+URL.
+Action: go_to_url(url='http://127.0.0.1:56992/odoo')
+Reasoning: The user has provided a plan and the first step is to navigate to the
+Odoo instance URL. The history indicates that the first action should be to go 
+to the URL. I will execute the `go_to_url` action.
+Action: go_to_url(url='http://127.0.0.1:56992/odoo')
+Reasoning: The previous attempt to navigate to `http://127.0.0.1:56992/odoo` 
+resulted in a 404 error page, as seen in the screenshot. The Odoo web interface 
+is typically accessed via the `/web` path. Therefore, I should navigate to the 
+standard login page at `http://127.0.0.1:56992/web/login` to proceed with 
+logging in as admin.
+Action: go_to_url(url='http://127.0.0.1:56992/web/login')
+Reasoning: The previous history indicates that navigating to `/odoo` resulted in
+a 404 error, and the system corrected this by navigating to `/web/login`. The 
+current URL metadata confirms the browser is at 
+`http://127.0.0.1:56992/web/login`. Although the screenshot shows the 404 page 
+(likely reflecting the state before the successful navigation or the error 
+itself), the logical next step based on the plan and the corrected URL is to 
+perform the login. I will enter the username 'admin' and password 'admin' and 
+click the login button.
+Action: fill('input', 'admin'), fill('input', 'admin'), click('button')
+Reasoning: 
+Action: The screenshot shows a 404 error on the website frontend, even though 
+the URL metadata indicates `/web/login`. This suggests that the specific path 
+`/web/login` might not be resolving correctly to the backend login page, or the 
+request is being routed through the website module which doesn't recognize that 
+path. However, I can see a "Sign in" button in the top right corner of the 
+website header. Alternatively, accessing the root URL `/` or `/web` is the 
+standard way to access the Odoo backend. Given the previous failure, I will try 
+navigating to the root URL `http://127.0.0.1:56992/` which typically redirects 
+to the app menu or the login page.
+
+<action>go_to_url(url='http://127.0.0.1:56992/')</action>
+Reasoning: The previous attempts to navigate directly to backend URLs like 
+`/odoo` or `/web/login` have resulted in 404 errors or confusion. However, the 
+current screenshot shows the Odoo website frontend with a "Sign in" button in 
+the top right corner. Clicking this button is the standard way to access the 
+Odoo backend authentication page from the website frontend. This should bypass 
+the routing issues encountered with direct URL access.
+Action: click('a:contains("Sign in")')
