@@ -1,0 +1,45 @@
+Plan:
+1. ### Minimal Execution Plan
+2. 1. **Access & Login**
+3.    - Navigate to `http://127.0.0.1:58952/odoo/accounting`
+4.    - Enter username `admin`, password `admin`, and submit.
+5. 2. **Locate & Open Draft**
+6.    - From the Accounting dashboard, navigate to `Accounting → Journal 
+Entries`
+7.    - Use the search/filter to find Reference: `Bench Office Supplies Tmpl`
+8.    - Open the record (verify Status reads `Draft`)
+9. 3. **Configure Auto-Post**
+10.    - Click the `Other Info` tab in the bottom notebook
+11.    - Set `Auto-post` dropdown to `Monthly`
+12.    - Wait for `Auto-post until` field to appear, then set it to `08/01/2026`
+13. 4. **Save & Validate**
+14.    - Click the Save (cloud) icon
+15.    - Confirm the entry **remains in Draft** state
+16.    - Verify no changes were made to: Reference, Accounting Date 
+(`05/01/2026`), Journal (`Miscellaneous Operations`), or the two journal item 
+lines
+Reasoning: 
+Action: <action>
+{"action": "go_to_url", "url": "http://127.0.0.1:58952/odoo/accounting"}
+</action>
+Reasoning: I am currently on the login page. The previous action navigated to 
+the target URL, which redirected to the login screen. According to the plan, I 
+need to log in with username 'admin' and password 'admin'. I will start by 
+entering the username into the Email field.
+Action: {"action": "type", "text": "admin", "clear": 1, "field": "email"}
+Reasoning: 
+Action: <action>
+{"action": "type", "text": "admin", "clear": 1, "field": "password"}
+</action>
+Reasoning: The previous actions successfully entered the username 'admin' and 
+password 'admin' into the respective fields. The next logical step to complete 
+the login process is to click the "Log in" button to submit the credentials and 
+access the Accounting dashboard.
+Action: {"action": "click", "field": "Log in"}
+Reasoning: The user has just clicked the "Log in" button on the login page. The 
+next step is to wait for the page to load and redirect to the Accounting 
+dashboard (as per the redirect URL in the history). Once on the dashboard, I 
+need to navigate to the "Journal Entries" list to find the draft entry "Bench 
+Office Supplies Tmpl". I will navigate via the "Accounting" menu to "Journal 
+Entries".
+Action: {"action": "click", "field": "Accounting"}
