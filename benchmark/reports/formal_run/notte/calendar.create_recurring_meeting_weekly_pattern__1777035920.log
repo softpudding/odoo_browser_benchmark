@@ -1,0 +1,62 @@
+=== Benchmark Evaluation ===
+  Task:   calendar.create_recurring_meeting_weekly_pattern
+  Agent:  command
+  DB:     bench_fr_4dc9e39d  (auto-isolated)
+  URL:    http://127.0.0.1:58469
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/notte/calendar.create_recurring_meeting_weekly_pattern__1777035920
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_4dc9e39d from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 58469
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 38 calls captured (21 writes, 17 reads)
+   State: 4 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 7 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     0 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   38
+  Writes:            21 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/notte/calendar.create_recurring_meeting_weekly_pattern__1777035920/
+
+  Postcondition failures:
+    - Recurrence unexpectedly includes Tuesday
+    - Recurrence unexpectedly includes Wednesday
+    - Recurrence unexpectedly includes Thursday
+    - Recurrence unexpectedly includes Friday
+    - Recurrence unexpectedly includes Saturday
+    - Recurrence unexpectedly includes Sunday
+    - Expanded local dates are [datetime.date(2026, 5, 4), datetime.date(2026, 5, 5), datetime.date(2026, 5, 6), datetime.date(2026, 5, 7)], expected [datetime.date(2026, 5, 4), datetime.date(2026, 5, 11), datetime.date(2026, 5, 18), datetime.date(2026, 5, 25)]

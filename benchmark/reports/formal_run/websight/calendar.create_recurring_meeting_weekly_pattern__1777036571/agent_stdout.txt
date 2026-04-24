@@ -1,0 +1,61 @@
+Plan:
+1. **Step 1: Navigate & Authenticate**
+2. - Open `http://127.0.0.1:59922/odoo/calendar`
+3. - Enter username `admin` and password `admin`, then submit to log in.
+4. **Step 2: Access Calendar & Initiate Creation**
+5. - If redirected to a dashboard, click the **Calendar** app tile.
+6. - Click **New** (or `+ Event`) to open the event creation form.
+7. **Step 3: Set Event Basics**
+8. - Enter Title: `Bench Weekly Standup`
+9. - Set Start: `2026-05-04 10:00`
+10. - Set End: `2026-05-04 10:30`
+11. - Verify **All Day** is toggled OFF.
+12. **Step 4: Configure Recurrence**
+13. - Toggle the **Recurrent** switch ON.
+14. - Set frequency to **Weekly**.
+15. - In the weekday selector, deselect all days, then click/select **Monday 
+only**.
+16. - Under the end condition, select **Number of repetitions** (do not use "End
+date").
+17. - Enter `4` in the repetitions count field.
+18. **Step 5: Save & Verify**
+19. - Click **Save** (or `Confirm`).
+20. - Confirm the event appears on May 4 at 10:00 with a recurring series 
+indicator. No other events or settings are modified.
+Reasoning: I am starting the task by navigating to the specified Odoo calendar 
+URL. The plan indicates that after opening the URL, I will need to log in with 
+the provided credentials.
+Action: {"action": "navigate", "url": "http://127.0.0.1:59922/odoo/calendar"}
+Reasoning: The browser is currently on the Odoo login page, which appeared 
+because the initial navigation to the calendar URL required authentication. I 
+need to enter the username 'admin' into the email field and the password 'admin'
+into the password field, then click the 'Log in' button to proceed to the 
+calendar app as per the instructions.
+Action: [
+  {"action": "fill", "selector": "", "text": "admin"},
+  {"action": "fill", "selector": "", "text": "admin"},
+  {"action": "click", "selector": "button:has-text(\"Log in\")"}
+]
+Reasoning: 
+Action: <action>
+[
+  {"action": "fill", "selector": "", "text": "admin"},
+  {"action": "fill", "selector": "", "text": "admin"},
+  {"action": "click", "selector": "button:has-text(\"Log in\")"}
+]
+</action>
+Reasoning: The previous step involved submitting the login form. Assuming the 
+login is successful, the page will redirect to the Odoo App Dashboard. The next 
+step in the plan is to open the Calendar app. I need to locate the tile labeled 
+"Calendar" on the dashboard and click it to proceed to the calendar view where I
+can create the new event.
+Action: [
+  {"action": "click", "selector": "a:has-text('Calendar')"}
+]
+Reasoning: The previous action navigated to the Calendar app. I am now on the 
+Calendar dashboard/view. According to the plan, the next step is to initiate the
+creation of a new event. I need to click the "New" button to open the event 
+creation form.
+Action: [
+  {"action": "click", "selector": "button:has-text(\"New\")"}
+]
