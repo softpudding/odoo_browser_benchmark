@@ -1,0 +1,75 @@
+Plan:
+1. ### Minimal Execution Plan
+2. **1. Access & Authentication**
+3. - Navigate to `http://127.0.0.1:61802/odoo/inventory`
+4. - Log in: `admin` / `admin`
+5. **2. Create Service Product**
+6. - Path: `Inventory` → `Products` → `Products` → `[New]`
+7. - Fill form:
+8.   - `Product Name`: `Conference Pass Std`
+9.   - `Product Type`: `Service`
+10.   - `Sales Price`: `100.00`
+11.   - `Service Tracking`: `Event Registration` (on *General Information* / 
+*Sales* tab)
+12. - Action: `[Save]`
+13. **3. Link to Event**
+14. - App: Switch to `Events`
+15. - Record: Open `Spring Summit` (use search if not visible)
+16. - Tab: `Tickets` → `[Add a line]`
+17. - Fill row:
+18.   - `Product`: `Conference Pass Std` *(select existing, do not create)*
+19.   - `Name`: `Standard Pass`
+20.   - `Price`: `100`
+21.   - `Maximum`: `200`
+22. - Action: `[Save]`
+23. **4. Quick Validation**
+24. - Verify product record: `type='service'`, `list_price=100.00`, 
+`service_tracking='event'`
+25. - Verify event ticket: `Standard Pass` linked to product, `price=100`, 
+`seats_max=200`
+26. - Ensure no event dates, names, or placeholder tickets were altered.
+Reasoning: The user wants to set up an event ticketing flow in Odoo.
+First, I need to create the underlying product. I will navigate to the Inventory
+app, go to the Products list, and create a new record.
+The product details are: Name="Conference Pass Std", Type="Service", Sales 
+Price="100.00".
+Crucially, I need to set the `service_tracking` field to `event` (which 
+corresponds to "Event Registration" in the UI) so it can be used for events.
+After saving the product, I will switch to the Events app.
+I need to find the existing event "Spring Summit".
+Then, in the Tickets tab, I will add a new line item.
+The ticket details are: Product="Conference Pass Std", Name="Standard Pass", 
+Price="100", Maximum="200".
+Finally, I will save the event to commit the changes.
+Action: click, 49, 233, left, 0
+Reasoning: The current screen is blank (`about:blank`). The first step in the 
+plan is to navigate to the Odoo inventory URL. I need to type the URL into the 
+address bar to load the Odoo instance.
+Action: type, http://127.0.0.1:61802/odoo/inventory
+Reasoning: 
+Action: <action>
+click, 456, 220, left, 0
+</action>
+Reasoning: 
+Action: <action>
+click, 500, 215, left, 0
+</action>
+Reasoning: The current screen shows the Odoo login page. The previous steps 
+involved navigating to the URL. Now I need to authenticate to access the 
+backend. I will enter the username 'admin' in the email field and the password 
+'admin' in the password field, then click the 'Log in' button.
+Action: type, admin, left, 0
+Reasoning: The user is on the login page. The history indicates that 'admin' was
+typed, likely into the email field which is currently focused. The next step is 
+to enter the password. I need to click on the password field, type 'admin', and 
+then click the 'Log in' button to proceed with the task.
+Action: click, 502, 322, left, 0
+Reasoning: The history shows I have navigated to the Odoo login page and typed 
+'admin' into the email field. The last step was clicking the password field. Now
+I need to enter the password 'admin' and click the 'Log in' button to complete 
+the authentication process.
+Action: type, admin
+Reasoning: 
+Action: <action>
+click, 492, 428, left, 0
+</action>
