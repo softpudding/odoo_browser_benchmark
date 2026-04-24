@@ -1,0 +1,69 @@
+=== Benchmark Evaluation ===
+  Task:   account.create_recurring_journal_entry
+  Agent:  command
+  DB:     bench_fr_093f88bf
+  URL:    http://127.0.0.1:8069
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/agent_e/account.create_recurring_journal_entry__1777013252
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_093f88bf from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready (2s)
+   Done.
+2. Capturing pre-task state...
+   Captured 3 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+Traceback (most recent call last):
+  File "/Users/yangxiao/git/odoo/.venv/bin/benchmark-eval", line 10, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/Users/yangxiao/git/odoo/benchmark/eval.py", line 1671, in main
+    cmd_run(args)
+  File "/Users/yangxiao/git/odoo/benchmark/eval.py", line 1260, in cmd_run
+    return _run_episode(
+           ^^^^^^^^^^^^^
+  File "/Users/yangxiao/git/odoo/benchmark/eval.py", line 1401, in _run_episode
+    rpc = OdooRPC(base_url, db, rpc_login, rpc_password)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/yangxiao/git/odoo/benchmark/eval.py", line 204, in __init__
+    self.uid = self.common.authenticate(db, login, password, {})
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/yangxiao/miniforge3/lib/python3.12/xmlrpc/client.py", line 1122, in __call__
+    return self.__send(self.__name, args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/yangxiao/miniforge3/lib/python3.12/xmlrpc/client.py", line 1461, in __request
+    response = self.__transport.request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/yangxiao/miniforge3/lib/python3.12/xmlrpc/client.py", line 1166, in request
+    return self.single_request(host, handler, request_body, verbose)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/yangxiao/miniforge3/lib/python3.12/xmlrpc/client.py", line 1178, in single_request
+    http_conn = self.send_request(host, handler, request_body, verbose)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/yangxiao/miniforge3/lib/python3.12/xmlrpc/client.py", line 1291, in send_request
+    self.send_content(connection, request_body)
+  File "/Users/yangxiao/miniforge3/lib/python3.12/xmlrpc/client.py", line 1321, in send_content
+    connection.endheaders(request_body)
+  File "/Users/yangxiao/miniforge3/lib/python3.12/http/client.py", line 1333, in endheaders
+    self._send_output(message_body, encode_chunked=encode_chunked)
+  File "/Users/yangxiao/miniforge3/lib/python3.12/http/client.py", line 1093, in _send_output
+    self.send(msg)
+  File "/Users/yangxiao/miniforge3/lib/python3.12/http/client.py", line 1037, in send
+    self.connect()
+  File "/Users/yangxiao/miniforge3/lib/python3.12/http/client.py", line 1003, in connect
+    self.sock = self._create_connection(
+                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/yangxiao/miniforge3/lib/python3.12/socket.py", line 865, in create_connection
+    raise exceptions[0]
+  File "/Users/yangxiao/miniforge3/lib/python3.12/socket.py", line 850, in create_connection
+    sock.connect(sa)
+ConnectionRefusedError: [Errno 61] Connection refused
