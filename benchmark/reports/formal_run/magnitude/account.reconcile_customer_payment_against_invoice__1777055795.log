@@ -1,0 +1,69 @@
+=== Benchmark Evaluation ===
+  Task:   account.reconcile_customer_payment_against_invoice
+  Agent:  command
+  DB:     bench_fr_c320ee41  (auto-isolated)
+  URL:    http://127.0.0.1:57325
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/magnitude/account.reconcile_customer_payment_against_invoice__1777055795
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_c320ee41 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 57325
+   Done.
+2. Capturing pre-task state...
+   Captured 4 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 34 calls captured (10 writes, 24 reads)
+   State: 4 records across 2 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     10 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      10 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   34
+  Writes:            10 non-forbidden, 0 forbidden
+  Required ops MISSED: ['account.payment.register.action_create_payments']
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/magnitude/account.reconcile_customer_payment_against_invoice__1777055795/
+
+  Postcondition failures:
+    - INV/BENCH/RECON payment_state is 'not_paid', expected 'paid' or 'in_payment' (payment must be registered and reconciled)
+    - No account.payment found for Bench Recon Co
+  Missing expected edits:
+    - account.move.move_type = entry
+    - account.move.partner_id = Bench Recon Co
+    - account.move.payment_state = not_paid
+    - account.move.ref = INV/2026/00001
+    - account.move.state = posted
+    - account.move.payment_state = paid
+    - account.payment.amount = 500.0
+    - account.payment.partner_id = Bench Recon Co
+    - account.payment.payment_type = inbound
+    - account.payment.state = paid

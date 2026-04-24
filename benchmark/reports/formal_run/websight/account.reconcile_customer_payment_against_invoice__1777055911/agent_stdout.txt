@@ -1,0 +1,24 @@
+Plan:
+1. Here is a minimal, step-by-step execution plan:
+2. 1. **Navigate & Login**
+3.    - Go to `http://127.0.0.1:57966/odoo/accounting`
+4.    - Authenticate with username: `admin`, password: `admin`
+5. 2. **Locate & Open Invoice**
+6.    - Launch the **Invoicing** app.
+7.    - Navigate to **Customers ▸ Invoices**.
+8.    - Filter/Search for `INV/BENCH/RECON` or Customer `Bench Recon Co`.
+9.    - Open the invoice (verify it is `Posted` with `500.00` total).
+10. 3. **Initiate Payment Wizard**
+11.    - In the invoice form header, click **Pay** (or **Register Payment**).
+12. 4. **Configure Wizard Fields**
+13.    - **Journal**: Select `Bank`
+14.    - **Payment Method**: Select `Manual`
+15.    - **Amount**: Confirm default shows `500.00`
+16.    - **Payment Date**: Leave as default (today's date)
+17.    - **Memo**: Leave at default (auto-populated)
+18. 5. **Finalize & Verify**
+19.    - Click **Create Payment** (do not click Discard).
+20.    - Confirm the invoice view reloads with `payment_state` = `Paid` / `In 
+Payment`.
+21.    - Verify exactly one payment record exists for `Bench Recon Co` 
+(`500.00`, `Posted`, reconciled).
