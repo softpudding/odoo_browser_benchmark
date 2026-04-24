@@ -1,0 +1,59 @@
+Plan:
+1. ### Minimal Execution Plan
+2. #### 🔹 Phase 1: Access & Authenticate
+3. 1. Navigate to `http://127.0.0.1:54357/odoo/accounting`
+4. 2. Log in with: **Username** `admin` | **Password** `admin`
+5. 3. Ensure the **Accounting** app dashboard loads.
+6. #### 🔹 Phase 2: Open Blank Journal Entry
+7. 1. Top menu → click `Accounting`
+8. 2. Main menu → navigate to `Accounting → Journal Entries`
+9. 3. Click `New` to open a fresh journal entry form (`move_type = entry`)
+10. #### 🔹 Phase 3: Configure Header
+11. - **Journal**: `Miscellaneous Operations`
+12. - **Reference**: `Bench Manual Adj 2026-04`
+13. - **Accounting Date**: `04/30/2026` (April 30, 2026)
+14. #### 🔹 Phase 4: Add Journal Items (3 Lines)
+15. *Switch to the `Journal Items` tab and enter exactly:*
+16. | Line | Account             | Partner      | Label                         
+| Debit  | Credit |
+17. 
+|------|---------------------|--------------|-----------------------------------
+---|--------|--------|
+18. | 1    | Bench Receivable    | Bench Entity | Manual adjustment receivable  
+| 100.00 | 0.00   |
+19. | 2    | Bench Sales Revenue | –            | Manual adjustment — sales     
+| 0.00   | 60.00  |
+20. | 3    | Bench Other Revenue | –            | Manual adjustment — other 
+income     | 0.00   | 40.00  |
+21. ✅ **Balance Check**: Total Debit = `100.00` | Total Credit = `100.00`
+22. #### 🔹 Phase 5: Save & Post
+23. 1. Click **Save** (cloud/disk icon) to persist the draft.
+24. 2. Click **Post** (header button).
+25. 3. Verify header status reads **Posted**.
+Reasoning: I need to follow the user's plan to create a manual journal entry in 
+Odoo.
+First, I will navigate to the provided URL. Since the URL is `/odoo/accounting`,
+it will likely redirect to the login page because I am not authenticated.
+I will log in with `admin`/`admin`.
+Then, I need to ensure I am in the Accounting app.
+Next, I will navigate to `Accounting > Journal Entries` and click `New`.
+I will fill in the header details: Reference `Bench Manual Adj 2026-04`, Journal
+`Miscellaneous Operations`, Date `04/30/2026`.
+Then, I will add the three journal item lines as specified in the "Journal 
+Items" tab.
+Line 1: Account `Bench Receivable`, Partner `Bench Entity`, Label `Manual 
+adjustment receivable`, Debit `100.00`.
+Line 2: Account `Bench Sales Revenue`, Label `Manual adjustment — sales`, Credit
+`60.00`.
+Line 3: Account `Bench Other Revenue`, Label `Manual adjustment — other income`,
+Credit `40.00`.
+Finally, I will save and post the entry.
+Action: Go to http://127.0.0.1:54357/odoo/accounting
+Reasoning: The current page is the login screen. I need to authenticate to 
+access the Accounting app. I will enter the credentials `admin` for both email 
+and password fields and click the Log in button.
+Action: fill(input_field(above="Enter your email", placeholder="Enter your 
+email"), "admin")
+fill(input_field(above="Enter your password", placeholder="Enter your 
+password"), "admin")
+click(button("Log in"))
