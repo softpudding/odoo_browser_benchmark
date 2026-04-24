@@ -1,0 +1,61 @@
+Plan:
+1. # 📋 Minimal Execution Plan: Odoo SMS Delivery Trigger
+2. ### 🔑 Access
+3. - **URL:** `http://127.0.0.1:49513/odoo/inventory`
+4. - **Credentials:** `admin` / `admin`
+5. ---
+6. ### 🛠️ Phase 1: Enable Setting
+7. 1. Open **Inventory** app.
+8. 2. Navigate to **Configuration > Settings**.
+9. 3. Under **Operations**, check ✅ **Text Confirmation** (*Send an automatic 
+confirmation Text Message when Delivery Orders are done*).
+10. 4. Verify confirmation type = **SMS** (default).
+11. 5. Click **Save**.
+12. ### 📦 Phase 2: Trigger SMS
+13. 1. Return to **Inventory** dashboard → open **Delivery Orders** card.
+14. 2. Open transfer **S-BENCH-SMS-001** (Customer: *Bench SMS Customer*).
+15. 3. Verify fields match defaults (do not edit customer, product, quantity, 
+phone, date, or reference).
+16. 4. Click **Validate**.
+17. 5. When the **SMS** dialog appears, click **Confirm** exactly once. 
+*(Ignore/avoid "Disable SMS" and "Cancel".)*
+18. ---
+19. ### ✅ Compliance Guardrails
+20. - [ ] No picking data modified (customer, product, qty, phone, date, 
+reference)
+21. - [ ] "Text Confirmation" setting saved before validation
+22. - [ ] SMS dialog confirmed exactly once
+23. - [ ] Delivery state updates to `Done`
+24. *Plan ready for execution.*
+Reasoning: The user wants to enable SMS delivery confirmation in Odoo. The first
+step is to navigate to the Odoo Inventory URL and log in. The screenshot is 
+blank, suggesting the page hasn't loaded yet or is just starting. I will 
+navigate to the specified URL.
+Action: goToUrl("http://127.0.0.1:49513/odoo/inventory")
+Reasoning: 
+Action: <action>
+click(selector="input")
+</action>
+Reasoning: The user is on the login page, and the email input field is currently
+focused. The plan requires logging in with the username 'admin'. Therefore, the 
+next step is to type 'admin' into the focused email field.
+Action: type(text="admin")
+Reasoning: 
+Action: <action>
+click(selector="input")
+</action>
+Reasoning: 
+Action: <action>
+type(text="admin")
+</action>
+Reasoning: The user has entered the credentials 'admin' for both email and 
+password. The "Log in" button is visible and ready to be clicked to authenticate
+and enter the Odoo backend. This is the necessary next step to proceed with the 
+task of enabling SMS confirmation and validating the delivery.
+Action: click(selector="button:has-text('Log in')")
+Reasoning: The user is currently on the Odoo app dashboard. To follow the plan 
+"Phase 1: Enable Setting", step 1 is to "Open Inventory app". The screenshot 
+shows the "Inventory" app icon is available and the cursor is near it. Clicking 
+this icon will take the user into the Inventory module where they can access 
+Configuration > Settings.
+Action: click(selector="img")

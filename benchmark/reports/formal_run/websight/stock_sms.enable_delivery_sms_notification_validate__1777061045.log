@@ -1,0 +1,62 @@
+=== Benchmark Evaluation ===
+  Task:   stock_sms.enable_delivery_sms_notification_validate
+  Agent:  command
+  DB:     bench_fr_e8fa5d47  (auto-isolated)
+  URL:    http://127.0.0.1:49513
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/websight/stock_sms.enable_delivery_sms_notification_validate__1777061045
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_e8fa5d47 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 49513
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 3 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 4 calls captured (1 writes, 3 reads)
+   State: 2 records across 3 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      3 edits
+  Extra:        0 edits
+  Wall clock:   600.1s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   4
+  Writes:            1 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/websight/stock_sms.enable_delivery_sms_notification_validate__1777061045/
+
+  Postcondition failures:
+    - res.company.stock_text_confirmation is still False — the Text Confirmation setting was not enabled.
+    - Picking S-BENCH-SMS-001 state='assigned', expected 'done' (agent must click Validate).
+    - No sms.sms record found with number +16175551234 — validating the picking did not trigger the SMS side effect.
+  Missing expected edits:
+    - sms.sms.number = +16175551234
+    - stock.picking.state = done
+    - res.company.stock_text_confirmation = True
