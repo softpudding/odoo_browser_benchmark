@@ -1,0 +1,75 @@
+=== Benchmark Evaluation ===
+  Task:   account.create_vendor_bill_from_scratch_pay
+  Agent:  command
+  DB:     bench_fr_8f62b7a3
+  URL:    http://127.0.0.1:8069
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/alumnium/account.create_vendor_bill_from_scratch_pay__1777014873
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_8f62b7a3 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready (2s)
+   Done.
+2. Capturing pre-task state...
+   Captured 3 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=16.3s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 16 calls captured (1 writes, 15 reads)
+   State: 3 records across 2 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     18 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      18 edits
+  Extra:        0 edits
+  Wall clock:   16.3s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   16
+  Writes:            1 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/alumnium/account.create_vendor_bill_from_scratch_pay__1777014873/
+
+  Postcondition failures:
+    - Vendor bill with ref='BENCH-VBILL-001' and move_type='in_invoice' not found — did the agent click New and fill the reference?
+  Missing expected edits:
+    - account.move.amount_total = 150.0
+    - account.move.invoice_date = None
+    - account.move.move_type = entry
+    - account.move.partner_id = Bench Bill Vendor
+    - account.move.payment_state = not_paid
+    - account.move.ref = BENCH-VBILL-001
+    - account.move.state = posted
+    - account.move.amount_total = 150.0
+    - account.move.invoice_date = 2026-05-10
+    - account.move.move_type = in_invoice
+    - account.move.partner_id = Bench Bill Vendor
+    - account.move.payment_state = paid
+    - account.move.ref = BENCH-VBILL-001
+    - account.move.state = posted
+    - account.payment.amount = 150.0
+    - account.payment.partner_id = Bench Bill Vendor
+    - account.payment.payment_type = outbound
+    - account.payment.state = in_process
