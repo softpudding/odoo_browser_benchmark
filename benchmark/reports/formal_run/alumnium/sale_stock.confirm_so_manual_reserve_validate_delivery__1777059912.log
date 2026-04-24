@@ -1,0 +1,65 @@
+=== Benchmark Evaluation ===
+  Task:   sale_stock.confirm_so_manual_reserve_validate_delivery
+  Agent:  command
+  DB:     bench_fr_0f1c8154  (auto-isolated)
+  URL:    http://127.0.0.1:60547
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/alumnium/sale_stock.confirm_so_manual_reserve_validate_delivery__1777059912
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_0f1c8154 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 60547
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=65.1s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 5 calls captured (1 writes, 4 reads)
+   State: 2 records across 2 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 4 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      4 edits
+  Extra:        0 edits
+  Wall clock:   65.1s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   5
+  Writes:            1 non-forbidden, 0 forbidden
+  Required ops MISSED: ['sale.order.action_confirm', 'stock.picking.action_assign']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/alumnium/sale_stock.confirm_so_manual_reserve_validate_delivery__1777059912/
+
+  Postcondition failures:
+    - SO state is 'draft', expected 'sale'
+    - Expected exactly 1 delivery, found 0
+    - Bench Servo Housing delivered qty is 0.0, expected 7.0
+    - Bench Control Cable delivered qty is 0.0, expected 5.0
+  Missing expected edits:
+    - stock.picking.origin = BENCH-RESERVE-SO
+    - stock.picking.partner_id = Northwind Assembly
+    - stock.picking.state = done
+    - sale.order.state = sale
