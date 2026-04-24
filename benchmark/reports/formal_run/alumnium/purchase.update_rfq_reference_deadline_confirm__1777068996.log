@@ -1,0 +1,63 @@
+=== Benchmark Evaluation ===
+  Task:   purchase.update_rfq_reference_deadline_confirm
+  Agent:  command
+  DB:     bench_fr_f138f86b  (auto-isolated)
+  URL:    http://127.0.0.1:56333
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/alumnium/purchase.update_rfq_reference_deadline_confirm__1777068996
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_f138f86b from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 56333
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=132.7s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 7 calls captured (2 writes, 5 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 4 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   132.7s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   7
+  Writes:            2 non-forbidden, 0 forbidden
+  Required ops MISSED: ['purchase.order.button_confirm']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/alumnium/purchase.update_rfq_reference_deadline_confirm__1777068996/
+
+  Postcondition failures:
+    - PO state is 'draft', expected 'purchase'
+    - Vendor Reference is 'MED-RFQ-REF-01', expected 'NCC-8842'
+    - Order deadline is 2026-04-25, expected 2026-05-22
+    - Dock Seal Kit quantity is 18.0, expected 24
+  Missing expected edits:
+    - purchase.order.partner_ref = NCC-8842
+    - purchase.order.state = purchase

@@ -1,0 +1,59 @@
+=== Benchmark Evaluation ===
+  Task:   mail.star_and_reply_inbox_message
+  Agent:  command
+  DB:     bench_fr_97534db4  (auto-isolated)
+  URL:    http://127.0.0.1:53199
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/websight/mail.star_and_reply_inbox_message__1777064118
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_97534db4 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 53199
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 3 records across 1 models
+5. Computing state diff...
+   8 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     0 edits
+  Observed:     8 edits
+  Matching:     0 edits
+  Missing:      0 edits
+  Extra:        8 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/websight/mail.star_and_reply_inbox_message__1777064118/
+
+  Postcondition failures:
+    - Seeded message 'Please confirm receipt of the Q2 status update.' is not starred by admin (starred_partner_ids does not include the admin partner)
+    - No reply mail.message found whose body contains 'Acknowledged - will follow up by Friday.'
+  Unexpected extra edits:
+    + mail.notification.is_read = True
+    + mail.notification.mail_message_id = 🎉 You've earned the Community hero badge!
+    + mail.notification.notification_type = email
+    + mail.notification.res_partner_id = Administrator
+    + mail.notification.is_read = True
+    + mail.notification.mail_message_id = 🎉 You've earned the Get started badge!
+    + mail.notification.notification_type = email
+    + mail.notification.res_partner_id = Administrator

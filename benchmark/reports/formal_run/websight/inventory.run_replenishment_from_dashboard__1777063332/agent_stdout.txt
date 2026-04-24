@@ -1,0 +1,73 @@
+Plan:
+1. Here is a minimal, step-by-step execution plan:
+2. 1. **Access & Authenticate**
+3.    - Navigate to `http://127.0.0.1:50064/odoo/inventory`
+4.    - Log in with username: `admin`, password: `admin`
+5. 2. **Navigate to Replenishment**
+6.    - Click the **Inventory** app from the dashboard
+7.    - Open top menu: `Operations → Replenishment`
+8. 3. **Trigger Order for Target Product**
+9.    - Locate the row for **Bench Reorder Widget**
+10.    - Verify row details: `Vendor = Bench Supplies Ltd`, `To Order = 28`
+11.    - Click the **Order** button (truck icon) on the far right of that row
+12.    - *Constraint Check:* Ensure no other rows are selected or triggered
+13. 4. **Handle Confirmation Wizard**
+14.    - If a dialog appears, verify the quantity defaults to `28`
+15.    - Click **Confirm** (or equivalent action button)
+16. 5. **Verify & Lock State**
+17.    - Navigate to `Purchase → Draft Orders` (or follow the 
+auto-redirect/link)
+18.    - Confirm exactly one draft `purchase.order` exists for vendor **Bench 
+Supplies Ltd**
+19.    - Verify the order contains **1 line**: `Bench Reorder Widget | Qty: 28`
+20.    - Leave the PO in **Draft** status
+21.    - *Constraint Check:* Confirm Min/Max rules, product master, and no other
+POs/RFQs remain untouched
+Reasoning: 
+Action: <action>
+navigate('http://127.0.0.1:50064/odoo/inventory')
+</action>
+Reasoning: The current screen is the Odoo login page. To proceed with the 
+instructions, I must first authenticate. The username and password are provided 
+in the prompt as 'admin' and 'admin'. I will first click the email field, enter 
+the username, then the password field, enter the password, and finally click the
+login button.
+Action: click('211')
+Reasoning: The previous action clicked the email input field. Now I need to 
+enter the username 'admin' into this field as part of the login process 
+described in the instructions.
+Action: type('211', 'admin')
+Reasoning: The previous action successfully entered the username 'admin' into 
+the email field. The next step in the login process is to enter the password. I 
+need to click on the password input field (which is below the email field and 
+has the placeholder "Enter your password") to focus it before typing the 
+password 'admin'. Based on the element sequence, if the email field was '211', 
+the password field is likely '213'.
+Action: click('213')
+Reasoning: 
+Action: <action>
+type('213', 'admin')
+</action>
+Reasoning: 
+Action: <action>
+type('213', 'admin')
+</action>
+Reasoning: 
+Action: <action>
+click('214')
+</action>
+Reasoning: The login button was clicked in the previous step. Assuming 
+successful authentication, the Odoo App Dashboard should now be displayed. The 
+next step in the plan is to open the **Inventory** app. I need to locate the 
+"Inventory" app icon on the dashboard and click it.
+Action: click('Inventory')
+Reasoning: 
+Action: The previous action was clicking the Inventory app. Now that the 
+Inventory app is open, I need to navigate to the Replenishment view via the top 
+menu bar. The standard Odoo menu path is `Operations > Replenishment`. I will 
+click on the "Operations" menu item in the top navigation bar to reveal the 
+submenu options.
+
+<action>
+click('Operations')
+</action>

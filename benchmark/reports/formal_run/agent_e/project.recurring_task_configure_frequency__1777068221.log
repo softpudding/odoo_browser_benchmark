@@ -1,0 +1,63 @@
+=== Benchmark Evaluation ===
+  Task:   project.recurring_task_configure_frequency
+  Agent:  command
+  DB:     bench_fr_087f44a8  (auto-isolated)
+  URL:    http://127.0.0.1:53236
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/project.recurring_task_configure_frequency__1777068221
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_087f44a8 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 53236
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 111 calls captured (44 writes, 67 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   5 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     5 edits
+  Observed:     5 edits
+  Matching:     3 edits
+  Missing:      2 edits
+  Extra:        2 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   111
+  Writes:            44 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/project.recurring_task_configure_frequency__1777068221/
+
+  Postcondition failures:
+    - Task 'Weekly Status Update' has repeat_type='forever', expected 'until'
+    - Task 'Weekly Status Update' has repeat_until=2026-05-01, expected 2026-06-13
+  Missing expected edits:
+    - project.task.repeat_type = until
+    - project.task.repeat_until = 2026-06-13
+  Unexpected extra edits:
+    + project.task.repeat_type = forever
+    + project.task.repeat_until = 2026-05-01

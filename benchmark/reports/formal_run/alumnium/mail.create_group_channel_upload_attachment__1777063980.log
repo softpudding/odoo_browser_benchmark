@@ -1,0 +1,60 @@
+=== Benchmark Evaluation ===
+  Task:   mail.create_group_channel_upload_attachment
+  Agent:  command
+  DB:     bench_fr_6746f23f  (auto-isolated)
+  URL:    http://127.0.0.1:52729
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/alumnium/mail.create_group_channel_upload_attachment__1777063980
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_6746f23f from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 52729
+   Done.
+2. Capturing pre-task state...
+   Captured 3 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=72.0s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 7 calls captured (2 writes, 5 reads)
+   State: 3 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   72.0s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   7
+  Writes:            2 non-forbidden, 0 forbidden
+  Required ops MISSED: ['discuss.channel.create', 'discuss.channel.message_post']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/alumnium/mail.create_group_channel_upload_attachment__1777063980/
+
+  Postcondition failures:
+    - Discuss channel 'Bench Project Sync' not found
+  Missing expected edits:
+    - discuss.channel.channel_type = group
+    - discuss.channel.name = Bench Project Sync

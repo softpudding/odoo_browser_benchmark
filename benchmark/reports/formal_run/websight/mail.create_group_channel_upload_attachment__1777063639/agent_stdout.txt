@@ -1,0 +1,59 @@
+Plan:
+1. ### Minimal Execution Plan
+2. 1. **Navigate & Authenticate**
+3.    - Open `http://127.0.0.1:51486/odoo/discuss`.
+4.    - Log in with username `admin` and password `admin`.
+5. 2. **Create Private Group Channel**
+6.    - In the Discuss left sidebar, click **`+`** (or *New Chat*).
+7.    - Select **Channel**.
+8.    - Toggle visibility to **Private**.
+9.    - Enter the exact name: `Bench Project Sync`.
+10.    - Click **Create/Confirm**.
+11. 3. **Invite Channel Member Bob**
+12.    - Open the channel settings/member panel for `Bench Project Sync`.
+13.    - Search for `Channel Member Bob` (login: `channel.bob`).
+14.    - Add/Invite only this user to the channel. Verify no other users are 
+added.
+15. 4. **Prepare Attachment**
+16.    - Locally create a file named exactly `sync-notes.txt`.
+17.    - Ensure its content is exactly one line: `Kickoff agenda for Bench 
+Project Sync.`
+18. 5. **Upload & Post Message**
+19.    - In the channel's bottom message composer, click the 
+**Attachment/Paperclip** icon.
+20.    - Select `sync-notes.txt`.
+21.    - Leave the text input **empty**.
+22.    - Click **Send**.
+23. 6. **Verify Completion**
+24.    - Confirm `Bench Project Sync` is a private group.
+25.    - Confirm only Administrator and Channel Member Bob are members.
+26.    - Confirm the channel displays a message containing only the 
+`sync-notes.txt` attachment.
+Reasoning: I need to start by navigating to the Odoo Discuss application at the 
+specified URL. The first step is to open the browser and go to the address. Then
+I will need to log in with the provided credentials.
+Action: navigate("http://127.0.0.1:51486/odoo/discuss")
+Reasoning: I am currently on the login page. I need to log in with the provided 
+credentials (admin/admin) to access the Odoo Discuss application. The form has 
+inputs for Email and Password. I will enter the credentials and submit the form.
+Action: fill('254', 'admin')
+Reasoning: I am currently on the login page. The previous action started filling
+the email field. I need to finish filling the email field, then fill the 
+password field, and finally click the login button to proceed with the task.
+Action: fill('254', 'admin')
+Reasoning: 
+Action: <action>
+fill('input', 'admin')
+</action>
+Reasoning: 
+Action: <action>
+click('Log in')
+</action>
+Reasoning: 
+Action: <action>
+fill('input', 'admin')
+</action>
+Reasoning: 
+Action: <action>
+click('Channels')
+</action>
