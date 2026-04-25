@@ -1,0 +1,69 @@
+Plan:
+1. ### Minimal Execution Plan
+2. 1. **Access & Login**
+3.    - Navigate to `http://127.0.0.1:54565/odoo/inventory`
+4.    - Log in: `admin` / `admin`
+5. 2. **Cancel Wrong Receipt (`R-BENCH-CANCEL-001`)**
+6.    - Open **Receipts** (kanban tile or `Operations > Transfers` filtered to 
+Receipts)
+7.    - Open `R-BENCH-CANCEL-001` → Click **Cancel** in header
+8.    - Verify state is **Cancelled**. *(Do not delete/unlink)*
+9. 3. **Create & Confirm Replacement**
+10.    - Click **New** in Receipts list
+11.    - Set **Receive From**: `Bench Supplier Inc`
+12.    - Add operation line: Product `Bench Serial Widget`, Demand `2`
+13.    - Click **Save** → Click **Mark as Todo** / **Confirm** → Dismiss any 
+stock warnings
+14. 4. **Assign Serials (Detailed Operations)**
+15.    - On the widget line, click **Details**
+16.    - Click **Add a line** to create a second row
+17.    - Row 1: Lot/Serial `BS-001` (select "Create" when prompted), Qty `1`
+18.    - Row 2: Lot/Serial `BS-002` (select "Create"), Qty `1`
+19.    - Click **Save** / close modal
+20. 5. **Validate & Finalize**
+21.    - Click **Validate** in header
+22.    - If backorder wizard appears: select **Process without backorder** (or 
+`Apply all`)
+23.    - Confirm receipt state is **Done**
+Reasoning: I need to start by navigating to the Odoo Inventory URL and logging 
+in. The URL provided is `http://127.0.0.1:54565/odoo/inventory`. The credentials
+are `admin` / `admin`.
+Action: goto http://127.0.0.1:54565/odoo/inventory
+Reasoning: I am currently on the login page for the Odoo website. To proceed 
+with the inventory tasks, I need to log in first. I will enter the username 
+'admin' into the email field and the password 'admin' into the password field, 
+then click 'Log in'.
+Action: fill('email', 'admin')
+Reasoning: I am on the login page. I have filled the email field with 'admin'. 
+Now I need to fill the password field with 'admin' and then click the 'Log in' 
+button to access the Odoo backend. After logging in, I will navigate to the 
+Inventory app to perform the required tasks (canceling the receipt and creating 
+a new one).
+Action: fill('password', 'admin')
+Reasoning: The previous actions involved filling the email and password fields 
+with 'admin'. Although the screenshot placeholders might suggest they are empty 
+(or the screenshot is from just before the fill), the history confirms 
+`fill('password', 'admin')` was the last step. To proceed with the login process
+as per the plan, I must now click the "Log in" button to authenticate and access
+the Odoo backend.
+Action: click('Log in')
+Reasoning: The history indicates that the login process was initiated by 
+clicking the "Log in" button. The instructions explicitly state "You are in the 
+Odoo 19 Inventory app, logged in as Administrator," which implies the login was 
+successful and the page has redirected to the Inventory Dashboard (consistent 
+with the redirect URL `/odoo/inventory` seen in the login screenshot's query 
+string).
+
+The next step in the plan is "Cancel Wrong Receipt (`R-BENCH-CANCEL-001`)". To 
+do this, I first need to access the list of receipts. On the Odoo Inventory 
+Dashboard, there is typically a kanban card labeled "Receipts" that shows the 
+count of transfers in various states (e.g., Ready, Waiting). Clicking this card 
+will open the list view of all receipt transfers, allowing me to find and open 
+`R-BENCH-CANCEL-001`.
+Action: click('Receipts')
+Reasoning: The previous action was clicking the 'Receipts' kanban tile. The page
+should now be displaying the list of receipts. I need to find the receipt 
+`R-BENCH-CANCEL-001` to cancel it. Since the list might be long, I should look 
+for the specific record. Once I locate the row corresponding to 
+`R-BENCH-CANCEL-001`, I will click on it to open the form view.
+Action: click('R-BENCH-CANCEL-001')
