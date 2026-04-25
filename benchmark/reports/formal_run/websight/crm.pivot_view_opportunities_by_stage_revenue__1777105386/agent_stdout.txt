@@ -1,0 +1,52 @@
+Plan:
+1. Here is a minimal, step-by-step plan:
+2. **1. Authenticate & Access Pipeline**
+3. - Open `http://127.0.0.1:65391/odoo/crm` in your browser.
+4. - Log in with `admin` / `admin`.
+5. - Ensure you are in the **CRM** app and click the **Pipeline** menu item.
+6. **2. Switch to Pivot View**
+7. - Locate the view switcher at the top-right corner.
+8. - Click the **Pivot** icon (grid/matrix) to change the view.
+9. **3. Configure Pivot Layout**
+10. - **Group by Stage:** Click the `+` button next to the `Total` row header. 
+Select **Stage** from the dropdown to group rows.
+11. - **Set Measures:** Click the **Measures** dropdown. Check **Expected 
+Revenue**. Uncheck **Count** (or any other default measures) so only Expected 
+Revenue is active.
+12. **4. Save as Favorite**
+13. - Click the **Favorites** dropdown in the search bar.
+14. - Select **Save current search**.
+15. - Enter the name exactly: `Bench Stage Revenue Pivot`
+16. - Click **Save**.
+17. **Verification:** The view should reload with `Stage` as rows and `Expected 
+Revenue` as the sole measure. The favorite will now be permanently available 
+under the CRM Pipeline (`crm.lead` model) without altering any opportunity data.
+Reasoning: 
+Action: <action>
+open(url="http://127.0.0.1:65391/odoo/crm")
+</action>
+Reasoning: I am currently on the login page. The URL indicates a redirect to the
+CRM module after login. I need to enter the credentials 'admin' for both 
+username (Email field) and password to access the Odoo backend.
+Action: click(selector="input")
+Reasoning: The user is currently on the login page. The first step is to enter 
+the email address 'admin' into the email input field to begin the authentication
+process as per the plan.
+Action: fill(selector="input", text="admin")
+Reasoning: The previous action successfully filled the email field with 'admin'.
+The next step in the authentication process is to enter the password 'admin' 
+into the password field. The password field is clearly visible with the 
+placeholder "Enter your password". After filling the password, the subsequent 
+step will be to click the 'Log in' button.
+Action: fill(selector="input", text="admin")
+Reasoning: The login form has been filled with the required credentials ('admin'
+for email and password). To proceed with the authentication and access the CRM 
+application as planned, I need to click the 'Log in' button. This will submit 
+the credentials and, assuming they are correct, redirect the user to the CRM 
+dashboard where the subsequent steps (opening Pipeline, switching to Pivot view,
+etc.) can be performed.
+Action: click(selector="button:has-text('Log in')")
+Reasoning: 
+Action: <action>
+click(selector="a:has-text('My Pipeline')")
+</action>
