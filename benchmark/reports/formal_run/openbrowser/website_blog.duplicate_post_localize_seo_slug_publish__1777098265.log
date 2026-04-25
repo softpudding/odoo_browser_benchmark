@@ -1,0 +1,54 @@
+=== Benchmark Evaluation ===
+  Task:   website_blog.duplicate_post_localize_seo_slug_publish
+  Agent:  command
+  DB:     bench_fr_3cfb0c01  (auto-isolated)
+  URL:    http://127.0.0.1:54260
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/openbrowser/website_blog.duplicate_post_localize_seo_slug_publish__1777098265
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_3cfb0c01 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Starting Odoo...
+   Odoo ready on port 54260
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=0.2s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     5 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      5 edits
+  Extra:        0 edits
+  Wall clock:   0.2s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/openbrowser/website_blog.duplicate_post_localize_seo_slug_publish__1777098265/
+
+  Postcondition failures:
+    - Duplicate post missing
+  Missing expected edits:
+    - blog.post.is_published = True
+    - blog.post.name = Warehouse Safety Primer EU
+    - blog.post.website_meta_description = Safety baseline for EU warehouse operations and dock checks.
+    - blog.post.website_meta_title = Warehouse Safety Primer for EU Teams
+    - blog.post.website_published = True

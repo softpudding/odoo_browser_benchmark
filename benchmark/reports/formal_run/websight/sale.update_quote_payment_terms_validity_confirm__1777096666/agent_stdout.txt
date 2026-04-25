@@ -1,0 +1,48 @@
+Plan:
+1. **Minimal Execution Plan**
+2. 1. **Navigate & Login:** Open `http://127.0.0.1:64287/odoo/sales` → Log in 
+with `admin` / `admin`
+3. 2. **Enter App:** Click the **Sales** app
+4. 3. **Open Quotation:** Locate and open draft quotation **BENCH-SO-PMT-02** 
+(verify customer: *Azure Interior*)
+5. 4. **Update Terms:** Change **Payment Terms** to `30 Net Days`
+6. 5. **Update Date:** Set **Expiration** to `05/28/2026`
+7. 6. **Update Line:** Find the **Desk Organizer** order line → Change 
+**Quantity** to `12`
+8. 7. **Finalize:** Click **Confirm**
+9. 8. **Stop.** (No other fields, lines, prices, or documents will be touched 
+per rules)
+Reasoning: I need to start by navigating to the Odoo sales URL and logging in 
+with the provided credentials to access the system.
+Action: visit http://127.0.0.1:64287/odoo/sales
+Reasoning: 
+Action: <action>
+fill('640', 'admin')
+</action>
+Reasoning: The previous action filled the email/username field with 'admin'. The
+next step in the login process is to enter the password. The password field is 
+visible with the placeholder "Enter your password". I will fill this field with 
+'admin'. After that, I will need to click the "Log in" button.
+Action: fill('input', 'admin')
+Reasoning: 
+Action: <action>
+fill('input', 'admin')
+</action>
+Reasoning: 
+Action: <action>
+click('button:has-text("Log in")')
+</action>
+Reasoning: 
+Action: <action>
+click('div.o_app')
+</action>
+Reasoning: I have successfully navigated to the Sales app dashboard. I need to 
+locate the specific quotation with reference "BENCH-SO-PMT-02". Since it's not 
+immediately visible in the top rows of the Kanban view (which shows S00035, 
+S00036, etc.), I should use the search bar to find it directly. I will click on 
+the search input field at the top right of the screen to begin searching.
+Action: click('input')
+Reasoning: 
+Action: <action>
+fill('input', 'BENCH-SO-PMT-02')
+</action>

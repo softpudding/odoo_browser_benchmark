@@ -1,0 +1,65 @@
+Plan:
+1. **1. Access & Login**
+2. - Navigate to `http://127.0.0.1:60950/odoo/blog-post-pages`
+3. - Log in: `admin` / `admin`
+4. - Verify you are in the **Blog Posts** list view.
+5. **2. Locate & Duplicate Original**
+6. - Filter by Blog: `Bench Ops Blog`
+7. - Find post: `Warehouse Safety Primer`
+8. - Open the record → Click **Action (⚙️)** dropdown → Select **Duplicate**
+9. - *Immediately close the original record to prevent accidental edits.*
+10. **3. Edit Duplicate Only**
+11. - Open the newly created copy
+12. - Change **Title** → `Warehouse Safety Primer EU`
+13. - Enable **Developer Mode** (`Settings → Activate Developer Mode`) to expose
+backend SEO fields
+14. - Set **SEO Title** → `Warehouse Safety Primer for EU Teams`
+15. - Set **SEO Description** → `Safety baseline for EU warehouse operations and
+dock checks.`
+16. - Toggle record status → **Published**
+17. - Click **Save**
+18. **4. Final Verification**
+19. - Search list for original `Warehouse Safety Primer`: confirm it is 
+**unpublished** and **unchanged**
+20. - Search list for `Warehouse Safety Primer EU`: confirm exactly **one** 
+exists and is **published**
+21. - Complete task.
+Reasoning: 
+Action: <action>
+goto('http://127.0.0.1:60950/odoo/blog-post-pages')
+</action>
+Reasoning: 
+Action: <action>
+fill('input', 'admin')
+fill('input', 'admin')
+click('button:has-text("Log in")')
+</action>
+Reasoning: 
+Action: <action>
+goto('http://127.0.0.1:60950/odoo/blog-post-pages')
+</action>
+Reasoning: The current URL indicates I am on the login page, redirected from the
+target blog post pages. The history shows a previous attempt to log in and 
+navigate, but the presence of the login page suggests the session is not active 
+or the previous navigation failed. I need to log in again to access the 
+protected resource. I will use the visible placeholders in the screenshot to 
+ensure correct field selection. After logging in, the system should redirect me 
+to the blog post pages (based on the `redirect` parameter in the URL), allowing 
+me to proceed with finding and duplicating the post.
+Action: fill('input', 'admin')
+fill('input', 'admin')
+click('button:has-text("Log in")')
+Reasoning: The current state shows the login page (`/web/login`). The history 
+indicates previous attempts to navigate and log in. The last action in history 
+attempted to fill fields using placeholder selectors and click "Log in", but the
+screenshot still shows the login page with empty fields, suggesting the action 
+either failed or hasn't taken effect yet. The URL contains a suspicious redirect
+parameter (`...pages%27%29%3F`), which might be causing redirect loops or errors
+after login, but the immediate task is to authenticate. I will attempt to log in
+again using the standard Odoo field names (`name="login"` and 
+`name="password"`), which are more robust than placeholder selectors. After 
+logging in, I will need to verify if I land on the correct page or if the 
+redirect issue persists.
+Action: fill('input', 'admin')
+fill('input', 'admin')
+click('button:has-text("Log in")')

@@ -1,0 +1,61 @@
+=== Benchmark Evaluation ===
+  Task:   purchase.update_rfq_add_line_confirm
+  Agent:  command
+  DB:     bench_fr_18ce5833  (auto-isolated)
+  URL:    http://127.0.0.1:53803
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/websight/purchase.update_rfq_add_line_confirm__1777093732
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_18ce5833 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 53803
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 4 calls captured (1 writes, 3 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     1 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      1 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   4
+  Writes:            1 non-forbidden, 0 forbidden
+  Required ops MISSED: ['purchase.order.button_confirm']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/websight/purchase.update_rfq_add_line_confirm__1777093732/
+
+  Postcondition failures:
+    - PO state is 'draft', expected 'purchase'
+    - Order deadline is 2026-04-25, expected 2026-05-20
+    - Expected 3 order lines, found 2
+  Missing expected edits:
+    - purchase.order.state = purchase
