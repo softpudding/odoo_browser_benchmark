@@ -1,0 +1,59 @@
+=== Benchmark Evaluation ===
+  Task:   crm.pivot_view_opportunities_by_stage_revenue
+  Agent:  command
+  DB:     bench_fr_64aa1370  (auto-isolated)
+  URL:    http://127.0.0.1:65156
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/alumnium/crm.pivot_view_opportunities_by_stage_revenue__1777105323
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_64aa1370 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 65156
+   Done.
+2. Capturing pre-task state...
+   Captured 13 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=25.5s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 4 calls captured (1 writes, 3 reads)
+   State: 13 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   25.5s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   4
+  Writes:            1 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/alumnium/crm.pivot_view_opportunities_by_stage_revenue__1777105323/
+
+  Postcondition failures:
+    - ir.filters favorite 'Bench Stage Revenue Pivot' not found
+  Missing expected edits:
+    - ir.filters.model_id = crm.lead
+    - ir.filters.name = Bench Stage Revenue Pivot
