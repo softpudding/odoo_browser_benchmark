@@ -1,0 +1,56 @@
+=== Benchmark Evaluation ===
+  Task:   mail.schedule_activity_on_partner_with_note
+  Agent:  command
+  DB:     bench_fr_e00cbcd5  (auto-isolated)
+  URL:    http://127.0.0.1:57335
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/mail.schedule_activity_on_partner_with_note__1777087015
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_e00cbcd5 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 57335
+   Done.
+2. Capturing pre-task state...
+   Captured 8 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 133 calls captured (49 writes, 84 reads)
+   State: 8 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     0 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   133
+  Writes:            49 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/mail.schedule_activity_on_partner_with_note__1777087015/
+
+  Postcondition failures:
+    - No mail.activity row found on partner 'Bench Activity Partner' (res_model='res.partner', res_id=8). The agent likely did not click Schedule in the wizard, or the wizard was cancelled.

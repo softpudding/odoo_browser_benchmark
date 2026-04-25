@@ -1,0 +1,58 @@
+=== Benchmark Evaluation ===
+  Task:   hr_holidays.refuse_then_re_request_other_type
+  Agent:  command
+  DB:     bench_fr_b31a09d4  (auto-isolated)
+  URL:    http://127.0.0.1:61101
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/openbrowser/hr_holidays.refuse_then_re_request_other_type__1777083737
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_b31a09d4 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 61101
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=0.3s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     6 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      6 edits
+  Extra:        0 edits
+  Wall clock:   0.3s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/openbrowser/hr_holidays.refuse_then_re_request_other_type__1777083737/
+
+  Postcondition failures:
+    - Original leave state is 'confirm', expected 'refuse'
+    - No chatter message containing 'Use sick leave instead' on the refused Paid Time Off leave
+    - No Sick Time Off leave for Eve Employee found (re-request step missing)
+  Missing expected edits:
+    - hr.leave.state = refuse
+    - hr.leave.employee_id = Eve Employee
+    - hr.leave.holiday_status_id = Sick Time Off
+    - hr.leave.name = Sick leave per manager
+    - hr.leave.number_of_days = 3.0
+    - hr.leave.state = confirm

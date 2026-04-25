@@ -1,0 +1,23 @@
+Successfully completed the cancel/restore workflow for order S00001 (BENCH-CANCEL-RESTORE) for Bench Cancel Co.
+
+Steps executed:
+1. Navigated to http://127.0.0.1:64188/odoo/sales
+2. Logged in with admin/admin credentials
+3. Opened the Sales app and located order S00001
+4. Opened the order form
+5. Clicked Cancel button in the statusbar
+6. Confirmed the cancellation dialog with the exact text "Are you sure you want to cancel this order? This may affect related documents or processes."
+7. Clicked Set to Quotation to restore the order to draft state
+
+Final state verification:
+- Order status: Quotation (state='draft') ✓
+- Customer: Bench Cancel Co ✓
+- Order lines intact:
+  - Bench Cancel Item A: qty=2, unit price=$40.00, amount=$80.00 ✓
+  - Bench Cancel Item B: qty=3, unit price=$25.00, amount=$75.00 ✓
+- Total: $155.00 ✓
+- Chatter history shows: Sales Order → Cancelled → Quotation ✓
+
+All requirements from the user request have been met.
+
+Last URL: http://127.0.0.1:64188/odoo/sales/1

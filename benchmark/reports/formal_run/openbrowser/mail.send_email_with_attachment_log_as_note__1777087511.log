@@ -1,0 +1,49 @@
+=== Benchmark Evaluation ===
+  Task:   mail.send_email_with_attachment_log_as_note
+  Agent:  command
+  DB:     bench_fr_2dacd825  (auto-isolated)
+  URL:    http://127.0.0.1:59486
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/openbrowser/mail.send_email_with_attachment_log_as_note__1777087511
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_2dacd825 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 59486
+   Done.
+2. Capturing pre-task state...
+   Captured 8 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=1.2s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 8 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     0 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   1.2s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/openbrowser/mail.send_email_with_attachment_log_as_note__1777087511/
+
+  Postcondition failures:
+    - No Send-message comment on partner 'Bench Chatter Co' with body 'Attached our welcome kit' was found. Messages present: []

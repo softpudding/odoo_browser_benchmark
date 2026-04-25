@@ -1,0 +1,53 @@
+=== Benchmark Evaluation ===
+  Task:   mail.mark_message_done_archive_notification
+  Agent:  command
+  DB:     bench_fr_1fbd2623  (auto-isolated)
+  URL:    http://127.0.0.1:52679
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/mail.mark_message_done_archive_notification__1777085779
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_1fbd2623 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 52679
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 28 calls captured (15 writes, 13 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  1.0
+  Precision:    1.0
+  Recall:       1.0
+  Expected:     0 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   600.1s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   28
+  Writes:            15 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/mail.mark_message_done_archive_notification__1777085779/
+

@@ -1,0 +1,59 @@
+=== Benchmark Evaluation ===
+  Task:   hr_holidays.refuse_leave_request
+  Agent:  command
+  DB:     bench_fr_84bd80a3  (auto-isolated)
+  URL:    http://127.0.0.1:59045
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/hr_holidays.refuse_leave_request__1777083282
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_84bd80a3 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 59045
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 30 calls captured (12 writes, 18 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     1 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      1 edits
+  Extra:        0 edits
+  Wall clock:   600.1s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   30
+  Writes:            12 non-forbidden, 0 forbidden
+  Required ops MISSED: ['hr.leave.action_refuse']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/hr_holidays.refuse_leave_request__1777083282/
+
+  Postcondition failures:
+    - Leave state is 'confirm', expected 'refuse'
+  Missing expected edits:
+    - hr.leave.state = refuse
