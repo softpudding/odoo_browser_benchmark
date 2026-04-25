@@ -1,0 +1,53 @@
+=== Benchmark Evaluation ===
+  Task:   stock.create_scrap_order_for_damaged_qty
+  Agent:  command
+  DB:     bench_fr_445af13d  (auto-isolated)
+  URL:    http://127.0.0.1:61212
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/stock.create_scrap_order_for_damaged_qty__1777117025
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_445af13d from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 61212
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=4.3s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 0 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      3 edits
+  Extra:        0 edits
+  Wall clock:   4.3s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/stock.create_scrap_order_for_damaged_qty__1777117025/
+
+  Postcondition failures:
+    - No stock.scrap found for 'Bench Scrap Item' — agent never created the scrap order
+  Missing expected edits:
+    - stock.scrap.product_id = Bench Scrap Item
+    - stock.scrap.scrap_qty = 3.0
+    - stock.scrap.state = done
