@@ -1,0 +1,56 @@
+=== Benchmark Evaluation ===
+  Task:   survey.review_submitted_responses_filter
+  Agent:  command
+  DB:     bench_fr_e19b6885  (auto-isolated)
+  URL:    http://127.0.0.1:49592
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/alumnium/survey.review_submitted_responses_filter__1777117849
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_e19b6885 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 49592
+   Done.
+2. Capturing pre-task state...
+   Captured 5 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=73.9s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 5 calls captured (1 writes, 4 reads)
+   State: 5 records across 2 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     0 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   73.9s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   5
+  Writes:            1 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/alumnium/survey.review_submitted_responses_filter__1777117849/
+
+  Postcondition failures:
+    - No chatter message containing 'Reviewed' was posted on the participation for reviewer-target@example.com.
