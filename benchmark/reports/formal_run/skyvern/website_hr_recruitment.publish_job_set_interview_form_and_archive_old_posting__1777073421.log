@@ -1,0 +1,68 @@
+=== Benchmark Evaluation ===
+  Task:   website_hr_recruitment.publish_job_set_interview_form_and_archive_old_posting
+  Agent:  command
+  DB:     bench_fr_e6f4f58b  (auto-isolated)
+  URL:    http://127.0.0.1:57694
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/website_hr_recruitment.publish_job_set_interview_form_and_archive_old_posting__1777073421
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_e6f4f58b from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Starting Odoo...
+   Odoo ready on port 57694
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 38 calls captured (17 writes, 21 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   5 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     8 edits
+  Observed:     5 edits
+  Matching:     2 edits
+  Missing:      6 edits
+  Extra:        3 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   38
+  Writes:            17 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/website_hr_recruitment.publish_job_set_interview_form_and_archive_old_posting__1777073421/
+
+  Postcondition failures:
+    - New job is not published
+    - Interview survey not set to Bench Interview Form
+    - Legacy job should be archived
+  Missing expected edits:
+    - hr.job.active = None
+    - hr.job.is_published = None
+    - hr.job.website_published = None
+    - hr.job.is_published = True
+    - hr.job.survey_id = Bench Interview Form
+    - hr.job.website_published = True
+  Unexpected extra edits:
+    + hr.job.is_published = None
+    + hr.job.survey_id = None
+    + hr.job.website_published = None

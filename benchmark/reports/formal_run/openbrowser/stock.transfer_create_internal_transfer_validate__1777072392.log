@@ -1,0 +1,53 @@
+=== Benchmark Evaluation ===
+  Task:   stock.transfer_create_internal_transfer_validate
+  Agent:  command
+  DB:     bench_fr_706730f3  (auto-isolated)
+  URL:    http://127.0.0.1:53600
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/openbrowser/stock.transfer_create_internal_transfer_validate__1777072392
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_706730f3 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 53600
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=0.2s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 0 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      3 edits
+  Extra:        0 edits
+  Wall clock:   0.2s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/openbrowser/stock.transfer_create_internal_transfer_validate__1777072392/
+
+  Postcondition failures:
+    - No internal stock.picking for Bench Move Item found — agent never created the transfer
+  Missing expected edits:
+    - stock.picking.location_dest_id = WH/Stock/Shelf C
+    - stock.picking.location_id = WH/Stock
+    - stock.picking.state = done
