@@ -1,0 +1,60 @@
+=== Benchmark Evaluation ===
+  Task:   hr_recruitment.schedule_second_interview_with_feedback
+  Agent:  command
+  DB:     bench_fr_9aae2006  (auto-isolated)
+  URL:    http://127.0.0.1:63242
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/websight/hr_recruitment.schedule_second_interview_with_feedback__1777110975
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_9aae2006 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 63242
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 4 calls captured (1 writes, 3 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     1 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      1 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   4
+  Writes:            1 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/websight/hr_recruitment.schedule_second_interview_with_feedback__1777110975/
+
+  Postcondition failures:
+    - Applicant stage is 'First Interview', expected 'Second Interview'
+    - Applicant notes do not contain the required feedback text
+    - Expected exactly 1 second interview meeting, found 0
+  Missing expected edits:
+    - hr.applicant.stage_id = Second Interview

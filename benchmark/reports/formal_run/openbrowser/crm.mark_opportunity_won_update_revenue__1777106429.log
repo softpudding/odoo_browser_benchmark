@@ -1,0 +1,64 @@
+=== Benchmark Evaluation ===
+  Task:   crm.mark_opportunity_won_update_revenue
+  Agent:  command
+  DB:     bench_fr_b9713098  (auto-isolated)
+  URL:    http://127.0.0.1:62568
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/openbrowser/crm.mark_opportunity_won_update_revenue__1777106429
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_b9713098 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 62568
+   Done.
+2. Capturing pre-task state...
+   Captured 3 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=0.6s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 1 calls captured (0 writes, 1 reads)
+   State: 3 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      4 edits
+  Extra:        0 edits
+  Wall clock:   0.6s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   1
+  Writes:            0 non-forbidden, 0 forbidden
+  Required ops MISSED: ['crm.lead.action_set_won_rainbowman']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/openbrowser/crm.mark_opportunity_won_update_revenue__1777106429/
+
+  Postcondition failures:
+    - Target stage is 'Qualified' (is_won=False); expected a won stage
+    - Target expected_revenue=40000.0, expected 52000.0
+    - Target priority is '0', expected '2'
+  Missing expected edits:
+    - crm.lead.expected_revenue = 52000.0
+    - crm.lead.priority = 2
+    - crm.lead.probability = 100.0
+    - crm.lead.stage_id = Won
