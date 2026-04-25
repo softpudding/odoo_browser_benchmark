@@ -1,0 +1,68 @@
+=== Benchmark Evaluation ===
+  Task:   stock.transfer_reserved_to_ready_partial_backorder
+  Agent:  command
+  DB:     bench_fr_26bf8409  (auto-isolated)
+  URL:    http://127.0.0.1:58188
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/stock.transfer_reserved_to_ready_partial_backorder__1777128389
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_26bf8409 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 58188
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 81 calls captured (38 writes, 43 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   1 atomic edits observed
+   Postconditions: 4 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     5 edits
+  Observed:     1 edits
+  Matching:     0 edits
+  Missing:      5 edits
+  Extra:        1 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   81
+  Writes:            38 non-forbidden, 0 forbidden
+  Required ops MISSED: ['stock.picking.button_validate']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/stock.transfer_reserved_to_ready_partial_backorder__1777128389/
+
+  Postcondition failures:
+    - Original delivery state is 'assigned', expected 'done' — did the agent click Validate and Create Backorder?
+    - Original delivery Bench Partial Item Quantity (Done) is 10.0, expected 7.0 — agent likely forgot to edit Quantity from 10 to 7 via the Detailed Operations popup
+    - Original delivery Bench Partial Item demand is 10.0, expected 7.0 (Odoo auto-splits demand on backorder creation)
+    - No backorder delivery found — agent likely clicked 'No Backorder' instead of 'Create Backorder' on the validation dialog
+  Missing expected edits:
+    - stock.picking.backorder_id = D-BENCH-PARTIAL-001
+    - stock.picking.origin = D-BENCH-PARTIAL-001
+    - stock.picking.partner_id = Bench Partial Cust
+    - stock.picking.state = assigned
+    - stock.picking.state = done
+  Unexpected extra edits:
+    + stock.picking.state = assigned

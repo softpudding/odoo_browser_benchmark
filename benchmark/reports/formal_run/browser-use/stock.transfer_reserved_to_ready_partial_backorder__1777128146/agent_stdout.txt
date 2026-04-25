@@ -1,0 +1,27 @@
+Task completed successfully!
+
+**Summary of actions performed:**
+
+1. **Part A - Reserve Stock:**
+   - Opened delivery order D-BENCH-PARTIAL-001 for Bench Partial Cust
+   - Clicked Check Availability to reserve 10 units of Bench Partial Item from WH/Stock
+   - Picking state changed to Ready/Assigned
+
+2. **Part B - Edit Quantity via Detailed Operations:**
+   - Clicked Details button on the Bench Partial Item move line
+   - Changed Quantity from 10.00 to 7.00 in the Detailed Operations popup
+   - Saved and closed the popup
+   - Picking form now shows Demand=7.00, Quantity=7.00
+
+3. **Part C - Validate and Create Backorder:**
+   - Clicked Validate button
+   - Create Backorder dialog appeared (because Quantity 7 < original Demand 10)
+   - Clicked Create Backorder
+
+**Final State:**
+- **Original picking D-BENCH-PARTIAL-001:** State = Done, Quantity = 7.00
+- **Backorder created:** WH/OUT/00001 (for remaining 3 units, state Ready/Assigned)
+
+The chatter log confirms all status transitions: Waiting → Ready → Done, and the backorder creation notification.
+
+Last URL: http://127.0.0.1:57278/odoo/inventory/action-597/1

@@ -1,0 +1,41 @@
+Plan:
+1. 1. **Navigate & Login**: Open `http://127.0.0.1:52730/odoo/inventory` → Log 
+in (`admin`/`admin`) → Open **Inventory** app.
+2. 2. **Locate Receipt**: Click the **Receipts** kanban tile → Open the record 
+with Source Document `BENCH-LOT-RCV-01`.
+3. 3. **Assign Lot**: In the move lines table, click **Optional columns** → 
+Toggle on **Lot/Serial Number** → Type `LOT-2026-R042` → Select **Create 
+"LOT-2026-R042"** from the dropdown.
+4. 4. **Validate**: Confirm the **Done** quantity shows `20` → Click 
+**Validate** → In the validation popup, accept full receipt (do not create a 
+backorder).
+5. 5. **Verify**: Confirm receipt status updates to **Done** and lot 
+`LOT-2026-R042` holds exactly 20 units.
+Reasoning: The current screen is `about:blank`. I need to navigate to the Odoo 
+Inventory URL provided in the instructions: 
+`http://127.0.0.1:52730/odoo/inventory`. The first step is to click the address 
+bar to enter this URL.
+Action: click(x=498, y=32)
+Reasoning: The previous action was clicking the address bar, preparing it for 
+input. The instruction requires navigating to 
+`http://127.0.0.1:52730/odoo/inventory`. I need to type this URL into the 
+address bar and then submit it to load the Odoo inventory page.
+Action: type(text="http://127.0.0.1:52730/odoo/inventory")
+Reasoning: The previous action attempted to navigate to the URL, and the browser
+has successfully loaded the login page at `http://127.0.0.1:52730/web/login`. 
+This confirms the navigation was successful, but authentication is required. 
+According to the plan, I need to log in with the credentials `admin` / `admin`. 
+The first step is to click on the "Email" input field to enter the username.
+Action: click(x=458, y=218)
+Reasoning: 
+Action: <action>
+type(text="admin")
+</action>
+Reasoning: 
+Action: <action>
+click(x=458, y=334)
+</action>
+Reasoning: 
+Action: <action>
+type(text="admin")
+</action>
