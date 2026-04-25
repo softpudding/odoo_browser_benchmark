@@ -1,0 +1,75 @@
+Plan:
+1. ### Minimal Execution Plan: MO `M-BENCH-SCRAP-001` Scrap & Finish
+2. 1. **Access & Authenticate**
+3.    - Navigate to `http://127.0.0.1:56069/odoo/manufacturing`
+4.    - Login: `admin` / `admin`
+5.    - Confirm the **Manufacturing** app is active.
+6. 2. **Open Manufacturing Order**
+7.    - Go to `Operations` → `Manufacturing Orders`
+8.    - Open `M-BENCH-SCRAP-001`
+9. 3. **Execute Scrap**
+10.    - Click **Actions** (⚙️ gear icon near breadcrumb) → Select **Scrap**
+11.    - In the popup, fill:
+12.      - `Product`: `ScrewA`
+13.      - `Quantity`: `2`
+14.      - `Source Location`: `WH/Stock`
+15.      - `Scrap Reason`: `Defective batch` (pick existing tag)
+16.      - `Scrap Location`: leave default
+17.    - Click **Scrap Products** to validate.
+18. 4. **Complete Production**
+19.    - Back on the MO form, click **Produce All** (or **Mark as Done**) in the
+header.
+20.    - Accept defaults on any confirmation/consumption warning dialogs.
+21. 5. **Post-Execution Verification**
+22.    - MO state = `Done` | Produced = `5` Bench Widgets
+23.    - Exactly 1 `stock.scrap` record: `ScrewA`, Qty `2`, Reason `Defective 
+batch`, State `Done`
+24.    - ✅ Constraints met: BOM/MO qty unchanged, no extra records, only ScrewA
+scrapped.
+Reasoning: The user wants to execute a manufacturing order workflow in Odoo 19. 
+The history is empty, meaning I am starting fresh. The instructions specify 
+navigating to `http://127.0.0.1:56069/odoo/manufacturing` and logging in. The 
+first step is to navigate to this URL.
+Action: navigate(url="http://127.0.0.1:56069/odoo/manufacturing")
+Reasoning: 
+Action: <action>
+fill(selector="input", text="admin")
+</action>
+Reasoning: The user wants to log in to Odoo. The history indicates that the 
+navigation to the URL has occurred and the username 'admin' has been entered 
+into the login field (though the screenshot shows the initial state, I must 
+follow the sequential logic of the history). The next logical step in the login 
+process is to enter the password. The password field is clearly visible below 
+the email field. I will fill the password field with 'admin'.
+Action: fill(selector="input", text="admin")
+Reasoning: The history indicates that the username and password have been 
+entered into their respective fields. The current view shows the login page with
+the "Log in" button ready to be clicked to submit the credentials and access the
+Odoo backend.
+Action: click(selector="button:contains('Log in')")
+Reasoning: 
+Action: <action>
+navigate(url="http://127.0.0.1:56069/odoo/manufacturing")
+</action>
+Reasoning: The screenshot shows the Odoo login page. The history indicates that 
+previous attempts were made to navigate and log in, but the current state is the
+login page (URL ends in `/web/login`). To proceed with the manufacturing task, I
+must first successfully authenticate. I will enter the username 'admin' into the
+Email field.
+Action: fill(selector="input", text="admin")
+Reasoning: The current screenshot shows the Odoo login page. The history 
+indicates that the last action was filling the login field with "admin". To 
+proceed with the login process as instructed ("Log in with username 'admin' and 
+password 'admin'"), the next logical step is to fill in the password field. The 
+password field is located directly below the email field.
+Action: fill(selector="input", text="admin")
+Reasoning: 
+Action: <action>
+fill(selector="input", text="admin")
+</action>
+Reasoning: The user is currently on the Manufacturing dashboard. The plan 
+requires opening the specific Manufacturing Order `M-BENCH-SCRAP-001`. To do 
+this, I need to access the list of manufacturing orders. The "Operations" menu 
+in the top navigation bar is the correct path to reach "Manufacturing Orders". I
+will click on "Operations" to proceed.
+Action: click(selector="a:contains('Operations')")

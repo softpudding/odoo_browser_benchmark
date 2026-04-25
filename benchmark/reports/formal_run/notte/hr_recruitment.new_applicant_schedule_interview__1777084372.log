@@ -1,0 +1,64 @@
+=== Benchmark Evaluation ===
+  Task:   hr_recruitment.new_applicant_schedule_interview
+  Agent:  command
+  DB:     bench_fr_a72e148a  (auto-isolated)
+  URL:    http://127.0.0.1:63527
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/notte/hr_recruitment.new_applicant_schedule_interview__1777084372
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_a72e148a from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 63527
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 41 calls captured (16 writes, 25 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   7 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     7 edits
+  Observed:     7 edits
+  Matching:     6 edits
+  Missing:      1 edits
+  Extra:        1 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   41
+  Writes:            16 non-forbidden, 0 forbidden
+  Required ops MISSED: ['mail.activity.schedule.action_schedule_activities']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/notte/hr_recruitment.new_applicant_schedule_interview__1777084372/
+
+  Postcondition failures:
+    - Recruiter is 'OdooBot', expected 'Marc Demo'
+    - No activity found on Elena Vasquez's applicant — expected a 'Call' activity scheduled for 2026-05-01
+  Missing expected edits:
+    - hr.applicant.salary_expected = 85000
+    - hr.applicant.user_id = Marc Demo
+  Unexpected extra edits:
+    + hr.applicant.salary_expected = 85000.0
+    + hr.applicant.user_id = OdooBot

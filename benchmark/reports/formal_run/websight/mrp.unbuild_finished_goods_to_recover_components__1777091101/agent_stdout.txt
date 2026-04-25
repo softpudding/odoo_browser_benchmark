@@ -1,0 +1,35 @@
+Plan:
+1. ### Minimal Execution Plan
+2. 1. **Access & Login**
+3.    - Navigate to `http://127.0.0.1:57795/odoo/manufacturing`
+4.    - Log in with Username: `admin` | Password: `admin`
+5. 2. **Navigate to Unbuild Menu**
+6.    - In the Manufacturing dashboard, open: **Products → Unbuild Orders**
+7. 3. **Create Unbuild Record**
+8.    - Click **New**
+9.    - Set **Manufacturing Order**: `WH/MO/UNBLD-001`
+10.    - Verify **Product** auto-populates to `Benchmark Recoverable Widget`
+11.    - Set **Quantity**: `3`
+12.    - Click **Save**
+13. 4. **Execute Unbuild**
+14.    - Click the **Unbuild** (or **Validate**) button on the top bar
+15. 5. **Verify & Close**
+16.    - Confirm record state changes to **Done**
+17.    - Confirm original MO `WH/MO/UNBLD-001` remains in **Done** state
+18.    - Ensure exactly 1 unbuild order exists and no inventory 
+adjustments/other MOs were created
+Reasoning: I need to perform the following steps:
+1.  Navigate to the Odoo Manufacturing URL.
+2.  Log in with the provided credentials.
+3.  Navigate to the Unbuild Orders menu.
+4.  Create a new unbuild order linked to MO `WH/MO/UNBLD-001`.
+5.  Set the quantity to 3.
+6.  Validate (Unbuild) the order.
+Action: click(element="1")
+Reasoning: I am currently on the Manufacturing Dashboard. To proceed with the 
+task of unbuilding the manufacturing order, I need to navigate to the "Unbuild 
+Orders" menu. Looking at the left sidebar, under the "Products" section, there 
+is a menu item labeled "Unbuild". This matches the instruction "Go to Products →
+Unbuild Orders". I will click this menu item to access the list of unbuild 
+orders.
+Action: click(element="12")
