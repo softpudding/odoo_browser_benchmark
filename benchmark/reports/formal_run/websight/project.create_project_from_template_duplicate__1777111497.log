@@ -1,0 +1,64 @@
+=== Benchmark Evaluation ===
+  Task:   project.create_project_from_template_duplicate
+  Agent:  command
+  DB:     bench_fr_c0b7cee3  (auto-isolated)
+  URL:    http://127.0.0.1:65224
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/websight/project.create_project_from_template_duplicate__1777111497
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_c0b7cee3 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 65224
+   Done.
+2. Capturing pre-task state...
+   Captured 5 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 4 calls captured (1 writes, 3 reads)
+   State: 5 records across 2 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     7 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      7 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   4
+  Writes:            1 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/websight/project.create_project_from_template_duplicate__1777111497/
+
+  Postcondition failures:
+    - Copy project 'Bench Template Project (Copy)' is missing
+  Missing expected edits:
+    - project.project.name = Bench Template Project (Copy)
+    - project.task.name = Build
+    - project.task.project_id = Bench Template Project (Copy)
+    - project.task.name = Review
+    - project.task.project_id = Bench Template Project (Copy)
+    - project.task.name = Setup
+    - project.task.project_id = Bench Template Project (Copy)
