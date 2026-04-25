@@ -1,0 +1,53 @@
+=== Benchmark Evaluation ===
+  Task:   website_hr_recruitment.apply_guru_job
+  Agent:  browser-use
+  DB:     bench_fr_f463c15c  (auto-isolated)
+  URL:    http://127.0.0.1:65509
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/browser-use/website_hr_recruitment.apply_guru_job__1777083785
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_f463c15c from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Starting Odoo...
+   Odoo ready on port 65509
+   Done.
+2. Capturing pre-task state...
+   Captured 281 records across 2 models
+   API trace recording: STARTED
+3. Running agent (browser-use)...
+
+
+   Agent finished: steps=0, wall_clock=102.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 16 calls captured (9 writes, 7 reads)
+   State: 290 records across 2 models
+5. Computing state diff...
+   6 atomic edits observed
+6. Scoring...
+
+==================================================
+  RESULT: PASS  (Strict: PASS)
+  StateDiffF1:  1.0
+  Precision:    1.0
+  Recall:       1.0
+  Expected:     6 edits
+  Observed:     6 edits
+  Matching:     6 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   102.1s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   16
+  Writes:            9 non-forbidden, 0 forbidden
+  Required ops MISSED: ['custom:/website/form/hr.applicant']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/browser-use/website_hr_recruitment.apply_guru_job__1777083785/
+

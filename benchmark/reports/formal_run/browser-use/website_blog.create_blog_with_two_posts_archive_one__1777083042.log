@@ -1,0 +1,53 @@
+=== Benchmark Evaluation ===
+  Task:   website_blog.create_blog_with_two_posts_archive_one
+  Agent:  browser-use
+  DB:     bench_fr_633d0727  (auto-isolated)
+  URL:    http://127.0.0.1:60782
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/browser-use/website_blog.create_blog_with_two_posts_archive_one__1777083042
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_633d0727 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 60782
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 2 models
+   API trace recording: STARTED
+3. Running agent (browser-use)...
+
+
+   Agent finished: steps=0, wall_clock=528.2s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 146 calls captured (71 writes, 75 reads)
+   State: 4 records across 2 models
+5. Computing state diff...
+   12 atomic edits observed
+6. Scoring...
+
+==================================================
+  RESULT: PASS  (Strict: PASS)
+  StateDiffF1:  1.0
+  Precision:    1.0
+  Recall:       1.0
+  Expected:     12 edits
+  Observed:     12 edits
+  Matching:     12 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   528.2s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   146
+  Writes:            71 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/browser-use/website_blog.create_blog_with_two_posts_archive_one__1777083042/
+
