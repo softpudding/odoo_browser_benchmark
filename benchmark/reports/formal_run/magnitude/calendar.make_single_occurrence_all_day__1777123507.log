@@ -1,0 +1,62 @@
+=== Benchmark Evaluation ===
+  Task:   calendar.make_single_occurrence_all_day
+  Agent:  command
+  DB:     bench_fr_a23c0231  (auto-isolated)
+  URL:    http://127.0.0.1:54423
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/calendar.make_single_occurrence_all_day__1777123507
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_a23c0231 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 54423
+   Done.
+2. Capturing pre-task state...
+   Captured 4 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 28 calls captured (15 writes, 13 reads)
+   State: 4 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   28
+  Writes:            15 non-forbidden, 0 forbidden
+  Required ops MISSED: ['calendar.event.web_save']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/calendar.make_single_occurrence_all_day__1777123507/
+
+  Postcondition failures:
+    - May 19 location is 'North Annex', expected 'Remote Review Hub'
+    - May 19 occurrence is not all-day
+    - May 19 occurrence still follows the recurrence
+  Missing expected edits:
+    - calendar.event.allday = True
+    - calendar.event.location = Remote Review Hub
