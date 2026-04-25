@@ -1,0 +1,59 @@
+Plan:
+1. **Objective:** Evaluate vendor alternatives, select lowest unit price, and 
+confirm winning RFQ while cancelling others.
+2. **Pre-flight:** `admin` / `admin` → `http://127.0.0.1:49743/odoo/purchase` → 
+Open **Purchase** app.
+3. | Step | Action | UI/Parameter |
+4. |:---|:---|:---|
+5. | 1 | Open draft RFQ | `R-BENCH-ALT-001` (Atlas Industrial) |
+6. | 2 | Create Alternative 1 | **Alternatives** tab → `Create Alternative` → 
+Vendor: `Beacon Mechanical` → `Copy Products`: ☑ → `Create Alternative` |
+7. | 3 | Set Price (Beacon) | Industrial Compressor → **Unit Price**: `100.00` 
+(Qty: `10`) → **Save** |
+8. | 4 | Create Alternative 2 | Return to `R-BENCH-ALT-001` → **Alternatives** 
+tab → `Create Alternative` → Vendor: `Crestline Equipment` → `Copy Products`: ☑ 
+→ `Create Alternative` |
+9. | 5 | Set Price (Crestline) | Industrial Compressor → **Unit Price**: 
+`130.00` (Qty: `10`) → **Save** |
+10. | 6 | Compare Lines | **Alternatives** tab → `Compare Product Lines` → 
+Locate `Beacon Mechanical` (100.00) → Click **Choose** (🎯) |
+11. | 7 | Open Winning RFQ | Click `Beacon Mechanical` reference in comparison 
+view |
+12. | 8 | Confirm & Finalize | `Confirm Order` → Dialog: select **Cancel 
+Alternatives** |
+13. **✅ Final Validation:**
+14. - `Beacon Mechanical` RFQ → **Purchase Order** (10× @ 100.00)
+15. - `Atlas Industrial` & `Crestline Equipment` RFQs → **Cancelled**
+16. - *Constraints met:* Only unit prices modified, quantities unchanged, no 
+RFQs deleted, alternatives explicitly cancelled.
+Reasoning: I need to log in to the Odoo instance, open the Purchase app, and 
+locate the specific draft RFQ `R-BENCH-ALT-001`. Then I will follow the steps to
+create two alternatives (Beacon Mechanical and Crestline Equipment), set their 
+prices (100.00 and 130.00 respectively), compare them, choose the cheapest one 
+(Beacon Mechanical), and finally confirm the order while cancelling the others.
+Action: goto http://127.0.0.1:49743/odoo/purchase
+Reasoning: 
+Action: <action>
+fill('input', 'admin')
+</action>
+Reasoning: The user needs to log in. The previous step filled the email field 
+with 'admin'. Now I need to fill the password field with 'admin' and then submit
+the form to log in. After logging in, I will navigate to the Purchase app as per
+the instructions.
+Action: fill('input', 'admin')
+Reasoning: 
+Action: <action>
+click('button:has-text("Log in")')
+</action>
+Reasoning: The current screenshot shows the Odoo login page with empty input 
+fields. The instruction requires logging in with 'admin'/'admin'. Although the 
+history indicates attempts to fill the fields and click login, the current state
+shows the fields are empty, implying the previous actions did not persist or the
+page reset. I need to re-enter the credentials. I will start by filling the 
+email field.
+Action: fill('input', 'admin')
+Reasoning: The previous action in the history was filling the login field with 
+'admin'. To proceed with the login process as instructed, I now need to fill the
+password field with 'admin'. After this, I will need to click the "Log in" 
+button.
+Action: fill('input', 'admin')

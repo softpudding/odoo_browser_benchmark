@@ -1,0 +1,64 @@
+=== Benchmark Evaluation ===
+  Task:   sale_purchase.update_pol_alternative_vendor_compare
+  Agent:  command
+  DB:     bench_fr_5723227e  (auto-isolated)
+  URL:    http://127.0.0.1:49164
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/sale_purchase.update_pol_alternative_vendor_compare__1777080981
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_5723227e from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Starting Odoo...
+   Odoo ready on port 49164
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 36 calls captured (17 writes, 19 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     5 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      5 edits
+  Extra:        0 edits
+  Wall clock:   600.1s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   36
+  Writes:            17 non-forbidden, 0 forbidden
+  Required ops MISSED: ['purchase.order.button_confirm']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/sale_purchase.update_pol_alternative_vendor_compare__1777080981/
+
+  Postcondition failures:
+    - Atlas Industrial RFQ state is 'draft', expected 'cancel'
+    - No purchase order for vendor 'Crestline Equipment'
+    - No purchase order for vendor 'Beacon Mechanical'
+  Missing expected edits:
+    - purchase.order.state = cancel
+    - purchase.order.partner_id = Beacon Mechanical
+    - purchase.order.state = purchase
+    - purchase.order.partner_id = Crestline Equipment
+    - purchase.order.state = cancel
