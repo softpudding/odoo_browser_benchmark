@@ -1,0 +1,60 @@
+=== Benchmark Evaluation ===
+  Task:   purchase.send_rfq_email_with_template_signature
+  Agent:  command
+  DB:     bench_fr_66637e8a  (auto-isolated)
+  URL:    http://127.0.0.1:61453
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/purchase.send_rfq_email_with_template_signature__1777113976
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_66637e8a from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 61453
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=5.2s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 1 calls captured (0 writes, 1 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     1 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      1 edits
+  Extra:        0 edits
+  Wall clock:   5.2s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   1
+  Writes:            0 non-forbidden, 0 forbidden
+  Required ops MISSED: ['mail.compose.message.action_send_mail']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/purchase.send_rfq_email_with_template_signature__1777113976/
+
+  Postcondition failures:
+    - Target RFQ state is 'draft', expected 'sent' (RFQ Sent)
+    - No mail.message on the target RFQ contains 'Please confirm by Friday.'
+  Missing expected edits:
+    - purchase.order.state = sent
