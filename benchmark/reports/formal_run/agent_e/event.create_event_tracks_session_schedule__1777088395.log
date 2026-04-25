@@ -1,0 +1,56 @@
+=== Benchmark Evaluation ===
+  Task:   event.create_event_tracks_session_schedule
+  Agent:  command
+  DB:     bench_fr_0cc36751  (auto-isolated)
+  URL:    http://127.0.0.1:56563
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/event.create_event_tracks_session_schedule__1777088395
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_0cc36751 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Starting Odoo...
+   Odoo ready on port 56563
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=334.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 0 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     6 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      6 edits
+  Extra:        0 edits
+  Wall clock:   334.0s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/event.create_event_tracks_session_schedule__1777088395/
+
+  Postcondition failures:
+    - Missing track titled 'Bench Opening Keynote' on event 'Bench Tech Summit' (found: [])
+    - Missing track titled 'Bench Closing Panel' on event 'Bench Tech Summit' (found: [])
+  Missing expected edits:
+    - event.track.duration = 1.5
+    - event.track.event_id = Bench Tech Summit
+    - event.track.name = Bench Closing Panel
+    - event.track.duration = 1.0
+    - event.track.event_id = Bench Tech Summit
+    - event.track.name = Bench Opening Keynote
