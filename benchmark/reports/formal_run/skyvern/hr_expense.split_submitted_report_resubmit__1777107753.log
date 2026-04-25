@@ -1,0 +1,59 @@
+=== Benchmark Evaluation ===
+  Task:   hr_expense.split_submitted_report_resubmit
+  Agent:  command
+  DB:     bench_fr_0b914958  (auto-isolated)
+  URL:    http://127.0.0.1:62480
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/hr_expense.split_submitted_report_resubmit__1777107753
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_0b914958 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 62480
+   Done.
+2. Capturing pre-task state...
+   Captured 3 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 55 calls captured (28 writes, 27 reads)
+   State: 3 records across 1 models
+5. Computing state diff...
+   4 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     6 edits
+  Observed:     4 edits
+  Matching:     4 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   600.1s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   55
+  Writes:            28 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/hr_expense.split_submitted_report_resubmit__1777107753/
+
+  Postcondition failures:
+    - Taxi state is 'submitted', expected 'approved' (approval_state='submitted')
+  Missing expected edits:
+    - hr.expense.approval_state = approved
+    - hr.expense.state = approved

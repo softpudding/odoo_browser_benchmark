@@ -1,0 +1,57 @@
+=== Benchmark Evaluation ===
+  Task:   hr_holidays.request_allocation_approve_self_book_day_off
+  Agent:  command
+  DB:     bench_fr_b27aa4f4  (auto-isolated)
+  URL:    http://127.0.0.1:49661
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/hr_holidays.request_allocation_approve_self_book_day_off__1777108590
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_b27aa4f4 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 49661
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=3.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 0 records across 2 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     6 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      6 edits
+  Extra:        0 edits
+  Wall clock:   3.1s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/hr_holidays.request_allocation_approve_self_book_day_off__1777108590/
+
+  Postcondition failures:
+    - No allocation found with description 'Q2 bonus'
+    - No leave request found with description 'Bench day off'
+  Missing expected edits:
+    - hr.leave.name = Bench day off
+    - hr.leave.number_of_days = 1.0
+    - hr.leave.state = validate
+    - hr.leave.allocation.name = Q2 bonus
+    - hr.leave.allocation.number_of_days = 5.0
+    - hr.leave.allocation.state = validate
