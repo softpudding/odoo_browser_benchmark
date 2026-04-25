@@ -1,0 +1,62 @@
+=== Benchmark Evaluation ===
+  Task:   fleet.log_service_cost_record
+  Agent:  command
+  DB:     bench_fr_f92e7ad2  (auto-isolated)
+  URL:    http://127.0.0.1:55839
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/websight/fleet.log_service_cost_record__1777106615
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_f92e7ad2 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 55839
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 4 calls captured (1 writes, 3 reads)
+   State: 0 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     5 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      5 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   4
+  Writes:            1 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/websight/fleet.log_service_cost_record__1777106615/
+
+  Postcondition failures:
+    - Expected exactly 1 service record for this vehicle, found 0
+  Missing expected edits:
+    - fleet.vehicle.log.services.amount = 150.0
+    - fleet.vehicle.log.services.date = 2026-05-10
+    - fleet.vehicle.log.services.service_type_id = Oil Change
+    - fleet.vehicle.log.services.vehicle_id = Toyota/Benchmark Fleet Sedan/BENCH-001
+    - fleet.vehicle.log.services.vendor_id = Beacon Auto Shop
