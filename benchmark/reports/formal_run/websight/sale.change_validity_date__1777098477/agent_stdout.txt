@@ -1,0 +1,46 @@
+Plan:
+1. Here is a minimal, step-by-step plan:
+2. 1. **Access & Login:** Navigate to `http://127.0.0.1:53192/odoo/sales`. Enter
+username `admin` and password `admin`.
+3. 2. **Navigate to App:** Click the **Sales** app, then go to **Orders → 
+Quotations**.
+4. 3. **Locate Record:** Search for reference `BENCH-VALID-01` (verify customer 
+is **Lakeview Partners**) and open it.
+5. 4. **Enable Editing:** Click **Edit** if the form is in read-only mode.
+6. 5. **Modify Date:** Update the **Expiration** field to `May 15, 2026`.
+7. 6. **Validate Scope:** Visually confirm that *only* the Expiration date 
+changed. Customer, lines, prices, and other fields must remain untouched.
+8. 7. **Save:** Click the **Save** button.
+9. 8. **Finalize:** Stop execution. Verify the status remains **Draft**. Do 
+**not** click Confirm, and do **not** create/delete any records.
+Reasoning: 
+Action: <action>
+{"type": "navigate", "url": "http://127.0.0.1:53192/odoo/sales"}
+</action>
+Reasoning: I am currently on the login page. The plan requires me to log in with
+username 'admin' and password 'admin' to access the Sales app. I need to fill in
+the Email and Password fields and click the Log in button.
+Action: {"type": "fill", "text": "admin", "selector": "input"}
+Reasoning: I am on the login page. The email field has already been filled with 
+'admin' based on the history. The next step is to fill the password field with 
+'admin' and then click the "Log in" button to proceed. I will perform the 
+password fill first.
+Action: {"type": "fill", "text": "admin", "selector": "input"}
+Reasoning: The username and password have been entered (indicated by the history
+of fill actions, even if the specific selectors were generic). The form is ready
+to be submitted. The next logical step to follow the plan is to click the "Log 
+in" button to authenticate and access the Odoo backend.
+Action: {"type": "click", "selector": "button.btn-primary", "description": 
+"Click the 'Log in' button to submit the credentials."}
+Reasoning: Based on the history, the login credentials ('admin'/'admin') have 
+been entered and the 'Log in' button has been clicked. The system is expected to
+authenticate and redirect to the Odoo backend. The next step in the plan is to 
+navigate to the **Sales** app. I will locate and click the Sales application 
+tile on the dashboard.
+Action: {"type": "click", "selector": "", "description": "Click on the Sales app
+to open it."}
+Reasoning: 
+Action: <action>
+{"type": "click", "selector": "", "description": "Click on the Sales app icon to
+enter the Sales module."}
+</action>
