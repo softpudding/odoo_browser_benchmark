@@ -1,0 +1,63 @@
+=== Benchmark Evaluation ===
+  Task:   purchase_stock.receive_and_complete_backorder
+  Agent:  command
+  DB:     bench_fr_974bd8d9  (auto-isolated)
+  URL:    http://127.0.0.1:56158
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/websight/purchase_stock.receive_and_complete_backorder__1777079278
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_974bd8d9 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 56158
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 8 calls captured (2 writes, 6 reads)
+   State: 2 records across 2 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      4 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   8
+  Writes:            2 non-forbidden, 0 forbidden
+  Required ops MISSED: ['stock.backorder.confirmation.process', 'stock.picking.button_validate']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/websight/purchase_stock.receive_and_complete_backorder__1777079278/
+
+  Postcondition failures:
+    - PO receipt_status is 'pending', expected 'full'
+    - Expected 2 done receipts, found 0 (total pickings: 1, states: ['assigned'])
+  Missing expected edits:
+    - stock.picking.origin = P00001
+    - stock.picking.state = done
+    - stock.picking.state = done
+    - purchase.order.receipt_status = full
