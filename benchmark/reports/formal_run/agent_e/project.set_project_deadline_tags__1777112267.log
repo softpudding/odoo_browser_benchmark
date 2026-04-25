@@ -1,0 +1,53 @@
+=== Benchmark Evaluation ===
+  Task:   project.set_project_deadline_tags
+  Agent:  command
+  DB:     bench_fr_6c165065  (auto-isolated)
+  URL:    http://127.0.0.1:52286
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/project.set_project_deadline_tags__1777112267
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_6c165065 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 52286
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=222.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   222.0s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/project.set_project_deadline_tags__1777112267/
+
+  Postcondition failures:
+    - Project deadline is False, expected 2026-06-30
+    - Missing required tags: ['Launch', 'Q3']. Actual tags: []
+  Missing expected edits:
+    - project.project.date = 2026-06-30
+    - project.project.tag_ids = [1, 2]

@@ -1,0 +1,60 @@
+=== Benchmark Evaluation ===
+  Task:   project.set_project_deadline_tags
+  Agent:  command
+  DB:     bench_fr_88cabf64  (auto-isolated)
+  URL:    http://127.0.0.1:51640
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/project.set_project_deadline_tags__1777112132
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_88cabf64 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 51640
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 42 calls captured (19 writes, 23 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   600.1s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   42
+  Writes:            19 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/project.set_project_deadline_tags__1777112132/
+
+  Postcondition failures:
+    - Project deadline is False, expected 2026-06-30
+    - Missing required tags: ['Launch', 'Q3']. Actual tags: []
+  Missing expected edits:
+    - project.project.date = 2026-06-30
+    - project.project.tag_ids = [1, 2]
