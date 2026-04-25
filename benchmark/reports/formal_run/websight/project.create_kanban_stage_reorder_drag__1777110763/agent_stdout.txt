@@ -1,0 +1,52 @@
+Plan:
+1. ### Minimal Execution Plan
+2. **1. Authenticate & Navigate**
+3. - Open `http://127.0.0.1:61468/odoo/project`
+4. - Log in: `admin` / `admin`
+5. - Click the **Project** app
+6. **2. Open Target Project**
+7. - Locate and click **Bench Project A**
+8. - Verify kanban view loads with stages: `Triage → In Progress → Review → 
+Done`
+9. **3. Create "Backlog Review" Stage**
+10. - Click the collapsed **"+"** (Add column) at the far right of the board
+11. - Type `Backlog Review`
+12. - Confirm via `Enter` or green checkmark
+13. - *Verify:* Order is now `Triage → In Progress → Review → Done → Backlog 
+Review`
+14. **4. Reorder to Position #2**
+15. - Click & hold the **Backlog Review** column header
+16. - Drag left until the insertion indicator snaps between **Triage** and **In 
+Progress**
+17. - Release (auto-saves immediately)
+18. **✅ Final State Check**
+19. Column order must read exactly:
+20. 1. Triage
+21. 2. **Backlog Review**
+22. 3. In Progress
+23. 4. Review
+24. 5. Done
+25. **⛔ Guardrails**
+26. - Do not rename, fold, archive, or delete existing stages
+27. - Do not create or modify tasks
+28. - Do not touch other projects
+29. - Stage remains scoped to *Bench Project A* (default behavior)
+Reasoning: 
+Action: <action>
+click(x=627, y=721)
+</action>
+Reasoning: The user has navigated to the "Bench Project A" kanban board (implied
+by the context and history). The instructions require creating a new stage named
+"Backlog Review". To do this, I must first click the collapsed "+" (Add column) 
+button located at the far right of the kanban board, next to the "Done" column. 
+This will expand the input field to type the new stage name. I will click in the
+upper-right area where the column headers are located.
+Action: click(x=1242, y=263)
+Reasoning: 
+Action: <action>
+type(text="Backlog Review")
+</action>
+Reasoning: 
+Action: <action>
+press(keys="Enter")
+</action>
