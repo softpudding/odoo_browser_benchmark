@@ -1,0 +1,63 @@
+=== Benchmark Evaluation ===
+  Task:   crm.convert_lead_to_opportunity_simple
+  Agent:  command
+  DB:     bench_fr_f1506ff3  (auto-isolated)
+  URL:    http://127.0.0.1:52921
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/websight/crm.convert_lead_to_opportunity_simple__1777087559
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_f1506ff3 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 52921
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 3 calls captured (1 writes, 2 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 4 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      3 edits
+  Extra:        0 edits
+  Wall clock:   600.1s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   3
+  Writes:            1 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/websight/crm.convert_lead_to_opportunity_simple__1777087559/
+
+  Postcondition failures:
+    - Lead type is 'lead', expected 'opportunity'
+    - Linked partner is 'None', expected 'Spark Innovations'
+    - Stage is 'New', expected 'Qualified'
+    - Expected exactly 1 matching activity, found 0
+  Missing expected edits:
+    - crm.lead.partner_id = Spark Innovations
+    - crm.lead.stage_id = Qualified
+    - crm.lead.type = opportunity
