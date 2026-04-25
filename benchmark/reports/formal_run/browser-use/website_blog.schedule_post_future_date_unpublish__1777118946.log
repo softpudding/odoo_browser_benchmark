@@ -1,0 +1,56 @@
+=== Benchmark Evaluation ===
+  Task:   website_blog.schedule_post_future_date_unpublish
+  Agent:  browser-use
+  DB:     bench_fr_e348c898  (auto-isolated)
+  URL:    http://127.0.0.1:56043
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/browser-use/website_blog.schedule_post_future_date_unpublish__1777118946
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_e348c898 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 56043
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (browser-use)...
+
+
+   Agent finished: steps=0, wall_clock=393.9s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 89 calls captured (42 writes, 47 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   2 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     2 edits
+  Matching:     2 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   393.9s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   89
+  Writes:            42 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/browser-use/website_blog.schedule_post_future_date_unpublish__1777118946/
+
+  Postcondition failures:
+    - Publishing date (admin local) is 2026-08-15T12:00:25, expected 2026-08-15T12:00:00
