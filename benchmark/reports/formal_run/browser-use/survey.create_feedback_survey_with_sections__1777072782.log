@@ -1,0 +1,60 @@
+=== Benchmark Evaluation ===
+  Task:   survey.create_feedback_survey_with_sections
+  Agent:  browser-use
+  DB:     bench_fr_6f4d6223  (auto-isolated)
+  URL:    http://127.0.0.1:55242
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/browser-use/survey.create_feedback_survey_with_sections__1777072782
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_6f4d6223 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 55242
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (browser-use)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 54 calls captured (21 writes, 33 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   2 atomic edits observed
+   Postconditions: 5 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     2 edits
+  Matching:     2 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   54
+  Writes:            21 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/browser-use/survey.create_feedback_survey_with_sections__1777072782/
+
+  Postcondition failures:
+    - Time limit is not enabled
+    - Expected 2 sections, found 1
+    - Expected 4 questions, found 1
+    - Missing section titled 'Logistics' (found sections: ['Content'])
+    - Missing question(s): ['Comments', 'Rate the pace', 'Was the venue comfortable?'] (found: ['How clear was the material?'])

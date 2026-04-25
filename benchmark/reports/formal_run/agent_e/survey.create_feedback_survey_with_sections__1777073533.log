@@ -1,0 +1,62 @@
+=== Benchmark Evaluation ===
+  Task:   survey.create_feedback_survey_with_sections
+  Agent:  command
+  DB:     bench_fr_40df3a9d  (auto-isolated)
+  URL:    http://127.0.0.1:58225
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/survey.create_feedback_survey_with_sections__1777073533
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_40df3a9d from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 58225
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 99 calls captured (40 writes, 59 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   2 atomic edits observed
+   Postconditions: 7 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     2 edits
+  Matching:     2 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   99
+  Writes:            40 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/survey.create_feedback_survey_with_sections__1777073533/
+
+  Postcondition failures:
+    - Pagination is 'page_per_question', expected 'page_per_section'
+    - Time limit is not enabled
+    - Expected 2 sections, found 0
+    - Expected 4 questions, found 3
+    - Missing section titled 'Content' (found sections: [])
+    - Missing section titled 'Logistics' (found sections: [])
+    - Missing question(s): ['Comments', 'How clear was the material?', 'Rate the pace', 'Was the venue comfortable?'] (found: ['How frequently do you use our products?', 'How likely are you to recommend the following products to a friend?', 'How many orders did you pass during the last 6 months?'])

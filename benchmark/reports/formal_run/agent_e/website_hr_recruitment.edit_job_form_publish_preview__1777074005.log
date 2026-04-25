@@ -1,0 +1,60 @@
+=== Benchmark Evaluation ===
+  Task:   website_hr_recruitment.edit_job_form_publish_preview
+  Agent:  command
+  DB:     bench_fr_7cddc13c  (auto-isolated)
+  URL:    http://127.0.0.1:60273
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/website_hr_recruitment.edit_job_form_publish_preview__1777074005
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_7cddc13c from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 60273
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 77 calls captured (36 writes, 41 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   77
+  Writes:            36 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/website_hr_recruitment.edit_job_form_publish_preview__1777074005/
+
+  Postcondition failures:
+    - Job 'Bench QA Engineer' is not published (is_published is False; expected True after toggling the Published switch)
+    - Job 'Bench QA Engineer' website_published is False; the Published boolean_toggle on the form should have set it True via its onchange
+  Missing expected edits:
+    - hr.job.is_published = True
+    - hr.job.website_published = True

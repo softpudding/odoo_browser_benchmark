@@ -1,0 +1,57 @@
+=== Benchmark Evaluation ===
+  Task:   website_hr_recruitment.publish_job_set_interview_form_and_archive_old_posting
+  Agent:  command
+  DB:     bench_fr_de2def63  (auto-isolated)
+  URL:    http://127.0.0.1:62640
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/openbrowser/website_hr_recruitment.publish_job_set_interview_form_and_archive_old_posting__1777074608
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_de2def63 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Starting Odoo...
+   Odoo ready on port 62640
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=0.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     8 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      8 edits
+  Extra:        0 edits
+  Wall clock:   0.1s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/openbrowser/website_hr_recruitment.publish_job_set_interview_form_and_archive_old_posting__1777074608/
+
+  Postcondition failures:
+    - New job not found
+  Missing expected edits:
+    - hr.job.active = None
+    - hr.job.is_published = None
+    - hr.job.website_published = None
+    - hr.job.active = True
+    - hr.job.is_published = True
+    - hr.job.name = Warehouse Interview Specialist
+    - hr.job.survey_id = Bench Interview Form
+    - hr.job.website_published = True
