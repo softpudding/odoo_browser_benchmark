@@ -1,0 +1,49 @@
+=== Benchmark Evaluation ===
+  Task:   survey.review_submitted_responses_filter
+  Agent:  command
+  DB:     bench_fr_4b8198a3  (auto-isolated)
+  URL:    http://127.0.0.1:50242
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/survey.review_submitted_responses_filter__1777117981
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_4b8198a3 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 50242
+   Done.
+2. Capturing pre-task state...
+   Captured 5 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=178.8s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 5 records across 2 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     0 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   178.8s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/survey.review_submitted_responses_filter__1777117981/
+
+  Postcondition failures:
+    - No chatter message containing 'Reviewed' was posted on the participation for reviewer-target@example.com.
