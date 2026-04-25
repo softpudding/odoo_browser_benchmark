@@ -1,0 +1,49 @@
+Plan:
+1. Here is a minimal, constraint-aware execution plan:
+2. 1. **Navigate & Authenticate**
+3.    - Open `http://127.0.0.1:55938/odoo/blog-post-pages`
+4.    - Log in with `admin` / `admin`
+5. 2. **Open Existing Post**
+6.    - From the list, open the record titled `Spring Planning Recap` (located 
+in `Bench Engineering Blog`)
+7. 3. **Edit Fields**
+8.    - **Author**: In the *Publishing Options* group, change to `Alice 
+Authoress`
+9.    - **Tags**: Select exactly the existing tags `Planning` and `Quarterly`. 
+Remove any others. (Do not create tags or add `Retrospective`)
+10.    - **Publishing Date**: In the *Publishing Options* group, set to 
+`04/25/2026 09:00:00`
+11. 4. **Constraint Validation**
+12.    - ✅ `Published` toggle is **OFF**
+13.    - ✅ Title, blog, subtitle, and content are unmodified
+14.    - ✅ Only one post named `Spring Planning Recap` exists
+15. 5. **Save**
+16.    - Click **Save**. Do not trigger any publish or preview actions.
+Reasoning: The current screen is blank, indicating the browser is at a starting 
+state or `about:blank`. The first step in the plan is to navigate to the 
+specified Odoo URL to access the blog posts list. I need to go to 
+`http://127.0.0.1:55938/odoo/blog-post-pages`. After navigating, I will likely 
+need to log in with the provided credentials (`admin`/`admin`) before I can 
+interact with the blog posts.
+Action: http://127.0.0.1:55938/odoo/blog-post-pages
+Reasoning: 
+Action: <action>
+fill('input', 'admin')
+</action>
+Reasoning: 
+Action: <action>
+fill('input', 'admin')
+</action>
+Reasoning: The user is currently on the login page. The email and password 
+fields have been filled with 'admin' based on the action history. The next step 
+is to click the "Log in" button to authenticate and proceed to the intended 
+destination (blog-post-pages).
+Action: click('button:has-text("Log in")')
+Reasoning: 
+Action: <action>
+click('button:has-text("Log in")')
+</action>
+Reasoning: 
+Action: <action>
+click('a:has-text("Spring Planning Recap")')
+</action>
