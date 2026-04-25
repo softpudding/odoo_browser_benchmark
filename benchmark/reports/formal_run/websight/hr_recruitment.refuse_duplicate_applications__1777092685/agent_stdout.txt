@@ -1,0 +1,56 @@
+Plan:
+1. **Minimal Execution Plan:**
+2. 1. **Access & Login**
+3.    - Navigate to `http://127.0.0.1:63739/odoo/recruitment`
+4.    - Log in with username `admin` and password `admin`
+5.    - Open/ensure you are in the **Recruitment** app
+6. 2. **Create New Refuse Reason**
+7.    - Go to `Configuration -> Applications -> Refuse Reasons`
+8.    - Click **New**
+9.    - Set **Name:** `Candidate withdrew after final review`
+10.    - Set **Email Template:** `Benchmark Applicant Withdrawal Template`
+11.    - Save/Confirm
+12. 3. **Locate Target Applicant**
+13.    - Return to the dashboard/kanban, open the **Operations Analyst** job 
+position
+14.    - Find and click applicant **Priya Nair**
+15. 4. **Configure & Submit Refusal**
+16.    - Click the **Refuse** button
+17.    - In the popup dialog, configure exactly:
+18.      - **Reason:** `Candidate withdrew after final review`
+19.      - **Refuse Duplicate Applications:** ✅ Toggle ON
+20.      - **Send Email:** ✅ Keep ON
+21.      - **Subject:** `Operations Analyst application update`
+22.      - **Body:** `We are closing your Operations Analyst applications after 
+your withdrawal request.`
+23.    - Click **Refuse** to execute
+24. 5. **Verify Outcome**
+25.    - Confirm `Priya Nair` and `Priya Nair (Referral)` both show status 
+**Refused** with the newly created reason
+26.    - Confirm `Priya Narayan` remains completely untouched
+Reasoning: 
+Action: <action>
+navigate('http://127.0.0.1:63739/odoo/recruitment')
+</action>
+Reasoning: I am on the login page. I need to log in with the provided 
+credentials 'admin'/'admin' to access the Odoo backend and proceed with the 
+recruitment tasks.
+Action: fill('input', 'admin')
+Reasoning: 
+Action: <action>
+fill('input', 'admin')
+</action>
+Reasoning: The user has filled in the login credentials ('admin', 'admin') in 
+the previous steps. The next step to proceed with the task is to click the "Log 
+in" button to authenticate and access the Odoo backend. Once logged in, the 
+system should redirect to the recruitment app dashboard as per the URL used.
+Action: click('button:has-text("Log in")')
+Reasoning: I have just submitted the login form. The next step is to access the 
+"Configuration" menu within the Recruitment app to set up the new refuse reason 
+as instructed. I need to wait for the page to load after login and then click on
+"Configuration".
+Action: click('a:has-text("Configuration")')
+Reasoning: 
+Action: <action>
+click('a:has-text("Applications")')
+</action>
