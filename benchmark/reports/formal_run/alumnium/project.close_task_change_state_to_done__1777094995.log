@@ -1,0 +1,58 @@
+=== Benchmark Evaluation ===
+  Task:   project.close_task_change_state_to_done
+  Agent:  command
+  DB:     bench_fr_6326a15b  (auto-isolated)
+  URL:    http://127.0.0.1:56488
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/alumnium/project.close_task_change_state_to_done__1777094995
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_6326a15b from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 56488
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=43.8s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 5 calls captured (1 writes, 4 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     1 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      1 edits
+  Extra:        0 edits
+  Wall clock:   43.8s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   5
+  Writes:            1 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/alumnium/project.close_task_change_state_to_done__1777094995/
+
+  Postcondition failures:
+    - Task 'Review document' state is '01_in_progress', expected '1_done' (Done) — pick 'Done' from the state widget dropdown, NOT 'Approved' / 'Cancelled' / 'Changes Requested'.
+  Missing expected edits:
+    - project.task.state = 1_done

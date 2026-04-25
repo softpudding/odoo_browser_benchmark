@@ -1,0 +1,63 @@
+Plan:
+1. **Minimal Execution Plan**
+2. 1. **Access & Login**
+3.    - Open `http://127.0.0.1:53492/odoo/email-marketing`
+4.    - Log in with `admin` / `admin`
+5. 2. **Open Original Mailing**
+6.    - Top Nav → **Email Marketing → Mailings**
+7.    - Click to open the record with Subject: `Bench Newsletter V1`
+8. 3. **Duplicate**
+9.    - Top control panel → click **Gear/Cog (Actions)** → select **Duplicate**
+10.    - *(A new draft form opens automatically)*
+11. 4. **Configure Duplicate**
+12.    - **Subject**: Change to exactly `Bench Newsletter V2 Spring Special`
+13.    - **Recipients**: Verify dropdown remains `Mailing List`
+14.    - **Mailing Lists**: Add/select `Bench Subscribers`
+15.    - **Sender / From & Email Body**: Leave exactly as-is (no edits)
+16.    - Click **Save (cloud icon)** if form does not auto-save
+17. 5. **Launch**
+18.    - Top control panel → click **Send**
+19.    - If confirmation dialog appears → click **Send / OK** immediately
+20. 6. **Verify (Optional)**
+21.    - Ensure original `Bench Newsletter V1` state remains `Sent` and 
+unmodified.
+Reasoning: 
+Action: <action>
+{"action": "go_to_url", "url": "http://127.0.0.1:53492/odoo/email-marketing"}
+</action>
+Reasoning: 
+Action: <action>
+{"action": "type", "text": "admin"}
+</action>
+Reasoning: I am currently on the login page. The "Email" field is focused 
+(indicated by the pink border) but appears to be empty (placeholder "Enter your 
+email" is visible). The previous action history shows an attempt to type 
+"admin", but the visual state suggests the field is still empty or the text is 
+not visible. To proceed with the login using username "admin" and password 
+"admin", I will type "admin" into the currently focused Email field, press Tab 
+to move to the Password field, type "admin" for the password, and press Enter to
+submit the login form.
+Action: {"action": "type", "text": "admin\tadmin\n"}
+Reasoning: The current screen is the login page. The "Email" field is focused. 
+The previous history indicates an attempt to log in, but since I am still seeing
+the login page with empty fields (placeholders visible), I need to perform the 
+login sequence again to ensure access. I will type the username "admin", tab to 
+the password field, type the password "admin", and press Enter to submit the 
+form. Once logged in, I will be redirected to the Email Marketing dashboard as 
+per the URL redirect parameter.
+Action: {"action": "type", "text": "admin\tadmin\n"}
+Reasoning: The previous attempts to type the credentials seem to have failed or 
+not registered, as the fields still show placeholders. The Email field appears 
+focused (pink border), but to be absolutely sure and to reset any state issues, 
+I will explicitly click the Email input field first. Then I will type the 
+username, tab to the password field, type the password, and press Enter to 
+submit the form.
+Action: {"action": "click", "selector": "input"}
+Reasoning: 
+Action: <action>
+{"action": "click", "selector": "input"}
+</action>
+Reasoning: 
+Action: <action>
+{"action": "type", "text": "admin\tadmin\n"}
+</action>
