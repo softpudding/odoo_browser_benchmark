@@ -1,0 +1,63 @@
+Plan:
+1. ### Minimal Execution Plan
+2. #### 🔐 Phase 1: Access & Login
+3. 1. Navigate to `http://127.0.0.1:62065/odoo/recruitment`
+4. 2. Log in with `Username: admin` / `Password: admin`
+5. 3. Wait for the Recruitment app dashboard to fully load.
+6. #### ✅ Phase 2: Hire Top Candidate
+7. 4. Click the **Bench Role** card on the dashboard.
+8. 5. Click **Top Candidate** to open the applicant form.
+9. 6. In the top status bar (stage pills), click **Contract Signed**.
+10.    *(Wait for the green "Hired" ribbon to appear and the **Create Employee**
+button to load in the header.)*
+11. 7. Click **Create Employee**.
+12. 8. In the pre-filled employee form, locate the **Job Title** field (directly
+under the name).
+13. 9. Overwrite its value with exactly: `Bench Role (Hired)`
+14. 10. Click **Save** (cloud icon). Confirm the "Employee" smart button appears
+in the applicant's top-right.
+15. #### ❌ Phase 3: Refuse Runner Up
+16. 11. Navigate back to the **Bench Role** applications list.
+17. 12. Click **Runner Up** to open the applicant form.
+18. 13. Click the **Refuse** button in the form header.
+19. 14. In the *Refuse Reason* wizard:
+20.     - Under **Reason**, click the **Not a fit** badge.
+21.     - Ensure **Send Email** toggle is **OFF** (click off if on).
+22.     - Click the **Refuse** button at the bottom.
+23. 15. Confirm the dialog closes and the form shows a red "Refused" ribbon.
+24. **Done.** Do not perform any additional navigation, edits, or creations.
+Reasoning: 
+Action: <action>
+{"action": "goto", "url": "http://127.0.0.1:62065/odoo/recruitment"}
+</action>
+Reasoning: I am currently on the login page. To proceed with the plan, I need to
+log in with the provided credentials (`admin`/`admin`). I will first enter the 
+email/username, then the password, and finally click the "Log in" button.
+Action: {"action": "fill", "element": "input", "text": "admin"}
+Reasoning: I have successfully filled the email field with 'admin'. The next 
+step in the login process is to enter the password. I see the password input 
+field is available. I will fill it with 'admin'. After that, I will need to 
+click the 'Log in' button to proceed to the dashboard.
+Action: {"action": "fill", "element": "input", "text": "admin"}
+Reasoning: I have filled in the username ('admin') and password ('admin') 
+fields. The next step in the login process is to click the "Log in" button to 
+submit the credentials and access the dashboard. The button is clearly visible 
+below the password field.
+Action: {"action": "click", "element": "button:has-text(\"Log in\")"}
+Reasoning: The login credentials have been entered and the "Log in" button was 
+clicked in the previous step. Assuming the login was successful, the page should
+now be redirected to the Odoo Recruitment dashboard. According to the plan, the 
+next step is to click the "Bench Role" card to open its applications. I will 
+look for a card or element containing the text "Bench Role" on the dashboard.
+Action: {"action": "click", "element": "text=\"Bench Role\""}
+Reasoning: The current screenshot shows the login page with empty email and 
+password fields. The history indicates that previous attempts were made to fill 
+these fields and click "Log in", and even an attempt to click "Bench Role" was 
+made (likely failing because the dashboard wasn't loaded). Since the fields are 
+currently empty in the screenshot, I need to re-enter the credentials. I will 
+start by filling the email field with 'admin'.
+Action: {"action": "fill", "element": "input", "text": "admin"}
+Reasoning: The screenshot shows the login page with empty fields. The history 
+indicates a previous attempt to log in failed or the page state reset. I need to
+re-enter the credentials. I will start by filling the email field with 'admin'.
+Action: {"action": "fill", "element": "input", "text": "admin"}
