@@ -1,0 +1,60 @@
+=== Benchmark Evaluation ===
+  Task:   crm.duplicate_lead_convert_to_opportunity
+  Agent:  browser-use
+  DB:     bench_fr_ed017a2d  (auto-isolated)
+  URL:    http://127.0.0.1:58598
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/browser-use/crm.duplicate_lead_convert_to_opportunity__1777104077
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_ed017a2d from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 58598
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (browser-use)...
+
+
+   Agent finished: steps=0, wall_clock=419.6s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 70 calls captured (41 writes, 29 reads)
+   State: 3 records across 1 models
+5. Computing state diff...
+   6 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     6 edits
+  Matching:     3 edits
+  Missing:      0 edits
+  Extra:        3 edits
+  Wall clock:   419.6s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   70
+  Writes:            41 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/browser-use/crm.duplicate_lead_convert_to_opportunity__1777104077/
+
+  Postcondition failures:
+    - Expected exactly 1 lead named 'Bench Template Lead', found 2
+  Unexpected extra edits:
+    + crm.lead.name = Bench Template Lead
+    + crm.lead.partner_id = None
+    + crm.lead.type = lead
