@@ -1,0 +1,64 @@
+=== Benchmark Evaluation ===
+  Task:   mrp_account.mo_consume_and_close_check_valuation
+  Agent:  command
+  DB:     bench_fr_4745725f  (auto-isolated)
+  URL:    http://127.0.0.1:62183
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/websight/mrp_account.mo_consume_and_close_check_valuation__1777077594
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_4745725f from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 62183
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 4 calls captured (1 writes, 3 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 5 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   600.1s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   4
+  Writes:            1 non-forbidden, 0 forbidden
+  Required ops MISSED: ['mrp.production.button_mark_done']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/websight/mrp_account.mo_consume_and_close_check_valuation__1777077594/
+
+  Postcondition failures:
+    - MO state is 'confirmed', expected 'done'
+    - MO qty_produced is 0.0, expected 1.0
+    - Expected exactly 1 done finished stock.move for MO 'MO-BENCH-VAL' (production_id + product='Bench Assembly'), found 0
+    - Expected exactly 2 done raw stock.moves for MO 'MO-BENCH-VAL' (raw_material_production_id), found 0: []
+    - Raw moves missing component(s) ['Bench Component 1', 'Bench Component 2'] (observed products: [])
+  Missing expected edits:
+    - mrp.production.qty_produced = 1.0
+    - mrp.production.state = done

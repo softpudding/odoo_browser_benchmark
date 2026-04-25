@@ -1,0 +1,53 @@
+=== Benchmark Evaluation ===
+  Task:   purchase_stock.receive_and_complete_backorder
+  Agent:  command
+  DB:     bench_fr_1234fc07  (auto-isolated)
+  URL:    http://127.0.0.1:50036
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/notte/purchase_stock.receive_and_complete_backorder__1777078299
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_1234fc07 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 50036
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=363.7s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 58 calls captured (29 writes, 29 reads)
+   State: 3 records across 2 models
+5. Computing state diff...
+   4 atomic edits observed
+6. Scoring...
+
+==================================================
+  RESULT: PASS  (Strict: PASS)
+  StateDiffF1:  1.0
+  Precision:    1.0
+  Recall:       1.0
+  Expected:     4 edits
+  Observed:     4 edits
+  Matching:     4 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   363.7s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   58
+  Writes:            29 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/notte/purchase_stock.receive_and_complete_backorder__1777078299/
+
