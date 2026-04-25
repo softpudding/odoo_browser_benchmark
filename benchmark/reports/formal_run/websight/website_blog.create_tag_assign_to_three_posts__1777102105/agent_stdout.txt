@@ -1,0 +1,65 @@
+Plan:
+1. Here is a minimal, executable plan:
+2. ### 🔹 Phase 1: Login
+3. 1. Navigate to `http://127.0.0.1:52000/`
+4. 2. Log in with `admin` / `admin`
+5. ### 🔹 Phase 2: Create Tag
+6. 3. Go to `http://127.0.0.1:52000/odoo/blog-tags`
+7. 4. Click **New**
+8. 5. Set **Name** → `Q2-2026`
+9. 6. Click **Save** (confirm only one instance exists)
+10. ### 🔹 Phase 3: Assign Tag to Posts
+11. 7. Navigate to `http://127.0.0.1:52000/odoo/blog-post-pages`
+12. 8. Open **Post-A** → In the `Tags` field, type/select `Q2-2026` from 
+dropdown → **Save**
+13. 9. Open **Post-B** → In the `Tags` field, type/select `Q2-2026` from 
+dropdown → **Save**
+14. 10. Open **Post-C** → In the `Tags` field, type/select `Q2-2026` from 
+dropdown → **Save**
+15. ### 🔹 Phase 4: Verify & Close
+16. 11. Confirm `Post-A`, `Post-B`, `Post-C` each list `Q2-2026` in their Tags 
+field.
+17. 12. Confirm `Post-D` does **not** list `Q2-2026`.
+18. 13. Verify no other fields (title, content, publish state, author, blog, 
+etc.) were altered on any post.
+19. 14. Logout (optional)
+Reasoning: 
+Action: <action>go_to("http://127.0.0.1:52000/odoo/blog-post-pages")</action>
+Reasoning: The user is currently on the login page, redirected from the blog 
+posts page. According to the plan, the first step is to log in with the provided
+credentials ('admin' / 'admin'). I need to fill in the Email and Password fields
+and then click the 'Log in' button to proceed to the backend where I can manage 
+blog tags and posts.
+Action: fill("input", "admin")
+Reasoning: The user is currently on the login screen. The history indicates that
+the login field (email) has been filled with "admin". The next step is to fill 
+the password field with "admin" and then click the "Log in" button to access the
+backend. Once logged in, the system should redirect to the intended page or the 
+dashboard, allowing the user to proceed with the plan.
+Action: fill("input", "admin")
+Reasoning: 
+Action: <action>click("button:has-text('Log in')")</action>
+Reasoning: The login was successful as indicated by the transition to the 
+backend list view. The plan specifies that the next major step is to create a 
+tag named `Q2-2026`. To do this, I first need to navigate to the Blog Tags 
+configuration page. The instruction mentions navigating to `/odoo/blog-tags`. 
+Therefore, I will direct the browser to this URL to create the new tag.
+Action: go_to("http://127.0.0.1:52000/odoo/blog-tags")
+Reasoning: The user is currently on the login page (indicated by the URL 
+`/web/login` in the image and the visible login form). The previous history 
+indicates an attempt to navigate to `/odoo/blog-tags` which likely triggered a 
+redirect to the login page because the session was not active or valid. To 
+proceed with the plan (creating a tag and assigning it to posts), I must first 
+authenticate. I will start by filling in the email/username field with 'admin'.
+Action: fill("input", "admin")
+Reasoning: 
+Action: <action>fill("input", "admin")</action>
+Reasoning: 
+Action: <action>click("button:has-text('Log in')")</action>
+Reasoning: The user is currently on the login page with the credentials 'admin' 
+and 'admin' already filled in. The previous history shows attempts to navigate 
+to backend pages which resulted in redirects to this login page. To proceed with
+the task of creating a blog tag and assigning it to posts, the user must first 
+authenticate. The next logical step is to click the "Log in" button to submit 
+the credentials and gain access to the backend.
+Action: click("button:has-text('Log in')")
