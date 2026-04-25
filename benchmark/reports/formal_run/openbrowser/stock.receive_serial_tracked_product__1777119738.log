@@ -1,0 +1,59 @@
+=== Benchmark Evaluation ===
+  Task:   stock.receive_serial_tracked_product
+  Agent:  command
+  DB:     bench_fr_d5fe1c70  (auto-isolated)
+  URL:    http://127.0.0.1:63458
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/openbrowser/stock.receive_serial_tracked_product__1777119738
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_d5fe1c70 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 63458
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=0.2s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 1 records across 2 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     7 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      7 edits
+  Extra:        0 edits
+  Wall clock:   0.2s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/openbrowser/stock.receive_serial_tracked_product__1777119738/
+
+  Postcondition failures:
+    - Receipt state is 'draft', expected 'done' — agent likely failed to validate after assigning three serials
+    - Missing serial lots for 'Bench Serial Gadget': ['SN-BENCH-001', 'SN-BENCH-002', 'SN-BENCH-003']
+    - Expected exactly 3 move lines (qty>0) on the receipt for Bench Serial Gadget, found 0 — agent likely merged serials onto a single move line
+  Missing expected edits:
+    - stock.picking.state = done
+    - stock.lot.name = SN-BENCH-001
+    - stock.lot.product_id = Bench Serial Gadget
+    - stock.lot.name = SN-BENCH-002
+    - stock.lot.product_id = Bench Serial Gadget
+    - stock.lot.name = SN-BENCH-003
+    - stock.lot.product_id = Bench Serial Gadget

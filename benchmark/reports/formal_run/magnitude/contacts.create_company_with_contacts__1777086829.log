@@ -1,0 +1,80 @@
+=== Benchmark Evaluation ===
+  Task:   contacts.create_company_with_contacts
+  Agent:  command
+  DB:     bench_fr_c0692186  (auto-isolated)
+  URL:    http://127.0.0.1:49177
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/contacts.create_company_with_contacts__1777086829
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_c0692186 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 49177
+   Done.
+2. Capturing pre-task state...
+   Captured 7 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=1.7s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 7 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     30 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      30 edits
+  Extra:        0 edits
+  Wall clock:   1.7s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/contacts.create_company_with_contacts__1777086829/
+
+  Postcondition failures:
+    - Company 'Vantage Industrial Group' not found (must be is_company=True)
+  Missing expected edits:
+    - res.partner.city = Chicago
+    - res.partner.country_id = United States
+    - res.partner.email = p.drum@vantage-industrial.example.com
+    - res.partner.function = Procurement Manager
+    - res.partner.is_company = None
+    - res.partner.name = Patricia Drum
+    - res.partner.parent_id = Vantage Industrial Group
+    - res.partner.phone = +1 (312) 555-0191
+    - res.partner.street = 4400 Commerce Drive
+    - res.partner.zip = 60609
+    - res.partner.city = Chicago
+    - res.partner.country_id = United States
+    - res.partner.email = s.okafor@vantage-industrial.example.com
+    - res.partner.function = Logistics Coordinator
+    - res.partner.is_company = None
+    - res.partner.name = Steven Okafor
+    - res.partner.parent_id = Vantage Industrial Group
+    - res.partner.phone = +1 (312) 555-0192
+    - res.partner.street = 4400 Commerce Drive
+    - res.partner.zip = 60609
+    - res.partner.city = Chicago
+    - res.partner.country_id = United States
+    - res.partner.email = None
+    - res.partner.function = None
+    - res.partner.is_company = True
+    - res.partner.name = Vantage Industrial Group
+    - res.partner.parent_id = None
+    - res.partner.phone = +1 (312) 555-0190
+    - res.partner.street = 4400 Commerce Drive
+    - res.partner.zip = 60609

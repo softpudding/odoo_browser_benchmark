@@ -1,0 +1,55 @@
+Plan:
+1. Here is a minimal, step-by-step execution plan:
+2. ### Phase 1: Create Discount Program
+3. 1. **Login & Navigate**: Access 
+`http://127.0.0.1:58777/odoo/discount-loyalty` (log in with `admin` / `admin` if
+not already authenticated).
+4. 2. **New Record**: Click the **New** button in the top-left of the Discounts 
+& Loyalty list.
+5. 3. **Basic Details**:
+6.    - **Program Name**: `Bench Promo 10%`
+7.    - **Program Type**: `Discount Code`
+8. 4. **Configure Conditions**: Click the **Conditions / Rules** tab. In the 
+rules table, set **Promo Code** to `BENCH10`.
+9. 5. **Configure Rewards**: Click the **Rewards** tab. In the rewards table, 
+set:
+10.    - **Reward Type**: `Discount`
+11.    - **Discount Value**: `10%`
+12.    - **Apply On**: `Order`
+13.    *(Leave `discount_mode` at default `percent`)*
+14. 6. **Save**: Click the **Save** button to persist the program.
+15. ### Phase 2: Apply to Sales Order
+16. 7. **Navigate to Quotation**: Go to **Sales > Orders > Quotations** and open
+`SO-BENCH-001`.
+17. 8. **Apply Code**: Click the **Coupon Code** button in the form header. 
+Enter `BENCH10` and confirm/apply.
+18. 9. **Verify**:
+19.    - Confirm a new order line appears labeled **Discount** with a line 
+amount of **-€10.00**.
+20.    - Confirm the **Total** at the bottom reads **€90.00**.
+21. 10. **Save & Leave**: Click **Save** to record the discount. **Do not 
+confirm** the order. Leave it in **Draft** state. Exit the form.
+Reasoning: I need to start by navigating to the Discounts & Loyalty module as 
+per the first step of the plan. The URL is provided. I will initiate the 
+navigation.
+Action: goto("http://127.0.0.1:58777/odoo/discount-loyalty")
+Reasoning: I am currently on the login page. To proceed with the plan, I need to
+authenticate using the provided credentials ('admin' / 'admin') and then 
+navigate to the target URL for the Discounts & Loyalty module. I will fill in 
+the email and password fields and click the "Log in" button.
+Action: fill('input', 'admin')
+Reasoning: I am on the login page. The previous step involved filling the email 
+field with 'admin'. Now I need to fill the password field with 'admin' and then 
+click the "Log in" button to access the backend. After logging in, I will be 
+redirected to the Discounts & Loyalty list as specified in the URL.
+Action: fill('input', 'admin')
+Reasoning: 
+Action: <action>click('button:has-text("Log in")')</action>
+Reasoning: The user has successfully logged into the Odoo backend. The URL 
+confirms they are on the Discounts & Loyalty list view 
+(`/odoo/discount-loyalty`). The next step in the plan is to create a new 
+Discount Code program. I need to click the "New" button to start creating the 
+program.
+Action: click('button:has-text("New")')
+Reasoning: 
+Action: <action>click('button:has-text("New")')</action>

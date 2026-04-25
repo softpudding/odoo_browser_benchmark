@@ -1,0 +1,41 @@
+Plan:
+1. Here is a minimal, step-by-step plan:
+2. 1. **Access & Login**: Navigate to `http://127.0.0.1:56999/odoo/recruitment`,
+log in with `admin` / `admin`, and open the **Recruitment** app.
+3. 2. **Open Applicant**: Click the **"Senior QA Engineer"** job position, then 
+click **"Diana Recruit"** in the applicants list to open her form.
+4. 3. **Update State & Recruiter**: Click the colored Kanban state ball at the 
+top and select **"Ready for Next Stage"**. In the **Recruiter** field, 
+type/select **"Recruiter Bob"**.
+5. 4. **Log Internal Note**: Scroll to the chatter, click **"Log note"**, type 
+exactly `Phone screen done.`, and click **Log**.
+6. 5. **Save**: Click the **Save** button to commit. Verify that name, email, 
+phone, and stage remain untouched.
+Reasoning: 
+Action: <action>
+{"action": "navigate", "url": "http://127.0.0.1:56999/odoo/recruitment"}
+</action>
+Reasoning: I'm currently on the login page. To proceed with the instructions, I 
+need to authenticate using the provided credentials. I will first fill in the 
+email field with 'admin', then fill the password field with 'admin', and finally
+click the 'Log in' button.
+Action: {"action": "type", "text": "admin"}
+Reasoning: The email 'admin' has been entered (per the history action `type 
+"admin"` targeting the focused email field). Now I need to enter the password. I
+will click the password input field to focus it.
+Action: {"action": "click", "target": "Enter your password"}
+Reasoning: The previous action typed 'admin' into the email field. I am now at 
+the login screen. I need to log in with password 'admin'. The password input 
+field is clearly visible below the email field. I should type 'admin' into this 
+field.
+Action: {"action": "type", "text": "admin", "target": "Enter your password"}
+Reasoning: The previous actions successfully filled in the email ('admin') and 
+password ('admin'). The next logical step to complete the login process is to 
+click the "Log in" button. This will authenticate the user and allow access to 
+the Odoo backend where the Recruitment app can be opened.
+Action: {"action": "click", "target": "Log in"}
+Reasoning: The current screen shows the login page. The email field appears to 
+be focused (indicated by the purple border). The history indicates previous 
+attempts to log in, but since I am still on the login page, I need to re-enter 
+the credentials. I will start by typing "admin" into the email field.
+Action: {"action": "type", "text": "admin"}

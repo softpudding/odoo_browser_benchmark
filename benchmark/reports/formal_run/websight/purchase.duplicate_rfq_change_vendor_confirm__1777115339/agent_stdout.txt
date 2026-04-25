@@ -1,0 +1,62 @@
+Plan:
+1. **1. Access & Authenticate**
+2. - Navigate to `http://127.0.0.1:63316/odoo/purchase`
+3. - Log in: `admin` / `admin`
+4. - Ensure the **Purchase** app is active.
+5. **2. Locate Target RFQ**
+6. - In the RFQ list view, filter: `Vendor Reference` = `BENCH-RFQ-DUP` | 
+`Vendor` = `Meridian Supply Co` | `Status` = `RFQ`
+7. - Open the matching draft. *(Make zero edits.)*
+8. **3. Duplicate & Update**
+9. - Click the **⚙️ (Actions)** gear icon in the top control bar → select 
+**Duplicate**.
+10. - On the newly created draft:
+11.   - Change **Vendor** to `Pinnacle Hardware`
+12.   - Set **Vendor Reference** to `PH-REISSUE-77`
+13.   - Set **Order Deadline** to `05/28/2026`
+14. - Verify product lines remain untouched (identical products, quantities, 
+unit prices).
+15. **4. Confirm & Finalize**
+16. - Click **Confirm Order**.
+17. - Validate: New record status = `Purchase Order`. Original `BENCH-RFQ-DUP` 
+remains a `Draft` RFQ with all original data intact.
+Reasoning: I need to start by navigating to the Odoo purchase module URL and 
+logging in with the provided credentials. Then I will search for the specific 
+RFQ "BENCH-RFQ-DUP".
+Action: click xpath=/html/body
+Reasoning: I am starting from a blank state. The first step in the plan is to 
+access the Odoo Purchase module. I need to navigate to the specified URL 
+`http://127.0.0.1:63316/odoo/purchase`. Once there, I will likely encounter a 
+login screen where I will enter the credentials `admin` / `admin`.
+Action: goto http://127.0.0.1:63316/odoo/purchase
+Reasoning: I am currently on the Odoo login page as indicated by the URL and the
+visible form. The next step in the plan is to authenticate. I need to enter the 
+username 'admin' into the Email field. After that, I will need to enter the 
+password and click login, but for this specific turn, I will start by filling 
+the email field.
+Action: type  into 
+xpath=/html/body/div/div/div[1]/div/div[2]/div/div/form/div[1]/input
+Reasoning: I have successfully navigated to the login page and entered the 
+username 'admin' in the email field. The next step in the authentication process
+is to enter the password. I need to locate the password input field and type 
+'admin' into it. After entering the password, I will need to click the 'Log in' 
+button to access the system.
+Action: type  into 
+xpath=/html/body/div/div/div[1]/div/div[2]/div/div/form/div[2]/div[1]/input
+Reasoning: 
+Action: <action>
+type  into 
+xpath=/html/body/div/div/div[1]/div/div[2]/div/div/form/div[2]/div[1]/input
+</action>
+Reasoning: I have filled in the username and password. The next step is to 
+submit the login form by clicking the "Log in" button. This will authenticate me
+and take me to the Odoo backend where I can select the Purchase app.
+Action: click 
+xpath=/html/body/div/div/div[1]/div/div[2]/div/div/form/div[3]/button
+Reasoning: I have just clicked the "Log in" button. The system will authenticate
+the user and, based on the redirect URL in the login page 
+(`redirect=%2Fodoo%2Fpurchase%3F`), will take me to the Purchase app. Once 
+logged in, I need to navigate to the "Requests for Quotation" list to find the 
+specific RFQ "BENCH-RFQ-DUP". I will look for the "Requests for Quotation" menu 
+item in the top navigation bar and click on it to access the list of RFQs.
+Action: click xpath=//a

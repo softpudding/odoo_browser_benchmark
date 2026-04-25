@@ -1,0 +1,64 @@
+=== Benchmark Evaluation ===
+  Task:   website.submit_contact_form_create_crm_lead
+  Agent:  command
+  DB:     bench_fr_19142063  (auto-isolated)
+  URL:    http://127.0.0.1:53222
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/website.submit_contact_form_create_crm_lead__1777121427
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_19142063 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 53222
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 6 calls captured (2 writes, 4 reads)
+   State: 0 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     6 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      6 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   6
+  Writes:            2 non-forbidden, 0 forbidden
+  Required ops MISSED: ['crm.lead.create']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/website.submit_contact_form_create_crm_lead__1777121427/
+
+  Postcondition failures:
+    - No crm.lead was created with email 'prospect@bench.test' or contact_name 'Bench Prospect Q4'. The form submission never reached the CRM pipeline.
+  Missing expected edits:
+    - crm.lead.contact_name = Bench Prospect Q4
+    - crm.lead.email_from = prospect@bench.test
+    - crm.lead.name = Requesting demo
+    - crm.lead.partner_name = Bench Test Inc
+    - crm.lead.phone = +15555551212
+    - crm.lead.type = opportunity

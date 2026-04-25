@@ -1,0 +1,60 @@
+=== Benchmark Evaluation ===
+  Task:   stock.receipt_full_quantity_validate_no_backorder
+  Agent:  command
+  DB:     bench_fr_51cd4052  (auto-isolated)
+  URL:    http://127.0.0.1:61810
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/stock.receipt_full_quantity_validate_no_backorder__1777119288
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_51cd4052 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 61810
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=86.4s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 28 calls captured (13 writes, 15 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     1 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      1 edits
+  Extra:        0 edits
+  Wall clock:   86.4s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   28
+  Writes:            13 non-forbidden, 0 forbidden
+  Required ops MISSED: ['stock.picking.button_validate']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/stock.receipt_full_quantity_validate_no_backorder__1777119288/
+
+  Postcondition failures:
+    - Receipt 'WH/IN/BENCH-FULL' state is 'assigned', expected 'done' — did the agent click Validate?
+    - On-hand of 'Bench Recv Item' at WH/Stock is 0, expected 10.0 (a validated receipt for 10 units should land a stock.quant of 10 at WH/Stock)
+  Missing expected edits:
+    - stock.picking.state = done

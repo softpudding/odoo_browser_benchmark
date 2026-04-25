@@ -1,0 +1,53 @@
+=== Benchmark Evaluation ===
+  Task:   mass_mailing.duplicate_mailing_edit_subject_send
+  Agent:  command
+  DB:     bench_fr_0c8e5031  (auto-isolated)
+  URL:    http://127.0.0.1:50917
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/mass_mailing.duplicate_mailing_edit_subject_send__1777093568
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_0c8e5031 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 50917
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=1.4s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      3 edits
+  Extra:        0 edits
+  Wall clock:   1.4s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/mass_mailing.duplicate_mailing_edit_subject_send__1777093568/
+
+  Postcondition failures:
+    - Duplicate mailing with subject 'Bench Newsletter V2 Spring Special' not found
+  Missing expected edits:
+    - mailing.mailing.mailing_model_name = mailing.list
+    - mailing.mailing.state = done
+    - mailing.mailing.subject = Bench Newsletter V2 Spring Special

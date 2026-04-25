@@ -1,0 +1,62 @@
+=== Benchmark Evaluation ===
+  Task:   purchase.update_rfq_note_quantity_confirm
+  Agent:  command
+  DB:     bench_fr_13f4600a  (auto-isolated)
+  URL:    http://127.0.0.1:50721
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/purchase.update_rfq_note_quantity_confirm__1777116370
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_13f4600a from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 50721
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 33 calls captured (18 writes, 15 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   600.1s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   33
+  Writes:            18 non-forbidden, 0 forbidden
+  Required ops MISSED: ['purchase.order.button_confirm']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/purchase.update_rfq_note_quantity_confirm__1777116370/
+
+  Postcondition failures:
+    - PO state is 'draft', expected 'purchase'
+    - Notes are '<span>Keep original receiving instructions.</span>', expected exact delivery note
+    - Dock Seal Kit quantity is 18.0, expected 24
+  Missing expected edits:
+    - purchase.order.note = Deliver dock seals in two labeled pallets.
+    - purchase.order.state = purchase

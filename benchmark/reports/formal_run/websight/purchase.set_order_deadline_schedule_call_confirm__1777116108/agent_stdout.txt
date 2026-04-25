@@ -1,0 +1,65 @@
+Plan:
+1. Here is a minimal, step-by-step execution plan:
+2. **1. Access & Authentication**
+3. - Navigate to `http://127.0.0.1:49697/odoo/purchase`
+4. - Log in with `admin` / `admin`
+5. - From the app dashboard, click **Purchase**
+6. **2. Locate Target RFQ**
+7. - In the Purchase list view, apply search filters:
+8.   - `Vendor`: `Blue Peak Industrial`
+9.   - `Vendor Reference`: `MED-RFQ-ACT-01`
+10.   - `Status`: `Draft`
+11. - Click the matching record to open the RFQ form
+12. **3. Update Vendor Reference**
+13. - Click the **Vendor Reference** field (top of the form)
+14. - Change value to `BPI-DOCK-05`
+15. - Wait for auto-save or manually click **Save**
+16. **4. Schedule Activity**
+17. - Click the **Activity/Calendar** icon (top right of the form)
+18. - Select **New Activity** → **Call**
+19. - Set **Due Date**: `05/18/2026`
+20. - Set **Summary**: `Confirm dock appointment`
+21. - Click **Schedule** / **Save**
+22. - ⚠️ Verify the activity list shows exactly one entry with this summary
+23. **5. Confirm Order**
+24. - Visually verify: Vendor, products, quantities, and unit prices remain 
+untouched
+25. - Click **Confirm Order**
+26. - ⚠️ If prompted, dismiss/skip any "Send by Email" options
+27. - Stop after the RFQ state changes to `Purchase Order`
+Reasoning: 
+Action: <action>
+{"action": "goto", "url": "http://127.0.0.1:49697/odoo/purchase"}
+</action>
+Reasoning: I am currently on the login page. I need to log in with the provided 
+credentials ('admin'/'admin') to access the Odoo backend. The email field is 
+clearly visible. I will enter the username first.
+Action: {"action": "fill", "element": {"desc": "Email input field", "type": 
+"input", "tag": "input", "attrs": {"placeholder": "Enter your email"}}, "value":
+"admin"}
+Reasoning: 
+Action: <action>
+{"action": "fill", "element": {"desc": "Password input field", "type": "input", 
+"tag": "input", "attrs": {"placeholder": "Enter your password"}}, "value": 
+"admin"}
+</action>
+Reasoning: I have entered the username 'admin' and password 'admin' into their 
+respective fields. The next step is to submit the login form by clicking the 
+"Log in" button.
+Action: {"action": "click", "element": {"desc": "Log in button", "tag": 
+"button", "attrs": {"type": "submit"}}}
+Reasoning: The history indicates that I have successfully filled in the 
+credentials and clicked the "Log in" button. The next step in the plan is to 
+navigate to the Purchase app. Although the URL contains a redirect to 
+`/odoo/purchase`, standard Odoo behavior often redirects to the main App 
+Dashboard (`/web`) after login if the specific route isn't a direct action link,
+or the plan explicitly guides me to "From the app dashboard, click Purchase". 
+Therefore, I expect to see the Odoo App Dashboard with various app icons. I need
+to locate and click the "Purchase" app icon to enter the Purchase module.
+Action: {"action": "click", "element": {"desc": "Purchase app icon", "tag": "a",
+"attrs": {"class": "o_app", "title": "Purchase"}}}
+Reasoning: 
+Action: <action>
+{"action": "click", "element": {"desc": "Purchase app icon", "tag": "a", 
+"attrs": {"class": "o_app", "title": "Purchase"}}}
+</action>

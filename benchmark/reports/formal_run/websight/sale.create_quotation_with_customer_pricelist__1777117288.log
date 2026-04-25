@@ -1,0 +1,60 @@
+=== Benchmark Evaluation ===
+  Task:   sale.create_quotation_with_customer_pricelist
+  Agent:  command
+  DB:     bench_fr_f8d747fd  (auto-isolated)
+  URL:    http://127.0.0.1:54221
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/websight/sale.create_quotation_with_customer_pricelist__1777117288
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_f8d747fd from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 54221
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 4 calls captured (1 writes, 3 reads)
+   State: 0 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      3 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   4
+  Writes:            1 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/websight/sale.create_quotation_with_customer_pricelist__1777117288/
+
+  Postcondition failures:
+    - No sale.order found for 'Bench Premium Co'
+  Missing expected edits:
+    - sale.order.partner_id = Bench Premium Co
+    - sale.order.pricelist_id = VIP 20% Off (USD)
+    - sale.order.state = draft

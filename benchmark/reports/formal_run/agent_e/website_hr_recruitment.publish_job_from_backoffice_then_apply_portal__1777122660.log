@@ -1,0 +1,82 @@
+=== Benchmark Evaluation ===
+  Task:   website_hr_recruitment.publish_job_from_backoffice_then_apply_portal
+  Agent:  command
+  DB:     bench_fr_b7bf9749  (auto-isolated)
+  URL:    http://127.0.0.1:58042
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/website_hr_recruitment.publish_job_from_backoffice_then_apply_portal__1777122660
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_b7bf9749 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 58042
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 85 calls captured (29 writes, 56 reads)
+   State: 2 records across 2 models
+5. Computing state diff...
+   10 atomic edits observed
+   Postconditions: 6 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     10 edits
+  Observed:     10 edits
+  Matching:     1 edits
+  Missing:      9 edits
+  Extra:        9 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   85
+  Writes:            29 non-forbidden, 0 forbidden
+  Required ops MISSED: ['hr.applicant.create']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/website_hr_recruitment.publish_job_from_backoffice_then_apply_portal__1777122660/
+
+  Postcondition failures:
+    - Expected exactly 1 hr.job named 'Senior Widget Engineer', found 2
+    - Job 'Senior Widget Engineer' is not published (is_published is False)
+    - Job 'Senior Widget Engineer' department is False, expected 'Administration'
+    - Job 'Senior Widget Engineer' no_of_recruitment is 1, expected 2
+    - Job 'Senior Widget Engineer' description does not contain 'Design and build widgets' (got: '')
+    - No hr.applicant found for 'Alex Portal' / 'alex.portal@example.com'
+  Missing expected edits:
+    - hr.applicant.email_from = alex.portal@example.com
+    - hr.applicant.job_id = Senior Widget Engineer
+    - hr.applicant.linkedin_profile = linkedin.com/in/alex-portal
+    - hr.applicant.partner_name = Alex Portal
+    - hr.applicant.partner_phone = +1 555 0199
+    - hr.job.department_id = Administration
+    - hr.job.is_published = True
+    - hr.job.no_of_recruitment = 2
+    - hr.job.website_published = True
+  Unexpected extra edits:
+    + hr.job.department_id = None
+    + hr.job.is_published = None
+    + hr.job.name = Senior Widget Engineer
+    + hr.job.no_of_recruitment = 1
+    + hr.job.website_published = None
+    + hr.job.department_id = None
+    + hr.job.is_published = None
+    + hr.job.no_of_recruitment = 1
+    + hr.job.website_published = None

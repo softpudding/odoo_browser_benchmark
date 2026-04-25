@@ -1,0 +1,69 @@
+Plan:
+1. Here is a minimal, step-by-step execution plan:
+2. **1. Access & Authentication**
+3. - Open `http://127.0.0.1:55908/odoo/sales`
+4. - Log in: `admin` / `admin`
+5. **2. Locate Target Order**
+6. - Navigate to **Sales** app → **Quotations** (or **Orders**)
+7. - Find the row: Reference `BENCH-DUP`, Customer `Bench Orig Co`, Status 
+`Sales Order`
+8. - Click the row to open the form
+9. **3. Duplicate**
+10. - In the form's control panel, click **⚙️ Actions** (gear icon)
+11. - Select **Duplicate**
+12. - Wait for the new draft form to load (`state='draft'`)
+13. **4. Modify Duplicate**
+14. - ⚠️ If a *Document Layout* dialog pops up, close/dismiss it immediately 
+without saving
+15. - Click the **Customer** field, clear it, type `Bench Clone Co`, and select 
+from autocomplete
+16. - ⚠️ **Do NOT click Confirm**
+17. **5. Save & Verify**
+18. - Click **Save** (cloud/floppy icon) in the top-left breadcrumb area
+19. - Confirm the copy shows **Quotation** status (`state='draft'`)
+20. - Verify order lines match: `Bench SO Dup Item A` (qty=2), `Bench SO Dup 
+Item B` (qty=3)
+21. - Return to list view and verify original `BENCH-DUP` remains exactly as 
+seeded (`state='sale'`, customer `Bench Orig Co`)
+Reasoning: I need to start by accessing the Odoo instance. The URL provided in 
+the plan is `http://127.0.0.1:55908/odoo/sales`. I will open this URL first.
+Action: open_url('http://127.0.0.1:55908/odoo/sales')
+Reasoning: I am on the login page and need to authenticate. I'll enter the 
+'admin' credentials into the respective fields.
+Action: fill('email', 'admin')
+Reasoning: I have already entered the username 'admin' into the email field. The
+next step in the login process is to enter the password. The image shows the 
+password field is available. I need to fill it with 'admin'.
+Action: fill('password', 'admin')
+Reasoning: The previous actions in the history indicate that the username 
+'admin' and password 'admin' have been entered into their respective fields. The
+next logical step to proceed with the authentication process is to click the 
+"Log in" button to submit the credentials. Once logged in, I will be able to 
+navigate to the Sales app as per the plan.
+Action: click('Log in')
+Reasoning: The provided screenshot shows the login page with empty input fields 
+for "Email" and "Password". Although the history indicates that `fill('email', 
+'admin')`, `fill('password', 'admin')`, and `click('Log in')` were previously 
+executed, the current state shows the fields are empty, suggesting the page may 
+have reloaded or the previous actions didn't persist. To proceed with the 
+instruction to log in, I need to re-enter the credentials. The first step is to 
+focus on the email field.
+Action: click('Enter your email')
+Reasoning: The previous action clicked on the "Enter your email" input field, 
+which should now be focused. The next logical step to proceed with the login 
+process is to type the username "admin" into this field. The password field will
+need to be filled next, followed by clicking the "Log in" button.
+Action: type('Enter your email', 'admin')
+Reasoning: 
+Action: <action>type('Enter your password', 'admin')</action>
+Reasoning: The previous action filled the password field with 'admin'. Now that 
+both the email (filled in the step before) and password fields should contain 
+the correct credentials, the next logical step is to submit the form by clicking
+the "Log in" button to access the Odoo backend.
+Action: click('Log in')
+Reasoning: I have successfully logged in. The current screen shows the Odoo 
+dashboard with various apps and a sidebar. My next step is to enter the Sales 
+application to find the order `BENCH-DUP`. I can see the "Sales" app icon (the 
+large blue/purple "S" circle) and also a "Sales" link in the left sidebar. I 
+will click the Sales app icon to navigate to the Sales module.
+Action: click('Sales')

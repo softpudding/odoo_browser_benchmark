@@ -1,0 +1,53 @@
+=== Benchmark Evaluation ===
+  Task:   crm.convert_lead_qualify
+  Agent:  command
+  DB:     bench_fr_2ed3d78a  (auto-isolated)
+  URL:    http://127.0.0.1:51015
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/crm.convert_lead_qualify__1777087174
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_2ed3d78a from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 51015
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=2.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   2.0s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/crm.convert_lead_qualify__1777087174/
+
+  Postcondition failures:
+    - Lead type is 'lead', expected 'opportunity'
+    - Lead stage is 'New', expected 'Qualified'
+  Missing expected edits:
+    - crm.lead.stage_id = Qualified
+    - crm.lead.type = opportunity

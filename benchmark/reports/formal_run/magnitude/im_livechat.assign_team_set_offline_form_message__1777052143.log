@@ -1,0 +1,53 @@
+=== Benchmark Evaluation ===
+  Task:   im_livechat.assign_team_set_offline_form_message
+  Agent:  command
+  DB:     bench_fr_c2e4f1b1  (auto-isolated)
+  URL:    http://127.0.0.1:52577
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/im_livechat.assign_team_set_offline_form_message__1777052143
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_c2e4f1b1 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 52577
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=2.4s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   2.4s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/im_livechat.assign_team_set_offline_form_message__1777052143/
+
+  Postcondition failures:
+    - Channel button_text is 'Need help? Chat with us.', expected 'Leave us a message and we will follow up by Monday.'
+    - Channel default_message is 'How may I help you?', expected 'Hello — we are offline. Email support@bench.test and we will reply by Monday.'
+  Missing expected edits:
+    - im_livechat.channel.button_text = Leave us a message and we will follow up by Monday.
+    - im_livechat.channel.default_message = Hello — we are offline. Email support@bench.test and we will reply by Monday.

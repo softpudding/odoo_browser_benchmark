@@ -1,0 +1,54 @@
+=== Benchmark Evaluation ===
+  Task:   event.add_track_with_speaker_publish
+  Agent:  command
+  DB:     bench_fr_0b64ca16  (auto-isolated)
+  URL:    http://127.0.0.1:55478
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/event.add_track_with_speaker_publish__1777049631
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_0b64ca16 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Starting Odoo...
+   Odoo ready on port 55478
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=1.6s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 0 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     5 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      5 edits
+  Extra:        0 edits
+  Wall clock:   1.6s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/event.add_track_with_speaker_publish__1777049631/
+
+  Postcondition failures:
+    - Expected exactly 1 track named 'Keynote: Future of Bench' on event 'Bench Spring Summit', found 0
+  Missing expected edits:
+    - event.track.event_id = Bench Spring Summit
+    - event.track.is_published = True
+    - event.track.name = Keynote: Future of Bench
+    - event.track.partner_email = dr.smith@example.com
+    - event.track.partner_name = Dr. Smith

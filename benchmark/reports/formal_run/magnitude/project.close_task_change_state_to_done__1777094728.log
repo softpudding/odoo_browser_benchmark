@@ -1,0 +1,51 @@
+=== Benchmark Evaluation ===
+  Task:   project.close_task_change_state_to_done
+  Agent:  command
+  DB:     bench_fr_ebb8f31c  (auto-isolated)
+  URL:    http://127.0.0.1:55492
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/project.close_task_change_state_to_done__1777094728
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_ebb8f31c from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 55492
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=2.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     1 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      1 edits
+  Extra:        0 edits
+  Wall clock:   2.0s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/project.close_task_change_state_to_done__1777094728/
+
+  Postcondition failures:
+    - Task 'Review document' state is '01_in_progress', expected '1_done' (Done) — pick 'Done' from the state widget dropdown, NOT 'Approved' / 'Cancelled' / 'Changes Requested'.
+  Missing expected edits:
+    - project.task.state = 1_done

@@ -1,0 +1,60 @@
+=== Benchmark Evaluation ===
+  Task:   sale.edit_existing_quotation_add_optional_product
+  Agent:  command
+  DB:     bench_fr_c2e90b7a  (auto-isolated)
+  URL:    http://127.0.0.1:57014
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/sale.edit_existing_quotation_add_optional_product__1777118075
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_c2e90b7a from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 57014
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 37 calls captured (15 writes, 22 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      3 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   37
+  Writes:            15 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/sale.edit_existing_quotation_add_optional_product__1777118075/
+
+  Postcondition failures:
+    - Expected exactly 2 order lines (1 existing + 1 new), found 1 (products: ['Bench Existing Item'], display_types: [False])
+  Missing expected edits:
+    - sale.order.line.order_id = BENCH-ADD-LINE
+    - sale.order.line.product_id = Bench Extra Item
+    - sale.order.line.product_uom_qty = 4.0

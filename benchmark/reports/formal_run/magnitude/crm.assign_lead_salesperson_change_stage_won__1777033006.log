@@ -1,0 +1,55 @@
+=== Benchmark Evaluation ===
+  Task:   crm.assign_lead_salesperson_change_stage_won
+  Agent:  command
+  DB:     bench_fr_f375d482  (auto-isolated)
+  URL:    http://127.0.0.1:49320
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/crm.assign_lead_salesperson_change_stage_won__1777033006
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_f375d482 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 49320
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=1.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      3 edits
+  Extra:        0 edits
+  Wall clock:   1.1s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/crm.assign_lead_salesperson_change_stage_won__1777033006/
+
+  Postcondition failures:
+    - Salesperson is 'None', expected 'Bench Rep'
+    - Stage is 'New' (is_won=False); expected 'Won' with is_won=True
+    - Probability is 10.0, expected 100
+  Missing expected edits:
+    - crm.lead.probability = 100.0
+    - crm.lead.stage_id = Won
+    - crm.lead.user_id = Bench Rep
