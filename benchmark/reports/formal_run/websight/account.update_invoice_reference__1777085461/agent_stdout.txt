@@ -1,0 +1,54 @@
+Plan:
+1. **1. Access & Authenticate**
+2. - Open 
+`http://127.0.0.1:57703/web/login?redirect=%2Fodoo%2Faccounting%2Fcustomer-invoi
+ces`
+3. - If redirected to a public website, click **Sign in**
+4. - Enter Username: `admin` | Password: `admin` → Click **Log in**
+5. **2. Navigate to Target List**
+6. - From the app dashboard, open **Invoicing**
+7. - Select **Customer Invoices** from the top menu
+8. **3. Locate & Open Invoice**
+9. - Use the search bar to filter for:
+10.   - `Customer` = `Asterline Consulting`
+11.   - `Reference` = `BENCH-INV-REF-01`
+12.   - `State` = `Draft`
+13. - Click the matching invoice to open it
+14. **4. Edit Reference**
+15. - Click the **Other Info** tab
+16. - Locate the **Reference** field
+17. - Replace value with: `BENCH-INV-REF-01-UPDATED`
+18. - Click **Save**
+19. **5. Constraint Verification**
+20. - ✅ Invoice remains in **Draft** state
+21. - ✅ Line items & amounts are untouched
+22. - ✅ No other invoices were modified or created
+Reasoning: I need to start by accessing the Odoo instance. The plan instructs me
+to go to the login URL with a redirect to the customer invoices list. I will 
+perform this navigation first.
+Action: 
+go_to_url("http://127.0.0.1:57703/web/login?redirect=%2Fodoo%2Faccounting%2Fcust
+omer-invoices")
+Reasoning: 
+Action: <action>
+fill('input', 'admin')
+</action>
+Reasoning: 
+Action: <action>
+fill('input', 'admin')
+</action>
+Reasoning: 
+Action: <action>
+click('button:has-text("Log in")')
+</action>
+Reasoning: 
+Action: <action>
+click('div.o_searchbar input')
+</action>
+Reasoning: I have successfully logged in and the system should have redirected 
+me to the Customer Invoices list view based on the URL. The last action was 
+clicking the search bar. Now I need to search for the specific invoice with 
+Reference `BENCH-INV-REF-01`. I will type this reference into the search bar and
+press Enter to filter the list. Then I will click on the invoice to open it.
+Action: fill('input', 'BENCH-INV-REF-01')
+press('Enter')
