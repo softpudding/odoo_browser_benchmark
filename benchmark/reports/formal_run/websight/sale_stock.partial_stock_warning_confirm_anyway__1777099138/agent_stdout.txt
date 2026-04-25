@@ -1,0 +1,158 @@
+Plan:
+1. ### Minimal Execution Plan
+2. 1. **Access & Authenticate**
+3.    - Open `http://127.0.0.1:55567/odoo/sales`
+4.    - Log in: Username `admin` / Password `admin`
+5. 2. **Navigate to Target**
+6.    - Open the **Sales** app.
+7.    - Click **Quotations** in the top menu.
+8.    - Locate and open draft quotation `S-BENCH-STK-001` (Customer: Bench 
+Warehouse Co).
+9. 3. **Confirm Order**
+10.    - Click **Confirm**.
+11.    - ⚠️ If a stock insufficiency warning pops up, dismiss it and confirm to 
+proceed.
+12. 4. **Process Partial Delivery**
+13.    - Click the **Delivery** smart button at the top of the SO.
+14.    - On the delivery record, locate the **Bench Limited Widget** line.
+15.    - Edit the **Done** quantity: Change from `5` → `2`.
+16.    - Click **Validate**.
+17. 5. **Handle Backorder**
+18.    - In the resulting backorder confirmation dialog, click **Create 
+Backorder**.
+19.    - ❌ Do NOT click "No Backorder".
+20. 6. **Verify Final State & Stop**
+21.    - ✅ SO `S-BENCH-STK-001` state = `Sales Order`
+22.    - ✅ First delivery state = `Done` (Quantity Done = `2`)
+23.    - ✅ Backorder delivery created for remaining `8` units
+24.    - 🔒 Do not modify, cancel, or touch any other records. Task complete.
+Reasoning: The user wants to process a specific Sales Order workflow in Odoo.
+1.  **Access:** I need to navigate to the Odoo Sales URL and log in.
+2.  **Locate Order:** I need to find the draft quotation `S-BENCH-STK-001` in 
+the Sales app under Quotations.
+3.  **Confirm:** I need to confirm the order. The instructions mention a 
+potential stock warning which should be dismissed/ignored to proceed.
+4.  **Partial Delivery:** I need to open the associated Delivery order. The 
+system will likely default the "Done" quantity to the reserved amount (5). I 
+must manually change this to **2**.
+5.  **Backorder:** Upon validating, a dialog will appear regarding the remaining
+8 units. I must select **Create Backorder**.
+
+I will execute these steps in sequence.
+Action: [
+  {"action": "goto", "url": "http://127.0.0.1:55567/odoo/sales"},
+  {"action": "fill", "selector": "input", "text": "admin"},
+  {"action": "fill", "selector": "input", "text": "admin"},
+  {"action": "click", "selector": "button"},
+  {"action": "click", "selector": "a"}, 
+  {"action": "click", "selector": "a:has-text('Quotations')"},
+  {"action": "click", "selector": "td:has-text('S-BENCH-STK-001')"},
+  {"action": "click", "selector": "button:has-text('Confirm')"},
+  {"action": "click", "selector": "button:has-text('Confirm')", "timeout": 2000,
+"optional": true},
+  {"action": "click", "selector": "button.o_stat_button:has-text('Delivery')"},
+  {"action": "fill", "selector": "input", "text": "2"},
+  {"action": "click", "selector": "button:has-text('Validate')"},
+  {"action": "click", "selector": "button:has-text('Create Backorder')"}
+]
+Reasoning: I am currently at the Odoo login page. The URL indicates a redirect 
+to the Sales app (`/odoo/sales`) after login. To proceed with the plan, I need 
+to authenticate first.
+1.  **Identify Fields**: I see an "Email" field and a "Password" field.
+2.  **Identify Button**: There is a "Log in" button.
+3.  **Action**: I will fill in the username 'admin' and password 'admin', then 
+click the "Log in" button.
+Action: [
+  {"action": "fill", "selector": "input", "text": "admin"},
+  {"action": "fill", "selector": "input", "text": "admin"},
+  {"action": "click", "selector": "button:has-text('Log in')"}
+]
+Reasoning: I am currently at the Odoo login page. The URL indicates a redirect 
+to the Sales app (`/odoo/sales`) after login. To proceed with the plan, I need 
+to authenticate first.
+1.  **Identify Fields**: I see an "Email" field and a "Password" field.
+2.  **Identify Button**: There is a "Log in" button.
+3.  **Action**: I will fill in the username 'admin' and password 'admin', then 
+click the "Log in" button.
+4.  **Subsequent Steps**: After login, I will navigate to the Sales app (via the
+redirect), click "Quotations", find "S-BENCH-STK-001", confirm the order, handle
+any stock warnings, go to the Delivery order, change the quantity done to 2, 
+validate, and create a backorder.
+Action: [
+  {"action": "fill", "selector": "input", "text": "admin"},
+  {"action": "fill", "selector": "input", "text": "admin"},
+  {"action": "click", "selector": "button:has-text('Log in')"},
+  {"action": "click", "selector": "a:has-text('Quotations')"},
+  {"action": "click", "selector": "td:has-text('S-BENCH-STK-001')"},
+  {"action": "click", "selector": "button:has-text('Confirm')"},
+  {"action": "click", "selector": "button:has-text('Confirm')", "timeout": 2000,
+"optional": true},
+  {"action": "click", "selector": "button.o_stat_button:has-text('Delivery')"},
+  {"action": "fill", "selector": "input", "text": "2"},
+  {"action": "click", "selector": "button:has-text('Validate')"},
+  {"action": "click", "selector": "button:has-text('Create Backorder')"}
+]
+Reasoning: I am currently at the Odoo login page. The URL in the browser bar 
+confirms I am at the login endpoint with a redirect to `/odoo/sales`. To execute
+the user's instruction, I need to first authenticate. After logging in, I will 
+be redirected to the Sales dashboard (or I will navigate there). Then I need to 
+find the specific quotation `S-BENCH-STK-001`, confirm it, handle the delivery 
+with a partial quantity of 2, and create a backorder for the rest.
+
+The plan is:
+1.  **Login**: Fill `admin` in login and password fields, click "Log in".
+2.  **Navigate**: Click "Quotations" in the Sales menu.
+3.  **Select Order**: Click on the row for `S-BENCH-STK-001`.
+4.  **Confirm**: Click "Confirm" (and handle any stock warning).
+5.  **Delivery**: Click the "Delivery" smart button.
+6.  **Partial Delivery**: Change the `quantity_done` to `2`.
+7.  **Validate & Backorder**: Click "Validate", then "Create Backorder".
+
+The previous history entry already contains this full sequence. I will execute 
+it.
+Action: [
+  {"action": "fill", "selector": "input", "text": "admin"},
+  {"action": "fill", "selector": "input", "text": "admin"},
+  {"action": "click", "selector": "button:has-text('Log in')"},
+  {"action": "click", "selector": "a:has-text('Quotations')"},
+  {"action": "click", "selector": "td:has-text('S-BENCH-STK-001')"},
+  {"action": "click", "selector": "button:has-text('Confirm')"},
+  {"action": "click", "selector": "button:has-text('Confirm')", "timeout": 2000,
+"optional": true},
+  {"action": "click", "selector": "button.o_stat_button:has-text('Delivery')"},
+  {"action": "fill", "selector": "input", "text": "2"},
+  {"action": "click", "selector": "button:has-text('Validate')"},
+  {"action": "click", "selector": "button:has-text('Create Backorder')"}
+]
+Reasoning: I am currently at the login page for the Odoo instance. The URL 
+indicates that after a successful login, I will be redirected to `/odoo/sales`. 
+To begin the task, I need to authenticate using the provided credentials: 
+username `admin` and password `admin`.
+
+The plan is:
+1.  Fill the `login` field with `admin`.
+2.  Fill the `password` field with `admin`.
+3.  Click the `Log in` button.
+4.  Once logged in and redirected to the Sales dashboard, I will navigate to the
+`Quotations` menu.
+5.  Locate and open the quotation `S-BENCH-STK-001`.
+6.  Confirm the order (handling any stock warnings if they appear).
+7.  Navigate to the Delivery order via the smart button.
+8.  Modify the `Done` quantity for the product to `2`.
+9.  Validate the delivery.
+10. In the backorder dialog, select `Create Backorder`.
+
+For this turn, I will execute the login steps.
+Action: [
+  {"action": "fill", "selector": "input", "text": "admin"},
+  {"action": "fill", "selector": "input", "text": "admin"},
+  {"action": "click", "selector": "button:has-text('Log in')"}
+]
+Reasoning: 
+Action: <action>
+[
+  {"action": "fill", "selector": "input", "text": "admin"},
+  {"action": "fill", "selector": "input", "text": "admin"},
+  {"action": "click", "selector": "button:has-text('Log in')"}
+]
+</action>
