@@ -1,0 +1,63 @@
+=== Benchmark Evaluation ===
+  Task:   sale.cancel_confirmed_recreate_send_email
+  Agent:  command
+  DB:     bench_fr_357e516c  (auto-isolated)
+  URL:    http://127.0.0.1:56031
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/alumnium/sale.cancel_confirmed_recreate_send_email__1777094367
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_357e516c from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 56031
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=79.1s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 5 calls captured (1 writes, 4 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      4 edits
+  Extra:        0 edits
+  Wall clock:   79.1s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   5
+  Writes:            1 non-forbidden, 0 forbidden
+  Required ops MISSED: ['sale.order.action_cancel', 'sale.order.action_quotation_send']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/alumnium/sale.cancel_confirmed_recreate_send_email__1777094367/
+
+  Postcondition failures:
+    - Original order state is 'sale', expected 'cancel'
+    - Replacement order for Clearwater Supply Co not found
+  Missing expected edits:
+    - sale.order.client_order_ref = CWS-REPLACE-01
+    - sale.order.partner_id = Clearwater Supply Co
+    - sale.order.state = sent
+    - sale.order.state = cancel

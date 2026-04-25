@@ -1,0 +1,69 @@
+=== Benchmark Evaluation ===
+  Task:   website.edit_page_update_text_set_properties
+  Agent:  command
+  DB:     bench_fr_56cf2869  (auto-isolated)
+  URL:    http://127.0.0.1:55706
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/website.edit_page_update_text_set_properties__1777098705
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_56cf2869 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 55706
+   Done.
+2. Capturing pre-task state...
+   Captured 7 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 77 calls captured (35 writes, 42 reads)
+   State: 7 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 6 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     6 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      6 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   77
+  Writes:            35 non-forbidden, 0 forbidden
+  Required ops MISSED: ['ir.ui.view.write', 'website.page.write']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/website.edit_page_update_text_set_properties__1777098705/
+
+  Postcondition failures:
+    - Page URL was not changed: still at /about-us, expected /about-benchmark-industries
+    - Page title is 'About Us', expected 'About Benchmark Industries | Our Story'
+    - Updated heading 'About Benchmark Industries' not found in page arch
+    - Old heading 'About Our Company' still present in page arch
+    - Expected paragraph text not found in page arch
+    - Old paragraph text 'We are a dynamic enterprise' still present in page arch
+  Missing expected edits:
+    - website.page.is_published = True
+    - website.page.name = About Benchmark Industries | Our Story
+    - website.page.url = /about-benchmark-industries
+    - website.page.is_published = True
+    - website.page.name = About Us
+    - website.page.url = /about-us

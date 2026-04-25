@@ -1,0 +1,58 @@
+=== Benchmark Evaluation ===
+  Task:   sale.update_quote_reference
+  Agent:  command
+  DB:     bench_fr_c61deae8  (auto-isolated)
+  URL:    http://127.0.0.1:61950
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/alumnium/sale.update_quote_reference__1777096043
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_c61deae8 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 61950
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=79.0s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 4 calls captured (1 writes, 3 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     1 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      1 edits
+  Extra:        0 edits
+  Wall clock:   79.0s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   4
+  Writes:            1 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/alumnium/sale.update_quote_reference__1777096043/
+
+  Postcondition failures:
+    - Draft quotation with reference 'BENCH-QREF-01-UPDATED' for 'Summitline Software' not found
+  Missing expected edits:
+    - sale.order.client_order_ref = BENCH-QREF-01-UPDATED

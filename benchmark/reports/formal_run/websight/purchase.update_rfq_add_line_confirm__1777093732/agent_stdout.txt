@@ -1,0 +1,45 @@
+Plan:
+1. 1. **Access & Login**: Open `http://127.0.0.1:53803/odoo/purchase` in a 
+browser. Log in with username `admin` and password `admin`.
+2. 2. **Open Purchase App & Locate RFQ**: Navigate to the **Purchase** app. Use 
+the search/filter to query `BENCH-RFQ-UPD` or `Pinnacle Hardware`. Click to open
+the matching draft RFQ.
+3. 3. **Add Product Line**: Scroll to the **Order Lines** table. Click **Add a 
+line**, search and select `Hex Wrench Set`. Manually set **Quantity** to `25` 
+and **Unit Price** to `15.00`. Ensure no other lines are touched.
+4. 4. **Update Deadline**: Locate the **Order Deadline** field (typically in the
+form header or under *Other Information* > *Dates*). Set the date to 
+`05/20/2026`.
+5. 5. **Verify & Confirm**: Double-check that the vendor is still `Pinnacle 
+Hardware` and existing product lines are unchanged. Click the **Confirm Order** 
+button at the top of the form.
+6. 6. **Completion**: Wait for the UI to refresh and the document state to 
+change from *Draft* to *Purchase Order*.
+Reasoning: 
+Action: <action>
+{"action": "navigate", "url": "http://127.0.0.1:53803/odoo/purchase"}
+</action>
+Reasoning: The current page is the login screen. To proceed with the 
+instructions, I first need to authenticate. I will enter the username 'admin' 
+into the 'Email' field.
+Action: {"action": "type", "text": "admin", "clear": true, "field": "Email"}
+Reasoning: The previous action successfully entered 'admin' into the Email 
+field. To proceed with the login process as instructed, I need to enter the 
+password 'admin' into the Password field and then submit the form.
+Action: {"action": "type", "text": "admin", "clear": true, "field": "Password"}
+Reasoning: The previous steps involved entering the username 'admin' and 
+password 'admin'. The next step is to submit the login form by clicking the "Log
+in" button. Once logged in, the system should redirect me to the Purchase app as
+specified in the URL parameter `redirect=%2Fodoo%2Fpurchase`.
+Action: {"action": "click", "button": "Log in"}
+Reasoning: 
+Action: The previous action was clicking the "Log in" button. The system should 
+now be logging in and redirecting to the Purchase app. The next step is to 
+search for the specific Request for Quotation (RFQ) mentioned in the 
+instructions: "BENCH-RFQ-UPD" for vendor "Pinnacle Hardware". I will use the 
+search functionality typically available in the top bar or within the app's list
+view to locate this document.
+
+<action>
+{"action": "search", "text": "BENCH-RFQ-UPD"}
+</action>

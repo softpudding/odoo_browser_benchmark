@@ -1,0 +1,47 @@
+Plan:
+1. # Minimal Execution Plan
+2. **1. Access & Authenticate**
+3. - Navigate to `http://127.0.0.1:54385/odoo/inventory`
+4. - Log in: `Username: admin` | `Password: admin`
+5. - Confirm landing on the **Inventory** dashboard.
+6. **2. Locate Target Receipt**
+7. - Click **Receipts** (Incoming Transfers tile).
+8. - Clear default filters → Select **Done** filter.
+9. - Open receipt with Source Document: `BENCH-RCV-SCRAP-01`
+10. - Verify form shows **State: Done** and 10 units of `Bench Scrap Product`.
+11. **3. Initiate Scrap**
+12. - Click **Actions** (⚙️ icon) → Select **Scrap**
+13.   *(Alternative: Click the **Scrap** smart button if visible)*
+14. - Confirm `Scrap Products` dialog appears.
+15. **4. Configure & Validate**
+16. - Set dialog fields:
+17.   - `Product`: `Bench Scrap Product`
+18.   - `Quantity`: `2`
+19.   - `Source Location`: `WH/Stock` (keep default)
+20.   - `Scrap Location`: `Virtual Locations/Scrap` (keep default)
+21. - Click **Scrap Products** to submit & auto-validate.
+22. **5. Compliance Verification**
+23. - ✅ Exactly **1** `stock.scrap` record created & in **Done** state.
+24. - ✅ Scraped product: `Bench Scrap Product`, Quantity: `2`.
+25. - ✅ Original receipt `BENCH-RCV-SCRAP-01` remains **Done** with original 10
+units (untouched).
+26. - ✅ No other products/receipts modified.
+Reasoning: 
+Action: <action>
+click(x=960, y=382)
+</action>
+Reasoning: The current state is `about:blank`, indicating the browser is open 
+but no page is loaded. The first step of the execution plan is to navigate to 
+the Odoo Inventory URL (`http://127.0.0.1:54385/odoo/inventory`). To do this, I 
+need to focus the browser's address bar, type the URL, and submit it. I will 
+click near the top center of the screen to target the address bar, type the URL,
+and press Enter.
+Action: click(x=960, y=50)
+type(text='http://127.0.0.1:54385/odoo/inventory')
+press(keys=['Enter'])
+Reasoning: The browser is currently on the Odoo login page. The first step is to
+authenticate. I need to click the 'Email' input field to focus it, then type the
+username 'admin'. After that, I will move to the password field, type 'admin', 
+and click 'Log in'.
+Action: click(x=420, y=220)
+type(text='admin')
