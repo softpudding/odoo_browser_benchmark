@@ -1,0 +1,66 @@
+=== Benchmark Evaluation ===
+  Task:   calendar.create_single_event
+  Agent:  browser-use
+  DB:     bench_fr_636cf110  (auto-isolated)
+  URL:    http://127.0.0.1:56142
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/browser-use/calendar.create_single_event__1777079103
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_636cf110 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 56142
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (browser-use)...
+
+
+   Agent finished: steps=0, wall_clock=600.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 42 calls captured (24 writes, 18 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   5 atomic edits observed
+   Postconditions: 5 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     5 edits
+  Observed:     5 edits
+  Matching:     3 edits
+  Missing:      2 edits
+  Extra:        2 edits
+  Wall clock:   600.1s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   42
+  Writes:            24 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/browser-use/calendar.create_single_event__1777079103/
+
+  Postcondition failures:
+    - Event date is 2026-05-01, expected 2026-05-08
+    - Duration is 170.0h, expected ~2h
+    - Location is 'False', expected 'Conference Room A'
+    - Description does not contain expected text about Q2 objectives
+    - Attendees: ['Administrator']; expected 'Marc Demo' to be present
+  Missing expected edits:
+    - calendar.event.location = Conference Room A
+    - calendar.event.start = 2026-05-08 06:00:00
+  Unexpected extra edits:
+    + calendar.event.location = None
+    + calendar.event.start = 2026-05-01 06:00:00
