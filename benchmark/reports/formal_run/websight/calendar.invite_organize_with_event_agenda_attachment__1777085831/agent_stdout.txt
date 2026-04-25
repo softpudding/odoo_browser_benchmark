@@ -1,0 +1,55 @@
+Plan:
+1. **Minimal Execution Plan**
+2. 1. **Navigate & Authenticate**: Open `http://127.0.0.1:59539/odoo/calendar`. 
+Enter username `admin` and password `admin`, then submit.
+3. 2. **Create Event Shell**: Click the **New** button (or click an empty time 
+slot on May 20) to open the calendar event form.
+4. 3. **Fill Core Fields**:
+5.    - **Title**: `Q2 Planning Session`
+6.    - **Date**: `2026-05-20`
+7.    - **Time**: Start `14:00` / End `15:30` (ensure **All Day** is `Off` and 
+**Recurrence** is set to `None`)
+8.    - **Attendees**: Type `Alice Bench` → click the existing contact in the 
+autocomplete dropdown. Repeat for `Bob Bench`. (Do not press Enter/`+` to create
+new contacts.)
+9.    - **Location** & **Activities**: Leave completely blank.
+10. 4. **Save Record**: Click **Save** to persist the event and load the 
+right-side chatter panel.
+11. 5. **Upload Attachment**: In the chatter panel, click the 📎 **Attach 
+files** (paperclip) icon. In the native file picker, navigate to and select 
+`benchmark/tasks/calendar.invite_organize_with_event_agenda_attachment/seed_arti
+facts/agenda.txt`. Confirm the selection to upload.
+12. 6. **Finalize**: Verify `agenda.txt` appears in the chatter. Confirm all 
+rules are met (no location, no activities, exact attendees/times, one-time 
+event). Click **Save** if the UI prompts to commit the attachment state. Task 
+complete.
+Reasoning: The screen is currently blank (about:blank). The first step is to 
+navigate to the specified Odoo URL to begin the login process.
+Action: Go to http://127.0.0.1:59539/odoo/calendar
+Reasoning: 
+Action: <action>
+fill('193', 'admin')
+</action>
+Reasoning: 
+Action: <action>
+fill('194', 'admin')
+</action>
+Reasoning: 
+Action: <action>
+click('206')
+</action>
+Reasoning: The screenshot shows the Odoo login page (`/web/login`) with the 
+"Sign in" button visible in the top right and the login form in the center. The 
+fields for Email and Password are currently empty (showing placeholders "Enter 
+your email" and "Enter your password"). Although the history indicates that fill
+and click actions were attempted, the current state shows the form is empty and 
+the user is not logged in (evidenced by the "Sign in" button and the login 
+form). This suggests the previous actions did not successfully complete the 
+login (perhaps the fields weren't filled correctly or the page reset). I need to
+perform the login sequence again: fill the email, fill the password, and click 
+the "Log in" button. The URL contains a redirect parameter 
+`redirect=%2Fodoo%2Fcalendar%3F`, so upon successful login, I should be taken 
+directly to the Calendar app.
+Action: fill('input', 'admin')
+fill('input', 'admin')
+click('button:has-text("Log in")')
