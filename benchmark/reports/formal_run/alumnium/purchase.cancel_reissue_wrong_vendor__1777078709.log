@@ -1,0 +1,69 @@
+=== Benchmark Evaluation ===
+  Task:   purchase.cancel_reissue_wrong_vendor
+  Agent:  command
+  DB:     bench_fr_ccf3f197  (auto-isolated)
+  URL:    http://127.0.0.1:52471
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/alumnium/purchase.cancel_reissue_wrong_vendor__1777078709
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_ccf3f197 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 52471
+   Done.
+2. Capturing pre-task state...
+   Captured 3 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=48.4s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 4 calls captured (1 writes, 3 reads)
+   State: 3 records across 2 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     10 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      10 edits
+  Extra:        0 edits
+  Wall clock:   48.4s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   4
+  Writes:            1 non-forbidden, 0 forbidden
+  Required ops MISSED: ['purchase.order.button_cancel', 'purchase.order.button_confirm']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/alumnium/purchase.cancel_reissue_wrong_vendor__1777078709/
+
+  Postcondition failures:
+    - Original PO state is 'purchase', expected 'cancel'
+    - No confirmed PO found for Pinnacle Parts
+  Missing expected edits:
+    - purchase.order.state = cancel
+    - purchase.order.origin = None
+    - purchase.order.partner_id = Pinnacle Parts
+    - purchase.order.state = purchase
+    - purchase.order.line.price_unit = 340.0
+    - purchase.order.line.product_id = Hydraulic Pump
+    - purchase.order.line.product_qty = 5.0
+    - purchase.order.line.price_unit = 85.0
+    - purchase.order.line.product_id = Pressure Gauge
+    - purchase.order.line.product_qty = 10.0

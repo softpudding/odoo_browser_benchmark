@@ -1,0 +1,56 @@
+=== Benchmark Evaluation ===
+  Task:   project_todo.create_note_add_tag_checklist
+  Agent:  browser-use
+  DB:     bench_fr_9fce97b8  (auto-isolated)
+  URL:    http://127.0.0.1:51907
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/browser-use/project_todo.create_note_add_tag_checklist__1777078616
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_9fce97b8 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 51907
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (browser-use)...
+
+
+   Agent finished: steps=0, wall_clock=291.7s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 44 calls captured (21 writes, 23 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   2 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     2 edits
+  Matching:     2 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   291.7s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   44
+  Writes:            21 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/browser-use/project_todo.create_note_add_tag_checklist__1777078616/
+
+  Postcondition failures:
+    - Description does not contain a checklist block (expected <ul class="o_checklist"> or data-list="checklist")
