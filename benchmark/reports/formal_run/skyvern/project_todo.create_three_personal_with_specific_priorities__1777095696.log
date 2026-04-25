@@ -1,0 +1,68 @@
+=== Benchmark Evaluation ===
+  Task:   project_todo.create_three_personal_with_specific_priorities
+  Agent:  command
+  DB:     bench_fr_af1779b4  (auto-isolated)
+  URL:    http://127.0.0.1:58942
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/project_todo.create_three_personal_with_specific_priorities__1777095696
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_af1779b4 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 58942
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 33 calls captured (14 writes, 19 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     9 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      9 edits
+  Extra:        0 edits
+  Wall clock:   600.1s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   33
+  Writes:            14 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/project_todo.create_three_personal_with_specific_priorities__1777095696/
+
+  Postcondition failures:
+    - To-do 'Plan Sprint' not found
+    - To-do 'Write Docs' not found
+    - To-do 'Refactor CSS' not found
+  Missing expected edits:
+    - project.task.active = True
+    - project.task.name = Plan Sprint
+    - project.task.priority = 1
+    - project.task.active = True
+    - project.task.name = Refactor CSS
+    - project.task.priority = 0
+    - project.task.active = True
+    - project.task.name = Write Docs
+    - project.task.priority = 0
