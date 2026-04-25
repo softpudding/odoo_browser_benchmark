@@ -1,0 +1,62 @@
+=== Benchmark Evaluation ===
+  Task:   mrp_account.confirm_mo_check_account_move
+  Agent:  command
+  DB:     bench_fr_f023a020  (auto-isolated)
+  URL:    http://127.0.0.1:57091
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/alumnium/mrp_account.confirm_mo_check_account_move__1777076799
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_f023a020 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 57091
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=241.2s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 7 calls captured (2 writes, 5 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   241.2s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   7
+  Writes:            2 non-forbidden, 0 forbidden
+  Required ops MISSED: ['mrp.production.button_mark_done']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/alumnium/mrp_account.confirm_mo_check_account_move__1777076799/
+
+  Postcondition failures:
+    - MO state is 'confirmed', expected 'done'
+    - MO qty_produced is 0.0, expected 5.0
+    - No account.move was auto-generated for the MO's stock moves. Check that the finished product uses automated (real_time) valuation and that the MO is closed.
+  Missing expected edits:
+    - mrp.production.qty_produced = 5.0
+    - mrp.production.state = done

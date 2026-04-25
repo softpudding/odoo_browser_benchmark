@@ -1,0 +1,56 @@
+=== Benchmark Evaluation ===
+  Task:   mrp_account.mo_consume_and_close_check_valuation
+  Agent:  command
+  DB:     bench_fr_81d853ef  (auto-isolated)
+  URL:    http://127.0.0.1:59715
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/mrp_account.mo_consume_and_close_check_valuation__1777077196
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_81d853ef from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 59715
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=3.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 5 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   3.0s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/mrp_account.mo_consume_and_close_check_valuation__1777077196/
+
+  Postcondition failures:
+    - MO state is 'confirmed', expected 'done'
+    - MO qty_produced is 0.0, expected 1.0
+    - Expected exactly 1 done finished stock.move for MO 'MO-BENCH-VAL' (production_id + product='Bench Assembly'), found 0
+    - Expected exactly 2 done raw stock.moves for MO 'MO-BENCH-VAL' (raw_material_production_id), found 0: []
+    - Raw moves missing component(s) ['Bench Component 1', 'Bench Component 2'] (observed products: [])
+  Missing expected edits:
+    - mrp.production.qty_produced = 1.0
+    - mrp.production.state = done

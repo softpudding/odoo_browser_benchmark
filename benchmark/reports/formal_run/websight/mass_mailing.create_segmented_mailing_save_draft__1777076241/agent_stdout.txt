@@ -1,0 +1,64 @@
+Plan:
+1. ### 📋 Minimal Execution Plan: Odoo Email Marketing Draft
+2. **Target:** `http://127.0.0.1:53765/odoo/email-marketing`  
+3. **Auth:** `admin` / `admin`  
+4. **Objective:** Create exactly one draft mailing targeting Berlin contacts.
+5. ---
+6. #### 🔹 Steps
+7. 1. **Access & Auth**  
+8.    - Open URL. Log in with `admin` / `admin`. Confirm you're on the Email 
+Marketing dashboard.
+9. 2. **Initialize**  
+10.    - Click **New**.
+11. 3. **Configure Header & Recipients**  
+12.    - **Subject:** `Berlin April Bulletin`  
+13.    - **Recipients Model (`mailing_model_id`):** Switch default to `Contact`.
+14.    - **Domain Filter:** Below the dropdown, click **Add condition** → set 
+exactly one rule:  
+15.      `Field: City` | `Operator: =` | `Value: Berlin`  
+16.    - ✅ Verify record counter shows exactly `2 record(s)`.
+17. 4. **Compose Body**  
+18.    - Switch to **Mail Body** tab.  
+19.    - Paste/type exactly: `Hello Berlin team — here is our April bulletin.`
+20. 5. **Persist**  
+21.    - Click the ☁️ **Save** icon in the top bar.  
+22.    - Verify UI state reads `Draft`.
+23. ---
+24. #### ⛔ Strict Constraints
+25. - **State:** Must remain `Draft`. Zero clicks on `Send`, `Send to All`, 
+`Test`, or scheduler.
+26. - **Strings:** Subject = `Berlin April Bulletin`. Body must contain literal 
+`Berlin team`.
+27. - **Model:** Recipients = `Contact` (`res.partner`). Do **not** use `Mailing
+List`.
+28. - **Data Integrity:** Do not create, edit, or delete any existing 
+contacts/seed data. Only one mailing record is allowed.
+Reasoning: I will navigate to the Odoo email marketing URL, log in with the 
+provided credentials, and create a new mailing. I will configure the subject as 
+"Berlin April Bulletin", set the recipients model to "Contact", apply a filter 
+for `City` equals `Berlin`, ensure the record count matches (2 records), write 
+the specified body text, and save the record as a draft without sending it.
+Action: {"action": "goto", "url": "http://127.0.0.1:53765/odoo/email-marketing"}
+Reasoning: 
+Action: <action>
+fill('49', 'admin')
+</action>
+Reasoning: The current screen shows the Odoo login page. According to the 
+history, the email field (field ID '49') has been filled with 'admin'. The next 
+logical step is to fill the password field with 'admin' and then click the "Log 
+in" button. I will assume the password field has the ID '50' (sequential to the 
+email field). After filling the password, I will need to click the "Log in" 
+button to proceed to the Email Marketing dashboard.
+Action: fill('50', 'admin')
+Reasoning: 
+Action: <action>
+click('378')
+</action>
+Reasoning: The current screen is the Odoo login page. The URL indicates a 
+redirect to `/odoo/email-marketing` after login. The email and password fields 
+are visible and appear empty (placeholders are shown). According to the plan, I 
+need to log in with `admin` / `admin`. I will fill in the credentials and click 
+the "Log in" button to proceed.
+Action: fill('input', 'admin')
+fill('input', 'admin')
+click('button:has-text("Log in")')

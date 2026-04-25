@@ -1,0 +1,54 @@
+=== Benchmark Evaluation ===
+  Task:   mrp_account.confirm_mo_check_account_move
+  Agent:  command
+  DB:     bench_fr_c8308ecd  (auto-isolated)
+  URL:    http://127.0.0.1:57486
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/mrp_account.confirm_mo_check_account_move__1777076848
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_c8308ecd from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 57486
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=3.3s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   3.3s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/mrp_account.confirm_mo_check_account_move__1777076848/
+
+  Postcondition failures:
+    - MO state is 'confirmed', expected 'done'
+    - MO qty_produced is 0.0, expected 5.0
+    - No account.move was auto-generated for the MO's stock moves. Check that the finished product uses automated (real_time) valuation and that the MO is closed.
+  Missing expected edits:
+    - mrp.production.qty_produced = 5.0
+    - mrp.production.state = done

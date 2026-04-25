@@ -1,0 +1,46 @@
+Plan:
+1. **Minimal Action Plan**
+2. 1. **Access & Authenticate**  
+3.    Navigate to `http://127.0.0.1:55969/odoo/manufacturing` → Log in with 
+username `admin` and password `admin`.
+4. 2. **Open App & Navigate**  
+5.    Click the **Manufacturing** app icon → From the top menu, select 
+**Operations > Manufacturing Orders**.
+6. 3. **Create Record**  
+7.    Click the **New** button.
+8. 4. **Populate Fields**  
+9.    - **Reference**: `M-BENCH-KIT-001`  
+10.    - **Product**: `Bench Assembly`  
+11.    - **Quantity**: `1` (leave default)  
+12.    - **Bill of Material**: Select the auto-completed BoM for `Bench 
+Assembly`
+13. 5. **Save to Draft**  
+14.    Click the Save (cloud/disc) icon or press `Ctrl+S`. Verify the status bar
+shows **Draft**.
+15. 6. **Confirm**  
+16.    Click the **Confirm** button in the form's status bar.
+17. 7. **Final State & Stop**  
+18.    - Verify status bar now reads **Confirmed**.  
+19.    - Open the **Components** tab and verify it lists exactly three lines: 
+`Bench Sub-A`, `Bench Sub-B`, and `Bench Frame`.  
+20.    - **Stop here.** Do not click *Mark as Done*, *Produce All*, or modify 
+any fields/BoMs. Leave the record open in the Confirmed state.
+Reasoning: 
+Action: <action>
+{"action": "navigate", "url": "http://127.0.0.1:55969/odoo/manufacturing"}
+</action>
+Reasoning: I am currently on the login screen after navigating to the URL. The 
+instructions require me to log in with username 'admin' and password 'admin'. 
+The email field is active. I will enter the credentials and submit the form.
+Action: {"action": "type", "text": "admin"}
+Reasoning: The user is on the login page. The history indicates that "admin" was
+typed, likely into the email field which is currently focused (indicated by the 
+purple border in the screenshot, although the placeholder text is still visible,
+suggesting the screenshot might be pre-action or the input is 
+transparent/overlay). The next step is to enter the password "admin" and then 
+log in. I will type "admin" into the password field.
+Action: {"action": "type", "selector": "input", "text": "admin"}
+Reasoning: I have entered the username and password. The next step is to submit 
+the login form by clicking the "Log in" button. This will authenticate me and 
+redirect me to the Manufacturing app as specified in the URL redirect parameter.
+Action: {"action": "click", "selector": "button"}
