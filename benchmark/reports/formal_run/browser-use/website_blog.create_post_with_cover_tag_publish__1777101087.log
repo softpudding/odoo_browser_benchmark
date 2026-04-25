@@ -1,0 +1,61 @@
+=== Benchmark Evaluation ===
+  Task:   website_blog.create_post_with_cover_tag_publish
+  Agent:  browser-use
+  DB:     bench_fr_333c616b  (auto-isolated)
+  URL:    http://127.0.0.1:63488
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/browser-use/website_blog.create_post_with_cover_tag_publish__1777101087
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_333c616b from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 63488
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (browser-use)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 88 calls captured (40 writes, 48 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   3 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     3 edits
+  Matching:     2 edits
+  Missing:      1 edits
+  Extra:        1 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   88
+  Writes:            40 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/browser-use/website_blog.create_post_with_cover_tag_publish__1777101087/
+
+  Postcondition failures:
+    - Blog post is not published
+    - Tags are []
+  Missing expected edits:
+    - blog.post.website_published = True
+  Unexpected extra edits:
+    + blog.post.website_published = None
