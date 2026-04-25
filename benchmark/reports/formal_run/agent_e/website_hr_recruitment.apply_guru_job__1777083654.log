@@ -1,0 +1,55 @@
+=== Benchmark Evaluation ===
+  Task:   website_hr_recruitment.apply_guru_job
+  Agent:  command
+  DB:     bench_fr_36eca960  (auto-isolated)
+  URL:    http://127.0.0.1:64922
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/website_hr_recruitment.apply_guru_job__1777083654
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_36eca960 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Starting Odoo...
+   Odoo ready on port 64922
+   Done.
+2. Capturing pre-task state...
+   Captured 281 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 285 records across 2 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     6 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      6 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/website_hr_recruitment.apply_guru_job__1777083654/
+
+  Postcondition failures:
+    - No hr.applicant found for John Smith / john@smith.com
+  Missing expected edits:
+    - hr.applicant.department_id = guru team
+    - hr.applicant.email_from = john@smith.com
+    - hr.applicant.job_id = Guru
+    - hr.applicant.linkedin_profile = linkedin.com/in/john-smith
+    - hr.applicant.partner_name = John Smith
+    - hr.applicant.partner_phone = 118.218
