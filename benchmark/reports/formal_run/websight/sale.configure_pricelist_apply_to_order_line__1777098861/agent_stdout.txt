@@ -1,0 +1,63 @@
+Plan:
+1. Here is a minimal, execution-ready plan:
+2. **1. Login & App Entry**
+3. - Open `http://127.0.0.1:54501/odoo/sales`
+4. - Log in: `admin` / `admin`
+5. - Enter the **Sales** app.
+6. **2. Create Pricelist**
+7. - Navigate: `Products` → `Pricelists` → **New**
+8. - **Name**: `Bench 10% Off`
+9. - **Sales Prices** tab → **Add a line**
+10.   - *Apply To*: `Product` (leave product field empty → All Products)
+11.   - *Price Type*: `Formula`
+12.   - *Based Price*: `Sales Price`
+13.   - *Discount*: `10`
+14.   - Click **Save & Close**
+15. - Click **Save** (top-right)
+16. **3. Create Quotation**
+17. - Navigate: `Orders` → `Quotations` → **New**
+18. - **Customer**: `Bench Price Co`
+19. - **Pricelist**: `Bench 10% Off`
+20. - Order Lines → **Add a product**:
+21.   - Product: `Bench Price Item`
+22.   - Quantity: `1` *(Unit Price auto-fills to `180.00`; **do not edit**)*
+23. - Click **Save** → Verify status remains **Quotation (Draft)**. **Do not 
+click Confirm.**
+24. **✅ Execution Constraints**
+25. - Pricelist name must be exact: `Bench 10% Off`
+26. - Rule must be `Formula` → `10` Discount on `Sales Price`
+27. - Quotation must stay in **Draft**; never confirm
+28. - No extra lines, notes, or manual price overrides
+Reasoning: 
+Action: <action>
+{
+  "tool_name": "browser_navigate",
+  "tool_args": {
+    "url": "http://127.0.0.1:54501/odoo/sales"
+  }
+}
+</action>
+Reasoning: I am on the login page. I need to enter the credentials `admin` / 
+`admin` to log in. I will start by clicking the email input field to enter the 
+username.
+Action: {"tool_name": "browser_input", "tool_args": {"coordinates": [497, 221], 
+"text": "admin", "option": "click"}}
+Reasoning: 
+Action: <action>
+{"tool_name": "browser_input", "tool_args": {"coordinates": [497, 342], "text": 
+"admin", "option": "click"}}
+</action>
+Reasoning: 
+Action: <action>
+{
+  "tool_name": "browser_input",
+  "tool_args": {
+    "coordinates": [
+      497,
+      221
+    ],
+    "text": "admin",
+    "option": "fill"
+  }
+}
+</action>
