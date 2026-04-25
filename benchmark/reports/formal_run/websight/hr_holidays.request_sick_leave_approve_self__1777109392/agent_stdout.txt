@@ -1,0 +1,48 @@
+Plan:
+1. ### Minimal Execution Plan
+2. 1. **Access & Login**
+3.    - Open `http://127.0.0.1:54113/odoo/time-off`
+4.    - Log in with `admin` / `admin` if prompted.
+5. 2. **Create & Submit Request**
+6.    - Click **New** (or **New Request**)
+7.    - Fill fields:
+8.      - `Time Off Type`: `Sick Leave`
+9.      - `Employee`: `Bench Sick Employee`
+10.      - `Start Date`: `May 11, 2026`
+11.      - `End Date`: `May 12, 2026`
+12.      - `Description/Reason`: `Sick leave benchmark`
+13.    - Click **Confirm** / **Submit** → verify state changes to **To Approve**
+(`confirm`).
+14. 3. **Approve as Manager**
+15.    - Navigate to `http://127.0.0.1:54113/odoo/time-off-approval` (Management
+dashboard)
+16.    - Clear filters if needed to locate the pending record
+17.    - Open the request for **Bench Sick Employee** (May 11–12) → click 
+**Approve** (or **Validate**)
+18.    - Verify state changes to **Approved** (`validate`).
+19. 4. **Final Verification**
+20.    - Confirm exactly one `hr.leave` record exists with: `Sick Leave` | 
+`Bench Sick Employee` | `2026-05-11` → `2026-05-12` | State: `Approved`.
+Reasoning: Starting the task by navigating to the Odoo Time Off URL.
+Action: click at (363, 57)
+Reasoning: The current screen is blank (`about:blank`), indicating that the 
+browser has not yet loaded the target Odoo application. The history shows an 
+initial click, likely attempting to start the process, but the page content is 
+not visible. The first step in the plan is to access the specific URL for the 
+Time Off module. Therefore, I need to navigate the browser to 
+`http://127.0.0.1:54113/odoo/time-off` to load the application and begin the 
+workflow.
+Action: {"action": "navigate", "url": "http://127.0.0.1:54113/odoo/time-off"}
+Reasoning: The current screen shows the Odoo login page, which appeared after 
+navigating to the time-off URL (likely due to a redirect because of 
+authentication requirements). The instruction explicitly states to "Log in with 
+username 'admin' and password 'admin'". Although the prompt says "You are logged
+in...", the visual evidence (login form) and URL (`/web/login`) contradict this,
+indicating a session is required. I must first complete the login process to 
+access the Time Off application. I will enter 'admin' into the email field and 
+'admin' into the password field, then click the "Log in" button.
+Action: {"action": "type", "text": "admin", "coordinates": [483, 219]}
+Reasoning: 
+Action: {"action": "type", "text": "admin", "coordinates": [483, 336]}
+Reasoning: 
+Action: <action>click at (483, 413)</action>

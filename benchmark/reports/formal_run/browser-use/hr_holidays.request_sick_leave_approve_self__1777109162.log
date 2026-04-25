@@ -1,0 +1,62 @@
+=== Benchmark Evaluation ===
+  Task:   hr_holidays.request_sick_leave_approve_self
+  Agent:  browser-use
+  DB:     bench_fr_0b3e36fb  (auto-isolated)
+  URL:    http://127.0.0.1:52541
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/browser-use/hr_holidays.request_sick_leave_approve_self__1777109162
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_0b3e36fb from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 52541
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (browser-use)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 84 calls captured (43 writes, 41 reads)
+   State: 0 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      4 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   84
+  Writes:            43 non-forbidden, 0 forbidden
+  Required ops MISSED: ['hr.leave.action_approve']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/browser-use/hr_holidays.request_sick_leave_approve_self__1777109162/
+
+  Postcondition failures:
+    - No hr.leave found for Bench Sick Employee / Sick Leave
+  Missing expected edits:
+    - hr.leave.employee_id = Bench Sick Employee
+    - hr.leave.holiday_status_id = Sick Leave
+    - hr.leave.number_of_days = 2.0
+    - hr.leave.state = validate
