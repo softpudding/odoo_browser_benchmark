@@ -1,0 +1,59 @@
+=== Benchmark Evaluation ===
+  Task:   product.configure_variant_attribute_two_values
+  Agent:  command
+  DB:     bench_fr_f37c1181  (auto-isolated)
+  URL:    http://127.0.0.1:64306
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/product.configure_variant_attribute_two_values__1777077910
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_f37c1181 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 64306
+   Done.
+2. Capturing pre-task state...
+   Captured 14 records across 3 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=1.5s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 14 records across 3 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     9 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      9 edits
+  Extra:        0 edits
+  Wall clock:   1.5s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/product.configure_variant_attribute_two_values__1777077910/
+
+  Postcondition failures:
+    - Attribute 'Size' was not created
+  Missing expected edits:
+    - product.template.attribute_line_ids = [1]
+    - product.attribute.value.attribute_id = Size
+    - product.attribute.value.name = Large
+    - product.attribute.value.attribute_id = Size
+    - product.attribute.value.name = Medium
+    - product.attribute.value.attribute_id = Size
+    - product.attribute.value.name = Small
+    - product.attribute.create_variant = always
+    - product.attribute.name = Size
