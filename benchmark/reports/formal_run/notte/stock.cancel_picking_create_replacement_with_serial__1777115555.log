@@ -1,0 +1,66 @@
+=== Benchmark Evaluation ===
+  Task:   stock.cancel_picking_create_replacement_with_serial
+  Agent:  command
+  DB:     bench_fr_108c3976  (auto-isolated)
+  URL:    http://127.0.0.1:53218
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/notte/stock.cancel_picking_create_replacement_with_serial__1777115555
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_108c3976 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 53218
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 56 calls captured (27 writes, 29 reads)
+   State: 3 records across 2 models
+5. Computing state diff...
+   6 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     8 edits
+  Observed:     6 edits
+  Matching:     3 edits
+  Missing:      5 edits
+  Extra:        3 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   56
+  Writes:            27 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/notte/stock.cancel_picking_create_replacement_with_serial__1777115555/
+
+  Postcondition failures:
+    - No replacement receipt found for vendor 'Bench Supplier Inc' containing the 'Bench Serial Widget' product
+  Missing expected edits:
+    - stock.lot.name = BS-002
+    - stock.lot.product_id = Bench Serial Widget
+    - stock.picking.origin = None
+    - stock.picking.partner_id = Bench Supplier Inc
+    - stock.picking.state = done
+  Unexpected extra edits:
+    + stock.picking.origin = None
+    + stock.picking.partner_id = None
+    + stock.picking.state = assigned
