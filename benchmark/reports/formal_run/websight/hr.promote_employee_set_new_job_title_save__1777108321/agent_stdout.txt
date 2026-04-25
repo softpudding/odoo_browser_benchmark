@@ -1,0 +1,70 @@
+Plan:
+1. **1. Access & Authenticate**
+2. - Open `http://127.0.0.1:53162/odoo/employees` in your browser.
+3. - Log in with username `admin` and password `admin`.
+4. **2. Locate Employee**
+5. - In the Employees list view, use the search bar to find `"Bench Promote 
+Me"`.
+6. - Click the employee name to open the form.
+7. **3. Edit Job Title**
+8. - Ensure the **Work** tab is active (default).
+9. - Locate the **Job Title** free-text field (directly below the **Job 
+Position** field).
+10. - Replace `Analyst` with exactly: `Senior Analyst`
+11. **4. Save & Verify**
+12. - Click the **Save** button (💾 icon or `Ctrl+S`/`Cmd+S`).
+13. - Confirm the **Job Title** displays exactly `Senior Analyst` and no other 
+fields (Job Position, Department, Name, etc.) were altered.
+14. - Close the record.
+Reasoning: 
+Action: <action>
+{"action": "navigate", "url": "http://127.0.0.1:53162/odoo/employees"}
+</action>
+Reasoning: I need to log in to the Odoo system to access the Employees app. The 
+current screen is the login page. I will enter the credentials 'admin' for both 
+email and password as instructed.
+Action: [
+  {"action": "fill", "locator": "Enter your email", "text": "admin"},
+  {"action": "fill", "locator": "Enter your password", "text": "admin"},
+  {"action": "click", "locator": "Log in"}
+]
+Reasoning: 
+Action: <action>
+[
+  {"action": "click", "locator": "Log in"}
+]
+</action>
+Reasoning: 
+Action: <action>
+[
+  {"action": "click", "locator": "Employees"}
+]
+</action>
+Reasoning: 
+Action: <action>
+[
+  {"action": "fill", "locator": "Enter your email", "text": "admin"},
+  {"action": "fill", "locator": "Enter your password", "text": "admin"},
+  {"action": "click", "locator": "Log in"}
+]
+</action>
+Reasoning: The current screenshot shows the Odoo login page (`/web/login`), 
+indicating that I am not yet authenticated or the session has expired. The URL 
+includes a redirect to `/odoo/employees`, which confirms that successful 
+authentication will take me to the desired destination. The history shows a 
+previous attempt to log in, but since the login page is still displayed, I need 
+to perform the login sequence again. I will enter the username 'admin' and 
+password 'admin' into the respective fields and click the 'Log in' button.
+Action: [
+  {"action": "fill", "locator": "Enter your email", "text": "admin"},
+  {"action": "fill", "locator": "Enter your password", "text": "admin"},
+  {"action": "click", "locator": "Log in"}
+]
+Reasoning: 
+Action: <action>
+[
+  {"action": "fill", "locator": "Enter your email", "text": "admin"},
+  {"action": "fill", "locator": "Enter your password", "text": "admin"},
+  {"action": "click", "locator": "Log in"}
+]
+</action>

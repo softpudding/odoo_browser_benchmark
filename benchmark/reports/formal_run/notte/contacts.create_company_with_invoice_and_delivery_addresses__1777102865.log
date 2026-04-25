@@ -1,0 +1,67 @@
+=== Benchmark Evaluation ===
+  Task:   contacts.create_company_with_invoice_and_delivery_addresses
+  Agent:  command
+  DB:     bench_fr_4a7e08dc  (auto-isolated)
+  URL:    http://127.0.0.1:49185
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/notte/contacts.create_company_with_invoice_and_delivery_addresses__1777102865
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_4a7e08dc from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 49185
+   Done.
+2. Capturing pre-task state...
+   Captured 7 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 38 calls captured (13 writes, 25 reads)
+   State: 8 records across 1 models
+5. Computing state diff...
+   4 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     12 edits
+  Observed:     4 edits
+  Matching:     4 edits
+  Missing:      8 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   38
+  Writes:            13 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/notte/contacts.create_company_with_invoice_and_delivery_addresses__1777102865/
+
+  Postcondition failures:
+    - Company street is False
+    - Invoice child address 'Billing Desk' not found
+    - Delivery child address 'Receiving Dock' not found
+  Missing expected edits:
+    - res.partner.is_company = None
+    - res.partner.name = Billing Desk
+    - res.partner.parent_id = Harbor Peak Logistics
+    - res.partner.type = invoice
+    - res.partner.is_company = None
+    - res.partner.name = Receiving Dock
+    - res.partner.parent_id = Harbor Peak Logistics
+    - res.partner.type = delivery

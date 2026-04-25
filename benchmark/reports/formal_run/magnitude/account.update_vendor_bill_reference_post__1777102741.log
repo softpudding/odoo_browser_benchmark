@@ -1,0 +1,61 @@
+=== Benchmark Evaluation ===
+  Task:   account.update_vendor_bill_reference_post
+  Agent:  command
+  DB:     bench_fr_1f0a343f  (auto-isolated)
+  URL:    http://127.0.0.1:64944
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/account.update_vendor_bill_reference_post__1777102741
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_1f0a343f from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 64944
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 34 calls captured (11 writes, 23 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      3 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   34
+  Writes:            11 non-forbidden, 0 forbidden
+  Required ops MISSED: ['account.move.action_post']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/account.update_vendor_bill_reference_post__1777102741/
+
+  Postcondition failures:
+    - Vendor bill 'MSC-8841' not found
+  Missing expected edits:
+    - account.move.invoice_date = 2026-05-06
+    - account.move.ref = MSC-8841
+    - account.move.state = posted

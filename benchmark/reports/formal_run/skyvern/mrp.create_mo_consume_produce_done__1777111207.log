@@ -1,0 +1,64 @@
+=== Benchmark Evaluation ===
+  Task:   mrp.create_mo_consume_produce_done
+  Agent:  command
+  DB:     bench_fr_6d08d89f  (auto-isolated)
+  URL:    http://127.0.0.1:64036
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/mrp.create_mo_consume_produce_done__1777111207
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_6d08d89f from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 64036
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 41 calls captured (21 writes, 20 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   4 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     4 edits
+  Matching:     2 edits
+  Missing:      2 edits
+  Extra:        2 edits
+  Wall clock:   600.1s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.5
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   41
+  Writes:            21 non-forbidden, 0 forbidden
+  Required ops MISSED: ['mrp.production.button_mark_done']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/mrp.create_mo_consume_produce_done__1777111207/
+
+  Postcondition failures:
+    - MO 'WH/MO/00001' state is 'confirmed', expected 'done'
+    - MO qty_produced is 0.0, expected 3.0
+  Missing expected edits:
+    - mrp.production.qty_produced = 3.0
+    - mrp.production.state = done
+  Unexpected extra edits:
+    + mrp.production.qty_produced = 0.0
+    + mrp.production.state = confirmed

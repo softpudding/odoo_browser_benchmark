@@ -1,0 +1,63 @@
+=== Benchmark Evaluation ===
+  Task:   crm.set_lost_reason_reassign_salesperson
+  Agent:  command
+  DB:     bench_fr_ea62190f  (auto-isolated)
+  URL:    http://127.0.0.1:63472
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/alumnium/crm.set_lost_reason_reassign_salesperson__1777106645
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_ea62190f from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 63472
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=45.7s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 5 calls captured (1 writes, 4 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      3 edits
+  Extra:        0 edits
+  Wall clock:   45.7s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   5
+  Writes:            1 non-forbidden, 0 forbidden
+  Required ops MISSED: ['crm.lead.lost.action_lost_reason_apply']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/alumnium/crm.set_lost_reason_reassign_salesperson__1777106645/
+
+  Postcondition failures:
+    - Opportunity is still active — expected archived (Lost)
+    - lost_reason is 'None', expected 'Too expensive'
+    - Salesperson is 'Marc Demo', expected 'Mitchell Admin'
+  Missing expected edits:
+    - crm.lead.active = None
+    - crm.lead.lost_reason_id = Too expensive
+    - crm.lead.user_id = Mitchell Admin
