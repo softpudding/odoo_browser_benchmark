@@ -1,0 +1,35 @@
+Plan:
+1. ### Minimal Execution Plan
+2. 1. **Access & Navigate**
+3.    - Open `http://127.0.0.1:58656/odoo/inventory` → Log in (`admin` / 
+`admin`)
+4.    - Click **Delivery Orders** kanban tile → Open picking 
+`D-BENCH-PARTIAL-001`
+5. 2. **Reserve Stock**
+6.    - Click **Check Availability** (form header)
+7.    - Verify: State → `Ready`, Single move line → `Quantity: 10`
+8. 3. **Partial Shipment (Detailed Operations)**
+9.    - In **Operations** tab, click **Details** on the `Bench Partial Item` row
+10.    - In modal: Click **Quantity** cell → Change `10` → `7` → Click **Save**
+11.    - Verify popup closes, form line shows `Done: 7 / Demand: 10`
+12. 4. **Validate & Backorder**
+13.    - Click **Validate** (form header)
+14.    - In `Create Backorder?` dialog → Click **Create Backorder** (left 
+button)
+15.    - Verify: `D-BENCH-PARTIAL-001` → State `Done` | Auto-backorder exists 
+for remaining `3` units (State: `Ready`)
+16. **Constraints Checklist:**
+17. - ✅ `Check Availability` clicked before editing
+18. - ✅ Quantity edited *only* via **Detailed Operations** popup
+19. - ✅ Demand column untouched (`10`)
+20. - ✅ Backorder created via dialog, not cancelled/unlinked
+Reasoning: 
+Action: <action>
+{"action": "mouse_move", "coordinate": [171, 661]}
+</action>
+Reasoning: The current state shows a blank page (`about:blank`). The instruction
+requires navigating to `http://127.0.0.1:58656/odoo/inventory`. To do this, I 
+first need to focus the browser's address bar. I will click on the address bar 
+area (top center of the screen) to ensure it is active for typing the URL in the
+subsequent step.
+Action: {"action": "click", "coordinate": [452, 31]}
