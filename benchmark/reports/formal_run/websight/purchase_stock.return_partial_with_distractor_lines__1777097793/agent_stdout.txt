@@ -1,0 +1,46 @@
+Plan:
+1. ### Minimal Execution Plan
+2. 1. **Access & Login**
+3.    - Navigate to `http://127.0.0.1:50434/odoo/purchase`
+4.    - Enter credentials: Username `admin` / Password `admin`
+5.    - Log in and open the **Purchase** app.
+6. 2. **Open Purchase Order**
+7.    - Locate and open PO `P-BENCH-RET-001`.
+8. 3. **Open Receipt**
+9.    - On the PO form, click the **Receipt** smart button (status: `Done`).
+10. 4. **Initiate Return**
+11.    - On the receipt form, click the **Return** button (top action bar).
+12. 5. **Configure Return Wizard**
+13.    - In the dialog, manually edit the `Return Quantity` for each line:
+14.      - `Bayside WidgetA` → `0`
+15.      - `Bayside WidgetB` → `2`
+16.      - `Bayside WidgetC` → `0`
+17.    - ⚠️ Do **not** click "Return All" or leave defaults.
+18. 6. **Create Return Picking**
+19.    - Click the **Return** button in the wizard to generate the new transfer.
+20. 7. **Validate Return**
+21.    - On the newly opened return transfer, click **Validate**.
+22.    - Confirm the processing dialog to finalize.
+23. **✅ Validation Checklist (Post-Execution)**
+24. - [ ] Return picking contains **only** `Bayside WidgetB` with quantity `2`.
+25. - [ ] `Bayside WidgetA` & `C` are excluded (qty `0`).
+26. - [ ] Original PO `P-BENCH-RET-001` and its receipt remain unchanged & in 
+`Done` state.
+Reasoning: Starting the task. I need to navigate to the Odoo instance, log in, 
+and access the Purchase app to find the specific Purchase Order 
+`P-BENCH-RET-001`.
+Action: click x="125" y="950"
+Reasoning: The browser is open with a blank page. The first step is to navigate 
+to the Odoo instance URL provided in the instructions. I need to type the URL 
+into the address bar.
+Action: type http://127.0.0.1:50434/odoo/purchase
+Reasoning: 
+Action: <action>click x="400" y="219" />
+</action>
+Reasoning: 
+Action: <action>click x="498" y="222" />
+</action>
+Reasoning: The browser has navigated to the Odoo login page. The cursor appears 
+to be in or near the Email field based on previous actions. I need to enter the 
+username 'admin' into the Email field first.
+Action: type admin
