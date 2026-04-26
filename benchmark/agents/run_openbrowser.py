@@ -36,14 +36,22 @@ def request_json(url, method="GET", body=None, timeout=10):
         return json.loads(resp.read().decode())
 
 
-def cleanup_conversation(server_url, chrome_uuid, conversation_id):
-    """Close managed tabs and delete the conversation.
+def cleanup_conversation(server_url, chrome_uuid, conversation_id, lane_port=None):
+    """Close the conversation's tabs and DELETE the session.
 
     Mirrors _cleanup_openbrowser_conversation in
-    OpenBrowser/eval/evaluate_browser_agent.py. Without this, every run
-    leaks one conversation in the OpenBrowser server and one tab group
-    in the persistent Chrome — accumulating to OOM after a few hundred
-    benchmark runs.
+    OpenBrowser/eval/evaluate_browser_agent.py, with one important
+    correction: the OpenBrowser extension only registers a tab as
+    "managed" when certain tool calls hit it (highlight, switch).
+    A tab the agent navigates to via TabAction("init") often stays
+    `isManaged: false`, and Odoo's auth redirects spawn extra tabs
+    that are never registered. So filtering by ``managed_only=true``
+    misses most of the conversation's actual tabs and leaks them.
+
+    We instead list all tabs in the browser (managed_only=false) and
+    close every tab whose URL contains our lane host
+    ``lane-<lane_port>.localtest.me`` — which is unique per run by
+    construction, so we can't accidentally nuke another lane's tabs.
     """
     if not conversation_id or not chrome_uuid:
         return
@@ -53,7 +61,7 @@ def cleanup_conversation(server_url, chrome_uuid, conversation_id):
         params = urllib.parse.urlencode({
             "browser_id": chrome_uuid,
             "conversation_id": conversation_id,
-            "managed_only": "true",
+            "managed_only": "false",
         })
         req = urllib.request.Request(
             f"{server_url}/tabs?{params}", method="GET"
@@ -64,6 +72,15 @@ def cleanup_conversation(server_url, chrome_uuid, conversation_id):
             tabs = data.get("data", {}).get("tabs", []) or []
     except Exception as e:
         print(f"[cleanup] list tabs failed: {e}", file=sys.stderr)
+
+    if lane_port:
+        lane_host = f"lane-{lane_port}.localtest.me"
+        tabs = [t for t in tabs if lane_host in (t.get("url") or "")]
+    else:
+        # Fallback: only close tabs the extension flagged as managed
+        # under our conversation. Loses unmanaged tabs but at least
+        # safe across lanes.
+        tabs = [t for t in tabs if t.get("isManaged")]
 
     closed = 0
     for tab in tabs:
@@ -176,6 +193,11 @@ def main():
         int(os.environ.get("OPENBROWSER_WALLCLOCK_BUDGET", "580"))
     )
     full_instruction = per_lane_host_rewrite(build_instruction())
+    # Extract our lane port for cleanup matching: post-rewrite the
+    # instruction has lane-<port>.localtest.me URLs, where port is
+    # the per-run Odoo port — unique to this run.
+    _lane_match = re.search(r"lane-(\d+)\.localtest\.me", full_instruction)
+    lane_port = _lane_match.group(1) if _lane_match else None
     server_url = os.environ.get("OPENBROWSER_URL", "http://127.0.0.1:8765")
     chrome_uuid = os.environ.get("OPENBROWSER_CHROME_UUID", "")
     # The frontend always passes model_alias + cwd; without them the
@@ -241,7 +263,9 @@ def main():
 
     # Belt-and-suspenders: finally is the primary cleanup path; atexit
     # catches sys.exit() (including the SIGTERM->sys.exit converter).
-    atexit.register(cleanup_conversation, server_url, chrome_uuid, conversation_id)
+    atexit.register(
+        cleanup_conversation, server_url, chrome_uuid, conversation_id, lane_port
+    )
 
     # Send the task via SSE streaming
     payload = json.dumps({
@@ -300,7 +324,7 @@ def main():
     except Exception as e:
         print(f"OpenBrowser streaming error: {e}", file=sys.stderr)
     finally:
-        cleanup_conversation(server_url, chrome_uuid, conversation_id)
+        cleanup_conversation(server_url, chrome_uuid, conversation_id, lane_port)
 
     if completed:
         print("OpenBrowser: task completed")
