@@ -1,0 +1,59 @@
+=== Benchmark Evaluation ===
+  Task:   contacts.add_bank_account_to_partner
+  Agent:  command
+  DB:     bench_fr_239b463d  (auto-isolated)
+  URL:    http://127.0.0.1:54612
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/contacts.add_bank_account_to_partner__1777217330
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_239b463d from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 54612
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=580.8s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 22 calls captured (8 writes, 14 reads)
+   State: 0 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   580.8s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   22
+  Writes:            8 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/contacts.add_bank_account_to_partner__1777217330/
+
+  Postcondition failures:
+    - No bank account linked to 'Benchmark IBAN Supplier Ltd'
+  Missing expected edits:
+    - res.partner.bank.acc_number = GB82 WEST 1234 5698 7654 32
+    - res.partner.bank.partner_id = Benchmark IBAN Supplier Ltd
