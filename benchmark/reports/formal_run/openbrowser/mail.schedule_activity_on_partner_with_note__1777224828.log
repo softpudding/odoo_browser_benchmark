@@ -1,0 +1,49 @@
+=== Benchmark Evaluation ===
+  Task:   mail.schedule_activity_on_partner_with_note
+  Agent:  command
+  DB:     bench_fr_7334ea74  (auto-isolated)
+  URL:    http://127.0.0.1:63249
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/mail.schedule_activity_on_partner_with_note__1777224828
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_7334ea74 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 63249
+   Done.
+2. Capturing pre-task state...
+   Captured 11 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=0.2s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 11 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     0 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   0.2s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/mail.schedule_activity_on_partner_with_note__1777224828/
+
+  Postcondition failures:
+    - No mail.activity row found on partner 'Bench Activity Partner' (res_model='res.partner', res_id=14). The agent likely did not click Schedule in the wizard, or the wizard was cancelled.
