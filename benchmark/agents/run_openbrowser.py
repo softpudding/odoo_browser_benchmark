@@ -19,6 +19,7 @@ import json
 import os
 import signal
 import sys
+import tempfile
 import urllib.parse
 import urllib.request
 
@@ -88,6 +89,17 @@ def cleanup_conversation(server_url, chrome_uuid, conversation_id):
 
     print(f"[cleanup] closed {closed}/{len(tabs)} managed tabs", flush=True)
 
+    # Debug escape hatch: skip the conversation DELETE so the session
+    # record survives in ~/.openbrowser/sessions.db for post-hoc inspection.
+    # Tab cleanup above still runs (that's what prevents Chrome OOM).
+    if os.environ.get("BENCHMARK_KEEP_CONVERSATION") == "1":
+        print(
+            f"[cleanup] keeping conversation {conversation_id} "
+            "(BENCHMARK_KEEP_CONVERSATION=1)",
+            flush=True,
+        )
+        return
+
     try:
         req = urllib.request.Request(
             f"{server_url}/agent/conversations/{conversation_id}",
@@ -118,6 +130,16 @@ def main():
     full_instruction = build_instruction()
     server_url = os.environ.get("OPENBROWSER_URL", "http://127.0.0.1:8765")
     chrome_uuid = os.environ.get("OPENBROWSER_CHROME_UUID", "")
+    # The frontend always passes model_alias + cwd; without them the
+    # server falls back to a default profile that caps the agent at ~20
+    # turns, terminating it long before complex tasks finish.
+    model_alias = os.environ.get("OPENBROWSER_MODEL_ALIAS", "qwen36plus")
+    # Fresh tempdir per run so the agent can't see / modify the
+    # benchmark repo via its terminal/file_editor tools. Don't auto-clean
+    # so any artifacts the agent wrote remain inspectable.
+    cwd = os.environ.get("OPENBROWSER_CWD") or tempfile.mkdtemp(
+        prefix="openbrowser_cwd_"
+    )
 
     if not chrome_uuid:
         print("ERROR: OPENBROWSER_CHROME_UUID not set", file=sys.stderr)
@@ -139,14 +161,21 @@ def main():
         print(f"ERROR: Cannot reach OpenBrowser server: {e}", file=sys.stderr)
         sys.exit(1)
 
-    # Create a conversation
+    # Create a conversation. Match the frontend exactly: include
+    # cwd + model_alias so the server selects the configured profile
+    # (turn budget, system-prompt blocks, etc.) instead of a default
+    # that caps the agent at ~20 turns.
     conv_data = request_json(
         f"{server_url}/agent/conversations",
         method="POST",
-        body={"browser_id": chrome_uuid},
+        body={
+            "browser_id": chrome_uuid,
+            "cwd": cwd,
+            "model_alias": model_alias,
+        },
     )
     conversation_id = conv_data["conversation_id"]
-    print(f"[conversation] {conversation_id}", flush=True)
+    print(f"[conversation] {conversation_id} model_alias={model_alias}", flush=True)
 
     # Belt-and-suspenders: finally is the primary cleanup path; atexit
     # catches sys.exit() (including the SIGTERM->sys.exit converter).
@@ -155,6 +184,7 @@ def main():
     # Send the task via SSE streaming
     payload = json.dumps({
         "text": full_instruction,
+        "cwd": cwd,
         "browser_id": chrome_uuid,
     }).encode()
     req = urllib.request.Request(
