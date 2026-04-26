@@ -1,0 +1,69 @@
+=== Benchmark Evaluation ===
+  Task:   account.create_refund_modify_reissue
+  Agent:  command
+  DB:     bench_fr_c573b40d  (auto-isolated)
+  URL:    http://127.0.0.1:65276
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/account.create_refund_modify_reissue__1777199997
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_c573b40d from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 65276
+   Done.
+2. Capturing pre-task state...
+   Captured 5 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=93.7s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 6 calls captured (2 writes, 4 reads)
+   State: 5 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     9 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      9 edits
+  Extra:        0 edits
+  Wall clock:   93.7s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   6
+  Writes:            2 non-forbidden, 0 forbidden
+  Required ops MISSED: ['account.move.action_post', 'account.move.reversal.modify_moves']
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/account.create_refund_modify_reissue__1777199997/
+
+  Postcondition failures:
+    - HLE-MOD-01 payment_state is 'not_paid', expected 'reversed' (Reverse and Create Invoice reconciles automatically)
+    - No credit note found linked to HLE-MOD-01
+    - No new posted invoice found for Harborlight Engineering (the modify workflow should create a replacement draft that gets confirmed)
+  Missing expected edits:
+    - account.move.payment_state = reversed
+    - account.move.partner_id = Harborlight Engineering
+    - account.move.payment_state = paid
+    - account.move.ref = Reversal of: INV/2026/00001, Quantity correction for project phase 2
+    - account.move.state = posted
+    - account.move.partner_id = Harborlight Engineering
+    - account.move.payment_state = not_paid
+    - account.move.ref = None
+    - account.move.state = posted

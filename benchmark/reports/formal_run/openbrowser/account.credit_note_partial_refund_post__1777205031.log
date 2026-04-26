@@ -1,0 +1,76 @@
+=== Benchmark Evaluation ===
+  Task:   account.credit_note_partial_refund_post
+  Agent:  command
+  DB:     bench_fr_45078b68  (auto-isolated)
+  URL:    http://127.0.0.1:53770
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/account.credit_note_partial_refund_post__1777205031
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_45078b68 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 53770
+   Done.
+2. Capturing pre-task state...
+   Captured 4 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 59 calls captured (27 writes, 32 reads)
+   State: 5 records across 1 models
+5. Computing state diff...
+   5 atomic edits observed
+   Postconditions: 7 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     6 edits
+  Observed:     5 edits
+  Matching:     0 edits
+  Missing:      6 edits
+  Extra:        5 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.5
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   59
+  Writes:            27 non-forbidden, 0 forbidden
+  Required ops MISSED: ['account.move.action_post']
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/account.credit_note_partial_refund_post__1777205031/
+
+  Postcondition failures:
+    - Credit note state is 'draft', expected 'posted'
+    - Credit note ref is 'Reversal of: INV/2026/00001', expected to contain 'Wrong qty'
+    - Credit note product is False, expected 'Bench Item A'
+    - Credit note Item A quantity is 1.0, expected 2.0
+    - Credit note Item A price_unit is 0.0, expected 100.0
+    - Credit note amount_total is 0.0, expected 200.0
+    - Credit note amount_untaxed is 0.0, expected 200.0
+  Missing expected edits:
+    - account.move.payment_state = partial
+    - account.move.move_type = out_refund
+    - account.move.partner_id = Bench AR Co
+    - account.move.payment_state = paid
+    - account.move.ref = Reversal of: INV/2026/00001, Wrong qty
+    - account.move.state = posted
+  Unexpected extra edits:
+    + account.move.move_type = out_refund
+    + account.move.partner_id = Bench AR Co
+    + account.move.payment_state = not_paid
+    + account.move.ref = Reversal of: INV/2026/00001
+    + account.move.state = draft
