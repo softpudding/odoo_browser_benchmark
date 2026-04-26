@@ -1,0 +1,62 @@
+=== Benchmark Evaluation ===
+  Task:   delivery.set_third_party_carrier_print_label
+  Agent:  command
+  DB:     bench_fr_c90f3ee9  (auto-isolated)
+  URL:    http://127.0.0.1:64769
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/delivery.set_third_party_carrier_print_label__1777222551
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_c90f3ee9 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 64769
+   Done.
+2. Capturing pre-task state...
+   Captured 7 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=583.4s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 91 calls captured (40 writes, 51 reads)
+   State: 8 records across 2 models
+5. Computing state diff...
+   2 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     5 edits
+  Observed:     2 edits
+  Matching:     2 edits
+  Missing:      3 edits
+  Extra:        0 edits
+  Wall clock:   583.4s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   91
+  Writes:            40 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/delivery.set_third_party_carrier_print_label__1777222551/
+
+  Postcondition failures:
+    - Delivery picking state is 'assigned', expected 'done'
+    - Delivery picking carrier is 'unset', expected 'Bench Express'
+    - Delivery picking carrier_tracking_ref is empty, expected 'BX-TRACK-002'
+  Missing expected edits:
+    - stock.picking.carrier_id = Bench Express
+    - stock.picking.carrier_tracking_ref = BX-TRACK-002
+    - stock.picking.state = done

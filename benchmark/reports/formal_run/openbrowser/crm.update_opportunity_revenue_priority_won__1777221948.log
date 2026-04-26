@@ -1,0 +1,59 @@
+=== Benchmark Evaluation ===
+  Task:   crm.update_opportunity_revenue_priority_won
+  Agent:  command
+  DB:     bench_fr_958d1fad  (auto-isolated)
+  URL:    http://127.0.0.1:61434
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/crm.update_opportunity_revenue_priority_won__1777221948
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_958d1fad from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 61434
+   Done.
+2. Capturing pre-task state...
+   Captured 4 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=581.2s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 94 calls captured (21 writes, 73 reads)
+   State: 4 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     0 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   581.2s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   94
+  Writes:            21 non-forbidden, 0 forbidden
+  Required ops MISSED: ['crm.lead.action_set_won_rainbowman']
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/crm.update_opportunity_revenue_priority_won__1777221948/
+
+  Postcondition failures:
+    - Northwind Renewal Review expected revenue is 0.0, expected 21000
+    - Northwind Renewal Review priority is '1', expected '2'
+    - Northwind Renewal Review won_status is 'pending', expected 'won'
