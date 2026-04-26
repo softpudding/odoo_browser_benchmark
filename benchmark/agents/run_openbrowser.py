@@ -58,7 +58,7 @@ def cleanup_conversation(server_url, chrome_uuid, conversation_id):
         req = urllib.request.Request(
             f"{server_url}/tabs?{params}", method="GET"
         )
-        with urllib.request.urlopen(req, timeout=5) as resp:
+        with urllib.request.urlopen(req, timeout=2) as resp:
             data = json.loads(resp.read().decode())
         if data.get("success"):
             tabs = data.get("data", {}).get("tabs", []) or []
@@ -82,7 +82,7 @@ def cleanup_conversation(server_url, chrome_uuid, conversation_id):
             req = urllib.request.Request(
                 f"{server_url}/tabs?{params}", data=b"", method="POST"
             )
-            with urllib.request.urlopen(req, timeout=5) as resp:
+            with urllib.request.urlopen(req, timeout=2) as resp:
                 resp.read()
             closed += 1
         except Exception as e:
@@ -106,7 +106,7 @@ def cleanup_conversation(server_url, chrome_uuid, conversation_id):
             f"{server_url}/agent/conversations/{conversation_id}",
             method="DELETE",
         )
-        with urllib.request.urlopen(req, timeout=5) as resp:
+        with urllib.request.urlopen(req, timeout=2) as resp:
             resp.read()
         print(f"[cleanup] conversation {conversation_id} deleted", flush=True)
     except Exception as e:
@@ -124,6 +124,29 @@ def _install_sigterm_to_sysexit():
     def _handler(signum, frame):
         sys.exit(128 + signum)
     signal.signal(signal.SIGTERM, _handler)
+
+
+def _install_wallclock_watchdog(seconds):
+    """Trigger a clean SystemExit at ``seconds`` so finally + atexit
+    cleanup runs *before* eval.py's harder ``subprocess.run(timeout=600)``
+    SIGKILL fires.
+
+    eval.py launches the wrapper as a subprocess with a 600s timeout.
+    On timeout it sends SIGKILL — bypassing every Python-level cleanup
+    hook. The result: when the agent is still running at 600s (the
+    common case for hard tasks), tabs and the OpenBrowser conversation
+    leak. Setting a SIGALRM at 580s gives us 20s to close tabs and
+    DELETE the conversation cleanly.
+    """
+    def _handler(signum, frame):
+        sys.stderr.write(
+            f"[watchdog] {seconds}s wall-clock budget exhausted, "
+            "exiting cleanly so cleanup runs\n"
+        )
+        sys.stderr.flush()
+        sys.exit(124)
+    signal.signal(signal.SIGALRM, _handler)
+    signal.alarm(seconds)
 
 
 _PER_LANE_HOST_RE = re.compile(r"127\.0\.0\.1:(\d+)")
@@ -149,6 +172,9 @@ def per_lane_host_rewrite(text: str) -> str:
 
 def main():
     _install_sigterm_to_sysexit()
+    _install_wallclock_watchdog(
+        int(os.environ.get("OPENBROWSER_WALLCLOCK_BUDGET", "580"))
+    )
     full_instruction = per_lane_host_rewrite(build_instruction())
     server_url = os.environ.get("OPENBROWSER_URL", "http://127.0.0.1:8765")
     chrome_uuid = os.environ.get("OPENBROWSER_CHROME_UUID", "")
