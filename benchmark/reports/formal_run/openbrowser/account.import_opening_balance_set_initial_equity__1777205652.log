@@ -1,0 +1,58 @@
+=== Benchmark Evaluation ===
+  Task:   account.import_opening_balance_set_initial_equity
+  Agent:  command
+  DB:     bench_fr_5a79b9bc  (auto-isolated)
+  URL:    http://127.0.0.1:56266
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/account.import_opening_balance_set_initial_equity__1777205652
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_5a79b9bc from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 56266
+   Done.
+2. Capturing pre-task state...
+   Captured 3 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=459.9s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 63 calls captured (19 writes, 44 reads)
+   State: 5 records across 1 models
+5. Computing state diff...
+   7 atomic edits observed
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.6
+  Precision:    0.4286
+  Recall:       1.0
+  Expected:     3 edits
+  Observed:     7 edits
+  Matching:     3 edits
+  Missing:      0 edits
+  Extra:        4 edits
+  Wall clock:   459.9s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   63
+  Writes:            19 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/account.import_opening_balance_set_initial_equity__1777205652/
+
+  Unexpected extra edits:
+    + account.move.move_type = out_invoice
+    + account.move.ref = None
+    + account.move.state = draft
+    + account.move.move_type = entry

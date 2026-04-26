@@ -1,0 +1,74 @@
+=== Benchmark Evaluation ===
+  Task:   account.modify_account_move_line_label
+  Agent:  command
+  DB:     bench_fr_5a407938  (auto-isolated)
+  URL:    http://127.0.0.1:60506
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/account.modify_account_move_line_label__1777206274
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_5a407938 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 60506
+   Done.
+2. Capturing pre-task state...
+   Captured 10 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 41 calls captured (21 writes, 20 reads)
+   State: 10 records across 2 models
+5. Computing state diff...
+   13 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     1 edits
+  Observed:     13 edits
+  Matching:     0 edits
+  Missing:      1 edits
+  Extra:        13 edits
+  Wall clock:   600.1s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   41
+  Writes:            21 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/account.modify_account_move_line_label__1777206274/
+
+  Postcondition failures:
+    - Invoice state is 'draft', expected 'posted' (did you click Confirm after editing the label?)
+    - Invoice line label (name) is 'Bench Edit Service', expected 'Corrected description' (either as-is or concatenated with the product name via the product_label_section_and_note_field widget, i.e. 'Bench Edit Service' + newline + 'Corrected description')
+  Missing expected edits:
+    - account.move.line.name = Bench Edit Service
+Corrected description
+  Unexpected extra edits:
+    + account.move.state = draft
+    + account.move.line.move_id = Draft Invoice INV/2026/00001 (BENCH-EDIT-001)
+    + account.move.line.name = Bench Edit Service
+    + account.move.line.product_id = Bench Edit Service
+    + account.move.line.move_id = Draft Invoice INV/2026/00001 (BENCH-EDIT-001)
+    + account.move.line.name = BENCH-EDIT-001 - INV/2026/00001
+    + account.move.line.product_id = None
+    + account.move.line.move_id = INV/2026/00001 (BENCH-EDIT-001)
+    + account.move.line.name = Service
+    + account.move.line.product_id = Bench Edit Service
+    + account.move.line.move_id = INV/2026/00001 (BENCH-EDIT-001)
+    + account.move.line.name = BENCH-EDIT-001 - INV/2026/00001
+    + account.move.line.product_id = None

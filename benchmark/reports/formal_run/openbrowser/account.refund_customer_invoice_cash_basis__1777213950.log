@@ -1,0 +1,66 @@
+=== Benchmark Evaluation ===
+  Task:   account.refund_customer_invoice_cash_basis
+  Agent:  command
+  DB:     bench_fr_69c439d1  (auto-isolated)
+  URL:    http://127.0.0.1:54737
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/account.refund_customer_invoice_cash_basis__1777213950
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_69c439d1 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 54737
+   Done.
+2. Capturing pre-task state...
+   Captured 4 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=581.2s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 84 calls captured (38 writes, 46 reads)
+   State: 6 records across 1 models
+5. Computing state diff...
+   11 atomic edits observed
+   Postconditions: 5 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     6 edits
+  Observed:     11 edits
+  Matching:     6 edits
+  Missing:      0 edits
+  Extra:        5 edits
+  Wall clock:   581.2s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   84
+  Writes:            38 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/account.refund_customer_invoice_cash_basis__1777213950/
+
+  Postcondition failures:
+    - Expected exactly 1 linked credit note, found 2
+    - Credit note state is 'draft', expected 'posted' (must click header Confirm to post the draft credit note)
+    - Credit note price_unit is 0.0, expected 200.0 (agent must override the default 500.0 price_unit)
+    - Credit note amount_total is 0.0, expected 200.0 (full-refund 500.0 indicates the agent accepted the wizard default without editing price_unit)
+    - Credit note amount_untaxed is 0.0, expected 200.0
+  Unexpected extra edits:
+    + account.move.move_type = out_refund
+    + account.move.partner_id = Bench Ref Co
+    + account.move.payment_state = not_paid
+    + account.move.ref = Reversal of: INV/2026/00001
+    + account.move.state = draft

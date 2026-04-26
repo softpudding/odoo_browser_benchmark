@@ -1,0 +1,72 @@
+=== Benchmark Evaluation ===
+  Task:   account.partial_refund_service_credit_note
+  Agent:  command
+  DB:     bench_fr_a4e3a711  (auto-isolated)
+  URL:    http://127.0.0.1:54741
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/account.partial_refund_service_credit_note__1777213950
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_a4e3a711 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 54741
+   Done.
+2. Capturing pre-task state...
+   Captured 5 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=472.3s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 36 calls captured (13 writes, 23 reads)
+   State: 6 records across 1 models
+5. Computing state diff...
+   4 atomic edits observed
+   Postconditions: 5 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     5 edits
+  Observed:     4 edits
+  Matching:     0 edits
+  Missing:      5 edits
+  Extra:        4 edits
+  Wall clock:   472.3s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  0.5
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   36
+  Writes:            13 non-forbidden, 0 forbidden
+  Required ops MISSED: ['account.move.action_post']
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/account.partial_refund_service_credit_note__1777213950/
+
+  Postcondition failures:
+    - CN-SERVICE-01 payment_state is 'not_paid', expected 'partial'
+    - Credit note state is 'draft', expected 'posted'
+    - Credit note ref is 'Reversal of: INV/2026/00001', expected the reason text to be present
+    - Expected 1 product line on the credit note, found 2
+    - Onsite Training should not appear on the credit note
+  Missing expected edits:
+    - account.move.payment_state = partial
+    - account.move.partner_id = Greenfield Manufacturing
+    - account.move.payment_state = paid
+    - account.move.ref = Reversal of: INV/2026/00001, Warehouse Audit session canceled
+    - account.move.state = posted
+  Unexpected extra edits:
+    + account.move.partner_id = Greenfield Manufacturing
+    + account.move.payment_state = not_paid
+    + account.move.ref = Reversal of: INV/2026/00001
+    + account.move.state = draft
