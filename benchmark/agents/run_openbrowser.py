@@ -165,17 +165,31 @@ def main():
     # cwd + model_alias so the server selects the configured profile
     # (turn budget, system-prompt blocks, etc.) instead of a default
     # that caps the agent at ~20 turns.
+    #
+    # Also forward $DASHSCOPE_BASE_URL as the conversation's `base_url`.
+    # OpenBrowser ignores the env var for its own LLM client, so without
+    # passing it explicitly here all DashScope traffic bypasses the
+    # benchmark's per-run mitmdump proxy and tokens always come out
+    # zero in the queue.
+    body = {
+        "browser_id": chrome_uuid,
+        "cwd": cwd,
+        "model_alias": model_alias,
+    }
+    base_url_override = os.environ.get("DASHSCOPE_BASE_URL")
+    if base_url_override:
+        body["base_url"] = base_url_override
     conv_data = request_json(
         f"{server_url}/agent/conversations",
         method="POST",
-        body={
-            "browser_id": chrome_uuid,
-            "cwd": cwd,
-            "model_alias": model_alias,
-        },
+        body=body,
     )
     conversation_id = conv_data["conversation_id"]
-    print(f"[conversation] {conversation_id} model_alias={model_alias}", flush=True)
+    print(
+        f"[conversation] {conversation_id} model_alias={model_alias} "
+        f"base_url={base_url_override or '(server default)'}",
+        flush=True,
+    )
 
     # Belt-and-suspenders: finally is the primary cleanup path; atexit
     # catches sys.exit() (including the SIGTERM->sys.exit converter).
