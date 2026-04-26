@@ -1,0 +1,60 @@
+=== Benchmark Evaluation ===
+  Task:   contacts.create_linked_contact_add_finance_tag
+  Agent:  command
+  DB:     bench_fr_31a5c8d7  (auto-isolated)
+  URL:    http://127.0.0.1:60064
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/contacts.create_linked_contact_add_finance_tag__1777218229
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_31a5c8d7 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 60064
+   Done.
+2. Capturing pre-task state...
+   Captured 12 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=489.9s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 29 calls captured (9 writes, 20 reads)
+   State: 12 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      3 edits
+  Extra:        0 edits
+  Wall clock:   489.9s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   29
+  Writes:            9 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/contacts.create_linked_contact_add_finance_tag__1777218229/
+
+  Postcondition failures:
+    - Expected exactly 1 'Dana Patel' contact, found 0
+  Missing expected edits:
+    - res.partner.name = Dana Patel
+    - res.partner.parent_id = Lakeshore Manufacturing
+    - res.partner.type = contact

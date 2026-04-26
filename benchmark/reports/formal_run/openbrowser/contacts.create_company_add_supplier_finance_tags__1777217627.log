@@ -1,0 +1,60 @@
+=== Benchmark Evaluation ===
+  Task:   contacts.create_company_add_supplier_finance_tags
+  Agent:  command
+  DB:     bench_fr_86dce86a  (auto-isolated)
+  URL:    http://127.0.0.1:57011
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/contacts.create_company_add_supplier_finance_tags__1777217627
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_86dce86a from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 57011
+   Done.
+2. Capturing pre-task state...
+   Captured 11 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=580.8s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 31 calls captured (10 writes, 21 reads)
+   State: 11 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   580.8s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   31
+  Writes:            10 non-forbidden, 0 forbidden
+  Required ops MISSED: ['res.partner.web_save']
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/contacts.create_company_add_supplier_finance_tags__1777217627/
+
+  Postcondition failures:
+    - Expected exactly 1 company named 'Harborview Components', found 0
+  Missing expected edits:
+    - res.partner.is_company = True
+    - res.partner.name = Harborview Components
