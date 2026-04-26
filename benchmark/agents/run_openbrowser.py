@@ -88,11 +88,17 @@ def cleanup_conversation(server_url, chrome_uuid, conversation_id, lane_port=Non
     from concurrent.futures import ThreadPoolExecutor
 
     def _close_one(tab):
-        tab_id = tab.get("tabId")
+        # The /tabs API returns the tab id under "id" — NOT under
+        # "tabId"/"tab_id" as evaluate_browser_agent.py assumed. Without
+        # this we silently no-op on every close (lookup fails, returns
+        # tab_id=None, error path skips print, closed counter stays 0).
+        tab_id = tab.get("id")
+        if not isinstance(tab_id, int):
+            tab_id = tab.get("tabId")
         if not isinstance(tab_id, int):
             tab_id = tab.get("tab_id")
         if not isinstance(tab_id, int):
-            return False, None, "missing tab_id"
+            return False, None, f"missing tab id in {tab!r}"
         params = urllib.parse.urlencode({
             "action": "close",
             "browser_id": chrome_uuid,
@@ -111,13 +117,23 @@ def cleanup_conversation(server_url, chrome_uuid, conversation_id, lane_port=Non
 
     closed = 0
     if tabs:
-        with ThreadPoolExecutor(max_workers=min(8, len(tabs))) as pool:
-            for ok, tab_id, err in pool.map(_close_one, tabs):
-                if ok:
-                    closed += 1
-                elif tab_id is not None:
-                    print(f"[cleanup] close tab {tab_id} failed: {err}",
-                          file=sys.stderr)
+        # In the atexit path the interpreter is shutting down and
+        # ThreadPoolExecutor.submit raises RuntimeError. Try parallel
+        # first; on shutdown error fall back to serial.
+        results = []
+        try:
+            with ThreadPoolExecutor(max_workers=min(8, len(tabs))) as pool:
+                results = list(pool.map(_close_one, tabs))
+        except RuntimeError as e:
+            print(f"[cleanup] parallel close unavailable ({e}), "
+                  "falling back to serial", file=sys.stderr, flush=True)
+            results = [_close_one(t) for t in tabs]
+        for ok, tab_id, err in results:
+            if ok:
+                closed += 1
+            else:
+                print(f"[cleanup] close tab {tab_id} failed: {err}",
+                      file=sys.stderr, flush=True)
 
     print(f"[cleanup] closed {closed}/{len(tabs)} lane-host tabs", flush=True)
 
