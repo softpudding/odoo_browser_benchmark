@@ -1,0 +1,28 @@
+=== Benchmark Evaluation ===
+  Task:   account.create_bill_from_confirmed_po
+  Agent:  command
+  DB:     bench_fr_664a6dd3  (auto-isolated)
+  URL:    http://127.0.0.1:51757
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/account.create_bill_from_confirmed_po__1777183553
+
+1. Preparing clean database...
+   No base snapshot 'benchmark_base' found. Creating from current DB...
+Traceback (most recent call last):
+  File "/Users/yangxiao/git/odoo/.venv/bin/benchmark-eval", line 10, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/Users/yangxiao/git/odoo/benchmark/eval.py", line 1682, in main
+    cmd_run(args)
+  File "/Users/yangxiao/git/odoo/benchmark/eval.py", line 1271, in cmd_run
+    return _run_episode(
+           ^^^^^^^^^^^^^
+  File "/Users/yangxiao/git/odoo/benchmark/eval.py", line 1334, in _run_episode
+    _prepare_episode(
+  File "/Users/yangxiao/git/odoo/benchmark/eval.py", line 965, in _prepare_episode
+    _create_base_snapshot(db, dbm)
+  File "/Users/yangxiao/git/odoo/benchmark/eval.py", line 1040, in _create_base_snapshot
+    dbm.create_snapshot(db, BASE_SNAPSHOT)
+  File "/Users/yangxiao/git/odoo/benchmark/db.py", line 87, in create_snapshot
+    raise RuntimeError(f"pg_dump failed: {result.stderr}")
+RuntimeError: pg_dump failed: pg_dump: error: connection to server on socket "/tmp/.s.PGSQL.5432" failed: FATAL:  database "bench_fr_664a6dd3" does not exist
+
