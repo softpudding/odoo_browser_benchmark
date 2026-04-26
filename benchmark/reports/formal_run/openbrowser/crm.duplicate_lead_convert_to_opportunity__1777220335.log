@@ -1,0 +1,65 @@
+=== Benchmark Evaluation ===
+  Task:   crm.duplicate_lead_convert_to_opportunity
+  Agent:  command
+  DB:     bench_fr_ac751c77  (auto-isolated)
+  URL:    http://127.0.0.1:53943
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/crm.duplicate_lead_convert_to_opportunity__1777220335
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_ac751c77 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 53943
+   Done.
+2. Capturing pre-task state...
+   Captured 3 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=581.3s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 71 calls captured (26 writes, 45 reads)
+   State: 4 records across 1 models
+5. Computing state diff...
+   3 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     3 edits
+  Matching:     0 edits
+  Missing:      3 edits
+  Extra:        3 edits
+  Wall clock:   581.3s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   71
+  Writes:            26 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/crm.duplicate_lead_convert_to_opportunity__1777220335/
+
+  Postcondition failures:
+    - Expected exactly 1 lead named 'Bench Template Lead', found 2
+    - Expected exactly 1 record named 'Bench Cloned Opp', found 0
+  Missing expected edits:
+    - crm.lead.name = Bench Cloned Opp
+    - crm.lead.partner_id = Bench Cloned Customer
+    - crm.lead.type = opportunity
+  Unexpected extra edits:
+    + crm.lead.name = Bench Template Lead
+    + crm.lead.partner_id = None
+    + crm.lead.type = lead
