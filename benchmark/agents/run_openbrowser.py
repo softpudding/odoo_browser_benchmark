@@ -82,30 +82,44 @@ def cleanup_conversation(server_url, chrome_uuid, conversation_id, lane_port=Non
         # safe across lanes.
         tabs = [t for t in tabs if t.get("isManaged")]
 
-    closed = 0
-    for tab in tabs:
+    # Close tabs in parallel — under K=5 contention each close round-
+    # trip can take 2-3s, and we may have 10+ tabs. Serial close with
+    # a 2s per-call timeout was repeatedly timing out and leaking tabs.
+    from concurrent.futures import ThreadPoolExecutor
+
+    def _close_one(tab):
         tab_id = tab.get("tabId")
         if not isinstance(tab_id, int):
             tab_id = tab.get("tab_id")
         if not isinstance(tab_id, int):
-            continue
+            return False, None, "missing tab_id"
+        params = urllib.parse.urlencode({
+            "action": "close",
+            "browser_id": chrome_uuid,
+            "conversation_id": conversation_id,
+            "tab_id": str(tab_id),
+        })
         try:
-            params = urllib.parse.urlencode({
-                "action": "close",
-                "browser_id": chrome_uuid,
-                "conversation_id": conversation_id,
-                "tab_id": str(tab_id),
-            })
             req = urllib.request.Request(
                 f"{server_url}/tabs?{params}", data=b"", method="POST"
             )
-            with urllib.request.urlopen(req, timeout=2) as resp:
+            with urllib.request.urlopen(req, timeout=8) as resp:
                 resp.read()
-            closed += 1
+            return True, tab_id, None
         except Exception as e:
-            print(f"[cleanup] close tab {tab_id} failed: {e}", file=sys.stderr)
+            return False, tab_id, str(e)
 
-    print(f"[cleanup] closed {closed}/{len(tabs)} managed tabs", flush=True)
+    closed = 0
+    if tabs:
+        with ThreadPoolExecutor(max_workers=min(8, len(tabs))) as pool:
+            for ok, tab_id, err in pool.map(_close_one, tabs):
+                if ok:
+                    closed += 1
+                elif tab_id is not None:
+                    print(f"[cleanup] close tab {tab_id} failed: {err}",
+                          file=sys.stderr)
+
+    print(f"[cleanup] closed {closed}/{len(tabs)} lane-host tabs", flush=True)
 
     # Debug escape hatch: skip the conversation DELETE so the session
     # record survives in ~/.openbrowser/sessions.db for post-hoc inspection.
