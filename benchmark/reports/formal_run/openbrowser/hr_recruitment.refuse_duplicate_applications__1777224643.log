@@ -1,0 +1,58 @@
+=== Benchmark Evaluation ===
+  Task:   hr_recruitment.refuse_duplicate_applications
+  Agent:  command
+  DB:     bench_fr_fa4b2939  (auto-isolated)
+  URL:    http://127.0.0.1:61172
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/hr_recruitment.refuse_duplicate_applications__1777224643
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_fa4b2939 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 61172
+   Done.
+2. Capturing pre-task state...
+   Captured 7 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=0.2s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 7 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 6 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      3 edits
+  Extra:        0 edits
+  Wall clock:   0.2s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/hr_recruitment.refuse_duplicate_applications__1777224643/
+
+  Postcondition failures:
+    - Expected exactly 1 refuse reason named 'Candidate withdrew after final review', found 0
+    - Priya Nair (Referral) is still active
+    - Priya Nair (Referral) refusal reason is False, expected 'Candidate withdrew after final review'
+    - Priya Nair is still active
+    - Priya Nair refusal reason is False, expected 'Candidate withdrew after final review'
+    - Priya Nair is missing the expected refusal email
+  Missing expected edits:
+    - hr.applicant.refuse.reason.active = True
+    - hr.applicant.refuse.reason.name = Candidate withdrew after final review
+    - hr.applicant.refuse.reason.template_id = Benchmark Applicant Withdrawal Template
