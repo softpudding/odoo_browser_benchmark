@@ -17,6 +17,7 @@ Usage:
 import atexit
 import json
 import os
+import re
 import signal
 import sys
 import tempfile
@@ -125,9 +126,30 @@ def _install_sigterm_to_sysexit():
     signal.signal(signal.SIGTERM, _handler)
 
 
+_PER_LANE_HOST_RE = re.compile(r"127\.0\.0\.1:(\d+)")
+
+
+def per_lane_host_rewrite(text: str) -> str:
+    """Rewrite ``127.0.0.1:<port>`` to ``lane-<port>.localtest.me:<port>``.
+
+    Each per-run Odoo binds to ``127.0.0.1`` on a unique port. When
+    multiple lanes share one Chrome browser, the cookie jar is keyed
+    by host (port-blind), so every lane writes/reads the same
+    ``session_id`` cookie and CSRF tokens collide. Routing each lane
+    through a unique ``*.localtest.me`` subdomain (public DNS, all
+    pointing back at 127.0.0.1) gives every lane its own cookie scope
+    while leaving the wire path unchanged.
+
+    Disable with ``BENCHMARK_PER_LANE_HOST=0`` for local debugging.
+    """
+    if os.environ.get("BENCHMARK_PER_LANE_HOST", "1") != "1":
+        return text
+    return _PER_LANE_HOST_RE.sub(r"lane-\1.localtest.me:\1", text)
+
+
 def main():
     _install_sigterm_to_sysexit()
-    full_instruction = build_instruction()
+    full_instruction = per_lane_host_rewrite(build_instruction())
     server_url = os.environ.get("OPENBROWSER_URL", "http://127.0.0.1:8765")
     chrome_uuid = os.environ.get("OPENBROWSER_CHROME_UUID", "")
     # The frontend always passes model_alias + cwd; without them the
