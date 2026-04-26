@@ -1,0 +1,52 @@
+=== Benchmark Evaluation ===
+  Task:   hr_holidays.refuse_leave_with_reason
+  Agent:  command
+  DB:     bench_fr_df5096c5  (auto-isolated)
+  URL:    http://127.0.0.1:59747
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/hr_holidays.refuse_leave_with_reason__1777224514
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_df5096c5 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 59747
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=0.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     1 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      1 edits
+  Extra:        0 edits
+  Wall clock:   0.1s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/hr_holidays.refuse_leave_with_reason__1777224514/
+
+  Postcondition failures:
+    - Leave state is 'confirm', expected 'refuse'
+    - No chatter message with reason text 'Denied: conflicts with critical project deadline' on the refused leave
+  Missing expected edits:
+    - hr.leave.state = refuse
