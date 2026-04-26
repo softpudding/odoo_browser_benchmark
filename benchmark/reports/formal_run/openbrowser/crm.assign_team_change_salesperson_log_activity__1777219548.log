@@ -1,0 +1,56 @@
+=== Benchmark Evaluation ===
+  Task:   crm.assign_team_change_salesperson_log_activity
+  Agent:  command
+  DB:     bench_fr_1792a435  (auto-isolated)
+  URL:    http://127.0.0.1:49807
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/crm.assign_team_change_salesperson_log_activity__1777219548
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_1792a435 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 49807
+   Done.
+2. Capturing pre-task state...
+   Captured 3 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=580.8s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 55 calls captured (15 writes, 40 reads)
+   State: 3 records across 1 models
+5. Computing state diff...
+   2 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     2 edits
+  Matching:     2 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   580.8s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   55
+  Writes:            15 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/crm.assign_team_change_salesperson_log_activity__1777219548/
+
+  Postcondition failures:
+    - No Call activity found on the opportunity
