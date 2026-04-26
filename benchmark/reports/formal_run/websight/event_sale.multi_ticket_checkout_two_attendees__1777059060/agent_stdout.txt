@@ -1,0 +1,97 @@
+Plan:
+1. ### Minimal Execution Plan
+2. 1. **Login & Access**
+3.    - Navigate to `http://127.0.0.1:64447/odoo/events`
+4.    - Authenticate: `admin` / `admin`
+5. 2. **Select Tickets**
+6.    - Click **Bench Expo 2026** card/title
+7.    - Click **Register** → Wait for modal
+8.    - Set `Standard` counter to `1`, `VIP` counter to `1`
+9.    - Click modal **Register** → Opens Attendees form
+10. 3. **Enter Attendee Details**
+11.    - **Standard Section**: `Name: Alice Standard`, `Email: 
+alice@benchexpo.test`
+12.    - **VIP Section**: `Name: Bob VIP`, `Email: bob@benchexpo.test`
+13.    - Click **Go to Payment**
+14. 4. **Checkout & Payment**
+15.    - Bypass address step (click Confirm/Next if prompted)
+16.    - On `/shop/payment`, select **Wire Transfer** option
+17.    - Accept T&C (if required) → Click **Pay now**
+18. 5. **Validate Final State**
+19.    - Confirm landing on Wire Transfer instructions page
+20.    - Assert SO: state=`sent`/`sale`, `amount_total`=`200.00`, 2 lines (50.00
+Standard, 150.00 VIP)
+21.    - Assert exactly 2 `event.registration` records linked to SO matching 
+exact names/emails above
+22.    - Assert Wire Transfer payment transaction state=`pending`
+23. **⚠️ Constraints:** Public UI flow only. Case-sensitive exact matches for 
+attendee data. No additional SOs/registrations. Do not cancel or modify prices.
+Reasoning: Starting the task by navigating to the Odoo events URL to begin the 
+login and registration process.
+Action: {"action": "goto", "url": "http://127.0.0.1:64447/odoo/events"}
+Reasoning: 
+Action: <action>
+type
+</action>
+Reasoning: I am currently on the login page because my previous navigation to 
+`/odoo/events` was redirected here for authentication. The URL confirms the 
+redirect destination. I need to log in with the provided credentials (`admin` / 
+`admin`) to proceed. I will start by entering the email address.
+Action: fill
+[
+        {"element": "input", "text": "admin"}
+]
+Reasoning: 
+Action: <action>
+fill
+[
+        {"element": "input", "text": "admin"}
+]
+</action>
+Reasoning: 
+Action: <action>
+click
+[
+        {"element": "button:has-text('Log in')"}
+]
+</action>
+Reasoning: I have just submitted the login form. To proceed with the task of 
+registering for the event, I need to ensure I am on the events listing page. I 
+will navigate directly to the events URL to confirm I am logged in and can see 
+the event list.
+Action: goto
+Reasoning: The current screenshot shows the Odoo login page with empty fields. 
+The history indicates that a previous attempt was made to log in (filling 
+credentials and clicking 'Log in') followed by a navigation to the events URL. 
+However, the result is the login page again (redirected from `/odoo/events`), 
+which implies the previous login attempt did not successfully establish a 
+session. To proceed with the task of registering for the event, I must 
+successfully authenticate. I will re-fill the email and password fields with 
+'admin' and click the 'Log in' button.
+Action: fill
+[
+    {"element": "input", "text": "admin"}
+]
+fill
+[
+    {"element": "input", "text": "admin"}
+]
+click
+[
+    {"element": "button:has-text('Log in')"}
+]
+Reasoning: 
+Action: <action>
+fill
+[
+    {"element": "input", "text": "admin"}
+]
+fill
+[
+    {"element": "input", "text": "admin"}
+]
+click
+[
+    {"element": "button:has-text('Log in')"}
+]
+</action>

@@ -1,0 +1,67 @@
+=== Benchmark Evaluation ===
+  Task:   contacts.update_address_add_tag
+  Agent:  command
+  DB:     bench_fr_d6680852  (auto-isolated)
+  URL:    http://127.0.0.1:51155
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/contacts.update_address_add_tag__1777055606
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_d6680852 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 51155
+   Done.
+2. Capturing pre-task state...
+   Captured 8 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 32 calls captured (16 writes, 16 reads)
+   State: 8 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 6 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     5 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      5 edits
+  Extra:        0 edits
+  Wall clock:   600.1s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   32
+  Writes:            16 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/contacts.update_address_add_tag__1777055606/
+
+  Postcondition failures:
+    - Street is '100 Main Street', expected '742 Innovation Blvd'
+    - City is 'Seattle', expected 'Portland'
+    - ZIP is '98101', expected '97201'
+    - State not set, expected 'Oregon'
+    - Tags are [], expected 'Supplier' to be present
+    - Website is 'False', expected 'https://brookfielddynamics.com'
+  Missing expected edits:
+    - res.partner.city = Portland
+    - res.partner.state_id = Oregon (US)
+    - res.partner.street = 742 Innovation Blvd
+    - res.partner.website = https://brookfielddynamics.com
+    - res.partner.zip = 97201

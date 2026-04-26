@@ -1,0 +1,53 @@
+=== Benchmark Evaluation ===
+  Task:   sale.add_discount_line
+  Agent:  browser-use
+  DB:     bench_fr_bb544ea2  (auto-isolated)
+  URL:    http://127.0.0.1:52309
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/browser-use/sale.add_discount_line__1777022972
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_bb544ea2 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 52309
+   Done.
+2. Capturing pre-task state...
+   Captured 3 records across 2 models
+   API trace recording: STARTED
+3. Running agent (browser-use)...
+
+
+   Agent finished: steps=0, wall_clock=300.5s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 44 calls captured (20 writes, 24 reads)
+   State: 3 records across 2 models
+5. Computing state diff...
+   1 atomic edits observed
+6. Scoring...
+
+==================================================
+  RESULT: PASS  (Strict: PASS)
+  StateDiffF1:  1.0
+  Precision:    1.0
+  Recall:       1.0
+  Expected:     1 edits
+  Observed:     1 edits
+  Matching:     1 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   300.5s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   44
+  Writes:            20 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/browser-use/sale.add_discount_line__1777022972/
+

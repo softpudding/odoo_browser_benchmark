@@ -1,0 +1,54 @@
+=== Benchmark Evaluation ===
+  Task:   website.set_page_seo_fields
+  Agent:  command
+  DB:     bench_fr_e41bf4fd  (auto-isolated)
+  URL:    http://127.0.0.1:52589
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/openbrowser/website.set_page_seo_fields__1777097861
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_e41bf4fd from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 52589
+   Done.
+2. Capturing pre-task state...
+   Captured 7 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=0.4s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 7 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   0.4s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/openbrowser/website.set_page_seo_fields__1777097861/
+
+  Postcondition failures:
+    - website_meta_title is False, expected 'Bench SEO Meta Title'
+    - website_meta_description is False, expected 'Bench SEO meta description text.'
+    - website_meta_keywords is False; expected keywords ['bench', 'odoo', 'seo']
+  Missing expected edits:
+    - website.page.website_meta_description = Bench SEO meta description text.
+    - website.page.website_meta_title = Bench SEO Meta Title

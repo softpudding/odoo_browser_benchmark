@@ -1,0 +1,66 @@
+Plan:
+1. ### Minimal Plan
+2. 1. **Navigate & Login**
+3.    - Open browser to `http://127.0.0.1:49450/odoo/contacts`
+4.    - Enter Username: `admin` | Password: `admin` → Click **Log In**
+5.    - Confirm landing in the **Contacts** app dashboard
+6. 2. **Create Company Contact**
+7.    - Click **Create**
+8.    - Toggle Company Type to **Company**
+9.    - Enter exact details:
+10.      - **Company Name**: `Vantage Industrial Group`
+11.      - **Phone**: `+1 (312) 555-0190`
+12.      - **Website**: `www.vantage-industrial.example.com`
+13.      - **Street**: `4400 Commerce Drive`
+14.      - **City**: `Chicago` | **State**: `Illinois` | **ZIP**: `60609`
+15.      - **Country**: `United States`
+16.    - Click **Save**
+17. 3. **Create Individual Contact 1**
+18.    - Click **Create** (or **Save & New**)
+19.    - Toggle Company Type to **Individual**
+20.    - Enter exact details:
+21.      - **Name**: `Patricia Drum`
+22.      - **Company**: `Vantage Industrial Group` (select from dropdown)
+23.      - **Job Position**: `Procurement Manager`
+24.      - **Email**: `p.drum@vantage-industrial.example.com`
+25.      - **Phone**: `+1 (312) 555-0191`
+26.    - Click **Save**
+27. 4. **Create Individual Contact 2**
+28.    - Click **Create** (or **Save & New**)
+29.    - Toggle Company Type to **Individual**
+30.    - Enter exact details:
+31.      - **Name**: `Steven Okafor`
+32.      - **Company**: `Vantage Industrial Group`
+33.      - **Job Position**: `Logistics Coordinator`
+34.      - **Email**: `s.okafor@vantage-industrial.example.com`
+35.      - **Phone**: `+1 (312) 555-0192`
+36.    - Click **Save**
+37. 5. **Verify & Close**
+38.    - Confirm exactly 3 contacts exist in the list with matching names, 
+types, links, and details
+39.    - Ensure no additional records were created → End session
+Reasoning: I need to start by navigating to the specified Odoo URL to begin the 
+login process and subsequent contact creation as outlined in the plan. The first
+step is to open the browser to the given address.
+Action: go_to_url('http://127.0.0.1:49450/odoo/contacts')
+Reasoning: The current screen is the login page. The first step in the plan is 
+to log in. I need to enter the username 'admin' into the 'Email' field. The 
+field is clearly visible in the center of the form.
+Action: fill([381, 187, 617, 247], 'admin')
+Reasoning: 
+Action: <action>
+fill([381, 312, 617, 369], 'admin')
+</action>
+Reasoning: Based on the provided history, the username 'admin' and password 
+'admin' have been entered into the login form fields. The next logical step to 
+proceed with the plan is to submit the credentials by clicking the "Log in" 
+button. This will authenticate the user and redirect them to the Odoo dashboard,
+specifically the Contacts app as per the redirect URL.
+Action: click([381, 395, 617, 447])
+Reasoning: The history indicates that the login credentials ('admin'/'admin') 
+have been entered and the "Log in" button was clicked. Following the plan, the 
+user should now be redirected to the Odoo Contacts dashboard (due to the 
+redirect URL). The next step is to create the company contact "Vantage 
+Industrial Group". I need to click the "Create" button, which is typically 
+located in the top-left control panel of the Odoo list view.
+Action: click([68, 163, 115, 186])

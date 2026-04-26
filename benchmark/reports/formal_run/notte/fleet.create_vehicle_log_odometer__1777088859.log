@@ -1,0 +1,72 @@
+=== Benchmark Evaluation ===
+  Task:   fleet.create_vehicle_log_odometer
+  Agent:  command
+  DB:     bench_fr_127bb596  (auto-isolated)
+  URL:    http://127.0.0.1:59529
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/notte/fleet.create_vehicle_log_odometer__1777088859
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_127bb596 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 59529
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 46 calls captured (25 writes, 21 reads)
+   State: 2 records across 2 models
+5. Computing state diff...
+   7 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     7 edits
+  Observed:     7 edits
+  Matching:     0 edits
+  Missing:      7 edits
+  Extra:        7 edits
+  Wall clock:   600.1s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   46
+  Writes:            25 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/notte/fleet.create_vehicle_log_odometer__1777088859/
+
+  Postcondition failures:
+    - Vehicle model is 'Raven Motors/Raven Motors/Falcon X', expected 'Raven Motors/Falcon X'
+  Missing expected edits:
+    - fleet.vehicle.odometer.value = 12540.0
+    - fleet.vehicle.odometer.vehicle_id = Raven Motors/Falcon X/OPS-7421
+    - fleet.vehicle.driver_id = OdooBot
+    - fleet.vehicle.license_plate = OPS-7421
+    - fleet.vehicle.model_id = Raven Motors/Falcon X
+    - fleet.vehicle.name = Raven Motors/Falcon X/OPS-7421
+    - fleet.vehicle.odometer = 12540.0
+  Unexpected extra edits:
+    + fleet.vehicle.odometer.value = 12540.0
+    + fleet.vehicle.odometer.vehicle_id = Raven Motors/Raven Motors/Falcon X/OPS-7421
+    + fleet.vehicle.driver_id = OdooBot
+    + fleet.vehicle.license_plate = OPS-7421
+    + fleet.vehicle.model_id = Raven Motors/Raven Motors/Falcon X
+    + fleet.vehicle.name = Raven Motors/Raven Motors/Falcon X/OPS-7421
+    + fleet.vehicle.odometer = 12540.0

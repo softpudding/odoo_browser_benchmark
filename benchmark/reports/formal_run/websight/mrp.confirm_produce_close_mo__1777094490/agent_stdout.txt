@@ -1,0 +1,71 @@
+Plan:
+1. Here is a minimal, sequential plan to execute the workflow while strictly 
+adhering to the constraints:
+2. 1. **Navigate & Authenticate**
+3.    - Open `http://127.0.0.1:54553/odoo/manufacturing`
+4.    - Log in with `admin` / `admin`
+5.    - Enter the **Manufacturing** app → Open **Manufacturing Orders**
+6. 2. **Locate & Open Order**
+7.    - Filter/Search for reference `WH/MO/BENCH-DESK-001`
+8.    - Verify product is **Office Desk** and quantity is `10`
+9.    - Open the record. Confirm state shows **Draft**
+10. 3. **Confirm Order**
+11.    - Click the **Confirm** button in the form header
+12.    - Wait for state to transition to **Confirmed**
+13.    - Verify component lines appear (Desk Top, Desk Leg, Cable Tray)
+14. 4. **Initiate Full Production**
+15.    - Click the **Produce All** button in the form header
+16. 5. **Finalize via Wizard**
+17.    - If a consumption/backorder dialog appears, immediately click 
+**Validate** or **Apply**
+18.    - **Do not** change quantities, trigger splits, or generate a backorder
+19. 6. **Validate Completion**
+20.    - Confirm MO state is now **Done**
+21.    - Verify `Produced` quantity equals `10`
+22.    - Ensure no backorder was created and all BoM/component data remains 
+unmodified
+Reasoning: I am currently at a blank page. The first step of the plan is to 
+navigate to the Odoo manufacturing instance and log in. I will start by 
+navigating to the provided URL.
+Action: navigate http://127.0.0.1:54553/odoo/manufacturing
+Reasoning: I have successfully navigated to the Odoo instance, which has 
+redirected me to the login page as expected because I am not authenticated. To 
+proceed with the plan, I need to log in using the provided credentials ('admin' 
+/ 'admin'). The screenshot shows the login form with fields for Email and 
+Password. I will start by entering the username 'admin' into the Email field.
+Action: fill 'admin' into the Email field
+Reasoning: The previous step involved filling the email field. Now I need to 
+complete the login process. The screenshot shows the login form. The next 
+logical step is to enter the password 'admin' into the Password field. After 
+that, I will click the 'Log in' button to authenticate and access the Odoo 
+backend.
+Action: fill 'admin' into the Password field
+Reasoning: The user has already filled in the 'Email' and 'Password' fields with
+'admin' as per the history. The current screenshot shows the login form ready 
+for submission. The next logical step to authenticate and proceed with the plan 
+(navigating to the Manufacturing app) is to click the 'Log in' button.
+Action: click the 'Log in' button
+Reasoning: The current screenshot shows the Odoo login page. The "Email" and 
+"Password" fields display placeholder text ("Enter your email", "Enter your 
+password"), which indicates that they are currently empty. The history indicates
+that previous steps attempted to fill these fields and click the "Log in" 
+button, but the current state (empty fields, not logged in) suggests those 
+actions did not successfully persist or register. To proceed with the plan of 
+accessing the Manufacturing app, I must successfully authenticate. I will start 
+by entering the username 'admin' into the Email field.
+Action: fill 'admin' into the Email field
+Reasoning: The email field is successfully filled with 'admin'. The password 
+field is currently empty. The next step is to enter the password 'admin' into 
+the password field to proceed with the login.
+Action: fill 'admin' into the Password field
+Reasoning: 
+Action: <action>
+click the 'Log in' button
+</action>
+Reasoning: The current screenshot shows the login form. The "Email" field has a 
+pink border, suggesting a validation error (likely "required"), and the 
+placeholder text "Enter your email" is visible, indicating the field is empty. 
+The same applies to the Password field. The history shows previous attempts to 
+fill and submit, but the current state implies the fields are empty. I need to 
+fill the Email field with 'admin' to proceed with authentication.
+Action: fill 'admin' into the Email field

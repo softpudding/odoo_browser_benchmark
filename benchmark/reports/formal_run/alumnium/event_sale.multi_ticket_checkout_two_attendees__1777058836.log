@@ -1,0 +1,70 @@
+=== Benchmark Evaluation ===
+  Task:   event_sale.multi_ticket_checkout_two_attendees
+  Agent:  command
+  DB:     bench_fr_a3244135  (auto-isolated)
+  URL:    http://127.0.0.1:63523
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/alumnium/event_sale.multi_ticket_checkout_two_attendees__1777058836
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_a3244135 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 63523
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=42.4s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 5 calls captured (1 writes, 4 reads)
+   State: 0 records across 2 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 4 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     10 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      10 edits
+  Extra:        0 edits
+  Wall clock:   42.4s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   5
+  Writes:            1 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/alumnium/event_sale.multi_ticket_checkout_two_attendees__1777058836/
+
+  Postcondition failures:
+    - Expected exactly 2 (non-cancelled) registrations on 'Bench Expo 2026', found 0
+    - No registration named 'Alice Standard' on 'Bench Expo 2026'
+    - No registration named 'Bob VIP' on 'Bench Expo 2026'
+    - Could not locate the sale order via the registrations
+  Missing expected edits:
+    - sale.order.amount_total = 200.0
+    - sale.order.partner_id = Administrator
+    - event.registration.email = alice@benchexpo.test
+    - event.registration.event_id = Bench Expo 2026
+    - event.registration.event_ticket_id = Standard
+    - event.registration.name = Alice Standard
+    - event.registration.email = bob@benchexpo.test
+    - event.registration.event_id = Bench Expo 2026
+    - event.registration.event_ticket_id = VIP
+    - event.registration.name = Bob VIP

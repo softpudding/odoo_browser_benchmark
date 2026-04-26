@@ -1,0 +1,61 @@
+=== Benchmark Evaluation ===
+  Task:   hr_expense.submit_report_with_receipt_approve
+  Agent:  browser-use
+  DB:     bench_fr_550e5de3  (auto-isolated)
+  URL:    http://127.0.0.1:63157
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/browser-use/hr_expense.submit_report_with_receipt_approve__1777107956
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_550e5de3 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 63157
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (browser-use)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 38 calls captured (16 writes, 22 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   1 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     1 edits
+  Observed:     1 edits
+  Matching:     0 edits
+  Missing:      1 edits
+  Extra:        1 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   38
+  Writes:            16 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/browser-use/hr_expense.submit_report_with_receipt_approve__1777107956/
+
+  Postcondition failures:
+    - Expense state is 'draft', expected 'approved'
+    - Expense has no attached receipt
+  Missing expected edits:
+    - hr.expense.state = approved
+  Unexpected extra edits:
+    + hr.expense.state = draft

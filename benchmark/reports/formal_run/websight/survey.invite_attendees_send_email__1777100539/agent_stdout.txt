@@ -1,0 +1,60 @@
+Plan:
+1. **Minimal Execution Plan**
+2. 1. **Navigate & Authenticate**
+3.    - Open `http://127.0.0.1:61385/odoo/action-survey.action_survey_form`
+4.    - Log in with Username: `admin` | Password: `admin`
+5. 2. **Open Target Survey**
+6.    - Ensure you're on the Surveys list (`/odoo/surveys`)
+7.    - Click the **`Bench Onboarding Quiz`** kanban card to open its form view
+8. 3. **Launch Invite Wizard**
+9.    - In the form header, click **Send**
+10.    - Confirm the "Share a Survey" dialog opens with **Send by Email** 
+enabled
+11. 4. **Add Recipients (Sequential)**
+12.    - Focus the **Recipients** tag-input
+13.    - Type `alice@x.com` → click autocomplete "Alice Invitee" → verify chip 
+creation
+14.    - Type `bob@y.com` → click autocomplete "Bob Invitee" → verify chip 
+creation
+15.    - Type `carol@z.com` → click autocomplete "Carol Invitee" → verify chip 
+creation
+16.    - *Checkpoint:* Exactly 3 recipient chips must be visible before 
+proceeding
+17. 5. **Set Subject**
+18.    - Clear the **Subject** field completely
+19.    - Type exactly: `Please complete onboarding`
+20. 6. **Validate & Send**
+21.    - Confirm email body, deadline, and attachments are untouched
+22.    - Click **Send** in the dialog footer
+23.    - Wait for dialog to close and page to return to survey form (confirm 
+successful toast/notification)
+Reasoning: 
+Action: 
+<action>open(url="http://127.0.0.1:61385/odoo/action-survey.action_survey_form")
+</action>
+Reasoning: 
+Action: <action>click(selector="#login")</action>
+Reasoning: The screenshot shows the Odoo login page. The URL contains a redirect
+to the Surveys app, which is the target application. The previous history 
+indicates an attempt to click a login selector, but the fields are currently 
+empty. To proceed with the plan "Navigate & Authenticate", I need to fill in the
+login credentials. The first step is to enter the username 'admin' into the 
+email field. The selector for the email input appears to be the input with the 
+placeholder "Enter your email".
+Action: type(selector="input", text="admin")
+Reasoning: The user is currently on the login page. The previous action history 
+shows the URL was opened and a login click was attempted, but credentials 
+haven't been entered yet. The instruction requires logging in with username 
+'admin' and password 'admin'. The current screenshot shows the login form. I 
+need to enter 'admin' into the email field first. The placeholder "Enter your 
+email" is visible, so the selector `input` is appropriate.
+Action: type(selector="input", text="admin")
+Reasoning: The screenshot shows the Odoo login page with the email and password 
+fields empty. The history indicates previous attempts to type 'admin' into the 
+email field, but the field remains empty (placeholder is visible). This suggests
+the field might not have been focused or the typing action didn't register. To 
+ensure the field is active and ready for input, I will click on the email input 
+field first.
+Action: click(selector="input")
+Reasoning: 
+Action: <action>type(selector="input", text="admin")</action>

@@ -1,0 +1,64 @@
+=== Benchmark Evaluation ===
+  Task:   website_slides.create_course_add_lesson_publish
+  Agent:  command
+  DB:     bench_fr_af11d001  (auto-isolated)
+  URL:    http://127.0.0.1:63773
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/notte/website_slides.create_course_add_lesson_publish__1777083545
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_af11d001 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 63773
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 56 calls captured (22 writes, 34 reads)
+   State: 2 records across 2 models
+5. Computing state diff...
+   5 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     5 edits
+  Observed:     5 edits
+  Matching:     3 edits
+  Missing:      2 edits
+  Extra:        2 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   56
+  Writes:            22 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/notte/website_slides.create_course_add_lesson_publish__1777083545/
+
+  Postcondition failures:
+    - Course is not published
+    - Lesson is not published
+    - Lesson article content is missing the expected body text
+  Missing expected edits:
+    - slide.channel.website_published = True
+    - slide.slide.website_published = True
+  Unexpected extra edits:
+    + slide.channel.website_published = None
+    + slide.slide.website_published = None

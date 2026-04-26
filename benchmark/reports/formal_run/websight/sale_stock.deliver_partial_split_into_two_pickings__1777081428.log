@@ -1,0 +1,66 @@
+=== Benchmark Evaluation ===
+  Task:   sale_stock.deliver_partial_split_into_two_pickings
+  Agent:  command
+  DB:     bench_fr_a86a7eaf  (auto-isolated)
+  URL:    http://127.0.0.1:51497
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/websight/sale_stock.deliver_partial_split_into_two_pickings__1777081428
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_a86a7eaf from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 51497
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 4 calls captured (1 writes, 3 reads)
+   State: 1 records across 2 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     7 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      7 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   4
+  Writes:            1 non-forbidden, 0 forbidden
+  Required ops MISSED: ['sale.order.action_confirm']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/websight/sale_stock.deliver_partial_split_into_two_pickings__1777081428/
+
+  Postcondition failures:
+    - SO state is 'draft', expected 'sale'
+    - No delivery orders found for the SO
+  Missing expected edits:
+    - sale.order.state = sale
+    - stock.picking.origin = S00001
+    - stock.picking.partner_id = Halberd Industries
+    - stock.picking.state = done
+    - stock.picking.origin = S00001
+    - stock.picking.partner_id = Halberd Industries
+    - stock.picking.state = confirmed

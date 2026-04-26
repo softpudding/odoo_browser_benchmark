@@ -1,0 +1,60 @@
+Plan:
+1. 1. **Navigate & Login**: Open `http://127.0.0.1:52280/odoo/contacts`. Enter 
+`admin` / `admin` and sign in.
+2. 2. **Switch View**: Click the **☰ List view** icon at the top-right of the 
+Contacts page.
+3. 3. **Search**: Type `John Doe` in the search bar and press Enter to display 
+all 4 records.
+4. 4. **Select Duplicates**: Check the boxes next to the **three** "John Doe" 
+rows with an empty/blank Company column. **Do not** check the row showing "Acme 
+Corp".
+5. 5. **Open Merge**: Click the **⚙️ Actions** dropdown → select **Merge**.
+6. 6. **Set Destination**: In the wizard's destination dropdown, choose the 
+"John Doe" record that contains `john@x.com`.
+7. 7. **Execute & Dismiss**: Click **Merge Contacts**. Close the success 
+confirmation popup.
+8. 8. **Verify**: Open the remaining "John Doe" record and confirm it displays 
+both `john@x.com` and `555-1234`. Verify the "Acme Corp" John Doe remains 
+separate and unchanged.
+Reasoning: 
+Action: <action>
+{
+  "action": "click",
+  "params": {
+    "selector": "a"
+  }
+}
+</action>
+Reasoning: I have successfully navigated to the Contacts app by clicking the 
+menu item in the previous step. The instructions specify that I need to switch 
+to List view to see checkboxes for selecting the duplicate records. The current 
+view is likely the default Kanban view. I will click the List view icon 
+(typically found in the top-right control panel) to switch the view mode.
+Action: {
+  "action": "click",
+  "params": {
+    "selector": "button.o-switch-view-list"
+  }
+}
+Reasoning: 
+Action: <action>
+{
+  "action": "fill",
+  "params": {
+    "selector": ".o_searchbar input",
+    "value": "John Doe"
+  }
+}
+</action>
+Reasoning: The previous action filled the search bar with "John Doe". According 
+to the plan (Step 3), I need to press Enter to execute the search and display 
+the filtered list of contacts. This will ensure that the subsequent selection of
+duplicates (Step 4) is performed on the correct set of records. The search bar 
+input selector is `.o_searchbar input`.
+Action: {
+  "action": "keypress",
+  "params": {
+    "selector": ".o_searchbar input",
+    "key": "Enter"
+  }
+}

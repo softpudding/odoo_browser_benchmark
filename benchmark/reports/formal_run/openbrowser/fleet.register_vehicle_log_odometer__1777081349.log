@@ -1,0 +1,54 @@
+=== Benchmark Evaluation ===
+  Task:   fleet.register_vehicle_log_odometer
+  Agent:  command
+  DB:     bench_fr_bea66128  (auto-isolated)
+  URL:    http://127.0.0.1:49591
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/openbrowser/fleet.register_vehicle_log_odometer__1777081349
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_bea66128 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 49591
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=0.2s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 0 records across 2 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      4 edits
+  Extra:        0 edits
+  Wall clock:   0.2s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/openbrowser/fleet.register_vehicle_log_odometer__1777081349/
+
+  Postcondition failures:
+    - Expected exactly 1 vehicle with plate 'BENCH-001', found 0
+  Missing expected edits:
+    - fleet.vehicle.license_plate = BENCH-001
+    - fleet.vehicle.model_id = Tesla Motors/Model 3
+    - fleet.vehicle.odometer.value = 1250.0
+    - fleet.vehicle.odometer.vehicle_id = Tesla Motors/Model 3/BENCH-001

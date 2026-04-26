@@ -1,0 +1,66 @@
+=== Benchmark Evaluation ===
+  Task:   hr_expense.split_submitted_report_resubmit
+  Agent:  command
+  DB:     bench_fr_2b8b183d  (auto-isolated)
+  URL:    http://127.0.0.1:63086
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/websight/hr_expense.split_submitted_report_resubmit__1777107936
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_2b8b183d from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 63086
+   Done.
+2. Capturing pre-task state...
+   Captured 3 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 4 calls captured (1 writes, 3 reads)
+   State: 3 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 4 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     6 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      6 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   4
+  Writes:            1 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/websight/hr_expense.split_submitted_report_resubmit__1777107936/
+
+  Postcondition failures:
+    - Meal state is 'submitted', expected 'approved' (approval_state='submitted')
+    - Taxi state is 'submitted', expected 'approved' (approval_state='submitted')
+    - Gadget state is 'submitted', expected 'refused' (approval_state='submitted')
+    - Expected refusal reason 'Not compliant' not found in Gadget chatter
+  Missing expected edits:
+    - hr.expense.approval_state = refused
+    - hr.expense.state = refused
+    - hr.expense.approval_state = approved
+    - hr.expense.state = approved
+    - hr.expense.approval_state = approved
+    - hr.expense.state = approved

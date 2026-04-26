@@ -1,0 +1,56 @@
+=== Benchmark Evaluation ===
+  Task:   website_hr_recruitment.apply_public_then_schedule_interview
+  Agent:  command
+  DB:     bench_fr_f92df326  (auto-isolated)
+  URL:    http://127.0.0.1:52570
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/website_hr_recruitment.apply_public_then_schedule_interview__1777102215
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_f92df326 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 52570
+   Done.
+2. Capturing pre-task state...
+   Captured 282 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=446.9s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 286 records across 2 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     6 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      6 edits
+  Extra:        0 edits
+  Wall clock:   446.9s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/website_hr_recruitment.apply_public_then_schedule_interview__1777102215/
+
+  Postcondition failures:
+    - No hr.applicant found for Casey Portal / casey.portal@example.com
+  Missing expected edits:
+    - hr.applicant.department_id = Operations
+    - hr.applicant.email_from = casey.portal@example.com
+    - hr.applicant.job_id = Platform Support Analyst
+    - hr.applicant.linkedin_profile = linkedin.com/in/casey-portal
+    - hr.applicant.partner_name = Casey Portal
+    - hr.applicant.partner_phone = +1 555 0128

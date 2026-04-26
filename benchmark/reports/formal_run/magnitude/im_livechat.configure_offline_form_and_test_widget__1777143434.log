@@ -1,0 +1,59 @@
+=== Benchmark Evaluation ===
+  Task:   im_livechat.configure_offline_form_and_test_widget
+  Agent:  command
+  DB:     bench_fr_5f647fc7  (auto-isolated)
+  URL:    http://127.0.0.1:61737
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/im_livechat.configure_offline_form_and_test_widget__1777143434
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_5f647fc7 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 61737
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=37.5s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 4 calls captured (1 writes, 3 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   37.5s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   4
+  Writes:            1 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/im_livechat.configure_offline_form_and_test_widget__1777143434/
+
+  Postcondition failures:
+    - Expected exactly 1 live chat channel named 'After Hours Help', found 0
+  Missing expected edits:
+    - im_livechat.channel.button_text = Questions after hours?
+    - im_livechat.channel.name = After Hours Help

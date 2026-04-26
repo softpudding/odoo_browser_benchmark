@@ -1,0 +1,61 @@
+Plan:
+1. Here is a minimal, step-by-step plan:
+2. 1. **Access & Authenticate**
+3.    - Navigate to `http://127.0.0.1:56609/odoo/purchase`
+4.    - Log in with Username: `admin` | Password: `admin`
+5.    - *(If redirected to Odoo home)* Click the **Purchase** app icon.
+6. 2. **Locate the Purchase Order**
+7.    - Use the search bar at the top of the Purchase Orders list.
+8.    - Filter/Type: `NOBACK-04`
+9.    - Open the confirmed PO from vendor **North Coast Components**.
+10. 3. **Open the Receipt**
+11.    - Click the **Receipts** smart button (typically shows `1 Delivery` or `1
+Receipt`) on the PO form.
+12.    - Click the receipt/delivery slip name to open it.
+13. 4. **Adjust Quantities & Validate**
+14.    - In the lines table, locate the **Done** (or *Done*) column.
+15.    - Change the Done value for `Servo Motor` to `6`
+16.    - Change the Done value for `Sensor Harness` to `9`
+17.    - Click the **Validate** button at the top.
+18. 5. **Reject Backorder**
+19.    - When the **Backorder Creation** dialog appears, select **No 
+Backorder**.
+20. 6. **Quick Verify**
+21.    - Confirm the receipt status is now `Done`.
+22.    - Return to the PO: verify Ordered remains `8` & `12`, Received shows `6`
+& `9`, exactly `1 Receipt` is attached, and PO status is not `Cancelled`.
+Reasoning: 
+Action: <action>
+{"action": "navigate", "url": "http://127.0.0.1:56609/odoo/purchase"}
+</action>
+Reasoning: I am currently on the login page. The first step is to enter the 
+username and password to access the Odoo backend. The username is 'admin' and 
+the password is 'admin'. After logging in, I will be directed to the dashboard 
+or the purchase module depending on the redirect URL. The plan says to navigate 
+to `/odoo/purchase`, which might happen automatically or require clicking the 
+app. Let's start by logging in.
+Action: {"action": "type", "text": "admin"}
+Reasoning: I am on the login page. The email field is active. I need to enter 
+the username 'admin', then the password 'admin', and finally click the 'Log in' 
+button. The previous action typed 'admin', presumably into the email field. Now 
+I will proceed to the password field.
+Action: {"action": "tab"}
+Reasoning: I am on the login page. The username 'admin' has been entered, and 
+the focus is now on the password field. I need to type the password 'admin' to 
+proceed with authentication. After typing the password, I will click the 'Log 
+in' button.
+Action: {"action": "type", "text": "admin"}
+Reasoning: The password 'admin' has been typed into the password field. The next
+logical step is to click the 'Log in' button to authenticate and proceed to the 
+Odoo backend. The redirect URL suggests I will be taken directly to the Purchase
+app.
+Action: {"action": "click", "text": "Log in"}
+Reasoning: 
+Action: I have successfully logged in. The system should now redirect me to the 
+Purchase app as indicated by the original URL. I need to locate the Purchase 
+Order with the reference `NOBACK-04`. I will use the search bar to find this 
+specific order.
+
+<action>
+{"action": "type", "text": "NOBACK-04"}
+</action>

@@ -1,0 +1,60 @@
+=== Benchmark Evaluation ===
+  Task:   website_sale.add_product_to_cart_checkout_portal
+  Agent:  command
+  DB:     bench_fr_de63962a  (auto-isolated)
+  URL:    http://127.0.0.1:50027
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/websight/website_sale.add_product_to_cart_checkout_portal__1777083989
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_de63962a from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 50027
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 6 calls captured (2 writes, 4 reads)
+   State: 0 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      3 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   6
+  Writes:            2 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/websight/website_sale.add_product_to_cart_checkout_portal__1777083989/
+
+  Postcondition failures:
+    - res.partner 'Bench Portal Customer' not found (address never saved)
+  Missing expected edits:
+    - sale.order.amount_total = 25.0
+    - sale.order.partner_id = Bench Portal Customer
+    - sale.order.state = sale

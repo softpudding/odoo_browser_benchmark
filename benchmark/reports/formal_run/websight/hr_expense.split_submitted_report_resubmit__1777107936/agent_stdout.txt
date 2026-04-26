@@ -1,0 +1,47 @@
+Plan:
+1. ### Minimal Execution Plan
+2. | Step | Action | UI/Input Details | Expected Result |
+3. |:---:|:---|:---|:---|
+4. | 1 | **Login** | Navigate to `http://127.0.0.1:63086/odoo/expenses` → Enter 
+`admin` / `admin` | Authenticated as Administrator in Odoo 19 |
+5. | 2 | **Navigate to Queue** | Menu: `Expenses` → `Expense Reports` → `To 
+Approve` | List view of all `Submitted` expenses displayed |
+6. | 3 | **Refuse Gadget** | Open `R-BENCH-SPLIT-001 Gadget` ($500.00) → Click 
+**Refuse** (statusbar) → Type exact reason: `Not compliant` → Click **Refuse 
+Expense** | Expense state = **Refused**; Chatter logs `Not compliant` |
+7. | 4 | **Approve Meal** | Return to list → Open `R-BENCH-SPLIT-001 Meal` 
+($40.00) → Click **Approve** | Expense state = **Approved** |
+8. | 5 | **Approve Taxi** | Return to list → Open `R-BENCH-SPLIT-001 Taxi` 
+($25.00) → Click **Approve** | Expense state = **Approved** |
+9. | 6 | **Verify** | Check all three records in the list | Meal & Taxi = 
+`Approved` • Gadget = `Refused` • None = `Posted`/`Paid`/`Deleted` |
+10. **Constraints Enforced:**
+11. - Refusal reason strictly: `Not compliant`
+12. - Only Gadget refused; Meal & Taxi approved
+13. - No post, pay, reset, or delete actions performed
+14. - Scope limited strictly to Lee Bench’s `R-BENCH-SPLIT-001` batch
+Reasoning: The current screen is blank, indicating I am likely at a new tab or 
+the initial state. The first step of the plan is to navigate to the Odoo 
+expenses URL to begin the login process. I will execute the navigation command.
+Action: go_to_url(url="http://127.0.0.1:63086/odoo/expenses")
+Reasoning: 
+Action: <action>fill_by_placeholder(input_value="admin", placeholder="Enter your
+email")</action>
+Reasoning: The previous action filled the email field. The current screen shows 
+the login form. The next step is to enter the password 'admin' into the password
+field. I will target the input field using its placeholder text "Enter your 
+password".
+Action: fill_by_placeholder(input_value="admin", placeholder="Enter your 
+password")
+Reasoning: The previous actions successfully navigated to the login page and 
+filled in the email and password fields. The current screen shows the login form
+with the "Log in" button clearly visible. To proceed with the plan and access 
+the Odoo Expenses app as Administrator, the next logical step is to submit the 
+form by clicking the "Log in" button.
+Action: click(button="Log in")
+Reasoning: The login was successful, and I am now at the Odoo App Launcher. The 
+next step in the plan is to navigate to the Expenses app to access the expense 
+reports. I can see the "Expenses" app icon in the grid. Clicking it will take me
+into the app where I can then proceed to the "Expense Reports" menu to find the 
+"To Approve" list.
+Action: click(icon="Expenses")

@@ -1,0 +1,49 @@
+Plan:
+1. ### Minimal Execution Plan
+2. 1. **Access & Authenticate**
+3.    - Navigate to `http://127.0.0.1:52882/odoo/accounting`
+4.    - Log in with `admin` / `admin`
+5. 2. **Open Reconciliation Widget**
+6.    - From Accounting Dashboard, click **Reconcile** on the **Bank** journal 
+tile (or go to `Banking → Bank Statements → Reconciliation`)
+7.    - Locate the unreconciled line: Label `Bench Reconcile 500`, Amount 
+`500.00`
+8.    - Click the line to open the reconciliation interface
+9. 3. **Manual Match**
+10.    - In the right-hand matching panel, **manually click** the open invoice 
+`BENCH-RECO-01` (€500.00) for *Bench Reconcile Customer*
+11.    - Bypass any auto-suggested matches
+12. 4. **Validate**
+13.    - Click **Validate** / **Confirm**
+14.    - Wait for success confirmation (toast or status update)
+15. 5. **Verify Outcomes**
+16.    - Bank line status: **Matched / Reconciled** (`is_reconciled = True`, 
+residual `0.0`)
+17.    - Open invoice `BENCH-RECO-01` → Confirm Payment Status is **Paid** 
+(amount due `0.00`)
+Reasoning: The user wants to reconcile a specific bank statement line with a 
+customer invoice. The plan involves logging in, navigating to the bank 
+reconciliation widget, selecting the specific unreconciled line, manually 
+matching it to the open invoice, and validating the reconciliation. I will start
+by navigating to the Odoo accounting login page.
+Action: {"action": "navigate", "url": "http://127.0.0.1:52882/odoo/accounting"}
+Reasoning: The current screen is the login page for Odoo. The plan requires 
+logging in with the credentials 'admin' and 'admin'. I need to interact with the
+form fields. I will start by clicking on the email input field to focus it and 
+prepare to type the username.
+Action: click on the email input field
+Reasoning: The email input field is already focused from the previous step. I 
+will now type the username 'admin' into the email field.
+Action: type text admin
+Reasoning: 
+Action: <action>click on the password input field</action>
+Reasoning: 
+Action: <action>click on the password input field</action>
+Reasoning: 
+Action: <action>click on the password input field</action>
+Reasoning: 
+Action: <action>type text admin</action>
+Reasoning: 
+Action: <action>click on the Log in button</action>
+Reasoning: 
+Action: <action>click on the Accounting app icon</action>

@@ -1,0 +1,44 @@
+Plan:
+1. **Execution Plan**
+2. 1. **Access & Auth**
+3.    - Open `http://127.0.0.1:52921/odoo/crm`
+4.    - Log in: `admin` / `admin`
+5. 2. **Navigate & Enable Leads**
+6.    - Open **CRM** app
+7.    - If **Leads** is missing from top menu: `Configuration > Settings` → Tick
+`Leads` → `Save` → Return to CRM
+8.    - Open `Leads > My Pipeline / Leads`
+9. 3. **Locate & Open Lead**
+10.    - Search: `Spark Innovations - Pager SaaS`
+11.    - Open form
+12.    - ⚠️ *Rule Check:* Do not modify name, description, revenue, or 
+salesperson.
+13. 4. **Convert to Opportunity**
+14.    - Click `Convert to Opportunity` (status bar)
+15.    - Wizard settings:
+16.      - Action: `Convert to opportunity` (default)
+17.      - Customer: `Link to an existing customer` → Select `Spark Innovations`
+18.    - Click `Create Opportunity`
+19.    - ⚠️ *Rule Check:* Confirm no merge occurred & no new customer was 
+created.
+20. 5. **Move Stage**
+21.    - Set opportunity stage to `Qualified` (drag or dropdown in status bar)
+22. 6. **Schedule Activity**
+23.    - Scroll to Chatter → `Schedule Activity`
+24.    - Type: `Call`
+25.    - Summary: `Confirm rollout timeline`
+26.    - Due Date: `05/15/2026`
+27.    - Save/Schedule
+28. 7. **Final Verification**
+29.    - Confirm opportunity exists in `Qualified` stage, linked to `Spark 
+Innovations`
+30.    - Verify Chatter shows the scheduled Call with correct summary & date
+31.    - Ensure zero modifications to other leads/opportunities
+Reasoning: I need to start by navigating to the Odoo login page to authenticate 
+as 'admin' before proceeding with the CRM tasks. I will go to the standard login
+URL for the instance.
+Action: goto http://127.0.0.1:52921/web/login
+Reasoning: I am currently on the login page. To proceed with the instructions, I
+need to authenticate as 'admin'. I will fill in the email and password fields 
+with 'admin' and then click the 'Log in' button.
+Action: fill('input', 'admin')

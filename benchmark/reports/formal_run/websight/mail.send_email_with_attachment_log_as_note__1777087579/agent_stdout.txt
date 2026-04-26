@@ -1,0 +1,50 @@
+Plan:
+1. Here is a minimal, step-by-step plan:
+2. 1. **Navigate & Log In**
+3.    - Open `http://127.0.0.1:59766/odoo/contacts` in your browser.
+4.    - Authenticate with username `admin` and password `admin`.
+5. 2. **Open Contact**
+6.    - In the Contacts app, locate and click **`Bench Chatter Co`** to open its
+form view.
+7. 3. **Select Correct Chatter Mode**
+8.    - Scroll to the chatter panel.
+9.    - **Click `Send message`** (do *not* use the default `Log note` tab).
+10. 4. **Compose & Attach**
+11.    - In the composer body, type exactly: `Attached our welcome kit`
+12.    - Click the **paperclip icon** (`Attach files`).
+13.    - Select/upload: 
+`benchmark/tasks/mail.send_email_with_attachment_log_as_note/seed_artifacts/welc
+ome_kit.txt`
+14.    - Wait for the `welcome_kit.txt` chip to appear above the text area.
+15. 5. **Send & Verify**
+16.    - Click **Send**.
+17.    - Confirm the new chatter entry shows the exact text, the attached 
+`welcome_kit.txt`, and is posted as a public comment (`message_type: comment` / 
+subtype: `mail.mt_comment`).
+Reasoning: The instruction requires navigating to a specific Odoo URL and 
+logging in as the first step. The plan clearly states to open 
+`http://127.0.0.1:59766/odoo/contacts` and authenticate with `admin`/`admin`. 
+Since the history is empty and the current screen is blank, the logical first 
+action is to navigate to the URL using the `goto` command.
+Action: goto("http://127.0.0.1:59766/odoo/contacts")
+Reasoning: 
+Action: <action>
+click("locator=//input")
+</action>
+Reasoning: 
+Action: <action>
+fill("locator=//input", "admin")
+</action>
+Reasoning: I have successfully navigated to the login page, clicked the email 
+input, and filled it with "admin". The next step in the login process is to 
+enter the password. The instruction requires logging in with password "admin". I
+need to locate the password input field and fill it with "admin".
+Action: fill("locator=//input", "admin")
+Reasoning: 
+Action: <action>
+click("locator=//button")
+</action>
+Reasoning: 
+Action: <action>
+click("locator=//span")
+</action>

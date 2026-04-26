@@ -52,7 +52,8 @@ def main():
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=False)
         page = browser.new_page()
-        page.goto(start_url)
+        page.set_default_navigation_timeout(120_000)
+        page.goto(start_url, wait_until="domcontentloaded")
 
         al = Alumni(page, llm=llm)
 

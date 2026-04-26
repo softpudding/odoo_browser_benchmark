@@ -1,0 +1,63 @@
+Plan:
+1. ### Minimal Execution Plan
+2. 1. **Access & Authenticate**
+3.    - Navigate to `http://127.0.0.1:58636/odoo/blog-post-pages`
+4.    - Log in with `admin` / `admin` if prompted.
+5. 2. **Open Target Record**
+6.    - In the list view, locate and click the post titled **`Bench Future 
+Post`** (verify it belongs to blog `Bench News`).
+7. 3. **Unpublish**
+8.    - In the opened form view, click the website indicator (top-right) to 
+access the systray or form header.
+9.    - Toggle the **Publish switch OFF**.
+10.    - Confirm the status pill changes to `Unpublished` / OFF.
+11. 4. **Reschedule**
+12.    - Scroll to the right-side **Publishing Options** section.
+13.    - Locate the `Publishing date` (`post_date`) field.
+14.    - Enter exactly: `08/15/2026 12:00:00`
+15. 5. **Save**
+16.    - Click the **Save** button.
+17. 6. **Final Verification**
+18.    - ✅ `is_published` = `False`
+19.    - ✅ `website_published` = `False`
+20.    - ✅ `post_date` = `2026-08-15 12:00:00`
+21.    - ✅ Title, blog, author, subtitle, and body remain untouched.
+22.    - ✅ Exactly one record named `Bench Future Post` exists.
+Reasoning: I need to navigate to the Odoo blog posts list view, log in with the 
+provided credentials, locate the specific blog post "Bench Future Post", 
+unpublish it, change the publishing date to 08/15/2026 12:00:00, and save the 
+changes.
+Action: {"action_name": "navigate_to", "action_args": {"url": 
+"http://127.0.0.1:58636/odoo/blog-post-pages"}}
+Reasoning: The previous action navigated to the target URL, but the system 
+redirected to the login page because authentication is required. The screenshot 
+clearly shows the Odoo login screen with the redirect URL preserved in the query
+string. To proceed with the task, I must first authenticate using the provided 
+credentials (`admin` / `admin`). Once logged in, the system should redirect me 
+back to the blog post list view (`/odoo/blog-post-pages`), allowing me to find 
+and edit the specific blog post.
+Action: fill_field([
+    {"text": "admin", "ref": "email"},
+    {"text": "admin", "ref": "password"}
+])
+click("button", "Log in")
+Reasoning: The current screenshot shows the Odoo login page with empty fields 
+(placeholders "Enter your email" and "Enter your password" are visible). The 
+history indicates that a previous action attempted to fill the fields using 
+`ref="email"` and `ref="password"` and then click "Log in". Since the fields are
+still empty, the `ref="email"` selector likely failed to match the input field. 
+In standard Odoo installations, the username/email input field has the `name` 
+attribute "login". Therefore, I will retry filling the fields using 
+`ref="login"` for the email and `ref="password"` for the password, followed by 
+clicking the "Log in" button.
+Action: fill_field([{"text": "admin", "ref": "login"}, {"text": "admin", "ref": 
+"password"}])
+click("button", "Log in")
+Reasoning: 
+Action: <action>
+click({"placeholder": "Enter your email"})
+type("admin")
+click({"placeholder": "Enter your password"})
+type("admin")
+click({"text": "Log in"})
+</action>

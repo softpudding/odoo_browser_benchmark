@@ -1,0 +1,44 @@
+Plan:
+1. Here is a minimal, step-by-step plan:
+2. 1. **Access & Authenticate**
+3.    - Open `http://127.0.0.1:60641/odoo/loyalty-programs`
+4.    - Log in with username: `admin`, password: `admin`
+5. 2. **Create Loyalty Program**
+6.    - Click **New**
+7.    - Set **Program Type** to `Promo Code Program` (or `Code-based`)
+8.    - Enter **Program Name**: `Harbor 15% Quotation Reward`
+9.    - Set **Code**: `HARBOR15`
+10.    - In the Reward section:
+11.      - Type: `Percentage`
+12.      - Value: `15`
+13.      - Apply On: `Whole Order`
+14.    - Click **Save**
+15. 3. **Apply to Quotation**
+16.    - Navigate to **Sales** → **Quotations**
+17.    - Search/Filter by Customer Reference: `HARBOR-LOYALTY-01`
+18.    - Open the draft quotation
+19.    - Locate the **Promo Code / Loyalty** input field (usually in the top 
+header or order tab)
+20.    - Enter `HARBOR15` and click **Apply**
+21. 4. **Verify & Halt**
+22.    - Confirm exactly one `-15%` discount line appears in the order lines
+23.    - Verify the original product line remains unmodified
+24.    - Ensure quotation status stays **Draft**
+25.    - **Stop** (do not confirm, send, or create additional reward lines)
+Reasoning: 
+Action: 
+<action>open(url="http://127.0.0.1:60641/odoo/loyalty-programs")</action>
+Reasoning: The current screen is the login page for the Odoo instance. The URL 
+indicates a redirect to `/odoo/loyalty-programs` after login. The instruction 
+requires logging in with username 'admin' and password 'admin'. I need to fill 
+in the email and password fields and click the 'Log in' button to proceed to the
+Loyalty Programs configuration.
+Action: fill("Enter your email", "admin")
+fill("Enter your password", "admin")
+click("Log in")
+Reasoning: 
+Action: <action>click("Log in")</action>
+Reasoning: 
+Action: <action>click("New")</action>
+Reasoning: 
+Action: <action>fill("Program Name", "Harbor 15% Quotation Reward")</action>

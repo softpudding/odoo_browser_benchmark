@@ -1,0 +1,54 @@
+=== Benchmark Evaluation ===
+  Task:   account.switch_negative_invoice_to_credit_note
+  Agent:  command
+  DB:     bench_fr_b7097a8c  (auto-isolated)
+  URL:    http://127.0.0.1:57132
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/account.switch_negative_invoice_to_credit_note__1777022984
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_b7097a8c from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 57132
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 48 calls captured (31 writes, 17 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   3 atomic edits observed
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  1.0
+  Precision:    1.0
+  Recall:       1.0
+  Expected:     3 edits
+  Observed:     3 edits
+  Matching:     3 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.3333
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   48
+  Writes:            31 non-forbidden, 0 forbidden
+  Required ops MISSED: ['account.move.action_switch_move_type', 'account.move.write']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/account.switch_negative_invoice_to_credit_note__1777022984/
+

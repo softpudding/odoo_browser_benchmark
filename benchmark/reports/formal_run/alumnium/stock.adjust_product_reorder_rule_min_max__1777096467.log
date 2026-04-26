@@ -1,0 +1,61 @@
+=== Benchmark Evaluation ===
+  Task:   stock.adjust_product_reorder_rule_min_max
+  Agent:  command
+  DB:     bench_fr_bedb00a5  (auto-isolated)
+  URL:    http://127.0.0.1:63474
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/alumnium/stock.adjust_product_reorder_rule_min_max__1777096467
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_bedb00a5 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 63474
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=120.2s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 7 calls captured (2 writes, 5 reads)
+   State: 0 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      4 edits
+  Extra:        0 edits
+  Wall clock:   120.2s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   7
+  Writes:            2 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/alumnium/stock.adjust_product_reorder_rule_min_max__1777096467/
+
+  Postcondition failures:
+    - No stock.warehouse.orderpoint found for 'Bench Reorder Item' — agent never created the reordering rule
+  Missing expected edits:
+    - stock.warehouse.orderpoint.location_id = WH/Stock
+    - stock.warehouse.orderpoint.product_id = Bench Reorder Item
+    - stock.warehouse.orderpoint.product_max_qty = 20.0
+    - stock.warehouse.orderpoint.product_min_qty = 5.0

@@ -1,0 +1,56 @@
+Plan:
+1. **Objective:** Create a `Spring Gift Card` program, generate one €50 code, 
+apply it to an existing €100 draft cart, and stop before payment.
+2. ### 🔹 Phase 1: Program Creation
+3. 1. Navigate to `http://127.0.0.1:65392/odoo/gift-cards-ewallet`
+4. 2. Click **New**.
+5. 3. Set fields:
+6.    - `Program Name`: `Spring Gift Card`
+7.    - `Program Type`: `Gift Card`
+8.    - *(Leave all other fields at default: Reward=Gift Card, Applies On=Future
+Orders, Trigger=Automatic)*
+9. 4. Click **Save**.
+10. ### 🔹 Phase 2: Code Generation
+11. 5. Click **Generate Gift Cards** (header action/cog icon).
+12. 6. In wizard: `For`=Anonymous Customers, `Quantity`=1, `Value`=50, 
+`Description`=Spring Promo Gift Card.
+13. 7. Confirm generation.
+14. 8. Click the **Gift Cards** smart button on the program form.
+15. 9. **Copy** the single generated code to clipboard.
+16. ### 🔹 Phase 3: Cart Application
+17. 10. Open `http://127.0.0.1:65392/shop/cart`
+18. 11. Verify `Spring Premium Bundle` × 1 (€100 subtotal) is present.
+19. 12. Paste the copied code into the **Discount code...** field → Click 
+**Apply**.
+20. 13. Verify a "Pay with Gift Card" reward line appears and **Total** drops to
+€50.
+21. ### ✅ Completion Criteria
+22. - [ ] Default Odoo `Gift Cards` program remains untouched.
+23. - [ ] Cart contains only `Spring Premium Bundle` (no qty/price changes).
+24. - [ ] Exactly one €50 code generated on `Spring Gift Card`.
+25. - [ ] Code applied via public `/shop/cart` page.
+26. - [ ] **Action stops here.** Do not click Checkout, Confirm, or Pay. Cart 
+remains in draft state.
+Reasoning: The user wants me to create a "Spring Gift Card" program in Odoo. The
+starting point is the Gift Cards configuration page at 
+`http://127.0.0.1:65392/odoo/gift-cards-ewallet`. The screenshot is blank, 
+indicating I need to navigate to this page first to begin the task.
+Action: go_to_url(url='http://127.0.0.1:65392/odoo/gift-cards-ewallet')
+Reasoning: I am currently on the Odoo login screen. To proceed with the task of 
+creating the "Spring Gift Card" program, I first need to authenticate into the 
+system. I will enter the username 'admin' and password 'admin' as instructed.
+Action: fill_and_submit_form(selector='input', values=['admin', 'admin'])
+Reasoning: The previous action attempted to fill the login form with 
+'admin'/'admin'. The screenshot shows the login page with the "Log in" button 
+clearly visible. To proceed with the task of creating the gift card program, I 
+must first successfully log in. Clicking the "Log in" button is the necessary 
+step to authenticate and access the backend.
+Action: click_button(button="Log in")
+Reasoning: I am currently on the Odoo login page (`/web/login`), which is a 
+prerequisite to accessing the backend "Gift Cards & eWallet" configuration. The 
+screenshot shows the login form with empty "Email" and "Password" fields. The 
+history indicates previous attempts to log in, but the current state shows I am 
+not yet authenticated. To proceed with the task of creating the "Spring Gift 
+Card" program, I must successfully log in. I will fill the login form with the 
+credentials 'admin' / 'admin' and submit it.
+Action: fill_and_submit_form(selector='input', values=['admin', 'admin'])

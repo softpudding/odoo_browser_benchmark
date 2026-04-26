@@ -1,0 +1,66 @@
+=== Benchmark Evaluation ===
+  Task:   account.create_customer_invoice_post
+  Agent:  command
+  DB:     bench_fr_a8202ab6  (auto-isolated)
+  URL:    http://127.0.0.1:65480
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/account.create_customer_invoice_post__1777130545
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_a8202ab6 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 65480
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=230.7s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 55 calls captured (26 writes, 29 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   4 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     4 edits
+  Matching:     0 edits
+  Missing:      4 edits
+  Extra:        4 edits
+  Wall clock:   230.7s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   55
+  Writes:            26 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/account.create_customer_invoice_post__1777130545/
+
+  Postcondition failures:
+    - Expected exactly 1 invoice with ref 'NWA-AR-220', found 0
+  Missing expected edits:
+    - account.move.invoice_date = 2026-06-10
+    - account.move.partner_id = Northwind Advisory
+    - account.move.ref = NWA-AR-220
+    - account.move.state = posted
+  Unexpected extra edits:
+    + account.move.invoice_date = 2026-06-10
+    + account.move.partner_id = Northwind Advisory
+    + account.move.ref = None
+    + account.move.state = posted

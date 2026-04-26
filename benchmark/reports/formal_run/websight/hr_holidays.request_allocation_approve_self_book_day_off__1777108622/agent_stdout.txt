@@ -1,0 +1,57 @@
+Plan:
+1. **1. Access & Authentication**
+2. - Open `http://127.0.0.1:49832/odoo/time-off-approval`
+3. - Log in: `admin` / `admin`
+4. **2. Allocate & Approve (5 Days)**
+5. - Navigate: **Time Off → Management → Allocations**
+6. - Click **New**
+7. - Fill fields:
+8.   - Description: `Q2 bonus`
+9.   - Employee: `Bench Worker`
+10.   - Time Off Type: `Bench Bonus Days`
+11.   - Allocation: `5 days`
+12. - Click **Save**
+13. - Click **Approve** → Verify status is **Approved** (`validate`)
+14. **3. Book & Approve (1 Day)**
+15. - Navigate: **Time Off → Management → Time Off**
+16. - Click **New**
+17. - Fill fields:
+18.   - Description: `Bench day off`
+19.   - Employee: `Bench Worker`
+20.   - Time Off Type: `Bench Bonus Days`
+21.   - Start & End Date: `2026-05-15`
+22. - Click **Save**
+23. - Click **Approve** → Verify status is **Approved** (`validate`)
+24. **4. Verify Completion**
+25. - Confirm exactly one approved allocation (5 days) and exactly one approved 
+leave (1 day on 2026-05-15) exist for `Bench Worker`. No other records altered.
+Reasoning: The user wants to perform a two-part task in Odoo 19 Time Off app:
+1.  **Allocate Leave:** Allocate 5 days of a specific leave type ("Bench Bonus 
+Days") for a specific employee ("Bench Worker") with the description "Q2 bonus" 
+and approve it.
+2.  **Book Leave:** Book a 1-day leave request for the same employee on 
+"2026-05-15" using the same leave type with the description "Bench day off" and 
+approve it.
+
+The plan provided matches the user's request perfectly. I will follow the steps:
+login, navigate to allocations, create and approve the allocation, then navigate
+to time off requests, create and approve the leave request. The key constraint 
+is that the allocation must be approved first to allow the leave request to be 
+approved, as mentioned in the instructions.
+Action: I will open the web browser to the provided URL: 
+http://127.0.0.1:49832/odoo/time-off-approval.
+Reasoning: 
+Action: <action>
+browser_go_to_url 
+http://127.0.0.1:49832/web/login?redirect=%2Fodoo%2Ftime-off-approval.%3F
+</action>
+Reasoning: 
+Action: <action>
+browser_type "admin" selector="input"
+browser_type "admin" selector="input"
+browser_click selector="button"
+</action>
+Reasoning: 
+Action: <action>
+browser_click selector="a:has-text('Time Off')"
+</action>

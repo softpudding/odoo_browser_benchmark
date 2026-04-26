@@ -1,0 +1,49 @@
+Plan:
+1. ### Phase 1: Back-Office (Create & Publish)
+2. 1. **Navigate & Login**: Go to `http://127.0.0.1:55497/odoo/recruitment`. Log
+in with `admin` / `admin`.
+3. 2. **New Job**: Click **New** (or **Configuration → Job Positions**).
+4. 3. **Fill Fields** (exact match):
+5.    - `Job Title`: `Senior Widget Engineer`
+6.    - `Department`: `Administration`
+7.    - `Target`: `2`
+8.    - `Job Description`: `Design and build widgets. Remote-friendly.`
+9. 4. **Save**: Click **Save**.
+10. 5. **Publish**: Click the **Go to Website** smart button → toggle top-right 
+switch from `Unpublished` to `Published`. Confirm status shows **Published**.
+11. ### Phase 2: Portal (Submit Application)
+12. 6. **Navigate**: Open `http://127.0.0.1:55497/jobs` (public site).
+13. 7. **Open Job**: Click **Senior Widget Engineer** → **Apply Now**.
+14. 8. **Fill Form** (exact match):
+15.    - `Your Name`: `Alex Portal`
+16.    - `Your Email`: `alex.portal@example.com`
+17.    - `Phone Number`: `+1 555 0199`
+18.    - `LinkedIn Profile`: `linkedin.com/in/alex-portal`
+19.    - `Short Introduction`: `Excited to apply for this role.`
+20. 9. **Submit**: Click **I'm feeling lucky**.
+21. 10. **Verify**: Confirm landing on the application success/thank-you page. 
+**Stop.** (Leave job published; create no other records.)
+Reasoning: 
+Action: <action>
+click(at="256", button="left")
+</action>
+Reasoning: The screen is blank, indicating we need to start by navigating to the
+target URL. The instruction explicitly states to go to 
+`http://127.0.0.1:55497/odoo/recruitment`. I will execute a `goto` action to 
+navigate to this address.
+Action: goto(url="http://127.0.0.1:55497/odoo/recruitment")
+Reasoning: I am currently on the login page, which appeared after navigating to 
+the recruitment URL (as indicated by the redirect parameter in the URL bar). To 
+proceed with the task of creating a job and applying, I first need to 
+authenticate. The instructions specify logging in with `admin` / `admin`. I will
+start by entering the username 'admin' into the Email field.
+Action: type(at="500, 217", text="admin")
+Reasoning: I have successfully entered 'admin' into the Email field. The next 
+step in the login process is to enter the password. According to the 
+instructions, the password is 'admin'. I will type 'admin' into the Password 
+field.
+Action: type(at="500, 337", text="admin")
+Reasoning: I have successfully filled in both the username ('admin') and the 
+password ('admin'). The next step is to submit the login form to access the 
+backend. I will click the "Log in" button.
+Action: click(at="500, 420")

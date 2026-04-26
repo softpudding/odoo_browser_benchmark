@@ -1,0 +1,56 @@
+Plan:
+1. ### Minimal Execution Plan
+2. 1. **Navigate & Authenticate**
+3.    - Open `http://127.0.0.1:59224/odoo/project`
+4.    - Enter username `admin` / password `admin` and log in.
+5. 2. **Access Project Kanban**
+6.    - Select the **Project** app (if redirected to a dashboard/list).
+7.    - Click to open the **"Bench Progress Project"** to load its task kanban 
+view.
+8. 3. **Move Tasks via Drag-and-Drop**
+9.    - Locate **Task A** in the **To Do** column. Press/hold on the card body, 
+drag it over to the **Done** column, and release. Wait for the UI to register 
+the drop/auto-save.
+10.    - Repeat for **Task B** (`To Do` → `Done`).
+11.    - Repeat for **Task C** (`To Do` → `Done`).
+12. 4. **Verify Final State**
+13.    - Confirm the **To Do** column contains `0` tasks.
+14.    - Confirm the **Done** column contains exactly `3` tasks: Task A, Task B,
+Task C.
+15.    - *Constraint check:* Do not open any task forms, click state pills, or 
+modify other fields/stages.
+Reasoning: 
+Action: <action>
+navigate('http://127.0.0.1:59224/odoo/project')
+</action>
+Reasoning: The current page is the login screen, as indicated by the URL 
+`.../web/login?redirect...` and the visible "Email", "Password", and "Log in" 
+fields. I need to authenticate first before I can access the Project app. I will
+enter the username `admin` into the email field and the password `admin` into 
+the password field, then click the "Log in" button.
+Action: fill('390, 215', 'admin')
+fill('490, 340', 'admin')
+click('500, 419')
+Reasoning: The previous action was to log in with admin/admin. Assuming that 
+succeeds, I will be taken to the Odoo Apps Dashboard. The next step in the plan 
+is to access the **Project** app. I need to locate and click the "Project" 
+application icon to proceed to the project list/kanban view.
+Action: click('333, 313')
+Reasoning: The current screenshot shows the login page with empty "Email" and 
+"Password" fields. Although the history indicates a previous attempt to log in 
+and navigate to the Project app, the current state confirms I am still at the 
+login screen (likely due to a failed login or session expiration). The URL also 
+contains a redirect to `/odoo/project`, confirming the intended destination 
+after authentication. I need to re-enter the credentials (`admin`/`admin`) and 
+click "Log in" to proceed. The form fields appear centered, so I will use 
+x-coordinate ~500 for the inputs and the button, consistent with the "Log in" 
+button coordinate in the history.
+Action: fill('500, 215', 'admin')
+fill('500, 340', 'admin')
+click('500, 419')
+Reasoning: 
+Action: <action>
+fill('500, 215', 'admin')
+fill('500, 340', 'admin')
+click('500, 419')
+</action>

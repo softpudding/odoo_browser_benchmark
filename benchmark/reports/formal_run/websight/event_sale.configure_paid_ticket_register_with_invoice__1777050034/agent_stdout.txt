@@ -1,0 +1,73 @@
+Plan:
+1. Here is a minimal, execution-ready plan:
+2. ### Phase 0: Access & Authentication
+3. 1. Navigate to `http://127.0.0.1:57794/odoo/events`
+4. 2. Log in with Username: `admin` | Password: `admin`
+5. ### Phase 1: Add Paid Ticket to Event
+6. 1. Open event **`Spring Dev Summit 2026`**
+7. 2. Switch to the **Tickets** tab
+8. 3. Click **Add a line** and populate:
+9.    - **Product**: `Dev Summit Pro Product`
+10.    - **Name**: `Professional Pass`
+11.    - **Price**: `150`
+12.    - **Maximum**: `50`
+13. 4. Click **Save**
+14. ### Phase 2: Create & Confirm Sales Order
+15. 1. Open **Sales** app → Click **New**
+16. 2. Set **Customer**: `Bench Summit Attendee Inc`
+17. 3. In **Order Lines**, click **Add a product** → select `Dev Summit Pro 
+Product`
+18. 4. In the **Configure an event** popup, select:
+19.    - **Event**: `Spring Dev Summit 2026`
+20.    - **Event Ticket**: `Professional Pass`
+21.    - Click **Ok**
+22. 5. Verify **Qty** = `1` & **Unit Price** = `150.00`
+23. 6. Click **Confirm**
+24. ### Phase 3: Register Attendee
+25. 1. In the auto-opened **Event Registrations** dialog, fill:
+26.    - **Name**: `Berta Attendee`
+27.    - **Email**: `berta@benchsummit.test`
+28. 2. Click **Create/Update registrations**
+29. ### Phase 4: Generate Draft Invoice
+30. 1. On the confirmed Sales Order, click **Create Invoice**
+31. 2. In the wizard, leave **Regular invoice** selected (default)
+32. 3. Click **Create Draft**
+33. 4. **STOP**. Verify the invoice is in **Draft** state. Do not post, confirm,
+or register payment.
+34. ### ✅ Final Verification Checkpoints
+35. - Event has 1 ticket: `Professional Pass` (Product: `Dev Summit Pro 
+Product`, Price: `150`, Max: `50`)
+36. - 1 SO: `Bench Summit Attendee Inc`, State: `Sales Order`, Line: 1×150.00
+37. - 1 Registration: `Berta Attendee` / `berta@benchsummit.test`, State: 
+`Registered`
+38. - 1 Invoice: Customer `Bench Summit Attendee Inc`, Total `150.00`, State: 
+`Draft`
+Reasoning: 
+Action: <action>
+{"action": "go_to_url", "url": "http://127.0.0.1:57794/odoo/events"}
+</action>
+Reasoning: I am currently on the Odoo login page. The previous action attempted 
+to navigate to the events page, which redirected here for authentication. I need
+to log in with the provided credentials (admin/admin) to proceed with the task 
+of configuring the event ticket.
+Action: {"action": "fill", "locator": "", "text": "admin"}
+Reasoning: The email "admin" has been entered. The next step is to enter the 
+password "admin" into the password field and then click the "Log in" button to 
+authenticate.
+Action: {"action": "fill", "locator": "", "text": "admin"}
+Reasoning: 
+Action: <action>
+{"action": "click", "locator": "button:has-text('Log in')"}
+</action>
+Reasoning: 
+Action: <action>
+{"action": "click", "locator": "button:has-text('Log in')"}
+</action>
+Reasoning: I am currently on the Odoo login page (`/web/login`), which I was 
+redirected to after trying to access `/odoo/events`. Although the history 
+indicates previous attempts to fill the credentials and click login, the current
+visual state (and the URL in the prompt header) confirms I am still on the login
+page with empty fields. This suggests the previous actions may not have 
+persisted or the page refreshed. I need to re-enter the credentials to 
+authenticate. I will start by filling the email field with 'admin'.
+Action: {"action": "fill", "locator": "", "text": "admin"}

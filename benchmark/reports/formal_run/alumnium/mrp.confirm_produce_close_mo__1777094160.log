@@ -1,0 +1,69 @@
+=== Benchmark Evaluation ===
+  Task:   mrp.confirm_produce_close_mo
+  Agent:  command
+  DB:     bench_fr_ca530e90  (auto-isolated)
+  URL:    http://127.0.0.1:53240
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/alumnium/mrp.confirm_produce_close_mo__1777094160
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_ca530e90 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 53240
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=61.0s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 4 calls captured (1 writes, 3 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 10 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   61.0s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   4
+  Writes:            1 non-forbidden, 0 forbidden
+  Required ops MISSED: ['mrp.production.action_confirm', 'mrp.production.button_mark_done']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/alumnium/mrp.confirm_produce_close_mo__1777094160/
+
+  Postcondition failures:
+    - MO state is 'draft', expected 'done'
+    - MO qty_produced is 0.0, expected 10.0
+    - Raw move for 'Desk Top' is in state 'draft', expected 'done'
+    - Raw move for 'Desk Top' consumed 0.0, expected 10.0
+    - Raw move for 'Desk Leg' is in state 'draft', expected 'done'
+    - Raw move for 'Desk Leg' consumed 0.0, expected 40.0
+    - Raw move for 'Cable Tray' is in state 'draft', expected 'done'
+    - Raw move for 'Cable Tray' consumed 0.0, expected 10.0
+    - Finished move state is 'draft', expected 'done'
+    - Finished move quantity is 0.0, expected 10.0
+  Missing expected edits:
+    - mrp.production.qty_produced = 10.0
+    - mrp.production.state = done

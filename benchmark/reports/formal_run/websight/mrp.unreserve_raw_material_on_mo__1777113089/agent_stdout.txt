@@ -1,0 +1,52 @@
+Plan:
+1. ### Minimal Execution Plan
+2. 1. **Navigate & Authenticate**
+3.    - Open `http://127.0.0.1:54555/odoo/manufacturing`
+4.    - Log in with `admin` / `admin`
+5. 2. **Locate the Manufacturing Order**
+6.    - Go to **Operations → Manufacturing Orders**
+7.    - Clear all active search filters (e.g., Ready, To Do, Cancelled) to 
+display confirmed records
+8. 3. **Open the Target MO**
+9.    - Click and open **MO-BENCH-UNRES**
+10. 4. **Release Reservation**
+11.    - In the form's top status bar, click the **Unreserve** button
+12.    - *Do not* click Cancel, Produce/Produce All, Check availability, or 
+modify any fields/tabs
+13. 5. **Verify & Complete**
+14.    - Confirm the status bar still reads **Confirmed**
+15.    - Confirm the **Unreserve** button has disappeared
+16.    - Confirm component stock move state reverted to **Confirmed** and 
+`WH/Stock` on-hand remains `10` (with `0` reserved for this MO)
+17.    - Task complete.
+Reasoning: 
+Action: <action>
+{"name": "browser_navigate", "arguments": {"url": 
+"http://127.0.0.1:54555/odoo/manufacturing"}}
+</action>
+Reasoning: 
+Action: <action>
+{"name": "browser_wait_for", "arguments": {"selector": "#login"}}
+</action>
+Reasoning: I am currently on the Odoo login page. The instruction requires me to
+log in with username 'admin' and password 'admin' before I can proceed to the 
+Manufacturing app to unreserve the order. I will enter the credentials and click
+the Log in button.
+Action: {"name": "browser_type", "arguments": {"selector": "#login", "text": 
+"admin"}}
+Reasoning: The user is on the login page. The previous action attempted to type 
+the username 'admin' into the login field. The next step in the authentication 
+process is to enter the password. I will type 'admin' into the password field. 
+The selector for the password field in Odoo is typically `#password` or `input`.
+Action: {"name": "browser_type", "arguments": {"selector": "#password", "text": 
+"admin"}}
+Reasoning: 
+Action: <action>
+{"name": "browser_click", "arguments": {"selector": "button", "description": 
+"Click the Log in button to authenticate."}}
+</action>
+Reasoning: 
+Action: <action>
+{"name": "browser_click", "arguments": {"selector": "a:has-text('Operations')", 
+"description": "Click the Operations menu in the top navbar."}}
+</action>

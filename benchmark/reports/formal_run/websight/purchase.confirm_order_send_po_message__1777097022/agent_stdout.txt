@@ -1,0 +1,41 @@
+Plan:
+1. **Minimal Execution Plan**
+2. 1. **Navigate & Log In**: Open `http://127.0.0.1:64125/odoo/purchase` in your
+browser. Enter username `admin` and password `admin`.
+3. 2. **Open App**: Click the **Purchase** app tile on the dashboard.
+4. 3. **Locate RFQ**: In the Requests for Quotations list, find and open the 
+draft record with Vendor **`Sterling Components`** and Vendor Reference 
+**`MED-SEND-PO-01`**.
+5. 4. **Confirm**: Click **Confirm Order**. Wait for the view to update to a 
+Purchase Order.
+6. 5. **Initiate Email**: Click **Send PO**.
+7. 6. **Compose Message**: In the popup dialog:
+8.    - Set **Subject** to: `Sterling components order follow-up`
+9.    - Replace the body text exactly with: `Please review the confirmed 
+purchase order and reply with the delivery date today.`
+10. 7. **Dispatch**: Click **Send**.
+11. 8. **Verify**: Confirm the PO status updated to "Sent", no other fields were
+altered, and no other records were modified.
+Reasoning: The instruction requires me to start by navigating to the Odoo 
+Purchase app URL. The current state is a blank page, so I must first open the 
+target URL to begin the workflow.
+Action: open_url(url='http://127.0.0.1:64125/odoo/purchase')
+Reasoning: The current page is the Odoo login screen. To proceed with the 
+instructions, I first need to authenticate. The history shows an attempt to open
+the URL, which correctly redirected to the login page. I will now enter the 
+username 'admin' and password 'admin' to log in.
+Action: fill('input', 'admin')
+Reasoning: The current screen is the login page. The username 'admin' has 
+already been entered in the previous step (based on history). I need to enter 
+the password 'admin' into the password field to complete the login process. 
+After entering the password, I will need to click the 'Log in' button, but for 
+now, I will just fill the password field as the immediate next action.
+Action: fill('input', 'admin')
+Reasoning: The current page is the Odoo login screen. The username and password 
+fields have been filled in the previous steps. To proceed with the instructions,
+I need to click the "Log in" button to authenticate. Once logged in, I will be 
+directed to the Odoo dashboard where I can access the Purchase app.
+Action: click('button:has-text("Log in")')
+Reasoning: 
+Action: <action>click('div.oe_module:has-text("Purchase")')
+</action>

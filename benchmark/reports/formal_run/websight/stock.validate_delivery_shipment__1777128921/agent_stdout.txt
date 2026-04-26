@@ -1,0 +1,61 @@
+Plan:
+1. **Minimal Execution Plan**
+2. 1. **Access & Login:** Open `http://127.0.0.1:60122/odoo/inventory` in 
+browser. Log in with `admin` / `admin`.
+3. 2. **Navigate:** Click the **Inventory** app → select the **Delivery Orders**
+(outgoing) card.
+4. 3. **Open Record:** Click delivery reference **BENCH-DEL-01** (Customer: 
+*Azure Interior*). *Leave `BENCH-DEL-OTHER` untouched.*
+5. 4. **Edit Quantities:** In the move lines section, update the **Done** 
+fields:
+6.    - `Steel Bracket 12"` → `12`
+7.    - `Copper Wire 100m` → `5`
+8.    *(Do not modify products, partner, or scheduled date.)*
+9. 5. **Process:** Click **Validate**.
+10. 6. **Handle Dialog:** In the "Create Backorder?" popup, click **No 
+Backorder**.
+11. 7. **Verify:** Confirm status changes to **Done**. Do not cancel.
+Reasoning: 
+Action: <action>
+visit('http://127.0.0.1:60122/odoo/inventory')
+</action>
+Reasoning: I am currently on the login page. To proceed with the instructions, I
+first need to authenticate. I will enter the username 'admin' into the email 
+field and the password 'admin' into the password field, then click the 'Log in' 
+button to access the system.
+Action: fill('input', 'admin')
+fill('input', 'admin')
+click('button:has-text("Log in")')
+Reasoning: The previous action was to log in with 'admin'/'admin'. Assuming 
+successful login, the user is redirected to the Inventory app dashboard 
+(`/odoo/inventory`).
+The next step is to navigate to the "Delivery Orders" list.
+From the dashboard, I need to click the "Delivery Orders" card.
+Then, I need to find and open the specific delivery order "BENCH-DEL-01".
+Once the record is open, I need to update the "Done" quantities for the two move
+lines:
+- "Steel Bracket 12"": set to 12.
+- "Copper Wire 100m": set to 5.
+Then, click "Validate".
+Finally, handle the backorder popup by clicking "No Backorder".
+Action: click('text="Delivery Orders"')
+click('text="BENCH-DEL-01"')
+fill('tr:has-text("Steel Bracket 12") input', '12')
+fill('tr:has-text("Copper Wire 100m") input', '5')
+click('button:has-text("Validate")')
+click('button:has-text("No Backorder")')
+Reasoning: The current screen is the login page for the Odoo instance. To 
+proceed with the instructions, I must first authenticate. The username is 
+'admin' and the password is 'admin'. I will fill in the email field with 
+'admin', the password field with 'admin', and then click the 'Log in' button.
+Action: fill('input', 'admin')
+fill('input', 'admin')
+click('button:has-text("Log in")')
+Reasoning: The current screen is the Odoo login page. The URL indicates a 
+redirect to `/odoo/inventory` after successful login. The history shows previous
+attempts to log in, but since the screenshot is still the login page, I need to 
+perform the login action again to proceed. I will fill the email and password 
+fields with 'admin' and click the 'Log in' button.
+Action: fill('input', 'admin')
+fill('input', 'admin')
+click('button:has-text("Log in")')

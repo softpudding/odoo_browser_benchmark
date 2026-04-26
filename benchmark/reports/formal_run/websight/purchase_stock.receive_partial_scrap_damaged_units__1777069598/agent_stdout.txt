@@ -1,0 +1,62 @@
+Plan:
+1. **Minimal Execution Plan**
+2. 1. **Access & Locate PO**
+3.    - Go to `http://127.0.0.1:58668/odoo/purchase` → Log in (`admin` / 
+`admin`).
+4.    - Open **Purchase** app. Find & open the confirmed PO with Source Document
+`SCRAP-PO-07`.
+5. 2. **Batch 1 (Partial Receipt)**
+6.    - Click the **Receipt** smart button.
+7.    - In Operations, set **Done** qty: `Bench Control Valve` = `4`, `Bench 
+Filter Cartridge` = `7`.
+8.    - Click **Validate** → Prompt appears → Select **Create Backorder**.
+9. 3. **Scrap Damaged Unit**
+10.    - Stay on the now-completed Batch 1 receipt. Click **Actions** (or 
+`⚙️`/`More`) → **Scrap**.
+11.    - Confirm: Product = `Bench Filter Cartridge`, Qty = `1`, Location = 
+(keep default).
+12.    - Click **Validate** to post the scrap.
+13. 4. **Batch 2 (Complete Backorder)**
+14.    - Navigate back to the PO (breadcrumb). Click the new **Backorder** 
+receipt smart button.
+15.    - Set **Done** qty to remaining: `Bench Control Valve` = `2`, `Bench 
+Filter Cartridge` = `3`.
+16.    - Click **Validate** (should close without further prompts).
+17. 5. **Verify Constraints**
+18.    - Confirm both receipts status = **Done**.
+19.    - Confirm PO lines still show Ordered Qty `6` & `10` (Received Qty will 
+show `6` & `9`, which is correct after scrap).
+20.    - Ensure exactly 1 scrap record exists and no PO/receipts were cancelled.
+Reasoning: I need to start by navigating to the specified URL to begin the 
+workflow. The instruction says to go to `http://127.0.0.1:58668/odoo/purchase`. 
+I will perform this navigation.
+Action: goto http://127.0.0.1:58668/odoo/purchase
+Reasoning: 
+Action: <action>
+fill 'input' with 'admin'
+</action>
+Reasoning: I have entered the username 'admin'. Now I need to enter the password
+'admin' into the password field to complete the login credentials. After 
+entering the password, I will click the 'Log in' button to access the system.
+Action: fill '#password' with 'admin'
+Reasoning: The user has successfully filled in both the email and password 
+fields with the value 'admin'. The next step in the login process is to click 
+the 'Log in' button to authenticate and access the Odoo system. This will allow 
+the user to proceed to the Purchase app as instructed.
+Action: click '#login'
+Reasoning: I have successfully logged in. The system should now redirect me to 
+the Purchase module or the main backend dashboard. To proceed with the task, I 
+need to access the Purchase application to find the specific Purchase Order 
+`SCRAP-PO-07`. I will look for and click on the "Purchase" application icon in 
+the Odoo app dashboard.
+Action: click 'a'
+Reasoning: 
+Action: <action>
+click 'input'
+</action>
+<action>
+type 'SCRAP-PO-07'
+</action>
+<action>
+press 'Enter'
+</action>

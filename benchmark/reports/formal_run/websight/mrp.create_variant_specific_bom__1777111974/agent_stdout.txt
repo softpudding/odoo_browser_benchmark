@@ -1,0 +1,65 @@
+Plan:
+1. ### Minimal Execution Plan
+2. 1. **Access & Authenticate**
+3.    - Navigate to `http://127.0.0.1:50440/odoo/manufacturing`
+4.    - Log in with `admin` / `admin`
+5. 2. **Open BoM Creation**
+6.    - Go to **Products** → **Bills of Materials**
+7.    - Click **New**
+8. 3. **Configure Header**
+9.    - **Product**: Select `Bench T-Shirt`
+10.    - **Product Variant**: Select `Bench Color: Red` *(must be explicitly 
+set, not blank)*
+11.    - **Quantity**: `1`
+12.    - **BoM Type**: Leave as default (`Manufacture this Product`)
+13. 4. **Add Component**
+14.    - Switch to the **Components** tab
+15.    - Click **Add a line**
+16.    - **Component**: Select `Bench Fabric`
+17.    - **Quantity**: `1`
+18. 5. **Finalize & Verify**
+19.    - Click **Save**
+20.    - Confirm constraints: 
+21.      - Only 1 BoM exists for `Bench T-Shirt`
+22.      - **Product Variant** field explicitly shows `Bench Color: Red`
+23.      - Exactly 1 component line (`Bench Fabric`, qty `1`)
+24.      - No template, attribute, or variant modifications made
+25.      - No manufacturing orders created
+Reasoning: The user wants to create a specific Bill of Materials for the Red 
+variant of "Bench T-Shirt".
+I need to navigate to the Manufacturing app, specifically the Bills of Materials
+section.
+Then I will create a new record.
+I must ensure the "Product" field is set to the template "Bench T-Shirt".
+Crucially, the "Product Variant" field must be set to the Red variant ("Bench 
+Color: Red") so it doesn't apply to the Blue one.
+Then I need to add "Bench Fabric" as a component with quantity 1.
+Finally, save the record.
+Action: Go to http://127.0.0.1:50440/odoo/manufacturing
+Reasoning: 
+Action: <action>
+fill('input', 'admin')
+</action>
+Reasoning: 
+Action: <action>
+fill('input', 'admin')
+</action>
+Reasoning: The previous steps filled in the username and password. Now I need to
+submit the form by clicking the "Log in" button to access the Odoo backend. Once
+logged in, I will be redirected to the Manufacturing app dashboard as per the 
+URL parameter. From there, I will navigate to the Bills of Materials section to 
+create the specific BoM.
+Action: click('button:has-text("Log in")')
+Reasoning: 
+Action: <action>
+click('div.app-name:has-text("Manufacturing")')
+</action>
+Reasoning: I am now on the Manufacturing dashboard. The task requires me to 
+navigate to the Bills of Materials section. I will click on the 'Products' menu 
+in the top navigation bar and then select 'Bills of Materials' from the 
+dropdown.
+Action: click('a:has-text("Products")')
+Reasoning: 
+Action: <action>
+click('a:has-text("Bills of Materials")')
+</action>

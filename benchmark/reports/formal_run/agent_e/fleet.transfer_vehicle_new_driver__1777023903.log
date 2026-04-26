@@ -1,0 +1,61 @@
+=== Benchmark Evaluation ===
+  Task:   fleet.transfer_vehicle_new_driver
+  Agent:  command
+  DB:     bench_fr_b02d9ea3  (auto-isolated)
+  URL:    http://127.0.0.1:59589
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/fleet.transfer_vehicle_new_driver__1777023903
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_b02d9ea3 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 59589
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=471.4s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 47 calls captured (21 writes, 26 reads)
+   State: 3 records across 2 models
+5. Computing state diff...
+   4 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     4 edits
+  Matching:     3 edits
+  Missing:      1 edits
+  Extra:        1 edits
+  Wall clock:   471.4s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   47
+  Writes:            21 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/fleet.transfer_vehicle_new_driver__1777023903/
+
+  Postcondition failures:
+    - 'Old Driver Bob' assignation log was not closed (date_end is empty)
+    - 'New Driver Alice' assignation log Start Date is 2026-04-24, expected 2026-03-15
+  Missing expected edits:
+    - fleet.vehicle.assignation.log.date_start = 2026-03-15
+  Unexpected extra edits:
+    + fleet.vehicle.assignation.log.date_start = 2026-04-24

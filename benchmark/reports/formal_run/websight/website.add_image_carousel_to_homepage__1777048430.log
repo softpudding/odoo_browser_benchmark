@@ -1,0 +1,50 @@
+=== Benchmark Evaluation ===
+  Task:   website.add_image_carousel_to_homepage
+  Agent:  command
+  DB:     bench_fr_e5f53cf2  (auto-isolated)
+  URL:    http://127.0.0.1:61925
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/websight/website.add_image_carousel_to_homepage__1777048430
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_e5f53cf2 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 61925
+   Done.
+2. Capturing pre-task state...
+   Captured 7 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 7 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     0 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/websight/website.add_image_carousel_to_homepage__1777048430/
+
+  Postcondition failures:
+    - Expected an image gallery / carousel block on the page; arch_db does not contain s_image_gallery, s_carousel, or carousel.
+    - Expected at least 3 <img> children in the gallery block; arch_db contains only 0.

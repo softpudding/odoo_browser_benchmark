@@ -1,0 +1,59 @@
+=== Benchmark Evaluation ===
+  Task:   sale_loyalty.create_program_apply_reward_on_quotation
+  Agent:  command
+  DB:     bench_fr_7e35f798  (auto-isolated)
+  URL:    http://127.0.0.1:59287
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/sale_loyalty.create_program_apply_reward_on_quotation__1777069809
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_7e35f798 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 59287
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 31 calls captured (13 writes, 18 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   600.1s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   31
+  Writes:            13 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/sale_loyalty.create_program_apply_reward_on_quotation__1777069809/
+
+  Postcondition failures:
+    - Loyalty program 'Harbor 15% Quotation Reward' not found
+  Missing expected edits:
+    - loyalty.program.name = Harbor 15% Quotation Reward
+    - loyalty.program.trigger = with_code

@@ -1,0 +1,45 @@
+Plan:
+1. **Minimal Execution Plan**
+2. 1. **Access & Auth**  
+3.    - Open `http://127.0.0.1:50397/odoo/sales`  
+4.    - Log in: `admin` / `admin`
+5. 2. **Open Target**  
+6.    - Enter **Sales** app → open **Quotations** list  
+7.    - Locate and click the row for `S-BENCH-COPY-001` (Customer: `Bench Copy 
+Co`)
+8. 3. **Duplicate**  
+9.    - Click **⚙️ Actions** in the control panel → select **Duplicate**  
+10.    - Wait for the new draft quotation to fully load
+11. 4. **Update Delivery Date (Duplicate Only)**  
+12.    - Click the **Other Info** tab  
+13.    - In the **Shipping** section, set **Delivery Date** to `08/15/2026`  
+14.    - Click **Save** (cloud/save icon) and wait for persistence
+15. 5. **Confirm (Duplicate Only)**  
+16.    - Click **Confirm** in the header status bar  
+17.    - Verify state transitions to `Sales Order` / `sale`
+18. 6. **Validate Constraints**  
+19.    - Ensure original `S-BENCH-COPY-001` remains in `Draft` with original 
+customer & lines  
+20.    - Confirm duplicated record holds both copied lines (`Bench SO Item A` 
+×2, `Bench SO Item B` ×3) and is now confirmed  
+21.    - **Do not** interact further with the original quotation
+Reasoning: I need to start by accessing the Odoo instance at the specified URL. 
+The first step is to open the browser and go to 
+`http://127.0.0.1:50397/odoo/sales`. This will likely redirect to a login page 
+or the main dashboard if already logged in, but based on the instructions, I 
+need to log in with `admin`/`admin`.
+Action: navigate('http://127.0.0.1:50397/odoo/sales')
+Reasoning: I am currently on the Odoo login page. The URL indicates a redirect 
+to `/odoo/sales`. To proceed with the plan, I first need to authenticate. I will
+enter the username 'admin' into the Email field.
+Action: fill('11', 'admin')
+Reasoning: 
+Action: <action>fill('17', 'admin')</action>
+Reasoning: I have filled in the username 'admin' and password 'admin'. The next 
+step is to submit the login form by clicking the "Log in" button. This will 
+authenticate me and redirect me to the Odoo dashboard (specifically 
+`/odoo/sales` as per the redirect URL), allowing me to proceed with the Sales 
+app tasks.
+Action: click('23')
+Reasoning: 
+Action: <action>click('14')</action>

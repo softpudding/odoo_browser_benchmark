@@ -1,0 +1,49 @@
+Plan:
+1. **Minimal Plan: Register Payment for Invoice BENCH-PAY-01**
+2. 1. **Navigate & Authenticate**
+3.    - Open `http://127.0.0.1:55276/odoo/account`
+4.    - Log in with `admin` / `admin`
+5. 2. **Open Target Invoice**
+6.    - Switch to the **Invoicing** app
+7.    - Locate and open Customer Invoice **BENCH-PAY-01** for **Lakeview 
+Partners**
+8. 3. **Register Payment**
+9.    - Click the **Pay** button (top-right of the invoice form)
+10.    - In the "Register Payment" wizard: **Do not edit any fields**
+11.    - Verify the default Amount shows `$1,000.00`
+12.    - Click **Create Payment**
+13. 4. **Verify & Close**
+14.    - Confirm the invoice status updates to **Paid** or **In Payment**
+15.    - Validate strict rule compliance: defaults unchanged, amount 
+`$1,000.00`, no extra payments, invoice otherwise unmodified.
+Reasoning: 
+Action: <action>
+go_to_url(url='http://127.0.0.1:55276/odoo/account')
+</action>
+Reasoning: The current page is the Odoo login screen. To proceed with the plan, 
+I need to authenticate first. The first step is to enter the username 'admin' 
+into the 'Email' field.
+Action: type_text(selector='input', text='admin')
+Reasoning: The previous action entered the username 'admin'. The next step in 
+the authentication process is to enter the password 'admin' into the password 
+field. The password field is located below the email field.
+Action: type_text(selector='input', text='admin')
+Reasoning: The password 'admin' has been entered. The next step in the plan is 
+to authenticate by submitting the form. The "Log in" button is visible on the 
+screen.
+Action: click(selector='button')
+Reasoning: The previous step involved logging in. I should now be on the Odoo 
+dashboard or the Apps page. My next sub-goal is to open the **Invoicing** app. I
+need to find the app icon labeled "Invoicing" and click on it.
+Action: click(selector='.o_app')
+Reasoning: The user has successfully logged in and opened the Invoicing app. The
+current goal is to locate and open the specific customer invoice with reference 
+**BENCH-PAY-01**. Since the list of invoices might be long or filtered 
+differently, the most reliable way to find this specific invoice is to use the 
+search functionality at the top right of the list view. I will type the invoice 
+reference into the search bar, press Enter to filter the list, and then click on
+the resulting invoice row to open its form view. This will position me to 
+perform the "Register Payment" action in the next steps.
+Action: type_text(selector='input', text='BENCH-PAY-01')
+key_action(action='return')
+click(selector='.o_list_view tbody tr:first-child')

@@ -1,0 +1,62 @@
+=== Benchmark Evaluation ===
+  Task:   event.create_event_configure_ticket
+  Agent:  command
+  DB:     bench_fr_d55a769f  (auto-isolated)
+  URL:    http://127.0.0.1:54666
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/event.create_event_configure_ticket__1777088006
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_d55a769f from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 54666
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 0 records across 2 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     12 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      12 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/event.create_event_configure_ticket__1777088006/
+
+  Postcondition failures:
+    - Expected exactly 1 event named 'Spring Tech Conference 2026', found 0
+  Missing expected edits:
+    - event.event.ticket.event_id = Spring Tech Conference 2026
+    - event.event.ticket.name = Registration for Spring Tech Conference 2026
+    - event.event.ticket.price = 30.0
+    - event.event.ticket.seats_limited = None
+    - event.event.ticket.seats_max = 0
+    - event.event.ticket.event_id = Spring Tech Conference 2026
+    - event.event.ticket.name = Standard Pass
+    - event.event.ticket.price = 150.0
+    - event.event.ticket.seats_limited = True
+    - event.event.ticket.seats_max = 100
+    - event.event.address_id = Riverside Convention Center
+    - event.event.name = Spring Tech Conference 2026

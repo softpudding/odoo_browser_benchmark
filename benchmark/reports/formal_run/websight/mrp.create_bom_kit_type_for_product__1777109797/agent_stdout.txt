@@ -1,0 +1,95 @@
+Plan:
+1. Here is a minimal, executable plan:
+2. 1. **Access & Login**: Open `http://127.0.0.1:55897/odoo/manufacturing`. 
+Authenticate with `admin` / `admin`.
+3. 2. **Launch App**: Click **Manufacturing** on the apps dashboard.
+4. 3. **Navigate**: Open **Products → Bills of Materials**.
+5. 4. **Create**: Click **New**.
+6. 5. **Fill Header**:
+7.    - **Product**: `Bench Kit Finished`
+8.    - **Quantity**: `1`
+9.    - **BoM Type**: Click the **Kit** radio button *(ensures 
+`type='phantom'`)*
+10. 6. **Fill Components**: Switch to the **Components** tab. Click **Add a 
+line** exactly twice:
+11.    - Line 1: `Bench Kit Comp A` | Qty: `2`
+12.    - Line 2: `Bench Kit Comp B` | Qty: `3`
+13. 7. **Save**: Click **Save**.
+14. 8. **Verify**: Confirm the record shows BoM Type `Kit`, exactly 2 component 
+rows, and no Manufacturing Order was auto-created.
+Reasoning: The user wants to create a specific Bill of Materials (BoM) in Odoo.
+1.  **Navigate**: First, I need to go to the provided URL 
+`http://127.0.0.1:55897/odoo/manufacturing`.
+2.  **Login**: Authenticate with `admin` and `admin`.
+3.  **App Selection**: Click on the "Manufacturing" app icon to enter the 
+manufacturing module.
+4.  **Menu Navigation**: Go to the "Products" menu and select "Bills of 
+Materials".
+5.  **Create Record**: Click the "New" button to start creating a new BoM.
+6.  **Header Fields**:
+    *   Select `Bench Kit Finished` in the Product field.
+    *   Ensure Quantity is `1.00`.
+    *   **Crucial Step**: Change the BoM Type from the default "Manufacture this
+Product" to **Kit**. This sets the internal type to `phantom`.
+7.  **Components**:
+    *   In the Components tab (usually default), click "Add a line".
+    *   Select `Bench Kit Comp A` and set quantity to `2`.
+    *   Click "Add a line" again.
+    *   Select `Bench Kit Comp B` and set quantity to `3`.
+8.  **Save**: Click the Save button.
+Action: [
+  {"action": "goto", "url": "http://127.0.0.1:55897/odoo/manufacturing"},
+  {"action": "fill", "locator": {"name": "login"}, "text": "admin"},
+  {"action": "fill", "locator": {"name": "password"}, "text": "admin"},
+  {"action": "click", "locator": {"xpath": "//button"}},
+  {"action": "click", "locator": {"xpath": "//div//span"}},
+  {"action": "click", "locator": {"xpath": "//a"}},
+  {"action": "click", "locator": {"xpath": "//button"}},
+  {"action": "click", "locator": {"xpath": "//input"}},
+  {"action": "fill", "locator": {"xpath": "//input"}, "text": "Bench Kit 
+Finished"},
+  {"action": "click", "locator": {"xpath": "//span"}},
+  {"action": "click", "locator": {"xpath": "//div//span"}},
+  {"action": "click", "locator": {"xpath": "//button"}},
+  {"action": "click", "locator": {"xpath": "(//td/..//input)[1]"}},
+  {"action": "fill", "locator": {"xpath": "(//td/..//input)[1]"}, "text": "Bench
+Kit Comp A"},
+  {"action": "click", "locator": {"xpath": "//span"}},
+  {"action": "click", "locator": {"xpath": "(//td/..//input)[1]"}},
+  {"action": "fill", "locator": {"xpath": "(//td/..//input)[1]"}, "text": "2"},
+  {"action": "click", "locator": {"xpath": "//button"}},
+  {"action": "click", "locator": {"xpath": "(//td/..//input)"}},
+  {"action": "fill", "locator": {"xpath": "(//td/..//input)"}, "text": "Bench 
+Kit Comp B"},
+  {"action": "click", "locator": {"xpath": "//span"}},
+  {"action": "click", "locator": {"xpath": "(//td/..//input)"}},
+  {"action": "fill", "locator": {"xpath": "(//td/..//input)"}, "text": "3"},
+  {"action": "click", "locator": {"xpath": "//button"}}
+]
+Task completed successfully
+WebSight result: [
+  {"action": "goto", "url": "http://127.0.0.1:55897/odoo/manufacturing"},
+  {"action": "fill", "locator": {"name": "login"}, "text": "admin"},
+  {"action": "fill", "locator": {"name": "password"}, "text": "admin"},
+  {"action": "click", "locator": {"xpath": "//button[@type='submit']"}},
+  {"action": "click", "locator": {"xpath": "//div[contains(@class, 'o_app')]//span[text()='Manufacturing']"}},
+  {"action": "click", "locator": {"xpath": "//a[contains(@href, '/web#view_type=list&model=mrp.bom')]"}},
+  {"action": "click", "locator": {"xpath": "//button[text()='New']"}},
+  {"action": "click", "locator": {"xpath": "//input[@name='product_id']"}},
+  {"action": "fill", "locator": {"xpath": "//input[@name='product_id']"}, "text": "Bench Kit Finished"},
+  {"action": "click", "locator": {"xpath": "//span[contains(text(), 'Bench Kit Finished')]"}},
+  {"action": "click", "locator": {"xpath": "//div[contains(@class, 'o_radio_item')]//span[text()='Kit']"}},
+  {"action": "click", "locator": {"xpath": "//button[text()='Add a line']"}},
+  {"action": "click", "locator": {"xpath": "(//td[contains(@class, 'o_list_record_selector')]/..//input[@name='product_id'])[1]"}},
+  {"action": "fill", "locator": {"xpath": "(//td[contains(@class, 'o_list_record_selector')]/..//input[@name='product_id'])[1]"}, "text": "Bench Kit Comp A"},
+  {"action": "click", "locator": {"xpath": "//span[contains(text(), 'Bench Kit Comp A')]"}},
+  {"action": "click", "locator": {"xpath": "(//td[contains(@class, 'o_list_record_selector')]/..//input[@name='product_qty'])[1]"}},
+  {"action": "fill", "locator": {"xpath": "(//td[contains(@class, 'o_list_record_selector')]/..//input[@name='product_qty'])[1]"}, "text": "2"},
+  {"action": "click", "locator": {"xpath": "//button[text()='Add a line']"}},
+  {"action": "click", "locator": {"xpath": "(//td[contains(@class, 'o_list_record_selector')]/..//input[@name='product_id'])[last()]"}},
+  {"action": "fill", "locator": {"xpath": "(//td[contains(@class, 'o_list_record_selector')]/..//input[@name='product_id'])[last()]"}, "text": "Bench Kit Comp B"},
+  {"action": "click", "locator": {"xpath": "//span[contains(text(), 'Bench Kit Comp B')]"}},
+  {"action": "click", "locator": {"xpath": "(//td[contains(@class, 'o_list_record_selector')]/..//input[@name='product_qty'])[last()]"}},
+  {"action": "fill", "locator": {"xpath": "(//td[contains(@class, 'o_list_record_selector')]/..//input[@name='product_qty'])[last()]"}, "text": "3"},
+  {"action": "click", "locator": {"xpath": "//button[text()='Save']"}}
+]

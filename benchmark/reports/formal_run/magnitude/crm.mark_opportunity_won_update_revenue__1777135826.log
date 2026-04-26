@@ -1,0 +1,67 @@
+=== Benchmark Evaluation ===
+  Task:   crm.mark_opportunity_won_update_revenue
+  Agent:  command
+  DB:     bench_fr_af5a1c84  (auto-isolated)
+  URL:    http://127.0.0.1:57441
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/crm.mark_opportunity_won_update_revenue__1777135826
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_af5a1c84 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 57441
+   Done.
+2. Capturing pre-task state...
+   Captured 3 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=142.8s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 51 calls captured (29 writes, 22 reads)
+   State: 3 records across 1 models
+5. Computing state diff...
+   4 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     4 edits
+  Matching:     3 edits
+  Missing:      1 edits
+  Extra:        1 edits
+  Wall clock:   142.8s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   51
+  Writes:            29 non-forbidden, 0 forbidden
+  Required ops MISSED: ['crm.lead.action_set_won_rainbowman']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/crm.mark_opportunity_won_update_revenue__1777135826/
+
+  Postcondition failures:
+    - Target priority is '3', expected '2'
+  Missing expected edits:
+    - crm.lead.expected_revenue = 52000.0
+    - crm.lead.priority = 2
+    - crm.lead.probability = 100.0
+    - crm.lead.stage_id = Won
+  Unexpected extra edits:
+    + crm.lead.expected_revenue = 52000.0
+    + crm.lead.priority = 3
+    + crm.lead.probability = 100.0
+    + crm.lead.stage_id = Won

@@ -1,0 +1,51 @@
+Plan:
+1. **1. Access & Navigate**
+2. - Open `http://127.0.0.1:60163/odoo/accounting` → Log in (`admin` / `admin`) 
+→ Open **Invoicing** app.
+3. **2. Locate Target Invoice**
+4. - Go to **Customer Invoices** → Filter to `Draft` & Customer `Lumen Works`.
+5. - Open the invoice where `Source Document` / `Invoice Origin` = `RET-508`.
+6. **3. Convert to Credit Note**
+7. - Click **Action** → **Credit Note / Refund** → Confirm to convert the draft.
+8. **4. Extract Product Specs**
+9. - Note each product line on the credit note.
+10. - For each product: Navigate to `Invoicing > Customers > Products`, open the
+product, read the **Sales Description** field.
+11. - Parse the exact `Qty=X` and `Discount=Y` values.
+12. **5. Fix Invoice Lines**
+13. - Return to the credit note draft.
+14. - Edit each product line:
+15.   - Update **Quantity** and **Discount (%)** to the parsed values.
+16.   - Ensure **Unit Price** is strictly **positive** (remove `-` if 
+auto-carried over).
+17. **6. Update Metadata**
+18. - Switch to the **Other Info** tab → Set **Customer Reference** to 
+`RET-508-READY`.
+19. **7. Finalize**
+20. - Click **Post / Confirm**.
+21. - Verify the second Lumen Works draft invoice remains completely untouched.
+Reasoning: 
+Action: <action>
+click(x=0.5, y=0.5)
+</action>
+Reasoning: I need to start by navigating to the specified Odoo URL. The current 
+state is a blank page or initial state. I will navigate to 
+`http://127.0.0.1:60163/odoo/accounting`.
+Action: navigate(url='http://127.0.0.1:60163/odoo/accounting')
+Reasoning: I am currently on the login page for the Odoo instance. To proceed 
+with the plan, I need to log in using the credentials provided (admin/admin). 
+The first step is to click on the 'Email' input field to enter the username.
+Action: click(x=0.498, y=0.221)
+Reasoning: 
+Action: <action>
+type(text='admin')
+</action>
+Reasoning: I have successfully navigated to the login page and entered the 
+username 'admin' into the email field. The next step is to enter the password 
+'admin'. I need to click on the password input field to focus it before typing 
+the password.
+Action: click(x=0.498, y=0.335)
+Reasoning: I am currently on the login page with the password field focused. I 
+need to type the password 'admin' to complete the login credentials entry. After
+this, I will click the 'Log in' button.
+Action: type(text='admin')

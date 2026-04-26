@@ -1,0 +1,54 @@
+Plan:
+1. **Minimal Action Plan**
+2. 1. **Access & Authenticate**
+3.    - Open `http://127.0.0.1:63242/odoo/recruitment`
+4.    - Log in with `admin` / `admin`
+5. 2. **Navigate to Applicant**
+6.    - Click the **Recruitment** app
+7.    - Open the **Dock Supervisor** job position
+8.    - Locate and click on applicant **Mina Chen** (verify it is *not* "Mina 
+Chen West")
+9. 3. **Update Stage**
+10.    - Change pipeline stage dropdown to **Second Interview**
+11. 4. **Schedule Interview Meeting**
+12.    - Click **Schedule Meeting** (or calendar/activity button)
+13.    - Enter:
+14.      - Title: `Second Interview - Mina Chen`
+15.      - Start: `June 25, 2026 2:00 PM`
+16.      - End: `June 25, 2026 2:30 PM`
+17.    - Save the meeting
+18. 5. **Add Feedback Note**
+19.    - In the Chatter/Notes section, type exactly: `Strong process knowledge 
+and clear stakeholder communication.`
+20. 6. **Finalize**
+21.    - Click **Save** on the applicant record
+22.    - *Verify constraints:* Email & phone unchanged, applicant not 
+refused/archived/hired.
+Reasoning: 
+Action: <action>
+{"action": "goto", "url": "http://127.0.0.1:63242/odoo/recruitment"}
+</action>
+Reasoning: I am currently on the login page. To proceed with the plan, I first 
+need to authenticate using the provided credentials (`admin`/`admin`). I will 
+enter the username into the email field and the password into the password 
+field, then submit the form.
+Action: {"action": "fill", "locator": "Enter your email", "text": "admin"}
+Reasoning: I have successfully filled in the username 'admin' in the email 
+field. The next step is to complete the login process by entering the password 
+'admin' in the password field. Once the password is entered, I will submit the 
+form to log in.
+Action: {"action": "fill", "locator": "Enter your password", "text": "admin"}
+Reasoning: I have successfully filled the email field with 'admin'. The next 
+step to authenticate is to enter the password 'admin' into the password field. 
+The password input is clearly labeled and ready for input.
+Action: {"action": "fill", "locator": "Enter your password", "text": "admin"}
+Reasoning: 
+Action: <action>
+{"action": "click", "locator": "Log in"}
+</action>
+Reasoning: I have successfully logged in. Based on the redirect URL in the login
+step, I should now be on the Recruitment app's dashboard showing the list of job
+positions. My next sub-goal is to open the "Dock Supervisor" job position to 
+find the applicant "Mina Chen". I will look for the "Dock Supervisor" card and 
+click on it.
+Action: {"action": "click", "locator": "Dock Supervisor"}

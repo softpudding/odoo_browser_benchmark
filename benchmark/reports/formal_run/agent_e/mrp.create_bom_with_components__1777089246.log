@@ -1,0 +1,60 @@
+=== Benchmark Evaluation ===
+  Task:   mrp.create_bom_with_components
+  Agent:  command
+  DB:     bench_fr_43f67844  (auto-isolated)
+  URL:    http://127.0.0.1:50268
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/mrp.create_bom_with_components__1777089246
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_43f67844 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 50268
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 64 calls captured (25 writes, 39 reads)
+   State: 3 records across 2 models
+5. Computing state diff...
+   9 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     12 edits
+  Observed:     9 edits
+  Matching:     9 edits
+  Missing:      3 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   64
+  Writes:            25 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/mrp.create_bom_with_components__1777089246/
+
+  Postcondition failures:
+    - BOM has 2 component lines, expected exactly 3
+  Missing expected edits:
+    - mrp.bom.line.bom_id = BOM-REFERENCE: Bench Assembled Gadget
+    - mrp.bom.line.product_id = Bench Power Unit
+    - mrp.bom.line.product_qty = 2.0

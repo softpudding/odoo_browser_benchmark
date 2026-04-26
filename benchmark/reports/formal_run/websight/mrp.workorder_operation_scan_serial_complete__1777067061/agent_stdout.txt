@@ -1,0 +1,61 @@
+Plan:
+1. # Minimal Execution Plan: Consume SN-B & Finalize MO-BENCH-WO
+2. | Step | Action | Expected Result |
+3. |:---|:---|:---|
+4. | **1. Auth & Nav** | Open `http://127.0.0.1:64864/odoo/manufacturing` → Log 
+in (`admin`/`admin`) | Dashboard loads in **Manufacturing** app |
+5. | **2. Open MO** | `Operations → Manufacturing Orders` → Search & open 
+`MO-BENCH-WO` | MO form loads in **Confirmed** state |
+6. | **3. Start WO** | Open **Work Orders** tab → Click **Start** on `Final 
+Assembly` | WO & MO state → `In Progress` |
+7. | **4. Override Serial** | Open **Components** tab → Locate `Bench Serial 
+Part` → Click **Details** (list icon)<br>• *If SN-A line exists:* Edit it, 
+change `Lot/Serial` to `SN-B`<br>• *If empty:* Click **Add a line**, set 
+`Lot/Serial = SN-B`, `Quantity = 1`<br>→ **Save & Close** popup | Popup closes; 
+Components tab shows `SN-B` as the only assigned/consumed serial |
+8. | **5. Finish WO** | Return to **Work Orders** tab → Click **Done** on `Final
+Assembly` | WO state → `Done` |
+9. | **6. Finalize MO** | On MO form header → Click **Mark as Done** / **Produce
+All** (accept any standard confirmation) | MO state → `Done` |
+10. | **7. Verify** | Check MO/WO tabs & Component traceability | • MO = 
+`Done`<br>• WO = `Done`<br>• Only `SN-B` consumed<br>• Qty = 1, No backorder, 
+SN-A/C/D untouched |
+11. **Key Constraints Enforced:**
+12. - ❌ No cancellation, no BoM/qty/WC edits
+13. - 🔒 `SN-B` explicitly forced in Detailed Operations before closing MO
+14. - ✅ Full production (1 unit) completed in single pass
+Reasoning: 
+Action: <action>
+go to url http://127.0.0.1:64864/odoo/manufacturing
+</action>
+Reasoning: The current screen is the Odoo login page. According to the plan 
+(Step 1), I need to log in to access the Manufacturing app. The URL 
+`http://127.0.0.1:64864/web/login?redirect=%2Fodoo%2Fmanufacturing%3F` confirms 
+that after a successful login, I will be redirected to the manufacturing module.
+I need to enter the credentials provided in the instructions (`admin` / 
+`admin`). The first field is "Email", so I will enter `admin` there.
+Action: fill [382, 220] with 'admin'
+Reasoning: 
+Action: <action>
+fill [382, 339] with 'admin'
+</action>
+Reasoning: I have already filled in the 'admin' credentials for both the Email 
+and Password fields in the previous steps. The next logical step is to submit 
+the form by clicking the 'Log in' button to access the Odoo backend and proceed 
+with the manufacturing order tasks.
+Action: click [482, 417]
+Reasoning: The screenshot shows the Odoo login page with empty "Email" and 
+"Password" fields. The previous attempts to log in (according to history) appear
+to have not persisted or the page reset, as the fields are currently empty. I 
+need to re-enter the credentials 'admin' for both fields and click the "Log in" 
+button to proceed to the Manufacturing app as per the redirect URL. I will use 
+central coordinates for the input fields to ensure accurate targeting.
+Action: fill [500, 220] with 'admin'
+fill [500, 340] with 'admin'
+click [500, 420]
+Reasoning: 
+Action: <action>
+fill [500, 220] with 'admin'
+fill [500, 340] with 'admin'
+click [500, 420]
+</action>

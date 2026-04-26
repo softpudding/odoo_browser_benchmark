@@ -1,0 +1,93 @@
+Plan:
+1. Here is a minimal, step-by-step execution plan:
+2. ### 🔹 Step 1: Access & Authentication
+3. 1. Open `http://127.0.0.1:55379/odoo/surveys` in your browser.
+4. 2. Log in with:
+5.    - **Username:** `admin`
+6.    - **Password:** `admin`
+7. ### 🔹 Step 2: Create Base Survey
+8. 1. On the Surveys dashboard, click **New**.
+9. 2. Select a **blank/standard** survey template. Ensure `Assessment` or 
+`Certification` toggles are **OFF**.
+10. ### 🔹 Step 3: Header & Options
+11. 1. Set **Survey Title** to exactly `Bench Customer Feedback` (check for 
+trailing spaces).
+12. 2. Navigate to the **Options** tab.
+13. 3. Configure:
+14.    - **Pagination:** `One page with all the questions`
+15.    - **Access Mode:** `Anyone with the link`
+16.    - Ensure status remains **Active** (not Archived/Draft).
+17. ### 🔹 Step 4: Section & Questions
+18. 1. Go to the **Questions** tab.
+19. 2. Delete any auto-generated questions or extra sections.
+20. 3. Rename the single section to: `Feedback`
+21. 4. Add exactly these 3 questions in order:
+22.    - **Q1:** `How satisfied are you?`
+23.      - Type: `Multiple choice: only one answer`
+24.      - Answers: `Very satisfied` | `Satisfied` | `Neutral` | `Unsatisfied`
+25.    - **Q2:** `What can we improve?`
+26.      - Type: `Multiple Lines Text Box`
+27.    - **Q3:** `Would you recommend us?`
+28.      - Type: `Multiple choice: only one answer`
+29.      - Answers: `Yes` | `No` | `Maybe`
+30. 5. Verify: Exactly 1 section, exactly 3 questions, no extra/empty answer 
+options.
+31. ### 🔹 Step 5: Save & Validate
+32. 1. Click **Save**.
+33. 2. Re-check **Options** tab: Confirm `Access Mode` still reads `Anyone with 
+the link`.
+34. 3. Verify:
+35.    - Title is exactly `Bench Customer Feedback`
+36.    - Survey is active & shareable
+37.    - No secondary drafts or surveys exist
+38.    - All rules are satisfied
+Reasoning: 
+Action: <action>
+go_to_url('http://127.0.0.1:55379/odoo/surveys')
+</action>
+Reasoning: The current screen is the Odoo login page. The instruction is to log 
+in with username 'admin' and password 'admin' to access the Surveys app. The 
+redirect URL in the address bar indicates that after login, I will be taken to 
+`/odoo/surveys`. I will first enter the credentials into the respective fields 
+and then click the "Log in" button.
+Action: fill('Email', 'admin')
+fill('Password', 'admin')
+click('Log in')
+Reasoning: The current URL (`.../web/login?redirect=%2Fodoo%2Fsurveys%27%29%3F`)
+contains a malformed redirect parameter ending in `')?`, which looks like a SQL 
+injection artifact or a corrupted URL. The form fields are empty, and there are 
+no error messages, which suggests that the previous login attempt (recorded in 
+history) likely caused the page to reload due to this invalid redirect target (a
+redirect loop or error). To break this loop and proceed, I need to navigate to a
+clean URL. I will go to `http://127.0.0.1:55379/web`. This will redirect me to a
+standard login page with a valid `redirect=/web` parameter. After successfully 
+logging in there, I can navigate to the Surveys app.
+Action: go_to_url('http://127.0.0.1:55379/web')
+Reasoning: The current page is a 404 error page, indicating that the previous 
+URL (`/web`) was incorrect or the application is not accessible there. The 
+instruction explicitly directs me to go to 
+`http://127.0.0.1:55379/odoo/surveys`. I need to navigate to this specific URL 
+to begin the task. This will likely lead to a login screen or the Surveys app 
+dashboard if a session is active (though given the 404, a fresh start is likely 
+needed).
+Action: go_to_url('http://127.0.0.1:55379/odoo/surveys')
+Reasoning: The current screen is the Odoo login page. The URL contains a 
+malformed redirect parameter (`.../surveys')?`), but the login form is visible 
+and ready for input. The previous history shows attempts to navigate and login, 
+but the session is not established (fields are empty). To proceed with the plan,
+I must first authenticate. I will enter the credentials 'admin' for both email 
+and password, and click the 'Log in' button. After logging in, I will observe 
+where I land; if the redirect fails due to the malformed URL, I will navigate to
+the Surveys app manually.
+Action: fill('Email', 'admin')
+fill('Password', 'admin')
+click('Log in')
+Reasoning: The current screen shows the Odoo login page, but the URL in the 
+address bar (`.../web/login?redirect=%2Fodoo%2Fsurveys%27%29%3F`) contains a 
+malformed redirect parameter (`/odoo/surveys')?`). This malformed parameter is 
+likely causing the login process to fail or redirect back to the login page with
+cleared fields, as seen in the screenshot (fields are empty). The history 
+indicates previous attempts to log in failed, likely due to this redirect issue.
+To break this loop, I need to navigate to a clean login URL without the corrupt 
+redirect parameter. I will go to `http://127.0.0.1:55379/web/login`.
+Action: go_to_url('http://127.0.0.1:55379/web/login')

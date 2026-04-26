@@ -1,0 +1,68 @@
+=== Benchmark Evaluation ===
+  Task:   purchase_stock.receive_partial_scrap_damaged_units
+  Agent:  command
+  DB:     bench_fr_22810035  (auto-isolated)
+  URL:    http://127.0.0.1:62121
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/purchase_stock.receive_partial_scrap_damaged_units__1777070442
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_22810035 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 62121
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 112 calls captured (48 writes, 64 reads)
+   State: 1 records across 2 models
+5. Computing state diff...
+   1 atomic edits observed
+   Postconditions: 5 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     1 edits
+  Matching:     0 edits
+  Missing:      4 edits
+  Extra:        1 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   112
+  Writes:            48 non-forbidden, 0 forbidden
+  Required ops MISSED: ['stock.scrap.action_validate', 'stock.scrap.create']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/purchase_stock.receive_partial_scrap_damaged_units__1777070442/
+
+  Postcondition failures:
+    - PO receipt_status is 'partial', expected 'full'
+    - Expected 2 done receipts, found 1
+    - PO line Bench Control Valve.qty_received is 4.0, expected 6.0
+    - PO line Bench Filter Cartridge.qty_received is 7.0, expected 10.0
+    - Expected exactly 1 scrap linked to the first receipt, found 0
+  Missing expected edits:
+    - stock.scrap.product_id = Bench Filter Cartridge
+    - stock.scrap.scrap_qty = 1.0
+    - stock.scrap.state = done
+    - purchase.order.receipt_status = full
+  Unexpected extra edits:
+    + purchase.order.receipt_status = partial

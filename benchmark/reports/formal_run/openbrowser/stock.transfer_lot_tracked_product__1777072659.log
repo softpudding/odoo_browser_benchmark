@@ -1,0 +1,54 @@
+=== Benchmark Evaluation ===
+  Task:   stock.transfer_lot_tracked_product
+  Agent:  command
+  DB:     bench_fr_18ec9299  (auto-isolated)
+  URL:    http://127.0.0.1:54759
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/openbrowser/stock.transfer_lot_tracked_product__1777072659
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_18ec9299 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 54759
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=0.3s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 1 records across 2 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      3 edits
+  Extra:        0 edits
+  Wall clock:   0.3s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/openbrowser/stock.transfer_lot_tracked_product__1777072659/
+
+  Postcondition failures:
+    - Receipt state is 'assigned', expected 'done' — agent likely failed to validate after assigning lot + quantity
+    - No stock.lot with name 'LOT-2026-001' for product 'Lot Product A' — agent did not enter the lot number
+  Missing expected edits:
+    - stock.picking.state = done
+    - stock.lot.name = LOT-2026-001
+    - stock.lot.product_id = Lot Product A

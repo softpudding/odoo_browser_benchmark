@@ -1,0 +1,49 @@
+Plan:
+1. Here is a minimal, execution-ready plan:
+2. 1. **Login & Navigate** → Open `http://127.0.0.1:65408/odoo/purchase`, 
+authenticate with `admin`/`admin`, and ensure the **Purchase** app is active.
+3. 2. **Open Target PO** → Click purchase order `RET-PO-07`. *(Strictly ignore 
+`RET-PO-08`)*
+4. 3. **Access Receipt** → On the PO form, click the **Receipt** smart button.
+5. 4. **Initiate Return** → Click the **Return** button.
+6. 5. **Set Quantities** → In the return wizard, manually input:
+7.    - `Servo Motor X2`: `2`
+8.    - `Sensor Harness Pro`: `0` *(Do NOT click "Return All")*
+9.    - `Panel Bracket 90`: `1`
+10. 6. **Confirm Return** → Click **Return** to generate the reverse stock 
+transfer.
+11. 7. **Validate Transfer** → On the newly created return transfer, click 
+**Validate**.
+12. 8. **Verify Constraints** → Confirm the PO record was never 
+edited/cancelled, only `RET-PO-07` was processed, and `Sensor Harness Pro` was 
+excluded from the return.
+Reasoning: The current screen is blank, indicating I am likely at the start of 
+the session or the page hasn't loaded. To begin the workflow of processing the 
+purchase order return, I first need to authenticate. I will navigate to the Odoo
+login page to enter the credentials provided (`admin`/`admin`).
+Action: go_to_url(url='http://127.0.0.1:65408/web/login')
+Reasoning: 
+Action: <action>
+go_to_url(url='http://127.0.0.1:65408/odoo/purchase')
+</action>
+Reasoning: I am currently on the Odoo login screen. The previous attempt to 
+navigate to `/odoo/purchase` resulted in this login page because I am not 
+authenticated. To proceed with the plan, I must first authenticate. I will start
+by entering the username `admin` into the Email field.
+Action: fill(field="Email", text="admin")
+Reasoning: The user is on the login page. The history indicates that the email 
+field was just filled with 'admin'. Although the screenshot shows the 
+placeholder text (which might be a rendering artifact or the state before the 
+action took full effect), the logical next step in the login sequence is to 
+enter the password. I need to fill the 'Password' field with 'admin' to proceed 
+with authentication.
+Action: fill(field="Password", text="admin")
+Reasoning: The previous steps involved filling in the username and password. The
+current screen shows the login form. To proceed with the plan of accessing the 
+Purchase app and processing the return for RET-PO-07, I must first submit the 
+login form. The "Log in" button is clearly visible and ready to be clicked.
+Action: click(element="Log in")
+Reasoning: 
+Action: <action>
+click(element="Log in")
+</action>

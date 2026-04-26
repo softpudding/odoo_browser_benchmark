@@ -1,0 +1,53 @@
+=== Benchmark Evaluation ===
+  Task:   hr_holidays.refuse_leave_request
+  Agent:  browser-use
+  DB:     bench_fr_4c2463d9  (auto-isolated)
+  URL:    http://127.0.0.1:57761
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/browser-use/hr_holidays.refuse_leave_request__1777083019
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_4c2463d9 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 57761
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (browser-use)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 80 calls captured (39 writes, 41 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   1 atomic edits observed
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  1.0
+  Precision:    1.0
+  Recall:       1.0
+  Expected:     1 edits
+  Observed:     1 edits
+  Matching:     1 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   80
+  Writes:            39 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/browser-use/hr_holidays.refuse_leave_request__1777083019/
+

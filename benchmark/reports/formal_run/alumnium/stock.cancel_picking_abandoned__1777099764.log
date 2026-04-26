@@ -1,0 +1,59 @@
+=== Benchmark Evaluation ===
+  Task:   stock.cancel_picking_abandoned
+  Agent:  command
+  DB:     bench_fr_2e891c42  (auto-isolated)
+  URL:    http://127.0.0.1:58109
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/alumnium/stock.cancel_picking_abandoned__1777099764
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_2e891c42 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 58109
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=58.1s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 4 calls captured (1 writes, 3 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     1 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      1 edits
+  Extra:        0 edits
+  Wall clock:   58.1s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   4
+  Writes:            1 non-forbidden, 0 forbidden
+  Required ops MISSED: ['stock.picking.action_cancel']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/alumnium/stock.cancel_picking_abandoned__1777099764/
+
+  Postcondition failures:
+    - Picking 'WH/OUT/BENCH-CANCEL' state is 'assigned', expected 'cancel'
+  Missing expected edits:
+    - stock.picking.state = cancel

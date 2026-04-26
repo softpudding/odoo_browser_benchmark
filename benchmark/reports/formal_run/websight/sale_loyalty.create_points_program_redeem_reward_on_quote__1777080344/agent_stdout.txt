@@ -1,0 +1,60 @@
+Plan:
+1. Here is a minimal, step-by-step plan:
+2. **1. Login & Access**
+3. - Navigate to `http://127.0.0.1:61731/odoo/loyalty-programs`
+4. - Enter credentials: `admin` / `admin` → Log in.
+5. **2. Create Loyalty Program**
+6. - Click **New** in the Discount & Loyalty / Loyalty Programs list.
+7. - Fill fields:
+8.   - **Program Name**: `Rotor Points Reward`
+9.   - **Program Type**: `Points`
+10.   - **Trigger**: `Automatic`
+11. - Click **Save**.
+12. **3. Configure Discount Reward**
+13. - Open the **Rewards** tab/section.
+14. - Click **Add a line**.
+15. - Set:
+16.   - **Reward Type**: `Discount`
+17.   - **Points**: `1`
+18.   - **Discount**: `10%`
+19. - Save the form. (Program is now active.)
+20. **4. Open Target Quotation**
+21. - Navigate to **Sales > Quotations**.
+22. - Use the search bar: Customer Reference `ROTOR-PTS-01`
+23. - Open the **Draft** record. Verify existing product lines are untouched.
+24. **5. Apply Reward**
+25. - In the quotation form, locate the **Loyalty & Promotions** widget/button 
+(typically above the order lines).
+26. - Select `Rotor Points Reward` and apply.
+27. - Verify: Exactly **one** new order line appears with type `Discount Reward`
+tied to `Rotor Points Reward`.
+28. **6. Final State & Constraints**
+29. - ✅ Quotation remains in **Draft** state.
+30. - ✅ Original product line is **unchanged**.
+31. - ✅ Exactly **one** reward line exists.
+32. - **Stop here. Do not confirm.**
+Reasoning: 
+Action: <action>
+goto http://127.0.0.1:61731/odoo/loyalty-programs
+</action>
+Reasoning: I am currently on the login page. To proceed with the plan, I first 
+need to authenticate using the provided credentials (`admin` / `admin`). The 
+email field is already highlighted, so I will enter the username there.
+Action: fill [188, 218] with admin
+Reasoning: I have filled the email/username field with 'admin'. Now I need to 
+enter the password 'admin' into the password field to proceed with the login 
+process. The password field is clearly visible below the email field.
+Action: fill [481, 338] with admin
+Reasoning: The history indicates that the username and password have been filled
+(although the screenshot placeholders are visible, I must proceed with the 
+plan). The next logical step in the login process is to submit the form by 
+clicking the "Log in" button. This will authenticate the user and redirect to 
+the Odoo backend, specifically the Loyalty Programs page as per the redirect 
+URL.
+Action: click [496, 420]
+Reasoning: I have successfully submitted the login credentials. The system will 
+now redirect me to the Loyalty Programs list view (`/odoo/loyalty-programs`) as 
+specified in the redirect URL. Once there, the next step in the plan is to 
+create a new loyalty program by clicking the "New" button. I will proceed to 
+click "New" to start creating the "Rotor Points Reward" program.
+Action: click [185, 444]

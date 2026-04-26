@@ -1,0 +1,67 @@
+Plan:
+1. ### Minimal Execution Plan
+2. 1. **Access & Authenticate**
+3.    - Navigate to `http://127.0.0.1:61667/odoo/time-off`
+4.    - Log in with Username: `admin` | Password: `admin`
+5. 2. **Initiate Request**
+6.    - In the Time Off app, click **New** (or **New Time Off**)
+7. 3. **Configure Form**
+8.    - **Time Off Type**: `Paid Time Off`
+9.    - **Date**: `June 15, 2026`
+10.    - **Duration**: Enable `Half Day` → Select `Morning`
+11.    - **Description**: `Doctor appointment`
+12. 4. **Submit**
+13.    - Click **Save** / **Confirm Request**
+14. 5. **Verify & Stop**
+15.    - Confirm status shows **To Approve**
+16.    - Confirm duration reads **0.5 days**
+17.    - **Do not** approve, refuse, or edit further. End process.
+Reasoning: 
+Action: <action>
+click element: 'Time Off'
+</action>
+Reasoning: The user is currently in the Time Off application. The next step in 
+the plan is to initiate a new request. I need to locate and click the "New" 
+button to open the time-off request form.
+Action: click element: 'New'
+Reasoning: The previous action clicked the "New" button, so the time-off request
+form should now be visible. I need to fill in the specific details: set the Time
+Off Type to "Paid Time Off", set the date to June 15, 2026, enable the Half Day 
+option, select Morning, add the description, and save. I will start by filling 
+out the "Time Off Type" field.
+Action: click element: 'Time Off Type'
+Reasoning: 
+Action: <action>
+click element: 'Paid Time Off'
+</action>
+Reasoning: The user has already selected the "Paid Time Off" type. The next step
+in the execution plan is to set the date to June 15, 2026. I need to locate the 
+date field (likely labeled "From" or "Date") to enter this value. After setting 
+the date, I will need to enable the "Half Day" option and select "Morning", then
+add the description. For now, I will focus on opening the date selector.
+Action: click element: 'From'
+Reasoning: 
+Action: The date picker is likely open showing the current month (April 2026). I
+need to navigate to June 2026 to select the 15th. I will first click the arrow 
+to advance to the next month (May).
+
+<action>
+click element: 'Next Month'
+</action>
+Reasoning: 
+Action: The date picker is currently showing May 2026 (after the previous 
+click). To select June 15, 2026, I need to advance the calendar one more month 
+to June.
+
+<action>
+click element: 'Next Month'
+</action>
+Reasoning: The date picker has been navigated to June 2026. The plan requires 
+selecting June 15, 2026. I will click on the number 15 in the calendar to set 
+the date. After this, I will proceed to configure the half-day duration and 
+description.
+Action: click element: '15'
+Reasoning: 
+Action: <action>
+click element: 'Half Day'
+</action>

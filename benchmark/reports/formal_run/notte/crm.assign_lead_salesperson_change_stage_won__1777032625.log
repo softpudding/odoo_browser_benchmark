@@ -1,0 +1,63 @@
+=== Benchmark Evaluation ===
+  Task:   crm.assign_lead_salesperson_change_stage_won
+  Agent:  command
+  DB:     bench_fr_8d2c468c  (auto-isolated)
+  URL:    http://127.0.0.1:64506
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/notte/crm.assign_lead_salesperson_change_stage_won__1777032625
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_8d2c468c from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 64506
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=357.7s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 53 calls captured (24 writes, 29 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   8 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     8 edits
+  Matching:     3 edits
+  Missing:      0 edits
+  Extra:        5 edits
+  Wall clock:   357.7s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   53
+  Writes:            24 non-forbidden, 0 forbidden
+  Required ops MISSED: ['crm.lead.action_set_won_rainbowman']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/notte/crm.assign_lead_salesperson_change_stage_won__1777032625/
+
+  Postcondition failures:
+    - Expected exactly one 'Bench Big Deal' opportunity, found 2
+  Unexpected extra edits:
+    + crm.lead.active = True
+    + crm.lead.name = Bench Big Deal
+    + crm.lead.probability = 10.0
+    + crm.lead.stage_id = New
+    + crm.lead.user_id = None

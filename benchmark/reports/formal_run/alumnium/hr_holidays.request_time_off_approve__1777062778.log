@@ -1,0 +1,59 @@
+=== Benchmark Evaluation ===
+  Task:   hr_holidays.request_time_off_approve
+  Agent:  command
+  DB:     bench_fr_a0260a3e  (auto-isolated)
+  URL:    http://127.0.0.1:64167
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/alumnium/hr_holidays.request_time_off_approve__1777062778
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_a0260a3e from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 64167
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=45.0s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 4 calls captured (1 writes, 3 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     1 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      1 edits
+  Extra:        0 edits
+  Wall clock:   45.0s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   4
+  Writes:            1 non-forbidden, 0 forbidden
+  Required ops MISSED: ['hr.leave.action_approve']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/alumnium/hr_holidays.request_time_off_approve__1777062778/
+
+  Postcondition failures:
+    - Leave state is 'confirm', expected 'validate'
+  Missing expected edits:
+    - hr.leave.state = validate

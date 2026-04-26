@@ -1,0 +1,68 @@
+=== Benchmark Evaluation ===
+  Task:   stock.create_physical_inventory_adjust_two_products
+  Agent:  command
+  DB:     bench_fr_f4d1c7a1  (auto-isolated)
+  URL:    http://127.0.0.1:56090
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/websight/stock.create_physical_inventory_adjust_two_products__1777116070
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_f4d1c7a1 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 56090
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 4 calls captured (1 writes, 3 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 4 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     8 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      8 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   4
+  Writes:            1 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/websight/stock.create_physical_inventory_adjust_two_products__1777116070/
+
+  Postcondition failures:
+    - Bench Prod X on-hand at WH/Stock is 15.0, expected 12.0 - did the agent change the Counted Quantity cell to 12 and click Apply?
+    - Bench Prod Y on-hand at WH/Stock is 25.0, expected 27.0 - did the agent change the Counted Quantity cell to 27 and click Apply?
+    - No done inventory-adjustment stock.move found for Bench Prod X (is_inventory=True, state='done') - Apply was not clicked or the adjustment failed to post
+    - No done inventory-adjustment stock.move found for Bench Prod Y (is_inventory=True, state='done') - Apply was not clicked or the adjustment failed to post
+  Missing expected edits:
+    - stock.quant.location_id = Inventory adjustment
+    - stock.quant.product_id = Bench Prod X
+    - stock.quant.quantity = 3.0
+    - stock.quant.quantity = 12.0
+    - stock.quant.location_id = Inventory adjustment
+    - stock.quant.product_id = Bench Prod Y
+    - stock.quant.quantity = -2.0
+    - stock.quant.quantity = 27.0

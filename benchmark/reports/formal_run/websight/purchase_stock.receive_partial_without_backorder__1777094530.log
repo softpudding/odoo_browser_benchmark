@@ -1,0 +1,62 @@
+=== Benchmark Evaluation ===
+  Task:   purchase_stock.receive_partial_without_backorder
+  Agent:  command
+  DB:     bench_fr_aa17b70b  (auto-isolated)
+  URL:    http://127.0.0.1:56609
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/websight/purchase_stock.receive_partial_without_backorder__1777094530
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_aa17b70b from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 56609
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 4 calls captured (1 writes, 3 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 4 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     1 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      1 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   4
+  Writes:            1 non-forbidden, 0 forbidden
+  Required ops MISSED: ['stock.backorder.confirmation.process_cancel_backorder', 'stock.picking.button_validate']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/websight/purchase_stock.receive_partial_without_backorder__1777094530/
+
+  Postcondition failures:
+    - PO receipt_status is 'pending', expected 'full'
+    - Receipt state is 'assigned', expected 'done'
+    - PO line Servo Motor.qty_received: expected 6.0, got 0.0
+    - PO line Sensor Harness.qty_received: expected 9.0, got 0.0
+  Missing expected edits:
+    - purchase.order.receipt_status = full

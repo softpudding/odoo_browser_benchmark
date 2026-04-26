@@ -1,0 +1,66 @@
+Plan:
+1. # Minimal Execution Plan: Webshop Order Placement (Wire Transfer)
+2. ## 🎯 Objective
+3. Place a confirmed end-to-end order for `Bench Portal Product` (€25.00) via 
+the web frontend, ensuring the backend `sale.order` is confirmed and meets all 
+specified criteria.
+4. ---
+5. ## 📋 Execution Steps
+6. ### 1. Add Product to Cart
+7. - Navigate to: `http://127.0.0.1:50027/shop`
+8. - Locate & open product: **`Bench Portal Product`**
+9. - Click **Add to Cart** (ensure quantity = `1`)
+10. - Navigate to cart: `http://127.0.0.1:50027/shop/cart`
+11. ### 2. Checkout & Delivery Address
+12. - Click **Checkout** / **Process Checkout**
+13. - Fill the delivery address form **exactly**:
+14.   - `Name`: `Bench Portal Customer`
+15.   - `Street`: `12 Bench Street`
+16.   - `City`: `Benchtown`
+17.   - `Zip`: `90001`
+18.   - `Country`: `United States`
+19.   - `Email`: `bench.portal@example.com`
+20.   - `Phone`: `+1 555-0199`
+21. - Click **Next** / **Save address**
+22. ### 3. Payment & Order Confirmation
+23. - Select payment method: **`Wire Transfer`** (offline)
+24. - Click **Pay now** / **Confirm order**
+25. - Wait for the order confirmation/thank-you page to load
+26. ---
+27. ## ✅ Backend Verification
+28. After frontend confirmation, validate the resulting `sale.order` record:
+29. - `state` ∈ (`sale`, `sent`, `done`) → **not** `draft` or `cancel`
+30. - `order_line` count = `1` for product `Bench Portal Product` 
+(`product_uom_qty=1`, `price_unit=25.00`)
+31. - `amount_total` = `25.00`
+32. - `website_id` is populated (confirms webshop origin)
+33. ---
+34. ## 🚫 Constraints Checklist
+35. -  Exact address/contact values used
+36. -  Product price & quantity unmodified (€25.00, qty 1)
+37. -  No extra products, partners, or sale orders created
+38. -  Payment via offline **Wire Transfer** only
+39. -  Order left in confirmed state (no cancellation)
+Reasoning: The instruction specifies to log in with 'admin'/'admin' at the shop 
+URL. I will first go to the login page.
+Action: navigate("http://127.0.0.1:50027/web/login")
+Reasoning: I am currently on the login page. The instructions explicitly state 
+to log in with username 'admin' and password 'admin'. I will fill in the email 
+field with 'admin', the password field with 'admin', and click the 'Log in' 
+button to authenticate. After logging in, I will proceed to the shop page to 
+start the ordering process.
+Action: fill('input', 'admin')
+Reasoning: I am currently on the login page. The previous step filled the email 
+field. I need to fill the password field with 'admin' and then click the 'Log 
+in' button to authenticate. After successful login, I will navigate to the shop 
+page to begin the ordering process.
+Action: fill('input', 'admin')
+Reasoning: 
+Action: <action>click(button:has-text("Log in"))</action>
+Reasoning: I have just attempted to log in with the provided credentials. The 
+next step in the plan is to navigate to the shop page 
+(`http://127.0.0.1:50027/shop`) to find the "Bench Portal Product" and begin the
+ordering process.
+Action: navigate("http://127.0.0.1:50027/shop")
+Reasoning: 
+Action: <action>click(link:has-text("Bench Portal Product"))</action>

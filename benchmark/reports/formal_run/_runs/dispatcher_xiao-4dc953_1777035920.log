@@ -1,0 +1,965 @@
+[odoo_benchmark 07c62ab5e] formal_run: xiao-4dc953 checkpoint (10 runs done)
+ Committer: yangxiao <yangxiao@B-L9034TD7-0440.local>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 228 files changed, 10641 insertions(+)
+ create mode 100644 benchmark/reports/formal_run/_runs/dispatcher_xiao-4dc953_1777035920.log
+ create mode 100644 benchmark/reports/formal_run/agent_e/calendar.create_all_day_event_with_attendee__1777033601/after_state.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/calendar.create_all_day_event_with_attendee__1777033601/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/calendar.create_all_day_event_with_attendee__1777033601/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/agent_e/calendar.create_all_day_event_with_attendee__1777033601/before_state.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/calendar.create_all_day_event_with_attendee__1777033601/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/calendar.create_all_day_event_with_attendee__1777033601/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/calendar.create_all_day_event_with_attendee__1777033601/score.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/calendar.create_all_day_event_with_attendee__1777033601/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/calendar.create_all_day_event_with_attendee__1777033601/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/calendar.create_all_day_event_with_attendee__1777033601/trace.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/calendar.create_all_day_event_with_attendee__1777033601/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/calendar.create_recurring_meeting_weekly_pattern__1777036548.log
+ create mode 100644 benchmark/reports/formal_run/agent_e/calendar.create_recurring_meeting_weekly_pattern__1777036548/after_state.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/calendar.create_recurring_meeting_weekly_pattern__1777036548/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/calendar.create_recurring_meeting_weekly_pattern__1777036548/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/agent_e/calendar.create_recurring_meeting_weekly_pattern__1777036548/before_state.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/calendar.create_recurring_meeting_weekly_pattern__1777036548/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/calendar.create_recurring_meeting_weekly_pattern__1777036548/mitm.log
+ create mode 100644 benchmark/reports/formal_run/agent_e/calendar.create_recurring_meeting_weekly_pattern__1777036548/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/calendar.create_recurring_meeting_weekly_pattern__1777036548/score.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/calendar.create_recurring_meeting_weekly_pattern__1777036548/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/calendar.create_recurring_meeting_weekly_pattern__1777036548/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/calendar.create_recurring_meeting_weekly_pattern__1777036548/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/agent_e/calendar.create_recurring_meeting_weekly_pattern__1777036548/trace.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/calendar.create_recurring_meeting_weekly_pattern__1777036548/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/calendar.create_recurring_meeting_weekly_pattern__1777034537.log
+ create mode 100644 benchmark/reports/formal_run/alumnium/calendar.create_recurring_meeting_weekly_pattern__1777034537/mitm.log
+ create mode 100644 benchmark/reports/formal_run/alumnium/calendar.create_recurring_meeting_weekly_pattern__1777034537/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/alumnium/calendar.create_recurring_meeting_weekly_pattern__1777036296.log
+ create mode 100644 benchmark/reports/formal_run/alumnium/calendar.create_recurring_meeting_weekly_pattern__1777036296/after_state.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/calendar.create_recurring_meeting_weekly_pattern__1777036296/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/calendar.create_recurring_meeting_weekly_pattern__1777036296/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/alumnium/calendar.create_recurring_meeting_weekly_pattern__1777036296/before_state.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/calendar.create_recurring_meeting_weekly_pattern__1777036296/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/calendar.create_recurring_meeting_weekly_pattern__1777036296/mitm.log
+ create mode 100644 benchmark/reports/formal_run/alumnium/calendar.create_recurring_meeting_weekly_pattern__1777036296/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/calendar.create_recurring_meeting_weekly_pattern__1777036296/score.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/calendar.create_recurring_meeting_weekly_pattern__1777036296/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/calendar.create_recurring_meeting_weekly_pattern__1777036296/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/calendar.create_recurring_meeting_weekly_pattern__1777036296/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/alumnium/calendar.create_recurring_meeting_weekly_pattern__1777036296/trace.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/calendar.create_recurring_meeting_weekly_pattern__1777036296/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/calendar.invite_external_attendee_by_email__1777037579.log
+ create mode 100644 benchmark/reports/formal_run/alumnium/calendar.invite_external_attendee_by_email__1777037579/mitm.log
+ create mode 100644 benchmark/reports/formal_run/alumnium/calendar.invite_external_attendee_by_email__1777037579/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/browser-use/calendar.create_recurring_meeting_weekly_pattern__1777033975.log
+ create mode 100644 benchmark/reports/formal_run/browser-use/calendar.create_recurring_meeting_weekly_pattern__1777033975/after_state.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/calendar.create_recurring_meeting_weekly_pattern__1777033975/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/calendar.create_recurring_meeting_weekly_pattern__1777033975/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/browser-use/calendar.create_recurring_meeting_weekly_pattern__1777033975/before_state.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/calendar.create_recurring_meeting_weekly_pattern__1777033975/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/calendar.create_recurring_meeting_weekly_pattern__1777033975/mitm.log
+ create mode 100644 benchmark/reports/formal_run/browser-use/calendar.create_recurring_meeting_weekly_pattern__1777033975/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/calendar.create_recurring_meeting_weekly_pattern__1777033975/score.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/calendar.create_recurring_meeting_weekly_pattern__1777033975/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/calendar.create_recurring_meeting_weekly_pattern__1777033975/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/calendar.create_recurring_meeting_weekly_pattern__1777033975/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/browser-use/calendar.create_recurring_meeting_weekly_pattern__1777033975/trace.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/calendar.create_recurring_meeting_weekly_pattern__1777033975/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/calendar.invite_external_attendee_by_email__1777035920.log
+ create mode 100644 benchmark/reports/formal_run/browser-use/calendar.invite_external_attendee_by_email__1777035920/after_state.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/calendar.invite_external_attendee_by_email__1777035920/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/calendar.invite_external_attendee_by_email__1777035920/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/browser-use/calendar.invite_external_attendee_by_email__1777035920/before_state.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/calendar.invite_external_attendee_by_email__1777035920/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/calendar.invite_external_attendee_by_email__1777035920/mitm.log
+ create mode 100644 benchmark/reports/formal_run/browser-use/calendar.invite_external_attendee_by_email__1777035920/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/calendar.invite_external_attendee_by_email__1777035920/score.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/calendar.invite_external_attendee_by_email__1777035920/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/calendar.invite_external_attendee_by_email__1777035920/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/calendar.invite_external_attendee_by_email__1777035920/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/browser-use/calendar.invite_external_attendee_by_email__1777035920/trace.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/calendar.invite_external_attendee_by_email__1777035920/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/event.create_event_add_question_publish__1777037004.log
+ create mode 100644 benchmark/reports/formal_run/browser-use/event.create_event_add_question_publish__1777037004/after_state.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/event.create_event_add_question_publish__1777037004/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/event.create_event_add_question_publish__1777037004/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/browser-use/event.create_event_add_question_publish__1777037004/before_state.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/event.create_event_add_question_publish__1777037004/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/event.create_event_add_question_publish__1777037004/mitm.log
+ create mode 100644 benchmark/reports/formal_run/browser-use/event.create_event_add_question_publish__1777037004/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/event.create_event_add_question_publish__1777037004/score.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/event.create_event_add_question_publish__1777037004/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/event.create_event_add_question_publish__1777037004/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/event.create_event_add_question_publish__1777037004/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/browser-use/event.create_event_add_question_publish__1777037004/trace.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/event.create_event_add_question_publish__1777037004/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/calendar.create_all_day_event_with_attendee__1777033573/after_state.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/calendar.create_all_day_event_with_attendee__1777033573/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/calendar.create_all_day_event_with_attendee__1777033573/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/magnitude/calendar.create_all_day_event_with_attendee__1777033573/before_state.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/calendar.create_all_day_event_with_attendee__1777033573/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/calendar.create_all_day_event_with_attendee__1777033573/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/calendar.create_all_day_event_with_attendee__1777033573/score.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/calendar.create_all_day_event_with_attendee__1777033573/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/calendar.create_all_day_event_with_attendee__1777033573/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/calendar.create_all_day_event_with_attendee__1777033573/trace.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/calendar.create_all_day_event_with_attendee__1777033573/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/calendar.create_recurring_meeting_weekly_pattern__1777036380.log
+ create mode 100644 benchmark/reports/formal_run/magnitude/calendar.create_recurring_meeting_weekly_pattern__1777036380/after_state.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/calendar.create_recurring_meeting_weekly_pattern__1777036380/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/calendar.create_recurring_meeting_weekly_pattern__1777036380/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/magnitude/calendar.create_recurring_meeting_weekly_pattern__1777036380/before_state.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/calendar.create_recurring_meeting_weekly_pattern__1777036380/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/calendar.create_recurring_meeting_weekly_pattern__1777036380/mitm.log
+ create mode 100644 benchmark/reports/formal_run/magnitude/calendar.create_recurring_meeting_weekly_pattern__1777036380/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/calendar.create_recurring_meeting_weekly_pattern__1777036380/score.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/calendar.create_recurring_meeting_weekly_pattern__1777036380/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/calendar.create_recurring_meeting_weekly_pattern__1777036380/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/calendar.create_recurring_meeting_weekly_pattern__1777036380/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/magnitude/calendar.create_recurring_meeting_weekly_pattern__1777036380/trace.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/calendar.create_recurring_meeting_weekly_pattern__1777036380/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/calendar.invite_external_attendee_by_email__1777037629/mitm.log
+ create mode 100644 benchmark/reports/formal_run/magnitude/calendar.invite_external_attendee_by_email__1777037629/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/notte/calendar.create_recurring_meeting_weekly_pattern__1777034203.log
+ create mode 100644 benchmark/reports/formal_run/notte/calendar.create_recurring_meeting_weekly_pattern__1777034203/mitm.log
+ create mode 100644 benchmark/reports/formal_run/notte/calendar.create_recurring_meeting_weekly_pattern__1777034203/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/notte/calendar.create_recurring_meeting_weekly_pattern__1777035920.log
+ create mode 100644 benchmark/reports/formal_run/notte/calendar.create_recurring_meeting_weekly_pattern__1777035920/after_state.json
+ create mode 100644 benchmark/reports/formal_run/notte/calendar.create_recurring_meeting_weekly_pattern__1777035920/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/notte/calendar.create_recurring_meeting_weekly_pattern__1777035920/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/notte/calendar.create_recurring_meeting_weekly_pattern__1777035920/before_state.json
+ create mode 100644 benchmark/reports/formal_run/notte/calendar.create_recurring_meeting_weekly_pattern__1777035920/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/notte/calendar.create_recurring_meeting_weekly_pattern__1777035920/mitm.log
+ create mode 100644 benchmark/reports/formal_run/notte/calendar.create_recurring_meeting_weekly_pattern__1777035920/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/notte/calendar.create_recurring_meeting_weekly_pattern__1777035920/score.json
+ create mode 100644 benchmark/reports/formal_run/notte/calendar.create_recurring_meeting_weekly_pattern__1777035920/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/notte/calendar.create_recurring_meeting_weekly_pattern__1777035920/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/notte/calendar.create_recurring_meeting_weekly_pattern__1777035920/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/notte/calendar.create_recurring_meeting_weekly_pattern__1777035920/trace.json
+ create mode 100644 benchmark/reports/formal_run/notte/calendar.create_recurring_meeting_weekly_pattern__1777035920/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/notte/calendar.invite_external_attendee_by_email__1777037172.log
+ create mode 100644 benchmark/reports/formal_run/notte/calendar.invite_external_attendee_by_email__1777037172/after_state.json
+ create mode 100644 benchmark/reports/formal_run/notte/calendar.invite_external_attendee_by_email__1777037172/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/notte/calendar.invite_external_attendee_by_email__1777037172/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/notte/calendar.invite_external_attendee_by_email__1777037172/before_state.json
+ create mode 100644 benchmark/reports/formal_run/notte/calendar.invite_external_attendee_by_email__1777037172/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/notte/calendar.invite_external_attendee_by_email__1777037172/mitm.log
+ create mode 100644 benchmark/reports/formal_run/notte/calendar.invite_external_attendee_by_email__1777037172/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/notte/calendar.invite_external_attendee_by_email__1777037172/score.json
+ create mode 100644 benchmark/reports/formal_run/notte/calendar.invite_external_attendee_by_email__1777037172/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/notte/calendar.invite_external_attendee_by_email__1777037172/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/notte/calendar.invite_external_attendee_by_email__1777037172/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/notte/calendar.invite_external_attendee_by_email__1777037172/trace.json
+ create mode 100644 benchmark/reports/formal_run/notte/calendar.invite_external_attendee_by_email__1777037172/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/account.switch_negative_invoice_to_credit_note__1777033889.log
+ create mode 100644 benchmark/reports/formal_run/openbrowser/account.switch_negative_invoice_to_credit_note__1777033889/after_state.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/account.switch_negative_invoice_to_credit_note__1777033889/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/account.switch_negative_invoice_to_credit_note__1777033889/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/openbrowser/account.switch_negative_invoice_to_credit_note__1777033889/before_state.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/account.switch_negative_invoice_to_credit_note__1777033889/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/account.switch_negative_invoice_to_credit_note__1777033889/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/account.switch_negative_invoice_to_credit_note__1777033889/score.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/account.switch_negative_invoice_to_credit_note__1777033889/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/account.switch_negative_invoice_to_credit_note__1777033889/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/account.switch_negative_invoice_to_credit_note__1777033889/trace.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/account.switch_negative_invoice_to_credit_note__1777033889/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/calendar.create_all_day_event_with_attendee__1777036548.log
+ create mode 100644 benchmark/reports/formal_run/openbrowser/calendar.create_all_day_event_with_attendee__1777036548/after_state.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/calendar.create_all_day_event_with_attendee__1777036548/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/calendar.create_all_day_event_with_attendee__1777036548/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/openbrowser/calendar.create_all_day_event_with_attendee__1777036548/before_state.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/calendar.create_all_day_event_with_attendee__1777036548/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/calendar.create_all_day_event_with_attendee__1777036548/mitm.log
+ create mode 100644 benchmark/reports/formal_run/openbrowser/calendar.create_all_day_event_with_attendee__1777036548/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/calendar.create_all_day_event_with_attendee__1777036548/score.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/calendar.create_all_day_event_with_attendee__1777036548/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/calendar.create_all_day_event_with_attendee__1777036548/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/calendar.create_all_day_event_with_attendee__1777036548/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/openbrowser/calendar.create_all_day_event_with_attendee__1777036548/trace.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/calendar.create_all_day_event_with_attendee__1777036548/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_recurring_meeting_weekly_pattern__1777034292.log
+ create mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_recurring_meeting_weekly_pattern__1777034292/mitm.log
+ create mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_recurring_meeting_weekly_pattern__1777034292/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_recurring_meeting_weekly_pattern__1777035920.log
+ create mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_recurring_meeting_weekly_pattern__1777035920/after_state.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_recurring_meeting_weekly_pattern__1777035920/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_recurring_meeting_weekly_pattern__1777035920/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_recurring_meeting_weekly_pattern__1777035920/before_state.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_recurring_meeting_weekly_pattern__1777035920/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_recurring_meeting_weekly_pattern__1777035920/mitm.log
+ create mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_recurring_meeting_weekly_pattern__1777035920/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_recurring_meeting_weekly_pattern__1777035920/score.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_recurring_meeting_weekly_pattern__1777035920/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_recurring_meeting_weekly_pattern__1777035920/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_recurring_meeting_weekly_pattern__1777035920/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_recurring_meeting_weekly_pattern__1777035920/trace.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_recurring_meeting_weekly_pattern__1777035920/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/calendar.invite_external_attendee_by_email__1777037192.log
+ create mode 100644 benchmark/reports/formal_run/skyvern/calendar.invite_external_attendee_by_email__1777037192/mitm.log
+ create mode 100644 benchmark/reports/formal_run/skyvern/calendar.invite_external_attendee_by_email__1777037192/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/websight/calendar.create_all_day_event_with_attendee__1777033911.log
+ create mode 100644 benchmark/reports/formal_run/websight/calendar.create_all_day_event_with_attendee__1777033911/after_state.json
+ create mode 100644 benchmark/reports/formal_run/websight/calendar.create_all_day_event_with_attendee__1777033911/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/websight/calendar.create_all_day_event_with_attendee__1777033911/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/websight/calendar.create_all_day_event_with_attendee__1777033911/before_state.json
+ create mode 100644 benchmark/reports/formal_run/websight/calendar.create_all_day_event_with_attendee__1777033911/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/websight/calendar.create_all_day_event_with_attendee__1777033911/mitm.log
+ create mode 100644 benchmark/reports/formal_run/websight/calendar.create_all_day_event_with_attendee__1777033911/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/websight/calendar.create_all_day_event_with_attendee__1777033911/score.json
+ create mode 100644 benchmark/reports/formal_run/websight/calendar.create_all_day_event_with_attendee__1777033911/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/websight/calendar.create_all_day_event_with_attendee__1777033911/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/websight/calendar.create_all_day_event_with_attendee__1777033911/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/websight/calendar.create_all_day_event_with_attendee__1777033911/trace.json
+ create mode 100644 benchmark/reports/formal_run/websight/calendar.create_all_day_event_with_attendee__1777033911/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/websight/calendar.create_recurring_meeting_weekly_pattern__1777036571.log
+ create mode 100644 benchmark/reports/formal_run/websight/calendar.create_recurring_meeting_weekly_pattern__1777036571/after_state.json
+ create mode 100644 benchmark/reports/formal_run/websight/calendar.create_recurring_meeting_weekly_pattern__1777036571/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/websight/calendar.create_recurring_meeting_weekly_pattern__1777036571/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/websight/calendar.create_recurring_meeting_weekly_pattern__1777036571/before_state.json
+ create mode 100644 benchmark/reports/formal_run/websight/calendar.create_recurring_meeting_weekly_pattern__1777036571/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/websight/calendar.create_recurring_meeting_weekly_pattern__1777036571/mitm.log
+ create mode 100644 benchmark/reports/formal_run/websight/calendar.create_recurring_meeting_weekly_pattern__1777036571/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/websight/calendar.create_recurring_meeting_weekly_pattern__1777036571/score.json
+ create mode 100644 benchmark/reports/formal_run/websight/calendar.create_recurring_meeting_weekly_pattern__1777036571/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/websight/calendar.create_recurring_meeting_weekly_pattern__1777036571/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/websight/calendar.create_recurring_meeting_weekly_pattern__1777036571/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/websight/calendar.create_recurring_meeting_weekly_pattern__1777036571/trace.json
+ create mode 100644 benchmark/reports/formal_run/websight/calendar.create_recurring_meeting_weekly_pattern__1777036571/trace_summary.json
+To https://github.com/softpudding/odoo_browser_benchmark.git
+   389f1122a..07c62ab5e  odoo_benchmark -> odoo_benchmark
+[odoo_benchmark c34bbb1b5] formal_run: xiao-4dc953 checkpoint (20 runs done)
+ Committer: yangxiao <yangxiao@B-L9034TD7-0440.local>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 149 files changed, 6826 insertions(+)
+ create mode 100644 benchmark/reports/formal_run/agent_e/calendar.invite_external_attendee_by_email__1777037640.log
+ create mode 100644 benchmark/reports/formal_run/agent_e/calendar.invite_external_attendee_by_email__1777037640/after_state.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/calendar.invite_external_attendee_by_email__1777037640/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/calendar.invite_external_attendee_by_email__1777037640/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/agent_e/calendar.invite_external_attendee_by_email__1777037640/before_state.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/calendar.invite_external_attendee_by_email__1777037640/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/calendar.invite_external_attendee_by_email__1777037640/mitm.log
+ create mode 100644 benchmark/reports/formal_run/agent_e/calendar.invite_external_attendee_by_email__1777037640/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/calendar.invite_external_attendee_by_email__1777037640/score.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/calendar.invite_external_attendee_by_email__1777037640/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/calendar.invite_external_attendee_by_email__1777037640/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/calendar.invite_external_attendee_by_email__1777037640/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/agent_e/calendar.invite_external_attendee_by_email__1777037640/trace.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/calendar.invite_external_attendee_by_email__1777037640/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/event.create_event_add_question_publish__1777038665.log
+ create mode 100644 benchmark/reports/formal_run/agent_e/event.create_event_add_question_publish__1777038665/mitm.log
+ create mode 100644 benchmark/reports/formal_run/agent_e/event.create_event_add_question_publish__1777038665/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/alumnium/calendar.invite_external_attendee_by_email__1777037579/after_state.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/calendar.invite_external_attendee_by_email__1777037579/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/calendar.invite_external_attendee_by_email__1777037579/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/alumnium/calendar.invite_external_attendee_by_email__1777037579/before_state.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/calendar.invite_external_attendee_by_email__1777037579/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/calendar.invite_external_attendee_by_email__1777037579/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/calendar.invite_external_attendee_by_email__1777037579/score.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/calendar.invite_external_attendee_by_email__1777037579/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/calendar.invite_external_attendee_by_email__1777037579/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/calendar.invite_external_attendee_by_email__1777037579/trace.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/calendar.invite_external_attendee_by_email__1777037579/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/event.create_event_add_question_publish__1777038484.log
+ create mode 100644 benchmark/reports/formal_run/alumnium/event.create_event_add_question_publish__1777038484/after_state.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/event.create_event_add_question_publish__1777038484/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/event.create_event_add_question_publish__1777038484/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/alumnium/event.create_event_add_question_publish__1777038484/before_state.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/event.create_event_add_question_publish__1777038484/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/event.create_event_add_question_publish__1777038484/mitm.log
+ create mode 100644 benchmark/reports/formal_run/alumnium/event.create_event_add_question_publish__1777038484/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/event.create_event_add_question_publish__1777038484/score.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/event.create_event_add_question_publish__1777038484/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/event.create_event_add_question_publish__1777038484/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/event.create_event_add_question_publish__1777038484/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/alumnium/event.create_event_add_question_publish__1777038484/trace.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/event.create_event_add_question_publish__1777038484/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/event.publish_event_register_attendee__1777038254.log
+ create mode 100644 benchmark/reports/formal_run/browser-use/event.publish_event_register_attendee__1777038254/after_state.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/event.publish_event_register_attendee__1777038254/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/event.publish_event_register_attendee__1777038254/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/browser-use/event.publish_event_register_attendee__1777038254/before_state.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/event.publish_event_register_attendee__1777038254/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/event.publish_event_register_attendee__1777038254/mitm.log
+ create mode 100644 benchmark/reports/formal_run/browser-use/event.publish_event_register_attendee__1777038254/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/event.publish_event_register_attendee__1777038254/score.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/event.publish_event_register_attendee__1777038254/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/event.publish_event_register_attendee__1777038254/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/event.publish_event_register_attendee__1777038254/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/browser-use/event.publish_event_register_attendee__1777038254/trace.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/event.publish_event_register_attendee__1777038254/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/calendar.invite_external_attendee_by_email__1777037629.log
+ create mode 100644 benchmark/reports/formal_run/magnitude/calendar.invite_external_attendee_by_email__1777037629/after_state.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/calendar.invite_external_attendee_by_email__1777037629/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/calendar.invite_external_attendee_by_email__1777037629/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/magnitude/calendar.invite_external_attendee_by_email__1777037629/before_state.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/calendar.invite_external_attendee_by_email__1777037629/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/calendar.invite_external_attendee_by_email__1777037629/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/calendar.invite_external_attendee_by_email__1777037629/score.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/calendar.invite_external_attendee_by_email__1777037629/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/calendar.invite_external_attendee_by_email__1777037629/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/calendar.invite_external_attendee_by_email__1777037629/trace.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/calendar.invite_external_attendee_by_email__1777037629/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/event.create_event_add_question_publish__1777038540.log
+ create mode 100644 benchmark/reports/formal_run/magnitude/event.create_event_add_question_publish__1777038540/after_state.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/event.create_event_add_question_publish__1777038540/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/event.create_event_add_question_publish__1777038540/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/magnitude/event.create_event_add_question_publish__1777038540/before_state.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/event.create_event_add_question_publish__1777038540/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/event.create_event_add_question_publish__1777038540/mitm.log
+ create mode 100644 benchmark/reports/formal_run/magnitude/event.create_event_add_question_publish__1777038540/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/event.create_event_add_question_publish__1777038540/score.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/event.create_event_add_question_publish__1777038540/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/event.create_event_add_question_publish__1777038540/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/event.create_event_add_question_publish__1777038540/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/magnitude/event.create_event_add_question_publish__1777038540/trace.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/event.create_event_add_question_publish__1777038540/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/notte/event.create_event_add_question_publish__1777038264.log
+ create mode 100644 benchmark/reports/formal_run/notte/event.create_event_add_question_publish__1777038264/after_state.json
+ create mode 100644 benchmark/reports/formal_run/notte/event.create_event_add_question_publish__1777038264/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/notte/event.create_event_add_question_publish__1777038264/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/notte/event.create_event_add_question_publish__1777038264/before_state.json
+ create mode 100644 benchmark/reports/formal_run/notte/event.create_event_add_question_publish__1777038264/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/notte/event.create_event_add_question_publish__1777038264/mitm.log
+ create mode 100644 benchmark/reports/formal_run/notte/event.create_event_add_question_publish__1777038264/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/notte/event.create_event_add_question_publish__1777038264/score.json
+ create mode 100644 benchmark/reports/formal_run/notte/event.create_event_add_question_publish__1777038264/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/notte/event.create_event_add_question_publish__1777038264/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/notte/event.create_event_add_question_publish__1777038264/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/notte/event.create_event_add_question_publish__1777038264/trace.json
+ create mode 100644 benchmark/reports/formal_run/notte/event.create_event_add_question_publish__1777038264/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/calendar.create_recurring_meeting_weekly_pattern__1777037814.log
+ create mode 100644 benchmark/reports/formal_run/openbrowser/calendar.create_recurring_meeting_weekly_pattern__1777037814/after_state.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/calendar.create_recurring_meeting_weekly_pattern__1777037814/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/calendar.create_recurring_meeting_weekly_pattern__1777037814/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/openbrowser/calendar.create_recurring_meeting_weekly_pattern__1777037814/before_state.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/calendar.create_recurring_meeting_weekly_pattern__1777037814/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/calendar.create_recurring_meeting_weekly_pattern__1777037814/mitm.log
+ create mode 100644 benchmark/reports/formal_run/openbrowser/calendar.create_recurring_meeting_weekly_pattern__1777037814/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/calendar.create_recurring_meeting_weekly_pattern__1777037814/score.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/calendar.create_recurring_meeting_weekly_pattern__1777037814/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/calendar.create_recurring_meeting_weekly_pattern__1777037814/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/calendar.create_recurring_meeting_weekly_pattern__1777037814/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/openbrowser/calendar.create_recurring_meeting_weekly_pattern__1777037814/trace.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/calendar.create_recurring_meeting_weekly_pattern__1777037814/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/calendar.invite_external_attendee_by_email__1777038893/mitm.log
+ create mode 100644 benchmark/reports/formal_run/openbrowser/calendar.invite_external_attendee_by_email__1777038893/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/skyvern/calendar.invite_external_attendee_by_email__1777037192/after_state.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/calendar.invite_external_attendee_by_email__1777037192/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/calendar.invite_external_attendee_by_email__1777037192/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/skyvern/calendar.invite_external_attendee_by_email__1777037192/before_state.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/calendar.invite_external_attendee_by_email__1777037192/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/calendar.invite_external_attendee_by_email__1777037192/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/calendar.invite_external_attendee_by_email__1777037192/score.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/calendar.invite_external_attendee_by_email__1777037192/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/calendar.invite_external_attendee_by_email__1777037192/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/calendar.invite_external_attendee_by_email__1777037192/trace.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/calendar.invite_external_attendee_by_email__1777037192/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/event.create_event_add_question_publish__1777038456.log
+ create mode 100644 benchmark/reports/formal_run/skyvern/event.create_event_add_question_publish__1777038456/mitm.log
+ create mode 100644 benchmark/reports/formal_run/skyvern/event.create_event_add_question_publish__1777038456/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/websight/calendar.invite_external_attendee_by_email__1777037834.log
+ create mode 100644 benchmark/reports/formal_run/websight/calendar.invite_external_attendee_by_email__1777037834/after_state.json
+ create mode 100644 benchmark/reports/formal_run/websight/calendar.invite_external_attendee_by_email__1777037834/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/websight/calendar.invite_external_attendee_by_email__1777037834/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/websight/calendar.invite_external_attendee_by_email__1777037834/before_state.json
+ create mode 100644 benchmark/reports/formal_run/websight/calendar.invite_external_attendee_by_email__1777037834/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/websight/calendar.invite_external_attendee_by_email__1777037834/mitm.log
+ create mode 100644 benchmark/reports/formal_run/websight/calendar.invite_external_attendee_by_email__1777037834/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/websight/calendar.invite_external_attendee_by_email__1777037834/score.json
+ create mode 100644 benchmark/reports/formal_run/websight/calendar.invite_external_attendee_by_email__1777037834/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/websight/calendar.invite_external_attendee_by_email__1777037834/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/websight/calendar.invite_external_attendee_by_email__1777037834/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/websight/calendar.invite_external_attendee_by_email__1777037834/trace.json
+ create mode 100644 benchmark/reports/formal_run/websight/calendar.invite_external_attendee_by_email__1777037834/trace_summary.json
+To https://github.com/softpudding/odoo_browser_benchmark.git
+ ! [rejected]            odoo_benchmark -> odoo_benchmark (fetch first)
+error: failed to push some refs to 'https://github.com/softpudding/odoo_browser_benchmark.git'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+[git] push attempt 1 failed: Command '['git', 'push']' returned non-zero exit status 1.
+To https://github.com/softpudding/odoo_browser_benchmark.git
+ ! [rejected]            odoo_benchmark -> odoo_benchmark (fetch first)
+error: failed to push some refs to 'https://github.com/softpudding/odoo_browser_benchmark.git'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+[git] push attempt 2 failed: Command '['git', 'push']' returned non-zero exit status 1.
+To https://github.com/softpudding/odoo_browser_benchmark.git
+ ! [rejected]            odoo_benchmark -> odoo_benchmark (fetch first)
+error: failed to push some refs to 'https://github.com/softpudding/odoo_browser_benchmark.git'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+[git] push attempt 3 failed: Command '['git', 'push']' returned non-zero exit status 1.
+[odoo_benchmark e00aab24b] formal_run: xiao-4dc953 checkpoint (30 runs done)
+ Committer: yangxiao <yangxiao@B-L9034TD7-0440.local>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 148 files changed, 6540 insertions(+)
+ create mode 100644 benchmark/reports/formal_run/agent_e/event.create_event_add_question_publish__1777038665/after_state.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/event.create_event_add_question_publish__1777038665/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/event.create_event_add_question_publish__1777038665/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/agent_e/event.create_event_add_question_publish__1777038665/before_state.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/event.create_event_add_question_publish__1777038665/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/event.create_event_add_question_publish__1777038665/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/event.create_event_add_question_publish__1777038665/score.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/event.create_event_add_question_publish__1777038665/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/event.create_event_add_question_publish__1777038665/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/event.create_event_add_question_publish__1777038665/trace.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/event.create_event_add_question_publish__1777038665/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/event.publish_event_register_attendee__1777039701.log
+ create mode 100644 benchmark/reports/formal_run/agent_e/event.publish_event_register_attendee__1777039701/mitm.log
+ create mode 100644 benchmark/reports/formal_run/agent_e/event.publish_event_register_attendee__1777039701/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/alumnium/event.publish_event_register_attendee__1777039548.log
+ create mode 100644 benchmark/reports/formal_run/alumnium/event.publish_event_register_attendee__1777039548/after_state.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/event.publish_event_register_attendee__1777039548/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/event.publish_event_register_attendee__1777039548/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/alumnium/event.publish_event_register_attendee__1777039548/before_state.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/event.publish_event_register_attendee__1777039548/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/event.publish_event_register_attendee__1777039548/mitm.log
+ create mode 100644 benchmark/reports/formal_run/alumnium/event.publish_event_register_attendee__1777039548/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/event.publish_event_register_attendee__1777039548/score.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/event.publish_event_register_attendee__1777039548/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/event.publish_event_register_attendee__1777039548/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/event.publish_event_register_attendee__1777039548/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/alumnium/event.publish_event_register_attendee__1777039548/trace.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/event.publish_event_register_attendee__1777039548/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr.create_employee_complete_profile__1777039082.log
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr.create_employee_complete_profile__1777039082/after_state.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr.create_employee_complete_profile__1777039082/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr.create_employee_complete_profile__1777039082/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr.create_employee_complete_profile__1777039082/before_state.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr.create_employee_complete_profile__1777039082/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr.create_employee_complete_profile__1777039082/mitm.log
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr.create_employee_complete_profile__1777039082/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr.create_employee_complete_profile__1777039082/score.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr.create_employee_complete_profile__1777039082/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr.create_employee_complete_profile__1777039082/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr.create_employee_complete_profile__1777039082/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr.create_employee_complete_profile__1777039082/trace.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr.create_employee_complete_profile__1777039082/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr.update_employee_job_title__1777040258/mitm.log
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr.update_employee_job_title__1777040258/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/magnitude/event.publish_event_register_attendee__1777039632.log
+ create mode 100644 benchmark/reports/formal_run/magnitude/event.publish_event_register_attendee__1777039632/after_state.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/event.publish_event_register_attendee__1777039632/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/event.publish_event_register_attendee__1777039632/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/magnitude/event.publish_event_register_attendee__1777039632/before_state.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/event.publish_event_register_attendee__1777039632/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/event.publish_event_register_attendee__1777039632/mitm.log
+ create mode 100644 benchmark/reports/formal_run/magnitude/event.publish_event_register_attendee__1777039632/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/event.publish_event_register_attendee__1777039632/score.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/event.publish_event_register_attendee__1777039632/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/event.publish_event_register_attendee__1777039632/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/event.publish_event_register_attendee__1777039632/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/magnitude/event.publish_event_register_attendee__1777039632/trace.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/event.publish_event_register_attendee__1777039632/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/notte/event.publish_event_register_attendee__1777039291.log
+ create mode 100644 benchmark/reports/formal_run/notte/event.publish_event_register_attendee__1777039291/after_state.json
+ create mode 100644 benchmark/reports/formal_run/notte/event.publish_event_register_attendee__1777039291/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/notte/event.publish_event_register_attendee__1777039291/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/notte/event.publish_event_register_attendee__1777039291/before_state.json
+ create mode 100644 benchmark/reports/formal_run/notte/event.publish_event_register_attendee__1777039291/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/notte/event.publish_event_register_attendee__1777039291/mitm.log
+ create mode 100644 benchmark/reports/formal_run/notte/event.publish_event_register_attendee__1777039291/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/notte/event.publish_event_register_attendee__1777039291/score.json
+ create mode 100644 benchmark/reports/formal_run/notte/event.publish_event_register_attendee__1777039291/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/notte/event.publish_event_register_attendee__1777039291/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/notte/event.publish_event_register_attendee__1777039291/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/notte/event.publish_event_register_attendee__1777039291/trace.json
+ create mode 100644 benchmark/reports/formal_run/notte/event.publish_event_register_attendee__1777039291/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/calendar.invite_external_attendee_by_email__1777038893.log
+ create mode 100644 benchmark/reports/formal_run/openbrowser/calendar.invite_external_attendee_by_email__1777038893/after_state.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/calendar.invite_external_attendee_by_email__1777038893/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/calendar.invite_external_attendee_by_email__1777038893/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/openbrowser/calendar.invite_external_attendee_by_email__1777038893/before_state.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/calendar.invite_external_attendee_by_email__1777038893/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/calendar.invite_external_attendee_by_email__1777038893/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/calendar.invite_external_attendee_by_email__1777038893/score.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/calendar.invite_external_attendee_by_email__1777038893/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/calendar.invite_external_attendee_by_email__1777038893/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/calendar.invite_external_attendee_by_email__1777038893/trace.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/calendar.invite_external_attendee_by_email__1777038893/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/event.create_event_add_question_publish__1777039945.log
+ create mode 100644 benchmark/reports/formal_run/openbrowser/event.create_event_add_question_publish__1777039945/after_state.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/event.create_event_add_question_publish__1777039945/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/event.create_event_add_question_publish__1777039945/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/openbrowser/event.create_event_add_question_publish__1777039945/before_state.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/event.create_event_add_question_publish__1777039945/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/event.create_event_add_question_publish__1777039945/mitm.log
+ create mode 100644 benchmark/reports/formal_run/openbrowser/event.create_event_add_question_publish__1777039945/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/event.create_event_add_question_publish__1777039945/score.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/event.create_event_add_question_publish__1777039945/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/event.create_event_add_question_publish__1777039945/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/event.create_event_add_question_publish__1777039945/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/openbrowser/event.create_event_add_question_publish__1777039945/trace.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/event.create_event_add_question_publish__1777039945/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/event.create_event_add_question_publish__1777038456/after_state.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/event.create_event_add_question_publish__1777038456/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/event.create_event_add_question_publish__1777038456/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/skyvern/event.create_event_add_question_publish__1777038456/before_state.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/event.create_event_add_question_publish__1777038456/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/event.create_event_add_question_publish__1777038456/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/event.create_event_add_question_publish__1777038456/score.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/event.create_event_add_question_publish__1777038456/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/event.create_event_add_question_publish__1777038456/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/event.create_event_add_question_publish__1777038456/trace.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/event.create_event_add_question_publish__1777038456/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/event.publish_event_register_attendee__1777039319.log
+ create mode 100644 benchmark/reports/formal_run/skyvern/event.publish_event_register_attendee__1777039319/after_state.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/event.publish_event_register_attendee__1777039319/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/event.publish_event_register_attendee__1777039319/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/skyvern/event.publish_event_register_attendee__1777039319/before_state.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/event.publish_event_register_attendee__1777039319/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/event.publish_event_register_attendee__1777039319/mitm.log
+ create mode 100644 benchmark/reports/formal_run/skyvern/event.publish_event_register_attendee__1777039319/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/event.publish_event_register_attendee__1777039319/score.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/event.publish_event_register_attendee__1777039319/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/event.publish_event_register_attendee__1777039319/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/event.publish_event_register_attendee__1777039319/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/skyvern/event.publish_event_register_attendee__1777039319/trace.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/event.publish_event_register_attendee__1777039319/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/websight/event.create_event_add_question_publish__1777038920.log
+ create mode 100644 benchmark/reports/formal_run/websight/event.create_event_add_question_publish__1777038920/after_state.json
+ create mode 100644 benchmark/reports/formal_run/websight/event.create_event_add_question_publish__1777038920/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/websight/event.create_event_add_question_publish__1777038920/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/websight/event.create_event_add_question_publish__1777038920/before_state.json
+ create mode 100644 benchmark/reports/formal_run/websight/event.create_event_add_question_publish__1777038920/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/websight/event.create_event_add_question_publish__1777038920/mitm.log
+ create mode 100644 benchmark/reports/formal_run/websight/event.create_event_add_question_publish__1777038920/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/websight/event.create_event_add_question_publish__1777038920/score.json
+ create mode 100644 benchmark/reports/formal_run/websight/event.create_event_add_question_publish__1777038920/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/websight/event.create_event_add_question_publish__1777038920/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/websight/event.create_event_add_question_publish__1777038920/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/websight/event.create_event_add_question_publish__1777038920/trace.json
+ create mode 100644 benchmark/reports/formal_run/websight/event.create_event_add_question_publish__1777038920/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/websight/event.publish_event_register_attendee__1777039967.log
+ create mode 100644 benchmark/reports/formal_run/websight/event.publish_event_register_attendee__1777039967/mitm.log
+ create mode 100644 benchmark/reports/formal_run/websight/event.publish_event_register_attendee__1777039967/tokens.jsonl
+To https://github.com/softpudding/odoo_browser_benchmark.git
+ ! [rejected]            odoo_benchmark -> odoo_benchmark (fetch first)
+error: failed to push some refs to 'https://github.com/softpudding/odoo_browser_benchmark.git'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+[git] push attempt 1 failed: Command '['git', 'push']' returned non-zero exit status 1.
+To https://github.com/softpudding/odoo_browser_benchmark.git
+ ! [rejected]            odoo_benchmark -> odoo_benchmark (fetch first)
+error: failed to push some refs to 'https://github.com/softpudding/odoo_browser_benchmark.git'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+[git] push attempt 2 failed: Command '['git', 'push']' returned non-zero exit status 1.
+To https://github.com/softpudding/odoo_browser_benchmark.git
+ ! [rejected]            odoo_benchmark -> odoo_benchmark (fetch first)
+error: failed to push some refs to 'https://github.com/softpudding/odoo_browser_benchmark.git'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+[git] push attempt 3 failed: Command '['git', 'push']' returned non-zero exit status 1.
+[odoo_benchmark 7cb66c0a7] formal_run: xiao-4dc953 checkpoint (40 runs done)
+ Committer: yangxiao <yangxiao@B-L9034TD7-0440.local>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 149 files changed, 7604 insertions(+)
+ create mode 100644 benchmark/reports/formal_run/agent_e/event.publish_event_register_attendee__1777039701/after_state.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/event.publish_event_register_attendee__1777039701/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/event.publish_event_register_attendee__1777039701/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/agent_e/event.publish_event_register_attendee__1777039701/before_state.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/event.publish_event_register_attendee__1777039701/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/event.publish_event_register_attendee__1777039701/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/event.publish_event_register_attendee__1777039701/score.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/event.publish_event_register_attendee__1777039701/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/event.publish_event_register_attendee__1777039701/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/event.publish_event_register_attendee__1777039701/trace.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/event.publish_event_register_attendee__1777039701/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/hr.create_employee_complete_profile__1777040949.log
+ create mode 100644 benchmark/reports/formal_run/agent_e/hr.create_employee_complete_profile__1777040949/after_state.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/hr.create_employee_complete_profile__1777040949/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/hr.create_employee_complete_profile__1777040949/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/agent_e/hr.create_employee_complete_profile__1777040949/before_state.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/hr.create_employee_complete_profile__1777040949/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/hr.create_employee_complete_profile__1777040949/mitm.log
+ create mode 100644 benchmark/reports/formal_run/agent_e/hr.create_employee_complete_profile__1777040949/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/hr.create_employee_complete_profile__1777040949/score.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/hr.create_employee_complete_profile__1777040949/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/hr.create_employee_complete_profile__1777040949/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/hr.create_employee_complete_profile__1777040949/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/agent_e/hr.create_employee_complete_profile__1777040949/trace.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/hr.create_employee_complete_profile__1777040949/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/hr.create_employee_complete_profile__1777040592.log
+ create mode 100644 benchmark/reports/formal_run/alumnium/hr.create_employee_complete_profile__1777040592/after_state.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/hr.create_employee_complete_profile__1777040592/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/hr.create_employee_complete_profile__1777040592/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/alumnium/hr.create_employee_complete_profile__1777040592/before_state.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/hr.create_employee_complete_profile__1777040592/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/hr.create_employee_complete_profile__1777040592/mitm.log
+ create mode 100644 benchmark/reports/formal_run/alumnium/hr.create_employee_complete_profile__1777040592/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/hr.create_employee_complete_profile__1777040592/score.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/hr.create_employee_complete_profile__1777040592/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/hr.create_employee_complete_profile__1777040592/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/hr.create_employee_complete_profile__1777040592/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/alumnium/hr.create_employee_complete_profile__1777040592/trace.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/hr.create_employee_complete_profile__1777040592/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr.update_employee_job_title__1777040258.log
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr.update_employee_job_title__1777040258/after_state.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr.update_employee_job_title__1777040258/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr.update_employee_job_title__1777040258/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr.update_employee_job_title__1777040258/before_state.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr.update_employee_job_title__1777040258/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr.update_employee_job_title__1777040258/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr.update_employee_job_title__1777040258/score.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr.update_employee_job_title__1777040258/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr.update_employee_job_title__1777040258/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr.update_employee_job_title__1777040258/trace.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr.update_employee_job_title__1777040258/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr_expense.reject_expense_report_with_feedback__1777041267.log
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr_expense.reject_expense_report_with_feedback__1777041267/after_state.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr_expense.reject_expense_report_with_feedback__1777041267/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr_expense.reject_expense_report_with_feedback__1777041267/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr_expense.reject_expense_report_with_feedback__1777041267/before_state.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr_expense.reject_expense_report_with_feedback__1777041267/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr_expense.reject_expense_report_with_feedback__1777041267/mitm.log
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr_expense.reject_expense_report_with_feedback__1777041267/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr_expense.reject_expense_report_with_feedback__1777041267/score.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr_expense.reject_expense_report_with_feedback__1777041267/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr_expense.reject_expense_report_with_feedback__1777041267/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr_expense.reject_expense_report_with_feedback__1777041267/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr_expense.reject_expense_report_with_feedback__1777041267/trace.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr_expense.reject_expense_report_with_feedback__1777041267/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/hr.create_employee_complete_profile__1777040643.log
+ create mode 100644 benchmark/reports/formal_run/magnitude/hr.create_employee_complete_profile__1777040643/after_state.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/hr.create_employee_complete_profile__1777040643/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/hr.create_employee_complete_profile__1777040643/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/magnitude/hr.create_employee_complete_profile__1777040643/before_state.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/hr.create_employee_complete_profile__1777040643/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/hr.create_employee_complete_profile__1777040643/mitm.log
+ create mode 100644 benchmark/reports/formal_run/magnitude/hr.create_employee_complete_profile__1777040643/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/hr.create_employee_complete_profile__1777040643/score.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/hr.create_employee_complete_profile__1777040643/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/hr.create_employee_complete_profile__1777040643/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/hr.create_employee_complete_profile__1777040643/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/magnitude/hr.create_employee_complete_profile__1777040643/trace.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/hr.create_employee_complete_profile__1777040643/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/notte/hr.create_employee_complete_profile__1777040326.log
+ create mode 100644 benchmark/reports/formal_run/notte/hr.create_employee_complete_profile__1777040326/after_state.json
+ create mode 100644 benchmark/reports/formal_run/notte/hr.create_employee_complete_profile__1777040326/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/notte/hr.create_employee_complete_profile__1777040326/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/notte/hr.create_employee_complete_profile__1777040326/before_state.json
+ create mode 100644 benchmark/reports/formal_run/notte/hr.create_employee_complete_profile__1777040326/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/notte/hr.create_employee_complete_profile__1777040326/mitm.log
+ create mode 100644 benchmark/reports/formal_run/notte/hr.create_employee_complete_profile__1777040326/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/notte/hr.create_employee_complete_profile__1777040326/score.json
+ create mode 100644 benchmark/reports/formal_run/notte/hr.create_employee_complete_profile__1777040326/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/notte/hr.create_employee_complete_profile__1777040326/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/notte/hr.create_employee_complete_profile__1777040326/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/notte/hr.create_employee_complete_profile__1777040326/trace.json
+ create mode 100644 benchmark/reports/formal_run/notte/hr.create_employee_complete_profile__1777040326/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/notte/hr.update_employee_job_title__1777041507.log
+ create mode 100644 benchmark/reports/formal_run/notte/hr.update_employee_job_title__1777041507/mitm.log
+ create mode 100644 benchmark/reports/formal_run/notte/hr.update_employee_job_title__1777041507/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/openbrowser/event.publish_event_register_attendee__1777041033.log
+ create mode 100644 benchmark/reports/formal_run/openbrowser/event.publish_event_register_attendee__1777041033/after_state.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/event.publish_event_register_attendee__1777041033/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/event.publish_event_register_attendee__1777041033/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/openbrowser/event.publish_event_register_attendee__1777041033/before_state.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/event.publish_event_register_attendee__1777041033/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/event.publish_event_register_attendee__1777041033/mitm.log
+ create mode 100644 benchmark/reports/formal_run/openbrowser/event.publish_event_register_attendee__1777041033/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/event.publish_event_register_attendee__1777041033/score.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/event.publish_event_register_attendee__1777041033/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/event.publish_event_register_attendee__1777041033/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/event.publish_event_register_attendee__1777041033/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/openbrowser/event.publish_event_register_attendee__1777041033/trace.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/event.publish_event_register_attendee__1777041033/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/hr.create_employee_complete_profile__1777040410.log
+ create mode 100644 benchmark/reports/formal_run/skyvern/hr.create_employee_complete_profile__1777040410/after_state.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/hr.create_employee_complete_profile__1777040410/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/hr.create_employee_complete_profile__1777040410/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/skyvern/hr.create_employee_complete_profile__1777040410/before_state.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/hr.create_employee_complete_profile__1777040410/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/hr.create_employee_complete_profile__1777040410/mitm.log
+ create mode 100644 benchmark/reports/formal_run/skyvern/hr.create_employee_complete_profile__1777040410/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/hr.create_employee_complete_profile__1777040410/score.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/hr.create_employee_complete_profile__1777040410/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/hr.create_employee_complete_profile__1777040410/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/hr.create_employee_complete_profile__1777040410/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/skyvern/hr.create_employee_complete_profile__1777040410/trace.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/hr.create_employee_complete_profile__1777040410/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/hr.update_employee_job_title__1777041530/mitm.log
+ create mode 100644 benchmark/reports/formal_run/skyvern/hr.update_employee_job_title__1777041530/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/websight/event.publish_event_register_attendee__1777039967/after_state.json
+ create mode 100644 benchmark/reports/formal_run/websight/event.publish_event_register_attendee__1777039967/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/websight/event.publish_event_register_attendee__1777039967/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/websight/event.publish_event_register_attendee__1777039967/before_state.json
+ create mode 100644 benchmark/reports/formal_run/websight/event.publish_event_register_attendee__1777039967/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/websight/event.publish_event_register_attendee__1777039967/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/websight/event.publish_event_register_attendee__1777039967/score.json
+ create mode 100644 benchmark/reports/formal_run/websight/event.publish_event_register_attendee__1777039967/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/websight/event.publish_event_register_attendee__1777039967/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/websight/event.publish_event_register_attendee__1777039967/trace.json
+ create mode 100644 benchmark/reports/formal_run/websight/event.publish_event_register_attendee__1777039967/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/websight/hr.create_employee_complete_profile__1777041062.log
+ create mode 100644 benchmark/reports/formal_run/websight/hr.create_employee_complete_profile__1777041062/mitm.log
+ create mode 100644 benchmark/reports/formal_run/websight/hr.create_employee_complete_profile__1777041062/tokens.jsonl
+To https://github.com/softpudding/odoo_browser_benchmark.git
+ ! [rejected]            odoo_benchmark -> odoo_benchmark (fetch first)
+error: failed to push some refs to 'https://github.com/softpudding/odoo_browser_benchmark.git'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+[git] push attempt 1 failed: Command '['git', 'push']' returned non-zero exit status 1.
+To https://github.com/softpudding/odoo_browser_benchmark.git
+ ! [rejected]            odoo_benchmark -> odoo_benchmark (fetch first)
+error: failed to push some refs to 'https://github.com/softpudding/odoo_browser_benchmark.git'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+[git] push attempt 2 failed: Command '['git', 'push']' returned non-zero exit status 1.
+To https://github.com/softpudding/odoo_browser_benchmark.git
+ ! [rejected]            odoo_benchmark -> odoo_benchmark (fetch first)
+error: failed to push some refs to 'https://github.com/softpudding/odoo_browser_benchmark.git'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+[git] push attempt 3 failed: Command '['git', 'push']' returned non-zero exit status 1.
+[odoo_benchmark 07d09ceab] formal_run: xiao-4dc953 checkpoint (50 runs done)
+ Committer: yangxiao <yangxiao@B-L9034TD7-0440.local>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 149 files changed, 5917 insertions(+)
+ create mode 100644 benchmark/reports/formal_run/agent_e/hr.update_employee_job_title__1777041767.log
+ create mode 100644 benchmark/reports/formal_run/agent_e/hr.update_employee_job_title__1777041767/after_state.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/hr.update_employee_job_title__1777041767/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/hr.update_employee_job_title__1777041767/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/agent_e/hr.update_employee_job_title__1777041767/before_state.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/hr.update_employee_job_title__1777041767/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/hr.update_employee_job_title__1777041767/mitm.log
+ create mode 100644 benchmark/reports/formal_run/agent_e/hr.update_employee_job_title__1777041767/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/hr.update_employee_job_title__1777041767/score.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/hr.update_employee_job_title__1777041767/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/hr.update_employee_job_title__1777041767/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/hr.update_employee_job_title__1777041767/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/agent_e/hr.update_employee_job_title__1777041767/trace.json
+ create mode 100644 benchmark/reports/formal_run/agent_e/hr.update_employee_job_title__1777041767/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/hr.update_employee_job_title__1777041685.log
+ create mode 100644 benchmark/reports/formal_run/alumnium/hr.update_employee_job_title__1777041685/after_state.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/hr.update_employee_job_title__1777041685/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/hr.update_employee_job_title__1777041685/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/alumnium/hr.update_employee_job_title__1777041685/before_state.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/hr.update_employee_job_title__1777041685/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/hr.update_employee_job_title__1777041685/mitm.log
+ create mode 100644 benchmark/reports/formal_run/alumnium/hr.update_employee_job_title__1777041685/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/hr.update_employee_job_title__1777041685/score.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/hr.update_employee_job_title__1777041685/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/hr.update_employee_job_title__1777041685/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/hr.update_employee_job_title__1777041685/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/alumnium/hr.update_employee_job_title__1777041685/trace.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/hr.update_employee_job_title__1777041685/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/alumnium/hr_expense.reject_expense_report_with_feedback__1777042801.log
+ create mode 100644 benchmark/reports/formal_run/alumnium/hr_expense.reject_expense_report_with_feedback__1777042801/mitm.log
+ create mode 100644 benchmark/reports/formal_run/alumnium/hr_expense.reject_expense_report_with_feedback__1777042801/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr_holidays.allocate_sick_leave_to_employee__1777042193.log
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr_holidays.allocate_sick_leave_to_employee__1777042193/after_state.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr_holidays.allocate_sick_leave_to_employee__1777042193/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr_holidays.allocate_sick_leave_to_employee__1777042193/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr_holidays.allocate_sick_leave_to_employee__1777042193/before_state.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr_holidays.allocate_sick_leave_to_employee__1777042193/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr_holidays.allocate_sick_leave_to_employee__1777042193/mitm.log
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr_holidays.allocate_sick_leave_to_employee__1777042193/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr_holidays.allocate_sick_leave_to_employee__1777042193/score.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr_holidays.allocate_sick_leave_to_employee__1777042193/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr_holidays.allocate_sick_leave_to_employee__1777042193/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr_holidays.allocate_sick_leave_to_employee__1777042193/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr_holidays.allocate_sick_leave_to_employee__1777042193/trace.json
+ create mode 100644 benchmark/reports/formal_run/browser-use/hr_holidays.allocate_sick_leave_to_employee__1777042193/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/hr.update_employee_job_title__1777041711.log
+ create mode 100644 benchmark/reports/formal_run/magnitude/hr.update_employee_job_title__1777041711/after_state.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/hr.update_employee_job_title__1777041711/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/hr.update_employee_job_title__1777041711/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/magnitude/hr.update_employee_job_title__1777041711/before_state.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/hr.update_employee_job_title__1777041711/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/hr.update_employee_job_title__1777041711/mitm.log
+ create mode 100644 benchmark/reports/formal_run/magnitude/hr.update_employee_job_title__1777041711/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/hr.update_employee_job_title__1777041711/score.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/hr.update_employee_job_title__1777041711/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/hr.update_employee_job_title__1777041711/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/hr.update_employee_job_title__1777041711/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/magnitude/hr.update_employee_job_title__1777041711/trace.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/hr.update_employee_job_title__1777041711/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/magnitude/hr_expense.reject_expense_report_with_feedback__1777042819/mitm.log
+ create mode 100644 benchmark/reports/formal_run/magnitude/hr_expense.reject_expense_report_with_feedback__1777042819/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/notte/hr.update_employee_job_title__1777041507/after_state.json
+ create mode 100644 benchmark/reports/formal_run/notte/hr.update_employee_job_title__1777041507/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/notte/hr.update_employee_job_title__1777041507/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/notte/hr.update_employee_job_title__1777041507/before_state.json
+ create mode 100644 benchmark/reports/formal_run/notte/hr.update_employee_job_title__1777041507/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/notte/hr.update_employee_job_title__1777041507/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/notte/hr.update_employee_job_title__1777041507/score.json
+ create mode 100644 benchmark/reports/formal_run/notte/hr.update_employee_job_title__1777041507/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/notte/hr.update_employee_job_title__1777041507/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/notte/hr.update_employee_job_title__1777041507/trace.json
+ create mode 100644 benchmark/reports/formal_run/notte/hr.update_employee_job_title__1777041507/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/notte/hr_expense.reject_expense_report_with_feedback__1777042335.log
+ create mode 100644 benchmark/reports/formal_run/notte/hr_expense.reject_expense_report_with_feedback__1777042335/after_state.json
+ create mode 100644 benchmark/reports/formal_run/notte/hr_expense.reject_expense_report_with_feedback__1777042335/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/notte/hr_expense.reject_expense_report_with_feedback__1777042335/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/notte/hr_expense.reject_expense_report_with_feedback__1777042335/before_state.json
+ create mode 100644 benchmark/reports/formal_run/notte/hr_expense.reject_expense_report_with_feedback__1777042335/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/notte/hr_expense.reject_expense_report_with_feedback__1777042335/mitm.log
+ create mode 100644 benchmark/reports/formal_run/notte/hr_expense.reject_expense_report_with_feedback__1777042335/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/notte/hr_expense.reject_expense_report_with_feedback__1777042335/score.json
+ create mode 100644 benchmark/reports/formal_run/notte/hr_expense.reject_expense_report_with_feedback__1777042335/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/notte/hr_expense.reject_expense_report_with_feedback__1777042335/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/notte/hr_expense.reject_expense_report_with_feedback__1777042335/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/notte/hr_expense.reject_expense_report_with_feedback__1777042335/trace.json
+ create mode 100644 benchmark/reports/formal_run/notte/hr_expense.reject_expense_report_with_feedback__1777042335/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/hr.create_employee_complete_profile__1777042154.log
+ create mode 100644 benchmark/reports/formal_run/openbrowser/hr.create_employee_complete_profile__1777042154/after_state.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/hr.create_employee_complete_profile__1777042154/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/hr.create_employee_complete_profile__1777042154/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/openbrowser/hr.create_employee_complete_profile__1777042154/before_state.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/hr.create_employee_complete_profile__1777042154/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/hr.create_employee_complete_profile__1777042154/mitm.log
+ create mode 100644 benchmark/reports/formal_run/openbrowser/hr.create_employee_complete_profile__1777042154/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/hr.create_employee_complete_profile__1777042154/score.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/hr.create_employee_complete_profile__1777042154/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/hr.create_employee_complete_profile__1777042154/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/hr.create_employee_complete_profile__1777042154/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/openbrowser/hr.create_employee_complete_profile__1777042154/trace.json
+ create mode 100644 benchmark/reports/formal_run/openbrowser/hr.create_employee_complete_profile__1777042154/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/hr.update_employee_job_title__1777041530.log
+ create mode 100644 benchmark/reports/formal_run/skyvern/hr.update_employee_job_title__1777041530/after_state.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/hr.update_employee_job_title__1777041530/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/hr.update_employee_job_title__1777041530/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/skyvern/hr.update_employee_job_title__1777041530/before_state.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/hr.update_employee_job_title__1777041530/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/hr.update_employee_job_title__1777041530/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/hr.update_employee_job_title__1777041530/score.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/hr.update_employee_job_title__1777041530/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/hr.update_employee_job_title__1777041530/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/hr.update_employee_job_title__1777041530/trace.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/hr.update_employee_job_title__1777041530/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/skyvern/hr_expense.reject_expense_report_with_feedback__1777042721.log
+ create mode 100644 benchmark/reports/formal_run/skyvern/hr_expense.reject_expense_report_with_feedback__1777042721/mitm.log
+ create mode 100644 benchmark/reports/formal_run/skyvern/hr_expense.reject_expense_report_with_feedback__1777042721/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/websight/hr.create_employee_complete_profile__1777041062/after_state.json
+ create mode 100644 benchmark/reports/formal_run/websight/hr.create_employee_complete_profile__1777041062/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/websight/hr.create_employee_complete_profile__1777041062/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/websight/hr.create_employee_complete_profile__1777041062/before_state.json
+ create mode 100644 benchmark/reports/formal_run/websight/hr.create_employee_complete_profile__1777041062/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/websight/hr.create_employee_complete_profile__1777041062/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/websight/hr.create_employee_complete_profile__1777041062/score.json
+ create mode 100644 benchmark/reports/formal_run/websight/hr.create_employee_complete_profile__1777041062/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/websight/hr.create_employee_complete_profile__1777041062/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/websight/hr.create_employee_complete_profile__1777041062/trace.json
+ create mode 100644 benchmark/reports/formal_run/websight/hr.create_employee_complete_profile__1777041062/trace_summary.json
+ create mode 100644 benchmark/reports/formal_run/websight/hr.update_employee_job_title__1777042176.log
+ create mode 100644 benchmark/reports/formal_run/websight/hr.update_employee_job_title__1777042176/after_state.json
+ create mode 100644 benchmark/reports/formal_run/websight/hr.update_employee_job_title__1777042176/agent_result.json
+ create mode 100644 benchmark/reports/formal_run/websight/hr.update_employee_job_title__1777042176/agent_stdout.txt
+ create mode 100644 benchmark/reports/formal_run/websight/hr.update_employee_job_title__1777042176/before_state.json
+ create mode 100644 benchmark/reports/formal_run/websight/hr.update_employee_job_title__1777042176/expected_state.json
+ create mode 100644 benchmark/reports/formal_run/websight/hr.update_employee_job_title__1777042176/mitm.log
+ create mode 100644 benchmark/reports/formal_run/websight/hr.update_employee_job_title__1777042176/postcondition_failures.json
+ create mode 100644 benchmark/reports/formal_run/websight/hr.update_employee_job_title__1777042176/score.json
+ create mode 100644 benchmark/reports/formal_run/websight/hr.update_employee_job_title__1777042176/state_diff.json
+ create mode 100644 benchmark/reports/formal_run/websight/hr.update_employee_job_title__1777042176/token_usage.json
+ create mode 100644 benchmark/reports/formal_run/websight/hr.update_employee_job_title__1777042176/tokens.jsonl
+ create mode 100644 benchmark/reports/formal_run/websight/hr.update_employee_job_title__1777042176/trace.json
+ create mode 100644 benchmark/reports/formal_run/websight/hr.update_employee_job_title__1777042176/trace_summary.json
+To https://github.com/softpudding/odoo_browser_benchmark.git
+ ! [rejected]            odoo_benchmark -> odoo_benchmark (fetch first)
+error: failed to push some refs to 'https://github.com/softpudding/odoo_browser_benchmark.git'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+[git] push attempt 1 failed: Command '['git', 'push']' returned non-zero exit status 1.
+To https://github.com/softpudding/odoo_browser_benchmark.git
+ ! [rejected]            odoo_benchmark -> odoo_benchmark (fetch first)
+error: failed to push some refs to 'https://github.com/softpudding/odoo_browser_benchmark.git'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+[git] push attempt 2 failed: Command '['git', 'push']' returned non-zero exit status 1.
+To https://github.com/softpudding/odoo_browser_benchmark.git
+ ! [rejected]            odoo_benchmark -> odoo_benchmark (fetch first)
+error: failed to push some refs to 'https://github.com/softpudding/odoo_browser_benchmark.git'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+[git] push attempt 3 failed: Command '['git', 'push']' returned non-zero exit status 1.

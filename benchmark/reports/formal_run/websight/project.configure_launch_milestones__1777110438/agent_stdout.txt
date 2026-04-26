@@ -1,0 +1,61 @@
+Plan:
+1. **Minimal Execution Plan**
+2. **1. Access & Authentication**
+3. - Open `http://127.0.0.1:59693/odoo/project`
+4. - Log in: `admin` / `admin`
+5. - Enter the **Project** app
+6. **2. Enable Project Milestones**
+7. - Open **Atlas Redesign** in form view
+8. - Navigate to **Settings** tab
+9. - Toggle **Milestones** → `ON`
+10. - Click **Save**
+11. **3. Create Milestones**
+12. - Return to Projects list/dashboard
+13. - Click `⋮` (menu) on **Atlas Redesign** card → **View > Milestones**
+14. - Create `Prototype Freeze` | Deadline: `2026-05-15` → **Save**
+15. - Create `Launch Review` | Deadline: `2026-05-29` → **Save**
+16. **4. Create Tasks**
+17. - Open the project's task view/list
+18. - Create `Finalize wireframes` → Stage: `In Progress`, Milestone: `Prototype
+Freeze` → **Save & Close**
+19. - Create `QA sign-off` → Stage: `New`, Milestone: `Launch Review` → **Save &
+Close**
+20. - Create `Publish landing page` → Stage: `Done`, Milestone: `Launch Review` 
+→ **Save & Close**
+21. **5. Update Description & Finalize**
+22. - Re-open **Atlas Redesign** project form view
+23. - Go to **Description** tab
+24. - Enter exactly: `1 of 3 tasks done across 2 milestones`
+25. - Click **Save**
+26. - Verify: Exactly 2 milestones & 3 tasks exist. No extras created.
+Reasoning: I need to begin by navigating to the Odoo project URL. Since the 
+screenshot is blank, I assume I am at the start or need to load the page. The 
+first step is to open the URL. After that, I will likely encounter a login 
+screen where I'll use the provided credentials.
+Action: open("http://127.0.0.1:59693/odoo/project")
+Reasoning: I am currently on the login page. To proceed with the plan, I need to
+authenticate using the provided credentials. The first step is to enter the 
+username 'admin' into the Email field.
+Action: type('admin', by=By.CSS_SELECTOR, input='input')
+Reasoning: 
+Action: <action>type('admin', by=By.CSS_SELECTOR, input='input')</action>
+Reasoning: Based on the history, I have just entered the password 'admin' (and 
+previously the email 'admin'). Although the screenshot placeholders suggest the 
+fields might be empty (or the screenshot is from a pre-typing state), the 
+logical next step in the authentication flow is to submit the form. I will click
+the "Log in" button to attempt to authenticate and access the Project app. If 
+the fields are indeed empty, this will trigger a validation error which I can 
+handle in the next step, but proceeding with the plan to click Login is the 
+correct sequence.
+Action: click('Log in', by=By.CSS_SELECTOR, input='button')
+Reasoning: I have successfully logged in. The redirect URL indicates I should be
+on the Project app dashboard (`/odoo/project`). I need to find the "Atlas 
+Redesign" project. The first step in the plan is to open this project in form 
+view to enable milestones. I will locate the "Atlas Redesign" card and click on 
+it. Note: Clicking the card usually opens the task view, but it's the entry 
+point. If it opens the task view, I will then need to find the project settings 
+(often via an "Edit" button or "Project" menu). However, usually, clicking the 
+project name on the card or the card itself is the start. I'll click the "Atlas 
+Redesign" card.
+Action: click('Atlas Redesign', by=By.CSS_SELECTOR, 
+input='.o_project_kanban_name')

@@ -1,0 +1,38 @@
+Plan:
+1. Here is a minimal, step-by-step plan:
+2. 1. **Access & Auth**: Open `http://127.0.0.1:58236/odoo/sales` and log in 
+with `admin` / `admin`.
+3. 2. **Navigate**: Open the **Sales** app → click **Orders** to load the list 
+view.
+4. 3. **Open Order**: Find the row with Customer Reference 
+`BENCH-CANCEL-RESTORE` (Customer: `Bench Cancel Co`) and click it to open the 
+form.
+5. 4. **Cancel**: Click **Cancel** in the statusbar header.
+6. 5. **Confirm Cancellation**: In the confirmation dialog, click **Ok**. Wait 
+for the status to update to **Cancelled**.
+7. 6. **Restore**: Click the newly visible **Set to Quotation** button in the 
+statusbar.
+8. 7. **Verify**: Confirm the statusbar now reads **Quotation**. Ensure both 
+order lines (`Item A: qty=2`, `Item B: qty=3`) remain exactly as seeded.
+9. 8. **Exception Handling**: If a "Document Layout" dialog appears at any 
+point, dismiss it immediately without modifying or saving changes.
+Reasoning: 
+Action: <action>
+{"action": "web", "params": {"method": "get", "url": 
+"http://127.0.0.1:58236/odoo/sales"}}
+</action>
+Reasoning: The current screen is the login page. I need to log in with the 
+provided credentials (`admin` / `admin`) to proceed. After logging in, the 
+redirect parameter in the URL (`redirect=%2Fodoo%2Fsales%3F`) suggests I will be
+taken to the Sales app, or I will need to navigate there. The first step is to 
+complete the login form.
+Action: {"action": "web", "params": {"method": "fill", "selector": "input", 
+"text": "admin"}}
+Reasoning: The previous action filled the email field with 'admin'. Now I need 
+to fill the password field with 'admin' and then click the 'Log in' button to 
+proceed to the Sales app.
+Action: {"action": "web", "params": {"method": "fill", "selector": "input", 
+"text": "admin"}}
+Reasoning: 
+Action: {"action": "web", "params": {"method": "click", "selector": 
+"button:contains('Log in')"}}

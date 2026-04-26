@@ -1,0 +1,86 @@
+Plan:
+1. ### Minimal Execution Plan
+2. **1. Locate & Open RFQ**
+3. - Navigate to `Purchase → Orders → Requests for Quotation`
+4. - Filter search: `Vendor Reference` = `BENCH-RFQ-3WAY-2`
+5. - Open the record
+6. **2. Confirm Order**
+7. - Verify lines: `Bench 3WM Bracket` (Qty: 8, Unit Price: 25.00) & `Bench 3WM 
+Fastener Kit` (Qty: 12, Unit Price: 5.00)
+8. - Click **Confirm Order** in the top status bar
+9. - Confirm any Odoo dialog if prompted
+10. - Wait until status flips to `Purchase Order`
+11. **3. Receive Products**
+12. - In the PO header, click the **Receive Products** smart button (badge: 1)
+13. - Verify `Done` columns auto-filled as `8` and `12` → **leave unchanged**
+14. - Click **Validate** in the receipt status bar
+15. - Wait until status updates to `Done` (no backorder prompt will appear)
+16. **4. Verify & Halt**
+17. - Navigate back to the PO form (breadcrumbs or `←`)
+18. - Confirm target state:
+19.   - PO Status: `Purchase Order`
+20.   - Billing Status: `Waiting Bills` (`invoice_status = 'to invoice'`)
+21. - **STOP.** Do not click `Create Bill`, register payment, or alter any 
+fields.
+Reasoning: I need to process the RFQ `BENCH-RFQ-3WAY-2`.
+1.  **Navigate to RFQs:** I will go to the Purchase app and find the "Requests 
+for Quotation" menu.
+2.  **Find the Record:** I will search for the specific Vendor Reference 
+`BENCH-RFQ-3WAY-2`.
+3.  **Confirm:** Once opened, I will click "Confirm Order" to turn the RFQ into 
+a Purchase Order.
+4.  **Receive:** I will click the "Receive Products" smart button to open the 
+receipt.
+5.  **Validate Receipt:** I will ensure the quantities (8 and 12) are correct in
+the "Done" column (they should be pre-filled) and click "Validate".
+6.  **Verify:** I will return to the PO to ensure the status is "Purchase Order"
+and Billing Status is "Waiting Bills".
+Action: 1.  **Navigate to Purchase App:** Ensure you are in the Purchase module.
+2.  **Open RFQ List:** Click on `Orders` -> `Requests for Quotation`.
+3.  **Search:** In the search bar, type `BENCH-RFQ-3WAY-2` and press Enter to 
+filter.
+4.  **Open Record:** Click on the record `BENCH-RFQ-3WAY-2` (Vendor: Bench 
+Supplier Inc).
+5.  **Confirm Order:** In the top status bar, click the **Confirm Order** 
+button. Wait for the status to change to **Purchase Order**.
+6.  **Open Receipt:** Click the **Receive Products** smart button (top right, 
+showing '1').
+7.  **Validate Receipt:**
+    *   Verify the operations list shows:
+        *   `Bench 3WM Bracket`: Demand 8, Done 8.
+        *   `Bench 3WM Fastener Kit`: Demand 12, Done 12.
+    *   Click the **Validate** button in the top status bar.
+    *   Wait for the status to change to **Done**.
+8.  **Return to PO:** Click the breadcrumb `Purchase Orders` or the back arrow 
+to return to the PO form.
+9.  **Final Verification:**
+    *   Confirm PO Status is **Purchase Order**.
+    *   Confirm Billing Status (often in the "Other Info" tab or top right smart
+buttons area) is **Waiting Bills** (or "To Bill").
+    *   **STOP**. Do not create a bill.
+Reasoning: The screen is currently blank, likely loading or at a starting point.
+I need to navigate to the Purchase app's specific menu to find the RFQ. The 
+first step is to access the "Orders" menu to see "Requests for Quotation". I 
+will click on the "Orders" menu item in the top navigation bar.
+Action: click
+Reasoning: The screen is blank. The instructions specify to go to the Purchase 
+app at a specific URL. The previous history suggests an intent to navigate to 
+the Orders menu. Since the UI is not visible, the best course of action is to 
+navigate to the Purchase app URL provided in the prompt to load the interface.
+Action: goto http://127.0.0.1:58141/odoo/purchase
+Reasoning: The current screen is the Odoo login page. The instructions require 
+me to log in with username 'admin' and password 'admin' to access the Purchase 
+app. I need to start by entering the email/username into the "Email" field.
+Action: click [383, 203, 613, 239]
+Reasoning: 
+Action: <action>
+type admin
+</action>
+Reasoning: 
+Action: <action>
+click [383, 310, 593, 346]
+</action>
+Reasoning: I have entered the username 'admin'. Now I need to enter the password
+'admin' in the password field and then click the 'Log in' button to access the 
+Purchase app.
+Action: click [383, 310, 593, 346]

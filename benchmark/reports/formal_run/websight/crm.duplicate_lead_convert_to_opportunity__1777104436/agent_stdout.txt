@@ -1,0 +1,80 @@
+Plan:
+1. Here is a minimal, execution-ready plan:
+2. **1. Login & Navigate**
+3. - Open `http://127.0.0.1:60365/odoo/crm`
+4. - Enter credentials: `admin` / `admin` → Wait for CRM dashboard to load.
+5. **2. Open Original Lead**
+6. - Navigate: **Leads** → **Leads** (top menu)
+7. - Click to open `Bench Template Lead` (verify it's a Lead type)
+8. **3. Duplicate**
+9. - Click the **⚙ (Gear/Actions)** icon in the top control bar
+10. - Select **Duplicate** → New form opens as `Bench Template Lead (copy)`
+11. **4. Rename & Save**
+12. - Edit the large title field to: `Bench Cloned Opp`
+13. - Click **Save**
+14. **5. Convert to Opportunity & Link Customer**
+15. - Click **Convert to Opportunity** (top-left header)
+16. - In the wizard:
+17.   - Select radio: `Convert to opportunity` (⚠️ do not merge)
+18.   - Select radio: `Link to an existing customer`
+19.   - Click **Customer** field → Type `Bench Cloned Customer` → Click `Create 
+"Bench Cloned Customer"` from dropdown
+20. - Click **Create Opportunity**
+21. **6. Verify**
+22. - Confirm active record shows type `Opportunity` and customer `Bench Cloned 
+Customer`
+23. - Navigate back to Leads list → verify original `Bench Template Lead` still 
+exists unchanged (type: Lead, original name intact)
+Reasoning: The user wants to duplicate a specific lead (`Bench Template Lead`) 
+and convert the copy. I am currently in the CRM app. The first step is to 
+navigate to the Leads list to find the target lead. According to the plan, I 
+need to open the "Leads" menu and then the "Leads" submenu (or view). I will 
+start by clicking the "Leads" menu item in the top navigation bar to access the 
+list of leads.
+Action: click(Leads)
+Reasoning: 
+Action: <action>click(Leads)
+</action>
+Reasoning: The user wants to duplicate a lead. I am currently in the CRM app. 
+The screen is blank, which might indicate a loading state or that the previous 
+navigation action hasn't fully rendered. The plan requires navigating to "Leads 
+-> Leads". The history shows a previous attempt to click "Leads". Since the 
+screen is blank, I need to ensure I am in the correct "Leads" view to find the 
+"Bench Template Lead". I will click "Leads" again to attempt to open the Leads 
+list or submenu.
+Action: click(Leads)
+Reasoning: The screen is currently blank, which suggests the previous navigation
+action might still be loading or didn't fully render the view. According to the 
+plan, I need to navigate to **Leads → Leads** to find the "Bench Template Lead".
+Since I am already in the CRM app, clicking the **Leads** menu item again is the
+appropriate step to ensure the Leads list or submenu is displayed. This will 
+allow me to proceed with opening the specific lead.
+Action: click(Leads)
+Reasoning: The screen is currently blank, which suggests the previous navigation
+actions haven't successfully rendered the Leads list view. The plan requires 
+navigating to **Leads → Leads** to find the "Bench Template Lead". Since I am in
+the CRM app, clicking the **Leads** menu item again is the appropriate step to 
+attempt to load the list of leads. This is a retry of the navigation step to 
+overcome the blank screen state.
+Action: click(Leads)
+Reasoning: The screen is currently blank, which suggests the previous navigation
+attempts haven't successfully loaded the Leads list. The plan requires 
+navigating to **Leads → Leads** to find the "Bench Template Lead". Since I am in
+the CRM app (based on the context), clicking the **Leads** menu item again is 
+the appropriate step to attempt to load the list of leads. This is a retry of 
+the navigation step to overcome the blank screen state.
+Action: click(Leads)
+Reasoning: The screen is currently blank, which suggests the previous navigation
+actions haven't successfully loaded the Leads list view. The plan requires 
+navigating to **Leads → Leads** to find the "Bench Template Lead". Since I am in
+the CRM app, clicking the **Leads** menu item again is the appropriate step to 
+attempt to load the list of leads. This is a retry of the navigation step to 
+overcome the blank screen state.
+Action: click(Leads)
+Reasoning: The screen has been blank for several steps, and repeated clicks on 
+"Leads" have not resolved the issue. This suggests the page might be stuck in a 
+loading state or a rendering error. Refreshing the browser page is a standard 
+recovery action to reset the view and load the CRM interface correctly. Once the
+page reloads, I should see the CRM dashboard or the last active view, allowing 
+me to proceed with navigating to the Leads list as per the plan.
+Action: refresh()

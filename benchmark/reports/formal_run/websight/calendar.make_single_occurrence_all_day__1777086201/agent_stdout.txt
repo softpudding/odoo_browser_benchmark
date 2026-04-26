@@ -1,0 +1,60 @@
+Plan:
+1. **Minimal Execution Plan**
+2. 1. **Access & Login:** Navigate to `http://127.0.0.1:61701/odoo/calendar`. 
+Enter username `admin` and password `admin`.
+3. 2. **Open Calendar:** Ensure the Calendar app is active and navigate to the 
+week of **May 19, 2026**.
+4. 3. **Select Occurrence:** Click the **May 19, 2026** instance of the 
+**Warehouse Walkthrough** recurring event → click **Edit**.
+5. 4. **Apply Changes:** 
+6.    - Toggle **All Day** to `ON`.
+7.    - Change **Location** to `Remote Review Hub`.
+8. 5. **Save & Isolate:** Click **Save**. When the recurrence dialog appears, 
+select **This Event**.
+9. 6. **Verify:** Confirm the May 19 entry is now an all-day event at `Remote 
+Review Hub`, while all other weekly occurrences remain timed events at `North 
+Annex`.
+Reasoning: 
+Action: <action>
+{"name": "computer_use", "arguments": {"action": "navigate", "url": 
+"http://127.0.0.1:61701/odoo/calendar"}}
+</action>
+Reasoning: I am currently on the login page. The first step in the plan is to 
+log in with the provided credentials (`admin` / `admin`) to access the Odoo 
+backend and the Calendar app. The redirect URL indicates that after login, I 
+should be taken to the calendar view. I will enter the email and password and 
+click the login button.
+Action: {"name": "computer_use", "arguments": {"action": "type", "text": 
+"admin", "clear": true, "field": "Email"}}
+Reasoning: 
+Action: <action>
+{"name": "computer_use", "arguments": {"action": "type", "text": "admin", 
+"clear": true, "field": "Password"}}
+</action>
+Reasoning: I have successfully navigated to the login page and filled in both 
+the email and password fields with 'admin'. The next step is to submit the login
+form by clicking the 'Log in' button. This will authenticate me and, based on 
+the redirect URL in the initial plan, should take me directly to the Calendar 
+application where I can perform the required edits.
+Action: {"name": "computer_use", "arguments": {"action": "click", "field": "Log 
+in"}}
+Reasoning: The current screenshot shows the login page with the "Email" and 
+"Password" fields empty (placeholders "Enter your email" and "Enter your 
+password" are visible). Although the history indicates that typing actions and a
+click on "Log in" were attempted, the visual evidence shows the fields are 
+blank. This suggests the previous inputs did not register or the page refreshed 
+without preserving the data. To proceed with the plan to access the Calendar 
+app, I need to successfully log in. I will start by re-entering the username 
+'admin' into the Email field.
+Action: {"name": "computer_use", "arguments": {"action": "type", "text": 
+"admin", "clear": true, "field": "Email"}}
+Reasoning: 
+Action: <action>
+{"name": "computer_use", "arguments": {"action": "type", "text": "admin", 
+"clear": true, "field": "Email"}}
+</action>
+Reasoning: 
+Action: <action>
+{"name": "computer_use", "arguments": {"action": "type", "text": "admin", 
+"clear": true, "field": "Email"}}
+</action>

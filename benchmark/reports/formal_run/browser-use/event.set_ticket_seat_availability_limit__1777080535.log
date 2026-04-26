@@ -1,0 +1,57 @@
+=== Benchmark Evaluation ===
+  Task:   event.set_ticket_seat_availability_limit
+  Agent:  browser-use
+  DB:     bench_fr_cf2acf88  (auto-isolated)
+  URL:    http://127.0.0.1:62677
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/browser-use/event.set_ticket_seat_availability_limit__1777080535
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_cf2acf88 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 62677
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (browser-use)...
+
+
+   Agent finished: steps=0, wall_clock=213.1s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 41 calls captured (21 writes, 20 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   1 atomic edits observed
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.4
+  Precision:    1.0
+  Recall:       0.25
+  Expected:     4 edits
+  Observed:     1 edits
+  Matching:     1 edits
+  Missing:      3 edits
+  Extra:        0 edits
+  Wall clock:   213.1s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   41
+  Writes:            21 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/browser-use/event.set_ticket_seat_availability_limit__1777080535/
+
+  Missing expected edits:
+    - event.event.ticket.event_id = Autumn AI Summit
+    - event.event.ticket.name = Registration for Autumn AI Summit
+    - event.event.ticket.seats_max = 0

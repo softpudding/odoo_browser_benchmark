@@ -1,0 +1,72 @@
+Plan:
+1. **Minimal Execution Plan**
+2. 1. **Access & Authenticate**
+3.    - Navigate to 
+`http://127.0.0.1:50266/odoo/action-survey.action_survey_form`
+4.    - Log in with Username: `admin` / Password: `admin`
+5. 2. **Navigate to Target Survey**
+6.    - Open the **Surveys** app (if not already active)
+7.    - Locate and click **`Customer Pulse March`** to open the survey form
+8. 3. **Open Participations List**
+9.    - Click the **Participations** (or Participants/Registered) smart button 
+at the top
+10. 4. **Filter & Locate Target Record**
+11.    - In the list view, open the **Filters** menu (or use the search bar) and
+apply **Completed** status
+12.    - Locate the row with Email `reviewer-target@example.com` and click to 
+open it
+13. 5. **Post Chatter Message**
+14.    - Scroll to the Chatter panel
+15.    - Ensure **Send message** is selected (do *not* use Log note)
+16.    - Type exactly: `Reviewed: feedback addressed`
+17.    - Click **Send**
+18. 6. **Constraint Verification**
+19.    - Confirm the message is visible in the target record's chatter
+20.    - Verify no participations were deleted, no survey questions/answers were
+modified, and no other records received messages
+Reasoning: The instruction requires me to start by navigating to a specific URL 
+in an Odoo environment. This is the entry point for the task. After navigating, 
+I will need to log in, but the immediate first step is the navigation itself.
+Action: navigate('http://127.0.0.1:50266/odoo/action-survey.action_survey_form')
+Reasoning: 
+Action: <action>
+fill('355', 'admin')
+</action>
+Reasoning: The previous action successfully filled the username field with 
+'admin'. Now, to log in, I must enter the password 'admin' into the 
+corresponding password input field. I will target the password input field, 
+which is identified by its placeholder text 'Enter your password', and type the 
+password.
+Action: fill('358', 'admin')
+Reasoning: The username 'admin' has been entered. The next step is to enter the 
+password 'admin' into the password field to proceed with the login. The password
+field is identified by its placeholder "Enter your password".
+Action: fill('358', 'admin')
+Reasoning: The username and password have been entered into their respective 
+fields as indicated by the history. The next step to complete the login process 
+is to click the "Log in" button to authenticate the user. This will allow me to 
+access the Odoo backend and proceed with the survey tasks.
+Action: click('364')
+Reasoning: 
+Action: The current observation shows the login page with empty fields, despite 
+the history indicating previous attempts to fill them. This suggests the 
+previous actions may not have persisted or the page was refreshed. To proceed 
+with the plan, I need to re-enter the credentials. I will start by filling the 
+email field.
+
+<action>
+fill('355', 'admin')
+</action>
+Reasoning: The agent previously attempted to log in but found the fields empty 
+afterwards, suggesting a need to re-enter credentials. The last action in the 
+history was `fill('355', 'admin')` to fill the email field. Following the 
+standard login flow and the agent's stated plan to re-enter credentials, the 
+next step is to fill the password field. Based on previous history, the password
+field corresponds to element `358`.
+Action: fill('358', 'admin')
+Reasoning: The history indicates that the username 'admin' and password 'admin' 
+have been entered into their respective fields. The current screenshot shows the
+login page with the "Log in" button clearly visible. To proceed with the task of
+accessing the Odoo backend and navigating to the Surveys app, I need to submit 
+the login form by clicking the "Log in" button.
+Action: click('364')

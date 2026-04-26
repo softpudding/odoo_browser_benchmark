@@ -1,0 +1,44 @@
+Plan:
+1. **1. Login & Access**  
+2. Open `http://127.0.0.1:56090/odoo/inventory`. If prompted, authenticate with 
+`admin` / `admin`.
+3. **2. Navigate**  
+4. In the Inventory app, open **Operations** → **Physical Inventory**.
+5. **3. Adjust Bench Prod X**  
+6. Locate the row for `Bench Prod X` at `WH/Stock`. Click its **Counted 
+Quantity** cell, change `15` to `12`, and press `Tab` (or click outside) to 
+commit.
+7. **4. Adjust Bench Prod Y**  
+8. Locate the row for `Bench Prod Y` at `WH/Stock`. Click its **Counted 
+Quantity** cell, change `25` to `27`, and press `Tab` (or click outside) to 
+commit.
+9. **5. Apply & Confirm**  
+10. Click **Apply All** in the list header. If a confirmation modal appears, 
+click the primary button (`Apply` / `Update Quantities`).
+11. **6. Verify**  
+12. Confirm the **On Hand Quantity** column now shows `12` for Bench Prod X and 
+`27` for Bench Prod Y. Odoo will have auto-posted the corresponding `stock.move`
+records with deltas `-3` and `+2`.
+Reasoning: 
+Action: <action>
+{"action": "navigate", "url": "http://127.0.0.1:56090/odoo/inventory"}
+</action>
+Reasoning: 
+Action: <action>
+{"action": "type", "selector": "input", "text": "admin"}
+</action>
+Reasoning: I have successfully navigated to the login page and entered the 
+username 'admin' in the email field. The next step is to enter the password 
+'admin' into the password field to proceed with authentication. After entering 
+the password, I will need to click the 'Log in' button.
+Action: {"action": "type", "selector": "input", "text": "admin"}
+Reasoning: 
+Action: <action>
+{"action": "click", "selector": "button"}
+</action>
+Reasoning: The previous action was clicking the 'Log in' button. Assuming 
+successful authentication, the user is now in the Odoo Inventory app dashboard. 
+According to the plan, the next step is to navigate to **Operations** > 
+**Physical Inventory**. I need to click the 'Operations' menu item in the top 
+navigation bar to reveal the submenu.
+Action: {"action": "click", "selector": "a:has-text('Operations')"}

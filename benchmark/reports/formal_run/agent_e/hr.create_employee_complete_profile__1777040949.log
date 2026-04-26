@@ -1,0 +1,63 @@
+=== Benchmark Evaluation ===
+  Task:   hr.create_employee_complete_profile
+  Agent:  command
+  DB:     bench_fr_66233f4e  (auto-isolated)
+  URL:    http://127.0.0.1:53140
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/hr.create_employee_complete_profile__1777040949
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_66233f4e from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 53140
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=556.4s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 36 calls captured (17 writes, 19 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   7 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     7 edits
+  Observed:     7 edits
+  Matching:     5 edits
+  Missing:      2 edits
+  Extra:        2 edits
+  Wall clock:   556.4s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   36
+  Writes:            17 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/hr.create_employee_complete_profile__1777040949/
+
+  Postcondition failures:
+    - Job Position: expected 'Field Operations Coordinator', got '(none)'
+    - Work Location: expected 'Home', got '(none)'
+  Missing expected edits:
+    - hr.employee.job_id = Field Operations Coordinator
+    - hr.employee.work_location_id = Home
+  Unexpected extra edits:
+    + hr.employee.job_id = None
+    + hr.employee.work_location_id = None

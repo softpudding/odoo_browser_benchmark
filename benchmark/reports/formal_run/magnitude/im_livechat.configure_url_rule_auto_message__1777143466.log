@@ -1,0 +1,61 @@
+=== Benchmark Evaluation ===
+  Task:   im_livechat.configure_url_rule_auto_message
+  Agent:  command
+  DB:     bench_fr_ad2e5fb0  (auto-isolated)
+  URL:    http://127.0.0.1:62084
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/im_livechat.configure_url_rule_auto_message__1777143466
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_ad2e5fb0 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 62084
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=37.8s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 4 calls captured (1 writes, 3 reads)
+   State: 0 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      4 edits
+  Extra:        0 edits
+  Wall clock:   37.8s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   4
+  Writes:            1 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/im_livechat.configure_url_rule_auto_message__1777143466/
+
+  Postcondition failures:
+    - Expected exactly 1 rule on 'Website Support', found 0
+  Missing expected edits:
+    - im_livechat.channel.rule.action = auto_popup
+    - im_livechat.channel.rule.auto_popup_timer = 5
+    - im_livechat.channel.rule.channel_id = Website Support
+    - im_livechat.channel.rule.regex_url = /contact

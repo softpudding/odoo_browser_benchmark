@@ -1,0 +1,40 @@
+=== Benchmark Evaluation ===
+  Task:   sale.confirm_correct_order
+  Agent:  browser-use
+  DB:     bench_fr_51b3d488  (auto-isolated)
+  URL:    http://127.0.0.1:63135
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/browser-use/sale.confirm_correct_order__1777092078
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_51b3d488 from snapshot 'benchmark_base'...
+Traceback (most recent call last):
+  File "/Users/yangxiao/odoo_browser_benchmark/.venv/bin/benchmark-eval", line 10, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/Users/yangxiao/odoo_browser_benchmark/benchmark/eval.py", line 1682, in main
+    cmd_run(args)
+    ~~~~~~~^^^^^^
+  File "/Users/yangxiao/odoo_browser_benchmark/benchmark/eval.py", line 1271, in cmd_run
+    return _run_episode(
+        task_dir=task_dir,
+    ...<19 lines>...
+        output_dir=output_dir,
+    )
+  File "/Users/yangxiao/odoo_browser_benchmark/benchmark/eval.py", line 1334, in _run_episode
+    _prepare_episode(
+    ~~~~~~~~~~~~~~~~^
+        db,
+        ^^^
+    ...<4 lines>...
+        conf_path=conf_path,
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/yangxiao/odoo_browser_benchmark/benchmark/eval.py", line 981, in _prepare_episode
+    dbm.restore_snapshot(restore_snapshot, db)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/yangxiao/odoo_browser_benchmark/benchmark/db.py", line 114, in restore_snapshot
+    raise RuntimeError(f"createdb failed: {result.stderr}")
+RuntimeError: createdb failed: createdb: error: connection to server on socket "/tmp/.s.PGSQL.5432" failed: FATAL:  sorry, too many clients already
+

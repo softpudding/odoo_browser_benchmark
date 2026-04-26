@@ -1,0 +1,58 @@
+=== Benchmark Evaluation ===
+  Task:   sale_stock.deliver_partial_split_into_two_pickings
+  Agent:  command
+  DB:     bench_fr_882a7c43  (auto-isolated)
+  URL:    http://127.0.0.1:51154
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/sale_stock.deliver_partial_split_into_two_pickings__1777081380
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_882a7c43 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 51154
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=438.4s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 1 records across 2 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     7 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      7 edits
+  Extra:        0 edits
+  Wall clock:   438.4s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/sale_stock.deliver_partial_split_into_two_pickings__1777081380/
+
+  Postcondition failures:
+    - SO state is 'draft', expected 'sale'
+    - No delivery orders found for the SO
+  Missing expected edits:
+    - sale.order.state = sale
+    - stock.picking.origin = S00001
+    - stock.picking.partner_id = Halberd Industries
+    - stock.picking.state = done
+    - stock.picking.origin = S00001
+    - stock.picking.partner_id = Halberd Industries
+    - stock.picking.state = confirmed

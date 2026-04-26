@@ -1,0 +1,45 @@
+Plan:
+1. Here is a minimal, step-by-step execution plan:
+2. 1. **Navigate & Authenticate**
+3.    - Go to `http://127.0.0.1:63628/odoo/inventory`
+4.    - Enter username: `admin`, password: `admin`, then submit.
+5. 2. **Open Target Receipt**
+6.    - From the Odoo dashboard, click **Inventory** → **Receipts** kanban tile.
+7.    - Type `BENCH-SN-RCV-01` in the top search bar, filter, and open the 
+record.
+8. 3. **Set Receipt Ready**
+9.    - If status shows `Draft`, click **Mark as Todo** (or **Confirm**) in the 
+header. Wait for status to change to `Ready`.
+10. 4. **Record Serial Numbers**
+11.    - On the `Bench Serial Gadget` line, click the **Detailed Operations** 
+icon (📋/≡) to open the popup.
+12.    - Ensure exactly **3 rows** exist. Fill them as:
+13.      - Row 1: `Lot/Serial Number` → `SN-BENCH-001` (select `Create 
+"SN-BENCH-001"`), `Quantity` → `1`
+14.      - Row 2: `Lot/Serial Number` → `SN-BENCH-002` (select `Create 
+"SN-BENCH-002"`), `Quantity` → `1`
+15.      - Row 3: `Lot/Serial Number` → `SN-BENCH-003` (select `Create 
+"SN-BENCH-003"`), `Quantity` → `1`
+16.    - Close the popup (changes auto-save).
+17. 5. **Validate & Finalize**
+18.    - Click **Validate** in the form header.
+19.    - If a backorder prompt appears, select **No Backorder** / **Validate 
+Entire Quantity**.
+20.    - Confirm receipt status updates to **Done**.
+Reasoning: 
+Action: <action>
+goto('http://127.0.0.1:63628/odoo/inventory')
+</action>
+Reasoning: I need to start by logging into the Odoo application. The current 
+screen shows the login page. I will enter the username 'admin' in the email 
+field.
+Action: fill('#login', 'admin')
+Reasoning: The previous action filled the email/login field with 'admin'. The 
+next step is to fill the password field with 'admin' and then click the 'Log in'
+button to authenticate and access the Odoo dashboard.
+Action: fill('#password', 'admin')
+click('Log in')
+Reasoning: 
+Action: <action>
+click('Inventory')
+</action>

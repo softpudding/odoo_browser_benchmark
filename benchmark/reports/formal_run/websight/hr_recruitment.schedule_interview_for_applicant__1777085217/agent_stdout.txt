@@ -1,0 +1,44 @@
+Plan:
+1. Here is a minimal, step-by-step plan:
+2. 1. **Access & Authenticate**: Open `http://127.0.0.1:50488/odoo/recruitment` 
+and log in with username `admin` / password `admin`.
+3. 2. **Select Job Pipeline**: Click into the **Operations Analyst** job 
+position.
+4. 3. **Open Applicant**: Click on the applicant card for **Riley Mercer** 
+(double-check name to ensure it is not `Riley Mercer West`).
+5. 4. **Open Activity Scheduler**: Click the **Schedule Activity** button (clock
+icon) in the top-right of the applicant form.
+6. 5. **Configure Activity**:
+7.    - **Activity Type**: `Call`
+8.    - **Due Date**: `June 17, 2026`
+9.    - **Summary**: `Schedule first interview`
+10. 6. **Save & Verify**: Click **Schedule**. Confirm the new activity appears 
+in the activity log and that the applicant's pipeline stage remains unchanged.
+Reasoning: 
+Action: <action>
+{"action": "web_navigate", "arguments": {"url": 
+"http://127.0.0.1:50488/odoo/recruitment"}}
+</action>
+Reasoning: I am currently on the login page for the Odoo instance. The URL 
+confirms I am trying to access the recruitment module (`/odoo/recruitment`). The
+first step in the plan is to log in with the provided credentials 
+(`admin`/`admin`). I will locate the email and password fields, input the 
+credentials, and submit the form.
+Action: {"action": "web_fill", "arguments": {"selector": "input", "text": 
+"admin"}}
+Reasoning: I am currently on the login page with the username 'admin' already 
+entered. To proceed with the plan, I need to enter the password 'admin' into the
+password field and then click the 'Log in' button to access the Odoo backend. 
+Once logged in, I will navigate to the Recruitment app.
+Action: {"action": "web_fill", "arguments": {"selector": "input", "text": 
+"admin"}}
+Reasoning: The username 'admin' and password 'admin' have been entered into 
+their respective fields. The next step is to submit the login form to access the
+Odoo backend. I will click the "Log in" button to authenticate.
+Action: {"action": "web_click", "arguments": {"selector": "button"}}
+Reasoning: I have successfully logged in. Based on the redirect URL in the login
+page (`/odoo/recruitment`), I should now be on the Recruitment dashboard. My 
+next step is to open the specific job pipeline for "Operations Analyst" to find 
+the applicant "Riley Mercer".
+Action: {"action": "web_click", "arguments": {"selector": 
+"a:has(.o_kanban_record_title:contains('Operations Analyst'))"}}

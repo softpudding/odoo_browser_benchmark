@@ -1,0 +1,46 @@
+Plan:
+1. Here is a minimal, execution-ready plan:
+2. **1. Access & Authenticate**
+3. - Navigate to `http://127.0.0.1:57512/odoo/sales`
+4. - Log in: `admin` / `admin`
+5. **2. Navigate & Open Target Record**
+6. - Open **Sales** app → **Quotations**
+7. - Find and open draft quotation: **BENCH-ADD-LINE** (Customer: `Bench Add 
+Co`)
+8. **3. Add Product Line** (Ensure **Order Lines** tab is active)
+9. - In list footer, click **Add a product**
+10. - New row → **Product**: Type/select `Bench Extra Item`
+11. - New row → **Quantity**: Input `4` → Press `Tab` to commit
+12. - *Guardrail*: Leave Unit Price at default `15.00`. Do NOT edit Row 1.
+13. **4. Save & Validate**
+14. - Click **Save** (breadcrumb cloud icon or form button)
+15. - **CRITICAL**: Do NOT click **Confirm**
+16. - *Verification Checklist*:
+17.   - Status remains `Quotation` / Draft
+18.   - Exactly `2` product lines visible
+19.   - Line 1 unchanged: `Bench Existing Item` | Qty: `2` | Price: `30.00`
+20.   - Line 2 correct: `Bench Extra Item` | Qty: `4` | Price: `15.00`
+Reasoning: Starting the execution plan. The first step is to navigate to the 
+Odoo sales URL and log in with the provided credentials.
+Action: visit("http://127.0.0.1:57512/odoo/sales")
+Reasoning: The current page is the login screen. The URL contains a redirect to 
+`/odoo/sales`, which means after successful login, I should be taken directly to
+the Sales dashboard.
+I need to log in with the provided credentials: username 'admin' and password 
+'admin'.
+The Email input field is currently focused.
+Action: type('admin')
+Reasoning: 
+Action: <action>click('#login_password')</action>
+Reasoning: 
+Action: <action>type('admin')</action>
+Reasoning: I have entered the username 'admin' and the password 'admin'. The 
+next step is to submit the login form by clicking the "Log in" button. Once 
+logged in, I will be redirected to the Sales app dashboard (as per the redirect 
+URL). From there, I will need to navigate to Quotations to find the specific 
+draft quotation 'BENCH-ADD-LINE'.
+Action: click('button')
+Reasoning: The login action has been completed. I am now on the Odoo dashboard. 
+I need to navigate to the Quotations list to find the specific quotation 
+'BENCH-ADD-LINE'. I will click on the "Quotations" menu item to proceed.
+Action: click("a:has-text('Quotations')")

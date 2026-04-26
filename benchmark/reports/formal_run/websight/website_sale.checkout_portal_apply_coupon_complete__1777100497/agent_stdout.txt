@@ -1,0 +1,80 @@
+Plan:
+1. ### Minimal Execution Plan: Checkout with `BENCH10CODE`
+2. | Phase | Action | Target/Selector | Expected Result |
+3. |:---|:---|:---|:---|
+4. | **1. Auth** | Navigate & Login | `http://127.0.0.1:61954/shop` → 
+credentials `admin`/`admin` | Session active as **admin** |
+5. | **2. Cart** | Add Product | Product tile: `Bench Coupon Item` → `Add to 
+cart` (qty: `1`) | Product in cart. Dismiss upsell modal if shown. Navigate to 
+`/shop/cart` |
+6. | **3. Coupon** | Apply Code | Input `` → `BENCH10CODE` → click `Apply` | 
+Reward line `-10%` (`-$10.00`) added. Cart total = **`$90.00`** |
+7. | **4. Address** | Proceed to Checkout | Click `` (or `Checkout`/`Process 
+Checkout`) | Lands on `/shop/address` or `/shop/checkout`. Pre-filled admin 
+address visible. |
+8. | **5. Confirm Addr** | Save Address | Click primary `Save address` / 
+`Confirm` / `Continue` (do not edit fields) | Proceeds to `/shop/payment` |
+9. | **6. Payment** | Select & Pay | Select `Wire Transfer` radio → check Terms 
+(if any) → click `Pay now` | Payment transaction initiated |
+10. | **7. Finalize** | Wait & Stop | Await redirect to `/shop/confirmation` | 
+**Task complete.** No reload/back navigation. |
+11. **✅ Post-Run Validation Checklist**
+12. - `sale.order`: 1 record, `client_order_ref` = `False`/`None`
+13. - Order lines: `Bench Coupon Item` ($100.00 × 1), Loyalty Reward `BENCH10` 
+(-$10.00)
+14. - `amount_total` = `90.00`, `state` ∈ (`sale`, `sent`)
+15. - `payment.transaction`: exists, provider = Wire Transfer, state ∈ 
+(`pending`, `done`)
+16. - Coupon `BENCH10CODE`: consumed (`points`=0 / linked to reward line)
+17. **🚫 Constraint Enforcement**
+18. - No new programs/codes created
+19. - Cart quantity remains `1`, no extra items
+20. - Admin partner address/email/phone untouched
+21. - Process stops immediately after `/shop/confirmation` loads
+Reasoning: The plan requires me to start by navigating to the shop URL and 
+logging in. I will first navigate to `http://127.0.0.1:61954/shop`. Since I am 
+not logged in yet, I will likely need to click a "Sign In" button and enter the 
+credentials `admin`/`admin`.
+Action: {
+  "action": "go_to_url",
+  "url": "http://127.0.0.1:61954/shop"
+}
+Reasoning: I am currently on the shop page (`/shop`). The screenshot shows the 
+"Sign In" button in the top right corner, indicating I am not logged in yet. The
+instructions explicitly state to "Log in with username 'admin' and password 
+'admin'". Therefore, my first step is to click the "Sign In" button to access 
+the login form.
+Action: {
+  "action": "click",
+  "selector": "a:has-text('Sign In')",
+  "description": "Click the Sign In button to proceed to the login page."
+}
+Reasoning: The previous action was to click the "Sign In" button. Assuming that 
+action was successful, the browser should now be on the login page (even though 
+the provided screenshot shows the shop page, I must proceed with the login flow 
+as per the plan). The next step is to enter the username 'admin' into the login 
+input field. The standard selector for the Odoo login username field is `input`.
+Action: {"action": "type", "selector": "input", "text": "admin"}
+Reasoning: 
+Action: <action>
+{
+  "action": "type",
+  "selector": "input",
+  "text": "admin"
+}
+</action>
+Reasoning: The current screenshot shows the shop page (`/shop`) with the "Sign 
+in" link visible in the top right corner. This indicates that I am not currently
+logged in. The history shows that previous actions attempted to click "Sign In" 
+(with uppercase 'I') and then type credentials. However, since the current view 
+is still the shop page, the initial click on "Sign In" likely failed (possibly 
+due to case sensitivity, as the screenshot shows "Sign in" with lowercase 'i'), 
+preventing navigation to the login page. Consequently, the subsequent typing 
+actions would have failed as the input fields were not present. To proceed with 
+the login process as per the plan, I need to successfully navigate to the login 
+page. I will click the "Sign in" link using the correct text casing.
+Action: {
+  "action": "click",
+  "selector": "text=\"Sign in\"",
+  "description": "Click the 'Sign in' link to navigate to the login page."
+}

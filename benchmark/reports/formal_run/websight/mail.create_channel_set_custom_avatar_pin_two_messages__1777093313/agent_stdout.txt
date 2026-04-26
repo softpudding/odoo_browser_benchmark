@@ -1,0 +1,50 @@
+Plan:
+1. 1. **Log In & Access**: Navigate to `http://127.0.0.1:49911/odoo/discuss`. 
+Enter username `admin` and password `admin`, then log in.
+2. 2. **Create Channel**: In the Discuss left sidebar, click **+** (New) under 
+the **Channels** section. In the creation dialog:
+3.    - Set **Name** to exactly `engineering-hub`
+4.    - Set **Type** to `Channel` (Public)
+5.    - Set **Description** to exactly `Weekly engineering updates`
+6.    - Click the avatar upload area and select 
+`benchmark/tasks/mail.create_channel_set_custom_avatar_pin_two_messages/seed_art
+ifacts/avatar.png`
+7.    - Click **Add** or **Create**
+8. 3. **Post Messages**: Ensure `engineering-hub` is selected. In the chat input
+box, send these messages sequentially (press Enter after each):
+9.    1. `Weekly standup Monday 10am`
+10.    2. `Please review PR #1042`
+11.    3. `Reminder: retro on Thursday`
+12. 4. **Pin Exactly Two Messages**:
+13.    - Hover over the **first** message (`Weekly standup Monday 10am`) → click
+the 📌 pin icon or `⋮` menu → **Pin to channel** → confirm.
+14.    - Hover over the **third** message (`Reminder: retro on Thursday`) → 
+click the 📌 pin icon or `⋮` menu → **Pin to channel** → confirm.
+15.    - **Do not** interact with the second message for pinning.
+16. 5. **Verify & Finish**: Confirm the channel is public, metadata matches 
+exactly, and the "Pinned" section contains only the two specified messages. 
+Close/stop.
+Reasoning: 
+Action: <action>
+{"action": "goto", "url": "http://127.0.0.1:49911/odoo/discuss"}
+</action>
+Reasoning: 
+Action: <action>
+{"action": "fill", "target": "email", "content": "admin"}
+</action>
+Reasoning: The previous actions navigated to the login page and filled the email
+field with "admin". The current screenshot shows the login form. Although the 
+screenshot appears to show empty fields (which might be the initial state before
+the history actions fully rendered or just a reference), I must proceed with the
+login sequence. The next logical step is to fill the password field with 
+"admin". After that, I will need to click the "Log in" button. I will perform 
+the password fill now.
+Action: {"action": "fill", "target": "", "content": "admin"}
+Reasoning: 
+Action: <action>
+{"action": "click", "target": "button:has-text(\"Log in\")"}
+</action>
+Reasoning: 
+Action: <action>
+{"action": "goto", "url": "http://127.0.0.1:49911/odoo/discuss"}
+</action>

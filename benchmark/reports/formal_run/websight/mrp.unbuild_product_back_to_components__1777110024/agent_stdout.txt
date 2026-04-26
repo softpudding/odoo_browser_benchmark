@@ -1,0 +1,52 @@
+Plan:
+1. Here is a minimal, step-by-step execution plan:
+2. 1. **Access & Login**
+3.    - Navigate to `http://127.0.0.1:57324/odoo/manufacturing`
+4.    - Log in with `admin` / `admin`
+5. 2. **Navigate to Unbuild Menu**
+6.    - In the top app menu: `Products` → `Unbuild Orders`
+7. 3. **Create Unbuild Record**
+8.    - Click `New`
+9.    - `Product`: Select `Bench Assembly` (BoM auto-fills)
+10.    - `Quantity`: Enter `2`
+11.    - `Manufacturing Order`: Leave completely blank
+12.    - `Source Location` & `Destination Location`: Verify both default to 
+`WH/Stock`
+13. 4. **Execute & Confirm**
+14.    - Click the `Unbuild` (or `Validate`/`Confirm`) button in the form status
+bar
+15.    - Wait for the status badge to update to `Done`
+16. 5. **Verify Stock Impact**
+17.    - Confirm `WH/Stock` on-hand reflects: `Bench Assembly` -2, `Bench Screw`
++6, `Bench Housing` +2
+Reasoning: I need to navigate to the Unbuild Orders menu within the 
+Manufacturing app. The instructions specify it is under "Products -> Unbuild 
+Orders". I will click on "Products" in the top menu first to find the "Unbuild 
+Orders" option.
+Action: click("Products")
+Reasoning: 
+Action: <action>
+click("Unbuild Orders")
+</action>
+Reasoning: The user has successfully navigated to the "Unbuild Orders" menu 
+under "Products". The next step in the execution plan is to create a new unbuild
+record. To do this, I need to click the "New" button on the list view to open 
+the form for creating a new unbuild order.
+Action: click("New")
+Reasoning: I have successfully navigated to the Unbuild Orders menu and clicked 
+"New" to create a new record. I am now on the Unbuild Order form. The next step 
+according to the plan is to select the product "Bench Assembly". This will also 
+auto-fill the Bill of Materials. I will click on "Bench Assembly" to select it 
+as the product to unbuild.
+Action: click("Bench Assembly")
+Reasoning: The user has selected "Bench Assembly" as the product. The next step 
+in the plan is to set the Quantity to 2. I need to locate the "Quantity" field 
+on the form and enter the value. Since the screenshot is blank, I will assume 
+the form fields are present and proceed to interact with the "Quantity" field to
+input the required value.
+Action: click("Quantity")
+Reasoning: The previous action was clicking on the "Quantity" field. The next 
+logical step is to input the value '2' as specified in the instructions. After 
+entering the quantity, the next step will be to click the 'Unbuild' button to 
+process the order.
+Action: type("2")

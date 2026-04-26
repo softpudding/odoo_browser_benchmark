@@ -1,0 +1,46 @@
+Plan:
+1. **Objective:** Add exactly one new media image to the `Bench Gallery Mug` 
+product in the Odoo backend without modifying any other data.
+2. **Access:** `http://127.0.0.1:49505/odoo/inventory/products` | Credentials: 
+`admin` / `admin`
+3. **Execution Steps:**
+4. 1. **Login:** Open the URL, authenticate with the provided credentials, and 
+wait for the dashboard/products list to load.
+5. 2. **Open Product:** Locate and click `Bench Gallery Mug` to open its backend
+form.
+6. 3. **Navigate to Media:** Switch to the **Sales** tab → find the **eCommerce 
+Media** kanban section.
+7. 4. **Add Image:** Click **Add Media** → upload a small image file → set the 
+**Name** field to exactly `Bench Side View` → confirm/apply the dialog.
+8. 5. **Persist:** Click **Save** on the product form to commit changes.
+9. **Constraints & Validation:**
+10. - ✅ Leave the **Published** toggle/state unchanged.
+11. - ✅ Do not touch the main product image, price, description, taxes, or any 
+other fields.
+12. - ✅ Verify exactly one new entry appears in **eCommerce Media** with the 
+name `Bench Side View`.
+Reasoning: The user wants to add an image to a specific product in Odoo. The 
+current screen is blank, indicating I need to start by navigating to the 
+provided URL to access the Odoo inventory page. I will begin by opening the URL 
+in the browser.
+Action: open url='http://127.0.0.1:49505/odoo/inventory/products' wait_load=True
+Reasoning: 
+Action: <action>click element="Enter your email" type="input" />
+</action>
+Reasoning: 
+Action: <action>type text="admin" element="Enter your email"</action>
+Reasoning: The previous step involved entering the username 'admin'. The current
+screen shows the login form with the password field empty. To proceed with 
+logging in as per the plan, I need to enter the password 'admin' into the 
+password field. The field is identified by the placeholder "Enter your 
+password". After entering the password, the next step will be to click the "Log 
+in" button.
+Action: type text="admin" element="Enter your password"
+Reasoning: 
+Action: <action>click element="Log in"</action>
+Reasoning: 
+Action: <action>wait_for_element_exists element="Products" timeout=10</action>
+Reasoning: 
+Action: <action>click element="Bench Gallery Mug"</action>
+Reasoning: 
+Action: <action>click element="Sales" type="tab"</action>

@@ -1,0 +1,64 @@
+=== Benchmark Evaluation ===
+  Task:   mrp.create_routing_set_workcenter
+  Agent:  command
+  DB:     bench_fr_cadcc7b5  (auto-isolated)
+  URL:    http://127.0.0.1:52211
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/mrp.create_routing_set_workcenter__1777089729
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_cadcc7b5 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 52211
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 68 calls captured (25 writes, 43 reads)
+   State: 2 records across 2 models
+5. Computing state diff...
+   4 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     6 edits
+  Observed:     4 edits
+  Matching:     2 edits
+  Missing:      4 edits
+  Extra:        2 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   68
+  Writes:            25 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/mrp.create_routing_set_workcenter__1777089729/
+
+  Postcondition failures:
+    - BOM has 0 operations, expected 1
+  Missing expected edits:
+    - mrp.routing.workcenter.bom_id = Benchmark Frame Assembly
+    - mrp.routing.workcenter.name = Final Assembly
+    - mrp.routing.workcenter.time_cycle_manual = 30.0
+    - mrp.routing.workcenter.workcenter_id = Benchmark Assembly Station
+  Unexpected extra edits:
+    + mrp.workcenter.active = True
+    + mrp.workcenter.name = Benchmark Assembly Station

@@ -1,0 +1,64 @@
+=== Benchmark Evaluation ===
+  Task:   sale.update_salesperson_validity_confirm
+  Agent:  command
+  DB:     bench_fr_de3a2d88  (auto-isolated)
+  URL:    http://127.0.0.1:53378
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/sale.update_salesperson_validity_confirm__1777046653
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_de3a2d88 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 53378
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 45 calls captured (16 writes, 29 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 4 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      4 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   45
+  Writes:            16 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/sale.update_salesperson_validity_confirm__1777046653/
+
+  Postcondition failures:
+    - Quotation state is 'draft', expected 'sale'
+    - Salesperson is 'Administrator', expected 'Marc Demo'
+    - Validity date is 2026-05-24, expected 2026-06-25
+    - Customer reference is 'False', expected 'CGS-JUNE'
+  Missing expected edits:
+    - sale.order.client_order_ref = CGS-JUNE
+    - sale.order.state = sale
+    - sale.order.user_id = Marc Demo
+    - sale.order.validity_date = 2026-06-25

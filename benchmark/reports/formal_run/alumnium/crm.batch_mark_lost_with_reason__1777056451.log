@@ -1,0 +1,66 @@
+=== Benchmark Evaluation ===
+  Task:   crm.batch_mark_lost_with_reason
+  Agent:  command
+  DB:     bench_fr_dd1a301d  (auto-isolated)
+  URL:    http://127.0.0.1:54645
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/alumnium/crm.batch_mark_lost_with_reason__1777056451
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_dd1a301d from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 54645
+   Done.
+2. Capturing pre-task state...
+   Captured 7 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=115.9s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 7 calls captured (2 writes, 5 reads)
+   State: 7 records across 2 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 7 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   115.9s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   7
+  Writes:            2 non-forbidden, 0 forbidden
+  Required ops MISSED: ['crm.lead.lost.action_lost_reason_apply']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/alumnium/crm.batch_mark_lost_with_reason__1777056451/
+
+  Postcondition failures:
+    - Expected exactly 1 lost reason named 'Deferred to FY27 budget', found 0
+    - Blue Canyon Power Expansion is still active, expected archived/lost
+    - Blue Canyon Power Expansion lost reason is False, expected 'Deferred to FY27 budget'
+    - Blue Canyon Power Expansion is missing the expected closing note
+    - Blue Canyon Power Renewal is still active, expected archived/lost
+    - Blue Canyon Power Renewal lost reason is False, expected 'Deferred to FY27 budget'
+    - Blue Canyon Power Renewal is missing the expected closing note
+  Missing expected edits:
+    - crm.lost.reason.active = True
+    - crm.lost.reason.name = Deferred to FY27 budget

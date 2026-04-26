@@ -1,0 +1,57 @@
+Plan:
+1. **Minimal Execution Plan**
+2. 1. **Access & Login**
+3.    - Navigate to `http://127.0.0.1:62250/odoo/ecommerce-products`
+4.    - Authenticate with `admin` / `admin`
+5.    - Ensure you are on the **eCommerce Products** list view.
+6. 2. **Step 1: Unpublish**
+7.    - Open **`Bench Cycle Gadget`**.
+8.    - Switch to the **Sales** tab.
+9.    - In the *Ecommerce Shop* group, toggle **Is Published** to `OFF`.
+10. 3. **Step 2: Archive**
+11.    - From the product form or list view, open the **Actions** (⚙️) menu.
+12.    - Click **Archive**.
+13.    - Return to the main product list.
+14. 4. **Step 3: Unarchive**
+15.    - Open the **Filters** dropdown in the list view.
+16.    - Enable the **Archived** filter.
+17.    - Re-open **`Bench Cycle Gadget`**.
+18.    - Open the **Actions** (⚙️) menu → Click **Unarchive**.
+19. 5. **Step 4: Publish**
+20.    - Switch to the **Sales** tab.
+21.    - In the *Ecommerce Shop* group, toggle **Is Published** to `ON`.
+22. 6. **Step 5: Update Reference & Save**
+23.    - Navigate to the **General Information** tab (or stay on current tab if 
+field is visible).
+24.    - Set **Internal Reference** to `BCG-RESTORED`.
+25.    - Click **Save** (or wait for auto-save indicator).
+26. 7. **Final Verification**
+27.    - Confirm state: `Active = True` | `Published on Website = True` | 
+`Internal Reference = BCG-RESTORED`.
+Reasoning: I need to start by navigating to the specified URL to access the Odoo
+instance. The history is empty, so this is the first step.
+Action: go_to_url('http://127.0.0.1:62250/odoo/ecommerce-products')
+Reasoning: The current screen shows the Odoo login page. The previous step 
+navigated to the URL, which redirected to the login page because the user is not
+authenticated. To proceed with the plan, I must first log in using the provided 
+credentials ('admin' / 'admin'). I will start by clicking the email field to 
+enter the username.
+Action: click(element='Email input field')
+Reasoning: 
+Action: <action>type(text='admin')</action>
+Reasoning: The current screen shows the login page. The previous action was 
+clicking the email input field. To proceed with logging in as 'admin', I need to
+type the username 'admin' into the email field. After this, I will need to click
+the password field to enter the password.
+Action: type(text='admin')
+Reasoning: 
+Action: <action>type(text='admin')</action>
+Reasoning: The user is on the login screen. The previous steps successfully 
+navigated to the URL and typed 'admin' into the email field. To complete the 
+login process, I now need to click on the password field to enter the password 
+'admin'.
+Action: click(element='Password input field')
+Reasoning: The previous action clicked the password input field. The password 
+field is now active and ready for input. I need to type the password 'admin' to 
+complete the credentials entry before logging in.
+Action: type(text='admin')
