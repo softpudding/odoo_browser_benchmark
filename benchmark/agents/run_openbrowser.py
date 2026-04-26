@@ -14,9 +14,12 @@ Usage:
         --cmd "python benchmark/agents/run_openbrowser.py"
 """
 
+import atexit
 import json
 import os
+import signal
 import sys
+import urllib.parse
 import urllib.request
 
 sys.path.insert(0, os.path.dirname(__file__))
@@ -31,7 +34,87 @@ def request_json(url, method="GET", body=None, timeout=10):
         return json.loads(resp.read().decode())
 
 
+def cleanup_conversation(server_url, chrome_uuid, conversation_id):
+    """Close managed tabs and delete the conversation.
+
+    Mirrors _cleanup_openbrowser_conversation in
+    OpenBrowser/eval/evaluate_browser_agent.py. Without this, every run
+    leaks one conversation in the OpenBrowser server and one tab group
+    in the persistent Chrome — accumulating to OOM after a few hundred
+    benchmark runs.
+    """
+    if not conversation_id or not chrome_uuid:
+        return
+
+    tabs = []
+    try:
+        params = urllib.parse.urlencode({
+            "browser_id": chrome_uuid,
+            "conversation_id": conversation_id,
+            "managed_only": "true",
+        })
+        req = urllib.request.Request(
+            f"{server_url}/tabs?{params}", method="GET"
+        )
+        with urllib.request.urlopen(req, timeout=5) as resp:
+            data = json.loads(resp.read().decode())
+        if data.get("success"):
+            tabs = data.get("data", {}).get("tabs", []) or []
+    except Exception as e:
+        print(f"[cleanup] list tabs failed: {e}", file=sys.stderr)
+
+    closed = 0
+    for tab in tabs:
+        tab_id = tab.get("tabId")
+        if not isinstance(tab_id, int):
+            tab_id = tab.get("tab_id")
+        if not isinstance(tab_id, int):
+            continue
+        try:
+            params = urllib.parse.urlencode({
+                "action": "close",
+                "browser_id": chrome_uuid,
+                "conversation_id": conversation_id,
+                "tab_id": str(tab_id),
+            })
+            req = urllib.request.Request(
+                f"{server_url}/tabs?{params}", data=b"", method="POST"
+            )
+            with urllib.request.urlopen(req, timeout=5) as resp:
+                resp.read()
+            closed += 1
+        except Exception as e:
+            print(f"[cleanup] close tab {tab_id} failed: {e}", file=sys.stderr)
+
+    print(f"[cleanup] closed {closed}/{len(tabs)} managed tabs", flush=True)
+
+    try:
+        req = urllib.request.Request(
+            f"{server_url}/agent/conversations/{conversation_id}",
+            method="DELETE",
+        )
+        with urllib.request.urlopen(req, timeout=5) as resp:
+            resp.read()
+        print(f"[cleanup] conversation {conversation_id} deleted", flush=True)
+    except Exception as e:
+        print(f"[cleanup] delete conversation failed: {e}", file=sys.stderr)
+
+
+def _install_sigterm_to_sysexit():
+    """Convert SIGTERM into sys.exit so atexit + finally cleanup fire.
+
+    formal_run.py sends SIGTERM after the 900s outer timeout, then
+    SIGKILL 10s later. Without this handler the default SIGTERM action
+    kills the process without running finally blocks, leaking the
+    conversation and managed tabs.
+    """
+    def _handler(signum, frame):
+        sys.exit(128 + signum)
+    signal.signal(signal.SIGTERM, _handler)
+
+
 def main():
+    _install_sigterm_to_sysexit()
     full_instruction = build_instruction()
     server_url = os.environ.get("OPENBROWSER_URL", "http://127.0.0.1:8765")
     chrome_uuid = os.environ.get("OPENBROWSER_CHROME_UUID", "")
@@ -64,6 +147,10 @@ def main():
     )
     conversation_id = conv_data["conversation_id"]
     print(f"[conversation] {conversation_id}", flush=True)
+
+    # Belt-and-suspenders: finally is the primary cleanup path; atexit
+    # catches sys.exit() (including the SIGTERM->sys.exit converter).
+    atexit.register(cleanup_conversation, server_url, chrome_uuid, conversation_id)
 
     # Send the task via SSE streaming
     payload = json.dumps({
@@ -120,6 +207,8 @@ def main():
 
     except Exception as e:
         print(f"OpenBrowser streaming error: {e}", file=sys.stderr)
+    finally:
+        cleanup_conversation(server_url, chrome_uuid, conversation_id)
 
     if completed:
         print("OpenBrowser: task completed")
