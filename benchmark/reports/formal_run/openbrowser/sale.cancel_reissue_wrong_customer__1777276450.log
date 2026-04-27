@@ -1,0 +1,55 @@
+=== Benchmark Evaluation ===
+  Task:   sale.cancel_reissue_wrong_customer
+  Agent:  command
+  DB:     bench_fr_8654bde6  (auto-isolated)
+  URL:    http://127.0.0.1:54165
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/sale.cancel_reissue_wrong_customer__1777276450
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_8654bde6 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 54165
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=132.6s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      4 edits
+  Extra:        0 edits
+  Wall clock:   132.6s
+  Steps:        0
+  Gave up:      False
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/sale.cancel_reissue_wrong_customer__1777276450/
+
+  Postcondition failures:
+    - Original order state is 'sale', expected 'cancel'
+    - Replacement Harbor Retail West order not found
+  Missing expected edits:
+    - sale.order.state = cancel
+    - sale.order.client_order_ref = SALE-FIX-12-WEST
+    - sale.order.partner_id = Harbor Retail West
+    - sale.order.state = sale
