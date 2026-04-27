@@ -1,0 +1,66 @@
+=== Benchmark Evaluation ===
+  Task:   fleet.assign_vehicle_create_contract_active
+  Agent:  command
+  DB:     bench_fr_e168f3b3  (auto-isolated)
+  URL:    http://127.0.0.1:55199
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/fleet.assign_vehicle_create_contract_active__1777249616
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_e168f3b3 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 55199
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=254.4s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 35 calls captured (10 writes, 25 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   7 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     7 edits
+  Observed:     7 edits
+  Matching:     4 edits
+  Missing:      3 edits
+  Extra:        3 edits
+  Wall clock:   254.4s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   35
+  Writes:            10 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/fleet.assign_vehicle_create_contract_active__1777249616/
+
+  Postcondition failures:
+    - Contract vendor (insurer_id) is not set
+    - Recurring Cost is 0.0, expected 200.0
+    - Start date is 2026-04-27, expected 2026-04-20
+  Missing expected edits:
+    - fleet.vehicle.log.contract.cost_generated = 200.0
+    - fleet.vehicle.log.contract.insurer_id = Bench Lease Co
+    - fleet.vehicle.log.contract.start_date = 2026-04-20
+  Unexpected extra edits:
+    + fleet.vehicle.log.contract.cost_generated = 0.0
+    + fleet.vehicle.log.contract.insurer_id = None
+    + fleet.vehicle.log.contract.start_date = 2026-04-27

@@ -1,0 +1,65 @@
+=== Benchmark Evaluation ===
+  Task:   event_sale.multi_ticket_checkout_two_attendees
+  Agent:  command
+  DB:     bench_fr_ca96f340  (auto-isolated)
+  URL:    http://127.0.0.1:55196
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/event_sale.multi_ticket_checkout_two_attendees__1777249616
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_ca96f340 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 55196
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=582.4s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 29 calls captured (10 writes, 19 reads)
+   State: 4 records across 2 models
+5. Computing state diff...
+   10 atomic edits observed
+   Postconditions: 4 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     10 edits
+  Observed:     10 edits
+  Matching:     8 edits
+  Missing:      2 edits
+  Extra:        2 edits
+  Wall clock:   582.4s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   29
+  Writes:            10 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/event_sale.multi_ticket_checkout_two_attendees__1777249616/
+
+  Postcondition failures:
+    - 'Alice Standard' is linked to ticket 'VIP', expected 'Standard'
+    - 'Bob VIP' is linked to ticket 'Standard', expected 'VIP'
+    - Sale order state is 'draft', expected 'sent', 'sale' or 'done'
+    - No payment.transaction linked to sale order 'S00001'
+  Missing expected edits:
+    - event.registration.event_ticket_id = Standard
+    - event.registration.event_ticket_id = VIP
+  Unexpected extra edits:
+    + event.registration.event_ticket_id = VIP
+    + event.registration.event_ticket_id = Standard

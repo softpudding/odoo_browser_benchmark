@@ -1,0 +1,65 @@
+=== Benchmark Evaluation ===
+  Task:   fleet.add_vehicle_log_odometer
+  Agent:  command
+  DB:     bench_fr_858bcac9  (auto-isolated)
+  URL:    http://127.0.0.1:55197
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/fleet.add_vehicle_log_odometer__1777249616
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_858bcac9 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 55197
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=582.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 37 calls captured (10 writes, 27 reads)
+   State: 1 records across 2 models
+5. Computing state diff...
+   2 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     5 edits
+  Observed:     2 edits
+  Matching:     0 edits
+  Missing:      5 edits
+  Extra:        2 edits
+  Wall clock:   582.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   37
+  Writes:            10 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/fleet.add_vehicle_log_odometer__1777249616/
+
+  Postcondition failures:
+    - Expected exactly 1 vehicle with plate 'FLEET-ADD-01', found 0
+  Missing expected edits:
+    - fleet.vehicle.license_plate = FLEET-ADD-01
+    - fleet.vehicle.model_id = Tesla Motors/Model 3
+    - fleet.vehicle.odometer.date = 2026-04-15
+    - fleet.vehicle.odometer.value = 15000.0
+    - fleet.vehicle.odometer.vehicle_id = Tesla Motors/Model 3/FLEET-ADD-01
+  Unexpected extra edits:
+    + fleet.vehicle.license_plate = None
+    + fleet.vehicle.model_id = Tesla Motors/Model 3
