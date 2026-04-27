@@ -1,0 +1,54 @@
+=== Benchmark Evaluation ===
+  Task:   hr_recruitment.skill_filter_then_send_offer
+  Agent:  command
+  DB:     bench_fr_3109c08f  (auto-isolated)
+  URL:    http://127.0.0.1:52868
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/hr_recruitment.skill_filter_then_send_offer__1777249368
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_3109c08f from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 52868
+   Done.
+2. Capturing pre-task state...
+   Captured 347 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=0.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 347 records across 2 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      4 edits
+  Extra:        0 edits
+  Wall clock:   0.1s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/hr_recruitment.skill_filter_then_send_offer__1777249368/
+
+  Postcondition failures:
+    - No mail.message on 'Alice Senior' with subject 'Job Offer - QA Lead'
+  Missing expected edits:
+    - mail.message.message_type = comment
+    - mail.message.model = hr.applicant
+    - mail.message.record_name = Alice Senior
+    - mail.message.subject = Job Offer - QA Lead
