@@ -1,0 +1,69 @@
+=== Benchmark Evaluation ===
+  Task:   stock_landed_costs.add_cost_to_shipment_allocate
+  Agent:  command
+  DB:     bench_fr_e19a7049  (auto-isolated)
+  URL:    http://127.0.0.1:52680
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/stock_landed_costs.add_cost_to_shipment_allocate__1777281205
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_e19a7049 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 52680
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 3 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=584.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 37 calls captured (15 writes, 22 reads)
+   State: 1 records across 3 models
+5. Computing state diff...
+   2 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     8 edits
+  Observed:     2 edits
+  Matching:     0 edits
+  Missing:      8 edits
+  Extra:        2 edits
+  Wall clock:   584.1s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   37
+  Writes:            15 non-forbidden, 0 forbidden
+  Required ops MISSED: ['stock.landed.cost.button_validate']
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/stock_landed_costs.add_cost_to_shipment_allocate__1777281205/
+
+  Postcondition failures:
+    - No stock.landed.cost found linking the seeded receipt 'R-BENCH-LC-001' to Freight — agent likely did not create or save the landed cost record.
+  Missing expected edits:
+    - stock.valuation.adjustment.lines.additional_landed_cost = 45.0
+    - stock.valuation.adjustment.lines.product_id = Bench Import Item
+    - stock.valuation.adjustment.lines.quantity = 3.0
+    - stock.landed.cost.lines.price_unit = 45.0
+    - stock.landed.cost.lines.product_id = Freight
+    - stock.landed.cost.lines.split_method = by_quantity
+    - stock.landed.cost.amount_total = 45.0
+    - stock.landed.cost.state = done
+  Unexpected extra edits:
+    + stock.landed.cost.amount_total = 0.0
+    + stock.landed.cost.state = draft

@@ -1,0 +1,61 @@
+=== Benchmark Evaluation ===
+  Task:   stock.validate_delivery_shipment
+  Agent:  command
+  DB:     bench_fr_6dddd978  (auto-isolated)
+  URL:    http://127.0.0.1:51768
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/stock.validate_delivery_shipment__1777281078
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_6dddd978 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 51768
+   Done.
+2. Capturing pre-task state...
+   Captured 7 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=113.6s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 4 calls captured (1 writes, 3 reads)
+   State: 7 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     1 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      1 edits
+  Extra:        0 edits
+  Wall clock:   113.6s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   4
+  Writes:            1 non-forbidden, 0 forbidden
+  Required ops MISSED: ['stock.picking.button_validate']
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/stock.validate_delivery_shipment__1777281078/
+
+  Postcondition failures:
+    - Target delivery state is 'assigned', expected 'done'
+    - Steel Bracket 12" delivered qty is 20.0, expected 12
+    - Copper Wire 100m delivered qty is 8.0, expected 5
+  Missing expected edits:
+    - stock.picking.state = done
