@@ -1,0 +1,59 @@
+=== Benchmark Evaluation ===
+  Task:   hr_expense.create_mileage_expense_submit_report
+  Agent:  command
+  DB:     bench_fr_a8703f5b  (auto-isolated)
+  URL:    http://127.0.0.1:59303
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/hr_expense.create_mileage_expense_submit_report__1777252709
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_a8703f5b from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 59303
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=590.3s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 38 calls captured (14 writes, 24 reads)
+   State: 0 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   590.3s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   38
+  Writes:            14 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/hr_expense.create_mileage_expense_submit_report__1777252709/
+
+  Postcondition failures:
+    - Expected exactly 1 target expense, found 0
+  Missing expected edits:
+    - hr.expense.name = Client Visit Mileage
+    - hr.expense.state = submitted
