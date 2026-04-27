@@ -1,0 +1,57 @@
+=== Benchmark Evaluation ===
+  Task:   project_todo.bulk_move_tasks_between_projects
+  Agent:  command
+  DB:     bench_fr_9b750abf  (auto-isolated)
+  URL:    http://127.0.0.1:51358
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/project_todo.bulk_move_tasks_between_projects__1777273725
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_9b750abf from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 51358
+   Done.
+2. Capturing pre-task state...
+   Captured 7 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=132.4s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 7 records across 2 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 5 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      3 edits
+  Extra:        0 edits
+  Wall clock:   132.4s
+  Steps:        0
+  Gave up:      False
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/project_todo.bulk_move_tasks_between_projects__1777273725/
+
+  Postcondition failures:
+    - Task 'Bench Task Alpha' is in project 'Bench Proj A', expected 'Bench Proj B'
+    - Task 'Bench Task Bravo' is in project 'Bench Proj A', expected 'Bench Proj B'
+    - Task 'Bench Task Charlie' is in project 'Bench Proj A', expected 'Bench Proj B'
+    - 'Bench Proj A' has 4 active tasks, expected 1 (Delta)
+    - 'Bench Proj B' has 0 active tasks, expected 3 (Alpha, Bravo, Charlie)
+  Missing expected edits:
+    - project.task.project_id = Bench Proj B
+    - project.task.project_id = Bench Proj B
+    - project.task.project_id = Bench Proj B
