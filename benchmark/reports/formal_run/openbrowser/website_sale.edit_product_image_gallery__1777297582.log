@@ -1,0 +1,62 @@
+=== Benchmark Evaluation ===
+  Task:   website_sale.edit_product_image_gallery
+  Agent:  command
+  DB:     bench_fr_8e0fb009  (auto-isolated)
+  URL:    http://127.0.0.1:61094
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/website_sale.edit_product_image_gallery__1777297582
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_8e0fb009 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 61094
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=580.8s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 29 calls captured (11 writes, 18 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   2 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     2 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        2 edits
+  Wall clock:   580.8s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   29
+  Writes:            11 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/website_sale.edit_product_image_gallery__1777297582/
+
+  Postcondition failures:
+    - No product.image with name 'Bench Side View' found for product 'Bench Gallery Mug' (found 1 total images: ['bench_side_view.webp'])
+  Missing expected edits:
+    - product.image.name = Bench Side View
+    - product.image.product_tmpl_id = Bench Gallery Mug
+  Unexpected extra edits:
+    + product.image.name = bench_side_view.webp
+    + product.image.product_tmpl_id = Bench Gallery Mug
