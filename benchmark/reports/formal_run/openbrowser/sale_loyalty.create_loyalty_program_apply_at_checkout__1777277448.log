@@ -1,0 +1,60 @@
+=== Benchmark Evaluation ===
+  Task:   sale_loyalty.create_loyalty_program_apply_at_checkout
+  Agent:  command
+  DB:     bench_fr_6a16b2e1  (auto-isolated)
+  URL:    http://127.0.0.1:60707
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/sale_loyalty.create_loyalty_program_apply_at_checkout__1777277448
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_6a16b2e1 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 60707
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=582.8s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 35 calls captured (7 writes, 28 reads)
+   State: 3 records across 1 models
+5. Computing state diff...
+   3 atomic edits observed
+   Postconditions: 5 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     3 edits
+  Matching:     3 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   582.8s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   35
+  Writes:            7 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/sale_loyalty.create_loyalty_program_apply_at_checkout__1777277448/
+
+  Postcondition failures:
+    - Discount applicability is 'specific', expected 'order'
+    - Reward description is '10% on Expenses', expected 'Spring Sale Discount'
+    - Program does not have a rule with code 'SPRING10' — codes seen: ['PROMO_CODE_a9a4']
+    - Expected exactly 1 reward/discount line on cart, found 0
+    - Cart amount_total is 200.0, expected 180.0
