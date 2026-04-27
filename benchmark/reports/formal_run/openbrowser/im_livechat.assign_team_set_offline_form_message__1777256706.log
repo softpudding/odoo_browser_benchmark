@@ -1,0 +1,60 @@
+=== Benchmark Evaluation ===
+  Task:   im_livechat.assign_team_set_offline_form_message
+  Agent:  command
+  DB:     bench_fr_912df982  (auto-isolated)
+  URL:    http://127.0.0.1:52928
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/im_livechat.assign_team_set_offline_form_message__1777256706
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_912df982 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 52928
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=126.5s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 17 calls captured (5 writes, 12 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   126.5s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   17
+  Writes:            5 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/im_livechat.assign_team_set_offline_form_message__1777256706/
+
+  Postcondition failures:
+    - Channel button_text is 'Need help? Chat with us.', expected 'Leave us a message and we will follow up by Monday.'
+    - Channel default_message is 'How may I help you?', expected 'Hello — we are offline. Email support@bench.test and we will reply by Monday.'
+  Missing expected edits:
+    - im_livechat.channel.button_text = Leave us a message and we will follow up by Monday.
+    - im_livechat.channel.default_message = Hello — we are offline. Email support@bench.test and we will reply by Monday.
