@@ -1,0 +1,70 @@
+=== Benchmark Evaluation ===
+  Task:   mrp.create_bom_with_components
+  Agent:  command
+  DB:     bench_fr_bf8a1df6  (auto-isolated)
+  URL:    http://127.0.0.1:55241
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/mrp.create_bom_with_components__1777269026
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_bf8a1df6 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 55241
+   Done.
+2. Capturing pre-task state...
+   Captured 3 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=581.4s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 27 calls captured (9 writes, 18 reads)
+   State: 4 records across 2 models
+5. Computing state diff...
+   3 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     12 edits
+  Observed:     3 edits
+  Matching:     2 edits
+  Missing:      10 edits
+  Extra:        1 edits
+  Wall clock:   581.4s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   27
+  Writes:            9 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/mrp.create_bom_with_components__1777269026/
+
+  Postcondition failures:
+    - BOM code is False, expected 'BOM-REFERENCE'
+    - BOM has 0 component lines, expected exactly 3
+  Missing expected edits:
+    - mrp.bom.line.bom_id = BOM-REFERENCE: Bench Assembled Gadget
+    - mrp.bom.line.product_id = Bench Control Board
+    - mrp.bom.line.product_qty = 1.0
+    - mrp.bom.line.bom_id = BOM-REFERENCE: Bench Assembled Gadget
+    - mrp.bom.line.product_id = Bench Power Unit
+    - mrp.bom.line.product_qty = 2.0
+    - mrp.bom.line.bom_id = BOM-REFERENCE: Bench Assembled Gadget
+    - mrp.bom.line.product_id = Bench Steel Frame
+    - mrp.bom.line.product_qty = 1.0
+    - mrp.bom.code = BOM-REFERENCE
+  Unexpected extra edits:
+    + mrp.bom.code = None

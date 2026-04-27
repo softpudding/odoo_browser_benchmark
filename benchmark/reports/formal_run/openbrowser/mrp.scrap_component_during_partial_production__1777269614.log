@@ -1,0 +1,66 @@
+=== Benchmark Evaluation ===
+  Task:   mrp.scrap_component_during_partial_production
+  Agent:  command
+  DB:     bench_fr_a5e81fee  (auto-isolated)
+  URL:    http://127.0.0.1:58840
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/mrp.scrap_component_during_partial_production__1777269614
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_a5e81fee from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 58840
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=580.9s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 29 calls captured (10 writes, 19 reads)
+   State: 2 records across 2 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     6 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      6 edits
+  Extra:        0 edits
+  Wall clock:   580.9s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   29
+  Writes:            10 non-forbidden, 0 forbidden
+  Required ops MISSED: ['stock.scrap.action_validate']
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/mrp.scrap_component_during_partial_production__1777269614/
+
+  Postcondition failures:
+    - MO state is 'confirmed', expected 'done'
+    - MO qty_produced is 0.0, expected 5.0
+    - No stock.scrap linked to MO M-BENCH-SCRAP-001 — the task requires scrapping 2 ScrewA before production
+  Missing expected edits:
+    - stock.scrap.product_id = ScrewA
+    - stock.scrap.production_id = M-BENCH-SCRAP-001
+    - mrp.production.qty_produced = 5.0
+    - stock.scrap.scrap_qty = 2.0
+    - mrp.production.state = done
+    - stock.scrap.state = done
