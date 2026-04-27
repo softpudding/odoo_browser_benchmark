@@ -1,0 +1,73 @@
+=== Benchmark Evaluation ===
+  Task:   mrp.confirm_mo_produce_partial_keep_backorder
+  Agent:  command
+  DB:     bench_fr_6d07d194  (auto-isolated)
+  URL:    http://127.0.0.1:54491
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/mrp.confirm_mo_produce_partial_keep_backorder__1777268929
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_6d07d194 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 54491
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=92.7s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 7 calls captured (2 writes, 5 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     15 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      15 edits
+  Extra:        0 edits
+  Wall clock:   92.7s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   7
+  Writes:            2 non-forbidden, 0 forbidden
+  Required ops MISSED: ['mrp.production.backorder.action_backorder']
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/mrp.confirm_mo_produce_partial_keep_backorder__1777268929/
+
+  Postcondition failures:
+    - Manufacturing order 'MO-BENCH-PARTIAL' still exists under its original name (state='confirmed'). Expected it to have been renamed to 'MO-BENCH-PARTIAL-001' by Odoo's backorder split after clicking the primary 'Create backorder' button.
+  Missing expected edits:
+    - mrp.production.backorder_sequence = 0
+    - mrp.production.name = MO-BENCH-PARTIAL
+    - mrp.production.product_qty = 10.0
+    - mrp.production.qty_produced = 0.0
+    - mrp.production.state = confirmed
+    - mrp.production.backorder_sequence = 1
+    - mrp.production.name = MO-BENCH-PARTIAL-001
+    - mrp.production.product_qty = 4.0
+    - mrp.production.qty_produced = 4.0
+    - mrp.production.state = done
+    - mrp.production.backorder_sequence = 2
+    - mrp.production.name = MO-BENCH-PARTIAL-002
+    - mrp.production.product_qty = 6.0
+    - mrp.production.qty_produced = 0.0
+    - mrp.production.state = confirmed

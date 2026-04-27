@@ -1,0 +1,66 @@
+=== Benchmark Evaluation ===
+  Task:   mrp.create_bom_kit_type_for_product
+  Agent:  command
+  DB:     bench_fr_a57f2183  (auto-isolated)
+  URL:    http://127.0.0.1:55055
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/mrp.create_bom_kit_type_for_product__1777269005
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_a57f2183 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 55055
+   Done.
+2. Capturing pre-task state...
+   Captured 3 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=318.0s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 19 calls captured (5 writes, 14 reads)
+   State: 3 records across 2 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     9 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      9 edits
+  Extra:        0 edits
+  Wall clock:   318.0s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   19
+  Writes:            5 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/mrp.create_bom_kit_type_for_product__1777269005/
+
+  Postcondition failures:
+    - Expected exactly 1 mrp.bom for 'Bench Kit Finished', found 0
+  Missing expected edits:
+    - mrp.bom.line.bom_id = Bench Kit Finished
+    - mrp.bom.line.product_id = Bench Kit Comp A
+    - mrp.bom.line.product_qty = 2.0
+    - mrp.bom.line.bom_id = Bench Kit Finished
+    - mrp.bom.line.product_id = Bench Kit Comp B
+    - mrp.bom.line.product_qty = 3.0
+    - mrp.bom.product_qty = 1.0
+    - mrp.bom.product_tmpl_id = Bench Kit Finished
+    - mrp.bom.type = phantom
