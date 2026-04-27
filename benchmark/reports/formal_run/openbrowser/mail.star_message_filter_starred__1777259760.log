@@ -1,0 +1,56 @@
+=== Benchmark Evaluation ===
+  Task:   mail.star_message_filter_starred
+  Agent:  command
+  DB:     bench_fr_ba06fc41  (auto-isolated)
+  URL:    http://127.0.0.1:54597
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/mail.star_message_filter_starred__1777259760
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_ba06fc41 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 54597
+   Done.
+2. Capturing pre-task state...
+   Captured 10 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=583.3s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 21 calls captured (9 writes, 12 reads)
+   State: 10 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     0 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   583.3s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   21
+  Writes:            9 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/mail.star_message_filter_starred__1777259760/
+
+  Postcondition failures:
+    - Target message with 'Finance close blocker — action required for Q2 cutoff' is not starred by admin
