@@ -1,0 +1,51 @@
+=== Benchmark Evaluation ===
+  Task:   hr_holidays.cancel_approved_leave_and_reallocate
+  Agent:  command
+  DB:     bench_fr_828d0acf  (auto-isolated)
+  URL:    http://127.0.0.1:51149
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/hr_holidays.cancel_approved_leave_and_reallocate__1777249221
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_828d0acf from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 51149
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=0.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     1 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      1 edits
+  Extra:        0 edits
+  Wall clock:   0.1s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/hr_holidays.cancel_approved_leave_and_reallocate__1777249221/
+
+  Postcondition failures:
+    - Tentative leave state is 'validate', expected 'refuse'
+  Missing expected edits:
+    - hr.leave.state = refuse
