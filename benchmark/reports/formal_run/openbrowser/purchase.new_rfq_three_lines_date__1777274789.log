@@ -1,0 +1,70 @@
+=== Benchmark Evaluation ===
+  Task:   purchase.new_rfq_three_lines_date
+  Agent:  command
+  DB:     bench_fr_fc9a2ba9  (auto-isolated)
+  URL:    http://127.0.0.1:58169
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/purchase.new_rfq_three_lines_date__1777274789
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_fc9a2ba9 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 58169
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=372.6s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 24 calls captured (9 writes, 15 reads)
+   State: 1 records across 2 models
+5. Computing state diff...
+   2 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     11 edits
+  Observed:     2 edits
+  Matching:     1 edits
+  Missing:      10 edits
+  Extra:        1 edits
+  Wall clock:   372.6s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   24
+  Writes:            9 non-forbidden, 0 forbidden
+  Required ops MISSED: ['purchase.order.button_confirm']
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/purchase.new_rfq_three_lines_date__1777274789/
+
+  Postcondition failures:
+    - No confirmed Purchase Order found for Meridian Supply Co
+  Missing expected edits:
+    - purchase.order.state = purchase
+    - purchase.order.line.price_unit = 0.4
+    - purchase.order.line.product_id = Hex Nut M8
+    - purchase.order.line.product_qty = 500.0
+    - purchase.order.line.price_unit = 1.5
+    - purchase.order.line.product_id = Rubber Gasket
+    - purchase.order.line.product_qty = 200.0
+    - purchase.order.line.price_unit = 0.75
+    - purchase.order.line.product_id = Stainless Bolt M8
+    - purchase.order.line.product_qty = 500.0
+  Unexpected extra edits:
+    + purchase.order.state = draft
