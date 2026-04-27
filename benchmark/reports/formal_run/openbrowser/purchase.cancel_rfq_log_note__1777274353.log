@@ -1,0 +1,59 @@
+=== Benchmark Evaluation ===
+  Task:   purchase.cancel_rfq_log_note
+  Agent:  command
+  DB:     bench_fr_3ed3959f  (auto-isolated)
+  URL:    http://127.0.0.1:55440
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/purchase.cancel_rfq_log_note__1777274353
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_3ed3959f from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 55440
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=202.7s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 25 calls captured (9 writes, 16 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     1 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      1 edits
+  Extra:        0 edits
+  Wall clock:   202.7s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   25
+  Writes:            9 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/purchase.cancel_rfq_log_note__1777274353/
+
+  Postcondition failures:
+    - Target RFQ state is 'draft', expected 'cancel'
+    - Expected internal note not found on target RFQ
+  Missing expected edits:
+    - purchase.order.state = cancel
