@@ -1,0 +1,61 @@
+=== Benchmark Evaluation ===
+  Task:   stock.scrap_product_from_receipt
+  Agent:  command
+  DB:     bench_fr_2ae3dab1  (auto-isolated)
+  URL:    http://127.0.0.1:63948
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/stock.scrap_product_from_receipt__1777280501
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_2ae3dab1 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 63948
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=175.2s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 17 calls captured (5 writes, 12 reads)
+   State: 0 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      3 edits
+  Extra:        0 edits
+  Wall clock:   175.2s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   17
+  Writes:            5 non-forbidden, 0 forbidden
+  Required ops MISSED: ['stock.scrap.action_validate']
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/stock.scrap_product_from_receipt__1777280501/
+
+  Postcondition failures:
+    - No stock.scrap exists for 'Bench Scrap Product' — agent did not create a scrap
+  Missing expected edits:
+    - stock.scrap.product_id = Bench Scrap Product
+    - stock.scrap.scrap_qty = 2.0
+    - stock.scrap.state = done
