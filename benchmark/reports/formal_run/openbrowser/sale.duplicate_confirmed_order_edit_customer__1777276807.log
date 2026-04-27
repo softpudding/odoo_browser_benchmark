@@ -1,0 +1,60 @@
+=== Benchmark Evaluation ===
+  Task:   sale.duplicate_confirmed_order_edit_customer
+  Agent:  command
+  DB:     bench_fr_6637522b  (auto-isolated)
+  URL:    http://127.0.0.1:56636
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/sale.duplicate_confirmed_order_edit_customer__1777276807
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_6637522b from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 56636
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=581.7s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 27 calls captured (10 writes, 17 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      3 edits
+  Extra:        0 edits
+  Wall clock:   581.7s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   27
+  Writes:            10 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/sale.duplicate_confirmed_order_edit_customer__1777276807/
+
+  Postcondition failures:
+    - No duplicate sale.order found for 'Bench Clone Co' — the copy's Customer field should be 'Bench Clone Co'
+  Missing expected edits:
+    - sale.order.client_order_ref = None
+    - sale.order.partner_id = Bench Clone Co
+    - sale.order.state = draft
