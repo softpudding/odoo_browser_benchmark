@@ -1,0 +1,57 @@
+=== Benchmark Evaluation ===
+  Task:   website_event.add_sponsor_to_event_publish
+  Agent:  command
+  DB:     bench_fr_8da5e078  (auto-isolated)
+  URL:    http://127.0.0.1:51211
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/website_event.add_sponsor_to_event_publish__1777295870
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_8da5e078 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Starting Odoo...
+   Odoo ready on port 51211
+   Done.
+2. Capturing pre-task state...
+   Captured 6 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=580.4s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 65 calls captured (21 writes, 44 reads)
+   State: 7 records across 2 models
+5. Computing state diff...
+   3 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     3 edits
+  Matching:     3 edits
+  Missing:      1 edits
+  Extra:        0 edits
+  Wall clock:   580.4s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   65
+  Writes:            21 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/website_event.add_sponsor_to_event_publish__1777295870/
+
+  Postcondition failures:
+    - Event 'Bench Conf 2026' is_published is False, expected True
+  Missing expected edits:
+    - event.event.is_published = True

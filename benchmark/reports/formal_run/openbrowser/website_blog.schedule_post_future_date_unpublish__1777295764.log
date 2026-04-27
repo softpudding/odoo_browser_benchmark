@@ -1,0 +1,61 @@
+=== Benchmark Evaluation ===
+  Task:   website_blog.schedule_post_future_date_unpublish
+  Agent:  command
+  DB:     bench_fr_90610db7  (auto-isolated)
+  URL:    http://127.0.0.1:50319
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/website_blog.schedule_post_future_date_unpublish__1777295764
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_90610db7 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 50319
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=113.9s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 17 calls captured (6 writes, 11 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   113.9s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   17
+  Writes:            6 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/website_blog.schedule_post_future_date_unpublish__1777295764/
+
+  Postcondition failures:
+    - Post is_published is True, expected False
+    - Post website_published is True, expected False
+    - Publishing date (admin local) is 2026-04-27T21:16:12, expected 2026-08-15T12:00:00
+  Missing expected edits:
+    - blog.post.is_published = None
+    - blog.post.website_published = None

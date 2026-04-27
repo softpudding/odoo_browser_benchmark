@@ -1,0 +1,57 @@
+=== Benchmark Evaluation ===
+  Task:   website_hr_recruitment.apply_guru_job
+  Agent:  command
+  DB:     bench_fr_fc99b809  (auto-isolated)
+  URL:    http://127.0.0.1:53031
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/website_hr_recruitment.apply_guru_job__1777296165
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_fc99b809 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Starting Odoo...
+   Odoo ready on port 53031
+   Done.
+2. Capturing pre-task state...
+   Captured 330 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=258.0s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 15 calls captured (8 writes, 7 reads)
+   State: 336 records across 2 models
+5. Computing state diff...
+   6 atomic edits observed
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.8333
+  Precision:    0.8333
+  Recall:       0.8333
+  Expected:     6 edits
+  Observed:     6 edits
+  Matching:     5 edits
+  Missing:      1 edits
+  Extra:        1 edits
+  Wall clock:   258.0s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   15
+  Writes:            8 non-forbidden, 0 forbidden
+  Required ops MISSED: ['custom:/website/form/hr.applicant']
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/website_hr_recruitment.apply_guru_job__1777296165/
+
+  Missing expected edits:
+    - hr.applicant.linkedin_profile = linkedin.com/in/john-smith
+  Unexpected extra edits:
+    + hr.applicant.linkedin_profile = None
