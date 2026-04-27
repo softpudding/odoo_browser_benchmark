@@ -1,0 +1,64 @@
+=== Benchmark Evaluation ===
+  Task:   website.edit_careers_spotlight
+  Agent:  command
+  DB:     bench_fr_0817cde2  (auto-isolated)
+  URL:    http://127.0.0.1:58495
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/website.edit_careers_spotlight__1777294297
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_0817cde2 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 58495
+   Done.
+2. Capturing pre-task state...
+   Captured 7 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=581.8s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 50 calls captured (17 writes, 33 reads)
+   State: 7 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     6 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      6 edits
+  Extra:        0 edits
+  Wall clock:   581.8s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   50
+  Writes:            17 non-forbidden, 0 forbidden
+  Required ops MISSED: ['ir.ui.view.write', 'website.page.write']
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/website.edit_careers_spotlight__1777294297/
+
+  Postcondition failures:
+    - No website.page found at /operations-playbooks
+  Missing expected edits:
+    - website.page.is_published = True
+    - website.page.name = Operations Playbooks
+    - website.page.url = /operations-playbooks
+    - website.page.is_published = True
+    - website.page.name = Policy Studio
+    - website.page.url = /policy-studio
