@@ -1,0 +1,59 @@
+=== Benchmark Evaluation ===
+  Task:   project.create_kanban_stage_reorder_drag
+  Agent:  command
+  DB:     bench_fr_639f0fce  (auto-isolated)
+  URL:    http://127.0.0.1:60908
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/project.create_kanban_stage_reorder_drag__1777291887
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_639f0fce from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 60908
+   Done.
+2. Capturing pre-task state...
+   Captured 11 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=147.5s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 22 calls captured (5 writes, 17 reads)
+   State: 11 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   147.5s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   22
+  Writes:            5 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/project.create_kanban_stage_reorder_drag__1777291887/
+
+  Postcondition failures:
+    - New stage 'Backlog Review' not found on project 'Bench Project A'
+  Missing expected edits:
+    - project.task.type.active = True
+    - project.task.type.name = Backlog Review

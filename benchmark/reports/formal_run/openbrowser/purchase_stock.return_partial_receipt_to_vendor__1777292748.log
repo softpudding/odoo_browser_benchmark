@@ -1,0 +1,59 @@
+=== Benchmark Evaluation ===
+  Task:   purchase_stock.return_partial_receipt_to_vendor
+  Agent:  command
+  DB:     bench_fr_17ff8616  (auto-isolated)
+  URL:    http://127.0.0.1:64944
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/purchase_stock.return_partial_receipt_to_vendor__1777292748
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_17ff8616 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 64944
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=76.3s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 4 calls captured (1 writes, 3 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     0 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   76.3s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   4
+  Writes:            1 non-forbidden, 0 forbidden
+  Required ops MISSED: ['stock.picking.button_validate', 'stock.return.picking.action_create_returns']
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/purchase_stock.return_partial_receipt_to_vendor__1777292748/
+
+  Postcondition failures:
+    - Servo Motor X2 received qty is 6.0, expected 4.0
+    - Panel Bracket 90 received qty is 5.0, expected 4.0
+    - Expected exactly 1 return picking, found 0
