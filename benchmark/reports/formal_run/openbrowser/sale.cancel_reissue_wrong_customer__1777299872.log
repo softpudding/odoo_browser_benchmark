@@ -1,0 +1,61 @@
+=== Benchmark Evaluation ===
+  Task:   sale.cancel_reissue_wrong_customer
+  Agent:  command
+  DB:     bench_fr_8654bde6  (auto-isolated)
+  URL:    http://127.0.0.1:55956
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/sale.cancel_reissue_wrong_customer__1777299872
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_8654bde6 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 55956
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=580.3s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 73 calls captured (18 writes, 55 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   1 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     1 edits
+  Matching:     1 edits
+  Missing:      3 edits
+  Extra:        0 edits
+  Wall clock:   580.3s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.5
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   73
+  Writes:            18 non-forbidden, 0 forbidden
+  Required ops MISSED: ['sale.order.action_confirm']
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/sale.cancel_reissue_wrong_customer__1777299872/
+
+  Postcondition failures:
+    - Replacement Harbor Retail West order not found
+  Missing expected edits:
+    - sale.order.client_order_ref = SALE-FIX-12-WEST
+    - sale.order.partner_id = Harbor Retail West
+    - sale.order.state = sale
