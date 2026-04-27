@@ -1,0 +1,63 @@
+=== Benchmark Evaluation ===
+  Task:   hr.add_resume_line_update_mobile
+  Agent:  command
+  DB:     bench_fr_0a3f4ef7  (auto-isolated)
+  URL:    http://127.0.0.1:62554
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/hr.add_resume_line_update_mobile__1777250736
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_0a3f4ef7 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 62554
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=543.7s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 48 calls captured (17 writes, 31 reads)
+   State: 2 records across 2 models
+5. Computing state diff...
+   1 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     6 edits
+  Observed:     1 edits
+  Matching:     1 edits
+  Missing:      5 edits
+  Extra:        0 edits
+  Wall clock:   543.7s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   48
+  Writes:            17 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/hr.add_resume_line_update_mobile__1777250736/
+
+  Postcondition failures:
+    - Expected 1 matching resume line, found 0
+    - Expected exactly 1 resume entry, found 0
+  Missing expected edits:
+    - hr.resume.line.date_end = 2027-05-01
+    - hr.resume.line.date_start = 2026-05-01
+    - hr.resume.line.employee_id = Marina Ortega
+    - hr.resume.line.line_type_id = Certification
+    - hr.resume.line.name = ISO 27001 Internal Auditor
