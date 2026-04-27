@@ -1,0 +1,65 @@
+=== Benchmark Evaluation ===
+  Task:   purchase.duplicate_rfq_change_vendor_confirm
+  Agent:  command
+  DB:     bench_fr_ac4e13c3  (auto-isolated)
+  URL:    http://127.0.0.1:53965
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/purchase.duplicate_rfq_change_vendor_confirm__1777299420
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_ac4e13c3 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 53965
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=510.5s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 35 calls captured (16 writes, 19 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   3 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     3 edits
+  Matching:     0 edits
+  Missing:      3 edits
+  Extra:        3 edits
+  Wall clock:   510.5s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   35
+  Writes:            16 non-forbidden, 0 forbidden
+  Required ops MISSED: ['purchase.order.button_confirm']
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/purchase.duplicate_rfq_change_vendor_confirm__1777299420/
+
+  Postcondition failures:
+    - Duplicated PO with vendor reference 'PH-REISSUE-77' not found
+  Missing expected edits:
+    - purchase.order.partner_id = Pinnacle Hardware
+    - purchase.order.partner_ref = PH-REISSUE-77
+    - purchase.order.state = purchase
+  Unexpected extra edits:
+    + purchase.order.partner_id = Pinnacle Hardware
+    + purchase.order.partner_ref = None
+    + purchase.order.state = draft
