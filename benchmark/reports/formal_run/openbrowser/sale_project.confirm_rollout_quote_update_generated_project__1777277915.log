@@ -1,0 +1,62 @@
+=== Benchmark Evaluation ===
+  Task:   sale_project.confirm_rollout_quote_update_generated_project
+  Agent:  command
+  DB:     bench_fr_619ae29f  (auto-isolated)
+  URL:    http://127.0.0.1:64292
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/sale_project.confirm_rollout_quote_update_generated_project__1777277915
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_619ae29f from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 64292
+   Done.
+2. Capturing pre-task state...
+   Captured 3 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=582.4s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 40 calls captured (8 writes, 32 reads)
+   State: 3 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   582.4s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   40
+  Writes:            8 non-forbidden, 0 forbidden
+  Required ops MISSED: ['project.project.write', 'project.task.write', 'sale.order.action_confirm', 'sale.order.write']
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/sale_project.confirm_rollout_quote_update_generated_project__1777277915/
+
+  Postcondition failures:
+    - Target quotation state is 'draft', expected 'sale'
+    - Target customer reference is 'ROLL-PROJ-31', expected 'ROLL-PROJ-31-LIVE'
+    - Confirmed sales order did not expose a generated project
+  Missing expected edits:
+    - sale.order.client_order_ref = ROLL-PROJ-31-LIVE
+    - sale.order.state = sale
