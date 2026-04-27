@@ -1,0 +1,59 @@
+=== Benchmark Evaluation ===
+  Task:   website_sale.apply_promo_code_at_checkout
+  Agent:  command
+  DB:     bench_fr_95d3383e  (auto-isolated)
+  URL:    http://127.0.0.1:57960
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/website_sale.apply_promo_code_at_checkout__1777297008
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_95d3383e from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 57960
+   Done.
+2. Capturing pre-task state...
+   Captured 3 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=490.0s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 52 calls captured (16 writes, 36 reads)
+   State: 4 records across 2 models
+5. Computing state diff...
+   2 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     2 edits
+  Matching:     2 edits
+  Missing:      1 edits
+  Extra:        0 edits
+  Wall clock:   490.0s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   52
+  Writes:            16 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/openbrowser/website_sale.apply_promo_code_at_checkout__1777297008/
+
+  Postcondition failures:
+    - Expected at least 1 reward (discount) line on the order, found 0
+    - Order amount_total is 100.0, expected 90.0
+  Missing expected edits:
+    - sale.order.amount_total = 90.0
