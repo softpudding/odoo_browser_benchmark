@@ -1,0 +1,63 @@
+=== Benchmark Evaluation ===
+  Task:   sale_project.confirm_rollout_quote_update_generated_project
+  Agent:  browser-use
+  DB:     bench_fr_cebfbd4c  (auto-isolated)
+  URL:    http://127.0.0.1:62581
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/browser-use/sale_project.confirm_rollout_quote_update_generated_project__1777393250
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_cebfbd4c from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 62581
+   Done.
+2. Capturing pre-task state...
+   Captured 3 records across 1 models
+   API trace recording: STARTED
+3. Running agent (browser-use)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 40 calls captured (16 writes, 24 reads)
+   State: 3 records across 1 models
+5. Computing state diff...
+   1 atomic edits observed
+   Postconditions: 5 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     1 edits
+  Matching:     1 edits
+  Missing:      1 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.25
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   40
+  Writes:            16 non-forbidden, 0 forbidden
+  Required ops MISSED: ['project.project.write', 'project.task.write', 'sale.order.write']
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/browser-use/sale_project.confirm_rollout_quote_update_generated_project__1777393250/
+
+  Postcondition failures:
+    - Target customer reference is 'ROLL-PROJ-31', expected 'ROLL-PROJ-31-LIVE'
+    - Project description is False, expected the exact summary text
+    - Missing renamed task 'Atlas Rollout Kickoff'
+    - Missing renamed task 'Atlas Go-Live Signoff'
+    - Original generated task names are still present in the target project
+  Missing expected edits:
+    - sale.order.client_order_ref = ROLL-PROJ-31-LIVE
