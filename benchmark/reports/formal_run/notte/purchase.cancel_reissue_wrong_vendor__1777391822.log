@@ -1,0 +1,53 @@
+=== Benchmark Evaluation ===
+  Task:   purchase.cancel_reissue_wrong_vendor
+  Agent:  command
+  DB:     bench_fr_575a1149  (auto-isolated)
+  URL:    http://127.0.0.1:56476
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/notte/purchase.cancel_reissue_wrong_vendor__1777391822
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_575a1149 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 56476
+   Done.
+2. Capturing pre-task state...
+   Captured 3 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=454.9s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 49 calls captured (21 writes, 28 reads)
+   State: 6 records across 2 models
+5. Computing state diff...
+   10 atomic edits observed
+6. Scoring...
+
+==================================================
+  RESULT: PASS  (Strict: PASS)
+  StateDiffF1:  1.0
+  Precision:    1.0
+  Recall:       1.0
+  Expected:     10 edits
+  Observed:     10 edits
+  Matching:     10 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   454.9s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   49
+  Writes:            21 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/notte/purchase.cancel_reissue_wrong_vendor__1777391822/
+
