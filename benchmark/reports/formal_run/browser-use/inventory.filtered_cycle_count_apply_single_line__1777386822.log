@@ -1,0 +1,52 @@
+=== Benchmark Evaluation ===
+  Task:   inventory.filtered_cycle_count_apply_single_line
+  Agent:  browser-use
+  DB:     bench_fr_99a1364d  (auto-isolated)
+  URL:    http://127.0.0.1:49645
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/browser-use/inventory.filtered_cycle_count_apply_single_line__1777386822
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_99a1364d from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Starting Odoo...
+   Odoo ready on port 49645
+   Done.
+2. Capturing pre-task state...
+   Captured 11 records across 1 models
+   API trace recording: STARTED
+3. Running agent (browser-use)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 52 calls captured (16 writes, 36 reads)
+   State: 11 records across 1 models
+5. Computing state diff...
+   2 atomic edits observed
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  1.0
+  Precision:    1.0
+  Recall:       1.0
+  Expected:     2 edits
+  Observed:     2 edits
+  Matching:     2 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   52
+  Writes:            16 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/browser-use/inventory.filtered_cycle_count_apply_single_line__1777386822/
+

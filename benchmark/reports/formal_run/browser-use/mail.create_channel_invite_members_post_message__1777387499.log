@@ -1,0 +1,56 @@
+=== Benchmark Evaluation ===
+  Task:   mail.create_channel_invite_members_post_message
+  Agent:  browser-use
+  DB:     bench_fr_90480a5a  (auto-isolated)
+  URL:    http://127.0.0.1:52776
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/browser-use/mail.create_channel_invite_members_post_message__1777387499
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_90480a5a from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 52776
+   Done.
+2. Capturing pre-task state...
+   Captured 4 records across 1 models
+   API trace recording: STARTED
+3. Running agent (browser-use)...
+
+
+   Agent finished: steps=0, wall_clock=398.9s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 52 calls captured (31 writes, 21 reads)
+   State: 6 records across 1 models
+5. Computing state diff...
+   4 atomic edits observed
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.6667
+  Precision:    0.5
+  Recall:       1.0
+  Expected:     2 edits
+  Observed:     4 edits
+  Matching:     2 edits
+  Missing:      0 edits
+  Extra:        2 edits
+  Wall clock:   398.9s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   52
+  Writes:            31 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/browser-use/mail.create_channel_invite_members_post_message__1777387499/
+
+  Unexpected extra edits:
+    + discuss.channel.channel_type = group
+    + discuss.channel.name = 
