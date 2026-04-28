@@ -1,0 +1,56 @@
+=== Benchmark Evaluation ===
+  Task:   website_sale.add_optional_at_cart_remove_main_keep_optional
+  Agent:  command
+  DB:     bench_fr_b5eaa62c  (auto-isolated)
+  URL:    http://127.0.0.1:61217
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/notte/website_sale.add_optional_at_cart_remove_main_keep_optional__1777396606
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_b5eaa62c from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 61217
+   Done.
+2. Capturing pre-task state...
+   Captured 28 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 69 calls captured (40 writes, 29 reads)
+   State: 28 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     0 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   69
+  Writes:            40 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/notte/website_sale.add_optional_at_cart_remove_main_keep_optional__1777396606/
+
+  Postcondition failures:
+    - No website cart for admin contains a 'Bench Tripod' line
