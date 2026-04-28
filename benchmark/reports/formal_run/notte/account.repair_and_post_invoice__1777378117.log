@@ -1,0 +1,59 @@
+=== Benchmark Evaluation ===
+  Task:   account.repair_and_post_invoice
+  Agent:  command
+  DB:     bench_fr_aafe1c57  (auto-isolated)
+  URL:    http://127.0.0.1:53384
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/notte/account.repair_and_post_invoice__1777378117
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_aafe1c57 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 53384
+   Done.
+2. Capturing pre-task state...
+   Captured 5 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=3.8s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 5 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 8 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   3.8s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/notte/account.repair_and_post_invoice__1777378117/
+
+  Postcondition failures:
+    - Target invoice state is draft, expected posted
+    - Acoustic Panel quantity is 1.0, expected 2.0
+    - Acoustic Panel discount is 0.0, expected 5.0
+    - Focus Lamp quantity is 3.0, expected 1.0
+    - Focus Lamp discount is 0.0, expected 15.0
+    - Desk Shelf quantity is 1.0, expected 3.0
+    - Desk Shelf discount is 10.0, expected 0.0
+    - Customer Reference is False, expected 'APR-OPS-READY'
+  Missing expected edits:
+    - account.move.ref = APR-OPS-READY
+    - account.move.state = posted

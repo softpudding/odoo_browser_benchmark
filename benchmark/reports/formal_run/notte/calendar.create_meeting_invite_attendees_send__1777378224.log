@@ -1,0 +1,52 @@
+=== Benchmark Evaluation ===
+  Task:   calendar.create_meeting_invite_attendees_send
+  Agent:  command
+  DB:     bench_fr_c9899c1a  (auto-isolated)
+  URL:    http://127.0.0.1:54459
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/notte/calendar.create_meeting_invite_attendees_send__1777378224
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_c9899c1a from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 54459
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=4.8s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 0 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   4.8s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/notte/calendar.create_meeting_invite_attendees_send__1777378224/
+
+  Postcondition failures:
+    - Postcondition check failed to return JSON:     conn = _connect(dsn, connection_factory=connection_factory, **kwasync) |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ | psycopg2.OperationalError: connection to server on socket "/tmp/.s.PGSQL.5432" failed: FATAL:  sorry, too many clients already
+  Missing expected edits:
+    - calendar.event.allday = None
+    - calendar.event.name = Team Sync

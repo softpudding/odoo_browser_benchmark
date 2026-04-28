@@ -1,0 +1,27 @@
+=== Benchmark Evaluation ===
+  Task:   account.register_partial_payment_reconcile_invoice
+  Agent:  command
+  DB:     bench_fr_4a4712e3  (auto-isolated)
+  URL:    http://127.0.0.1:56529
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/notte/account.register_partial_payment_reconcile_invoice__1777378670
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_4a4712e3 from snapshot 'benchmark_base'...
+Traceback (most recent call last):
+  File "/Users/yangxiao/git/odoo/.venv/bin/benchmark-eval", line 10, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/Users/yangxiao/git/odoo/benchmark/eval.py", line 1682, in main
+    cmd_run(args)
+  File "/Users/yangxiao/git/odoo/benchmark/eval.py", line 1271, in cmd_run
+    return _run_episode(
+           ^^^^^^^^^^^^^
+  File "/Users/yangxiao/git/odoo/benchmark/eval.py", line 1334, in _run_episode
+    _prepare_episode(
+  File "/Users/yangxiao/git/odoo/benchmark/eval.py", line 981, in _prepare_episode
+    dbm.restore_snapshot(restore_snapshot, db)
+  File "/Users/yangxiao/git/odoo/benchmark/db.py", line 114, in restore_snapshot
+    raise RuntimeError(f"createdb failed: {result.stderr}")
+RuntimeError: createdb failed: createdb: error: connection to server on socket "/tmp/.s.PGSQL.5432" failed: FATAL:  sorry, too many clients already
+
