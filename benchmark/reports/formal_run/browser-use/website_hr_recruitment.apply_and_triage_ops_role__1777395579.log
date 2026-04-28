@@ -1,0 +1,64 @@
+=== Benchmark Evaluation ===
+  Task:   website_hr_recruitment.apply_and_triage_ops_role
+  Agent:  browser-use
+  DB:     bench_fr_97907075  (auto-isolated)
+  URL:    http://127.0.0.1:56492
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/browser-use/website_hr_recruitment.apply_and_triage_ops_role__1777395579
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_97907075 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 56492
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (browser-use)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 133 calls captured (54 writes, 79 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   8 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     8 edits
+  Observed:     8 edits
+  Matching:     6 edits
+  Missing:      2 edits
+  Extra:        2 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.5
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   133
+  Writes:            54 non-forbidden, 0 forbidden
+  Required ops MISSED: ['hr.applicant.write']
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/browser-use/website_hr_recruitment.apply_and_triage_ops_role__1777395579/
+
+  Postcondition failures:
+    - Applicant stage is 'New', expected 'Qualification'
+    - Applicant priority is '0', expected '3'
+  Missing expected edits:
+    - hr.applicant.priority = 3
+    - hr.applicant.stage_id = Qualification
+  Unexpected extra edits:
+    + hr.applicant.priority = 0
+    + hr.applicant.stage_id = New
