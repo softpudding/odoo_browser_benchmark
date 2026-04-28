@@ -1,0 +1,65 @@
+=== Benchmark Evaluation ===
+  Task:   hr_holidays.allocate_leave_then_request_against_balance
+  Agent:  command
+  DB:     bench_fr_64959331  (auto-isolated)
+  URL:    http://127.0.0.1:54938
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/notte/hr_holidays.allocate_leave_then_request_against_balance__1777384567
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_64959331 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 54938
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 58 calls captured (25 writes, 33 reads)
+   State: 1 records across 2 models
+5. Computing state diff...
+   5 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     12 edits
+  Observed:     5 edits
+  Matching:     5 edits
+  Missing:      7 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.5
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   58
+  Writes:            25 non-forbidden, 0 forbidden
+  Required ops MISSED: ['hr.leave.action_approve']
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/notte/hr_holidays.allocate_leave_then_request_against_balance__1777384567/
+
+  Postcondition failures:
+    - No leave request found with description 'Warehouse flu recovery'
+  Missing expected edits:
+    - hr.leave.employee_id = Marc Demo
+    - hr.leave.holiday_status_id = Sick Time Off
+    - hr.leave.name = Warehouse flu recovery
+    - hr.leave.number_of_days = 2.0
+    - hr.leave.request_date_from = 2026-06-23
+    - hr.leave.request_date_to = 2026-06-24
+    - hr.leave.state = validate
