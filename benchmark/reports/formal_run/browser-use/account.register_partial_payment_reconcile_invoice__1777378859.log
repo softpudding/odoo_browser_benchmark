@@ -1,0 +1,53 @@
+=== Benchmark Evaluation ===
+  Task:   account.register_partial_payment_reconcile_invoice
+  Agent:  browser-use
+  DB:     bench_fr_5e32c0df  (auto-isolated)
+  URL:    http://127.0.0.1:59477
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/browser-use/account.register_partial_payment_reconcile_invoice__1777378859
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_5e32c0df from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 59477
+   Done.
+2. Capturing pre-task state...
+   Captured 5 records across 2 models
+   API trace recording: STARTED
+3. Running agent (browser-use)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 86 calls captured (39 writes, 47 reads)
+   State: 7 records across 2 models
+5. Computing state diff...
+   10 atomic edits observed
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  1.0
+  Precision:    1.0
+  Recall:       1.0
+  Expected:     10 edits
+  Observed:     10 edits
+  Matching:     10 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   86
+  Writes:            39 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/browser-use/account.register_partial_payment_reconcile_invoice__1777378859/
+
