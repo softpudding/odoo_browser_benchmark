@@ -1,0 +1,32 @@
+[
+  {
+    "model": "purchase.order",
+    "entity_key": [
+      "Bench Dropship Supplier"
+    ],
+    "field": "state",
+    "op": "set",
+    "norm_value": "purchase",
+    "note": "Auto-generated PO for the dropship vendor must be confirmed"
+  },
+  {
+    "model": "stock.picking",
+    "entity_key": [
+      "Bench Dropship Supplier"
+    ],
+    "field": "partner_id",
+    "op": "create",
+    "norm_value": "Bench Dropship Supplier",
+    "note": "Dropship picking gets created when the PO is confirmed"
+  },
+  {
+    "model": "stock.picking",
+    "entity_key": [
+      "Bench Dropship Supplier"
+    ],
+    "field": "state",
+    "op": "create",
+    "norm_value": "done",
+    "note": "Dropship picking must be validated (state = done)"
+  }
+]

@@ -1,0 +1,63 @@
+=== Benchmark Evaluation ===
+  Task:   sale_purchase.dropship_so_to_po_chain_validate
+  Agent:  command
+  DB:     bench_fr_d16309e3  (auto-isolated)
+  URL:    http://127.0.0.1:57460
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/sale_purchase.dropship_so_to_po_chain_validate__1777453457
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_d16309e3 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 57460
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 3 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=240.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 86 calls captured (33 writes, 53 reads)
+   State: 2 records across 3 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      3 edits
+  Extra:        0 edits
+  Wall clock:   240.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   86
+  Writes:            33 non-forbidden, 0 forbidden
+  Required ops MISSED: ['purchase.order.button_confirm', 'stock.picking.button_validate']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/sale_purchase.dropship_so_to_po_chain_validate__1777453457/
+
+  Postcondition failures:
+    - SO line qty_delivered for 'Bench Dropship Gadget' is 0.0, expected 5.0
+    - PO state is 'draft', expected 'purchase'
+    - No pickings linked to the SO
+  Missing expected edits:
+    - stock.picking.partner_id = Bench Dropship Supplier
+    - purchase.order.state = purchase
+    - stock.picking.state = done
