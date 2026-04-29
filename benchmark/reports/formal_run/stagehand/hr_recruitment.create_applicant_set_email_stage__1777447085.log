@@ -1,0 +1,68 @@
+=== Benchmark Evaluation ===
+  Task:   hr_recruitment.create_applicant_set_email_stage
+  Agent:  command
+  DB:     bench_fr_0a2b326c  (auto-isolated)
+  URL:    http://127.0.0.1:62020
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/hr_recruitment.create_applicant_set_email_stage__1777447085
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_0a2b326c from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 62020
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=64.3s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 42 calls captured (22 writes, 20 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   8 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     8 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        8 edits
+  Wall clock:   64.3s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   42
+  Writes:            22 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/hr_recruitment.create_applicant_set_email_stage__1777447085/
+
+  Postcondition failures:
+    - Applicant 'Taylor Kim' not found
+  Missing expected edits:
+    - hr.applicant.priority = 1
+    - hr.applicant.stage_id = First Interview
+  Unexpected extra edits:
+    + hr.applicant.job_id = Experienced Developer
+    + hr.applicant.partner_name = Taylor Kim
+    + hr.applicant.priority = 0
+    + hr.applicant.stage_id = Initial Qualification
+    + hr.applicant.job_id = Experienced Developer
+    + hr.applicant.partner_name = Taylor KimStrong technical background. Schedule technical interview next week.
+    + hr.applicant.priority = 2
+    + hr.applicant.stage_id = First Interview
