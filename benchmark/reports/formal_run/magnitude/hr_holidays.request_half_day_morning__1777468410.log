@@ -1,0 +1,54 @@
+=== Benchmark Evaluation ===
+  Task:   hr_holidays.request_half_day_morning
+  Agent:  command
+  DB:     bench_fr_2b9f573f  (auto-isolated)
+  URL:    http://127.0.0.1:60776
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/magnitude/hr_holidays.request_half_day_morning__1777468410
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_2b9f573f from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 60776
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=423.7s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 74 calls captured (27 writes, 47 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   6 atomic edits observed
+6. Scoring...
+
+==================================================
+  RESULT: PASS  (Strict: FAIL)
+  StateDiffF1:  1.0
+  Precision:    1.0
+  Recall:       1.0
+  Expected:     6 edits
+  Observed:     6 edits
+  Matching:     6 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   423.7s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    0.9259
+  HarmfulWriteRate:  0.0741
+  StrictClean:       False
+  Total API calls:   74
+  Writes:            25 non-forbidden, 2 forbidden
+  Forbidden ops FIRED: ['hr.leave.action_refuse', 'hr.leave.unlink']
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/magnitude/hr_holidays.request_half_day_morning__1777468410/
+

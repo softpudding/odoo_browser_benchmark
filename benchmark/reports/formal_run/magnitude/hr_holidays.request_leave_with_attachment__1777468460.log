@@ -1,0 +1,56 @@
+=== Benchmark Evaluation ===
+  Task:   hr_holidays.request_leave_with_attachment
+  Agent:  command
+  DB:     bench_fr_cce5a5dd  (auto-isolated)
+  URL:    http://127.0.0.1:61347
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/magnitude/hr_holidays.request_leave_with_attachment__1777468460
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_cce5a5dd from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 61347
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=201.6s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 50 calls captured (18 writes, 32 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   4 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     4 edits
+  Matching:     4 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   201.6s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   50
+  Writes:            18 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/magnitude/hr_holidays.request_leave_with_attachment__1777468460/
+
+  Postcondition failures:
+    - No ir.attachment linked to hr.leave id=1 (res_model='hr.leave'); the PDF justification was not attached via the chatter
