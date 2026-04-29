@@ -1,0 +1,63 @@
+=== Benchmark Evaluation ===
+  Task:   maintenance.create_equipment_schedule_preventive_plan
+  Agent:  command
+  DB:     bench_fr_9dc8195c  (auto-isolated)
+  URL:    http://127.0.0.1:56035
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/magnitude/maintenance.create_equipment_schedule_preventive_plan__1777427429
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_9dc8195c from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 56035
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=280.0s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 32 calls captured (12 writes, 20 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   5 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     5 edits
+  Observed:     5 edits
+  Matching:     3 edits
+  Missing:      2 edits
+  Extra:        2 edits
+  Wall clock:   280.0s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   32
+  Writes:            12 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/magnitude/maintenance.create_equipment_schedule_preventive_plan__1777427429/
+
+  Postcondition failures:
+    - expected_mtbf is 3030, expected 30
+    - effective_date is 2026-04-29, expected 2026-06-01
+  Missing expected edits:
+    - maintenance.equipment.effective_date = 2026-06-01
+    - maintenance.equipment.expected_mtbf = 30
+  Unexpected extra edits:
+    + maintenance.equipment.effective_date = 2026-04-29
+    + maintenance.equipment.expected_mtbf = 3030

@@ -1,0 +1,63 @@
+=== Benchmark Evaluation ===
+  Task:   maintenance.archive_equipment_create_replacement
+  Agent:  command
+  DB:     bench_fr_8a87d38a  (auto-isolated)
+  URL:    http://127.0.0.1:55081
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/magnitude/maintenance.archive_equipment_create_replacement__1777427327
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_8a87d38a from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 55081
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=56.6s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 23 calls captured (7 writes, 16 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     5 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      5 edits
+  Extra:        0 edits
+  Wall clock:   56.6s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   23
+  Writes:            7 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/magnitude/maintenance.archive_equipment_create_replacement__1777427327/
+
+  Postcondition failures:
+    - Equipment 'Old Belt OB-99' is still active; expected it to be archived
+    - Equipment 'New Belt NB-100' not found
+  Missing expected edits:
+    - maintenance.equipment.active = True
+    - maintenance.equipment.category_id = Warehouse Gear
+    - maintenance.equipment.name = New Belt NB-100
+    - maintenance.equipment.serial_no = NB-100-SN-2026
+    - maintenance.equipment.active = None
