@@ -1,0 +1,51 @@
+=== Benchmark Evaluation ===
+  Task:   event.create_event_mail_schedule_and_publish_registration
+  Agent:  command
+  DB:     bench_fr_7b8f226e  (auto-isolated)
+  URL:    http://127.0.0.1:64776
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/event.create_event_mail_schedule_and_publish_registration__1777474259
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_7b8f226e from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Starting Odoo...
+   Odoo ready on port 64776
+   Done.
+2. Capturing pre-task state...
+   Captured 5 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=0.4s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 5 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   0.4s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/event.create_event_mail_schedule_and_publish_registration__1777474259/
+
+  Postcondition failures:
+    - Event not found
+  Missing expected edits:
+    - event.event.name = Dock Systems Expo 2026
+    - event.event.website_published = True
