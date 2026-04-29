@@ -1,0 +1,60 @@
+=== Benchmark Evaluation ===
+  Task:   website_sale.configure_free_shipping_threshold
+  Agent:  command
+  DB:     bench_fr_d442b319  (auto-isolated)
+  URL:    http://127.0.0.1:57070
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/website_sale.configure_free_shipping_threshold__1777439115
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_d442b319 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 57070
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=93.7s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 36 calls captured (16 writes, 20 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   93.7s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   36
+  Writes:            16 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/website_sale.configure_free_shipping_threshold__1777439115/
+
+  Postcondition failures:
+    - Carrier free_over is False; the 'Free if order amount is above' checkbox must be enabled
+    - Carrier amount is 1000.0, expected 100.00 (the free-shipping threshold must be exactly 100)
+  Missing expected edits:
+    - delivery.carrier.amount = 100.0
+    - delivery.carrier.free_over = True
