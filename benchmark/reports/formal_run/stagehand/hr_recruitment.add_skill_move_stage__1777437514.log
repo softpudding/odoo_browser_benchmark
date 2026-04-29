@@ -1,0 +1,64 @@
+=== Benchmark Evaluation ===
+  Task:   hr_recruitment.add_skill_move_stage
+  Agent:  command
+  DB:     bench_fr_04ed8726  (auto-isolated)
+  URL:    http://127.0.0.1:54472
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/hr_recruitment.add_skill_move_stage__1777437514
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_04ed8726 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 54472
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=13.5s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 4 calls captured (1 writes, 3 reads)
+   State: 1 records across 2 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     5 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      5 edits
+  Extra:        0 edits
+  Wall clock:   13.5s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   4
+  Writes:            1 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/hr_recruitment.add_skill_move_stage__1777437514/
+
+  Postcondition failures:
+    - Applicant stage is 'Initial Qualification', expected 'First Interview'
+    - Expected 1 Python skill entry, found 0
+    - Expected exactly 1 applicant skill entry, found 0
+  Missing expected edits:
+    - hr.applicant.skill.applicant_id = Jordan Park
+    - hr.applicant.skill.skill_id = Python
+    - hr.applicant.skill.skill_level_id = Advanced
+    - hr.applicant.skill.skill_type_id = IT Skills
+    - hr.applicant.stage_id = First Interview

@@ -1,0 +1,27 @@
+Stagehand: using openai/gpt-4.1-mini via http://127.0.0.1:53760/v1
+[2026-04-29 12:38:18.605 +0800] [32mINFO[39m: [36mLaunching local browser[39m
+    [35mcategory[39m: "init"
+[2026-04-29 12:38:22.459 +0800] [32mINFO[39m: [36mCreating v3 agent instance[39m
+    [35mcategory[39m: "agent"
+    [35mcua[39m: false
+    [35mmode[39m: "dom"
+    [35mmodel[39m: "openai/gpt-4.1-mini"
+    [35msystemPrompt[39m: ""
+[2026-04-29 12:38:22.459 +0800] [31mERROR[39m: [36mUsing agent in default DOM mode (legacy). Agent will default to 'hybrid' on an upcoming release for improved performance.
+  → https://docs.stagehand.dev/v3/basics/agent
+[39m
+    [35mcategory[39m: "agent"
+Stagehand result: {
+  "success": false,
+  "actions": [],
+  "message": "Failed to execute task: Failed after 3 attempts. Last error: You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+  "completed": false,
+  "messages": [
+    {
+      "role": "user",
+      "content": "First, log in with username 'admin' and password 'admin'. Then: # Allocate a new leave type, approve, then book a day off against it\n\nYou are logged in to Odoo 19 as **Administrator** in the **Time Off** app.\n\n**Bench Worker** is a direct report who needs a custom bonus-days allocation\nand then a single-day leave request booked against it. The leave type\n`Bench Bonus Days` requires an allocation before any request can be made, so\nthe order matters: you must approve the allocation first, otherwise the\nleave request will not validate.\n\n## What to do\n\n### Part 1 — Allocate 5 days\n\n1. Go to **Time Off → Management → Allocations**.\n2. Click **New**.\n3. Fill in:\n   - **Description**: `Q2 bonus`\n   - **Employee**: `Bench Worker`\n   - **Time Off Type**: `Bench Bonus Days`\n   - **Allocation**: `5 days`\n4. **Save** the allocation (cloud icon or the breadcrumb save).\n5. Click **Approve** on the saved allocation form. It must move from\n   **To Confirm** to **Approved** (state `validate`).\n\n### Part 2 — Book 1 day against the allocation\n\n1. Go to **Time Off → Management → Time Off** (or the New Request\n   shortcut from the Time Off app).\n2. Click **New**.\n3. Fill in:\n   - **Description**: `Bench day off`\n   - **Employee**: `Bench Worker`\n   - **Time Off Type**: `Bench Bonus Days`\n   - **Dates**: single day, **May 15, 2026** (start = end = 2026-05-15).\n4. **Save** the request.\n5. Click **Approve** on the saved form. It must move to **Approved**\n   (state `validate`).\n\nAfter completion there must be **exactly one** approved allocation and\n**exactly one** approved leave for Bench Worker with the values above.\n\n## Rules\n\n- The allocation MUST be approved before the leave request is approved —\n  otherwise the leave refuses to validate (no allocated balance).\n- The allocation is exactly **5 days** for the **Bench Bonus Days** type.\n- The leave request is exactly **1 day** on **2026-05-15** (start and end\n  equal).\n- Use **Bench Worker** for both records.\n- Do not refuse, cancel, or delete any records.\n- Do not create additional allocations or leave requests.\n- Do not modify any other employee, leave type, or unrelated record."
+    }
+  ]
+}
+[2026-04-29 12:38:30.092 +0800] [31mERROR[39m: [36mError executing agent task: Failed after 3 attempts. Last error: You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.[39m
+    [35mcategory[39m: "agent"
