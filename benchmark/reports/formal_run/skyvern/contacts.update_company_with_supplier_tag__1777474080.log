@@ -1,0 +1,58 @@
+=== Benchmark Evaluation ===
+  Task:   contacts.update_company_with_supplier_tag
+  Agent:  command
+  DB:     bench_fr_b94df7fa  (auto-isolated)
+  URL:    http://127.0.0.1:63230
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/contacts.update_company_with_supplier_tag__1777474080
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_b94df7fa from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 63230
+   Done.
+2. Capturing pre-task state...
+   Captured 12 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=0.4s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 12 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 7 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   0.4s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/contacts.update_company_with_supplier_tag__1777474080/
+
+  Postcondition failures:
+    - Phone is '+1 (206) 555-0101', expected '+1 (206) 555-0184'
+    - Website is 'http://www.northcoast.example.com', expected a northcoastfab URL
+    - Street is 'False', expected '85 Harbor Way'
+    - City is 'False', expected 'Seattle'
+    - ZIP is 'False', expected '98134'
+    - State code is 'None', expected 'WA'
+    - Supplier tag was not added to the company
+  Missing expected edits:
+    - res.partner.phone = +1 (206) 555-0184
+    - res.partner.website = http://www.northcoastfab.example.com
