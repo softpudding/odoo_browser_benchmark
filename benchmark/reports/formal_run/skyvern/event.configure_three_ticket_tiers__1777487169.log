@@ -1,0 +1,58 @@
+=== Benchmark Evaluation ===
+  Task:   event.configure_three_ticket_tiers
+  Agent:  command
+  DB:     bench_fr_b2c6bdb2  (auto-isolated)
+  URL:    http://127.0.0.1:49300
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/event.configure_three_ticket_tiers__1777487169
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_b2c6bdb2 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 49300
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=372.3s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 47 calls captured (12 writes, 35 reads)
+   State: 5 records across 1 models
+5. Computing state diff...
+   12 atomic edits observed
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.8571
+  Precision:    1.0
+  Recall:       0.75
+  Expected:     16 edits
+  Observed:     12 edits
+  Matching:     12 edits
+  Missing:      4 edits
+  Extra:        0 edits
+  Wall clock:   372.3s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   47
+  Writes:            12 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/event.configure_three_ticket_tiers__1777487169/
+
+  Missing expected edits:
+    - event.event.ticket.event_id = Summer DevCon 2026
+    - event.event.ticket.name = Registration for Summer DevCon 2026
+    - event.event.ticket.price = 30.0
+    - event.event.ticket.seats_max = 0
