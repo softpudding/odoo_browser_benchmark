@@ -1,0 +1,66 @@
+=== Benchmark Evaluation ===
+  Task:   hr.create_employee_complete_profile
+  Agent:  command
+  DB:     bench_fr_6e08d863  (auto-isolated)
+  URL:    http://127.0.0.1:63560
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/hr.create_employee_complete_profile__1777436968
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_6e08d863 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 63560
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=103.6s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 38 calls captured (20 writes, 18 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   7 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     7 edits
+  Observed:     7 edits
+  Matching:     4 edits
+  Missing:      3 edits
+  Extra:        3 edits
+  Wall clock:   103.6s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   38
+  Writes:            20 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/hr.create_employee_complete_profile__1777436968/
+
+  Postcondition failures:
+    - Job Position: expected 'Field Operations Coordinator', got '(none)'
+    - Work Location: expected 'Home', got '(none)'
+    - Certificate Level: expected 'bachelor', got '(none)'
+  Missing expected edits:
+    - hr.employee.certificate = bachelor
+    - hr.employee.job_id = Field Operations Coordinator
+    - hr.employee.work_location_id = Home
+  Unexpected extra edits:
+    + hr.employee.certificate = None
+    + hr.employee.job_id = None
+    + hr.employee.work_location_id = None

@@ -1,0 +1,65 @@
+=== Benchmark Evaluation ===
+  Task:   hr.create_department_assign_manager_three_employees
+  Agent:  command
+  DB:     bench_fr_6e1f230d  (auto-isolated)
+  URL:    http://127.0.0.1:62587
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/hr.create_department_assign_manager_three_employees__1777436904
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_6e1f230d from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 62587
+   Done.
+2. Capturing pre-task state...
+   Captured 7 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=138.6s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 80 calls captured (46 writes, 34 reads)
+   State: 8 records across 2 models
+5. Computing state diff...
+   4 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     5 edits
+  Observed:     4 edits
+  Matching:     2 edits
+  Missing:      3 edits
+  Extra:        2 edits
+  Wall clock:   138.6s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   80
+  Writes:            46 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/hr.create_department_assign_manager_three_employees__1777436904/
+
+  Postcondition failures:
+    - Engineer 'Eng One' department is 'Administration', expected 'Bench Engineering'
+    - Engineer 'Eng Two' department is 'Administration', expected 'Bench Engineering'
+    - Engineer 'Eng Three' department is 'Operations', expected 'Bench Engineering'
+  Missing expected edits:
+    - hr.employee.department_id = Bench Engineering
+    - hr.employee.department_id = Bench Engineering
+    - hr.employee.department_id = Bench Engineering
+  Unexpected extra edits:
+    + hr.employee.department_id = Administration
+    + hr.employee.department_id = Administration

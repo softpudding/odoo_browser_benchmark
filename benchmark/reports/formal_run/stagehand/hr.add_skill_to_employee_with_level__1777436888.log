@@ -1,0 +1,70 @@
+=== Benchmark Evaluation ===
+  Task:   hr.add_skill_to_employee_with_level
+  Agent:  command
+  DB:     bench_fr_b87b006d  (auto-isolated)
+  URL:    http://127.0.0.1:62386
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/hr.add_skill_to_employee_with_level__1777436888
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_b87b006d from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 62386
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=136.6s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 109 calls captured (51 writes, 58 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   8 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     8 edits
+  Matching:     0 edits
+  Missing:      4 edits
+  Extra:        8 edits
+  Wall clock:   136.6s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   109
+  Writes:            51 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/hr.add_skill_to_employee_with_level__1777436888/
+
+  Postcondition failures:
+    - No skills found for 'Tech Tom'
+  Missing expected edits:
+    - hr.employee.skill.employee_id = Tech Tom
+    - hr.employee.skill.skill_id = Python
+    - hr.employee.skill.skill_level_id = Advanced
+    - hr.employee.skill.skill_type_id = Programming Languages
+  Unexpected extra edits:
+    + hr.employee.skill.employee_id = Administrator
+    + hr.employee.skill.skill_id = Go
+    + hr.employee.skill.skill_level_id = Beginner
+    + hr.employee.skill.skill_type_id = Programming Languages
+    + hr.employee.skill.employee_id = Administrator
+    + hr.employee.skill.skill_id = Python
+    + hr.employee.skill.skill_level_id = Advanced
+    + hr.employee.skill.skill_type_id = Programming Languages
