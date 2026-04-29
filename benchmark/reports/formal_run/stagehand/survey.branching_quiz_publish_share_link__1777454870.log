@@ -1,0 +1,62 @@
+=== Benchmark Evaluation ===
+  Task:   survey.branching_quiz_publish_share_link
+  Agent:  command
+  DB:     bench_fr_f8b9922b  (auto-isolated)
+  URL:    http://127.0.0.1:52435
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/survey.branching_quiz_publish_share_link__1777454870
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_f8b9922b from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 52435
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=160.8s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 58 calls captured (27 writes, 31 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   2 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     2 edits
+  Matching:     1 edits
+  Missing:      1 edits
+  Extra:        1 edits
+  Wall clock:   160.8s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   58
+  Writes:            27 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/survey.branching_quiz_publish_share_link__1777454870/
+
+  Postcondition failures:
+    - Survey access mode is 'token', expected 'public'
+    - Conditional question type is 'char_box', expected 'text_box'
+    - First question answers are ['Zone AZone B'], expected ['Zone A', 'Zone B']
+  Missing expected edits:
+    - survey.survey.access_mode = public
+  Unexpected extra edits:
+    + survey.survey.access_mode = token

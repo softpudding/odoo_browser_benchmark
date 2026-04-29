@@ -1,0 +1,59 @@
+=== Benchmark Evaluation ===
+  Task:   survey.create_feedback_survey_with_sections
+  Agent:  command
+  DB:     bench_fr_0a6c6abf  (auto-isolated)
+  URL:    http://127.0.0.1:52451
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/survey.create_feedback_survey_with_sections__1777454871
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_0a6c6abf from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 52451
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=156.2s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 147 calls captured (72 writes, 75 reads)
+   State: 0 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   156.2s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   147
+  Writes:            72 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/survey.create_feedback_survey_with_sections__1777454871/
+
+  Postcondition failures:
+    - Survey 'Q1 Workshop Feedback' not found
+  Missing expected edits:
+    - survey.survey.access_mode = public
+    - survey.survey.title = Q1 Workshop Feedback

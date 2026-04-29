@@ -1,0 +1,73 @@
+=== Benchmark Evaluation ===
+  Task:   survey.invite_attendees_send_email
+  Agent:  command
+  DB:     bench_fr_da20d1a3  (auto-isolated)
+  URL:    http://127.0.0.1:52917
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/survey.invite_attendees_send_email__1777454912
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_da20d1a3 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 52917
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=109.6s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 30 calls captured (14 writes, 16 reads)
+   State: 1 records across 2 models
+5. Computing state diff...
+   8 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     6 edits
+  Observed:     8 edits
+  Matching:     0 edits
+  Missing:      6 edits
+  Extra:        8 edits
+  Wall clock:   109.6s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   30
+  Writes:            14 non-forbidden, 0 forbidden
+  Required ops MISSED: ['survey.invite.action_invite']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/survey.invite_attendees_send_email__1777454912/
+
+  Postcondition failures:
+    - Survey 'Bench Onboarding Quiz' not found (agent may have renamed or deleted it)
+  Missing expected edits:
+    - survey.user_input.email = alice@x.com
+    - survey.user_input.state = new
+    - survey.user_input.email = bob@y.com
+    - survey.user_input.state = new
+    - survey.user_input.email = carol@z.com
+    - survey.user_input.state = new
+  Unexpected extra edits:
+    + survey.survey.access_mode = token
+    + survey.survey.active = True
+    + survey.survey.title = Bench Onboarding Quiz
+    + survey.survey.users_login_required = None
+    + survey.survey.access_mode = token
+    + survey.survey.active = True
+    + survey.survey.title = Please complete onboarding
+    + survey.survey.users_login_required = None
