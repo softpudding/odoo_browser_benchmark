@@ -1,0 +1,62 @@
+=== Benchmark Evaluation ===
+  Task:   hr_recruitment.skill_filter_then_send_offer
+  Agent:  command
+  DB:     bench_fr_70e8b98c  (auto-isolated)
+  URL:    http://127.0.0.1:63539
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/magnitude/hr_recruitment.skill_filter_then_send_offer__1777425972
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_70e8b98c from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 63539
+   Done.
+2. Capturing pre-task state...
+   Captured 347 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=41.9s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 4 calls captured (1 writes, 3 reads)
+   State: 347 records across 2 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      4 edits
+  Extra:        0 edits
+  Wall clock:   41.9s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   4
+  Writes:            1 non-forbidden, 0 forbidden
+  Required ops MISSED: ['applicant.send.mail.action_send']
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/magnitude/hr_recruitment.skill_filter_then_send_offer__1777425972/
+
+  Postcondition failures:
+    - No mail.message on 'Alice Senior' with subject 'Job Offer - QA Lead'
+  Missing expected edits:
+    - mail.message.message_type = comment
+    - mail.message.model = hr.applicant
+    - mail.message.record_name = Alice Senior
+    - mail.message.subject = Job Offer - QA Lead

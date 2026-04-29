@@ -1,0 +1,60 @@
+=== Benchmark Evaluation ===
+  Task:   im_livechat.configure_channel_hours_operator_rules
+  Agent:  command
+  DB:     bench_fr_c9d18e33  (auto-isolated)
+  URL:    http://127.0.0.1:51192
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/magnitude/im_livechat.configure_channel_hours_operator_rules__1777426713
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_c9d18e33 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Starting Odoo...
+   Odoo ready on port 51192
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=51.4s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 19 calls captured (4 writes, 15 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      4 edits
+  Extra:        0 edits
+  Wall clock:   51.4s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   19
+  Writes:            4 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/magnitude/im_livechat.configure_channel_hours_operator_rules__1777426713/
+
+  Postcondition failures:
+    - Channel not found
+  Missing expected edits:
+    - im_livechat.channel.button_text = Talk to support now
+    - im_livechat.channel.max_sessions = 1
+    - im_livechat.channel.max_sessions_mode = limited
+    - im_livechat.channel.name = Support Routing
