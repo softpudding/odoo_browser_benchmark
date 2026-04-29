@@ -1,0 +1,66 @@
+=== Benchmark Evaluation ===
+  Task:   mail.star_and_reply_inbox_message
+  Agent:  command
+  DB:     bench_fr_aa5a42dd  (auto-isolated)
+  URL:    http://127.0.0.1:62593
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/mail.star_and_reply_inbox_message__1777433884
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_aa5a42dd from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 62593
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=120.0s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 43 calls captured (21 writes, 22 reads)
+   State: 4 records across 1 models
+5. Computing state diff...
+   12 atomic edits observed
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     0 edits
+  Observed:     12 edits
+  Matching:     0 edits
+  Missing:      0 edits
+  Extra:        12 edits
+  Wall clock:   120.0s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   43
+  Writes:            21 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/mail.star_and_reply_inbox_message__1777433884/
+
+  Unexpected extra edits:
+    + mail.notification.is_read = True
+    + mail.notification.mail_message_id = Administrator
+    + mail.notification.notification_type = email
+    + mail.notification.res_partner_id = Bench Coordinator
+    + mail.notification.is_read = True
+    + mail.notification.mail_message_id = 🎉 You've earned the Community hero badge!
+    + mail.notification.notification_type = email
+    + mail.notification.res_partner_id = Administrator
+    + mail.notification.is_read = True
+    + mail.notification.mail_message_id = 🎉 You've earned the Get started badge!
+    + mail.notification.notification_type = email
+    + mail.notification.res_partner_id = Administrator

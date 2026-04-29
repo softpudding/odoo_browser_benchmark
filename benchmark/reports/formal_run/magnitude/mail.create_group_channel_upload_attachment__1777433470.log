@@ -1,0 +1,66 @@
+=== Benchmark Evaluation ===
+  Task:   mail.create_group_channel_upload_attachment
+  Agent:  command
+  DB:     bench_fr_bed712ba  (auto-isolated)
+  URL:    http://127.0.0.1:60181
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/mail.create_group_channel_upload_attachment__1777433470
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_bed712ba from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 60181
+   Done.
+2. Capturing pre-task state...
+   Captured 3 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=336.9s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 95 calls captured (46 writes, 49 reads)
+   State: 6 records across 1 models
+5. Computing state diff...
+   6 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     6 edits
+  Matching:     1 edits
+  Missing:      1 edits
+  Extra:        5 edits
+  Wall clock:   336.9s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    0.9783
+  HarmfulWriteRate:  0.0217
+  StrictClean:       False
+  Total API calls:   95
+  Writes:            45 non-forbidden, 1 forbidden
+  Required ops MISSED: ['discuss.channel.create', 'discuss.channel.message_post']
+  Forbidden ops FIRED: ['discuss.channel.unlink']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/mail.create_group_channel_upload_attachment__1777433470/
+
+  Postcondition failures:
+    - Postcondition check failed to return JSON:   File "/Users/yangxiao/odoo_browser_benchmark/.venv/lib/python3.13/site-packages/psycopg2/__init__.py", line 122, in connect |     conn = _connect(dsn, connection_factory=connection_factory, **kwasync) | psycopg2.OperationalError: connection to server on socket "/tmp/.s.PGSQL.5432" failed: FATAL:  sorry, too many clients already
+  Missing expected edits:
+    - discuss.channel.channel_type = group
+  Unexpected extra edits:
+    + discuss.channel.channel_type = group
+    + discuss.channel.name = 
+    + discuss.channel.channel_type = group
+    + discuss.channel.name = 
+    + discuss.channel.channel_type = channel

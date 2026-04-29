@@ -1,0 +1,60 @@
+=== Benchmark Evaluation ===
+  Task:   mail.create_channel_pin_message_invite_member
+  Agent:  command
+  DB:     bench_fr_cd0ec477  (auto-isolated)
+  URL:    http://127.0.0.1:60179
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/mail.create_channel_pin_message_invite_member__1777433470
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_cd0ec477 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 60179
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 153 calls captured (78 writes, 75 reads)
+   State: 4 records across 1 models
+5. Computing state diff...
+   2 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     1 edits
+  Observed:     2 edits
+  Matching:     1 edits
+  Missing:      0 edits
+  Extra:        1 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    0.9872
+  HarmfulWriteRate:  0.0128
+  StrictClean:       False
+  Total API calls:   153
+  Writes:            77 non-forbidden, 1 forbidden
+  Forbidden ops FIRED: ['discuss.channel.unlink']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/mail.create_channel_pin_message_invite_member__1777433470/
+
+  Postcondition failures:
+    - Channel type is 'channel', expected 'group'
+    - Expected exactly one pinned target message, found 0
+  Unexpected extra edits:
+    + discuss.channel.name = Administrator, OdooBot
