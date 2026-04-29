@@ -1,0 +1,54 @@
+=== Benchmark Evaluation ===
+  Task:   account.complete_customer_tax_id_then_post
+  Agent:  command
+  DB:     bench_fr_e391710e  (auto-isolated)
+  URL:    http://127.0.0.1:59329
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/account.complete_customer_tax_id_then_post__1777443044
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_e391710e from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 59329
+   Done.
+2. Capturing pre-task state...
+   Captured 11 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=298.1s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 77 calls captured (41 writes, 36 reads)
+   State: 11 records across 2 models
+5. Computing state diff...
+   3 atomic edits observed
+6. Scoring...
+
+==================================================
+  RESULT: PASS  (Strict: PASS)
+  StateDiffF1:  1.0
+  Precision:    1.0
+  Recall:       1.0
+  Expected:     3 edits
+  Observed:     3 edits
+  Matching:     3 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   298.1s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  0.3333
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   77
+  Writes:            41 non-forbidden, 0 forbidden
+  Required ops MISSED: ['account.move.write', 'res.partner.write']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/account.complete_customer_tax_id_then_post__1777443044/
+
