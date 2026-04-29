@@ -1,0 +1,59 @@
+=== Benchmark Evaluation ===
+  Task:   account.update_customer_invoice_terms_post
+  Agent:  command
+  DB:     bench_fr_a1f36639  (auto-isolated)
+  URL:    http://127.0.0.1:58516
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/account.update_customer_invoice_terms_post__1777479474
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_a1f36639 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 58516
+   Done.
+2. Capturing pre-task state...
+   Captured 5 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 46 calls captured (21 writes, 25 reads)
+   State: 5 records across 1 models
+5. Computing state diff...
+   3 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     3 edits
+  Matching:     3 edits
+  Missing:      1 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   46
+  Writes:            21 non-forbidden, 0 forbidden
+  Required ops MISSED: ['account.move.action_post']
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/account.update_customer_invoice_terms_post__1777479474/
+
+  Postcondition failures:
+    - Invoice state is 'draft', expected 'posted'
+  Missing expected edits:
+    - account.move.state = posted
