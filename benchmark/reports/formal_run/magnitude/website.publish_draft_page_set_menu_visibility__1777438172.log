@@ -1,0 +1,55 @@
+=== Benchmark Evaluation ===
+  Task:   website.publish_draft_page_set_menu_visibility
+  Agent:  command
+  DB:     bench_fr_0377c26f  (auto-isolated)
+  URL:    http://127.0.0.1:65180
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/website.publish_draft_page_set_menu_visibility__1777438172
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_0377c26f from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 65180
+   Done.
+2. Capturing pre-task state...
+   Captured 22 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=145.2s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 71 calls captured (39 writes, 32 reads)
+   State: 23 records across 2 models
+5. Computing state diff...
+   8 atomic edits observed
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.9333
+  Precision:    0.875
+  Recall:       1.0
+  Expected:     7 edits
+  Observed:     8 edits
+  Matching:     7 edits
+  Missing:      0 edits
+  Extra:        1 edits
+  Wall clock:   145.2s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   71
+  Writes:            39 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/website.publish_draft_page_set_menu_visibility__1777438172/
+
+  Unexpected extra edits:
+    + website.menu.page_id = Contact Us

@@ -1,0 +1,69 @@
+=== Benchmark Evaluation ===
+  Task:   website.update_contact_info
+  Agent:  command
+  DB:     bench_fr_e50de5f7  (auto-isolated)
+  URL:    http://127.0.0.1:50093
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/website.update_contact_info__1777438353
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_e50de5f7 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 50093
+   Done.
+2. Capturing pre-task state...
+   Captured 7 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=100.8s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 88 calls captured (60 writes, 28 reads)
+   State: 7 records across 1 models
+5. Computing state diff...
+   1 atomic edits observed
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     1 edits
+  Observed:     1 edits
+  Matching:     0 edits
+  Missing:      1 edits
+  Extra:        1 edits
+  Wall clock:   100.8s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   88
+  Writes:            60 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/website.update_contact_info__1777438353/
+
+  Missing expected edits:
+    - website.page.arch = About Us
+Our Story
+We are a dedicated team committed to delivering excellence.
+Contact Information
+Phone: +1 555 987 6543
+Email: info@example.com
+Address: 123 Main Street, Suite 100
+  Unexpected extra edits:
+    + website.page.arch = About Us
+Our Story
+We are a dedicated team committed to delivering excellence.
+Contact Information
+Phone:&nbsp;+1 555 987 6543
+Email: info@example.com
+Address: 123 Main Street, Suite 100

@@ -1,0 +1,57 @@
+=== Benchmark Evaluation ===
+  Task:   website.add_image_snippet_swap_source
+  Agent:  command
+  DB:     bench_fr_9f1425f7  (auto-isolated)
+  URL:    http://127.0.0.1:62591
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/website.add_image_snippet_swap_source__1777437916
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_9f1425f7 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 62591
+   Done.
+2. Capturing pre-task state...
+   Captured 7 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 96 calls captured (37 writes, 59 reads)
+   State: 7 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     0 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   96
+  Writes:            37 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/website.add_image_snippet_swap_source__1777437916/
+
+  Postcondition failures:
+    - Expected an <img> with src='/web/image/website.library_image_10' in the page arch; not found.
+    - Expected at least one <img> tag in the page arch after adding the Image snippet.

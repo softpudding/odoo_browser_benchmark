@@ -1,0 +1,56 @@
+=== Benchmark Evaluation ===
+  Task:   website.set_page_seo_fields
+  Agent:  command
+  DB:     bench_fr_6cc35daf  (auto-isolated)
+  URL:    http://127.0.0.1:49308
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/website.set_page_seo_fields__1777438231
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_6cc35daf from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 49308
+   Done.
+2. Capturing pre-task state...
+   Captured 7 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=184.6s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 105 calls captured (42 writes, 63 reads)
+   State: 7 records across 1 models
+5. Computing state diff...
+   2 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     2 edits
+  Matching:     2 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   184.6s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   105
+  Writes:            42 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/website.set_page_seo_fields__1777438231/
+
+  Postcondition failures:
+    - Postcondition check failed to return JSON:   File "/Users/yangxiao/odoo_browser_benchmark/.venv/lib/python3.13/site-packages/psycopg2/__init__.py", line 122, in connect |     conn = _connect(dsn, connection_factory=connection_factory, **kwasync) | psycopg2.OperationalError: connection to server on socket "/tmp/.s.PGSQL.5432" failed: FATAL:  sorry, too many clients already
