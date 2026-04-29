@@ -1,0 +1,67 @@
+=== Benchmark Evaluation ===
+  Task:   contacts.create_company_with_contacts
+  Agent:  command
+  DB:     bench_fr_c0692186  (auto-isolated)
+  URL:    http://127.0.0.1:59186
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/contacts.create_company_with_contacts__1777444482
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_c0692186 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 59186
+   Done.
+2. Capturing pre-task state...
+   Captured 7 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=203.1s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 83 calls captured (35 writes, 48 reads)
+   State: 9 records across 1 models
+5. Computing state diff...
+   20 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     30 edits
+  Observed:     20 edits
+  Matching:     20 edits
+  Missing:      10 edits
+  Extra:        0 edits
+  Wall clock:   203.1s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   83
+  Writes:            35 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/contacts.create_company_with_contacts__1777444482/
+
+  Postcondition failures:
+    - Contact 'Steven Okafor' not found
+  Missing expected edits:
+    - res.partner.city = Chicago
+    - res.partner.country_id = United States
+    - res.partner.email = s.okafor@vantage-industrial.example.com
+    - res.partner.function = Logistics Coordinator
+    - res.partner.is_company = None
+    - res.partner.name = Steven Okafor
+    - res.partner.parent_id = Vantage Industrial Group
+    - res.partner.phone = +1 (312) 555-0192
+    - res.partner.street = 4400 Commerce Drive
+    - res.partner.zip = 60609
