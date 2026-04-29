@@ -1,0 +1,60 @@
+=== Benchmark Evaluation ===
+  Task:   website_sale.set_product_seo_title_meta
+  Agent:  command
+  DB:     bench_fr_51ffae90  (auto-isolated)
+  URL:    http://127.0.0.1:49661
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/website_sale.set_product_seo_title_meta__1777455887
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_51ffae90 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 49661
+   Done.
+2. Capturing pre-task state...
+   Captured 14 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=149.1s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 112 calls captured (38 writes, 74 reads)
+   State: 14 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   149.1s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   112
+  Writes:            38 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/website_sale.set_product_seo_title_meta__1777455887/
+
+  Postcondition failures:
+    - website_meta_title is False, expected 'Buy Bench SEO Widget Online'
+    - website_meta_description is False, expected 'Premium widget for benchmarking with fast delivery.'
+  Missing expected edits:
+    - product.template.website_meta_description = Premium widget for benchmarking with fast delivery.
+    - product.template.website_meta_title = Buy Bench SEO Widget Online
