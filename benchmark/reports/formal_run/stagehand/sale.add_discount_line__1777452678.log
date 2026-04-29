@@ -1,0 +1,58 @@
+=== Benchmark Evaluation ===
+  Task:   sale.add_discount_line
+  Agent:  command
+  DB:     bench_fr_9661ff69  (auto-isolated)
+  URL:    http://127.0.0.1:64791
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/sale.add_discount_line__1777452678
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_9661ff69 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 64791
+   Done.
+2. Capturing pre-task state...
+   Captured 3 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=140.1s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 71 calls captured (30 writes, 41 reads)
+   State: 3 records across 2 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     1 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      1 edits
+  Extra:        0 edits
+  Wall clock:   140.1s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   71
+  Writes:            30 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/sale.add_discount_line__1777452678/
+
+  Postcondition failures:
+    - Desk Organizer discount is 0.0%, expected 10%
+  Missing expected edits:
+    - sale.order.line.discount = 10.0
