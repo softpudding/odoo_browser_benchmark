@@ -1,0 +1,62 @@
+=== Benchmark Evaluation ===
+  Task:   website_blog.create_blog_with_two_posts_archive_one
+  Agent:  command
+  DB:     bench_fr_b30e903e  (auto-isolated)
+  URL:    http://127.0.0.1:62619
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/website_blog.create_blog_with_two_posts_archive_one__1777475588
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_b30e903e from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 62619
+   Done.
+2. Capturing pre-task state...
+   Captured 3 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=0.4s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 3 records across 2 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     12 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      12 edits
+  Extra:        0 edits
+  Wall clock:   0.4s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/website_blog.create_blog_with_two_posts_archive_one__1777475588/
+
+  Postcondition failures:
+    - Blog 'Bench Insights' not found
+  Missing expected edits:
+    - blog.post.active = True
+    - blog.post.blog_id = Bench Insights
+    - blog.post.is_published = True
+    - blog.post.name = April Update
+    - blog.post.website_published = True
+    - blog.blog.active = True
+    - blog.blog.name = Bench Insights
+    - blog.post.active = None
+    - blog.post.blog_id = Bench Insights
+    - blog.post.is_published = None
+    - blog.post.name = March Notes
+    - blog.post.website_published = None
