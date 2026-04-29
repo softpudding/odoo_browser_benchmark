@@ -1,0 +1,64 @@
+=== Benchmark Evaluation ===
+  Task:   website.create_new_page_publish
+  Agent:  command
+  DB:     bench_fr_ffb0d6dc  (auto-isolated)
+  URL:    http://127.0.0.1:55033
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/website.create_new_page_publish__1777455067
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_ffb0d6dc from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 55033
+   Done.
+2. Capturing pre-task state...
+   Captured 6 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=88.1s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 53 calls captured (21 writes, 32 reads)
+   State: 7 records across 1 models
+5. Computing state diff...
+   3 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     3 edits
+  Matching:     0 edits
+  Missing:      3 edits
+  Extra:        3 edits
+  Wall clock:   88.1s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   53
+  Writes:            21 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/website.create_new_page_publish__1777455067/
+
+  Postcondition failures:
+    - Page missing at '/bench-new-page' (expected name 'Bench New Page')
+  Missing expected edits:
+    - website.page.is_published = True
+    - website.page.name = Bench New Page
+    - website.page.url = /bench-new-page
+  Unexpected extra edits:
+    + website.page.is_published = None
+    + website.page.name = New Page
+    + website.page.url = /new-page
