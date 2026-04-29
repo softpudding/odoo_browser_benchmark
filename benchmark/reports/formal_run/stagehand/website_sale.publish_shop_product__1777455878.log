@@ -1,0 +1,62 @@
+=== Benchmark Evaluation ===
+  Task:   website_sale.publish_shop_product
+  Agent:  command
+  DB:     bench_fr_c5085b60  (auto-isolated)
+  URL:    http://127.0.0.1:49569
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/website_sale.publish_shop_product__1777455878
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_c5085b60 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 49569
+   Done.
+2. Capturing pre-task state...
+   Captured 14 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=161.4s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 25 calls captured (8 writes, 17 reads)
+   State: 14 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      3 edits
+  Extra:        0 edits
+  Wall clock:   161.4s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   25
+  Writes:            8 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/website_sale.publish_shop_product__1777455878/
+
+  Postcondition failures:
+    - Sales price is 0.0, expected 199.0
+    - Product is not published to the website
+    - Website description does not contain the required text
+  Missing expected edits:
+    - product.template.description_ecommerce = Ergonomic task chair ready for the online shop.
+    - product.template.is_published = True
+    - product.template.list_price = 199.0
