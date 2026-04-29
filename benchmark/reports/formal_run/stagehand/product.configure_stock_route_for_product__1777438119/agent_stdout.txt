@@ -1,0 +1,27 @@
+Stagehand: using openai/gpt-4.1-mini via http://127.0.0.1:62190/v1
+[2026-04-29 12:49:18.647 +0800] [32mINFO[39m: [36mLaunching local browser[39m
+    [35mcategory[39m: "init"
+[2026-04-29 12:49:25.357 +0800] [32mINFO[39m: [36mCreating v3 agent instance[39m
+    [35mcategory[39m: "agent"
+    [35mcua[39m: false
+    [35mmode[39m: "dom"
+    [35mmodel[39m: "openai/gpt-4.1-mini"
+    [35msystemPrompt[39m: ""
+[2026-04-29 12:49:25.357 +0800] [31mERROR[39m: [36mUsing agent in default DOM mode (legacy). Agent will default to 'hybrid' on an upcoming release for improved performance.
+  → https://docs.stagehand.dev/v3/basics/agent
+[39m
+    [35mcategory[39m: "agent"
+Stagehand result: {
+  "success": false,
+  "actions": [],
+  "message": "Failed to execute task: Failed after 3 attempts. Last error: You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+  "completed": false,
+  "messages": [
+    {
+      "role": "user",
+      "content": "First, log in with username 'admin' and password 'admin'. Then: # Enable the MTO stock route on `Bench MTO Item`\n\nYou are in the Odoo 19 **Inventory** app logged in as **Administrator**.\n\nA storable product **`Bench MTO Item`** has been added to the catalog with\n**no routes selected**. To make the system trigger procurement each time this\nitem is sold, it must carry the **Replenish on Order (MTO)** route.\n\n## What to do\n\n1. Open the **Inventory** app.\n2. Go to **Products > Products** and open the product **`Bench MTO Item`**.\n3. On the product form, switch to the **Inventory** tab (the page where the\n   Logistics / Operations groups are rendered, alongside weight, volume,\n   customer lead time, etc.).\n4. In the **Operations** group, locate the **Routes** field. It renders as a\n   list of checkboxes (one per applicable route).\n5. Tick the checkbox labelled **`Replenish on Order (MTO)`** and leave every\n   other checkbox in that Routes group unchecked.\n6. **Save** the product.\n\n## Expected end state\n\n- The product **`Bench MTO Item`** has its `route_ids` set to a single route:\n  the **Replenish on Order (MTO)** route\n  (`stock.route_warehouse0_mto`).\n\n## Rules\n\n- Enable ONLY the **Replenish on Order (MTO)** route. Do NOT additionally\n  enable Buy, Manufacture, Dropship, or any other route in that checkbox\n  group.\n- Do NOT change any other field on the product (keep the name, type,\n  storable flag, prices, category, etc. untouched).\n- Do NOT archive, duplicate, or delete the product.\n- Do NOT create a new route — the MTO route is already available, you only\n  need to tick its checkbox."
+    }
+  ]
+}
+[2026-04-29 12:49:32.672 +0800] [31mERROR[39m: [36mError executing agent task: Failed after 3 attempts. Last error: You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.[39m
+    [35mcategory[39m: "agent"

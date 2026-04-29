@@ -1,0 +1,27 @@
+Stagehand: using openai/gpt-4.1-mini via http://127.0.0.1:62135/v1
+[2026-04-29 12:49:20.103 +0800] [32mINFO[39m: [36mLaunching local browser[39m
+    [35mcategory[39m: "init"
+[2026-04-29 12:49:27.229 +0800] [32mINFO[39m: [36mCreating v3 agent instance[39m
+    [35mcategory[39m: "agent"
+    [35mcua[39m: false
+    [35mmode[39m: "dom"
+    [35mmodel[39m: "openai/gpt-4.1-mini"
+    [35msystemPrompt[39m: ""
+[2026-04-29 12:49:27.231 +0800] [31mERROR[39m: [36mUsing agent in default DOM mode (legacy). Agent will default to 'hybrid' on an upcoming release for improved performance.
+  → https://docs.stagehand.dev/v3/basics/agent
+[39m
+    [35mcategory[39m: "agent"
+Stagehand result: {
+  "success": false,
+  "actions": [],
+  "message": "Failed to execute task: Failed after 3 attempts. Last error: Cannot connect to API: connect ECONNREFUSED 127.0.0.1:62135",
+  "completed": false,
+  "messages": [
+    {
+      "role": "user",
+      "content": "First, log in with username 'admin' and password 'admin'. Then: # Receive a subcontracted serial-tracked product\n\nYou are in the Odoo 19 **Inventory** app, logged in as **Administrator**.\n\nThe vendor **Bench Subcontractor Inc** finished assembling 2 units of the\nserial-tracked product **Bench Sub Assembly** for us under a\nsubcontracting Bill of Materials. A confirmed purchase order\n`P-BENCH-SUB-001` for 2 units of **Bench Sub Assembly** is already in\nthe system and has auto-generated an incoming transfer (receipt) from\nthe subcontractor. The raw components (`Bench Sub Part-A` and\n`Bench Sub Part-B`) are already located at the subcontractor's\nsubcontracting location (the vendor has them).\n\nEach finished unit must be tagged with its own serial number. Your job\nis to receive the 2 units through the receipt, enter the two serial\nnumbers, and validate — so the linked subcontract MO closes and\nback-flushes the raw components.\n\n## What to do\n\n1. From the Inventory overview, go to **Receipts** (the Receipts kanban\n   tile or Operations > Transfers filtered to Receipts).\n2. Open the receipt whose **Source Document** is `P-BENCH-SUB-001` (it\n   is in state **Ready**, vendor is `Bench Subcontractor Inc`, and the\n   single line is `Bench Sub Assembly` with demand `2`).\n3. On the `Bench Sub Assembly` move line, click the **Details** button\n   (the list-icon `⋮`/`≡` button at the end of the row) to open the\n   **Detailed Operations** popup — a modal with a list of\n   `stock.move.line` rows.\n4. Make sure the popup ends up with **exactly two rows**, one per\n   serial. If the popup starts with fewer than two rows, use the\n   **Add a line** button in the popup's list.\n5. Enter the serial numbers, one per row, each with **Quantity = 1**:\n   - Row 1: Lot/Serial Number = `BSA-2026-01`, Quantity = `1`\n   - Row 2: Lot/Serial Number = `BSA-2026-02`, Quantity = `1`\n\n   When the autocomplete suggests `Create \"BSA-2026-01\"` /\n   `Create \"BSA-2026-02\"`, pick the **Create** option so the serial is\n   created on the fly.\n6. Save / close the popup.\n7. Back on the receipt form header, click **Validate**.\n8. The receipt state should become **Done**. As a side effect, the\n   auto-generated subcontracting manufacturing order becomes **Done**\n   and the 4 components (2 of Part-A + 2 of Part-B) are consumed at\n   the subcontractor's location.\n\n## Rules\n\n- The receipt **must end in state Done**. Do not cancel it, do not\n  create a backorder.\n- You MUST enter **two distinct serial numbers** `BSA-2026-01` and\n  `BSA-2026-02` exactly (no extra whitespace, no alternate spelling).\n- Each serial row MUST carry Quantity **1.0** (not 2.0 on a single\n  row).\n- Do NOT change the demand quantity on the line (leave it at `2`).\n- Do NOT open the Manufacturing app and try to close the subcontract MO\n  manually — the MO closes automatically when the receipt is validated.\n- Do NOT add or remove Bench Sub Assembly lines on the receipt — only\n  edit the move-line rows inside the Detailed Operations popup.\n- Do NOT modify the Bill of Materials or the subcontractor partner.\n- Leave the origin `P-BENCH-SUB-001` as the Source Document."
+    }
+  ]
+}
+[2026-04-29 12:49:33.276 +0800] [31mERROR[39m: [36mError executing agent task: Failed after 3 attempts. Last error: Cannot connect to API: connect ECONNREFUSED 127.0.0.1:62135[39m
+    [35mcategory[39m: "agent"
