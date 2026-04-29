@@ -1,0 +1,56 @@
+=== Benchmark Evaluation ===
+  Task:   crm.assign_team_change_salesperson_log_activity
+  Agent:  command
+  DB:     bench_fr_6513ba7a  (auto-isolated)
+  URL:    http://127.0.0.1:54334
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/crm.assign_team_change_salesperson_log_activity__1777483579
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_6513ba7a from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 54334
+   Done.
+2. Capturing pre-task state...
+   Captured 3 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=306.7s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 37 calls captured (16 writes, 21 reads)
+   State: 3 records across 1 models
+5. Computing state diff...
+   2 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     2 edits
+  Matching:     2 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   306.7s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   37
+  Writes:            16 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/crm.assign_team_change_salesperson_log_activity__1777483579/
+
+  Postcondition failures:
+    - No Call activity found on the opportunity
