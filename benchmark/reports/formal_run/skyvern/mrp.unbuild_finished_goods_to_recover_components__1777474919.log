@@ -1,0 +1,54 @@
+=== Benchmark Evaluation ===
+  Task:   mrp.unbuild_finished_goods_to_recover_components
+  Agent:  command
+  DB:     bench_fr_2bd62af2  (auto-isolated)
+  URL:    http://127.0.0.1:55075
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/mrp.unbuild_finished_goods_to_recover_components__1777474919
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_2bd62af2 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 55075
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=0.2s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 0 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      4 edits
+  Extra:        0 edits
+  Wall clock:   0.2s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/mrp.unbuild_finished_goods_to_recover_components__1777474919/
+
+  Postcondition failures:
+    - No unbuild order linked to MO WH/MO/UNBLD-001 — the task requires creating one
+  Missing expected edits:
+    - mrp.unbuild.mo_id = WH/MO/UNBLD-001
+    - mrp.unbuild.product_id = Benchmark Recoverable Widget
+    - mrp.unbuild.product_qty = 3.0
+    - mrp.unbuild.state = done
