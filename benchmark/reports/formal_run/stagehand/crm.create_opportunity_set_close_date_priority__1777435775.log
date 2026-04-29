@@ -1,0 +1,69 @@
+=== Benchmark Evaluation ===
+  Task:   crm.create_opportunity_set_close_date_priority
+  Agent:  command
+  DB:     bench_fr_3d74b9ce  (auto-isolated)
+  URL:    http://127.0.0.1:64721
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/crm.create_opportunity_set_close_date_priority__1777435775
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_3d74b9ce from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 64721
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=80.6s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 41 calls captured (18 writes, 23 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   12 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     6 edits
+  Observed:     12 edits
+  Matching:     4 edits
+  Missing:      2 edits
+  Extra:        8 edits
+  Wall clock:   80.6s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   41
+  Writes:            18 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/crm.create_opportunity_set_close_date_priority__1777435775/
+
+  Postcondition failures:
+    - Expected revenue is 0.0, expected 42000
+    - Expected closing date is False, expected 2026-05-20
+  Missing expected edits:
+    - crm.lead.date_deadline = 2026-05-20
+    - crm.lead.expected_revenue = 42000.0
+  Unexpected extra edits:
+    + crm.lead.date_deadline = None
+    + crm.lead.expected_revenue = 0.0
+    + crm.lead.name = 05/20/2026
+    + crm.lead.partner_id = None
+    + crm.lead.priority = 0
+    + crm.lead.type = opportunity
+    + crm.lead.date_deadline = None
+    + crm.lead.expected_revenue = 0.0
