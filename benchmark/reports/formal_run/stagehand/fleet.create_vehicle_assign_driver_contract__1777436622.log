@@ -1,0 +1,63 @@
+=== Benchmark Evaluation ===
+  Task:   fleet.create_vehicle_assign_driver_contract
+  Agent:  command
+  DB:     bench_fr_0a3682bb  (auto-isolated)
+  URL:    http://127.0.0.1:59515
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/fleet.create_vehicle_assign_driver_contract__1777436622
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_0a3682bb from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 59515
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=128.5s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 28 calls captured (12 writes, 16 reads)
+   State: 0 records across 2 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     6 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      6 edits
+  Extra:        0 edits
+  Wall clock:   128.5s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   28
+  Writes:            12 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/fleet.create_vehicle_assign_driver_contract__1777436622/
+
+  Postcondition failures:
+    - Vehicle FSM-2048 not found
+  Missing expected edits:
+    - fleet.vehicle.driver_id = Avery Collins
+    - fleet.vehicle.license_plate = FSM-2048
+    - fleet.vehicle.model_id = Zephyr/Cargo EV
+    - fleet.vehicle.log.contract.ins_ref = LEASE-2048
+    - fleet.vehicle.log.contract.insurer_id = Northwind Leasing
+    - fleet.vehicle.log.contract.vehicle_id = Zephyr/Cargo EV/FSM-2048

@@ -1,0 +1,71 @@
+=== Benchmark Evaluation ===
+  Task:   fleet.transfer_vehicle_between_drivers_log_history
+  Agent:  command
+  DB:     bench_fr_d23a60c6  (auto-isolated)
+  URL:    http://127.0.0.1:61164
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/fleet.transfer_vehicle_between_drivers_log_history__1777436778
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_d23a60c6 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 61164
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=84.1s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 44 calls captured (22 writes, 22 reads)
+   State: 2 records across 2 models
+5. Computing state diff...
+   7 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     7 edits
+  Matching:     0 edits
+  Missing:      4 edits
+  Extra:        7 edits
+  Wall clock:   84.1s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   44
+  Writes:            22 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/fleet.transfer_vehicle_between_drivers_log_history__1777436778/
+
+  Postcondition failures:
+    - Vehicle driver is 'Driver AliceDriver Bob04/18/2026', expected 'Driver Bob'
+    - No assignation log entry found for original driver 'Driver Alice'
+    - Expected exactly 1 assignation log entry for 'Driver Bob', found 0
+  Missing expected edits:
+    - fleet.vehicle.driver_id = Driver Bob
+    - fleet.vehicle.assignation.log.date_start = 2026-04-18
+    - fleet.vehicle.assignation.log.driver_id = Driver Bob
+    - fleet.vehicle.assignation.log.vehicle_id = Bench Motors/Bench Sedan/BS-1001
+  Unexpected extra edits:
+    + fleet.vehicle.driver_id = Driver AliceDriver Bob04/18/2026
+    + fleet.vehicle.assignation.log.date_start = 2026-04-29
+    + fleet.vehicle.assignation.log.driver_id = Driver Alice
+    + fleet.vehicle.assignation.log.vehicle_id = Bench Motors/Bench Sedan/BS-1001
+    + fleet.vehicle.assignation.log.date_start = 2026-04-29
+    + fleet.vehicle.assignation.log.driver_id = Driver AliceDriver Bob04/18/2026
+    + fleet.vehicle.assignation.log.vehicle_id = Bench Motors/Bench Sedan/BS-1001

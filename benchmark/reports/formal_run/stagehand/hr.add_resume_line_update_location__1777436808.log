@@ -1,0 +1,73 @@
+=== Benchmark Evaluation ===
+  Task:   hr.add_resume_line_update_location
+  Agent:  command
+  DB:     bench_fr_e3b1e975  (auto-isolated)
+  URL:    http://127.0.0.1:61471
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/hr.add_resume_line_update_location__1777436808
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_e3b1e975 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 61471
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=71.2s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 45 calls captured (20 writes, 25 reads)
+   State: 3 records across 2 models
+5. Computing state diff...
+   9 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     6 edits
+  Observed:     9 edits
+  Matching:     0 edits
+  Missing:      6 edits
+  Extra:        9 edits
+  Wall clock:   71.2s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   45
+  Writes:            20 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/hr.add_resume_line_update_location__1777436808/
+
+  Postcondition failures:
+    - Employee 'Marina Ortega' not found
+  Missing expected edits:
+    - hr.resume.line.date_end = 2027-05-01
+    - hr.resume.line.date_start = 2026-05-01
+    - hr.resume.line.employee_id = Marina Ortega
+    - hr.resume.line.line_type_id = Certification
+    - hr.resume.line.name = ISO 27001 Internal Auditor
+    - hr.employee.work_location_id = Home
+  Unexpected extra edits:
+    + hr.employee.name = Marina Ortega
+    + hr.employee.work_location_id = HQ West
+    + hr.resume.line.date_end = 2026-05-01
+    + hr.resume.line.date_start = 2026-04-29
+    + hr.resume.line.employee_id = Marina Ortega05/01/2027
+    + hr.resume.line.line_type_id = None
+    + hr.resume.line.name = ISO 27001 Internal AuditorCertification
+    + hr.employee.name = Marina Ortega05/01/2027
+    + hr.employee.work_location_id = Home
