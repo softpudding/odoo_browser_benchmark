@@ -1,0 +1,60 @@
+=== Benchmark Evaluation ===
+  Task:   website_hr_recruitment.apply_guru_job
+  Agent:  command
+  DB:     bench_fr_b3274e98  (auto-isolated)
+  URL:    http://127.0.0.1:61826
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/website_hr_recruitment.apply_guru_job__1777455555
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_b3274e98 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Starting Odoo...
+   Odoo ready on port 61826
+   Done.
+2. Capturing pre-task state...
+   Captured 281 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=35.7s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 16 calls captured (9 writes, 7 reads)
+   State: 285 records across 2 models
+5. Computing state diff...
+   6 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     6 edits
+  Observed:     6 edits
+  Matching:     5 edits
+  Missing:      1 edits
+  Extra:        1 edits
+  Wall clock:   35.7s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   16
+  Writes:            9 non-forbidden, 0 forbidden
+  Required ops MISSED: ['custom:/website/form/hr.applicant']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/website_hr_recruitment.apply_guru_job__1777455555/
+
+  Postcondition failures:
+    - Required short introduction '### [GURU] HR RECRUITMENT TEST DATA ###' not found in applicant chatter messages
+  Missing expected edits:
+    - hr.applicant.linkedin_profile = linkedin.com/in/john-smith
+  Unexpected extra edits:
+    + hr.applicant.linkedin_profile = ### [GURU] HR RECRUITMENT TEST DATA ###linkedin.com/in/john-smith
