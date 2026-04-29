@@ -1,0 +1,68 @@
+=== Benchmark Evaluation ===
+  Task:   hr_holidays.allocate_leave_then_request_against_balance
+  Agent:  command
+  DB:     bench_fr_964695b9  (auto-isolated)
+  URL:    http://127.0.0.1:57535
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/magnitude/hr_holidays.allocate_leave_then_request_against_balance__1777468132
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_964695b9 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 57535
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=316.6s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 97 calls captured (53 writes, 44 reads)
+   State: 2 records across 2 models
+5. Computing state diff...
+   12 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     12 edits
+  Observed:     12 edits
+  Matching:     7 edits
+  Missing:      5 edits
+  Extra:        5 edits
+  Wall clock:   316.6s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   97
+  Writes:            53 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/magnitude/hr_holidays.allocate_leave_then_request_against_balance__1777468132/
+
+  Postcondition failures:
+    - No allocation found with description 'Quarter-End Sick Leave Buffer'
+  Missing expected edits:
+    - hr.leave.allocation.employee_id = Marc Demo
+    - hr.leave.allocation.holiday_status_id = Sick Time Off
+    - hr.leave.allocation.name = Quarter-End Sick Leave Buffer
+    - hr.leave.allocation.number_of_days = 4.0
+    - hr.leave.allocation.state = validate
+  Unexpected extra edits:
+    + hr.leave.allocation.employee_id = Marc Demo
+    + hr.leave.allocation.holiday_status_id = Sick Time Off
+    + hr.leave.allocation.name = Allocation RequestQuarter-End Sick Leave Buffer
+    + hr.leave.allocation.number_of_days = 4.0
+    + hr.leave.allocation.state = validate
