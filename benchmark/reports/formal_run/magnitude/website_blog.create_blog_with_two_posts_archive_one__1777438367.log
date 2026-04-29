@@ -1,0 +1,53 @@
+=== Benchmark Evaluation ===
+  Task:   website_blog.create_blog_with_two_posts_archive_one
+  Agent:  command
+  DB:     bench_fr_dc83043a  (auto-isolated)
+  URL:    http://127.0.0.1:50181
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/website_blog.create_blog_with_two_posts_archive_one__1777438367
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_dc83043a from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 50181
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=362.3s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 263 calls captured (107 writes, 156 reads)
+   State: 4 records across 2 models
+5. Computing state diff...
+   12 atomic edits observed
+6. Scoring...
+
+==================================================
+  RESULT: PASS  (Strict: PASS)
+  StateDiffF1:  1.0
+  Precision:    1.0
+  Recall:       1.0
+  Expected:     12 edits
+  Observed:     12 edits
+  Matching:     12 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   362.3s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   263
+  Writes:            107 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/website_blog.create_blog_with_two_posts_archive_one__1777438367/
+
