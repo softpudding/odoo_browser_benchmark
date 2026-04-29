@@ -1,0 +1,63 @@
+=== Benchmark Evaluation ===
+  Task:   mail.star_and_reply_inbox_message
+  Agent:  command
+  DB:     bench_fr_aa5a42dd  (auto-isolated)
+  URL:    http://127.0.0.1:54719
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/magnitude/mail.star_and_reply_inbox_message__1777427283
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_aa5a42dd from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 54719
+   Done.
+2. Capturing pre-task state...
+   Captured 5 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 41 calls captured (24 writes, 17 reads)
+   State: 6 records across 1 models
+5. Computing state diff...
+   5 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     0 edits
+  Observed:     5 edits
+  Matching:     0 edits
+  Missing:      0 edits
+  Extra:        5 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   41
+  Writes:            24 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/magnitude/mail.star_and_reply_inbox_message__1777427283/
+
+  Postcondition failures:
+    - Seeded message 'Please confirm receipt of the Q2 status update.' is not starred by admin (starred_partner_ids does not include the admin partner)
+    - No reply mail.message found whose body contains 'Acknowledged - will follow up by Friday.'
+  Unexpected extra edits:
+    + mail.notification.is_read = True
+    + mail.notification.is_read = True
+    + mail.notification.mail_message_id = "Benchmark Counter/00001: note" assigned to you
+    + mail.notification.notification_type = email
+    + mail.notification.res_partner_id = Administrator
