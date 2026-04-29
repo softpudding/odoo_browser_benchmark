@@ -1,0 +1,66 @@
+=== Benchmark Evaluation ===
+  Task:   calendar.create_event_add_description_attendee
+  Agent:  command
+  DB:     bench_fr_f8c5fa8b  (auto-isolated)
+  URL:    http://127.0.0.1:56258
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/calendar.create_event_add_description_attendee__1777435090
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_f8c5fa8b from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 56258
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=79.9s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 53 calls captured (32 writes, 21 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   5 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     5 edits
+  Observed:     5 edits
+  Matching:     2 edits
+  Missing:      3 edits
+  Extra:        3 edits
+  Wall clock:   79.9s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   53
+  Writes:            32 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/calendar.create_event_add_description_attendee__1777435090/
+
+  Postcondition failures:
+    - Event date is 2026-04-29, expected 2026-05-22
+    - Location is 'Room 204Review kickoff agenda and confirm owners for the vendor rollout.', expected 'Room 204'
+    - Description does not contain expected text about kickoff owners
+  Missing expected edits:
+    - calendar.event.location = Room 204
+    - calendar.event.start = 2026-05-22 03:00:00
+    - calendar.event.stop = 2026-05-22 04:30:00
+  Unexpected extra edits:
+    + calendar.event.location = Room 204Review kickoff agenda and confirm owners for the vendor rollout.
+    + calendar.event.start = 2026-04-29 04:00:00
+    + calendar.event.stop = 2026-04-29 05:30:00

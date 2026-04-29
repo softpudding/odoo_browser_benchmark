@@ -1,0 +1,58 @@
+=== Benchmark Evaluation ===
+  Task:   calendar.invite_external_attendee_by_email
+  Agent:  command
+  DB:     bench_fr_eda670ba  (auto-isolated)
+  URL:    http://127.0.0.1:57228
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/calendar.invite_external_attendee_by_email__1777435183
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_eda670ba from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 57228
+   Done.
+2. Capturing pre-task state...
+   Captured 7 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=79.2s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 58 calls captured (34 writes, 24 reads)
+   State: 9 records across 2 models
+5. Computing state diff...
+   3 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     3 edits
+  Matching:     3 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   79.2s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   58
+  Writes:            34 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/calendar.invite_external_attendee_by_email__1777435183/
+
+  Postcondition failures:
+    - Event date is 2026-04-29, expected 2026-05-14
+    - Local start hour is 12, expected 10 (10 AM)
+    - Duration is 357.50h, expected ~1h

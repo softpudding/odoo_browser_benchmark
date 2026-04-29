@@ -1,0 +1,58 @@
+=== Benchmark Evaluation ===
+  Task:   calendar.invite_organize_with_event_agenda_attachment
+  Agent:  command
+  DB:     bench_fr_29054e1b  (auto-isolated)
+  URL:    http://127.0.0.1:57462
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/calendar.invite_organize_with_event_agenda_attachment__1777435208
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_29054e1b from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 57462
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=98.7s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 58 calls captured (35 writes, 23 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   2 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     2 edits
+  Matching:     2 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   98.7s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   58
+  Writes:            35 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/calendar.invite_organize_with_event_agenda_attachment__1777435208/
+
+  Postcondition failures:
+    - Event local start hour is 0, expected 14 (2 PM)
+    - Event duration is 1.00h, expected 1.5h
+    - No ir.attachment named 'agenda.txt' linked to calendar event id=1; all attachments: ['invitation.ics', 'invitation.ics']

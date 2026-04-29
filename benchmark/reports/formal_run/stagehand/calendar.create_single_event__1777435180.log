@@ -1,0 +1,66 @@
+=== Benchmark Evaluation ===
+  Task:   calendar.create_single_event
+  Agent:  command
+  DB:     bench_fr_620c4ff3  (auto-isolated)
+  URL:    http://127.0.0.1:57182
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/calendar.create_single_event__1777435180
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_620c4ff3 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 57182
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=136.2s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 49 calls captured (31 writes, 18 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   5 atomic edits observed
+   Postconditions: 5 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     5 edits
+  Observed:     5 edits
+  Matching:     3 edits
+  Missing:      2 edits
+  Extra:        2 edits
+  Wall clock:   136.2s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   49
+  Writes:            31 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/calendar.create_single_event__1777435180/
+
+  Postcondition failures:
+    - Event date is 2026-04-29, expected 2026-05-08
+    - Local start hour is 12, expected 14 (2 PM)
+    - Duration is 1.0h, expected ~2h
+    - Description does not contain expected text about Q2 objectives
+    - Attendees: ['Administrator']; expected 'Marc Demo' to be present
+  Missing expected edits:
+    - calendar.event.start = 2026-05-08 06:00:00
+    - calendar.event.stop = 2026-05-08 08:00:00
+  Unexpected extra edits:
+    + calendar.event.start = 2026-04-29 04:30:00
+    + calendar.event.stop = 2026-04-29 05:30:00
