@@ -1,0 +1,75 @@
+=== Benchmark Evaluation ===
+  Task:   crm.create_opportunity_tag_schedule_call
+  Agent:  command
+  DB:     bench_fr_1d19de75  (auto-isolated)
+  URL:    http://127.0.0.1:64784
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/crm.create_opportunity_tag_schedule_call__1777435776
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_1d19de75 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 64784
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=116.4s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 65 calls captured (28 writes, 37 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   10 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     5 edits
+  Observed:     10 edits
+  Matching:     0 edits
+  Missing:      5 edits
+  Extra:        10 edits
+  Wall clock:   116.4s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   65
+  Writes:            28 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/crm.create_opportunity_tag_schedule_call__1777435776/
+
+  Postcondition failures:
+    - Customer is 'Azure Interiors', expected 'Azure Interior'
+    - Priority is '0', expected '3'
+    - Expected Call activity was not scheduled
+  Missing expected edits:
+    - crm.lead.expected_revenue = 42000.0
+    - crm.lead.name = Vertex Renewal Expansion
+    - crm.lead.partner_id = Azure Interior
+    - crm.lead.priority = 3
+    - crm.lead.type = opportunity
+  Unexpected extra edits:
+    + crm.lead.expected_revenue = 0.0
+    + crm.lead.name = Review renewal options05/13/2026
+    + crm.lead.partner_id = None
+    + crm.lead.priority = 2
+    + crm.lead.type = opportunity
+    + crm.lead.expected_revenue = 42000.0
+    + crm.lead.name = Vertex Renewal Expansion
+    + crm.lead.partner_id = Azure Interiors
+    + crm.lead.priority = 0
+    + crm.lead.type = opportunity

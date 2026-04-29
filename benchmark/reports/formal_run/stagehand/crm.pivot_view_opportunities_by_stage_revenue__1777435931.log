@@ -1,0 +1,62 @@
+=== Benchmark Evaluation ===
+  Task:   crm.pivot_view_opportunities_by_stage_revenue
+  Agent:  command
+  DB:     bench_fr_fa4dbf69  (auto-isolated)
+  URL:    http://127.0.0.1:50527
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/crm.pivot_view_opportunities_by_stage_revenue__1777435931
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_fa4dbf69 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 50527
+   Done.
+2. Capturing pre-task state...
+   Captured 13 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=119.2s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 47 calls captured (22 writes, 25 reads)
+   State: 14 records across 1 models
+5. Computing state diff...
+   2 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     2 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        2 edits
+  Wall clock:   119.2s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   47
+  Writes:            22 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/crm.pivot_view_opportunities_by_stage_revenue__1777435931/
+
+  Postcondition failures:
+    - ir.filters favorite 'Bench Stage Revenue Pivot' not found
+  Missing expected edits:
+    - ir.filters.model_id = crm.lead
+    - ir.filters.name = Bench Stage Revenue Pivot
+  Unexpected extra edits:
+    + ir.filters.model_id = crm.lead
+    + ir.filters.name = PipelineBench Stage Revenue Pivot
