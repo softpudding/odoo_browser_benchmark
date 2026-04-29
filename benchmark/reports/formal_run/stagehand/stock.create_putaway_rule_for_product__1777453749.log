@@ -1,0 +1,64 @@
+=== Benchmark Evaluation ===
+  Task:   stock.create_putaway_rule_for_product
+  Agent:  command
+  DB:     bench_fr_fe535fb6  (auto-isolated)
+  URL:    http://127.0.0.1:61002
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/stock.create_putaway_rule_for_product__1777453749
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_fe535fb6 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 61002
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=107.9s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 36 calls captured (13 writes, 23 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   3 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     3 edits
+  Matching:     0 edits
+  Missing:      3 edits
+  Extra:        3 edits
+  Wall clock:   107.9s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   36
+  Writes:            13 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/stock.create_putaway_rule_for_product__1777453749/
+
+  Postcondition failures:
+    - No putaway rule found for product 'Bench Putaway Product'
+  Missing expected edits:
+    - stock.putaway.rule.location_in_id = WH/Stock
+    - stock.putaway.rule.location_out_id = WH/Stock/Bench Shelf A
+    - stock.putaway.rule.product_id = Bench Putaway Product
+  Unexpected extra edits:
+    + stock.putaway.rule.location_in_id = WH/Stock
+    + stock.putaway.rule.location_out_id = WH/Stock
+    + stock.putaway.rule.product_id = None
