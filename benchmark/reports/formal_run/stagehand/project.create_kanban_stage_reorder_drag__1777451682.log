@@ -1,0 +1,56 @@
+=== Benchmark Evaluation ===
+  Task:   project.create_kanban_stage_reorder_drag
+  Agent:  command
+  DB:     bench_fr_3c964e73  (auto-isolated)
+  URL:    http://127.0.0.1:54088
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/project.create_kanban_stage_reorder_drag__1777451682
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_3c964e73 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 54088
+   Done.
+2. Capturing pre-task state...
+   Captured 11 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=143.6s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 73 calls captured (29 writes, 44 reads)
+   State: 12 records across 1 models
+5. Computing state diff...
+   2 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     2 edits
+  Matching:     2 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   143.6s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   73
+  Writes:            29 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/project.create_kanban_stage_reorder_drag__1777451682/
+
+  Postcondition failures:
+    - Stage left-to-right order is ['Triage', 'In Progress', 'Review', 'Done', 'Backlog Review']; expected ['Triage', 'Backlog Review', 'In Progress', 'Review', 'Done']. 'Backlog Review' must sit at position #2 (between 'Triage' and 'In Progress').
