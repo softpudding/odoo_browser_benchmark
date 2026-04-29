@@ -64,6 +64,14 @@ function fetchWithoutThinking(originalFetch = globalThis.fetch) {
         const body = JSON.parse(init.body);
         if (body && typeof body === "object" && !Array.isArray(body)) {
           body.enable_thinking = false;
+          // AI SDK >=2.x emits system instructions with role="developer"
+          // (OpenAI's new convention). DashScope only accepts the legacy
+          // role set {system, assistant, user, tool, function}. Rewrite.
+          if (Array.isArray(body.messages)) {
+            for (const m of body.messages) {
+              if (m && m.role === "developer") m.role = "system";
+            }
+          }
           init = { ...init, body: JSON.stringify(body) };
         }
       } catch {

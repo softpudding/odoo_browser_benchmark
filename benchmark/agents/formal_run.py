@@ -63,12 +63,19 @@ SYSTEM_PY = os.environ.get(
 )
 MITMDUMP = "/Users/yangxiao/miniforge3/bin/mitmdump"
 DASHSCOPE_UPSTREAM = "https://dashscope.aliyuncs.com"
+OPENAI_UPSTREAM = "https://api.openai.com"
 TOKEN_LOGGER_ADDON = "benchmark/agents/token_logger.py"
 
 ACTIVE_AGENTS = [
     "browser-use", "notte", "skyvern", "alumnium",
     "magnitude", "agent_e", "openbrowser", "websight",
+    "stagehand",
 ]
+
+# Stagehand uses OpenAI gpt-4.1-mini directly; all other agents use Qwen via
+# DashScope's OpenAI-compat endpoint. Each run gets its own reverse-proxy
+# pointing at the right upstream so token_logger.py captures usage.
+OPENAI_AGENTS = {"stagehand"}
 
 
 def alloc_free_port() -> int:
@@ -78,7 +85,11 @@ def alloc_free_port() -> int:
         return s.getsockname()[1]
 
 
-def start_run_proxy(token_log: Path, stderr_log: Path) -> tuple[int, subprocess.Popen]:
+def start_run_proxy(
+    token_log: Path,
+    stderr_log: Path,
+    upstream: str = DASHSCOPE_UPSTREAM,
+) -> tuple[int, subprocess.Popen]:
     """Start a per-run mitmdump and wait until it's accepting connections.
 
     Returns (port, Popen). Caller must terminate the Popen when the run
@@ -91,7 +102,7 @@ def start_run_proxy(token_log: Path, stderr_log: Path) -> tuple[int, subprocess.
         proc = subprocess.Popen(
             [
                 MITMDUMP,
-                "--mode", f"reverse:{DASHSCOPE_UPSTREAM}",
+                "--mode", f"reverse:{upstream}",
                 "-p", str(port),
                 "--set", f"token_log={token_log}",
                 "-s", str(REPO_ROOT / TOKEN_LOGGER_ADDON),
@@ -236,6 +247,16 @@ def build_cmd(agent: str, task: str, db: str, outdir: Path, env: dict) -> list[s
                 f"BENCHMARK_MODEL=qwen3.6-plus BENCHMARK_MAX_STEPS=60 "
                 f"node benchmark/agents/run_magnitude.mjs"
             )
+        return base[:5] + ["--agent", "command", "--cmd", inner] + base[5:]
+    if agent == "stagehand":
+        # Stagehand v3 + Qwen via DashScope is broken (see run_stagehand.mjs
+        # comments). Use OpenAI gpt-4.1-mini through the per-run proxy.
+        inner = (
+            f"OPENAI_API_KEY={env['OPENAI_API_KEY']} "
+            f"OPENAI_BASE_URL={env['OPENAI_BASE_URL']} "
+            f"BENCHMARK_MODEL=gpt-4.1-mini BENCHMARK_MAX_STEPS=60 "
+            f"node benchmark/agents/run_stagehand.mjs"
+        )
         return base[:5] + ["--agent", "command", "--cmd", inner] + base[5:]
     # python wrappers
     wrapper = f"run_{agent}.py"
@@ -386,9 +407,18 @@ def run_one(agent: str, task: str, base_env: dict, worker: str) -> dict:
     tokens_jsonl = outdir / "tokens.jsonl"
 
     # Per-run mitmdump so concurrent runs never share a token log.
-    proxy_port, proxy_proc = start_run_proxy(tokens_jsonl, outdir / "mitm.log")
-    env = {**base_env, "DASHSCOPE_BASE_URL":
-           f"http://127.0.0.1:{proxy_port}/compatible-mode/v1"}
+    if agent in OPENAI_AGENTS:
+        proxy_port, proxy_proc = start_run_proxy(
+            tokens_jsonl, outdir / "mitm.log", upstream=OPENAI_UPSTREAM
+        )
+        env = {**base_env, "OPENAI_BASE_URL":
+               f"http://127.0.0.1:{proxy_port}/v1"}
+    else:
+        proxy_port, proxy_proc = start_run_proxy(
+            tokens_jsonl, outdir / "mitm.log"
+        )
+        env = {**base_env, "DASHSCOPE_BASE_URL":
+               f"http://127.0.0.1:{proxy_port}/compatible-mode/v1"}
     cmd = build_cmd(agent, task, db, outdir, env)
 
     run_start = time.time()
@@ -661,10 +691,12 @@ def main() -> int:
     if not dk:
         print("DASHSCOPE_API_KEY not set", file=sys.stderr)
         return 1
+    ok = os.environ.get("OPENAI_API_KEY")
 
     # Per-run proxies are spun up inside run_one, so we don't need an
     # externally-managed proxy anymore. We still pass DASHSCOPE_API_KEY
-    # via env; DASHSCOPE_BASE_URL is overridden per-run.
+    # (and OPENAI_API_KEY for stagehand) via env; the *_BASE_URL is
+    # overridden per-run.
     env = {
         "DASHSCOPE_API_KEY": dk,
         "OPENBROWSER_CHROME_UUID": os.environ.get("OPENBROWSER_CHROME_UUID", ""),
@@ -673,11 +705,17 @@ def main() -> int:
         # qwen fallback path remains active.
         "ANTHROPIC_API_KEY": os.environ.get("ANTHROPIC_API_KEY", ""),
     }
+    if ok:
+        env["OPENAI_API_KEY"] = ok
 
     pending = pending_pairs_for(args.worker)
     pending = interleave_by_agent(pending)
     if args.limit:
         pending = pending[: args.limit]
+
+    if any(a in OPENAI_AGENTS for a, _ in pending) and not ok:
+        print("OPENAI_API_KEY required for stagehand pairs", file=sys.stderr)
+        return 1
 
     print(f"worker={args.worker} K={args.parallel} pending={len(pending)}")
     for a, t in pending[:12]:
