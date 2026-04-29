@@ -1,0 +1,64 @@
+=== Benchmark Evaluation ===
+  Task:   hr_holidays.allocate_sick_leave_to_employee
+  Agent:  command
+  DB:     bench_fr_69a1db4c  (auto-isolated)
+  URL:    http://127.0.0.1:61965
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/hr_holidays.allocate_sick_leave_to_employee__1777446787
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_69a1db4c from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 61965
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=43.9s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 4 calls captured (1 writes, 3 reads)
+   State: 0 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     6 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      6 edits
+  Extra:        0 edits
+  Wall clock:   43.9s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   4
+  Writes:            1 non-forbidden, 0 forbidden
+  Required ops MISSED: ['hr.leave.allocation.action_approve']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/hr_holidays.allocate_sick_leave_to_employee__1777446787/
+
+  Postcondition failures:
+    - No allocation found with description '2026 Sick leave pool'
+  Missing expected edits:
+    - hr.leave.allocation.allocation_type = regular
+    - hr.leave.allocation.employee_id = Marc Demo
+    - hr.leave.allocation.holiday_status_id = Sick Time Off
+    - hr.leave.allocation.name = 2026 Sick leave pool
+    - hr.leave.allocation.number_of_days = 15.0
+    - hr.leave.allocation.state = validate
