@@ -216,12 +216,25 @@ def build_cmd(agent: str, task: str, db: str, outdir: Path, env: dict) -> list[s
             "--provider", "dashscope", "--model", "qwen3.6-plus",
         ] + base[5:]
     if agent == "magnitude":
-        inner = (
-            f"DASHSCOPE_API_KEY={env['DASHSCOPE_API_KEY']} "
-            f"DASHSCOPE_BASE_URL={env['DASHSCOPE_BASE_URL']} "
-            f"BENCHMARK_MODEL=qwen3.6-plus BENCHMARK_MAX_STEPS=60 "
-            f"node benchmark/agents/run_magnitude.mjs"
-        )
+        # Magnitude needs strong visual grounding for pixel-coordinate clicks.
+        # If ANTHROPIC_API_KEY is set, use Claude Sonnet 4 (the project's
+        # documented best target). Otherwise fall back to qwen3.6-plus.
+        anthropic_key = env.get("ANTHROPIC_API_KEY", "")
+        if anthropic_key:
+            model = env.get("BENCHMARK_MODEL", "claude-sonnet-4-20250514")
+            inner = (
+                f"ANTHROPIC_API_KEY={anthropic_key} "
+                f"BENCHMARK_PROVIDER=anthropic "
+                f"BENCHMARK_MODEL={model} BENCHMARK_MAX_STEPS=60 "
+                f"node benchmark/agents/run_magnitude.mjs"
+            )
+        else:
+            inner = (
+                f"DASHSCOPE_API_KEY={env['DASHSCOPE_API_KEY']} "
+                f"DASHSCOPE_BASE_URL={env['DASHSCOPE_BASE_URL']} "
+                f"BENCHMARK_MODEL=qwen3.6-plus BENCHMARK_MAX_STEPS=60 "
+                f"node benchmark/agents/run_magnitude.mjs"
+            )
         return base[:5] + ["--agent", "command", "--cmd", inner] + base[5:]
     # python wrappers
     wrapper = f"run_{agent}.py"
@@ -654,6 +667,10 @@ def main() -> int:
     env = {
         "DASHSCOPE_API_KEY": dk,
         "OPENBROWSER_CHROME_UUID": os.environ.get("OPENBROWSER_CHROME_UUID", ""),
+        # Optional: forward Anthropic key so run_magnitude.mjs can use Claude
+        # for its pixel-coordinate visual grounding. Empty string means
+        # qwen fallback path remains active.
+        "ANTHROPIC_API_KEY": os.environ.get("ANTHROPIC_API_KEY", ""),
     }
 
     pending = pending_pairs_for(args.worker)

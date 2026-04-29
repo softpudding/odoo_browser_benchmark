@@ -34,8 +34,28 @@ if (!instruction || !startUrl) {
 // use the 'anthropic' provider. Prefer 'openai-generic' against DashScope's
 // OpenAI-compat endpoint whenever a DashScope/OpenAI key is available.
 function buildLlmConfig() {
+  // BENCHMARK_PROVIDER lets the caller force a provider when multiple keys are
+  // present. Magnitude's pixel-coordinate clicks need a model with strong
+  // visual grounding (Claude Sonnet's CUA training in particular); on
+  // qwen/kimi the agent loops without finishing tasks. So when ANTHROPIC_API_KEY
+  // is set, prefer Anthropic by default — even if a DashScope key is also
+  // present.
+  const provider = process.env.BENCHMARK_PROVIDER;
   const dashKey = process.env.DASHSCOPE_API_KEY || process.env.BAILIAN_API_KEY;
-  if (dashKey || process.env.OPENAI_API_KEY) {
+
+  if (provider === "anthropic" || (!provider && process.env.ANTHROPIC_API_KEY)) {
+    return {
+      provider: "anthropic",
+      options: {
+        // Project's README documents Sonnet 4 as the tested target
+        // (claude-sonnet-4-20250514). Use it by default so numbers align
+        // with the project's own benchmark evidence.
+        model: process.env.BENCHMARK_MODEL || "claude-sonnet-4-20250514",
+        apiKey: process.env.ANTHROPIC_API_KEY,
+      },
+    };
+  }
+  if (provider === "openai-generic" || dashKey || process.env.OPENAI_API_KEY) {
     const apiKey = process.env.OPENAI_API_KEY || dashKey;
     const baseUrl =
       process.env.OPENAI_BASE_URL ||
@@ -48,15 +68,6 @@ function buildLlmConfig() {
         model: process.env.BENCHMARK_MODEL || "qwen3.6-plus",
         apiKey,
         baseUrl,
-      },
-    };
-  }
-  if (process.env.ANTHROPIC_API_KEY) {
-    return {
-      provider: "anthropic",
-      options: {
-        model: process.env.BENCHMARK_MODEL || "claude-sonnet-4-20250514",
-        apiKey: process.env.ANTHROPIC_API_KEY,
       },
     };
   }
