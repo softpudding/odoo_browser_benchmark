@@ -1,0 +1,53 @@
+=== Benchmark Evaluation ===
+  Task:   mrp.create_bom_with_components
+  Agent:  command
+  DB:     bench_fr_2451b331  (auto-isolated)
+  URL:    http://127.0.0.1:61654
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/magnitude/mrp.create_bom_with_components__1777428002
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_2451b331 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 61654
+   Done.
+2. Capturing pre-task state...
+   Captured 3 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=254.1s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 51 calls captured (15 writes, 36 reads)
+   State: 7 records across 2 models
+5. Computing state diff...
+   12 atomic edits observed
+6. Scoring...
+
+==================================================
+  RESULT: PASS  (Strict: PASS)
+  StateDiffF1:  1.0
+  Precision:    1.0
+  Recall:       1.0
+  Expected:     12 edits
+  Observed:     12 edits
+  Matching:     12 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   254.1s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   51
+  Writes:            15 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/magnitude/mrp.create_bom_with_components__1777428002/
+
