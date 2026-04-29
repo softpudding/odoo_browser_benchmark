@@ -1,0 +1,27 @@
+Stagehand: using openai/gpt-4.1-mini via http://127.0.0.1:60512/v1
+[2026-04-29 12:47:09.911 +0800] [32mINFO[39m: [36mLaunching local browser[39m
+    [35mcategory[39m: "init"
+[2026-04-29 12:47:14.584 +0800] [32mINFO[39m: [36mCreating v3 agent instance[39m
+    [35mcategory[39m: "agent"
+    [35mcua[39m: false
+    [35mmode[39m: "dom"
+    [35mmodel[39m: "openai/gpt-4.1-mini"
+    [35msystemPrompt[39m: ""
+[2026-04-29 12:47:14.585 +0800] [31mERROR[39m: [36mUsing agent in default DOM mode (legacy). Agent will default to 'hybrid' on an upcoming release for improved performance.
+  → https://docs.stagehand.dev/v3/basics/agent
+[39m
+    [35mcategory[39m: "agent"
+Stagehand result: {
+  "success": false,
+  "actions": [],
+  "message": "Failed to execute task: Failed after 3 attempts. Last error: You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+  "completed": false,
+  "messages": [
+    {
+      "role": "user",
+      "content": "First, log in with username 'admin' and password 'admin'. Then: # Create a manufacturing order from scratch, consume components, and close it\n\nYou are in the Odoo 19 **Manufacturing** app logged in as **Administrator**.\n\nA Bill of Materials for product **Bench Assembly** already exists. It\nconsumes **1 Bench Part A** and **2 Bench Part B** per finished unit.\nThere is **no manufacturing order yet** — you must create one from\nscratch and run it through to completion.\n\n## What to do\n\n1. Open the **Manufacturing** app and go to **Operations → Manufacturing\n   Orders**.\n2. Click **New** to create a new manufacturing order.\n3. Fill in the form:\n   - **Product**: `Bench Assembly`\n   - **Quantity**: `3`\n   Leave other fields at their defaults. The Bill of Materials for\n   Bench Assembly is auto-selected and the component lines (Bench Part\n   A qty 3, Bench Part B qty 6) appear after you select the product and\n   quantity.\n4. Click **Confirm** in the status bar. The MO moves from **Draft** to\n   **Confirmed** and raw-material moves are created.\n5. Click **Produce All** (also labeled **Mark as Done**) to finish the\n   manufacturing order. If a consumption / consumption-warning dialog\n   appears asking whether to **Apply** / **Continue** / **Validate**,\n   accept it so the MO transitions to **Done** with the full 3 units\n   produced.\n6. Make sure the final MO state is **Done** with **Quantity Produced =\n   3**.\n\nAfter you finish:\n\n- Exactly **one** `mrp.production` record exists for **Bench Assembly**\n  with **Quantity = 3**, state **Done**, and quantity produced **3**.\n- The MO consumed **3 Bench Part A** and **6 Bench Part B** (those are\n  the `stock.move` raw-material lines).\n- A finished `stock.move` produced **3 Bench Assembly**.\n\n## Rules\n\n- Do **not** cancel, unlock, or delete the MO once you create it.\n- Do **not** change the Bill of Materials or its component quantities.\n- Do **not** create additional manufacturing orders, unbuild orders, or\n  scrap orders — create **one** MO only.\n- The finished product is **Bench Assembly** (not Bench Part A or\n  Bench Part B). Do not pick a component product by mistake.\n- Do **not** change the planned quantity after confirming. The MO must\n  close at **3 units produced**."
+    }
+  ]
+}
+[2026-04-29 12:47:21.919 +0800] [31mERROR[39m: [36mError executing agent task: Failed after 3 attempts. Last error: You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.[39m
+    [35mcategory[39m: "agent"

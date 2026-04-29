@@ -1,0 +1,27 @@
+Stagehand: using openai/gpt-4.1-mini via http://127.0.0.1:60516/v1
+[2026-04-29 12:47:08.759 +0800] [32mINFO[39m: [36mLaunching local browser[39m
+    [35mcategory[39m: "init"
+[2026-04-29 12:47:12.874 +0800] [32mINFO[39m: [36mCreating v3 agent instance[39m
+    [35mcategory[39m: "agent"
+    [35mcua[39m: false
+    [35mmode[39m: "dom"
+    [35mmodel[39m: "openai/gpt-4.1-mini"
+    [35msystemPrompt[39m: ""
+[2026-04-29 12:47:12.876 +0800] [31mERROR[39m: [36mUsing agent in default DOM mode (legacy). Agent will default to 'hybrid' on an upcoming release for improved performance.
+  → https://docs.stagehand.dev/v3/basics/agent
+[39m
+    [35mcategory[39m: "agent"
+Stagehand result: {
+  "success": false,
+  "actions": [],
+  "message": "Failed to execute task: Failed after 3 attempts. Last error: You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+  "completed": false,
+  "messages": [
+    {
+      "role": "user",
+      "content": "First, log in with username 'admin' and password 'admin'. Then: # Create a Bill of Materials that applies to only one product variant\n\nYou are in the Odoo 19 **Manufacturing** app logged in as **Administrator**.\n\nA product template **Bench T-Shirt** already exists with a **Bench Color**\nattribute that produces two variants: **Bench T-Shirt (Red)** and\n**Bench T-Shirt (Blue)**. A component product **Bench Fabric** also exists.\n\nNo Bill of Materials exists yet for Bench T-Shirt. You must create one that\nis specific to the **Red variant only** — it must not apply to the Blue\nvariant.\n\n## What to do\n\n1. Open the **Manufacturing** app and go to **Products → Bills of Materials**.\n2. Click **New** to create a new Bill of Materials.\n3. Fill in the form:\n   - **Product**: `Bench T-Shirt` (select the product template in the\n     Product field).\n   - **Product Variant**: `Bench Color: Red` (this field is\n     labeled **Product Variant** on the BoM form and determines which\n     variant the BoM applies to). It must be set so that the BoM applies\n     to the **Red** variant only, not to all variants.\n   - **Quantity**: `1`\n   - Leave **BoM Type** at its default (**Manufacture this Product**).\n4. Under the **Components** tab, click **Add a line** and add exactly one\n   component:\n   - **Component**: `Bench Fabric`\n   - **Quantity**: `1`\n5. Save the record.\n\nAfter you finish:\n\n- Exactly **one** `mrp.bom` record exists for the **Bench T-Shirt** product\n  template.\n- That BoM's **Product Variant** is set to **Bench T-Shirt (Red)** — it\n  must NOT be left blank (blank means \"applies to all variants\").\n- The BoM has exactly one component line: **Bench Fabric**, quantity **1**.\n\n## Rules\n\n- Do **not** create a BoM that applies to all variants (Product Variant\n  left blank). The BoM must be Red-variant-specific.\n- Do **not** create a BoM for the Blue variant.\n- Do **not** create more than one Bill of Materials for Bench T-Shirt.\n- Do **not** add more than one component line; the BoM must have exactly\n  one line.\n- Do **not** modify the Bench T-Shirt product template, its attributes, or\n  its existing variants.\n- Do **not** create a manufacturing order — only the BoM is required."
+    }
+  ]
+}
+[2026-04-29 12:47:20.204 +0800] [31mERROR[39m: [36mError executing agent task: Failed after 3 attempts. Last error: You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.[39m
+    [35mcategory[39m: "agent"

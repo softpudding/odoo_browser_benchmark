@@ -1,0 +1,27 @@
+Stagehand: using openai/gpt-4.1-mini via http://127.0.0.1:60777/v1
+[2026-04-29 12:47:29.179 +0800] [32mINFO[39m: [36mLaunching local browser[39m
+    [35mcategory[39m: "init"
+[2026-04-29 12:47:32.856 +0800] [32mINFO[39m: [36mCreating v3 agent instance[39m
+    [35mcategory[39m: "agent"
+    [35mcua[39m: false
+    [35mmode[39m: "dom"
+    [35mmodel[39m: "openai/gpt-4.1-mini"
+    [35msystemPrompt[39m: ""
+[2026-04-29 12:47:32.857 +0800] [31mERROR[39m: [36mUsing agent in default DOM mode (legacy). Agent will default to 'hybrid' on an upcoming release for improved performance.
+  → https://docs.stagehand.dev/v3/basics/agent
+[39m
+    [35mcategory[39m: "agent"
+Stagehand result: {
+  "success": false,
+  "actions": [],
+  "message": "Failed to execute task: Failed after 3 attempts. Last error: You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+  "completed": false,
+  "messages": [
+    {
+      "role": "user",
+      "content": "First, log in with username 'admin' and password 'admin'. Then: # Partially produce a manufacturing order and create a backorder\n\nYou are in the Odoo 19 **Manufacturing** app logged in as **Administrator**.\n\nA confirmed manufacturing order **WH/MO/BENCH-PART-001** is planned for\n**10** units of **Bench Chassis Z**, but the factory only finished\n**6** units today. The remaining **4** units must stay planned as a\nbackorder.\n\n## What to do\n\n1. Open the **Manufacturing** app and go to **Operations → Manufacturing\n   Orders**.\n2. Open the manufacturing order **WH/MO/BENCH-PART-001**.\n3. On the form, change **Quantity Producing** (the editable quantity\n   field near the top, sometimes labeled \"Quantity\") from **10** to\n   **6**.\n4. Click **Produce** in the form header (the button label reflects the\n   partial quantity).\n5. A dialog will appear asking what to do with the remaining quantity.\n   Select **Create Backorder** so the remaining 4 units are kept as a\n   new manufacturing order.\n\nAfter you finish, two manufacturing orders should exist:\n\n- The produced MO (typically renamed to **WH/MO/BENCH-PART-001-001**)\n  in **Done** state with **6** units produced.\n- The backorder MO (typically **WH/MO/BENCH-PART-001-002**) for the\n  remaining **4** units, still in a confirmed / planned state with 0\n  units produced.\n\n## Rules\n\n- Do **not** cancel the manufacturing order.\n- Do **not** choose \"No Backorder\" — the remaining 4 units must be\n  preserved in a new backorder MO.\n- Do **not** modify the Bill of Materials, the component lines, or the\n  finished product.\n- Do **not** create any extra manufacturing orders beyond the automatic\n  backorder."
+    }
+  ]
+}
+[2026-04-29 12:47:40.128 +0800] [31mERROR[39m: [36mError executing agent task: Failed after 3 attempts. Last error: You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.[39m
+    [35mcategory[39m: "agent"
