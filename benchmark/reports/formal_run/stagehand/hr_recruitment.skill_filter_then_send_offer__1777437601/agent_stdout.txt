@@ -1,0 +1,36 @@
+Stagehand: using openai/gpt-4.1-mini via http://127.0.0.1:55540/v1
+[2026-04-29 12:40:37.354 +0800] [32mINFO[39m: [36mLaunching local browser[39m
+    [35mcategory[39m: "init"
+[2026-04-29 12:40:42.903 +0800] [32mINFO[39m: [36mCreating v3 agent instance[39m
+    [35mcategory[39m: "agent"
+    [35mcua[39m: false
+    [35mmode[39m: "dom"
+    [35mmodel[39m: "openai/gpt-4.1-mini"
+    [35msystemPrompt[39m: ""
+[2026-04-29 12:40:42.904 +0800] [31mERROR[39m: [36mUsing agent in default DOM mode (legacy). Agent will default to 'hybrid' on an upcoming release for improved performance.
+  → https://docs.stagehand.dev/v3/basics/agent
+[39m
+    [35mcategory[39m: "agent"
+[2026-04-29 12:40:46.446 +0800] [32mINFO[39m: [36mAgent calling tool: ariaTree[39m
+    [35mcategory[39m: "agent"
+Stagehand result: {
+  "success": false,
+  "actions": [
+    {
+      "type": "ariaTree",
+      "taskCompleted": false,
+      "pageUrl": "http://127.0.0.1:55558/web/login?redirect=%2Fodoo%2Frecruitment%3F",
+      "timestamp": 1777437646465
+    }
+  ],
+  "message": "Failed to execute task: Failed after 3 attempts. Last error: You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+  "completed": false,
+  "messages": [
+    {
+      "role": "user",
+      "content": "First, log in with username 'admin' and password 'admin'. Then: Go to the **Recruitment** app and open the **Applications** list\n(Recruitment → Applications → All Applications, or URL path\n`/odoo/recruitment-applications`). Switch to the **list view**.\n\nYou must send a job offer to the **senior** applicant who applied to\nthe **QA Lead** position and has the **Python** skill. Use the\nfollowing procedure.\n\n## Steps\n\n1. In the search bar, filter the list so it shows only applicants\n   whose *Skills* contain **Python**. The way to do this in Odoo 19\n   is to type `Python` in the search box and select the **Skills**\n   entry from the autocomplete dropdown (NOT \"Applicant\", NOT\n   \"Tag\", NOT \"Job Position\"). Several applicants remain after this\n   filter — some of them apply to other jobs or are not seniors.\n\n2. Read the list and identify the single applicant that satisfies\n   ALL of the following:\n   - Job Position = **QA Lead**\n   - Tag (Category) = **Senior**\n   - Skill = **Python** (implied by the filter)\n\n3. Tick **only that applicant's row-checkbox** (exactly one row\n   checked) — do NOT tick any other rows.\n\n4. Open the **Actions** menu (the ⚙ / gear dropdown in the control\n   panel — the one that only appears once at least one record is\n   selected) and click **Send Email**. A modal dialog titled\n   *Send Email* opens (model `applicant.send.mail`).\n\n5. In the wizard, clear any pre-filled Subject input and type\n   exactly:\n\n   `Job Offer - QA Lead`\n\n6. In the **body** editor below the subject, type a short message\n   that explicitly mentions the start date. The body text MUST\n   contain the literal string `2026-06-01` (used by automated\n   checks). For example:\n\n       Welcome aboard. Your expected start date is 2026-06-01.\n\n7. Click the **Send** button at the bottom of the wizard.\n\n8. The wizard closes. The chosen applicant's chatter now contains a\n   new message whose subject is **Job Offer - QA Lead** and whose\n   body contains **2026-06-01**. None of the other applicants may\n   receive this email.\n\n## Rules\n\n- Tick exactly **one** applicant's checkbox — the one that satisfies\n  all three conditions above.\n- Do NOT modify, refuse, archive, or reorder any applicant record.\n- Do NOT change stages, priorities, emails, phones, tags, or skills.\n- The email wizard **Subject** must be exactly `Job Offer - QA Lead`\n  (case-sensitive, no trailing punctuation).\n- The email wizard **body** must contain the literal string\n  `2026-06-01`.\n- Use the *Skills* facet of the search filter — filtering only by\n  tag name, job, or applicant name does not count."
+    }
+  ]
+}
+[2026-04-29 12:40:53.250 +0800] [31mERROR[39m: [36mError executing agent task: Failed after 3 attempts. Last error: You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.[39m
+    [35mcategory[39m: "agent"
