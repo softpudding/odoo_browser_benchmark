@@ -1,0 +1,54 @@
+=== Benchmark Evaluation ===
+  Task:   hr.create_public_holiday_calendar_entry
+  Agent:  command
+  DB:     bench_fr_e126673c  (auto-isolated)
+  URL:    http://127.0.0.1:49782
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/hr.create_public_holiday_calendar_entry__1777474424
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_e126673c from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 49782
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=0.2s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 0 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      4 edits
+  Extra:        0 edits
+  Wall clock:   0.2s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/hr.create_public_holiday_calendar_entry__1777474424/
+
+  Postcondition failures:
+    - No resource.calendar.leaves row named 'Bench Founder Day' found
+  Missing expected edits:
+    - resource.calendar.leaves.calendar_id = None
+    - resource.calendar.leaves.name = Bench Founder Day
+    - resource.calendar.leaves.resource_id = None
+    - resource.calendar.leaves.time_type = leave
