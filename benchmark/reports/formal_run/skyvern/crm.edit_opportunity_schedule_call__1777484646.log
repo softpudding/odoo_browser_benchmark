@@ -1,0 +1,60 @@
+=== Benchmark Evaluation ===
+  Task:   crm.edit_opportunity_schedule_call
+  Agent:  command
+  DB:     bench_fr_b43d62a7  (auto-isolated)
+  URL:    http://127.0.0.1:57890
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/crm.edit_opportunity_schedule_call__1777484646
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_b43d62a7 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 57890
+   Done.
+2. Capturing pre-task state...
+   Captured 3 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=355.4s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 40 calls captured (16 writes, 24 reads)
+   State: 3 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   355.4s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   40
+  Writes:            16 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/crm.edit_opportunity_schedule_call__1777484646/
+
+  Postcondition failures:
+    - Expected revenue is 50000.0, expected 75000
+    - Probability is 40.0, expected 60
+  Missing expected edits:
+    - crm.lead.expected_revenue = 75000.0
+    - crm.lead.probability = 60.0
