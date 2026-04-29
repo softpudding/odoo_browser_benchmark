@@ -1,0 +1,55 @@
+=== Benchmark Evaluation ===
+  Task:   sale.cancel_confirmed_recreate_send_email
+  Agent:  command
+  DB:     bench_fr_96f1dd88  (auto-isolated)
+  URL:    http://127.0.0.1:58350
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/sale.cancel_confirmed_recreate_send_email__1777475216
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_96f1dd88 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 58350
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=0.2s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      4 edits
+  Extra:        0 edits
+  Wall clock:   0.2s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/sale.cancel_confirmed_recreate_send_email__1777475216/
+
+  Postcondition failures:
+    - Original order state is 'sale', expected 'cancel'
+    - Replacement order for Clearwater Supply Co not found
+  Missing expected edits:
+    - sale.order.client_order_ref = CWS-REPLACE-01
+    - sale.order.partner_id = Clearwater Supply Co
+    - sale.order.state = sent
+    - sale.order.state = cancel

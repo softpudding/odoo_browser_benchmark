@@ -1,0 +1,53 @@
+=== Benchmark Evaluation ===
+  Task:   sale.apply_discount_percent_on_sale_order_line
+  Agent:  command
+  DB:     bench_fr_91cc8219  (auto-isolated)
+  URL:    http://127.0.0.1:58343
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/sale.apply_discount_percent_on_sale_order_line__1777475215
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_91cc8219 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 58343
+   Done.
+2. Capturing pre-task state...
+   Captured 4 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=0.2s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 4 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     1 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      1 edits
+  Extra:        0 edits
+  Wall clock:   0.2s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/sale.apply_discount_percent_on_sale_order_line__1777475215/
+
+  Postcondition failures:
+    - 'Bench Product A' discount is 0.0, expected 10.0 (the task is to set the per-line Disc.% to 10% on this row)
+    - SO amount_untaxed is 160.0, expected 150.0 (90 from A with 10% disc + 60 from B)
+    - SO amount_total is 160.0, expected 150.0 (no taxes → equals amount_untaxed)
+  Missing expected edits:
+    - sale.order.line.discount = 10.0
