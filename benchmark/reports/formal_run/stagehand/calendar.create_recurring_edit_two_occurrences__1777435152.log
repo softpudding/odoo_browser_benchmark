@@ -1,0 +1,64 @@
+=== Benchmark Evaluation ===
+  Task:   calendar.create_recurring_edit_two_occurrences
+  Agent:  command
+  DB:     bench_fr_ce23816e  (auto-isolated)
+  URL:    http://127.0.0.1:56891
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/calendar.create_recurring_edit_two_occurrences__1777435152
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_ce23816e from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 56891
+   Done.
+2. Capturing pre-task state...
+   Captured 4 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=225.5s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 58 calls captured (34 writes, 24 reads)
+   State: 5 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 9 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     0 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   225.5s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   58
+  Writes:            34 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/calendar.create_recurring_edit_two_occurrences__1777435152/
+
+  Postcondition failures:
+    - Expected 6 'Cross-Team Sync' events (including detached), found 1
+    - Event on 2026-06-04 has location 'Building B Room 201', expected 'Main Conference Room'
+    - No event found on 2026-06-11 — occurrence may be missing
+    - No event found on 2026-06-18 — occurrence may be missing
+    - No event found on 2026-06-25 — occurrence may be missing
+    - No event found on 2026-07-02 — occurrence may be missing
+    - No event found on 2026-07-09 — occurrence may be missing
+    - Base event (Jun 4) is not marked as recurring — the event may not have been created with recurrence
+    - Marc Demo is not an attendee on any Cross-Team Sync event
