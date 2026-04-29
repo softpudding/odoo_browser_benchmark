@@ -1,0 +1,71 @@
+=== Benchmark Evaluation ===
+  Task:   sale.cancel_reissue_wrong_customer
+  Agent:  command
+  DB:     bench_fr_e110323d  (auto-isolated)
+  URL:    http://127.0.0.1:50325
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/sale.cancel_reissue_wrong_customer__1777452823
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_e110323d from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 50325
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=236.1s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 95 calls captured (46 writes, 49 reads)
+   State: 3 records across 1 models
+5. Computing state diff...
+   8 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     8 edits
+  Matching:     0 edits
+  Missing:      4 edits
+  Extra:        8 edits
+  Wall clock:   236.1s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  0.5
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   95
+  Writes:            46 non-forbidden, 0 forbidden
+  Required ops MISSED: ['sale.order.action_confirm']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/sale.cancel_reissue_wrong_customer__1777452823/
+
+  Postcondition failures:
+    - Replacement Harbor Retail West order not found
+  Missing expected edits:
+    - sale.order.state = cancel
+    - sale.order.client_order_ref = SALE-FIX-12-WEST
+    - sale.order.partner_id = Harbor Retail West
+    - sale.order.state = sale
+  Unexpected extra edits:
+    + sale.order.client_order_ref = None
+    + sale.order.partner_id = Harbor Retail East
+    + sale.order.state = draft
+    + sale.order.client_order_ref = SALE-FIX-12
+    + sale.order.partner_id = Harbor Retail East
+    + sale.order.state = cancel
+    + sale.order.client_order_ref = None
+    + sale.order.state = draft
