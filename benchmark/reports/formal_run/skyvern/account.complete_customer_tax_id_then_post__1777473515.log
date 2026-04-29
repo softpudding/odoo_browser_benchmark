@@ -1,0 +1,55 @@
+=== Benchmark Evaluation ===
+  Task:   account.complete_customer_tax_id_then_post
+  Agent:  command
+  DB:     bench_fr_0e536101  (auto-isolated)
+  URL:    http://127.0.0.1:58436
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/account.complete_customer_tax_id_then_post__1777473515
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_0e536101 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 58436
+   Done.
+2. Capturing pre-task state...
+   Captured 17 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=0.2s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 17 records across 2 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      3 edits
+  Extra:        0 edits
+  Wall clock:   0.2s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/account.complete_customer_tax_id_then_post__1777473515/
+
+  Postcondition failures:
+    - East customer VAT is False, expected 'EU3029981'
+    - Invoice state is 'draft', expected 'posted'
+    - Customer Reference is False, expected 'VAT-302-CLEAR'
+  Missing expected edits:
+    - res.partner.vat = EU3029981
+    - account.move.ref = VAT-302-CLEAR
+    - account.move.state = posted
