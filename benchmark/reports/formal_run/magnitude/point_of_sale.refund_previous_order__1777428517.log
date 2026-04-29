@@ -1,0 +1,56 @@
+=== Benchmark Evaluation ===
+  Task:   point_of_sale.refund_previous_order
+  Agent:  command
+  DB:     bench_fr_a5379e79  (auto-isolated)
+  URL:    http://127.0.0.1:49452
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/magnitude/point_of_sale.refund_previous_order__1777428517
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_a5379e79 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 49452
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=342.7s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 50 calls captured (25 writes, 25 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   4 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     4 edits
+  Matching:     4 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   342.7s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   50
+  Writes:            25 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/magnitude/point_of_sale.refund_previous_order__1777428517/
+
+  Postcondition failures:
+    - Refund line price_subtotal is 10.0, expected -10.0
