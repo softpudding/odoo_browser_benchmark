@@ -1,0 +1,78 @@
+=== Benchmark Evaluation ===
+  Task:   contacts.create_company_with_contacts
+  Agent:  command
+  DB:     bench_fr_efc0532b  (auto-isolated)
+  URL:    http://127.0.0.1:50402
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/contacts.create_company_with_contacts__1777482350
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_efc0532b from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 50402
+   Done.
+2. Capturing pre-task state...
+   Captured 10 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 53 calls captured (23 writes, 30 reads)
+   State: 11 records across 1 models
+5. Computing state diff...
+   10 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     30 edits
+  Observed:     10 edits
+  Matching:     10 edits
+  Missing:      20 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   53
+  Writes:            23 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/contacts.create_company_with_contacts__1777482350/
+
+  Postcondition failures:
+    - Contact 'Patricia Drum' not found
+    - Contact 'Steven Okafor' not found
+  Missing expected edits:
+    - res.partner.city = Chicago
+    - res.partner.country_id = United States
+    - res.partner.email = p.drum@vantage-industrial.example.com
+    - res.partner.function = Procurement Manager
+    - res.partner.is_company = None
+    - res.partner.name = Patricia Drum
+    - res.partner.parent_id = Vantage Industrial Group
+    - res.partner.phone = +1 (312) 555-0191
+    - res.partner.street = 4400 Commerce Drive
+    - res.partner.zip = 60609
+    - res.partner.city = Chicago
+    - res.partner.country_id = United States
+    - res.partner.email = s.okafor@vantage-industrial.example.com
+    - res.partner.function = Logistics Coordinator
+    - res.partner.is_company = None
+    - res.partner.name = Steven Okafor
+    - res.partner.parent_id = Vantage Industrial Group
+    - res.partner.phone = +1 (312) 555-0192
+    - res.partner.street = 4400 Commerce Drive
+    - res.partner.zip = 60609
