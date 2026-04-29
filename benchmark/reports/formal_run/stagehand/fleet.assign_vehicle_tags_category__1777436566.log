@@ -1,0 +1,62 @@
+=== Benchmark Evaluation ===
+  Task:   fleet.assign_vehicle_tags_category
+  Agent:  command
+  DB:     bench_fr_13b0550e  (auto-isolated)
+  URL:    http://127.0.0.1:58859
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/fleet.assign_vehicle_tags_category__1777436566
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_13b0550e from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 58859
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=80.6s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 36 calls captured (19 writes, 17 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   1 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     1 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        1 edits
+  Wall clock:   80.6s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   36
+  Writes:            19 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/fleet.assign_vehicle_tags_category__1777436566/
+
+  Postcondition failures:
+    - Vehicle is missing required tags: ['Sales Team'] (currently has: ['Executive'])
+    - Vehicle category_id is not set
+  Missing expected edits:
+    - fleet.vehicle.category_id = Company Cars
+    - fleet.vehicle.tag_ids = [1, 2]
+  Unexpected extra edits:
+    + fleet.vehicle.tag_ids = [1]

@@ -1,0 +1,63 @@
+=== Benchmark Evaluation ===
+  Task:   event.register_attendee_confirm_check_in
+  Agent:  command
+  DB:     bench_fr_8015bcf0  (auto-isolated)
+  URL:    http://127.0.0.1:56792
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/event.register_attendee_confirm_check_in__1777436398
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_8015bcf0 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 56792
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=140.3s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 33 calls captured (13 writes, 20 reads)
+   State: 0 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     5 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      5 edits
+  Extra:        0 edits
+  Wall clock:   140.3s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   33
+  Writes:            13 non-forbidden, 0 forbidden
+  Required ops MISSED: ['event.registration.action_set_done']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/event.register_attendee_confirm_check_in__1777436398/
+
+  Postcondition failures:
+    - No registration for 'Sofia Reyes' on event 'Product Update Q2 — Partners Meetup'
+  Missing expected edits:
+    - event.registration.email = sofia.reyes@partner.example
+    - event.registration.event_id = Product Update Q2 — Partners Meetup
+    - event.registration.name = Sofia Reyes
+    - event.registration.phone = +44 20 7946 0312
+    - event.registration.state = done

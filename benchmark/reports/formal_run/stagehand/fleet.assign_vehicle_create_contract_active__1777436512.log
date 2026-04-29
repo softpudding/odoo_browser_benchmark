@@ -1,0 +1,74 @@
+=== Benchmark Evaluation ===
+  Task:   fleet.assign_vehicle_create_contract_active
+  Agent:  command
+  DB:     bench_fr_bb044b8d  (auto-isolated)
+  URL:    http://127.0.0.1:58181
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/fleet.assign_vehicle_create_contract_active__1777436512
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_bb044b8d from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 58181
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=79.1s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 37 calls captured (19 writes, 18 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   7 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     7 edits
+  Observed:     7 edits
+  Matching:     0 edits
+  Missing:      7 edits
+  Extra:        7 edits
+  Wall clock:   79.1s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   37
+  Writes:            19 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/fleet.assign_vehicle_create_contract_active__1777436512/
+
+  Postcondition failures:
+    - Contract Type (cost_subtype_id) is not set
+    - Contract vendor is 'Bench Lease Co04/20/2026Bench Lease Co', expected 'Bench Lease Co'
+    - Start date is 2026-04-29, expected 2026-04-20
+  Missing expected edits:
+    - fleet.vehicle.log.contract.cost_frequency = monthly
+    - fleet.vehicle.log.contract.cost_generated = 200.0
+    - fleet.vehicle.log.contract.cost_subtype_id = Leasing
+    - fleet.vehicle.log.contract.insurer_id = Bench Lease Co
+    - fleet.vehicle.log.contract.start_date = 2026-04-20
+    - fleet.vehicle.log.contract.state = open
+    - fleet.vehicle.log.contract.vehicle_id = Bench Mobility/Bench Van/BENCH-VAN-01
+  Unexpected extra edits:
+    + fleet.vehicle.log.contract.cost_frequency = monthly
+    + fleet.vehicle.log.contract.cost_generated = 200.0
+    + fleet.vehicle.log.contract.cost_subtype_id = None
+    + fleet.vehicle.log.contract.insurer_id = Bench Lease Co04/20/2026Bench Lease Co
+    + fleet.vehicle.log.contract.start_date = 2026-04-29
+    + fleet.vehicle.log.contract.state = open
+    + fleet.vehicle.log.contract.vehicle_id = Bench Mobility/Bench Van/BENCH-VAN-01
