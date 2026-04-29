@@ -1,0 +1,52 @@
+=== Benchmark Evaluation ===
+  Task:   project.update_task_assign_deadline_activity
+  Agent:  command
+  DB:     bench_fr_28a5e6f5  (auto-isolated)
+  URL:    http://127.0.0.1:56480
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/project.update_task_assign_deadline_activity__1777475050
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_28a5e6f5 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 56480
+   Done.
+2. Capturing pre-task state...
+   Captured 3 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=0.2s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 3 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     1 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      1 edits
+  Extra:        0 edits
+  Wall clock:   0.2s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/project.update_task_assign_deadline_activity__1777475050/
+
+  Postcondition failures:
+    - Task stage is 'To Do', expected 'In Progress'
+    - Expected Call activity was not scheduled on the task
+  Missing expected edits:
+    - project.task.stage_id = In Progress
