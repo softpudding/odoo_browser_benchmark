@@ -1,0 +1,64 @@
+=== Benchmark Evaluation ===
+  Task:   account.credit_note_partial_refund_post
+  Agent:  command
+  DB:     bench_fr_4809cc5b  (auto-isolated)
+  URL:    http://127.0.0.1:50847
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/account.credit_note_partial_refund_post__1777434560
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_4809cc5b from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 50847
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=135.6s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 78 calls captured (37 writes, 41 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     6 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      6 edits
+  Extra:        0 edits
+  Wall clock:   135.6s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   78
+  Writes:            37 non-forbidden, 0 forbidden
+  Required ops MISSED: ['account.move.action_post', 'account.move.reversal.refund_moves']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/account.credit_note_partial_refund_post__1777434560/
+
+  Postcondition failures:
+    - No out_refund credit note with reversed_entry_id=INV/BENCH/001 found
+  Missing expected edits:
+    - account.move.payment_state = partial
+    - account.move.move_type = out_refund
+    - account.move.partner_id = Bench AR Co
+    - account.move.payment_state = paid
+    - account.move.ref = Reversal of: INV/2026/00001, Wrong qty
+    - account.move.state = posted

@@ -1,0 +1,61 @@
+=== Benchmark Evaluation ===
+  Task:   account.complete_customer_tax_id_then_post
+  Agent:  command
+  DB:     bench_fr_2fa39e2d  (auto-isolated)
+  URL:    http://127.0.0.1:49427
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/account.complete_customer_tax_id_then_post__1777434382
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_2fa39e2d from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 49427
+   Done.
+2. Capturing pre-task state...
+   Captured 11 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=170.6s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 68 calls captured (32 writes, 36 reads)
+   State: 11 records across 2 models
+5. Computing state diff...
+   3 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     3 edits
+  Matching:     2 edits
+  Missing:      1 edits
+  Extra:        1 edits
+  Wall clock:   170.6s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  0.3333
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   68
+  Writes:            32 non-forbidden, 0 forbidden
+  Required ops MISSED: ['account.move.write', 'res.partner.write']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/account.complete_customer_tax_id_then_post__1777434382/
+
+  Postcondition failures:
+    - East customer VAT is '15%', expected 'EU3029981'
+  Missing expected edits:
+    - res.partner.vat = EU3029981
+  Unexpected extra edits:
+    + res.partner.vat = 15%

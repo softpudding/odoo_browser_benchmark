@@ -1,0 +1,68 @@
+=== Benchmark Evaluation ===
+  Task:   account.create_recurring_journal_entry
+  Agent:  command
+  DB:     bench_fr_45d7286b  (auto-isolated)
+  URL:    http://127.0.0.1:49415
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/account.create_recurring_journal_entry__1777434382
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_45d7286b from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 49415
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=218.8s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 50 calls captured (22 writes, 28 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   3 atomic edits observed
+   Postconditions: 9 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     3 edits
+  Matching:     2 edits
+  Missing:      1 edits
+  Extra:        1 edits
+  Wall clock:   218.8s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   50
+  Writes:            22 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/account.create_recurring_journal_entry__1777434382/
+
+  Postcondition failures:
+    - Entry state is 'draft', expected 'posted'
+    - Entry date is '2026-04-01', expected '2026-05-01'
+    - Expected exactly 3 journal lines, found 0
+    - Total debit is 0, expected 1050.00
+    - Total credit is 0, expected 1050.00
+    - No debit line of 1000.00 on a Rent/expense account found. Seen lines: 
+    - No debit line of 50.00 on a Tax Paid / asset account found. Seen lines: 
+    - No credit line of 1050.00 on a Bank/cash account found. Seen lines: 
+    - No activity with summary containing 'Post next month's rent entry' found. Summaries seen: 'To-Do'
+  Missing expected edits:
+    - account.move.state = posted
+  Unexpected extra edits:
+    + account.move.state = draft

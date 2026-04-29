@@ -1,0 +1,67 @@
+=== Benchmark Evaluation ===
+  Task:   account.partial_pay_vendor_bill_with_memo
+  Agent:  command
+  DB:     bench_fr_631d2857  (auto-isolated)
+  URL:    http://127.0.0.1:51545
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/account.partial_pay_vendor_bill_with_memo__1777434639
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_631d2857 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 51545
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=51.2s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 37 calls captured (16 writes, 21 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   4 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     4 edits
+  Matching:     0 edits
+  Missing:      4 edits
+  Extra:        4 edits
+  Wall clock:   51.2s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   37
+  Writes:            16 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/account.partial_pay_vendor_bill_with_memo__1777434639/
+
+  Postcondition failures:
+    - Payment memo is 'VB-PARTIAL-01PARTIAL-JUN-600', expected 'PARTIAL-JUN-600'
+    - Payment date is 2026-04-29, expected 2026-06-12
+  Missing expected edits:
+    - account.payment.amount = 600.0
+    - account.payment.date = 2026-06-12
+    - account.payment.memo = PARTIAL-JUN-600
+    - account.payment.state = in_process
+  Unexpected extra edits:
+    + account.payment.amount = 600.0
+    + account.payment.date = 2026-04-29
+    + account.payment.memo = VB-PARTIAL-01PARTIAL-JUN-600
+    + account.payment.state = in_process
