@@ -1,0 +1,53 @@
+=== Benchmark Evaluation ===
+  Task:   stock.archive_old_product_set_inactive
+  Agent:  command
+  DB:     bench_fr_4000d6a6  (auto-isolated)
+  URL:    http://127.0.0.1:56098
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/stock.archive_old_product_set_inactive__1777437157
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_4000d6a6 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 56098
+   Done.
+2. Capturing pre-task state...
+   Captured 28 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=83.2s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 45 calls captured (23 writes, 22 reads)
+   State: 28 records across 2 models
+5. Computing state diff...
+   2 atomic edits observed
+6. Scoring...
+
+==================================================
+  RESULT: PASS  (Strict: PASS)
+  StateDiffF1:  1.0
+  Precision:    1.0
+  Recall:       1.0
+  Expected:     2 edits
+  Observed:     2 edits
+  Matching:     2 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   83.2s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   45
+  Writes:            23 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/stock.archive_old_product_set_inactive__1777437157/
+
