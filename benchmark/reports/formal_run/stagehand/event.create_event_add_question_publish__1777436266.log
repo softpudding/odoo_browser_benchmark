@@ -1,0 +1,72 @@
+=== Benchmark Evaluation ===
+  Task:   event.create_event_add_question_publish
+  Agent:  command
+  DB:     bench_fr_90635d17  (auto-isolated)
+  URL:    http://127.0.0.1:55102
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/event.create_event_add_question_publish__1777436266
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_90635d17 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 55102
+   Done.
+2. Capturing pre-task state...
+   Captured 3 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=126.2s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 70 calls captured (22 writes, 48 reads)
+   State: 4 records across 2 models
+5. Computing state diff...
+   3 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     11 edits
+  Observed:     3 edits
+  Matching:     0 edits
+  Missing:      11 edits
+  Extra:        3 edits
+  Wall clock:   126.2s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   70
+  Writes:            22 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/event.create_event_add_question_publish__1777436266/
+
+  Postcondition failures:
+    - No event.event named 'Bench 2026 Conference' — agent did not create it
+  Missing expected edits:
+    - event.event.is_published = True
+    - event.event.name = Bench 2026 Conference
+    - event.event.website_published = True
+    - event.question.is_mandatory_answer = True
+    - event.question.once_per_order = None
+    - event.question.question_type = text_box
+    - event.question.title = Company
+    - event.question.is_mandatory_answer = True
+    - event.question.once_per_order = None
+    - event.question.question_type = simple_choice
+    - event.question.title = Experience Level
+  Unexpected extra edits:
+    + event.event.is_published = True
+    + event.event.name = Bench 2026 Conference07/15/2026 09:00:00Experience Level
+    + event.event.website_published = True
