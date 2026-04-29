@@ -1,0 +1,61 @@
+=== Benchmark Evaluation ===
+  Task:   hr_recruitment.create_applicant_add_skills_refuse
+  Agent:  command
+  DB:     bench_fr_afd690b0  (auto-isolated)
+  URL:    http://127.0.0.1:51873
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/hr_recruitment.create_applicant_add_skills_refuse__1777474609
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_afd690b0 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 51873
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=0.3s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 1 records across 2 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     11 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      11 edits
+  Extra:        0 edits
+  Wall clock:   0.3s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/hr_recruitment.create_applicant_add_skills_refuse__1777474609/
+
+  Postcondition failures:
+    - Target applicant 'Cameron Blake' not found
+  Missing expected edits:
+    - hr.applicant.skill.applicant_id = Cameron Blake
+    - hr.applicant.skill.skill_id = Python
+    - hr.applicant.skill.skill_level_id = Advanced
+    - hr.applicant.skill.skill_type_id = Languages
+    - hr.applicant.active = None
+    - hr.applicant.email_from = cameron.blake@techmail.example.com
+    - hr.applicant.job_id = Senior Data Engineer
+    - hr.applicant.partner_name = Cameron Blake
+    - hr.applicant.partner_phone = +1 555 0147
+    - hr.applicant.refuse_reason_id = Does not fit the job requirements
+    - hr.applicant.stage_id = New
