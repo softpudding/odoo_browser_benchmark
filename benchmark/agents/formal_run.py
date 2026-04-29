@@ -162,6 +162,15 @@ def rewrite_queue(rows: list[dict]) -> None:
 def append_row(row: dict) -> None:
     with LOCK_PATH.open("w") as lk:
         fcntl.flock(lk.fileno(), fcntl.LOCK_EX)
+        # Same trailing-\n guard as the bulk claim path: missing newlines
+        # glue rows together and corrupt later parses.
+        if QUEUE_PATH.exists() and QUEUE_PATH.stat().st_size > 0:
+            with QUEUE_PATH.open("rb") as f:
+                f.seek(-1, 2)
+                needs_nl = f.read(1) != b"\n"
+            if needs_nl:
+                with QUEUE_PATH.open("a") as f:
+                    f.write("\n")
         with QUEUE_PATH.open("a") as f:
             f.write(json.dumps(row) + "\n")
 
@@ -636,6 +645,16 @@ def stream_claim(worker: str, n_tasks: int, agents: list[str] | None) -> int:
 
         with LOCK_PATH.open("w") as lk:
             fcntl.flock(lk.fileno(), fcntl.LOCK_EX)
+            # Ensure file ends with \n before appending; otherwise the first
+            # new row gets glued to the previous line and json.loads silently
+            # drops both rows from later parsers.
+            if QUEUE_PATH.exists() and QUEUE_PATH.stat().st_size > 0:
+                with QUEUE_PATH.open("rb") as f:
+                    f.seek(-1, 2)
+                    needs_nl = f.read(1) != b"\n"
+                if needs_nl:
+                    with QUEUE_PATH.open("a") as f:
+                        f.write("\n")
             with QUEUE_PATH.open("a") as f:
                 for r in new_rows:
                     f.write(json.dumps(r) + "\n")
