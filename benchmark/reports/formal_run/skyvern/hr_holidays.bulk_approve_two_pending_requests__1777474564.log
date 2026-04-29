@@ -1,0 +1,53 @@
+=== Benchmark Evaluation ===
+  Task:   hr_holidays.bulk_approve_two_pending_requests
+  Agent:  command
+  DB:     bench_fr_8c396e43  (auto-isolated)
+  URL:    http://127.0.0.1:51317
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/hr_holidays.bulk_approve_two_pending_requests__1777474564
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_8c396e43 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 51317
+   Done.
+2. Capturing pre-task state...
+   Captured 5 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=0.2s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 5 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   0.2s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/hr_holidays.bulk_approve_two_pending_requests__1777474564/
+
+  Postcondition failures:
+    - Eve's leave state is 'confirm', expected 'validate'
+    - Frank's leave state is 'confirm', expected 'validate'
+  Missing expected edits:
+    - hr.leave.state = validate
+    - hr.leave.state = validate
