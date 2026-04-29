@@ -1,0 +1,817 @@
+[odoo_benchmark a1bfec865] formal_run: xiao-1d1974 checkpoint (10 runs done)
+ 815 files changed, 414 insertions(+), 8530 deletions(-)
+ rename benchmark/reports/formal_run/{skyvern/account.complete_customer_tax_id_then_post__1777473515/agent_stdout.txt => _runs/dispatcher_xiao-1d1974_skyvern_K8_1777473843.log} (100%)
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.complete_customer_tax_id_then_post__1777473515/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.complete_customer_tax_id_then_post__1777473542.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.complete_customer_tax_id_then_post__1777473542/after_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.complete_customer_tax_id_then_post__1777473542/before_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.complete_customer_tax_id_then_post__1777473542/expected_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.complete_customer_tax_id_then_post__1777473542/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.complete_customer_tax_id_then_post__1777473542/postcondition_failures.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.complete_customer_tax_id_then_post__1777473542/trace_summary.json
+ rename benchmark/reports/formal_run/skyvern/{account.complete_customer_tax_id_then_post__1777473515.log => account.complete_customer_tax_id_then_post__1777473844.log} (89%)
+ rename benchmark/reports/formal_run/skyvern/{account.complete_customer_tax_id_then_post__1777473515 => account.complete_customer_tax_id_then_post__1777473844}/after_state.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_bill_from_confirmed_po__1777473515 => account.complete_customer_tax_id_then_post__1777473844}/agent_result.json (96%)
+ rename benchmark/reports/formal_run/skyvern/{account.complete_customer_tax_id_then_post__1777473542 => account.complete_customer_tax_id_then_post__1777473844}/agent_stdout.txt (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.complete_customer_tax_id_then_post__1777473515 => account.complete_customer_tax_id_then_post__1777473844}/before_state.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.complete_customer_tax_id_then_post__1777473515 => account.complete_customer_tax_id_then_post__1777473844}/expected_state.json (100%)
+ create mode 100644 benchmark/reports/formal_run/skyvern/account.complete_customer_tax_id_then_post__1777473844/mitm.log
+ rename benchmark/reports/formal_run/skyvern/{account.complete_customer_tax_id_then_post__1777473515 => account.complete_customer_tax_id_then_post__1777473844}/postcondition_failures.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.complete_customer_tax_id_then_post__1777473515 => account.complete_customer_tax_id_then_post__1777473844}/score.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.complete_customer_tax_id_then_post__1777473515 => account.complete_customer_tax_id_then_post__1777473844}/state_diff.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.complete_customer_tax_id_then_post__1777473515 => account.complete_customer_tax_id_then_post__1777473844}/token_usage.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.complete_customer_tax_id_then_post__1777473515 => account.complete_customer_tax_id_then_post__1777473844}/tokens.jsonl (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.complete_customer_tax_id_then_post__1777473515 => account.complete_customer_tax_id_then_post__1777473844}/trace.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.complete_customer_tax_id_then_post__1777473515 => account.complete_customer_tax_id_then_post__1777473844}/trace_summary.json (100%)
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_bill_from_confirmed_po__1777473515.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_bill_from_confirmed_po__1777473515/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_bill_from_confirmed_po__1777473515/score.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_bill_from_confirmed_po__1777473542/after_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_bill_from_confirmed_po__1777473542/before_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_bill_from_confirmed_po__1777473542/expected_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_bill_from_confirmed_po__1777473542/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_bill_from_confirmed_po__1777473542/postcondition_failures.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_bill_from_confirmed_po__1777473542/trace_summary.json
+ rename benchmark/reports/formal_run/skyvern/{account.create_bill_from_confirmed_po__1777473542.log => account.create_bill_from_confirmed_po__1777473844.log} (89%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_bill_from_confirmed_po__1777473515 => account.create_bill_from_confirmed_po__1777473844}/after_state.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.complete_customer_tax_id_then_post__1777473515 => account.create_bill_from_confirmed_po__1777473844}/agent_result.json (96%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_bill_from_confirmed_po__1777473515 => account.create_bill_from_confirmed_po__1777473844}/agent_stdout.txt (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_bill_from_confirmed_po__1777473515 => account.create_bill_from_confirmed_po__1777473844}/before_state.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_bill_from_confirmed_po__1777473515 => account.create_bill_from_confirmed_po__1777473844}/expected_state.json (100%)
+ create mode 100644 benchmark/reports/formal_run/skyvern/account.create_bill_from_confirmed_po__1777473844/mitm.log
+ rename benchmark/reports/formal_run/skyvern/{account.create_bill_from_confirmed_po__1777473515 => account.create_bill_from_confirmed_po__1777473844}/postcondition_failures.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_bill_from_confirmed_po__1777473542 => account.create_bill_from_confirmed_po__1777473844}/score.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.complete_customer_tax_id_then_post__1777473542 => account.create_bill_from_confirmed_po__1777473844}/state_diff.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.complete_customer_tax_id_then_post__1777473542 => account.create_bill_from_confirmed_po__1777473844}/token_usage.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.complete_customer_tax_id_then_post__1777473542 => account.create_bill_from_confirmed_po__1777473844}/tokens.jsonl (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.complete_customer_tax_id_then_post__1777473542 => account.create_bill_from_confirmed_po__1777473844}/trace.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_bill_from_confirmed_po__1777473515 => account.create_bill_from_confirmed_po__1777473844}/trace_summary.json (100%)
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_customer_invoice_post__1777473515/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_customer_invoice_post__1777473515/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_customer_invoice_post__1777473542.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_customer_invoice_post__1777473542/after_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_customer_invoice_post__1777473542/before_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_customer_invoice_post__1777473542/expected_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_customer_invoice_post__1777473542/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_customer_invoice_post__1777473542/postcondition_failures.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_customer_invoice_post__1777473542/score.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_customer_invoice_post__1777473542/trace_summary.json
+ rename benchmark/reports/formal_run/skyvern/{account.create_customer_invoice_post__1777473515.log => account.create_customer_invoice_post__1777473844.log} (89%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_customer_invoice_post__1777473515 => account.create_customer_invoice_post__1777473844}/after_state.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.complete_customer_tax_id_then_post__1777473542 => account.create_customer_invoice_post__1777473844}/agent_result.json (96%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_bill_from_confirmed_po__1777473542 => account.create_customer_invoice_post__1777473844}/agent_stdout.txt (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_customer_invoice_post__1777473515 => account.create_customer_invoice_post__1777473844}/before_state.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_customer_invoice_post__1777473515 => account.create_customer_invoice_post__1777473844}/expected_state.json (100%)
+ create mode 100644 benchmark/reports/formal_run/skyvern/account.create_customer_invoice_post__1777473844/mitm.log
+ rename benchmark/reports/formal_run/skyvern/{account.create_customer_invoice_post__1777473515 => account.create_customer_invoice_post__1777473844}/postcondition_failures.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_customer_invoice_post__1777473515 => account.create_customer_invoice_post__1777473844}/score.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_bill_from_confirmed_po__1777473515 => account.create_customer_invoice_post__1777473844}/state_diff.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_bill_from_confirmed_po__1777473515 => account.create_customer_invoice_post__1777473844}/token_usage.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_bill_from_confirmed_po__1777473515 => account.create_customer_invoice_post__1777473844}/tokens.jsonl (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_bill_from_confirmed_po__1777473515 => account.create_customer_invoice_post__1777473844}/trace.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_customer_invoice_post__1777473515 => account.create_customer_invoice_post__1777473844}/trace_summary.json (100%)
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_manual_journal_entry_balanced__1777473515.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_manual_journal_entry_balanced__1777473515/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_manual_journal_entry_balanced__1777473515/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_manual_journal_entry_balanced__1777473515/score.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_manual_journal_entry_balanced__1777473542/expected_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_manual_journal_entry_balanced__1777473542/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_manual_journal_entry_balanced__1777473542/postcondition_failures.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_manual_journal_entry_balanced__1777473542/score.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_manual_journal_entry_balanced__1777473542/trace_summary.json
+ rename benchmark/reports/formal_run/skyvern/{account.create_manual_journal_entry_balanced__1777473542.log => account.create_manual_journal_entry_balanced__1777473844.log} (87%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_manual_journal_entry_balanced__1777473515 => account.create_manual_journal_entry_balanced__1777473844}/after_state.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_customer_invoice_post__1777473542 => account.create_manual_journal_entry_balanced__1777473844}/agent_result.json (96%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_customer_invoice_post__1777473515 => account.create_manual_journal_entry_balanced__1777473844}/agent_stdout.txt (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_manual_journal_entry_balanced__1777473515 => account.create_manual_journal_entry_balanced__1777473844}/before_state.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_manual_journal_entry_balanced__1777473515 => account.create_manual_journal_entry_balanced__1777473844}/expected_state.json (100%)
+ create mode 100644 benchmark/reports/formal_run/skyvern/account.create_manual_journal_entry_balanced__1777473844/mitm.log
+ rename benchmark/reports/formal_run/skyvern/{account.create_manual_journal_entry_balanced__1777473515 => account.create_manual_journal_entry_balanced__1777473844}/postcondition_failures.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.complete_customer_tax_id_then_post__1777473542 => account.create_manual_journal_entry_balanced__1777473844}/score.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_bill_from_confirmed_po__1777473542 => account.create_manual_journal_entry_balanced__1777473844}/state_diff.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_bill_from_confirmed_po__1777473542 => account.create_manual_journal_entry_balanced__1777473844}/token_usage.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_bill_from_confirmed_po__1777473542 => account.create_manual_journal_entry_balanced__1777473844}/tokens.jsonl (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_bill_from_confirmed_po__1777473542 => account.create_manual_journal_entry_balanced__1777473844}/trace.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_manual_journal_entry_balanced__1777473515 => account.create_manual_journal_entry_balanced__1777473844}/trace_summary.json (100%)
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_recurring_entry_template__1777473515.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_recurring_entry_template__1777473515/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_recurring_entry_template__1777473515/score.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_recurring_entry_template__1777473542/after_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_recurring_entry_template__1777473542/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_recurring_entry_template__1777473542/before_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_recurring_entry_template__1777473542/expected_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_recurring_entry_template__1777473542/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_recurring_entry_template__1777473542/postcondition_failures.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_recurring_entry_template__1777473542/score.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_recurring_entry_template__1777473542/trace_summary.json
+ rename benchmark/reports/formal_run/skyvern/{account.create_recurring_entry_template__1777473542.log => account.create_recurring_entry_template__1777473844.log} (84%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_recurring_entry_template__1777473515 => account.create_recurring_entry_template__1777473844}/after_state.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_manual_journal_entry_balanced__1777473542 => account.create_recurring_entry_template__1777473844}/agent_result.json (96%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_customer_invoice_post__1777473542 => account.create_recurring_entry_template__1777473844}/agent_stdout.txt (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_recurring_entry_template__1777473515 => account.create_recurring_entry_template__1777473844}/before_state.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_recurring_entry_template__1777473515 => account.create_recurring_entry_template__1777473844}/expected_state.json (100%)
+ create mode 100644 benchmark/reports/formal_run/skyvern/account.create_recurring_entry_template__1777473844/mitm.log
+ rename benchmark/reports/formal_run/skyvern/{account.create_recurring_entry_template__1777473515 => account.create_recurring_entry_template__1777473844}/postcondition_failures.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.repair_and_post_invoice__1777473589 => account.create_recurring_entry_template__1777473844}/score.json (92%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_customer_invoice_post__1777473515 => account.create_recurring_entry_template__1777473844}/state_diff.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_customer_invoice_post__1777473515 => account.create_recurring_entry_template__1777473844}/token_usage.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_customer_invoice_post__1777473515 => account.create_recurring_entry_template__1777473844}/tokens.jsonl (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_customer_invoice_post__1777473515 => account.create_recurring_entry_template__1777473844}/trace.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_recurring_entry_template__1777473515 => account.create_recurring_entry_template__1777473844}/trace_summary.json (100%)
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_recurring_journal_entry__1777473515.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_recurring_journal_entry__1777473515/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_recurring_journal_entry__1777473515/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_recurring_journal_entry__1777473515/score.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_recurring_journal_entry__1777473589/after_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_recurring_journal_entry__1777473589/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_recurring_journal_entry__1777473589/before_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_recurring_journal_entry__1777473589/expected_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_recurring_journal_entry__1777473589/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_recurring_journal_entry__1777473589/postcondition_failures.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_recurring_journal_entry__1777473589/score.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_recurring_journal_entry__1777473589/trace_summary.json
+ rename benchmark/reports/formal_run/skyvern/{account.create_recurring_journal_entry__1777473589.log => account.create_recurring_journal_entry__1777473844.log} (84%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_manual_journal_entry_balanced__1777473542 => account.create_recurring_journal_entry__1777473844}/after_state.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_bill_from_confirmed_po__1777473542 => account.create_recurring_journal_entry__1777473844}/agent_result.json (96%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_manual_journal_entry_balanced__1777473515 => account.create_recurring_journal_entry__1777473844}/agent_stdout.txt (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_manual_journal_entry_balanced__1777473542 => account.create_recurring_journal_entry__1777473844}/before_state.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_recurring_journal_entry__1777473515 => account.create_recurring_journal_entry__1777473844}/expected_state.json (100%)
+ create mode 100644 benchmark/reports/formal_run/skyvern/account.create_recurring_journal_entry__1777473844/mitm.log
+ rename benchmark/reports/formal_run/skyvern/{account.create_recurring_journal_entry__1777473515 => account.create_recurring_journal_entry__1777473844}/postcondition_failures.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.reverse_journal_entry_from_general_ledger__1777473640 => account.create_recurring_journal_entry__1777473844}/score.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_customer_invoice_post__1777473542 => account.create_recurring_journal_entry__1777473844}/state_diff.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_customer_invoice_post__1777473542 => account.create_recurring_journal_entry__1777473844}/token_usage.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_customer_invoice_post__1777473542 => account.create_recurring_journal_entry__1777473844}/tokens.jsonl (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_customer_invoice_post__1777473542 => account.create_recurring_journal_entry__1777473844}/trace.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_recurring_journal_entry__1777473515 => account.create_recurring_journal_entry__1777473844}/trace_summary.json (100%)
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_refund_modify_reissue__1777473515.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_refund_modify_reissue__1777473515/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_refund_modify_reissue__1777473515/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_refund_modify_reissue__1777473515/score.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_refund_modify_reissue__1777473589/after_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_refund_modify_reissue__1777473589/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_refund_modify_reissue__1777473589/before_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_refund_modify_reissue__1777473589/expected_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_refund_modify_reissue__1777473589/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_refund_modify_reissue__1777473589/postcondition_failures.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_refund_modify_reissue__1777473589/trace_summary.json
+ rename benchmark/reports/formal_run/skyvern/{account.create_refund_modify_reissue__1777473589.log => account.create_refund_modify_reissue__1777473844.log} (92%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_refund_modify_reissue__1777473515 => account.create_refund_modify_reissue__1777473844}/after_state.json (100%)
+ create mode 100644 benchmark/reports/formal_run/skyvern/account.create_refund_modify_reissue__1777473844/agent_result.json
+ rename benchmark/reports/formal_run/skyvern/{account.create_manual_journal_entry_balanced__1777473542 => account.create_refund_modify_reissue__1777473844}/agent_stdout.txt (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_refund_modify_reissue__1777473515 => account.create_refund_modify_reissue__1777473844}/before_state.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_refund_modify_reissue__1777473515 => account.create_refund_modify_reissue__1777473844}/expected_state.json (100%)
+ create mode 100644 benchmark/reports/formal_run/skyvern/account.create_refund_modify_reissue__1777473844/mitm.log
+ rename benchmark/reports/formal_run/skyvern/{account.create_refund_modify_reissue__1777473515 => account.create_refund_modify_reissue__1777473844}/postcondition_failures.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_refund_modify_reissue__1777473589 => account.create_refund_modify_reissue__1777473844}/score.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_manual_journal_entry_balanced__1777473515 => account.create_refund_modify_reissue__1777473844}/state_diff.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_manual_journal_entry_balanced__1777473515 => account.create_refund_modify_reissue__1777473844}/token_usage.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_manual_journal_entry_balanced__1777473515 => account.create_refund_modify_reissue__1777473844}/tokens.jsonl (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_manual_journal_entry_balanced__1777473515 => account.create_refund_modify_reissue__1777473844}/trace.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_refund_modify_reissue__1777473515 => account.create_refund_modify_reissue__1777473844}/trace_summary.json (100%)
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_vendor_bill_confirm__1777473515.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_vendor_bill_confirm__1777473515/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_vendor_bill_confirm__1777473515/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_vendor_bill_confirm__1777473589/after_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_vendor_bill_confirm__1777473589/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_vendor_bill_confirm__1777473589/before_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_vendor_bill_confirm__1777473589/expected_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_vendor_bill_confirm__1777473589/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_vendor_bill_confirm__1777473589/postcondition_failures.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_vendor_bill_confirm__1777473589/trace_summary.json
+ rename benchmark/reports/formal_run/skyvern/{account.create_vendor_bill_confirm__1777473589.log => account.create_vendor_bill_confirm__1777473844.log} (90%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_vendor_bill_confirm__1777473515 => account.create_vendor_bill_confirm__1777473844}/after_state.json (100%)
+ create mode 100644 benchmark/reports/formal_run/skyvern/account.create_vendor_bill_confirm__1777473844/agent_result.json
+ rename benchmark/reports/formal_run/skyvern/{account.create_recurring_entry_template__1777473515 => account.create_vendor_bill_confirm__1777473844}/agent_stdout.txt (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_vendor_bill_confirm__1777473515 => account.create_vendor_bill_confirm__1777473844}/before_state.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_vendor_bill_confirm__1777473515 => account.create_vendor_bill_confirm__1777473844}/expected_state.json (100%)
+ create mode 100644 benchmark/reports/formal_run/skyvern/account.create_vendor_bill_confirm__1777473844/mitm.log
+ rename benchmark/reports/formal_run/skyvern/{account.create_vendor_bill_confirm__1777473515 => account.create_vendor_bill_confirm__1777473844}/postcondition_failures.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_vendor_bill_confirm__1777473589 => account.create_vendor_bill_confirm__1777473844}/score.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_manual_journal_entry_balanced__1777473542 => account.create_vendor_bill_confirm__1777473844}/state_diff.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_manual_journal_entry_balanced__1777473542 => account.create_vendor_bill_confirm__1777473844}/token_usage.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_manual_journal_entry_balanced__1777473542 => account.create_vendor_bill_confirm__1777473844}/tokens.jsonl (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_manual_journal_entry_balanced__1777473542 => account.create_vendor_bill_confirm__1777473844}/trace.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_vendor_bill_confirm__1777473515 => account.create_vendor_bill_confirm__1777473844}/trace_summary.json (100%)
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_vendor_bill_from_scratch_pay__1777473543.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_vendor_bill_from_scratch_pay__1777473543/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_vendor_bill_from_scratch_pay__1777473543/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_vendor_bill_from_scratch_pay__1777473543/state_diff.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_vendor_bill_from_scratch_pay__1777473543/token_usage.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_vendor_bill_from_scratch_pay__1777473543/trace.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_vendor_bill_from_scratch_pay__1777473589/after_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_vendor_bill_from_scratch_pay__1777473589/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_vendor_bill_from_scratch_pay__1777473589/agent_stdout.txt
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_vendor_bill_from_scratch_pay__1777473589/before_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_vendor_bill_from_scratch_pay__1777473589/expected_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_vendor_bill_from_scratch_pay__1777473589/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_vendor_bill_from_scratch_pay__1777473589/postcondition_failures.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_vendor_bill_from_scratch_pay__1777473589/score.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_vendor_bill_from_scratch_pay__1777473589/state_diff.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_vendor_bill_from_scratch_pay__1777473589/token_usage.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_vendor_bill_from_scratch_pay__1777473589/trace.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.create_vendor_bill_from_scratch_pay__1777473589/trace_summary.json
+ rename benchmark/reports/formal_run/skyvern/{account.create_vendor_bill_from_scratch_pay__1777473589.log => account.create_vendor_bill_from_scratch_pay__1777473876.log} (88%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_vendor_bill_from_scratch_pay__1777473543 => account.create_vendor_bill_from_scratch_pay__1777473876}/after_state.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_recurring_entry_template__1777473515 => account.create_vendor_bill_from_scratch_pay__1777473876}/agent_result.json (96%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_recurring_entry_template__1777473542 => account.create_vendor_bill_from_scratch_pay__1777473876}/agent_stdout.txt (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_vendor_bill_from_scratch_pay__1777473543 => account.create_vendor_bill_from_scratch_pay__1777473876}/before_state.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_vendor_bill_from_scratch_pay__1777473543 => account.create_vendor_bill_from_scratch_pay__1777473876}/expected_state.json (100%)
+ create mode 100644 benchmark/reports/formal_run/skyvern/account.create_vendor_bill_from_scratch_pay__1777473876/mitm.log
+ rename benchmark/reports/formal_run/skyvern/{account.create_vendor_bill_from_scratch_pay__1777473543 => account.create_vendor_bill_from_scratch_pay__1777473876}/postcondition_failures.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_vendor_bill_from_scratch_pay__1777473543 => account.create_vendor_bill_from_scratch_pay__1777473876}/score.json (92%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_recurring_entry_template__1777473515 => account.create_vendor_bill_from_scratch_pay__1777473876}/state_diff.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_recurring_entry_template__1777473515 => account.create_vendor_bill_from_scratch_pay__1777473876}/token_usage.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_recurring_entry_template__1777473515 => account.create_vendor_bill_from_scratch_pay__1777473876}/tokens.jsonl (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_recurring_entry_template__1777473515 => account.create_vendor_bill_from_scratch_pay__1777473876}/trace.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_vendor_bill_from_scratch_pay__1777473543 => account.create_vendor_bill_from_scratch_pay__1777473876}/trace_summary.json (100%)
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.credit_note_partial_refund_post__1777473543/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.credit_note_partial_refund_post__1777473543/agent_stdout.txt
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.credit_note_partial_refund_post__1777473543/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.credit_note_partial_refund_post__1777473543/score.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.credit_note_partial_refund_post__1777473543/state_diff.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.credit_note_partial_refund_post__1777473543/token_usage.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.credit_note_partial_refund_post__1777473543/trace.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.credit_note_partial_refund_post__1777473589.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.credit_note_partial_refund_post__1777473589/after_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.credit_note_partial_refund_post__1777473589/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.credit_note_partial_refund_post__1777473589/agent_stdout.txt
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.credit_note_partial_refund_post__1777473589/before_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.credit_note_partial_refund_post__1777473589/expected_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.credit_note_partial_refund_post__1777473589/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.credit_note_partial_refund_post__1777473589/postcondition_failures.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.credit_note_partial_refund_post__1777473589/score.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.credit_note_partial_refund_post__1777473589/state_diff.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.credit_note_partial_refund_post__1777473589/token_usage.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.credit_note_partial_refund_post__1777473589/trace.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.credit_note_partial_refund_post__1777473589/trace_summary.json
+ rename benchmark/reports/formal_run/skyvern/{account.credit_note_partial_refund_post__1777473543.log => account.credit_note_partial_refund_post__1777473876.log} (85%)
+ rename benchmark/reports/formal_run/skyvern/{account.credit_note_partial_refund_post__1777473543 => account.credit_note_partial_refund_post__1777473876}/after_state.json (100%)
+ create mode 100644 benchmark/reports/formal_run/skyvern/account.credit_note_partial_refund_post__1777473876/agent_result.json
+ rename benchmark/reports/formal_run/skyvern/{account.create_recurring_journal_entry__1777473515 => account.credit_note_partial_refund_post__1777473876}/agent_stdout.txt (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.credit_note_partial_refund_post__1777473543 => account.credit_note_partial_refund_post__1777473876}/before_state.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.credit_note_partial_refund_post__1777473543 => account.credit_note_partial_refund_post__1777473876}/expected_state.json (100%)
+ create mode 100644 benchmark/reports/formal_run/skyvern/account.credit_note_partial_refund_post__1777473876/mitm.log
+ rename benchmark/reports/formal_run/skyvern/{account.credit_note_partial_refund_post__1777473543 => account.credit_note_partial_refund_post__1777473876}/postcondition_failures.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_vendor_bill_confirm__1777473515 => account.credit_note_partial_refund_post__1777473876}/score.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_recurring_entry_template__1777473542 => account.credit_note_partial_refund_post__1777473876}/state_diff.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_recurring_entry_template__1777473542 => account.credit_note_partial_refund_post__1777473876}/token_usage.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_recurring_entry_template__1777473542 => account.credit_note_partial_refund_post__1777473876}/tokens.jsonl (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_recurring_entry_template__1777473542 => account.credit_note_partial_refund_post__1777473876}/trace.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.credit_note_partial_refund_post__1777473543 => account.credit_note_partial_refund_post__1777473876}/trace_summary.json (100%)
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.import_opening_balance_set_initial_equity__1777473543/after_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.import_opening_balance_set_initial_equity__1777473543/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.import_opening_balance_set_initial_equity__1777473543/agent_stdout.txt
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.import_opening_balance_set_initial_equity__1777473543/before_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.import_opening_balance_set_initial_equity__1777473543/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.import_opening_balance_set_initial_equity__1777473543/score.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.import_opening_balance_set_initial_equity__1777473543/state_diff.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.import_opening_balance_set_initial_equity__1777473543/token_usage.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.import_opening_balance_set_initial_equity__1777473543/trace.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.import_opening_balance_set_initial_equity__1777473640.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.import_opening_balance_set_initial_equity__1777473640/after_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.import_opening_balance_set_initial_equity__1777473640/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.import_opening_balance_set_initial_equity__1777473640/agent_stdout.txt
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.import_opening_balance_set_initial_equity__1777473640/before_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.import_opening_balance_set_initial_equity__1777473640/expected_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.import_opening_balance_set_initial_equity__1777473640/postcondition_failures.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.import_opening_balance_set_initial_equity__1777473640/score.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.import_opening_balance_set_initial_equity__1777473640/state_diff.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.import_opening_balance_set_initial_equity__1777473640/trace.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.import_opening_balance_set_initial_equity__1777473640/trace_summary.json
+ rename benchmark/reports/formal_run/skyvern/{account.import_opening_balance_set_initial_equity__1777473543.log => account.import_opening_balance_set_initial_equity__1777473876.log} (90%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_recurring_journal_entry__1777473515 => account.import_opening_balance_set_initial_equity__1777473876}/after_state.json (100%)
+ create mode 100644 benchmark/reports/formal_run/skyvern/account.import_opening_balance_set_initial_equity__1777473876/agent_result.json
+ rename benchmark/reports/formal_run/skyvern/{account.create_recurring_journal_entry__1777473589 => account.import_opening_balance_set_initial_equity__1777473876}/agent_stdout.txt (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_recurring_journal_entry__1777473515 => account.import_opening_balance_set_initial_equity__1777473876}/before_state.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.import_opening_balance_set_initial_equity__1777473543 => account.import_opening_balance_set_initial_equity__1777473876}/expected_state.json (100%)
+ create mode 100644 benchmark/reports/formal_run/skyvern/account.import_opening_balance_set_initial_equity__1777473876/mitm.log
+ rename benchmark/reports/formal_run/skyvern/{account.import_opening_balance_set_initial_equity__1777473543 => account.import_opening_balance_set_initial_equity__1777473876}/postcondition_failures.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.switch_negative_invoice_to_credit_note__1777473640 => account.import_opening_balance_set_initial_equity__1777473876}/score.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_recurring_journal_entry__1777473515 => account.import_opening_balance_set_initial_equity__1777473876}/state_diff.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_recurring_journal_entry__1777473515 => account.import_opening_balance_set_initial_equity__1777473876}/token_usage.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_recurring_journal_entry__1777473515 => account.import_opening_balance_set_initial_equity__1777473876}/tokens.jsonl (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_recurring_journal_entry__1777473515 => account.import_opening_balance_set_initial_equity__1777473876}/trace.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.import_opening_balance_set_initial_equity__1777473543 => account.import_opening_balance_set_initial_equity__1777473876}/trace_summary.json (100%)
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.lock_books_set_period_lock_date__1777473543/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.lock_books_set_period_lock_date__1777473543/agent_stdout.txt
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.lock_books_set_period_lock_date__1777473543/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.lock_books_set_period_lock_date__1777473543/state_diff.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.lock_books_set_period_lock_date__1777473543/token_usage.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.lock_books_set_period_lock_date__1777473543/trace.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.lock_books_set_period_lock_date__1777473640.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.lock_books_set_period_lock_date__1777473640/after_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.lock_books_set_period_lock_date__1777473640/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.lock_books_set_period_lock_date__1777473640/agent_stdout.txt
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.lock_books_set_period_lock_date__1777473640/before_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.lock_books_set_period_lock_date__1777473640/expected_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.lock_books_set_period_lock_date__1777473640/postcondition_failures.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.lock_books_set_period_lock_date__1777473640/state_diff.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.lock_books_set_period_lock_date__1777473640/trace.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.lock_books_set_period_lock_date__1777473640/trace_summary.json
+ rename benchmark/reports/formal_run/skyvern/{account.lock_books_set_period_lock_date__1777473543.log => account.lock_books_set_period_lock_date__1777473876.log} (84%)
+ rename benchmark/reports/formal_run/skyvern/{account.lock_books_set_period_lock_date__1777473543 => account.lock_books_set_period_lock_date__1777473876}/after_state.json (100%)
+ create mode 100644 benchmark/reports/formal_run/skyvern/account.lock_books_set_period_lock_date__1777473876/agent_result.json
+ rename benchmark/reports/formal_run/skyvern/{account.create_refund_modify_reissue__1777473515 => account.lock_books_set_period_lock_date__1777473876}/agent_stdout.txt (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.lock_books_set_period_lock_date__1777473543 => account.lock_books_set_period_lock_date__1777473876}/before_state.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.lock_books_set_period_lock_date__1777473543 => account.lock_books_set_period_lock_date__1777473876}/expected_state.json (100%)
+ create mode 100644 benchmark/reports/formal_run/skyvern/account.lock_books_set_period_lock_date__1777473876/mitm.log
+ rename benchmark/reports/formal_run/skyvern/{account.lock_books_set_period_lock_date__1777473543 => account.lock_books_set_period_lock_date__1777473876}/postcondition_failures.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.lock_books_set_period_lock_date__1777473640 => account.lock_books_set_period_lock_date__1777473876}/score.json (92%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_recurring_journal_entry__1777473589 => account.lock_books_set_period_lock_date__1777473876}/state_diff.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_recurring_journal_entry__1777473589 => account.lock_books_set_period_lock_date__1777473876}/token_usage.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_recurring_journal_entry__1777473589 => account.lock_books_set_period_lock_date__1777473876}/tokens.jsonl (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_recurring_journal_entry__1777473589 => account.lock_books_set_period_lock_date__1777473876}/trace.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.lock_books_set_period_lock_date__1777473543 => account.lock_books_set_period_lock_date__1777473876}/trace_summary.json (100%)
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.modify_account_move_line_label__1777473543/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.modify_account_move_line_label__1777473543/agent_stdout.txt
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.modify_account_move_line_label__1777473543/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.modify_account_move_line_label__1777473543/score.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.modify_account_move_line_label__1777473543/state_diff.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.modify_account_move_line_label__1777473543/token_usage.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.modify_account_move_line_label__1777473543/tokens.jsonl
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.modify_account_move_line_label__1777473543/trace.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.modify_account_move_line_label__1777473640.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.modify_account_move_line_label__1777473640/after_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.modify_account_move_line_label__1777473640/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.modify_account_move_line_label__1777473640/agent_stdout.txt
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.modify_account_move_line_label__1777473640/before_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.modify_account_move_line_label__1777473640/expected_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.modify_account_move_line_label__1777473640/postcondition_failures.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.modify_account_move_line_label__1777473640/score.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.modify_account_move_line_label__1777473640/state_diff.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.modify_account_move_line_label__1777473640/tokens.jsonl
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.modify_account_move_line_label__1777473640/trace.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.modify_account_move_line_label__1777473640/trace_summary.json
+ rename benchmark/reports/formal_run/skyvern/{account.modify_account_move_line_label__1777473543.log => account.modify_account_move_line_label__1777473876.log} (90%)
+ rename benchmark/reports/formal_run/skyvern/{account.modify_account_move_line_label__1777473543 => account.modify_account_move_line_label__1777473876}/after_state.json (100%)
+ create mode 100644 benchmark/reports/formal_run/skyvern/account.modify_account_move_line_label__1777473876/agent_result.json
+ rename benchmark/reports/formal_run/skyvern/{account.create_refund_modify_reissue__1777473589 => account.modify_account_move_line_label__1777473876}/agent_stdout.txt (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.modify_account_move_line_label__1777473543 => account.modify_account_move_line_label__1777473876}/before_state.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.modify_account_move_line_label__1777473543 => account.modify_account_move_line_label__1777473876}/expected_state.json (100%)
+ create mode 100644 benchmark/reports/formal_run/skyvern/account.modify_account_move_line_label__1777473876/mitm.log
+ rename benchmark/reports/formal_run/skyvern/{account.modify_account_move_line_label__1777473543 => account.modify_account_move_line_label__1777473876}/postcondition_failures.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.lock_books_set_period_lock_date__1777473543 => account.modify_account_move_line_label__1777473876}/score.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_refund_modify_reissue__1777473515 => account.modify_account_move_line_label__1777473876}/state_diff.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_refund_modify_reissue__1777473515 => account.modify_account_move_line_label__1777473876}/token_usage.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_refund_modify_reissue__1777473515 => account.modify_account_move_line_label__1777473876}/tokens.jsonl (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_refund_modify_reissue__1777473515 => account.modify_account_move_line_label__1777473876}/trace.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.modify_account_move_line_label__1777473543 => account.modify_account_move_line_label__1777473876}/trace_summary.json (100%)
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.partial_pay_vendor_bill_with_memo__1777473543/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.partial_pay_vendor_bill_with_memo__1777473543/agent_stdout.txt
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.partial_pay_vendor_bill_with_memo__1777473543/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.partial_pay_vendor_bill_with_memo__1777473543/state_diff.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.partial_pay_vendor_bill_with_memo__1777473543/token_usage.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.partial_pay_vendor_bill_with_memo__1777473543/tokens.jsonl
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.partial_pay_vendor_bill_with_memo__1777473543/trace.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.partial_pay_vendor_bill_with_memo__1777473640.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.partial_pay_vendor_bill_with_memo__1777473640/after_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.partial_pay_vendor_bill_with_memo__1777473640/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.partial_pay_vendor_bill_with_memo__1777473640/agent_stdout.txt
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.partial_pay_vendor_bill_with_memo__1777473640/before_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.partial_pay_vendor_bill_with_memo__1777473640/expected_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.partial_pay_vendor_bill_with_memo__1777473640/postcondition_failures.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.partial_pay_vendor_bill_with_memo__1777473640/score.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.partial_pay_vendor_bill_with_memo__1777473640/state_diff.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.partial_pay_vendor_bill_with_memo__1777473640/tokens.jsonl
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.partial_pay_vendor_bill_with_memo__1777473640/trace.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.partial_pay_vendor_bill_with_memo__1777473640/trace_summary.json
+ rename benchmark/reports/formal_run/skyvern/{account.partial_pay_vendor_bill_with_memo__1777473543.log => account.partial_pay_vendor_bill_with_memo__1777473876.log} (85%)
+ rename benchmark/reports/formal_run/skyvern/{account.partial_pay_vendor_bill_with_memo__1777473543 => account.partial_pay_vendor_bill_with_memo__1777473876}/after_state.json (100%)
+ create mode 100644 benchmark/reports/formal_run/skyvern/account.partial_pay_vendor_bill_with_memo__1777473876/agent_result.json
+ rename benchmark/reports/formal_run/skyvern/{account.create_vendor_bill_confirm__1777473515 => account.partial_pay_vendor_bill_with_memo__1777473876}/agent_stdout.txt (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.partial_pay_vendor_bill_with_memo__1777473543 => account.partial_pay_vendor_bill_with_memo__1777473876}/before_state.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.partial_pay_vendor_bill_with_memo__1777473543 => account.partial_pay_vendor_bill_with_memo__1777473876}/expected_state.json (100%)
+ create mode 100644 benchmark/reports/formal_run/skyvern/account.partial_pay_vendor_bill_with_memo__1777473876/mitm.log
+ rename benchmark/reports/formal_run/skyvern/{account.partial_pay_vendor_bill_with_memo__1777473543 => account.partial_pay_vendor_bill_with_memo__1777473876}/postcondition_failures.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.partial_pay_vendor_bill_with_memo__1777473543 => account.partial_pay_vendor_bill_with_memo__1777473876}/score.json (92%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_refund_modify_reissue__1777473589 => account.partial_pay_vendor_bill_with_memo__1777473876}/state_diff.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_refund_modify_reissue__1777473589 => account.partial_pay_vendor_bill_with_memo__1777473876}/token_usage.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_refund_modify_reissue__1777473589 => account.partial_pay_vendor_bill_with_memo__1777473876}/tokens.jsonl (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_refund_modify_reissue__1777473589 => account.partial_pay_vendor_bill_with_memo__1777473876}/trace.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.partial_pay_vendor_bill_with_memo__1777473543 => account.partial_pay_vendor_bill_with_memo__1777473876}/trace_summary.json (100%)
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.partial_refund_service_credit_note__1777473543.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.partial_refund_service_credit_note__1777473543/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.partial_refund_service_credit_note__1777473543/agent_stdout.txt
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.partial_refund_service_credit_note__1777473543/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.partial_refund_service_credit_note__1777473543/state_diff.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.partial_refund_service_credit_note__1777473543/token_usage.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.partial_refund_service_credit_note__1777473543/tokens.jsonl
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.partial_refund_service_credit_note__1777473543/trace.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.partial_refund_service_credit_note__1777473643/after_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.partial_refund_service_credit_note__1777473643/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.partial_refund_service_credit_note__1777473643/agent_stdout.txt
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.partial_refund_service_credit_note__1777473643/before_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.partial_refund_service_credit_note__1777473643/expected_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.partial_refund_service_credit_note__1777473643/postcondition_failures.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.partial_refund_service_credit_note__1777473643/score.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.partial_refund_service_credit_note__1777473643/state_diff.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.partial_refund_service_credit_note__1777473643/tokens.jsonl
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.partial_refund_service_credit_note__1777473643/trace.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.partial_refund_service_credit_note__1777473643/trace_summary.json
+ rename benchmark/reports/formal_run/skyvern/{account.partial_refund_service_credit_note__1777473643.log => account.partial_refund_service_credit_note__1777473876.log} (90%)
+ rename benchmark/reports/formal_run/skyvern/{account.partial_refund_service_credit_note__1777473543 => account.partial_refund_service_credit_note__1777473876}/after_state.json (100%)
+ create mode 100644 benchmark/reports/formal_run/skyvern/account.partial_refund_service_credit_note__1777473876/agent_result.json
+ rename benchmark/reports/formal_run/skyvern/{account.create_vendor_bill_confirm__1777473589 => account.partial_refund_service_credit_note__1777473876}/agent_stdout.txt (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.partial_refund_service_credit_note__1777473543 => account.partial_refund_service_credit_note__1777473876}/before_state.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.partial_refund_service_credit_note__1777473543 => account.partial_refund_service_credit_note__1777473876}/expected_state.json (100%)
+ create mode 100644 benchmark/reports/formal_run/skyvern/account.partial_refund_service_credit_note__1777473876/mitm.log
+ rename benchmark/reports/formal_run/skyvern/{account.partial_refund_service_credit_note__1777473543 => account.partial_refund_service_credit_note__1777473876}/postcondition_failures.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.partial_refund_service_credit_note__1777473543 => account.partial_refund_service_credit_note__1777473876}/score.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_vendor_bill_confirm__1777473515 => account.partial_refund_service_credit_note__1777473876}/state_diff.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_vendor_bill_confirm__1777473515 => account.partial_refund_service_credit_note__1777473876}/token_usage.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_vendor_bill_confirm__1777473515 => account.partial_refund_service_credit_note__1777473876}/tokens.jsonl (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_vendor_bill_confirm__1777473515 => account.partial_refund_service_credit_note__1777473876}/trace.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.partial_refund_service_credit_note__1777473543 => account.partial_refund_service_credit_note__1777473876}/trace_summary.json (100%)
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.post_customer_invoice_with_tax_groups__1777473543/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.post_customer_invoice_with_tax_groups__1777473543/agent_stdout.txt
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.post_customer_invoice_with_tax_groups__1777473543/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.post_customer_invoice_with_tax_groups__1777473543/state_diff.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.post_customer_invoice_with_tax_groups__1777473543/token_usage.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.post_customer_invoice_with_tax_groups__1777473543/tokens.jsonl
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.post_customer_invoice_with_tax_groups__1777473543/trace.json
+ rename benchmark/reports/formal_run/skyvern/{account.post_customer_invoice_with_tax_groups__1777473543.log => account.post_customer_invoice_with_tax_groups__1777473876.log} (88%)
+ rename benchmark/reports/formal_run/skyvern/{account.post_customer_invoice_with_tax_groups__1777473543 => account.post_customer_invoice_with_tax_groups__1777473876}/after_state.json (100%)
+ create mode 100644 benchmark/reports/formal_run/skyvern/account.post_customer_invoice_with_tax_groups__1777473876/agent_result.json
+ rename benchmark/reports/formal_run/skyvern/{account.create_vendor_bill_from_scratch_pay__1777473543 => account.post_customer_invoice_with_tax_groups__1777473876}/agent_stdout.txt (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.post_customer_invoice_with_tax_groups__1777473543 => account.post_customer_invoice_with_tax_groups__1777473876}/before_state.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.post_customer_invoice_with_tax_groups__1777473543 => account.post_customer_invoice_with_tax_groups__1777473876}/expected_state.json (100%)
+ create mode 100644 benchmark/reports/formal_run/skyvern/account.post_customer_invoice_with_tax_groups__1777473876/mitm.log
+ rename benchmark/reports/formal_run/skyvern/{account.post_customer_invoice_with_tax_groups__1777473543 => account.post_customer_invoice_with_tax_groups__1777473876}/postcondition_failures.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.post_customer_invoice_with_tax_groups__1777473543 => account.post_customer_invoice_with_tax_groups__1777473876}/score.json (92%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_vendor_bill_confirm__1777473589 => account.post_customer_invoice_with_tax_groups__1777473876}/state_diff.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_vendor_bill_confirm__1777473589 => account.post_customer_invoice_with_tax_groups__1777473876}/token_usage.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_vendor_bill_confirm__1777473589 => account.post_customer_invoice_with_tax_groups__1777473876}/tokens.jsonl (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_vendor_bill_confirm__1777473589 => account.post_customer_invoice_with_tax_groups__1777473876}/trace.json (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.post_customer_invoice_with_tax_groups__1777473543 => account.post_customer_invoice_with_tax_groups__1777473876}/trace_summary.json (100%)
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.post_draft_invoice_send_to_customer__1777473589.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.post_draft_invoice_send_to_customer__1777473589/after_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.post_draft_invoice_send_to_customer__1777473589/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.post_draft_invoice_send_to_customer__1777473589/agent_stdout.txt
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.post_draft_invoice_send_to_customer__1777473589/before_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.post_draft_invoice_send_to_customer__1777473589/expected_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.post_draft_invoice_send_to_customer__1777473589/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.post_draft_invoice_send_to_customer__1777473589/postcondition_failures.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.post_draft_invoice_send_to_customer__1777473589/score.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.post_draft_invoice_send_to_customer__1777473589/state_diff.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.post_draft_invoice_send_to_customer__1777473589/token_usage.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.post_draft_invoice_send_to_customer__1777473589/tokens.jsonl
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.post_draft_invoice_send_to_customer__1777473589/trace.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.post_draft_invoice_send_to_customer__1777473589/trace_summary.json
+ rename benchmark/reports/formal_run/skyvern/{account.import_opening_balance_set_initial_equity__1777473640 => account.post_draft_invoice_send_to_customer__1777473906}/mitm.log (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_vendor_bill_from_scratch_pay__1777473543 => account.post_draft_invoice_send_to_customer__1777473906}/tokens.jsonl (100%)
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.print_invoice_pdf_attach_to_partner__1777473589.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.print_invoice_pdf_attach_to_partner__1777473589/after_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.print_invoice_pdf_attach_to_partner__1777473589/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.print_invoice_pdf_attach_to_partner__1777473589/agent_stdout.txt
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.print_invoice_pdf_attach_to_partner__1777473589/before_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.print_invoice_pdf_attach_to_partner__1777473589/expected_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.print_invoice_pdf_attach_to_partner__1777473589/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.print_invoice_pdf_attach_to_partner__1777473589/postcondition_failures.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.print_invoice_pdf_attach_to_partner__1777473589/score.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.print_invoice_pdf_attach_to_partner__1777473589/state_diff.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.print_invoice_pdf_attach_to_partner__1777473589/token_usage.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.print_invoice_pdf_attach_to_partner__1777473589/tokens.jsonl
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.print_invoice_pdf_attach_to_partner__1777473589/trace.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.print_invoice_pdf_attach_to_partner__1777473589/trace_summary.json
+ rename benchmark/reports/formal_run/skyvern/{account.lock_books_set_period_lock_date__1777473640 => account.print_invoice_pdf_attach_to_partner__1777473906}/mitm.log (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.create_vendor_bill_from_scratch_pay__1777473589 => account.print_invoice_pdf_attach_to_partner__1777473906}/tokens.jsonl (100%)
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.reconcile_bank_statement_line_manual__1777473589.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.reconcile_bank_statement_line_manual__1777473589/after_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.reconcile_bank_statement_line_manual__1777473589/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.reconcile_bank_statement_line_manual__1777473589/agent_stdout.txt
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.reconcile_bank_statement_line_manual__1777473589/before_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.reconcile_bank_statement_line_manual__1777473589/expected_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.reconcile_bank_statement_line_manual__1777473589/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.reconcile_bank_statement_line_manual__1777473589/postcondition_failures.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.reconcile_bank_statement_line_manual__1777473589/score.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.reconcile_bank_statement_line_manual__1777473589/state_diff.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.reconcile_bank_statement_line_manual__1777473589/token_usage.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.reconcile_bank_statement_line_manual__1777473589/tokens.jsonl
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.reconcile_bank_statement_line_manual__1777473589/trace.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.reconcile_bank_statement_line_manual__1777473589/trace_summary.json
+ rename benchmark/reports/formal_run/skyvern/{account.modify_account_move_line_label__1777473640 => account.reconcile_bank_statement_line_manual__1777473906}/mitm.log (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.credit_note_partial_refund_post__1777473543 => account.reconcile_bank_statement_line_manual__1777473906}/tokens.jsonl (100%)
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.reconcile_customer_payment_against_invoice__1777473589.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.reconcile_customer_payment_against_invoice__1777473589/after_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.reconcile_customer_payment_against_invoice__1777473589/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.reconcile_customer_payment_against_invoice__1777473589/agent_stdout.txt
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.reconcile_customer_payment_against_invoice__1777473589/before_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.reconcile_customer_payment_against_invoice__1777473589/expected_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.reconcile_customer_payment_against_invoice__1777473589/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.reconcile_customer_payment_against_invoice__1777473589/postcondition_failures.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.reconcile_customer_payment_against_invoice__1777473589/score.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.reconcile_customer_payment_against_invoice__1777473589/state_diff.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.reconcile_customer_payment_against_invoice__1777473589/token_usage.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.reconcile_customer_payment_against_invoice__1777473589/tokens.jsonl
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.reconcile_customer_payment_against_invoice__1777473589/trace.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.reconcile_customer_payment_against_invoice__1777473589/trace_summary.json
+ rename benchmark/reports/formal_run/skyvern/{account.partial_pay_vendor_bill_with_memo__1777473640 => account.reconcile_customer_payment_against_invoice__1777473906}/mitm.log (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.credit_note_partial_refund_post__1777473589 => account.reconcile_customer_payment_against_invoice__1777473906}/tokens.jsonl (100%)
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.refund_customer_invoice_cash_basis__1777473589.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.refund_customer_invoice_cash_basis__1777473589/after_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.refund_customer_invoice_cash_basis__1777473589/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.refund_customer_invoice_cash_basis__1777473589/agent_stdout.txt
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.refund_customer_invoice_cash_basis__1777473589/before_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.refund_customer_invoice_cash_basis__1777473589/expected_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.refund_customer_invoice_cash_basis__1777473589/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.refund_customer_invoice_cash_basis__1777473589/postcondition_failures.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.refund_customer_invoice_cash_basis__1777473589/score.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.refund_customer_invoice_cash_basis__1777473589/state_diff.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.refund_customer_invoice_cash_basis__1777473589/token_usage.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.refund_customer_invoice_cash_basis__1777473589/tokens.jsonl
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.refund_customer_invoice_cash_basis__1777473589/trace.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.refund_customer_invoice_cash_basis__1777473589/trace_summary.json
+ rename benchmark/reports/formal_run/skyvern/{account.partial_refund_service_credit_note__1777473643 => account.refund_customer_invoice_cash_basis__1777473906}/mitm.log (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.import_opening_balance_set_initial_equity__1777473543 => account.refund_customer_invoice_cash_basis__1777473906}/tokens.jsonl (100%)
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.register_partial_payment_reconcile_invoice__1777473589.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.register_partial_payment_reconcile_invoice__1777473589/after_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.register_partial_payment_reconcile_invoice__1777473589/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.register_partial_payment_reconcile_invoice__1777473589/agent_stdout.txt
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.register_partial_payment_reconcile_invoice__1777473589/before_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.register_partial_payment_reconcile_invoice__1777473589/expected_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.register_partial_payment_reconcile_invoice__1777473589/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.register_partial_payment_reconcile_invoice__1777473589/postcondition_failures.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.register_partial_payment_reconcile_invoice__1777473589/score.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.register_partial_payment_reconcile_invoice__1777473589/state_diff.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.register_partial_payment_reconcile_invoice__1777473589/token_usage.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.register_partial_payment_reconcile_invoice__1777473589/tokens.jsonl
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.register_partial_payment_reconcile_invoice__1777473589/trace.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.register_partial_payment_reconcile_invoice__1777473589/trace_summary.json
+ rename benchmark/reports/formal_run/skyvern/{calendar.invite_external_attendee_by_email__1777473734 => account.register_partial_payment_reconcile_invoice__1777473906}/mitm.log (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.import_opening_balance_set_initial_equity__1777473640 => account.register_partial_payment_reconcile_invoice__1777473906}/tokens.jsonl (100%)
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.register_payment_defaults__1777473589.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.register_payment_defaults__1777473589/after_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.register_payment_defaults__1777473589/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.register_payment_defaults__1777473589/agent_stdout.txt
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.register_payment_defaults__1777473589/before_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.register_payment_defaults__1777473589/expected_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.register_payment_defaults__1777473589/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.register_payment_defaults__1777473589/postcondition_failures.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.register_payment_defaults__1777473589/score.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.register_payment_defaults__1777473589/state_diff.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.register_payment_defaults__1777473589/token_usage.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.register_payment_defaults__1777473589/tokens.jsonl
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.register_payment_defaults__1777473589/trace.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.register_payment_defaults__1777473589/trace_summary.json
+ rename benchmark/reports/formal_run/skyvern/{calendar.invite_organize_with_event_agenda_attachment__1777473735 => account.register_payment_defaults__1777473906}/mitm.log (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.lock_books_set_period_lock_date__1777473543 => account.register_payment_defaults__1777473906}/tokens.jsonl (100%)
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.repair_and_post_invoice__1777473589.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.repair_and_post_invoice__1777473589/after_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.repair_and_post_invoice__1777473589/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.repair_and_post_invoice__1777473589/agent_stdout.txt
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.repair_and_post_invoice__1777473589/before_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.repair_and_post_invoice__1777473589/expected_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.repair_and_post_invoice__1777473589/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.repair_and_post_invoice__1777473589/postcondition_failures.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.repair_and_post_invoice__1777473589/state_diff.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.repair_and_post_invoice__1777473589/token_usage.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.repair_and_post_invoice__1777473589/tokens.jsonl
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.repair_and_post_invoice__1777473589/trace.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.repair_and_post_invoice__1777473589/trace_summary.json
+ rename benchmark/reports/formal_run/skyvern/{calendar.make_single_occurrence_all_day__1777473735 => account.repair_and_post_invoice__1777473906}/mitm.log (100%)
+ rename benchmark/reports/formal_run/skyvern/{account.lock_books_set_period_lock_date__1777473640 => account.repair_and_post_invoice__1777473906}/tokens.jsonl (100%)
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.reverse_journal_entry_from_general_ledger__1777473640.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.reverse_journal_entry_from_general_ledger__1777473640/after_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.reverse_journal_entry_from_general_ledger__1777473640/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.reverse_journal_entry_from_general_ledger__1777473640/agent_stdout.txt
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.reverse_journal_entry_from_general_ledger__1777473640/before_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.reverse_journal_entry_from_general_ledger__1777473640/expected_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.reverse_journal_entry_from_general_ledger__1777473640/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.reverse_journal_entry_from_general_ledger__1777473640/postcondition_failures.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.reverse_journal_entry_from_general_ledger__1777473640/state_diff.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.reverse_journal_entry_from_general_ledger__1777473640/token_usage.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.reverse_journal_entry_from_general_ledger__1777473640/tokens.jsonl
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.reverse_journal_entry_from_general_ledger__1777473640/trace.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.reverse_journal_entry_from_general_ledger__1777473640/trace_summary.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.switch_negative_invoice_repair_credit_note__1777473640.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.switch_negative_invoice_repair_credit_note__1777473640/after_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.switch_negative_invoice_repair_credit_note__1777473640/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.switch_negative_invoice_repair_credit_note__1777473640/agent_stdout.txt
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.switch_negative_invoice_repair_credit_note__1777473640/before_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.switch_negative_invoice_repair_credit_note__1777473640/expected_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.switch_negative_invoice_repair_credit_note__1777473640/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.switch_negative_invoice_repair_credit_note__1777473640/postcondition_failures.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.switch_negative_invoice_repair_credit_note__1777473640/score.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.switch_negative_invoice_repair_credit_note__1777473640/state_diff.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.switch_negative_invoice_repair_credit_note__1777473640/token_usage.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.switch_negative_invoice_repair_credit_note__1777473640/tokens.jsonl
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.switch_negative_invoice_repair_credit_note__1777473640/trace.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.switch_negative_invoice_repair_credit_note__1777473640/trace_summary.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.switch_negative_invoice_to_credit_note__1777473640.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.switch_negative_invoice_to_credit_note__1777473640/after_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.switch_negative_invoice_to_credit_note__1777473640/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.switch_negative_invoice_to_credit_note__1777473640/agent_stdout.txt
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.switch_negative_invoice_to_credit_note__1777473640/before_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.switch_negative_invoice_to_credit_note__1777473640/expected_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.switch_negative_invoice_to_credit_note__1777473640/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.switch_negative_invoice_to_credit_note__1777473640/postcondition_failures.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.switch_negative_invoice_to_credit_note__1777473640/state_diff.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.switch_negative_invoice_to_credit_note__1777473640/token_usage.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.switch_negative_invoice_to_credit_note__1777473640/tokens.jsonl
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.switch_negative_invoice_to_credit_note__1777473640/trace.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.switch_negative_invoice_to_credit_note__1777473640/trace_summary.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.update_customer_invoice_terms_post__1777473640.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.update_customer_invoice_terms_post__1777473640/after_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.update_customer_invoice_terms_post__1777473640/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.update_customer_invoice_terms_post__1777473640/agent_stdout.txt
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.update_customer_invoice_terms_post__1777473640/before_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.update_customer_invoice_terms_post__1777473640/expected_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.update_customer_invoice_terms_post__1777473640/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.update_customer_invoice_terms_post__1777473640/postcondition_failures.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.update_customer_invoice_terms_post__1777473640/score.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.update_customer_invoice_terms_post__1777473640/state_diff.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.update_customer_invoice_terms_post__1777473640/token_usage.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.update_customer_invoice_terms_post__1777473640/tokens.jsonl
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.update_customer_invoice_terms_post__1777473640/trace.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.update_customer_invoice_terms_post__1777473640/trace_summary.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.update_invoice_reference__1777473640.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.update_invoice_reference__1777473640/after_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.update_invoice_reference__1777473640/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.update_invoice_reference__1777473640/agent_stdout.txt
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.update_invoice_reference__1777473640/before_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.update_invoice_reference__1777473640/expected_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.update_invoice_reference__1777473640/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.update_invoice_reference__1777473640/postcondition_failures.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.update_invoice_reference__1777473640/score.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.update_invoice_reference__1777473640/state_diff.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.update_invoice_reference__1777473640/token_usage.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.update_invoice_reference__1777473640/tokens.jsonl
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.update_invoice_reference__1777473640/trace.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.update_invoice_reference__1777473640/trace_summary.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.update_vendor_bill_reference_post__1777473640.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.update_vendor_bill_reference_post__1777473640/after_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.update_vendor_bill_reference_post__1777473640/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.update_vendor_bill_reference_post__1777473640/agent_stdout.txt
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.update_vendor_bill_reference_post__1777473640/before_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.update_vendor_bill_reference_post__1777473640/expected_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.update_vendor_bill_reference_post__1777473640/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.update_vendor_bill_reference_post__1777473640/postcondition_failures.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.update_vendor_bill_reference_post__1777473640/score.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.update_vendor_bill_reference_post__1777473640/state_diff.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.update_vendor_bill_reference_post__1777473640/token_usage.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.update_vendor_bill_reference_post__1777473640/tokens.jsonl
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.update_vendor_bill_reference_post__1777473640/trace.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/account.update_vendor_bill_reference_post__1777473640/trace_summary.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.configure_meeting_with_location_and_reminder__1777473640.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.configure_meeting_with_location_and_reminder__1777473640/after_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.configure_meeting_with_location_and_reminder__1777473640/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.configure_meeting_with_location_and_reminder__1777473640/agent_stdout.txt
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.configure_meeting_with_location_and_reminder__1777473640/before_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.configure_meeting_with_location_and_reminder__1777473640/expected_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.configure_meeting_with_location_and_reminder__1777473640/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.configure_meeting_with_location_and_reminder__1777473640/postcondition_failures.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.configure_meeting_with_location_and_reminder__1777473640/score.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.configure_meeting_with_location_and_reminder__1777473640/state_diff.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.configure_meeting_with_location_and_reminder__1777473640/token_usage.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.configure_meeting_with_location_and_reminder__1777473640/tokens.jsonl
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.configure_meeting_with_location_and_reminder__1777473640/trace.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.configure_meeting_with_location_and_reminder__1777473640/trace_summary.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_all_day_event_with_attendee__1777473640.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_all_day_event_with_attendee__1777473640/after_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_all_day_event_with_attendee__1777473640/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_all_day_event_with_attendee__1777473640/agent_stdout.txt
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_all_day_event_with_attendee__1777473640/before_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_all_day_event_with_attendee__1777473640/expected_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_all_day_event_with_attendee__1777473640/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_all_day_event_with_attendee__1777473640/postcondition_failures.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_all_day_event_with_attendee__1777473640/score.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_all_day_event_with_attendee__1777473640/state_diff.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_all_day_event_with_attendee__1777473640/token_usage.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_all_day_event_with_attendee__1777473640/tokens.jsonl
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_all_day_event_with_attendee__1777473640/trace.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_all_day_event_with_attendee__1777473640/trace_summary.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_event_add_description_attendee__1777473698.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_event_add_description_attendee__1777473698/after_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_event_add_description_attendee__1777473698/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_event_add_description_attendee__1777473698/agent_stdout.txt
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_event_add_description_attendee__1777473698/before_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_event_add_description_attendee__1777473698/expected_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_event_add_description_attendee__1777473698/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_event_add_description_attendee__1777473698/postcondition_failures.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_event_add_description_attendee__1777473698/score.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_event_add_description_attendee__1777473698/state_diff.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_event_add_description_attendee__1777473698/token_usage.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_event_add_description_attendee__1777473698/tokens.jsonl
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_event_add_description_attendee__1777473698/trace.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_event_add_description_attendee__1777473698/trace_summary.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_event_with_two_organizers_recurring_weekly__1777473698.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_event_with_two_organizers_recurring_weekly__1777473698/after_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_event_with_two_organizers_recurring_weekly__1777473698/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_event_with_two_organizers_recurring_weekly__1777473698/agent_stdout.txt
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_event_with_two_organizers_recurring_weekly__1777473698/before_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_event_with_two_organizers_recurring_weekly__1777473698/expected_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_event_with_two_organizers_recurring_weekly__1777473698/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_event_with_two_organizers_recurring_weekly__1777473698/postcondition_failures.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_event_with_two_organizers_recurring_weekly__1777473698/score.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_event_with_two_organizers_recurring_weekly__1777473698/state_diff.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_event_with_two_organizers_recurring_weekly__1777473698/token_usage.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_event_with_two_organizers_recurring_weekly__1777473698/tokens.jsonl
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_event_with_two_organizers_recurring_weekly__1777473698/trace.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_event_with_two_organizers_recurring_weekly__1777473698/trace_summary.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_meeting_invite_attendees_send__1777473698.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_meeting_invite_attendees_send__1777473698/after_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_meeting_invite_attendees_send__1777473698/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_meeting_invite_attendees_send__1777473698/agent_stdout.txt
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_meeting_invite_attendees_send__1777473698/before_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_meeting_invite_attendees_send__1777473698/expected_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_meeting_invite_attendees_send__1777473698/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_meeting_invite_attendees_send__1777473698/postcondition_failures.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_meeting_invite_attendees_send__1777473698/score.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_meeting_invite_attendees_send__1777473698/state_diff.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_meeting_invite_attendees_send__1777473698/token_usage.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_meeting_invite_attendees_send__1777473698/tokens.jsonl
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_meeting_invite_attendees_send__1777473698/trace.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_meeting_invite_attendees_send__1777473698/trace_summary.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_private_meeting_with_video_link__1777473698.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_private_meeting_with_video_link__1777473698/after_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_private_meeting_with_video_link__1777473698/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_private_meeting_with_video_link__1777473698/agent_stdout.txt
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_private_meeting_with_video_link__1777473698/before_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_private_meeting_with_video_link__1777473698/expected_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_private_meeting_with_video_link__1777473698/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_private_meeting_with_video_link__1777473698/postcondition_failures.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_private_meeting_with_video_link__1777473698/score.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_private_meeting_with_video_link__1777473698/state_diff.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_private_meeting_with_video_link__1777473698/token_usage.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_private_meeting_with_video_link__1777473698/tokens.jsonl
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_private_meeting_with_video_link__1777473698/trace.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_private_meeting_with_video_link__1777473698/trace_summary.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_recurring_edit_two_occurrences__1777473699.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_recurring_edit_two_occurrences__1777473699/after_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_recurring_edit_two_occurrences__1777473699/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_recurring_edit_two_occurrences__1777473699/agent_stdout.txt
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_recurring_edit_two_occurrences__1777473699/before_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_recurring_edit_two_occurrences__1777473699/expected_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_recurring_edit_two_occurrences__1777473699/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_recurring_edit_two_occurrences__1777473699/postcondition_failures.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_recurring_edit_two_occurrences__1777473699/score.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_recurring_edit_two_occurrences__1777473699/state_diff.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_recurring_edit_two_occurrences__1777473699/token_usage.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_recurring_edit_two_occurrences__1777473699/tokens.jsonl
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_recurring_edit_two_occurrences__1777473699/trace.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_recurring_edit_two_occurrences__1777473699/trace_summary.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_recurring_meeting_weekly_pattern__1777473699.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_recurring_meeting_weekly_pattern__1777473699/after_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_recurring_meeting_weekly_pattern__1777473699/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_recurring_meeting_weekly_pattern__1777473699/agent_stdout.txt
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_recurring_meeting_weekly_pattern__1777473699/before_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_recurring_meeting_weekly_pattern__1777473699/expected_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_recurring_meeting_weekly_pattern__1777473699/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_recurring_meeting_weekly_pattern__1777473699/postcondition_failures.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_recurring_meeting_weekly_pattern__1777473699/score.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_recurring_meeting_weekly_pattern__1777473699/state_diff.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_recurring_meeting_weekly_pattern__1777473699/token_usage.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_recurring_meeting_weekly_pattern__1777473699/tokens.jsonl
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_recurring_meeting_weekly_pattern__1777473699/trace.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_recurring_meeting_weekly_pattern__1777473699/trace_summary.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_single_event__1777473700.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_single_event__1777473700/after_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_single_event__1777473700/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_single_event__1777473700/agent_stdout.txt
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_single_event__1777473700/before_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_single_event__1777473700/expected_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_single_event__1777473700/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_single_event__1777473700/postcondition_failures.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_single_event__1777473700/score.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_single_event__1777473700/state_diff.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_single_event__1777473700/token_usage.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_single_event__1777473700/tokens.jsonl
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_single_event__1777473700/trace.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.create_single_event__1777473700/trace_summary.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.edit_single_recurrence_occurrence__1777473701.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.edit_single_recurrence_occurrence__1777473701/after_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.edit_single_recurrence_occurrence__1777473701/agent_result.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.edit_single_recurrence_occurrence__1777473701/agent_stdout.txt
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.edit_single_recurrence_occurrence__1777473701/before_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.edit_single_recurrence_occurrence__1777473701/expected_state.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.edit_single_recurrence_occurrence__1777473701/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.edit_single_recurrence_occurrence__1777473701/postcondition_failures.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.edit_single_recurrence_occurrence__1777473701/score.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.edit_single_recurrence_occurrence__1777473701/state_diff.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.edit_single_recurrence_occurrence__1777473701/token_usage.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.edit_single_recurrence_occurrence__1777473701/tokens.jsonl
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.edit_single_recurrence_occurrence__1777473701/trace.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.edit_single_recurrence_occurrence__1777473701/trace_summary.json
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.invite_external_attendee_by_email__1777473734.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.invite_external_attendee_by_email__1777473734/tokens.jsonl
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.invite_organize_with_event_agenda_attachment__1777473735.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.invite_organize_with_event_agenda_attachment__1777473735/tokens.jsonl
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.make_single_occurrence_all_day__1777473735.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.make_single_occurrence_all_day__1777473735/tokens.jsonl
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.schedule_recurring_steering_sync__1777473735.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.schedule_recurring_steering_sync__1777473735/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/calendar.schedule_recurring_steering_sync__1777473735/tokens.jsonl
+ delete mode 100644 benchmark/reports/formal_run/skyvern/contacts.add_bank_account_iban__1777473735.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/contacts.add_bank_account_iban__1777473735/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/contacts.add_bank_account_iban__1777473735/tokens.jsonl
+ delete mode 100644 benchmark/reports/formal_run/skyvern/contacts.add_bank_account_to_partner__1777473735.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/contacts.add_bank_account_to_partner__1777473735/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/contacts.add_bank_account_to_partner__1777473735/tokens.jsonl
+ delete mode 100644 benchmark/reports/formal_run/skyvern/contacts.archive_duplicate_transfer_fields__1777473735.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/contacts.archive_duplicate_transfer_fields__1777473735/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/contacts.archive_duplicate_transfer_fields__1777473735/tokens.jsonl
+ delete mode 100644 benchmark/reports/formal_run/skyvern/contacts.archive_then_unarchive__1777473736/mitm.log
+ delete mode 100644 benchmark/reports/formal_run/skyvern/contacts.archive_then_unarchive__1777473736/tokens.jsonl
+To ssh://ssh.github.com:443/softpudding/odoo_browser_benchmark.git
+   e747d8438..a1bfec865  odoo_benchmark -> odoo_benchmark
