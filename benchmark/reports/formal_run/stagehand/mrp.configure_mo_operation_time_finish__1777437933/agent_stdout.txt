@@ -1,0 +1,27 @@
+Stagehand: using openai/gpt-4.1-mini via http://127.0.0.1:59672/v1
+[2026-04-29 12:46:10.683 +0800] [32mINFO[39m: [36mLaunching local browser[39m
+    [35mcategory[39m: "init"
+[2026-04-29 12:46:14.132 +0800] [32mINFO[39m: [36mCreating v3 agent instance[39m
+    [35mcategory[39m: "agent"
+    [35mcua[39m: false
+    [35mmode[39m: "dom"
+    [35mmodel[39m: "openai/gpt-4.1-mini"
+    [35msystemPrompt[39m: ""
+[2026-04-29 12:46:14.133 +0800] [31mERROR[39m: [36mUsing agent in default DOM mode (legacy). Agent will default to 'hybrid' on an upcoming release for improved performance.
+  → https://docs.stagehand.dev/v3/basics/agent
+[39m
+    [35mcategory[39m: "agent"
+Stagehand result: {
+  "success": false,
+  "actions": [],
+  "message": "Failed to execute task: Failed after 3 attempts. Last error: You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+  "completed": false,
+  "messages": [
+    {
+      "role": "user",
+      "content": "First, log in with username 'admin' and password 'admin'. Then: Configure the work order on a confirmed manufacturing order and finish it.\n\nContext:\n- A manufacturing order **WH/MO/BENCH0001** is already **Confirmed** for\n  product **Bench Operation Product** with quantity **5**.\n- The MO has a single operation running on work center\n  **Bench Assembly Station**. A work order named **Assembly Station** has\n  already been created for it.\n\nSteps:\n1. Go to **Manufacturing** and open **Manufacturing Orders**. Click the row\n   for **WH/MO/BENCH0001** to open it.\n2. Click the **Work Orders** tab on the MO form.\n3. On the work order line **Assembly Station**, set **Expected Duration**\n   to `45` (minutes).\n4. Save the MO so the duration change is persisted.\n5. Click **Start** on the work order to begin it (this moves its state to\n   In Progress).\n6. Click **Done** on the work order to finish it. Its state must become\n   **Finished** (the manufacturing order itself may remain in progress —\n   that is fine).\n\nRules:\n- Do NOT cancel the manufacturing order.\n- Do NOT delete the work order.\n- Do NOT change the product, quantity, or work center.\n- The Expected Duration must be exactly 45 minutes."
+    }
+  ]
+}
+[2026-04-29 12:46:21.371 +0800] [31mERROR[39m: [36mError executing agent task: Failed after 3 attempts. Last error: You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.[39m
+    [35mcategory[39m: "agent"

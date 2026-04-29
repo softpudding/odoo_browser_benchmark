@@ -1,0 +1,27 @@
+Stagehand: using openai/gpt-4.1-mini via http://127.0.0.1:59114/v1
+[2026-04-29 12:45:20.995 +0800] [32mINFO[39m: [36mLaunching local browser[39m
+    [35mcategory[39m: "init"
+[2026-04-29 12:45:24.358 +0800] [32mINFO[39m: [36mCreating v3 agent instance[39m
+    [35mcategory[39m: "agent"
+    [35mcua[39m: false
+    [35mmode[39m: "dom"
+    [35mmodel[39m: "openai/gpt-4.1-mini"
+    [35msystemPrompt[39m: ""
+[2026-04-29 12:45:24.359 +0800] [31mERROR[39m: [36mUsing agent in default DOM mode (legacy). Agent will default to 'hybrid' on an upcoming release for improved performance.
+  → https://docs.stagehand.dev/v3/basics/agent
+[39m
+    [35mcategory[39m: "agent"
+Stagehand result: {
+  "success": false,
+  "actions": [],
+  "message": "Failed to execute task: Failed after 3 attempts. Last error: You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+  "completed": false,
+  "messages": [
+    {
+      "role": "user",
+      "content": "First, log in with username 'admin' and password 'admin'. Then: Open the **Email Marketing** app (URL `/odoo/email-marketing`) and create a new mailing from scratch. Do NOT duplicate any existing mailing — click the **New** button.\n\nThere is a pre-seeded mailing list named **`Bench Newsletter Subs`** (with 3 contacts) that you must use.\n\nFill the new mailing form with EXACTLY these values:\n\n- **Subject**: `Spring Promo`\n- **Mailing Type**: keep the default **Email** (do not change this).\n- **Recipients**: keep the default **Mailing List** (do not change it to Contact / Lead / any other option).\n- **Mailing Lists** (shown below Recipients once `Mailing List` is selected): add the list **`Bench Newsletter Subs`** — type the name and pick the existing row from the autocomplete (do NOT use a \"Create …\" quick-create item).\n- **Mail Body**: in the rich-text body editor (the big content area / iframe below the header fields), write the text: `Save 20%`. Clear any placeholder text first so the final body is exactly this short message.\n\nThen **Schedule** the mailing for a specific date:\n\n1. Click the **Schedule** button in the top control panel (next to the Send button). Do NOT click Send. Do NOT click \"Send a Sample Mail\".\n2. A small dialog titled **\"When do you want to send your mailing?\"** appears, containing a single **Send on** datetime field.\n3. Set the **Send on** datetime to exactly **`05/20/2026 10:00:00`** (i.e. May 20, 2026 at 10:00 AM). Clear any pre-filled value first.\n4. Click the primary **Schedule** button at the bottom of that dialog to confirm.\n\nAfter confirming, the mailing's status changes to **In Queue** and a Scheduled-for date is shown on the form.\n\nRules:\n\n- **Do NOT click Send** — we want the mailing scheduled for a future date, not sent immediately.\n- **Do NOT click \"Send a Sample Mail\"** (test send).\n- **Do NOT change** the Mailing Type away from `Email` or the Recipients away from `Mailing List`.\n- The Subject must be exactly `Spring Promo` (no trailing whitespace, no extra words).\n- The body must contain `Save 20%` as visible text.\n- Use the seeded `Bench Newsletter Subs` list; do NOT create a new mailing list.\n- Do NOT create more than one mailing — there must be exactly one `Spring Promo` mailing in the database at the end.\n- Do NOT delete any seeded record."
+    }
+  ]
+}
+[2026-04-29 12:45:31.831 +0800] [31mERROR[39m: [36mError executing agent task: Failed after 3 attempts. Last error: You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.[39m
+    [35mcategory[39m: "agent"

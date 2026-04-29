@@ -1,0 +1,27 @@
+Stagehand: using openai/gpt-4.1-mini via http://127.0.0.1:59669/v1
+[2026-04-29 12:46:07.646 +0800] [32mINFO[39m: [36mLaunching local browser[39m
+    [35mcategory[39m: "init"
+[2026-04-29 12:46:11.937 +0800] [32mINFO[39m: [36mCreating v3 agent instance[39m
+    [35mcategory[39m: "agent"
+    [35mcua[39m: false
+    [35mmode[39m: "dom"
+    [35mmodel[39m: "openai/gpt-4.1-mini"
+    [35msystemPrompt[39m: ""
+[2026-04-29 12:46:11.938 +0800] [31mERROR[39m: [36mUsing agent in default DOM mode (legacy). Agent will default to 'hybrid' on an upcoming release for improved performance.
+  → https://docs.stagehand.dev/v3/basics/agent
+[39m
+    [35mcategory[39m: "agent"
+Stagehand result: {
+  "success": false,
+  "actions": [],
+  "message": "Failed to execute task: Failed after 3 attempts. Last error: You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+  "completed": false,
+  "messages": [
+    {
+      "role": "user",
+      "content": "First, log in with username 'admin' and password 'admin'. Then: Go to the **Manufacturing** app.\n\nThe database already contains these products:\n\n- **Bench Kit** — a kit product whose Bill of Materials has **BoM Type = Kit (phantom)**\n  and contains two sub-components: **Bench Sub-A** (1 unit) and **Bench Sub-B** (2 units).\n- **Bench Frame** — an ordinary storable component.\n- **Bench Assembly** — a finished product with a **normal** Bill of Materials\n  that consumes **1x Bench Kit** and **1x Bench Frame** per unit produced.\n\nYour job is to create and confirm a new Manufacturing Order:\n\n1. From the Manufacturing app, open **Operations > Manufacturing Orders**\n   (or click the **New** button from the MO list).\n2. Click **New** to create a new manufacturing order.\n3. In the **Reference** field, type the exact name: `M-BENCH-KIT-001`.\n4. In the **Product** field, pick **Bench Assembly**.\n5. Leave the **Quantity** at **1** (do NOT change it).\n6. In the **Bill of Material** field, pick the pre-seeded BoM for **Bench Assembly**\n   (it is the only BoM matching that product — select it from the autocomplete).\n7. Save the record (cloud icon or Ctrl+S) so the MO is written in the **Draft** state.\n8. Click the **Confirm** button in the form status bar so the MO moves to the\n   **Confirmed** state.\n\nThat is all — do NOT click Produce All / Mark as Done, and do NOT close the MO.\n\nAfter Confirm, the **Components** tab on the MO must show **three** rows (one each for\n**Bench Sub-A**, **Bench Sub-B**, and **Bench Frame**) — NOT two rows showing Bench Kit\nand Bench Frame. This is because Bench Kit is a phantom/kit BoM and Odoo automatically\nexpands it into its own sub-components on confirm; you do **not** need to edit the\nComponents tab, modify the BoM, or add anything manually — the expansion is automatic.\n\n**Rules:**\n- Do NOT modify any BoM (neither Bench Kit's nor Bench Assembly's).\n- Do NOT manually add, delete, or edit any rows on the Components tab.\n- Do NOT change the quantity away from 1.\n- Do NOT click Produce All, Mark as Done, or Cancel.\n- The MO must end in the **Confirmed** state (not Draft, not In Progress, not Done)."
+    }
+  ]
+}
+[2026-04-29 12:46:19.327 +0800] [31mERROR[39m: [36mError executing agent task: Failed after 3 attempts. Last error: You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.[39m
+    [35mcategory[39m: "agent"

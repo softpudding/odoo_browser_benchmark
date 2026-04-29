@@ -1,0 +1,27 @@
+Stagehand: using openai/gpt-4.1-mini via http://127.0.0.1:59869/v1
+[2026-04-29 12:46:20.980 +0800] [32mINFO[39m: [36mLaunching local browser[39m
+    [35mcategory[39m: "init"
+[2026-04-29 12:46:24.163 +0800] [32mINFO[39m: [36mCreating v3 agent instance[39m
+    [35mcategory[39m: "agent"
+    [35mcua[39m: false
+    [35mmode[39m: "dom"
+    [35mmodel[39m: "openai/gpt-4.1-mini"
+    [35msystemPrompt[39m: ""
+[2026-04-29 12:46:24.163 +0800] [31mERROR[39m: [36mUsing agent in default DOM mode (legacy). Agent will default to 'hybrid' on an upcoming release for improved performance.
+  → https://docs.stagehand.dev/v3/basics/agent
+[39m
+    [35mcategory[39m: "agent"
+Stagehand result: {
+  "success": false,
+  "actions": [],
+  "message": "Failed to execute task: Failed after 3 attempts. Last error: You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+  "completed": false,
+  "messages": [
+    {
+      "role": "user",
+      "content": "First, log in with username 'admin' and password 'admin'. Then: # Produce a partial MO quantity and create a backorder for the rest\n\nYou are in the Odoo 19 **Manufacturing** app logged in as **Administrator**.\n\nManufacturing order **MO-BENCH-PARTIAL** is a confirmed manufacturing\norder for **10** units of **Bench Widget**. Its Bill of Materials\nconsumes **1 Bench Mat** per Bench Widget and there are **10 Bench Mat**\non hand at **WH/Stock**.\n\nThe shop floor has only finished **4** of the 10 widgets so far, and\nyou need to close the production run now so those 4 widgets are\nregistered as produced today. The remaining **6** units must stay as a\n**pending backorder** so another team can finish them later — do NOT\ncancel them, do NOT discard them, and do NOT produce more than 4 on\nthis first run.\n\n## What to do\n\n1. Open the **Manufacturing** app and go to **Operations → Manufacturing\n   Orders**. Clear any default search filters (Ready, To Do, etc.) so\n   the confirmed MO is visible.\n2. Open the manufacturing order **MO-BENCH-PARTIAL**.\n3. In the form, find the **Quantity** line at the top (it reads\n   `10.00 / 10.00 Units  To Produce`). The left-hand number is the\n   **Quantity Producing** for this run — **change it from 10 to 4**\n   (click the left-hand `10.00`, clear it, type `4`, then Tab out of\n   the field to commit the edit).\n4. Click the **Produce** button in the form header. (Because\n   `Quantity Producing < Quantity`, the header button is labeled\n   **Produce**, not **Produce All**.)\n5. A dialog titled **\"You produced less than the initial demand\"**\n   (model `mrp.production.backorder`) will appear. It has two buttons:\n   - **Create backorder** (primary, blue)\n   - **No Backorder** (secondary)\n\n   Click the primary **Create backorder** button. This closes the\n   current run as 4 units produced and opens a sibling backorder\n   manufacturing order for the remaining 6 units.\n6. You'll be redirected to the new backorder MO form — you can leave\n   that form as-is. Do NOT confirm, produce, or cancel the backorder.\n\nAfter you finish:\n\n- The original manufacturing order (Odoo will have renamed it from\n  `MO-BENCH-PARTIAL` to `MO-BENCH-PARTIAL-001` when the backorder was\n  split off) must be in **Done** state with **4 units produced**.\n- A second `mrp.production` record named `MO-BENCH-PARTIAL-002` (the\n  backorder) must exist with the remaining **6** units, linked to the\n  same production group, in a non-done, non-cancelled state\n  (**Confirmed** / **In Progress**).\n\n## Rules\n\n- Do **not** cancel **MO-BENCH-PARTIAL** or its backorder.\n- Do **not** click **No Backorder** on the dialog — that would discard\n  the remaining 6 units.\n- Do **not** change the planned **Quantity** (the right-hand `10.00` of\n  the original MO) — only the left-hand **Quantity Producing** goes\n  from 10 to 4.\n- Do **not** touch the Bill of Materials, the component list, or the\n  on-hand stock.\n- Do **not** produce and close the backorder — leave it pending."
+    }
+  ]
+}
+[2026-04-29 12:46:31.490 +0800] [31mERROR[39m: [36mError executing agent task: Failed after 3 attempts. Last error: You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.[39m
+    [35mcategory[39m: "agent"

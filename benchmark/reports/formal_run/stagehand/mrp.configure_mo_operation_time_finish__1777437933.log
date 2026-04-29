@@ -1,0 +1,60 @@
+=== Benchmark Evaluation ===
+  Task:   mrp.configure_mo_operation_time_finish
+  Agent:  command
+  DB:     bench_fr_64d91537  (auto-isolated)
+  URL:    http://127.0.0.1:59746
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/mrp.configure_mo_operation_time_finish__1777437933
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_64d91537 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 59746
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=14.7s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 4 calls captured (1 writes, 3 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   14.7s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   4
+  Writes:            1 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/mrp.configure_mo_operation_time_finish__1777437933/
+
+  Postcondition failures:
+    - Work order duration_expected is 50.0, expected 45
+    - Work order state is 'ready', expected 'done'
+  Missing expected edits:
+    - mrp.workorder.duration_expected = 45.0
+    - mrp.workorder.state = done
