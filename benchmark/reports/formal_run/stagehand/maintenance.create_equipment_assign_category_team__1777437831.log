@@ -1,0 +1,61 @@
+=== Benchmark Evaluation ===
+  Task:   maintenance.create_equipment_assign_category_team
+  Agent:  command
+  DB:     bench_fr_a491893c  (auto-isolated)
+  URL:    http://127.0.0.1:58379
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/maintenance.create_equipment_assign_category_team__1777437831
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_a491893c from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 58379
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=14.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 4 calls captured (1 writes, 3 reads)
+   State: 0 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      4 edits
+  Extra:        0 edits
+  Wall clock:   14.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   4
+  Writes:            1 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/maintenance.create_equipment_assign_category_team__1777437831/
+
+  Postcondition failures:
+    - Equipment 'Dock Scanner DS-200' not found
+  Missing expected edits:
+    - maintenance.equipment.category_id = Warehouse Gear
+    - maintenance.equipment.maintenance_team_id = Bench Maintenance
+    - maintenance.equipment.name = Dock Scanner DS-200
+    - maintenance.equipment.serial_no = DS-200-SN-1042

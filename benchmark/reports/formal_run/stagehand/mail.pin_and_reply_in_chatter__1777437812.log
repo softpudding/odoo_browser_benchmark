@@ -1,0 +1,57 @@
+=== Benchmark Evaluation ===
+  Task:   mail.pin_and_reply_in_chatter
+  Agent:  command
+  DB:     bench_fr_ef151245  (auto-isolated)
+  URL:    http://127.0.0.1:58193
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/mail.pin_and_reply_in_chatter__1777437812
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_ef151245 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 58193
+   Done.
+2. Capturing pre-task state...
+   Captured 4 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=14.5s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 4 calls captured (1 writes, 3 reads)
+   State: 4 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     0 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   14.5s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   4
+  Writes:            1 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/mail.pin_and_reply_in_chatter__1777437812/
+
+  Postcondition failures:
+    - Seeded message 'Print queue alert from warehouse B' is not pinned (pinned_at is not set)
+    - No follow-up message found with body 'Acknowledged - investigating now' in channel

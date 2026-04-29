@@ -1,0 +1,27 @@
+Stagehand: using openai/gpt-4.1-mini via http://127.0.0.1:58327/v1
+[2026-04-29 12:44:28.208 +0800] [32mINFO[39m: [36mLaunching local browser[39m
+    [35mcategory[39m: "init"
+[2026-04-29 12:44:32.091 +0800] [32mINFO[39m: [36mCreating v3 agent instance[39m
+    [35mcategory[39m: "agent"
+    [35mcua[39m: false
+    [35mmode[39m: "dom"
+    [35mmodel[39m: "openai/gpt-4.1-mini"
+    [35msystemPrompt[39m: ""
+[2026-04-29 12:44:32.092 +0800] [31mERROR[39m: [36mUsing agent in default DOM mode (legacy). Agent will default to 'hybrid' on an upcoming release for improved performance.
+  → https://docs.stagehand.dev/v3/basics/agent
+[39m
+    [35mcategory[39m: "agent"
+Stagehand result: {
+  "success": false,
+  "actions": [],
+  "message": "Failed to execute task: Failed after 3 attempts. Last error: You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+  "completed": false,
+  "messages": [
+    {
+      "role": "user",
+      "content": "First, log in with username 'admin' and password 'admin'. Then: # Register a New Preventive-Plan Equipment\n\nOpen the **Maintenance** app and create a new equipment record with a simple preventive-maintenance plan.\n\n## Steps\n\n1. Open **Maintenance → Equipments**.\n2. Click **New**.\n3. Set the **Name** to `Bench Press 01`.\n4. Set the **Equipment Category** to `Machinery`. This category does **not** exist yet — create it from the category dropdown (e.g. via \"Create\" in the autocomplete).\n5. Set the **Technician** to `Bench Tech` (the user already exists; pick it from the autocomplete).\n6. Open the **Maintenance** tab and set **Expected Mean Time Between Failure** to `30` days. (This is the writable `Expected MTBF` field — do NOT try to edit `MTBF`, which is a read-only computed statistic.)\n7. **Save** the equipment.\n8. Reopen the saved equipment, go to the **Product Information** tab, and set the **Effective Date** to `06/01/2026`.\n9. **Save** the record.\n\n## Rules\n\n- Use the exact name, category, technician, Expected MTBF, and Effective Date shown above.\n- The `Machinery` category does not exist yet — create it on the fly.\n- The `Bench Tech` user already exists — select them, do not create a new user.\n- Leave the new equipment active (do not archive it).\n- Do not modify or delete any other equipment, category, or user record."
+    }
+  ]
+}
+[2026-04-29 12:44:39.372 +0800] [31mERROR[39m: [36mError executing agent task: Failed after 3 attempts. Last error: You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.[39m
+    [35mcategory[39m: "agent"
