@@ -1,0 +1,72 @@
+=== Benchmark Evaluation ===
+  Task:   mrp.create_bom_with_components
+  Agent:  command
+  DB:     bench_fr_1bb58db7  (auto-isolated)
+  URL:    http://127.0.0.1:55114
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/mrp.create_bom_with_components__1777447909
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_1bb58db7 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 55114
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=126.1s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 52 calls captured (23 writes, 29 reads)
+   State: 4 records across 2 models
+5. Computing state diff...
+   12 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     12 edits
+  Observed:     12 edits
+  Matching:     6 edits
+  Missing:      6 edits
+  Extra:        6 edits
+  Wall clock:   126.1s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   52
+  Writes:            23 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/mrp.create_bom_with_components__1777447909/
+
+  Postcondition failures:
+    - BOM components are {'Bench Steel Frame': 1.0, '[COMM] Communication': 2.0}, expected {'Bench Steel Frame': 1.0, 'Bench Control Board': 1.0, 'Bench Power Unit': 2.0}
+    - Unexpected component line: [COMM] Communication
+    - Unexpected component line: [COMM] Communication
+  Missing expected edits:
+    - mrp.bom.line.bom_id = BOM-REFERENCE: Bench Assembled Gadget
+    - mrp.bom.line.product_id = Bench Control Board
+    - mrp.bom.line.product_qty = 1.0
+    - mrp.bom.line.bom_id = BOM-REFERENCE: Bench Assembled Gadget
+    - mrp.bom.line.product_id = Bench Power Unit
+    - mrp.bom.line.product_qty = 2.0
+  Unexpected extra edits:
+    + mrp.bom.line.bom_id = BOM-REFERENCE: Bench Assembled Gadget
+    + mrp.bom.line.product_id = [COMM] Communication
+    + mrp.bom.line.product_qty = 2.0
+    + mrp.bom.line.bom_id = BOM-REFERENCE: Bench Assembled Gadget
+    + mrp.bom.line.product_id = [COMM] Communication
+    + mrp.bom.line.product_qty = 1.0

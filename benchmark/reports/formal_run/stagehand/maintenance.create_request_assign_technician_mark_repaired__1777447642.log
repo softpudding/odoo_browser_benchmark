@@ -1,0 +1,63 @@
+=== Benchmark Evaluation ===
+  Task:   maintenance.create_request_assign_technician_mark_repaired
+  Agent:  command
+  DB:     bench_fr_cae60554  (auto-isolated)
+  URL:    http://127.0.0.1:51990
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/maintenance.create_request_assign_technician_mark_repaired__1777447642
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_cae60554 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 51990
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=168.5s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 71 calls captured (29 writes, 42 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   3 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     3 edits
+  Matching:     1 edits
+  Missing:      2 edits
+  Extra:        2 edits
+  Wall clock:   168.5s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   71
+  Writes:            29 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/maintenance.create_request_assign_technician_mark_repaired__1777447642/
+
+  Postcondition failures:
+    - Equipment is False
+    - Technician is False
+  Missing expected edits:
+    - maintenance.request.equipment_id = Forklift FL-88
+    - maintenance.request.user_id = Marc Demo
+  Unexpected extra edits:
+    + maintenance.request.equipment_id = None
+    + maintenance.request.user_id = None
