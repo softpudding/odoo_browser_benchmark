@@ -1,0 +1,49 @@
+=== Benchmark Evaluation ===
+  Task:   crm.log_opportunity_note_internal
+  Agent:  command
+  DB:     bench_fr_2e297909  (auto-isolated)
+  URL:    http://127.0.0.1:63844
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/crm.log_opportunity_note_internal__1777474150
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_2e297909 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 63844
+   Done.
+2. Capturing pre-task state...
+   Captured 3 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=0.2s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 3 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     0 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   0.2s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/crm.log_opportunity_note_internal__1777474150/
+
+  Postcondition failures:
+    - No Log-note (mail.mt_note) message on opportunity 'Bench Note Opp' with body containing 'demo' was found. Messages present: []
