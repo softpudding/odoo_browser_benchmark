@@ -1,0 +1,74 @@
+=== Benchmark Evaluation ===
+  Task:   hr_holidays.request_leave_with_attachment
+  Agent:  command
+  DB:     bench_fr_17eaf0d2  (auto-isolated)
+  URL:    http://127.0.0.1:61641
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/hr_holidays.request_leave_with_attachment__1777447032
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_17eaf0d2 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 61641
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=154.3s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 80 calls captured (40 writes, 40 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   8 atomic edits observed
+   Postconditions: 5 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     8 edits
+  Matching:     2 edits
+  Missing:      2 edits
+  Extra:        6 edits
+  Wall clock:   154.3s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   80
+  Writes:            40 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/hr_holidays.request_leave_with_attachment__1777447032/
+
+  Postcondition failures:
+    - Leave type is 'Sick Time Off', expected 'Annual Leave'
+    - Start date is 2026-04-29, expected 2026-03-09
+    - End date is 2026-04-29, expected 2026-03-10
+    - number_of_days is 1.0, expected 2.0
+    - No ir.attachment linked to hr.leave id=1 (res_model='hr.leave'); the PDF justification was not attached via the chatter
+  Missing expected edits:
+    - hr.leave.holiday_status_id = Annual Leave
+    - hr.leave.name = Family event
+    - hr.leave.number_of_days = 2.0
+    - hr.leave.state = confirm
+  Unexpected extra edits:
+    + hr.leave.holiday_status_id = Sick Time Off
+    + hr.leave.name = Family event
+    + hr.leave.number_of_days = 1.0
+    + hr.leave.state = confirm
+    + hr.leave.holiday_status_id = Sick Time Off
+    + hr.leave.name = None
+    + hr.leave.number_of_days = 0.0
+    + hr.leave.state = confirm

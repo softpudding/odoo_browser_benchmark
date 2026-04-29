@@ -1,0 +1,66 @@
+=== Benchmark Evaluation ===
+  Task:   im_livechat.create_channel_add_canned_response
+  Agent:  command
+  DB:     bench_fr_6c32cf01  (auto-isolated)
+  URL:    http://127.0.0.1:63537
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/im_livechat.create_channel_add_canned_response__1777447239
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_6c32cf01 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 63537
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=67.6s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 29 calls captured (11 writes, 18 reads)
+   State: 4 records across 2 models
+5. Computing state diff...
+   4 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     4 edits
+  Matching:     0 edits
+  Missing:      4 edits
+  Extra:        4 edits
+  Wall clock:   67.6s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   29
+  Writes:            11 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/im_livechat.create_channel_add_canned_response__1777447239/
+
+  Postcondition failures:
+    - Expected exactly 1 channel named 'Checkout Support', found 0
+  Missing expected edits:
+    - im_livechat.channel.button_text = Need help with your order?
+    - im_livechat.channel.name = Checkout Support
+    - mail.canned.response.source = checkout_help
+    - mail.canned.response.substitution = Hello, thanks for contacting checkout support.
+  Unexpected extra edits:
+    + im_livechat.channel.button_text = Need help? Chat with us.
+    + im_livechat.channel.name = Checkout SupportNeed help with your order?
+    + im_livechat.channel.button_text = Need help? Chat with us.
+    + im_livechat.channel.name = checkout_helpHello, thanks for contacting checkout support.

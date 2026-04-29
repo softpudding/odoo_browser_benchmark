@@ -1,0 +1,59 @@
+=== Benchmark Evaluation ===
+  Task:   im_livechat.configure_offline_form_and_test_widget
+  Agent:  command
+  DB:     bench_fr_263bc792  (auto-isolated)
+  URL:    http://127.0.0.1:63299
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/im_livechat.configure_offline_form_and_test_widget__1777447216
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_263bc792 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 63299
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=131.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 30 calls captured (11 writes, 19 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   131.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   30
+  Writes:            11 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/im_livechat.configure_offline_form_and_test_widget__1777447216/
+
+  Postcondition failures:
+    - Expected exactly 1 live chat channel named 'After Hours Help', found 0
+  Missing expected edits:
+    - im_livechat.channel.button_text = Questions after hours?
+    - im_livechat.channel.name = After Hours Help
