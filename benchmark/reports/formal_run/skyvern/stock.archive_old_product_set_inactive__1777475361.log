@@ -1,0 +1,53 @@
+=== Benchmark Evaluation ===
+  Task:   stock.archive_old_product_set_inactive
+  Agent:  command
+  DB:     bench_fr_3cbec170  (auto-isolated)
+  URL:    http://127.0.0.1:59988
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/stock.archive_old_product_set_inactive__1777475361
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_3cbec170 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 59988
+   Done.
+2. Capturing pre-task state...
+   Captured 54 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=0.2s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 54 records across 2 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   0.2s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/stock.archive_old_product_set_inactive__1777475361/
+
+  Postcondition failures:
+    - Product template 'Bench Archive Me' still has active=True; expected active=False after archiving via cog Actions > Archive.
+    - product.product variant of 'Bench Archive Me' (id=42) still has active=True; expected active=False.
+  Missing expected edits:
+    - product.product.active = None
+    - product.template.active = None
