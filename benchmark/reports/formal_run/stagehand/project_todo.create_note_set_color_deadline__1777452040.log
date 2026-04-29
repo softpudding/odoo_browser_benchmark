@@ -1,0 +1,56 @@
+=== Benchmark Evaluation ===
+  Task:   project_todo.create_note_set_color_deadline
+  Agent:  command
+  DB:     bench_fr_6c75e3a2  (auto-isolated)
+  URL:    http://127.0.0.1:57202
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/project_todo.create_note_set_color_deadline__1777452040
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_6c75e3a2 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 57202
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=94.6s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 42 calls captured (17 writes, 25 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   2 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     2 edits
+  Matching:     2 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   94.6s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   42
+  Writes:            17 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/project_todo.create_note_set_color_deadline__1777452040/
+
+  Postcondition failures:
+    - Note is missing a deadline
