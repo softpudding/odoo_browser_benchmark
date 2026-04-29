@@ -1,0 +1,54 @@
+=== Benchmark Evaluation ===
+  Task:   crm.qualify_lead_and_prepare_quote
+  Agent:  command
+  DB:     bench_fr_9b4396a7  (auto-isolated)
+  URL:    http://127.0.0.1:49153
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/crm.qualify_lead_and_prepare_quote__1777445159
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_9b4396a7 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 49153
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 3 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=320.2s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 103 calls captured (55 writes, 48 reads)
+   State: 4 records across 3 models
+5. Computing state diff...
+   13 atomic edits observed
+6. Scoring...
+
+==================================================
+  RESULT: PASS  (Strict: PASS)
+  StateDiffF1:  1.0
+  Precision:    1.0
+  Recall:       1.0
+  Expected:     13 edits
+  Observed:     13 edits
+  Matching:     13 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   320.2s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  0.2
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   103
+  Writes:            55 non-forbidden, 0 forbidden
+  Required ops MISSED: ['crm.lead.write', 'crm.quotation.partner.action_apply', 'mail.activity.create', 'sale.order.write']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/crm.qualify_lead_and_prepare_quote__1777445159/
+
