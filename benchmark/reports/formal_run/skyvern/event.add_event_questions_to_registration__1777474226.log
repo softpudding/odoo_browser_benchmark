@@ -1,0 +1,55 @@
+=== Benchmark Evaluation ===
+  Task:   event.add_event_questions_to_registration
+  Agent:  command
+  DB:     bench_fr_d7bff35f  (auto-isolated)
+  URL:    http://127.0.0.1:64464
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/event.add_event_questions_to_registration__1777474226
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_d7bff35f from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 64464
+   Done.
+2. Capturing pre-task state...
+   Captured 3 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=0.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 3 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      4 edits
+  Extra:        0 edits
+  Wall clock:   0.1s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/event.add_event_questions_to_registration__1777474226/
+
+  Postcondition failures:
+    - Missing question titled 'What is your job title?' on event (found: ['Email', 'Name', 'Phone'])
+    - Missing question titled 'How many years of experience?' on event (found: ['Email', 'Name', 'Phone'])
+  Missing expected edits:
+    - event.question.question_type = simple_choice
+    - event.question.title = How many years of experience?
+    - event.question.question_type = text_box
+    - event.question.title = What is your job title?
