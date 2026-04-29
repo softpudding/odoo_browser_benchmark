@@ -1,0 +1,67 @@
+=== Benchmark Evaluation ===
+  Task:   stock.cancel_picking_create_replacement_with_serial
+  Agent:  command
+  DB:     bench_fr_5e7ac310  (auto-isolated)
+  URL:    http://127.0.0.1:64464
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/stock.cancel_picking_create_replacement_with_serial__1777447103
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_5e7ac310 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 64464
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=48.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 4 calls captured (1 writes, 3 reads)
+   State: 1 records across 2 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     8 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      8 edits
+  Extra:        0 edits
+  Wall clock:   48.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   4
+  Writes:            1 non-forbidden, 0 forbidden
+  Required ops MISSED: ['stock.picking.action_cancel']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/stock.cancel_picking_create_replacement_with_serial__1777447103/
+
+  Postcondition failures:
+    - Original receipt state is 'assigned', expected 'cancel'
+    - No replacement receipt found for vendor 'Bench Supplier Inc' containing the 'Bench Serial Widget' product
+  Missing expected edits:
+    - stock.lot.name = BS-001
+    - stock.lot.product_id = Bench Serial Widget
+    - stock.lot.name = BS-002
+    - stock.lot.product_id = Bench Serial Widget
+    - stock.picking.state = cancel
+    - stock.picking.origin = None
+    - stock.picking.partner_id = Bench Supplier Inc
+    - stock.picking.state = done
