@@ -1,0 +1,54 @@
+=== Benchmark Evaluation ===
+  Task:   contacts.create_company_add_supplier_tag
+  Agent:  command
+  DB:     bench_fr_65ae5a59  (auto-isolated)
+  URL:    http://127.0.0.1:62954
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/contacts.create_company_add_supplier_tag__1777474048
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_65ae5a59 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 62954
+   Done.
+2. Capturing pre-task state...
+   Captured 11 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=0.2s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 11 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      4 edits
+  Extra:        0 edits
+  Wall clock:   0.2s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/contacts.create_company_add_supplier_tag__1777474048/
+
+  Postcondition failures:
+    - Expected exactly 1 target company, found 0
+  Missing expected edits:
+    - res.partner.city = Tacoma
+    - res.partner.is_company = True
+    - res.partner.name = North Coast Fabrication
+    - res.partner.website = https://northcoastfab.com

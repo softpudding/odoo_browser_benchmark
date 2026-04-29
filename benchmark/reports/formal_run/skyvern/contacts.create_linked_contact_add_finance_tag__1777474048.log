@@ -1,0 +1,53 @@
+=== Benchmark Evaluation ===
+  Task:   contacts.create_linked_contact_add_finance_tag
+  Agent:  command
+  DB:     bench_fr_5cbe5562  (auto-isolated)
+  URL:    http://127.0.0.1:62951
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/contacts.create_linked_contact_add_finance_tag__1777474048
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_5cbe5562 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 62951
+   Done.
+2. Capturing pre-task state...
+   Captured 12 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=0.2s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 12 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      3 edits
+  Extra:        0 edits
+  Wall clock:   0.2s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/contacts.create_linked_contact_add_finance_tag__1777474048/
+
+  Postcondition failures:
+    - Expected exactly 1 'Dana Patel' contact, found 0
+  Missing expected edits:
+    - res.partner.name = Dana Patel
+    - res.partner.parent_id = Lakeshore Manufacturing
+    - res.partner.type = contact

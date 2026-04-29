@@ -1,0 +1,55 @@
+=== Benchmark Evaluation ===
+  Task:   contacts.create_company_set_supplier_tag
+  Agent:  command
+  DB:     bench_fr_82275a0a  (auto-isolated)
+  URL:    http://127.0.0.1:62945
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/contacts.create_company_set_supplier_tag__1777474048
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_82275a0a from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 62945
+   Done.
+2. Capturing pre-task state...
+   Captured 10 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=0.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 10 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     5 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      5 edits
+  Extra:        0 edits
+  Wall clock:   0.1s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/contacts.create_company_set_supplier_tag__1777474048/
+
+  Postcondition failures:
+    - Expected exactly 1 company named 'Harborview Fabrication', found 0
+  Missing expected edits:
+    - res.partner.email = ops@harborview.example.com
+    - res.partner.is_company = True
+    - res.partner.name = Harborview Fabrication
+    - res.partner.phone = +1 206 555 0144
+    - res.partner.website = https://harborview.example.com
