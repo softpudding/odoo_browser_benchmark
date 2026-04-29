@@ -1,0 +1,69 @@
+=== Benchmark Evaluation ===
+  Task:   project.create_milestone_assign_tasks_reach
+  Agent:  command
+  DB:     bench_fr_fddc537f  (auto-isolated)
+  URL:    http://127.0.0.1:54440
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/project.create_milestone_assign_tasks_reach__1777451715
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_fddc537f from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 54440
+   Done.
+2. Capturing pre-task state...
+   Captured 4 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=172.5s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 62 calls captured (26 writes, 36 reads)
+   State: 6 records across 2 models
+5. Computing state diff...
+   8 atomic edits observed
+   Postconditions: 4 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     6 edits
+  Observed:     8 edits
+  Matching:     3 edits
+  Missing:      3 edits
+  Extra:        5 edits
+  Wall clock:   172.5s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   62
+  Writes:            26 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/project.create_milestone_assign_tasks_reach__1777451715/
+
+  Postcondition failures:
+    - Milestone 'Phase 1 Complete' deadline is False, expected 2026-06-01
+    - Milestone 'Phase 1 Complete' is_reached is False; task required toggling Reached to True
+    - Project has 4 tasks; expected exactly 3
+    - Task 'T2 - Build Prototype' has no milestone; expected 'Phase 1 Complete'
+  Missing expected edits:
+    - project.milestone.deadline = 2026-06-01
+    - project.milestone.is_reached = True
+    - project.task.milestone_id = Phase 1 Complete
+  Unexpected extra edits:
+    + project.milestone.deadline = None
+    + project.milestone.is_reached = None
+    + project.task.milestone_id = None
+    + project.task.name = Phase 1 Complete2026-06-01
+    + project.task.project_id = Bench Milestone Proj
