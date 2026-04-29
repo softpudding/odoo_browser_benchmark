@@ -1,0 +1,27 @@
+Stagehand: using openai/gpt-4.1-mini via http://127.0.0.1:61348/v1
+[2026-04-29 12:48:11.395 +0800] [32mINFO[39m: [36mLaunching local browser[39m
+    [35mcategory[39m: "init"
+[2026-04-29 12:48:15.209 +0800] [32mINFO[39m: [36mCreating v3 agent instance[39m
+    [35mcategory[39m: "agent"
+    [35mcua[39m: false
+    [35mmode[39m: "dom"
+    [35mmodel[39m: "openai/gpt-4.1-mini"
+    [35msystemPrompt[39m: ""
+[2026-04-29 12:48:15.211 +0800] [31mERROR[39m: [36mUsing agent in default DOM mode (legacy). Agent will default to 'hybrid' on an upcoming release for improved performance.
+  → https://docs.stagehand.dev/v3/basics/agent
+[39m
+    [35mcategory[39m: "agent"
+Stagehand result: {
+  "success": false,
+  "actions": [],
+  "message": "Failed to execute task: Failed after 3 attempts. Last error: You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+  "completed": false,
+  "messages": [
+    {
+      "role": "user",
+      "content": "First, log in with username 'admin' and password 'admin'. Then: # Unbuild a completed manufacturing order to recover components\n\nYou are in the Odoo 19 **Manufacturing** app logged in as\n**Administrator**.\n\nManufacturing order **WH/MO/UNBLD-001** was completed (3 units of\n**Benchmark Recoverable Widget** produced), but quality control rejected\nall 3 units. You need to **unbuild** them so their components return to\nstock.\n\n## What to do\n\n1. Open the **Manufacturing** app.\n2. Go to **Products → Unbuild Orders** (or **Operations → Unbuild**,\n   depending on menu layout).\n3. Click **New** to create a new unbuild order with:\n   - **Manufacturing Order**: `WH/MO/UNBLD-001`\n   - **Product**: should auto-populate to `Benchmark Recoverable Widget`\n   - **Quantity**: `3` (the full produced quantity)\n4. Click **Save**, then **Unbuild** (the confirm/validate action).\n5. The unbuild should move to **Done** state. The finished product\n   quantity is consumed; the component quantities are returned to the\n   stock location.\n\n## Rules\n\n- Create **exactly one** unbuild order, linked to MO\n  **WH/MO/UNBLD-001**.\n- The unbuild quantity must be exactly **3**.\n- The unbuild must end in the **Done** state (validated).\n- Do **not** cancel the original MO — it stays in the Done state.\n- Do **not** create any other manufacturing orders, unbuild orders,\n  or inventory adjustments."
+    }
+  ]
+}
+[2026-04-29 12:48:22.464 +0800] [31mERROR[39m: [36mError executing agent task: Failed after 3 attempts. Last error: You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.[39m
+    [35mcategory[39m: "agent"
