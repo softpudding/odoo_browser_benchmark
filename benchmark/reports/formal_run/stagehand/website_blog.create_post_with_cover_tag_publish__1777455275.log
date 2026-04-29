@@ -1,0 +1,60 @@
+=== Benchmark Evaluation ===
+  Task:   website_blog.create_post_with_cover_tag_publish
+  Agent:  command
+  DB:     bench_fr_6f9b2c79  (auto-isolated)
+  URL:    http://127.0.0.1:58345
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/website_blog.create_post_with_cover_tag_publish__1777455275
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_6f9b2c79 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 58345
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=82.6s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 24 calls captured (7 writes, 17 reads)
+   State: 0 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      3 edits
+  Extra:        0 edits
+  Wall clock:   82.6s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   24
+  Writes:            7 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/website_blog.create_post_with_cover_tag_publish__1777455275/
+
+  Postcondition failures:
+    - Blog post 'Harbor Notes Rollout' not found
+  Missing expected edits:
+    - blog.post.blog_id = Harbor Newsroom
+    - blog.post.name = Harbor Notes Rollout
+    - blog.post.website_published = True
