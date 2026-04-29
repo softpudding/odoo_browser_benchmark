@@ -1,0 +1,61 @@
+=== Benchmark Evaluation ===
+  Task:   website.create_contact_form_with_custom_field
+  Agent:  command
+  DB:     bench_fr_3c7b7ab7  (auto-isolated)
+  URL:    http://127.0.0.1:62939
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/website.create_contact_form_with_custom_field__1777437958
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_3c7b7ab7 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 62939
+   Done.
+2. Capturing pre-task state...
+   Captured 7 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=130.2s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 34 calls captured (14 writes, 20 reads)
+   State: 7 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 5 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     0 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   130.2s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   34
+  Writes:            14 non-forbidden, 0 forbidden
+  Required ops MISSED: ['ir.ui.view.write']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/website.create_contact_form_with_custom_field__1777437958/
+
+  Postcondition failures:
+    - Form does not contain a field labelled 'Inquiry Type'
+    - No Selection-type field found in the contact form arch (neither data-type="selection" nor a <select> element).
+    - Selection option 'Sales' missing from form arch
+    - Selection option 'Support' missing from form arch
+    - Selection option 'Partnership' missing from form arch
