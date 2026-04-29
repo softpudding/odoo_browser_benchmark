@@ -1,0 +1,60 @@
+=== Benchmark Evaluation ===
+  Task:   inventory.create_storage_category_assign_to_location
+  Agent:  command
+  DB:     bench_fr_f18a6d0b  (auto-isolated)
+  URL:    http://127.0.0.1:63956
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/inventory.create_storage_category_assign_to_location__1777447271
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_f18a6d0b from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 63956
+   Done.
+2. Capturing pre-task state...
+   Captured 14 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=131.1s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 47 calls captured (16 writes, 31 reads)
+   State: 15 records across 2 models
+5. Computing state diff...
+   2 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     2 edits
+  Matching:     2 edits
+  Missing:      1 edits
+  Extra:        0 edits
+  Wall clock:   131.1s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   47
+  Writes:            16 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/inventory.create_storage_category_assign_to_location__1777447271/
+
+  Postcondition failures:
+    - Location 'WH/Stock' has no storage_category_id set
+  Missing expected edits:
+    - stock.storage.category.max_weight = 500.0
+    - stock.storage.category.name = Cold Chain
+    - stock.location.storage_category_id = Cold Chain

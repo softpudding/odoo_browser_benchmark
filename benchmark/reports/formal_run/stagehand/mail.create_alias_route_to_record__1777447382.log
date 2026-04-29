@@ -1,0 +1,56 @@
+=== Benchmark Evaluation ===
+  Task:   mail.create_alias_route_to_record
+  Agent:  command
+  DB:     bench_fr_383bd270  (auto-isolated)
+  URL:    http://127.0.0.1:65268
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/mail.create_alias_route_to_record__1777447382
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_383bd270 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 65268
+   Done.
+2. Capturing pre-task state...
+   Captured 12 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=136.0s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 114 calls captured (43 writes, 71 reads)
+   State: 13 records across 2 models
+5. Computing state diff...
+   2 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     2 edits
+  Matching:     2 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   136.0s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   114
+  Writes:            43 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/mail.create_alias_route_to_record__1777447382/
+
+  Postcondition failures:
+    - Alias 'benchalias' alias_defaults does not contain a 'team_id' key; got keys=[].
