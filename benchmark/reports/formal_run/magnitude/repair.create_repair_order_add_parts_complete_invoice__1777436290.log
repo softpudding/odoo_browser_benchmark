@@ -1,0 +1,62 @@
+=== Benchmark Evaluation ===
+  Task:   repair.create_repair_order_add_parts_complete_invoice
+  Agent:  command
+  DB:     bench_fr_759dde70  (auto-isolated)
+  URL:    http://127.0.0.1:65112
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/repair.create_repair_order_add_parts_complete_invoice__1777436290
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_759dde70 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 65112
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=183.4s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 93 calls captured (51 writes, 42 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   2 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     2 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        2 edits
+  Wall clock:   183.4s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   93
+  Writes:            51 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/repair.create_repair_order_add_parts_complete_invoice__1777436290/
+
+  Postcondition failures:
+    - Repair order 'RO/BENCH/0001' not found
+  Missing expected edits:
+    - repair.order.name = RO/BENCH/0001
+    - repair.order.state = done
+  Unexpected extra edits:
+    + repair.order.name = WH/RO/00001
+    + repair.order.state = done
