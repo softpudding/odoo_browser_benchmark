@@ -1,0 +1,71 @@
+[
+  {
+    "model": "sale.order",
+    "entity_key": [
+      "S-BENCH-STK-001"
+    ],
+    "field": "state",
+    "op": "set",
+    "norm_value": "sale",
+    "note": "SO must be confirmed (state=sale)"
+  },
+  {
+    "model": "stock.picking",
+    "entity_key": [
+      "S00001"
+    ],
+    "field": "origin",
+    "op": "create",
+    "norm_value": "S00001"
+  },
+  {
+    "model": "stock.picking",
+    "entity_key": [
+      "S00001"
+    ],
+    "field": "partner_id",
+    "op": "create",
+    "norm_value": "Bench Warehouse Co"
+  },
+  {
+    "model": "stock.picking",
+    "entity_key": [
+      "S00001"
+    ],
+    "field": "state",
+    "op": "create",
+    "norm_value": "assigned",
+    "note": "First picking by dedup order (backorder state=assigned with stock reservable)"
+  },
+  {
+    "model": "stock.picking",
+    "entity_key": [
+      "S00001",
+      "#dup1"
+    ],
+    "field": "origin",
+    "op": "create",
+    "norm_value": "S00001"
+  },
+  {
+    "model": "stock.picking",
+    "entity_key": [
+      "S00001",
+      "#dup1"
+    ],
+    "field": "partner_id",
+    "op": "create",
+    "norm_value": "Bench Warehouse Co"
+  },
+  {
+    "model": "stock.picking",
+    "entity_key": [
+      "S00001",
+      "#dup1"
+    ],
+    "field": "state",
+    "op": "create",
+    "norm_value": "done",
+    "note": "Second picking by dedup order (original state=done)"
+  }
+]

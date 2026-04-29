@@ -1,0 +1,61 @@
+=== Benchmark Evaluation ===
+  Task:   stock.receive_lot_tracked_product
+  Agent:  command
+  DB:     bench_fr_55531b30  (auto-isolated)
+  URL:    http://127.0.0.1:49748
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/stock.receive_lot_tracked_product__1777454599
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_55531b30 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 49748
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=92.4s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 51 calls captured (22 writes, 29 reads)
+   State: 1 records across 2 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      3 edits
+  Extra:        0 edits
+  Wall clock:   92.4s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   51
+  Writes:            22 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/stock.receive_lot_tracked_product__1777454599/
+
+  Postcondition failures:
+    - Receipt state is 'assigned', expected 'done' — agent likely failed to validate after assigning a lot
+    - No stock.lot with name 'LOT-2026-R042' for product 'Apex Turbine Rotor' — agent did not enter the lot number
+  Missing expected edits:
+    - stock.picking.state = done
+    - stock.lot.name = LOT-2026-R042
+    - stock.lot.product_id = Apex Turbine Rotor

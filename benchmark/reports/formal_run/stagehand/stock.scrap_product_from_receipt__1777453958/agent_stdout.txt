@@ -1,0 +1,27 @@
+Stagehand: using openai/gpt-4.1-mini via http://127.0.0.1:63511/v1
+[2026-04-29 17:13:33.785 +0800] [32mINFO[39m: [36mLaunching local browser[39m
+    [35mcategory[39m: "init"
+[2026-04-29 17:13:42.055 +0800] [32mINFO[39m: [36mCreating v3 agent instance[39m
+    [35mcategory[39m: "agent"
+    [35mcua[39m: false
+    [35mmode[39m: "dom"
+    [35mmodel[39m: "openai/gpt-4.1-mini"
+    [35msystemPrompt[39m: ""
+[2026-04-29 17:13:42.055 +0800] [31mERROR[39m: [36mUsing agent in default DOM mode (legacy). Agent will default to 'hybrid' on an upcoming release for improved performance.
+  → https://docs.stagehand.dev/v3/basics/agent
+[39m
+    [35mcategory[39m: "agent"
+Stagehand result: {
+  "success": false,
+  "actions": [],
+  "message": "Failed to execute task: Failed after 3 attempts. Last error: You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+  "completed": false,
+  "messages": [
+    {
+      "role": "user",
+      "content": "First, log in with username 'admin' and password 'admin'. Then: Go to the **Inventory** app (URL `/odoo/inventory`).\n\nA validated receipt with reference **`BENCH-RCV-SCRAP-01`** already exists. It received **10 units** of the product **`Bench Scrap Product`** from the supplier into `WH/Stock`. The receipt is already in **Done** state.\n\nTwo of those received units are damaged and need to be scrapped.\n\n## Steps\n\n1. From the Inventory dashboard, open **Receipts** (the Incoming Transfers tile).\n2. Open the validated receipt with the source document **`BENCH-RCV-SCRAP-01`**. (It is in the **Done** state, so you may need to clear default filters or switch to the Done filter to see it.)\n3. From the receipt form, open the **Actions** (cog / gear) menu and click **Scrap** (or use the Scrap button if available on the form). A Scrap Products dialog will open.\n4. In the Scrap dialog, fill:\n   - **Product:** `Bench Scrap Product`\n   - **Quantity:** `2`\n   - Leave **Source Location** at the default (`WH/Stock`).\n   - Leave **Scrap Location** at the default (`Virtual Locations/Scrap`).\n5. Click **Scrap Products** in the dialog to confirm. The scrap record will be created and validated in one step (status **Done**).\n\n## Rules\n\n- The scrap must be linked to the seeded receipt `BENCH-RCV-SCRAP-01` (use the Scrap action from the receipt, not a standalone scrap from Operations > Scrap).\n- The scrapped product must be exactly **`Bench Scrap Product`** and the quantity must be exactly **`2`**.\n- The scrap record must end up in the **Done** state (you must click **Validate**).\n- Do NOT cancel, delete, or modify the original receipt. It must stay in **Done** state with the original received quantity of 10.\n- Do NOT create more than one stock.scrap record.\n- Do NOT touch other products or other receipts."
+    }
+  ]
+}
+[2026-04-29 17:13:49.478 +0800] [31mERROR[39m: [36mError executing agent task: Failed after 3 attempts. Last error: You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.[39m
+    [35mcategory[39m: "agent"

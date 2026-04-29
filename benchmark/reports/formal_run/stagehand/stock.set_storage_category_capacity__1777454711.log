@@ -1,0 +1,62 @@
+=== Benchmark Evaluation ===
+  Task:   stock.set_storage_category_capacity
+  Agent:  command
+  DB:     bench_fr_b5a20b25  (auto-isolated)
+  URL:    http://127.0.0.1:50852
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/stock.set_storage_category_capacity__1777454711
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_b5a20b25 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 50852
+   Done.
+2. Capturing pre-task state...
+   Captured 15 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=111.9s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 41 calls captured (18 writes, 23 reads)
+   State: 16 records across 2 models
+5. Computing state diff...
+   3 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     3 edits
+  Matching:     2 edits
+  Missing:      2 edits
+  Extra:        1 edits
+  Wall clock:   111.9s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   41
+  Writes:            18 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/stock.set_storage_category_capacity__1777454711/
+
+  Postcondition failures:
+    - Storage category allow_new_product is 'mixed', expected 'same'
+    - Sub-location 'WH/Stock/Bench Small Bin Area' has no storage_category_id assigned
+  Missing expected edits:
+    - stock.storage.category.allow_new_product = same
+    - stock.location.storage_category_id = Bench Small Bin
+  Unexpected extra edits:
+    + stock.storage.category.allow_new_product = mixed
