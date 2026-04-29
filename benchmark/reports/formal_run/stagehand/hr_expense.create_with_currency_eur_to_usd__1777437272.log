@@ -1,0 +1,63 @@
+=== Benchmark Evaluation ===
+  Task:   hr_expense.create_with_currency_eur_to_usd
+  Agent:  command
+  DB:     bench_fr_8f128442  (auto-isolated)
+  URL:    http://127.0.0.1:51150
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/hr_expense.create_with_currency_eur_to_usd__1777437272
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_8f128442 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 51150
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=104.6s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 30 calls captured (11 writes, 19 reads)
+   State: 0 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     6 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      6 edits
+  Extra:        0 edits
+  Wall clock:   104.6s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   30
+  Writes:            11 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/hr_expense.create_with_currency_eur_to_usd__1777437272/
+
+  Postcondition failures:
+    - No expense found with description 'NYC Hotel'
+  Missing expected edits:
+    - hr.expense.currency_id = EUR
+    - hr.expense.name = NYC Hotel
+    - hr.expense.payment_mode = own_account
+    - hr.expense.product_id = Hotel
+    - hr.expense.state = draft
+    - hr.expense.total_amount_currency = 185.0
