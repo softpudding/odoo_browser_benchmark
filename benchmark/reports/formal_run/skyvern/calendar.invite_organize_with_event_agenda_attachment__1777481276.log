@@ -1,0 +1,56 @@
+=== Benchmark Evaluation ===
+  Task:   calendar.invite_organize_with_event_agenda_attachment
+  Agent:  command
+  DB:     bench_fr_d6c9d9ec  (auto-isolated)
+  URL:    http://127.0.0.1:63477
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/calendar.invite_organize_with_event_agenda_attachment__1777481276
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_d6c9d9ec from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 63477
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=508.1s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 48 calls captured (25 writes, 23 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   2 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     2 edits
+  Matching:     2 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   508.1s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   48
+  Writes:            25 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/calendar.invite_organize_with_event_agenda_attachment__1777481276/
+
+  Postcondition failures:
+    - No ir.attachment named 'agenda.txt' linked to calendar event id=1; all attachments: ['invitation.ics', 'invitation.ics']
