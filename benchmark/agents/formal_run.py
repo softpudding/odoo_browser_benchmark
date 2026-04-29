@@ -543,6 +543,9 @@ def git_commit_push(worker: str, completed: int) -> None:
     except subprocess.CalledProcessError as e:
         print(f"[git] commit skipped: {e}", file=sys.stderr)
         return
+    if os.environ.get("BENCHMARK_NO_PUSH"):
+        print("[git] BENCHMARK_NO_PUSH=1 — skipping push", file=sys.stderr)
+        return
     for attempt in (1, 2, 3):
         try:
             subprocess.run(["git", "push"], check=True, cwd=str(REPO_ROOT))
