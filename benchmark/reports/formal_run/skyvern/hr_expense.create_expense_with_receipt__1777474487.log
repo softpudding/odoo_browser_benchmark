@@ -1,0 +1,56 @@
+=== Benchmark Evaluation ===
+  Task:   hr_expense.create_expense_with_receipt
+  Agent:  command
+  DB:     bench_fr_2df7fe8b  (auto-isolated)
+  URL:    http://127.0.0.1:50493
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/hr_expense.create_expense_with_receipt__1777474487
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_2df7fe8b from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 50493
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=0.2s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 0 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     6 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      6 edits
+  Extra:        0 edits
+  Wall clock:   0.2s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/hr_expense.create_expense_with_receipt__1777474487/
+
+  Postcondition failures:
+    - No expense found with description 'Client dinner at Harborview'
+  Missing expected edits:
+    - hr.expense.name = Client dinner at Harborview
+    - hr.expense.payment_mode = company_account
+    - hr.expense.product_id = Client Meals
+    - hr.expense.state = draft
+    - hr.expense.total_amount = 185.5
+    - hr.expense.vendor_id = Harborview Restaurant Group
