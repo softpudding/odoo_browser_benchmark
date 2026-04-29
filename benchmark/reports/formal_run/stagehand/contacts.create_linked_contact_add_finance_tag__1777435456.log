@@ -1,0 +1,58 @@
+=== Benchmark Evaluation ===
+  Task:   contacts.create_linked_contact_add_finance_tag
+  Agent:  command
+  DB:     bench_fr_84c29761  (auto-isolated)
+  URL:    http://127.0.0.1:60543
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/contacts.create_linked_contact_add_finance_tag__1777435456
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_84c29761 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 60543
+   Done.
+2. Capturing pre-task state...
+   Captured 9 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=107.5s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 48 calls captured (26 writes, 22 reads)
+   State: 10 records across 1 models
+5. Computing state diff...
+   3 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     3 edits
+  Matching:     3 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   107.5s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   48
+  Writes:            26 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/contacts.create_linked_contact_add_finance_tag__1777435456/
+
+  Postcondition failures:
+    - Job Position is 'False', expected 'Accounts Payable Specialist'
+    - State is 'None', expected 'IL'
+    - Country should be United States

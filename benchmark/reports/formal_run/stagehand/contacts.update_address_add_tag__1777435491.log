@@ -1,0 +1,69 @@
+=== Benchmark Evaluation ===
+  Task:   contacts.update_address_add_tag
+  Agent:  command
+  DB:     bench_fr_72749abc  (auto-isolated)
+  URL:    http://127.0.0.1:61114
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/contacts.update_address_add_tag__1777435491
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_72749abc from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 61114
+   Done.
+2. Capturing pre-task state...
+   Captured 8 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=103.6s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 49 calls captured (25 writes, 24 reads)
+   State: 8 records across 1 models
+5. Computing state diff...
+   4 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     5 edits
+  Observed:     4 edits
+  Matching:     2 edits
+  Missing:      3 edits
+  Extra:        2 edits
+  Wall clock:   103.6s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   49
+  Writes:            25 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/contacts.update_address_add_tag__1777435491/
+
+  Postcondition failures:
+    - City is 'SeattlePortland', expected 'Portland'
+    - ZIP is '9810197201', expected '97201'
+    - State not set, expected 'Oregon'
+  Missing expected edits:
+    - res.partner.city = Portland
+    - res.partner.state_id = Oregon (US)
+    - res.partner.street = 742 Innovation Blvd
+    - res.partner.website = https://brookfielddynamics.com
+    - res.partner.zip = 97201
+  Unexpected extra edits:
+    + res.partner.city = SeattlePortland
+    + res.partner.street = 742 Innovation Blvd
+    + res.partner.website = https://brookfielddynamics.com
+    + res.partner.zip = 9810197201
