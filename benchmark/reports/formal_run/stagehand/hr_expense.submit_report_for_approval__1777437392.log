@@ -1,0 +1,64 @@
+=== Benchmark Evaluation ===
+  Task:   hr_expense.submit_report_for_approval
+  Agent:  command
+  DB:     bench_fr_67d3cd4c  (auto-isolated)
+  URL:    http://127.0.0.1:52836
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/hr_expense.submit_report_for_approval__1777437392
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_67d3cd4c from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 52836
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=12.8s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 4 calls captured (1 writes, 3 reads)
+   State: 0 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     6 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      6 edits
+  Extra:        0 edits
+  Wall clock:   12.8s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   4
+  Writes:            1 non-forbidden, 0 forbidden
+  Required ops MISSED: ['hr.expense.action_submit']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/hr_expense.submit_report_for_approval__1777437392/
+
+  Postcondition failures:
+    - Expected exactly 1 expense named 'Hotel in Paris', found 0
+  Missing expected edits:
+    - hr.expense.date = 2026-03-12
+    - hr.expense.employee_id = Administrator
+    - hr.expense.name = Hotel in Paris
+    - hr.expense.product_id = [TRANS & ACC] Travel & Accommodation
+    - hr.expense.state = submitted
+    - hr.expense.total_amount = 250.0

@@ -1,0 +1,27 @@
+Stagehand: using openai/gpt-4.1-mini via http://127.0.0.1:52828/v1
+[2026-04-29 12:37:06.713 +0800] [32mINFO[39m: [36mLaunching local browser[39m
+    [35mcategory[39m: "init"
+[2026-04-29 12:37:10.070 +0800] [32mINFO[39m: [36mCreating v3 agent instance[39m
+    [35mcategory[39m: "agent"
+    [35mcua[39m: false
+    [35mmode[39m: "dom"
+    [35mmodel[39m: "openai/gpt-4.1-mini"
+    [35msystemPrompt[39m: ""
+[2026-04-29 12:37:10.071 +0800] [31mERROR[39m: [36mUsing agent in default DOM mode (legacy). Agent will default to 'hybrid' on an upcoming release for improved performance.
+  → https://docs.stagehand.dev/v3/basics/agent
+[39m
+    [35mcategory[39m: "agent"
+Stagehand result: {
+  "success": false,
+  "actions": [],
+  "message": "Failed to execute task: Failed after 3 attempts. Last error: You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.",
+  "completed": false,
+  "messages": [
+    {
+      "role": "user",
+      "content": "First, log in with username 'admin' and password 'admin'. Then: # Allocate leave, then request time off against it\n\nYou are in the Odoo 19 **Time Off** app logged in as **Administrator**.\n\nMarc Demo needs a fresh sick-leave balance and then an approved request that\nuses part of that balance.\n\n## What to do\n\n1. Go to **Management → Allocations** and create a new allocation with:\n   - **Description**: `Quarter-End Sick Leave Buffer`\n   - **Employee**: `Marc Demo`\n   - **Time Off Type**: `Sick Time Off`\n   - **Allocation**: `4 days`\n2. Save the allocation and approve it so it reaches the **Approved** state.\n3. Then go to **Management → Time Off** and create a new time-off request with:\n   - **Description**: `Warehouse flu recovery`\n   - **Employee**: `Marc Demo`\n   - **Time Off Type**: `Sick Time Off`\n   - **Start Date**: `June 23, 2026`\n   - **End Date**: `June 24, 2026`\n4. Save that request and approve it so the request is also **Approved**.\n\nAfter completion there must be one approved allocation and one approved leave\nrequest for Marc Demo with the exact values above.\n\n## Rules\n\n- Work on **Marc Demo** only.\n- Use **Sick Time Off** for both records.\n- The allocation must be exactly **4 days**.\n- The leave request must use the exact description and dates above.\n- Do not refuse, cancel, or delete any records.\n- Do not create extra allocations or extra time-off requests."
+    }
+  ]
+}
+[2026-04-29 12:37:17.262 +0800] [31mERROR[39m: [36mError executing agent task: Failed after 3 attempts. Last error: You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.[39m
+    [35mcategory[39m: "agent"
