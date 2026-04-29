@@ -1,0 +1,64 @@
+=== Benchmark Evaluation ===
+  Task:   purchase.update_rfq_note_quantity_confirm
+  Agent:  command
+  DB:     bench_fr_3a5ea588  (auto-isolated)
+  URL:    http://127.0.0.1:61745
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/purchase.update_rfq_note_quantity_confirm__1777452412
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_3a5ea588 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 61745
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=109.7s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 49 calls captured (23 writes, 26 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   1 atomic edits observed
+   Postconditions: 4 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     1 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        1 edits
+  Wall clock:   109.7s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   49
+  Writes:            23 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/purchase.update_rfq_note_quantity_confirm__1777452412/
+
+  Postcondition failures:
+    - PO state is 'draft', expected 'purchase'
+    - Notes are '<span>Keep original receiving instructions.</span>', expected exact delivery note
+    - Dock Seal Kit quantity is 18.0, expected 24
+    - Distractor RFQ state is 'purchase', expected 'draft'
+  Missing expected edits:
+    - purchase.order.note = Deliver dock seals in two labeled pallets.
+    - purchase.order.state = purchase
+  Unexpected extra edits:
+    + purchase.order.state = purchase
