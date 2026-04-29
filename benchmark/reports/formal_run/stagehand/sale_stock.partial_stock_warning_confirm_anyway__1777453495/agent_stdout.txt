@@ -1,0 +1,27 @@
+Stagehand: using openai/gpt-4.1-mini via http://127.0.0.1:57773/v1
+[2026-04-29 17:05:33.048 +0800] [32mINFO[39m: [36mLaunching local browser[39m
+    [35mcategory[39m: "init"
+[2026-04-29 17:05:36.310 +0800] [32mINFO[39m: [36mCreating v3 agent instance[39m
+    [35mcategory[39m: "agent"
+    [35mcua[39m: false
+    [35mmode[39m: "dom"
+    [35mmodel[39m: "openai/gpt-4.1-mini"
+    [35msystemPrompt[39m: ""
+[2026-04-29 17:05:36.311 +0800] [31mERROR[39m: [36mUsing agent in default DOM mode (legacy). Agent will default to 'hybrid' on an upcoming release for improved performance.
+  → https://docs.stagehand.dev/v3/basics/agent
+[39m
+    [35mcategory[39m: "agent"
+Stagehand result: {
+  "success": false,
+  "actions": [],
+  "message": "Failed to execute task: Failed after 3 attempts. Last error: Cannot connect to API: connect ECONNREFUSED 127.0.0.1:57773",
+  "completed": false,
+  "messages": [
+    {
+      "role": "user",
+      "content": "First, log in with username 'admin' and password 'admin'. Then: Navigate to the **Sales** app and open the **Quotations** list.\n\nFind the draft quotation with customer reference **\"S-BENCH-STK-001\"** for\ncustomer **Bench Warehouse Co**. The quotation has a single line:\n\n| Product              | Ordered Qty |\n|----------------------|-------------|\n| Bench Limited Widget | 10          |\n\nThe warehouse has **5** units of **Bench Limited Widget** on hand, less than\nthe 10 ordered. The customer has agreed to receive only **2** units in the\nfirst shipment (even though more are reservable) and the remaining **8**\nunits will be sent in a backorder.\n\n### Steps\n\n1. Open the quotation and click **Confirm** to convert it into a Sales Order.\n   If any warning dialog appears about insufficient stock, dismiss it /\n   confirm anyway so the sale order becomes confirmed.\n2. Click the **Delivery** smart button to navigate to the delivery order.\n3. On the delivery order, the **Done** quantity for **Bench Limited Widget**\n   will be auto-filled to the reserved amount (5). You MUST change the\n   **Done** quantity to **2**.\n4. Click **Validate**.\n5. A backorder dialog will appear asking what to do with the unshipped 8\n   units. Click **Create Backorder** (do NOT click \"No Backorder\").\n\n### Final state\n\n- Sales order **S-BENCH-STK-001** is confirmed (state = \"Sales Order\").\n- The first delivery is **Done** with Done quantity = **2**.\n- A **backorder** delivery exists (state Ready/Waiting/Assigned) for the\n  remaining **8** units of Bench Limited Widget.\n\n### Rules\n\n- You MUST set the Done quantity on the first delivery to exactly **2**\n  (not 5, not 10).\n- You MUST choose **Create Backorder** in the dialog — do NOT choose\n  \"No Backorder\".\n- Do NOT cancel the order or the delivery.\n- Do NOT modify any other quotation or sales order.\n- Do NOT change the products, customer, or prices on the order."
+    }
+  ]
+}
+[2026-04-29 17:05:42.353 +0800] [31mERROR[39m: [36mError executing agent task: Failed after 3 attempts. Last error: Cannot connect to API: connect ECONNREFUSED 127.0.0.1:57773[39m
+    [35mcategory[39m: "agent"
