@@ -1,0 +1,58 @@
+=== Benchmark Evaluation ===
+  Task:   stock.transfer_reserved_to_ready_partial_backorder
+  Agent:  command
+  DB:     bench_fr_45fe1df8  (auto-isolated)
+  URL:    http://127.0.0.1:61072
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/stock.transfer_reserved_to_ready_partial_backorder__1777475461
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_45fe1df8 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 61072
+   Done.
+2. Capturing pre-task state...
+   Captured 6 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=0.3s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 6 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 4 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     5 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      5 edits
+  Extra:        0 edits
+  Wall clock:   0.3s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/stock.transfer_reserved_to_ready_partial_backorder__1777475461/
+
+  Postcondition failures:
+    - Original delivery state is 'confirmed', expected 'done' — did the agent click Validate and Create Backorder?
+    - Original delivery Bench Partial Item Quantity (Done) is 0.0, expected 7.0 — agent likely forgot to edit Quantity from 10 to 7 via the Detailed Operations popup
+    - Original delivery Bench Partial Item demand is 10.0, expected 7.0 (Odoo auto-splits demand on backorder creation)
+    - No backorder delivery found — agent likely clicked 'No Backorder' instead of 'Create Backorder' on the validation dialog
+  Missing expected edits:
+    - stock.picking.backorder_id = D-BENCH-PARTIAL-001
+    - stock.picking.origin = D-BENCH-PARTIAL-001
+    - stock.picking.partner_id = Bench Partial Cust
+    - stock.picking.state = assigned
+    - stock.picking.state = done

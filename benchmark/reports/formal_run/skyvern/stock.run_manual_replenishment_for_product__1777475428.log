@@ -1,0 +1,55 @@
+=== Benchmark Evaluation ===
+  Task:   stock.run_manual_replenishment_for_product
+  Agent:  command
+  DB:     bench_fr_58c9a846  (auto-isolated)
+  URL:    http://127.0.0.1:60778
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/stock.run_manual_replenishment_for_product__1777475428
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_58c9a846 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 60778
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=0.4s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 0 records across 2 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     5 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      5 edits
+  Extra:        0 edits
+  Wall clock:   0.4s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/stock.run_manual_replenishment_for_product__1777475428/
+
+  Postcondition failures:
+    - No purchase.order found for vendor 'Bench Replenish Vendor' — agent did not trigger action_replenish on the orderpoint
+  Missing expected edits:
+    - purchase.order.line.price_unit = 50.0
+    - purchase.order.line.product_id = Bench Replenish Item
+    - purchase.order.line.product_qty = 20.0
+    - purchase.order.partner_id = Bench Replenish Vendor
+    - purchase.order.state = draft
