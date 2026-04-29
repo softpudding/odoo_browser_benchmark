@@ -1,0 +1,63 @@
+=== Benchmark Evaluation ===
+  Task:   mail.create_group_channel_upload_attachment
+  Agent:  command
+  DB:     bench_fr_bd8bfa1e  (auto-isolated)
+  URL:    http://127.0.0.1:49698
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/mail.create_group_channel_upload_attachment__1777447455
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_bd8bfa1e from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 49698
+   Done.
+2. Capturing pre-task state...
+   Captured 3 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=164.9s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 39 calls captured (28 writes, 11 reads)
+   State: 4 records across 1 models
+5. Computing state diff...
+   2 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     2 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        2 edits
+  Wall clock:   164.9s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   39
+  Writes:            28 non-forbidden, 0 forbidden
+  Required ops MISSED: ['discuss.channel.create', 'discuss.channel.message_post']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/mail.create_group_channel_upload_attachment__1777447455/
+
+  Postcondition failures:
+    - Discuss channel 'Bench Project Sync' not found
+  Missing expected edits:
+    - discuss.channel.channel_type = group
+    - discuss.channel.name = Bench Project Sync
+  Unexpected extra edits:
+    + discuss.channel.channel_type = group
+    + discuss.channel.name = Administratorchannel.bobchannel.bobchannel.bob
