@@ -1,0 +1,61 @@
+=== Benchmark Evaluation ===
+  Task:   website_hr_recruitment.edit_job_form_publish_preview
+  Agent:  command
+  DB:     bench_fr_db9e6ffc  (auto-isolated)
+  URL:    http://127.0.0.1:61863
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/website_hr_recruitment.edit_job_form_publish_preview__1777455558
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_db9e6ffc from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 61863
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=95.3s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 60 calls captured (22 writes, 38 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   95.3s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   60
+  Writes:            22 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/website_hr_recruitment.edit_job_form_publish_preview__1777455558/
+
+  Postcondition failures:
+    - Job 'Bench QA Engineer' is not published (is_published is False; expected True after toggling the Published switch)
+    - Job 'Bench QA Engineer' website_published is False; the Published boolean_toggle on the form should have set it True via its onchange
+    - Job description does not contain the exact phrase 'Write automated tests for Bench Products.' (got: '')
+  Missing expected edits:
+    - hr.job.is_published = True
+    - hr.job.website_published = True

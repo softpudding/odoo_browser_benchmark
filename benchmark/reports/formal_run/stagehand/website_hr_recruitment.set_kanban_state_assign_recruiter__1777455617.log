@@ -1,0 +1,63 @@
+=== Benchmark Evaluation ===
+  Task:   website_hr_recruitment.set_kanban_state_assign_recruiter
+  Agent:  command
+  DB:     bench_fr_ac62e7b0  (auto-isolated)
+  URL:    http://127.0.0.1:62653
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/website_hr_recruitment.set_kanban_state_assign_recruiter__1777455617
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_ac62e7b0 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 62653
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=98.2s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 49 calls captured (26 writes, 23 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   2 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     2 edits
+  Matching:     1 edits
+  Missing:      1 edits
+  Extra:        1 edits
+  Wall clock:   98.2s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   49
+  Writes:            26 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/stagehand/website_hr_recruitment.set_kanban_state_assign_recruiter__1777455617/
+
+  Postcondition failures:
+    - kanban_state is 'normal', expected 'done' (Ready for Next Stage)
+    - Stage is 'Second Interview', expected 'Initial Qualification' (the agent should not have changed the stage)
+  Missing expected edits:
+    - hr.applicant.kanban_state = done
+    - hr.applicant.user_id = Recruiter Bob
+  Unexpected extra edits:
+    + hr.applicant.stage_id = Second Interview
+    + hr.applicant.user_id = Recruiter Bob
