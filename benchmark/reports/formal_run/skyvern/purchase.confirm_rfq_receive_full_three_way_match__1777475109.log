@@ -1,0 +1,56 @@
+=== Benchmark Evaluation ===
+  Task:   purchase.confirm_rfq_receive_full_three_way_match
+  Agent:  command
+  DB:     bench_fr_93fc85a5  (auto-isolated)
+  URL:    http://127.0.0.1:57153
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/purchase.confirm_rfq_receive_full_three_way_match__1777475109
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_93fc85a5 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 57153
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=0.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 5 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   0.1s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/purchase.confirm_rfq_receive_full_three_way_match__1777475109/
+
+  Postcondition failures:
+    - PO state is 'draft', expected 'purchase' — agent likely did not click Confirm Order
+    - PO invoice_status is 'no', expected 'to invoice' (3-way match READY). 'no' = receipt not validated; 'invoiced' = a bill was created (forbidden).
+    - PO line 1 (Bench 3WM Bracket) qty_received is 0.0, expected 8.0 — agent did not validate the receipt at full demand
+    - PO line 2 (Bench 3WM Fastener Kit) qty_received is 0.0, expected 12.0 — agent did not validate the receipt at full demand
+    - No stock.picking found for the PO — unexpected (Confirm Order should auto-generate an incoming transfer)
+  Missing expected edits:
+    - purchase.order.invoice_status = to invoice
+    - purchase.order.state = purchase

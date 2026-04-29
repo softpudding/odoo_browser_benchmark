@@ -1,0 +1,53 @@
+=== Benchmark Evaluation ===
+  Task:   purchase.reset_draft_edit_reconfirm
+  Agent:  command
+  DB:     bench_fr_90ca2c06  (auto-isolated)
+  URL:    http://127.0.0.1:57292
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/purchase.reset_draft_edit_reconfirm__1777475120
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_90ca2c06 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 57292
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=0.2s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 2 records across 2 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   0.2s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/purchase.reset_draft_edit_reconfirm__1777475120/
+
+  Postcondition failures:
+    - PO state is 'draft', expected 'purchase' (confirmed)
+    - Terms and Conditions (note): expected 'Updated via browser', got ''
+  Missing expected edits:
+    - purchase.order.note = Updated via browser
+    - purchase.order.state = purchase
