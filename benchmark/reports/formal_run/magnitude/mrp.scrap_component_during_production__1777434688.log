@@ -1,0 +1,65 @@
+=== Benchmark Evaluation ===
+  Task:   mrp.scrap_component_during_production
+  Agent:  command
+  DB:     bench_fr_86949c2e  (auto-isolated)
+  URL:    http://127.0.0.1:52113
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/mrp.scrap_component_during_production__1777434688
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_86949c2e from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 52113
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=557.9s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 144 calls captured (70 writes, 74 reads)
+   State: 2 records across 2 models
+5. Computing state diff...
+   4 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     6 edits
+  Observed:     4 edits
+  Matching:     3 edits
+  Missing:      3 edits
+  Extra:        1 edits
+  Wall clock:   557.9s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    0.9571
+  HarmfulWriteRate:  0.0429
+  StrictClean:       False
+  Total API calls:   144
+  Writes:            67 non-forbidden, 3 forbidden
+  Forbidden ops FIRED: ['stock.scrap.unlink']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/mrp.scrap_component_during_production__1777434688/
+
+  Postcondition failures:
+    - MO state is 'to_close', expected 'done'
+    - MO qty_produced is 0.0, expected 5.0
+    - Scrap quantity is 1.0, expected 2.0
+  Missing expected edits:
+    - mrp.production.qty_produced = 5.0
+    - stock.scrap.scrap_qty = 2.0
+    - mrp.production.state = done
+  Unexpected extra edits:
+    + stock.scrap.scrap_qty = 1.0
