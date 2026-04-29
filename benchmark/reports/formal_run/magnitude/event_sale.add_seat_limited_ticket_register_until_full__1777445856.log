@@ -1,0 +1,58 @@
+=== Benchmark Evaluation ===
+  Task:   event_sale.add_seat_limited_ticket_register_until_full
+  Agent:  command
+  DB:     bench_fr_89b7c363  (auto-isolated)
+  URL:    http://127.0.0.1:54919
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/event_sale.add_seat_limited_ticket_register_until_full__1777445856
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_89b7c363 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 54919
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=285.9s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 99 calls captured (56 writes, 43 reads)
+   State: 8 records across 2 models
+5. Computing state diff...
+   28 atomic edits observed
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.9231
+  Precision:    0.8571
+  Recall:       1.0
+  Expected:     24 edits
+  Observed:     28 edits
+  Matching:     24 edits
+  Missing:      0 edits
+  Extra:        4 edits
+  Wall clock:   285.9s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   99
+  Writes:            56 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/event_sale.add_seat_limited_ticket_register_until_full__1777445856/
+
+  Unexpected extra edits:
+    + event.event.ticket.event_id = Spring Q2 Workshop
+    + event.event.ticket.name = Registration for Spring Q2 Workshop
+    + event.event.ticket.price = 30.0
+    + event.event.ticket.seats_max = 0
