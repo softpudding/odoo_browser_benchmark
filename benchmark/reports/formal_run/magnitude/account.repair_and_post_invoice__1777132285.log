@@ -1,0 +1,62 @@
+=== Benchmark Evaluation ===
+  Task:   account.repair_and_post_invoice
+  Agent:  command
+  DB:     bench_fr_c8a400ae  (auto-isolated)
+  URL:    http://127.0.0.1:56541
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/account.repair_and_post_invoice__1777132285
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_c8a400ae from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 56541
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 110 calls captured (59 writes, 51 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   1 atomic edits observed
+   Postconditions: 4 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     1 edits
+  Matching:     1 edits
+  Missing:      1 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.3333
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   110
+  Writes:            59 non-forbidden, 0 forbidden
+  Required ops MISSED: ['account.move.line.write', 'account.move.write']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/account.repair_and_post_invoice__1777132285/
+
+  Postcondition failures:
+    - Acoustic Panel discount is 0.0, expected 5.0
+    - Focus Lamp discount is 0.0, expected 15.0
+    - Desk Shelf discount is 10.0, expected 0.0
+    - Customer Reference is False, expected 'APR-OPS-READY'
+  Missing expected edits:
+    - account.move.ref = APR-OPS-READY

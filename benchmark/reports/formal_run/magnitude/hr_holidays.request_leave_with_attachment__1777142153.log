@@ -1,0 +1,61 @@
+=== Benchmark Evaluation ===
+  Task:   hr_holidays.request_leave_with_attachment
+  Agent:  command
+  DB:     bench_fr_cce5a5dd  (auto-isolated)
+  URL:    http://127.0.0.1:55937
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/hr_holidays.request_leave_with_attachment__1777142153
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_cce5a5dd from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 55937
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 143 calls captured (81 writes, 62 reads)
+   State: 0 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      4 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   143
+  Writes:            81 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/hr_holidays.request_leave_with_attachment__1777142153/
+
+  Postcondition failures:
+    - No leave request found with description 'Family event'
+  Missing expected edits:
+    - hr.leave.holiday_status_id = Annual Leave
+    - hr.leave.name = Family event
+    - hr.leave.number_of_days = 2.0
+    - hr.leave.state = confirm

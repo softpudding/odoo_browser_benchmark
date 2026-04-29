@@ -1,0 +1,56 @@
+=== Benchmark Evaluation ===
+  Task:   delivery.configure_fixed_rate_carrier_confirm_sale
+  Agent:  command
+  DB:     bench_fr_dda50dcf  (auto-isolated)
+  URL:    http://127.0.0.1:61583
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/delivery.configure_fixed_rate_carrier_confirm_sale__1777136572
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_dda50dcf from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 61583
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=369.6s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 73 calls captured (34 writes, 39 reads)
+   State: 3 records across 1 models
+5. Computing state diff...
+   4 atomic edits observed
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.6667
+  Precision:    0.5
+  Recall:       1.0
+  Expected:     2 edits
+  Observed:     4 edits
+  Matching:     2 edits
+  Missing:      0 edits
+  Extra:        2 edits
+  Wall clock:   369.6s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   73
+  Writes:            34 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/magnitude/delivery.configure_fixed_rate_carrier_confirm_sale__1777136572/
+
+  Unexpected extra edits:
+    + delivery.carrier.delivery_type = fixed
+    + delivery.carrier.name = Harbor Flat Freight
