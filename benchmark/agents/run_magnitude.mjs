@@ -47,10 +47,11 @@ function buildLlmConfig() {
     return {
       provider: "anthropic",
       options: {
-        // Project's README documents Sonnet 4 as the tested target
-        // (claude-sonnet-4-20250514). Use it by default so numbers align
-        // with the project's own benchmark evidence.
-        model: process.env.BENCHMARK_MODEL || "claude-sonnet-4-20250514",
+        // Sonnet 4.6 is Anthropic's current recommended successor to
+        // Sonnet 4 (the original tested target — claude-sonnet-4-20250514 —
+        // is restricted on some workspaces). Override with BENCHMARK_MODEL
+        // if you need to pin a different snapshot.
+        model: process.env.BENCHMARK_MODEL || "claude-sonnet-4-6",
         apiKey: process.env.ANTHROPIC_API_KEY,
       },
     };

@@ -217,11 +217,12 @@ def build_cmd(agent: str, task: str, db: str, outdir: Path, env: dict) -> list[s
         ] + base[5:]
     if agent == "magnitude":
         # Magnitude needs strong visual grounding for pixel-coordinate clicks.
-        # If ANTHROPIC_API_KEY is set, use Claude Sonnet 4 (the project's
-        # documented best target). Otherwise fall back to qwen3.6-plus.
+        # If ANTHROPIC_API_KEY is set, use Claude Sonnet 4.6 (Anthropic's
+        # current recommended successor to Sonnet 4). Otherwise fall back
+        # to qwen3.6-plus.
         anthropic_key = env.get("ANTHROPIC_API_KEY", "")
         if anthropic_key:
-            model = env.get("BENCHMARK_MODEL", "claude-sonnet-4-20250514")
+            model = env.get("BENCHMARK_MODEL", "claude-sonnet-4-6")
             inner = (
                 f"ANTHROPIC_API_KEY={anthropic_key} "
                 f"BENCHMARK_PROVIDER=anthropic "
