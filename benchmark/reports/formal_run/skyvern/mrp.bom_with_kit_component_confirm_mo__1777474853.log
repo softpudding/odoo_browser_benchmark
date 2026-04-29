@@ -1,0 +1,53 @@
+=== Benchmark Evaluation ===
+  Task:   mrp.bom_with_kit_component_confirm_mo
+  Agent:  command
+  DB:     bench_fr_d9731c17  (auto-isolated)
+  URL:    http://127.0.0.1:54327
+  Output: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/mrp.bom_with_kit_component_confirm_mo__1777474853
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_d9731c17 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 54327
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=0.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      3 edits
+  Extra:        0 edits
+  Wall clock:   0.1s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/git/odoo/benchmark/reports/formal_run/skyvern/mrp.bom_with_kit_component_confirm_mo__1777474853/
+
+  Postcondition failures:
+    - Manufacturing order 'M-BENCH-KIT-001' not found
+  Missing expected edits:
+    - mrp.production.name = M-BENCH-KIT-001
+    - mrp.production.product_qty = 1.0
+    - mrp.production.state = confirmed
