@@ -1,0 +1,66 @@
+=== Benchmark Evaluation ===
+  Task:   crm.create_opportunity_set_close_date_priority
+  Agent:  command
+  DB:     bench_fr_932fc059  (auto-isolated)
+  URL:    http://127.0.0.1:59940
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/crm.create_opportunity_set_close_date_priority__1777527098
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_932fc059 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 59940
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=434.7s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 61 calls captured (26 writes, 35 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   12 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     6 edits
+  Observed:     12 edits
+  Matching:     5 edits
+  Missing:      1 edits
+  Extra:        7 edits
+  Wall clock:   434.7s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   61
+  Writes:            26 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/crm.create_opportunity_set_close_date_priority__1777527098/
+
+  Postcondition failures:
+    - Customer is 'False', expected 'Azure Interior'
+  Missing expected edits:
+    - crm.lead.partner_id = Azure Interior
+  Unexpected extra edits:
+    + crm.lead.date_deadline = None
+    + crm.lead.expected_revenue = 0.0
+    + crm.lead.name = Test Opportunity
+    + crm.lead.partner_id = None
+    + crm.lead.priority = 0
+    + crm.lead.type = opportunity
+    + crm.lead.partner_id = None
