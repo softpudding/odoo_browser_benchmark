@@ -61,8 +61,23 @@ def main():
                 print(text, flush=True)
                 last_data = text
 
-                # Look for completion signals in the streamed data
-                if "TERMINATE" in text or "completed" in text.lower():
+                event = None
+                if text.startswith("data:"):
+                    try:
+                        event = json.loads(text.removeprefix("data:").strip())
+                    except json.JSONDecodeError:
+                        event = None
+
+                # Agent-E signals success either through final answer text or
+                # through an SSE event like {"message": "DONE", "type": "done"}.
+                event_message = str((event or {}).get("message", ""))
+                event_type = str((event or {}).get("type", ""))
+                if (
+                    "TERMINATE" in text
+                    or "completed" in text.lower()
+                    or event_message.upper() == "DONE"
+                    or event_type.upper() == "DONE"
+                ):
                     final_result = "completed"
 
             if final_result == "completed":
