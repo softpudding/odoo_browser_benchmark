@@ -1,0 +1,57 @@
+=== Benchmark Evaluation ===
+  Task:   hr_recruitment.schedule_second_interview_with_feedback
+  Agent:  command
+  DB:     bench_fr_e0ebe7d5  (auto-isolated)
+  URL:    http://127.0.0.1:57898
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/hr_recruitment.schedule_second_interview_with_feedback__1777534457
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_e0ebe7d5 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 57898
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=498.4s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 119 calls captured (69 writes, 50 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   1 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     1 edits
+  Observed:     1 edits
+  Matching:     1 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   498.4s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   119
+  Writes:            69 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/hr_recruitment.schedule_second_interview_with_feedback__1777534457/
+
+  Postcondition failures:
+    - Meeting start is 2026-04-30 08:00:00, expected 2026-06-25 14:00:00
+    - Meeting end is 2026-04-30 08:30:00, expected 2026-06-25 14:30:00
