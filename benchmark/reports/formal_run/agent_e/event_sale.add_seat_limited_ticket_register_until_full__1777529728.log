@@ -1,0 +1,68 @@
+=== Benchmark Evaluation ===
+  Task:   event_sale.add_seat_limited_ticket_register_until_full
+  Agent:  command
+  DB:     bench_fr_f82c0f5b  (auto-isolated)
+  URL:    http://127.0.0.1:53790
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/event_sale.add_seat_limited_ticket_register_until_full__1777529728
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_f82c0f5b from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 53790
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=509.8s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 118 calls captured (50 writes, 68 reads)
+   State: 6 records across 2 models
+5. Computing state diff...
+   20 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     24 edits
+  Observed:     20 edits
+  Matching:     17 edits
+  Missing:      7 edits
+  Extra:        3 edits
+  Wall clock:   509.8s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   118
+  Writes:            50 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/event_sale.add_seat_limited_ticket_register_until_full__1777529728/
+
+  Postcondition failures:
+    - Expected the 5 registrations ['VIP-1', 'VIP-2', 'VIP-3', 'VIP-4', 'VIP-5'] on 'Spring Q2 Workshop'; found ['VIP-1', 'VIP-2', 'VIP-3', 'VIP-4']
+  Missing expected edits:
+    - event.registration.event_ticket_id = VIP Seat
+    - event.registration.event_ticket_id = VIP Seat
+    - event.registration.event_ticket_id = VIP Seat
+    - event.registration.event_id = Spring Q2 Workshop
+    - event.registration.event_ticket_id = VIP Seat
+    - event.registration.name = VIP-5
+    - event.registration.state = open
+  Unexpected extra edits:
+    + event.registration.event_ticket_id = None
+    + event.registration.event_ticket_id = None
+    + event.registration.event_ticket_id = None
