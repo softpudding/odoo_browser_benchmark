@@ -1,0 +1,62 @@
+=== Benchmark Evaluation ===
+  Task:   website_blog.create_post_with_cover_tag_publish
+  Agent:  command
+  DB:     bench_fr_528895e1  (auto-isolated)
+  URL:    http://127.0.0.1:59777
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/website_blog.create_post_with_cover_tag_publish__1777569857
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_528895e1 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 59777
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 62 calls captured (26 writes, 36 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   3 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     3 edits
+  Matching:     2 edits
+  Missing:      1 edits
+  Extra:        1 edits
+  Wall clock:   600.1s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   62
+  Writes:            26 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/website_blog.create_post_with_cover_tag_publish__1777569857/
+
+  Postcondition failures:
+    - Blog post is not published
+    - Subtitle is False
+    - Tags are []
+  Missing expected edits:
+    - blog.post.website_published = True
+  Unexpected extra edits:
+    + blog.post.website_published = None

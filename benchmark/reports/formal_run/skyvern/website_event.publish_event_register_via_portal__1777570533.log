@@ -1,0 +1,43 @@
+=== Benchmark Evaluation ===
+  Task:   website_event.publish_event_register_via_portal
+  Agent:  command
+  DB:     bench_fr_e0784d66  (auto-isolated)
+  URL:    http://127.0.0.1:61977
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/website_event.publish_event_register_via_portal__1777570533
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_e0784d66 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+Traceback (most recent call last):
+  File "/Users/yangxiao/odoo_browser_benchmark/.venv/bin/benchmark-eval", line 10, in <module>
+    sys.exit(main())
+             ~~~~^^
+  File "/Users/yangxiao/odoo_browser_benchmark/benchmark/eval.py", line 1684, in main
+    cmd_run(args)
+    ~~~~~~~^^^^^^
+  File "/Users/yangxiao/odoo_browser_benchmark/benchmark/eval.py", line 1273, in cmd_run
+    return _run_episode(
+        task_dir=task_dir,
+    ...<19 lines>...
+        output_dir=output_dir,
+    )
+  File "/Users/yangxiao/odoo_browser_benchmark/benchmark/eval.py", line 1336, in _run_episode
+    _prepare_episode(
+    ~~~~~~~~~~~~~~~~^
+        db,
+        ^^^
+    ...<4 lines>...
+        conf_path=conf_path,
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/yangxiao/odoo_browser_benchmark/benchmark/eval.py", line 1010, in _prepare_episode
+    odoo_proc.wait_ready()
+    ~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/yangxiao/odoo_browser_benchmark/benchmark/eval.py", line 158, in wait_ready
+    raise RuntimeError(f"Odoo not ready after {timeout}s on port {self.port}")
+RuntimeError: Odoo not ready after 60s on port 61977
