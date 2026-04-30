@@ -1,0 +1,58 @@
+=== Benchmark Evaluation ===
+  Task:   website_sale.configure_delivery_method_weight
+  Agent:  command
+  DB:     bench_fr_4d5eed15  (auto-isolated)
+  URL:    http://127.0.0.1:51358
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/website_sale.configure_delivery_method_weight__1777554576
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_4d5eed15 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 51358
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=524.6s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 36 calls captured (11 writes, 25 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   3 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     3 edits
+  Matching:     3 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   524.6s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   36
+  Writes:            11 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/website_sale.configure_delivery_method_weight__1777554576/
+
+  Postcondition failures:
+    - Expected exactly 2 delivery.price.rule rows on 'Bench Weight Shipping', found 0
+    - No price rule matching (variable=weight, operator='<=', max_value=5.0) found; existing rules: []
+    - No price rule matching (variable=weight, operator='>', max_value=5.0) found; existing rules: []

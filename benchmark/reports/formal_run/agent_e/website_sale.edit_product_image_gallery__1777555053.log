@@ -1,0 +1,59 @@
+=== Benchmark Evaluation ===
+  Task:   website_sale.edit_product_image_gallery
+  Agent:  command
+  DB:     bench_fr_127eda4a  (auto-isolated)
+  URL:    http://127.0.0.1:53185
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/website_sale.edit_product_image_gallery__1777555053
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_127eda4a from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 53185
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=562.2s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 30 calls captured (12 writes, 18 reads)
+   State: 0 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   562.2s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   30
+  Writes:            12 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/website_sale.edit_product_image_gallery__1777555053/
+
+  Postcondition failures:
+    - No product.image with name 'Bench Side View' found for product 'Bench Gallery Mug' (found 0 total images: [])
+  Missing expected edits:
+    - product.image.name = Bench Side View
+    - product.image.product_tmpl_id = Bench Gallery Mug
