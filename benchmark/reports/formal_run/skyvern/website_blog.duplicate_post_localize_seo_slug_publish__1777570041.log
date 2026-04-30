@@ -1,0 +1,67 @@
+=== Benchmark Evaluation ===
+  Task:   website_blog.duplicate_post_localize_seo_slug_publish
+  Agent:  command
+  DB:     bench_fr_b7596ddb  (auto-isolated)
+  URL:    http://127.0.0.1:60510
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/website_blog.duplicate_post_localize_seo_slug_publish__1777570041
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_b7596ddb from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Starting Odoo...
+   Odoo ready on port 60510
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 72 calls captured (35 writes, 37 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   5 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     5 edits
+  Observed:     5 edits
+  Matching:     1 edits
+  Missing:      4 edits
+  Extra:        4 edits
+  Wall clock:   600.1s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   72
+  Writes:            35 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/website_blog.duplicate_post_localize_seo_slug_publish__1777570041/
+
+  Postcondition failures:
+    - Duplicate post is not published
+    - SEO title is False
+    - SEO description is False
+  Missing expected edits:
+    - blog.post.is_published = True
+    - blog.post.website_meta_description = Safety baseline for EU warehouse operations and dock checks.
+    - blog.post.website_meta_title = Warehouse Safety Primer for EU Teams
+    - blog.post.website_published = True
+  Unexpected extra edits:
+    + blog.post.is_published = None
+    + blog.post.website_meta_description = None
+    + blog.post.website_meta_title = None
+    + blog.post.website_published = None

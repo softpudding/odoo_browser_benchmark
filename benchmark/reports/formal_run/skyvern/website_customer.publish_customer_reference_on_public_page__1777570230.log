@@ -1,0 +1,53 @@
+=== Benchmark Evaluation ===
+  Task:   website_customer.publish_customer_reference_on_public_page
+  Agent:  command
+  DB:     bench_fr_d3ac032a  (auto-isolated)
+  URL:    http://127.0.0.1:61083
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/website_customer.publish_customer_reference_on_public_page__1777570230
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_d3ac032a from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 61083
+   Done.
+2. Capturing pre-task state...
+   Captured 9 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 49 calls captured (21 writes, 28 reads)
+   State: 9 records across 1 models
+5. Computing state diff...
+   2 atomic edits observed
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  1.0
+  Precision:    1.0
+  Recall:       1.0
+  Expected:     2 edits
+  Observed:     2 edits
+  Matching:     2 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   600.1s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   49
+  Writes:            21 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/website_customer.publish_customer_reference_on_public_page__1777570230/
+
