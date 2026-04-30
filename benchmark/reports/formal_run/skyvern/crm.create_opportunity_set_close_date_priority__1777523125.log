@@ -1,0 +1,63 @@
+=== Benchmark Evaluation ===
+  Task:   crm.create_opportunity_set_close_date_priority
+  Agent:  command
+  DB:     bench_fr_00c7f575  (auto-isolated)
+  URL:    http://127.0.0.1:54389
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/crm.create_opportunity_set_close_date_priority__1777523125
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_00c7f575 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 54389
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 35 calls captured (12 writes, 23 reads)
+   State: 0 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     6 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      6 edits
+  Extra:        0 edits
+  Wall clock:   600.1s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   35
+  Writes:            12 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/crm.create_opportunity_set_close_date_priority__1777523125/
+
+  Postcondition failures:
+    - Expected exactly 1 opportunity named 'Vertex Renewal Expansion', found 0
+  Missing expected edits:
+    - crm.lead.date_deadline = 2026-05-20
+    - crm.lead.expected_revenue = 42000.0
+    - crm.lead.name = Vertex Renewal Expansion
+    - crm.lead.partner_id = Azure Interior
+    - crm.lead.priority = 3
+    - crm.lead.type = opportunity
