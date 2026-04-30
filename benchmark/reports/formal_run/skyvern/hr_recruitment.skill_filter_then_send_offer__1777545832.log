@@ -1,0 +1,84 @@
+=== Benchmark Evaluation ===
+  Task:   hr_recruitment.skill_filter_then_send_offer
+  Agent:  command
+  DB:     bench_fr_eacdb82f  (auto-isolated)
+  URL:    http://127.0.0.1:60502
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/hr_recruitment.skill_filter_then_send_offer__1777545832
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_eacdb82f from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 60502
+   Done.
+2. Capturing pre-task state...
+   Captured 298 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 43 calls captured (20 writes, 23 reads)
+   State: 305 records across 2 models
+5. Computing state diff...
+   33 atomic edits observed
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.2162
+  Precision:    0.1212
+  Recall:       1.0
+  Expected:     4 edits
+  Observed:     33 edits
+  Matching:     4 edits
+  Missing:      0 edits
+  Extra:        29 edits
+  Wall clock:   600.1s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   43
+  Writes:            20 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/hr_recruitment.skill_filter_then_send_offer__1777545832/
+
+  Unexpected extra edits:
+    + mail.message.model = mailing.contact
+    + mail.message.model = hr.employee
+    + mail.message.message_type = notification
+    + mail.message.model = crm.team.member
+    + mail.message.record_name = Administrator
+    + mail.message.subject = None
+    + mail.message.model = hr.employee
+    + mail.message.message_type = comment
+    + mail.message.model = discuss.channel
+    + mail.message.record_name = Administrator, OdooBot
+    + mail.message.subject = None
+    + mail.message.subject = Job Offer - QA Lead
+    + mail.message.message_type = user_notification
+    + mail.message.model = gamification.badge.user
+    + mail.message.record_name = Community hero
+    + mail.message.subject = 🎉 You've earned the Community hero badge!
+    + mail.message.message_type = notification
+    + mail.message.model = gamification.badge
+    + mail.message.record_name = Community hero
+    + mail.message.subject = None
+    + mail.message.model = gamification.badge.user
+    + mail.message.message_type = user_notification
+    + mail.message.model = gamification.badge.user
+    + mail.message.record_name = Get started
+    + mail.message.subject = 🎉 You've earned the Get started badge!
+    + mail.message.message_type = notification
+    + mail.message.model = gamification.badge
+    + mail.message.record_name = Get started
+    + mail.message.subject = None
+    + mail.message.model = gamification.badge.user
