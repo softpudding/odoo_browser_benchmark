@@ -1,0 +1,53 @@
+=== Benchmark Evaluation ===
+  Task:   calendar.create_meeting_invite_attendees_send
+  Agent:  command
+  DB:     bench_fr_e1fc4387  (auto-isolated)
+  URL:    http://127.0.0.1:50264
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/calendar.create_meeting_invite_attendees_send__1777524718
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_e1fc4387 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 50264
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=399.5s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 62 calls captured (37 writes, 25 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   2 atomic edits observed
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  1.0
+  Precision:    1.0
+  Recall:       1.0
+  Expected:     2 edits
+  Observed:     2 edits
+  Matching:     2 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   399.5s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   62
+  Writes:            37 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/calendar.create_meeting_invite_attendees_send__1777524718/
+
