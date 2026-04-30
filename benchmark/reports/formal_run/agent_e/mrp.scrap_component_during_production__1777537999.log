@@ -1,0 +1,69 @@
+=== Benchmark Evaluation ===
+  Task:   mrp.scrap_component_during_production
+  Agent:  command
+  DB:     bench_fr_5d3c7cc5  (auto-isolated)
+  URL:    http://127.0.0.1:56119
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/mrp.scrap_component_during_production__1777537999
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_5d3c7cc5 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 56119
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=456.4s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 66 calls captured (36 writes, 30 reads)
+   State: 3 records across 2 models
+5. Computing state diff...
+   10 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     6 edits
+  Observed:     10 edits
+  Matching:     4 edits
+  Missing:      2 edits
+  Extra:        6 edits
+  Wall clock:   456.4s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    0.9722
+  HarmfulWriteRate:  0.0278
+  StrictClean:       False
+  Total API calls:   66
+  Writes:            35 non-forbidden, 1 forbidden
+  Forbidden ops FIRED: ['stock.scrap.unlink']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/mrp.scrap_component_during_production__1777537999/
+
+  Postcondition failures:
+    - Expected exactly 1 scrap for MO M-BENCH-PROD-001, found 2: ['New', 'SP/00001']
+    - Scrap New state is 'draft', expected 'done' (the scrap wizard must be validated)
+    - Scrap quantity is 1.0, expected 2.0
+  Missing expected edits:
+    - stock.scrap.scrap_qty = 2.0
+    - stock.scrap.state = done
+  Unexpected extra edits:
+    + stock.scrap.product_id = Bench Component A
+    + stock.scrap.production_id = M-BENCH-PROD-001
+    + stock.scrap.scrap_qty = 1.0
+    + stock.scrap.state = done
+    + stock.scrap.scrap_qty = 1.0
+    + stock.scrap.state = draft
