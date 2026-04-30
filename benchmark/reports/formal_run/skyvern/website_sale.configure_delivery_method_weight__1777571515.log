@@ -1,0 +1,53 @@
+=== Benchmark Evaluation ===
+  Task:   website_sale.configure_delivery_method_weight
+  Agent:  command
+  DB:     bench_fr_c8d07b00  (auto-isolated)
+  URL:    http://127.0.0.1:65282
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/website_sale.configure_delivery_method_weight__1777571515
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_c8d07b00 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 65282
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      3 edits
+  Extra:        0 edits
+  Wall clock:   600.1s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/website_sale.configure_delivery_method_weight__1777571515/
+
+  Postcondition failures:
+    - delivery.carrier 'Bench Weight Shipping' not found
+  Missing expected edits:
+    - delivery.carrier.delivery_type = base_on_rule
+    - delivery.carrier.is_published = True
+    - delivery.carrier.name = Bench Weight Shipping
