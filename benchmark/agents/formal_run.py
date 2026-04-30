@@ -756,6 +756,7 @@ def main() -> int:
         "DASHSCOPE_API_KEY": dk,
         "BENCHMARK_MODEL": os.environ.get("BENCHMARK_MODEL", "qwen3.6-plus"),
         "OPENBROWSER_CHROME_UUID": os.environ.get("OPENBROWSER_CHROME_UUID", ""),
+        "AGENT_E_URL": os.environ.get("AGENT_E_URL", ""),
         # Optional: forward Anthropic key so run_magnitude.mjs can use Claude
         # for its pixel-coordinate visual grounding. Empty string means
         # qwen fallback path remains active.
