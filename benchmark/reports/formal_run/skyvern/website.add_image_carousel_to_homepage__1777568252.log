@@ -1,0 +1,57 @@
+=== Benchmark Evaluation ===
+  Task:   website.add_image_carousel_to_homepage
+  Agent:  command
+  DB:     bench_fr_fcb847fd  (auto-isolated)
+  URL:    http://127.0.0.1:54430
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/website.add_image_carousel_to_homepage__1777568252
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_fcb847fd from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 54430
+   Done.
+2. Capturing pre-task state...
+   Captured 7 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 64 calls captured (23 writes, 41 reads)
+   State: 7 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     0 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   600.1s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   64
+  Writes:            23 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/website.add_image_carousel_to_homepage__1777568252/
+
+  Postcondition failures:
+    - Expected an image gallery / carousel block on the page; arch_db does not contain s_image_gallery, s_carousel, or carousel.
+    - Expected at least 3 <img> children in the gallery block; arch_db contains only 0.
