@@ -1,0 +1,57 @@
+=== Benchmark Evaluation ===
+  Task:   mail.schedule_activity_on_partner_with_note
+  Agent:  command
+  DB:     bench_fr_f52c7a18  (auto-isolated)
+  URL:    http://127.0.0.1:49619
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/mail.schedule_activity_on_partner_with_note__1777548246
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_f52c7a18 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 49619
+   Done.
+2. Capturing pre-task state...
+   Captured 8 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=338.4s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 40 calls captured (21 writes, 19 reads)
+   State: 8 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     0 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   338.4s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   40
+  Writes:            21 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/mail.schedule_activity_on_partner_with_note__1777548246/
+
+  Postcondition failures:
+    - Activity date_deadline is 2026-05-05, expected 2026-05-15
+    - Activity note does not contain 'Q2 plan'. Note text (stripped) was: 'Discu'

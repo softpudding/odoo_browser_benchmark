@@ -1,0 +1,62 @@
+=== Benchmark Evaluation ===
+  Task:   mail.create_channel_invite_members
+  Agent:  command
+  DB:     bench_fr_036faadc  (auto-isolated)
+  URL:    http://127.0.0.1:64017
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/mail.create_channel_invite_members__1777547369
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_036faadc from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 64017
+   Done.
+2. Capturing pre-task state...
+   Captured 3 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=508.4s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 46 calls captured (32 writes, 14 reads)
+   State: 5 records across 1 models
+5. Computing state diff...
+   4 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     4 edits
+  Matching:     1 edits
+  Missing:      1 edits
+  Extra:        3 edits
+  Wall clock:   508.4s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   46
+  Writes:            32 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/mail.create_channel_invite_members__1777547369/
+
+  Postcondition failures:
+    - Channel type is 'channel', expected 'group' (a private group channel)
+  Missing expected edits:
+    - discuss.channel.channel_type = group
+  Unexpected extra edits:
+    + discuss.channel.channel_type = group
+    + discuss.channel.name = 
+    + discuss.channel.channel_type = channel

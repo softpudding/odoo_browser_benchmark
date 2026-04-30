@@ -1,0 +1,64 @@
+=== Benchmark Evaluation ===
+  Task:   mail.create_group_channel_upload_attachment
+  Agent:  command
+  DB:     bench_fr_bf738db2  (auto-isolated)
+  URL:    http://127.0.0.1:65304
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/mail.create_group_channel_upload_attachment__1777547906
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_bf738db2 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 65304
+   Done.
+2. Capturing pre-task state...
+   Captured 3 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 45 calls captured (32 writes, 13 reads)
+   State: 5 records across 1 models
+5. Computing state diff...
+   4 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     4 edits
+  Matching:     1 edits
+  Missing:      1 edits
+  Extra:        3 edits
+  Wall clock:   600.1s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   45
+  Writes:            32 non-forbidden, 0 forbidden
+  Required ops MISSED: ['discuss.channel.create', 'discuss.channel.message_post']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/mail.create_group_channel_upload_attachment__1777547906/
+
+  Postcondition failures:
+    - Channel type is 'channel', expected 'group' (a private group channel, not a public channel or DM)
+    - No ir.attachment named 'sync-notes.txt' linked to channel 'Bench Project Sync' (id=5); all attachments on this channel: []
+  Missing expected edits:
+    - discuss.channel.channel_type = group
+  Unexpected extra edits:
+    + discuss.channel.channel_type = group
+    + discuss.channel.name = 
+    + discuss.channel.channel_type = channel
