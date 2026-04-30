@@ -510,6 +510,8 @@ def run_one(agent: str, task: str, base_env: dict, worker: str) -> dict:
         "verdict": verdict, "f1": f1,
         "wall_clock": wall,
         "total_tokens": token_summary.get("total_tokens", 0),
+        "model": base_env.get("BENCHMARK_MODEL", ""),
+        "trace_clean": os.environ.get("BENCHMARK_TRACE_CLEAN", "true").lower() != "false",
         "output_dir": str(outdir.relative_to(REPO_ROOT)),
         "isolated_port": isolated_port,
         "isolation_failed": isolation_failed,
