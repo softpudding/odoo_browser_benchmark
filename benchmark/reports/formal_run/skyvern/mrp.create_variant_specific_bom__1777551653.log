@@ -1,0 +1,61 @@
+=== Benchmark Evaluation ===
+  Task:   mrp.create_variant_specific_bom
+  Agent:  command
+  DB:     bench_fr_925c5402  (auto-isolated)
+  URL:    http://127.0.0.1:57805
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/mrp.create_variant_specific_bom__1777551653
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_925c5402 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 57805
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 36 calls captured (16 writes, 20 reads)
+   State: 0 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      4 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   36
+  Writes:            16 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/mrp.create_variant_specific_bom__1777551653/
+
+  Postcondition failures:
+    - No mrp.bom for 'Bench T-Shirt' — the task requires creating one for the Red variant
+  Missing expected edits:
+    - mrp.bom.product_id = Bench T-Shirt (Red)
+    - mrp.bom.product_qty = 1.0
+    - mrp.bom.product_tmpl_id = Bench T-Shirt
+    - mrp.bom.type = normal
