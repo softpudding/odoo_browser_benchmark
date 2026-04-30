@@ -1,0 +1,54 @@
+=== Benchmark Evaluation ===
+  Task:   delivery.country_rule_and_free_threshold_apply_to_so
+  Agent:  command
+  DB:     bench_fr_037189fd  (auto-isolated)
+  URL:    http://127.0.0.1:58153
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/delivery.country_rule_and_free_threshold_apply_to_so__1777523846
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_037189fd from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 58153
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      4 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/delivery.country_rule_and_free_threshold_apply_to_so__1777523846/
+
+  Postcondition failures:
+    - Delivery method 'US Harbor Freight' not found
+  Missing expected edits:
+    - delivery.carrier.amount = 100.0
+    - delivery.carrier.delivery_type = fixed
+    - delivery.carrier.free_over = True
+    - delivery.carrier.name = US Harbor Freight
