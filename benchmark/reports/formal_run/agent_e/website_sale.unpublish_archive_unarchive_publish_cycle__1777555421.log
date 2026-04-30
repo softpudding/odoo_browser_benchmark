@@ -1,0 +1,62 @@
+=== Benchmark Evaluation ===
+  Task:   website_sale.unpublish_archive_unarchive_publish_cycle
+  Agent:  command
+  DB:     bench_fr_54590e4d  (auto-isolated)
+  URL:    http://127.0.0.1:54569
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/website_sale.unpublish_archive_unarchive_publish_cycle__1777555421
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_54590e4d from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 54569
+   Done.
+2. Capturing pre-task state...
+   Captured 14 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=1094.7s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 44 calls captured (21 writes, 23 reads)
+   State: 14 records across 1 models
+5. Computing state diff...
+   2 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     1 edits
+  Observed:     2 edits
+  Matching:     0 edits
+  Missing:      1 edits
+  Extra:        2 edits
+  Wall clock:   1094.7s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   44
+  Writes:            21 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/website_sale.unpublish_archive_unarchive_publish_cycle__1777555421/
+
+  Postcondition failures:
+    - Product 'Bench Cycle Gadget' is not published; expected is_published=True
+    - Product 'Bench Cycle Gadget' default_code is 'BCG-INIT', expected 'BCG-RESTORED'
+  Missing expected edits:
+    - product.template.default_code = BCG-RESTORED
+  Unexpected extra edits:
+    + product.template.is_published = None
+    + product.template.website_published = None

@@ -1,0 +1,53 @@
+=== Benchmark Evaluation ===
+  Task:   website_sale.publish_product_set_price
+  Agent:  command
+  DB:     bench_fr_1ea4e9ab  (auto-isolated)
+  URL:    http://127.0.0.1:53198
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/website_sale.publish_product_set_price__1777555057
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_1ea4e9ab from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 53198
+   Done.
+2. Capturing pre-task state...
+   Captured 14 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=1746.2s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 30 calls captured (13 writes, 17 reads)
+   State: 14 records across 1 models
+5. Computing state diff...
+   3 atomic edits observed
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  1.0
+  Precision:    1.0
+  Recall:       1.0
+  Expected:     3 edits
+  Observed:     3 edits
+  Matching:     3 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   1746.2s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   30
+  Writes:            13 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/website_sale.publish_product_set_price__1777555057/
+
