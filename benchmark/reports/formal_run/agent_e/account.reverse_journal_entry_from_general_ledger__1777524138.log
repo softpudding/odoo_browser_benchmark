@@ -1,0 +1,61 @@
+=== Benchmark Evaluation ===
+  Task:   account.reverse_journal_entry_from_general_ledger
+  Agent:  command
+  DB:     bench_fr_a352db0a  (auto-isolated)
+  URL:    http://127.0.0.1:63666
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/account.reverse_journal_entry_from_general_ledger__1777524138
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_a352db0a from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 63666
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=555.5s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 240 calls captured (104 writes, 136 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      3 edits
+  Extra:        0 edits
+  Wall clock:   555.5s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   240
+  Writes:            104 non-forbidden, 0 forbidden
+  Required ops MISSED: ['account.move.reversal.refund_moves']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/account.reverse_journal_entry_from_general_ledger__1777524138/
+
+  Postcondition failures:
+    - No account.move with reversed_entry_id=BENCH-GL-REV.id found (reversal entry was not created)
+  Missing expected edits:
+    - account.move.move_type = entry
+    - account.move.ref = Reversal of: MISC/2026/04/0001
+    - account.move.state = posted
