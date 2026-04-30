@@ -1,0 +1,58 @@
+=== Benchmark Evaluation ===
+  Task:   survey.create_survey_one_page_publish_share
+  Agent:  command
+  DB:     bench_fr_f6cd02db  (auto-isolated)
+  URL:    http://127.0.0.1:51485
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/survey.create_survey_one_page_publish_share__1777551129
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_f6cd02db from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 51485
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=593.4s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 58 calls captured (21 writes, 37 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   3 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     3 edits
+  Matching:     3 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   593.4s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   58
+  Writes:            21 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/survey.create_survey_one_page_publish_share__1777551129/
+
+  Postcondition failures:
+    - Expected exactly 3 questions, found 1
+    - Missing question titled 'What can we improve?' (found: ['How satisfied are you?'])
+    - Missing question titled 'Would you recommend us?' (found: ['How satisfied are you?'])
