@@ -37,6 +37,7 @@ setup_openai_compat()
 def main():
     full_instruction = build_instruction()
     agent_e_url = os.environ.get("AGENT_E_URL", "http://127.0.0.1:8000")
+    timeout = int(os.environ.get("AGENT_E_TIMEOUT", "1800"))
 
     payload = json.dumps({"command": full_instruction}).encode()
     req = urllib.request.Request(
@@ -50,7 +51,7 @@ def main():
     )
 
     try:
-        with urllib.request.urlopen(req, timeout=600) as resp:
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
             # Agent-E returns a StreamingResponse — read it chunk by chunk
             last_data = ""
             final_result = None
@@ -77,6 +78,7 @@ def main():
                     or "completed" in text.lower()
                     or event_message.upper() == "DONE"
                     or event_type.upper() == "DONE"
+                    or event_type.upper() == "ANSWER"
                 ):
                     final_result = "completed"
 
