@@ -1,0 +1,54 @@
+=== Benchmark Evaluation ===
+  Task:   event.add_event_questions_to_registration
+  Agent:  command
+  DB:     bench_fr_2653b366  (auto-isolated)
+  URL:    http://127.0.0.1:49750
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/event.add_event_questions_to_registration__1777528634
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_2653b366 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 49750
+   Done.
+2. Capturing pre-task state...
+   Captured 3 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=314.1s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 43 calls captured (15 writes, 28 reads)
+   State: 5 records across 1 models
+5. Computing state diff...
+   4 atomic edits observed
+6. Scoring...
+
+==================================================
+  RESULT: PASS  (Strict: PASS)
+  StateDiffF1:  1.0
+  Precision:    1.0
+  Recall:       1.0
+  Expected:     4 edits
+  Observed:     4 edits
+  Matching:     4 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   314.1s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   43
+  Writes:            15 non-forbidden, 0 forbidden
+  Required ops MISSED: ['event.question.create']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/event.add_event_questions_to_registration__1777528634/
+
