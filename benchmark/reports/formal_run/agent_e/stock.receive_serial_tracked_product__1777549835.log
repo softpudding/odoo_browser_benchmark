@@ -1,0 +1,53 @@
+=== Benchmark Evaluation ===
+  Task:   stock.receive_serial_tracked_product
+  Agent:  command
+  DB:     bench_fr_467ec1be  (auto-isolated)
+  URL:    http://127.0.0.1:62653
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/stock.receive_serial_tracked_product__1777549835
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_467ec1be from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 62653
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=554.1s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 64 calls captured (32 writes, 32 reads)
+   State: 4 records across 2 models
+5. Computing state diff...
+   7 atomic edits observed
+6. Scoring...
+
+==================================================
+  RESULT: PASS  (Strict: PASS)
+  StateDiffF1:  1.0
+  Precision:    1.0
+  Recall:       1.0
+  Expected:     7 edits
+  Observed:     7 edits
+  Matching:     7 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   554.1s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   64
+  Writes:            32 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/stock.receive_serial_tracked_product__1777549835/
+
