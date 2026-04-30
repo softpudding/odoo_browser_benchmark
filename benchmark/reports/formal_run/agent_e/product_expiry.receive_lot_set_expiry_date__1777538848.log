@@ -1,0 +1,60 @@
+=== Benchmark Evaluation ===
+  Task:   product_expiry.receive_lot_set_expiry_date
+  Agent:  command
+  DB:     bench_fr_b11431ee  (auto-isolated)
+  URL:    http://127.0.0.1:59805
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/product_expiry.receive_lot_set_expiry_date__1777538848
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_b11431ee from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 59805
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=489.3s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 83 calls captured (37 writes, 46 reads)
+   State: 2 records across 2 models
+5. Computing state diff...
+   2 atomic edits observed
+   Postconditions: 3 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     3 edits
+  Observed:     2 edits
+  Matching:     2 edits
+  Missing:      1 edits
+  Extra:        0 edits
+  Wall clock:   489.3s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   83
+  Writes:            37 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/product_expiry.receive_lot_set_expiry_date__1777538848/
+
+  Postcondition failures:
+    - Receipt state is 'assigned', expected 'done' — agent likely failed to validate after creating the lot
+    - stock.lot.expiration_date is 2026-05-30 08:50:34.976362 (≈ 30 days from today), expected ≈ today+60 (±2). Agent likely left the 30-day template default.
+    - stock.lot.removal_date is 2026-05-25 08:50:34.976362 (≈ 25 days from today), expected ≈ today+55 (±2).
+  Missing expected edits:
+    - stock.picking.state = done
