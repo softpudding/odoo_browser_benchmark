@@ -1,0 +1,58 @@
+=== Benchmark Evaluation ===
+  Task:   crm.batch_mark_lost_with_reason
+  Agent:  command
+  DB:     bench_fr_71c9fc57  (auto-isolated)
+  URL:    http://127.0.0.1:53540
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/crm.batch_mark_lost_with_reason__1777522874
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_71c9fc57 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 53540
+   Done.
+2. Capturing pre-task state...
+   Captured 7 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=344.4s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 7 records across 2 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 7 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      2 edits
+  Extra:        0 edits
+  Wall clock:   344.4s
+  Steps:        0
+  Gave up:      False
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/crm.batch_mark_lost_with_reason__1777522874/
+
+  Postcondition failures:
+    - Expected exactly 1 lost reason named 'Deferred to FY27 budget', found 0
+    - Blue Canyon Power Expansion is still active, expected archived/lost
+    - Blue Canyon Power Expansion lost reason is False, expected 'Deferred to FY27 budget'
+    - Blue Canyon Power Expansion is missing the expected closing note
+    - Blue Canyon Power Renewal is still active, expected archived/lost
+    - Blue Canyon Power Renewal lost reason is False, expected 'Deferred to FY27 budget'
+    - Blue Canyon Power Renewal is missing the expected closing note
+  Missing expected edits:
+    - crm.lost.reason.active = True
+    - crm.lost.reason.name = Deferred to FY27 budget
