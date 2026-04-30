@@ -1,0 +1,107 @@
+=== Benchmark Evaluation ===
+  Task:   contacts.create_company_with_contacts
+  Agent:  command
+  DB:     bench_fr_e2379b44  (auto-isolated)
+  URL:    http://127.0.0.1:55063
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/contacts.create_company_with_contacts__1777525912
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_e2379b44 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 55063
+   Done.
+2. Capturing pre-task state...
+   Captured 7 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=529.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 56 calls captured (26 writes, 30 reads)
+   State: 11 records across 1 models
+5. Computing state diff...
+   40 atomic edits observed
+   Postconditions: 8 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     30 edits
+  Observed:     40 edits
+  Matching:     14 edits
+  Missing:      16 edits
+  Extra:        26 edits
+  Wall clock:   529.1s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   56
+  Writes:            26 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/contacts.create_company_with_contacts__1777525912/
+
+  Postcondition failures:
+    - Patricia Drum's company: expected 'Vantage Industrial Group', got '(none)'
+    - Patricia Drum's job position: expected 'Procurement Manager', got 'False'
+    - Patricia Drum's email: expected 'p.drum@vantage-industrial.example.com', got 'False'
+    - Patricia Drum's phone: expected '+1 (312) 555-0191', got 'False'
+    - Steven Okafor's company: expected 'Vantage Industrial Group', got '(none)'
+    - Steven Okafor's job position: expected 'Logistics Coordinator', got 'False'
+    - Steven Okafor's email: expected 's.okafor@vantage-industrial.example.com', got 'False'
+    - Steven Okafor's phone: expected '+1 (312) 555-0192', got 'False'
+  Missing expected edits:
+    - res.partner.city = Chicago
+    - res.partner.country_id = United States
+    - res.partner.email = p.drum@vantage-industrial.example.com
+    - res.partner.function = Procurement Manager
+    - res.partner.parent_id = Vantage Industrial Group
+    - res.partner.phone = +1 (312) 555-0191
+    - res.partner.street = 4400 Commerce Drive
+    - res.partner.zip = 60609
+    - res.partner.city = Chicago
+    - res.partner.country_id = United States
+    - res.partner.email = s.okafor@vantage-industrial.example.com
+    - res.partner.function = Logistics Coordinator
+    - res.partner.parent_id = Vantage Industrial Group
+    - res.partner.phone = +1 (312) 555-0192
+    - res.partner.street = 4400 Commerce Drive
+    - res.partner.zip = 60609
+  Unexpected extra edits:
+    + res.partner.city = Chicago
+    + res.partner.country_id = United States
+    + res.partner.email = p.drum@vantage-industrial.example.com
+    + res.partner.function = Procurement Manager
+    + res.partner.is_company = None
+    + res.partner.name = Patricia Drum
+    + res.partner.parent_id = Vantage Industrial Group
+    + res.partner.phone = +1 (312) 555-0191
+    + res.partner.street = 4400 Commerce Drive
+    + res.partner.zip = 60609
+    + res.partner.city = None
+    + res.partner.country_id = None
+    + res.partner.email = None
+    + res.partner.function = None
+    + res.partner.parent_id = None
+    + res.partner.phone = None
+    + res.partner.street = None
+    + res.partner.zip = None
+    + res.partner.city = None
+    + res.partner.country_id = None
+    + res.partner.email = None
+    + res.partner.function = None
+    + res.partner.parent_id = None
+    + res.partner.phone = None
+    + res.partner.street = None
+    + res.partner.zip = None

@@ -1,0 +1,53 @@
+=== Benchmark Evaluation ===
+  Task:   contacts.create_linked_contact_add_finance_tag
+  Agent:  command
+  DB:     bench_fr_145f7c81  (auto-isolated)
+  URL:    http://127.0.0.1:55346
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/contacts.create_linked_contact_add_finance_tag__1777525972
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_145f7c81 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 55346
+   Done.
+2. Capturing pre-task state...
+   Captured 9 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=513.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 59 calls captured (22 writes, 37 reads)
+   State: 10 records across 1 models
+5. Computing state diff...
+   3 atomic edits observed
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  1.0
+  Precision:    1.0
+  Recall:       1.0
+  Expected:     3 edits
+  Observed:     3 edits
+  Matching:     3 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   513.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   59
+  Writes:            22 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/contacts.create_linked_contact_add_finance_tag__1777525972/
+
