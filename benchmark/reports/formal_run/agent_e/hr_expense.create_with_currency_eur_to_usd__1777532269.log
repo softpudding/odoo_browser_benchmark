@@ -1,0 +1,53 @@
+=== Benchmark Evaluation ===
+  Task:   hr_expense.create_with_currency_eur_to_usd
+  Agent:  command
+  DB:     bench_fr_b17d97ca  (auto-isolated)
+  URL:    http://127.0.0.1:64606
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/hr_expense.create_with_currency_eur_to_usd__1777532269
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_b17d97ca from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 64606
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=189.9s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 35 calls captured (14 writes, 21 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   6 atomic edits observed
+6. Scoring...
+
+==================================================
+  RESULT: PASS  (Strict: PASS)
+  StateDiffF1:  1.0
+  Precision:    1.0
+  Recall:       1.0
+  Expected:     6 edits
+  Observed:     6 edits
+  Matching:     6 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   189.9s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   35
+  Writes:            14 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/hr_expense.create_with_currency_eur_to_usd__1777532269/
+
