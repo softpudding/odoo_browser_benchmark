@@ -1,0 +1,56 @@
+=== Benchmark Evaluation ===
+  Task:   crm.create_opportunity_tag_schedule_call
+  Agent:  command
+  DB:     bench_fr_7fd1a6e0  (auto-isolated)
+  URL:    http://127.0.0.1:60028
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/crm.create_opportunity_tag_schedule_call__1777527114
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_7fd1a6e0 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 60028
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=595.2s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 67 calls captured (32 writes, 35 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   5 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     5 edits
+  Observed:     5 edits
+  Matching:     5 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   595.2s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   67
+  Writes:            32 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/crm.create_opportunity_tag_schedule_call__1777527114/
+
+  Postcondition failures:
+    - Expected Call activity was not scheduled
