@@ -178,20 +178,19 @@ def append_row(row: dict) -> None:
 def pending_pairs_for(worker: str) -> list[tuple[str, str]]:
     """(agent, task) that the worker has claimed and not yet marked done."""
     rows = load_queue()
-    claimed: set[tuple[str, str]] = set()
-    done: set[tuple[str, str]] = set()
+    latest: dict[tuple[str, str], dict] = {}
     for r in rows:
         # Defensive: skip malformed rows (our earlier dispatcher emitted some).
         a = r.get("agent", "")
         t = r.get("task", "")
         if not a or not t or " " in a:
             continue
-        key = (a, t)
-        if r.get("status") == "done":
-            done.add(key)
-        elif r.get("status") == "claimed" and r.get("worker") == worker:
-            claimed.add(key)
-    return sorted(claimed - done)
+        latest[(a, t)] = r
+    return sorted(
+        (a, t)
+        for (a, t), r in latest.items()
+        if r.get("status") == "claimed" and r.get("worker") == worker
+    )
 
 
 def interleave_by_agent(pairs: list[tuple[str, str]]) -> list[tuple[str, str]]:
@@ -269,11 +268,15 @@ def build_cmd(agent: str, task: str, db: str, outdir: Path, env: dict) -> list[s
         return base[:5] + ["--agent", "command", "--cmd", inner] + base[5:]
     # python wrappers
     wrapper = f"run_{agent}.py"
+    model = env.get("BENCHMARK_MODEL", "qwen3.6-plus")
     inner = (
         f"DASHSCOPE_API_KEY={env['DASHSCOPE_API_KEY']} "
         f"DASHSCOPE_BASE_URL={env['DASHSCOPE_BASE_URL']} "
+        f"OPENAI_API_KEY={env['DASHSCOPE_API_KEY']} "
+        f"OPENAI_BASE_URL={env['DASHSCOPE_BASE_URL']} "
         f"OPENBROWSER_CHROME_UUID={env.get('OPENBROWSER_CHROME_UUID', '')} "
-        f"BENCHMARK_MAX_STEPS=60 {SYSTEM_PY} benchmark/agents/{wrapper}"
+        f"BENCHMARK_MODEL={model} BENCHMARK_MAX_STEPS=60 "
+        f"{SYSTEM_PY} benchmark/agents/{wrapper}"
     )
     return base[:5] + ["--agent", "command", "--cmd", inner] + base[5:]
 
@@ -721,6 +724,7 @@ def main() -> int:
     # overridden per-run.
     env = {
         "DASHSCOPE_API_KEY": dk,
+        "BENCHMARK_MODEL": os.environ.get("BENCHMARK_MODEL", "qwen3.6-plus"),
         "OPENBROWSER_CHROME_UUID": os.environ.get("OPENBROWSER_CHROME_UUID", ""),
         # Optional: forward Anthropic key so run_magnitude.mjs can use Claude
         # for its pixel-coordinate visual grounding. Empty string means
