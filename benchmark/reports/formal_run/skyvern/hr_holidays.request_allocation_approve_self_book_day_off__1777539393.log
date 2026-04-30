@@ -1,0 +1,63 @@
+=== Benchmark Evaluation ===
+  Task:   hr_holidays.request_allocation_approve_self_book_day_off
+  Agent:  command
+  DB:     bench_fr_17dd032e  (auto-isolated)
+  URL:    http://127.0.0.1:49383
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/hr_holidays.request_allocation_approve_self_book_day_off__1777539393
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_17dd032e from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 49383
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 61 calls captured (31 writes, 30 reads)
+   State: 1 records across 2 models
+5. Computing state diff...
+   3 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     6 edits
+  Observed:     3 edits
+  Matching:     3 edits
+  Missing:      3 edits
+  Extra:        0 edits
+  Wall clock:   600.1s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.5
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   61
+  Writes:            31 non-forbidden, 0 forbidden
+  Required ops MISSED: ['hr.leave.action_approve']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/hr_holidays.request_allocation_approve_self_book_day_off__1777539393/
+
+  Postcondition failures:
+    - No leave request found with description 'Bench day off'
+  Missing expected edits:
+    - hr.leave.name = Bench day off
+    - hr.leave.number_of_days = 1.0
+    - hr.leave.state = validate
+    - hr.leave.allocation.name = Q2 bonus
+    - hr.leave.allocation.state = validate
