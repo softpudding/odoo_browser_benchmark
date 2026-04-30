@@ -1,0 +1,65 @@
+=== Benchmark Evaluation ===
+  Task:   website_hr_recruitment.publish_job_set_interview_form_and_archive_old_posting
+  Agent:  command
+  DB:     bench_fr_77b9147a  (auto-isolated)
+  URL:    http://127.0.0.1:49251
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/website_hr_recruitment.publish_job_set_interview_form_and_archive_old_posting__1777554082
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_77b9147a from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Starting Odoo...
+   Odoo ready on port 49251
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=474.9s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 76 calls captured (35 writes, 41 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   5 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     8 edits
+  Observed:     5 edits
+  Matching:     3 edits
+  Missing:      5 edits
+  Extra:        2 edits
+  Wall clock:   474.9s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   76
+  Writes:            35 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/website_hr_recruitment.publish_job_set_interview_form_and_archive_old_posting__1777554082/
+
+  Postcondition failures:
+    - New job is not published
+    - Legacy job should be archived
+  Missing expected edits:
+    - hr.job.active = None
+    - hr.job.is_published = None
+    - hr.job.website_published = None
+    - hr.job.is_published = True
+    - hr.job.website_published = True
+  Unexpected extra edits:
+    + hr.job.is_published = None
+    + hr.job.website_published = None
