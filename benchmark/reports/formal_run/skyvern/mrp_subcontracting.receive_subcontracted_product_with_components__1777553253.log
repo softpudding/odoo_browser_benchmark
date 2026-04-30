@@ -1,0 +1,66 @@
+=== Benchmark Evaluation ===
+  Task:   mrp_subcontracting.receive_subcontracted_product_with_components
+  Agent:  command
+  DB:     bench_fr_b5951ce8  (auto-isolated)
+  URL:    http://127.0.0.1:61930
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/mrp_subcontracting.receive_subcontracted_product_with_components__1777553253
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_b5951ce8 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 61930
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 3 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 56 calls captured (23 writes, 33 reads)
+   State: 4 records across 3 models
+5. Computing state diff...
+   4 atomic edits observed
+   Postconditions: 4 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     9 edits
+  Observed:     4 edits
+  Matching:     4 edits
+  Missing:      5 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   56
+  Writes:            23 non-forbidden, 0 forbidden
+  Required ops MISSED: ['stock.picking.button_validate']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/mrp_subcontracting.receive_subcontracted_product_with_components__1777553253/
+
+  Postcondition failures:
+    - Receipt state is 'assigned', expected 'done'
+    - Missing serials on receipt move_lines: ['BSA-2026-01', 'BSA-2026-02'] (found [])
+    - Subcontract MO(s) not all 'done': states=['confirmed']
+    - Total produced qty across done subcontract MOs is 0, expected 2.0
+  Missing expected edits:
+    - mrp.production.product_id = Bench Sub Assembly
+    - mrp.production.state = done
+    - mrp.production.subcontractor_id = Bench Subcontractor Inc
+    - mrp.production.state = done
+    - stock.picking.state = done

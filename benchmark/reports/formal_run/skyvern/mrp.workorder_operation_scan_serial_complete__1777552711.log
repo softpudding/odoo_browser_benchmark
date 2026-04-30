@@ -1,0 +1,69 @@
+=== Benchmark Evaluation ===
+  Task:   mrp.workorder_operation_scan_serial_complete
+  Agent:  command
+  DB:     bench_fr_3f5d0988  (auto-isolated)
+  URL:    http://127.0.0.1:60520
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/mrp.workorder_operation_scan_serial_complete__1777552711
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_3f5d0988 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 60520
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 53 calls captured (26 writes, 27 reads)
+   State: 2 records across 2 models
+5. Computing state diff...
+   2 atomic edits observed
+   Postconditions: 5 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     2 edits
+  Matching:     0 edits
+  Missing:      4 edits
+  Extra:        2 edits
+  Wall clock:   600.1s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   53
+  Writes:            26 non-forbidden, 0 forbidden
+  Required ops MISSED: ['mrp.production.button_mark_done']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/mrp.workorder_operation_scan_serial_complete__1777552711/
+
+  Postcondition failures:
+    - MO state is 'progress', expected 'done'
+    - MO qty_produced is 0.0, expected 1.0
+    - Work order state is 'progress', expected 'done'
+    - Expected exactly ['SN-B'] consumed, got [] (all move lines: [('SN-B', 1.0, False)])
+    - Total consumed quantity for 'Bench Serial Part' is 0, expected 1.0
+  Missing expected edits:
+    - mrp.production.qty_produced = 1.0
+    - mrp.production.state = done
+    - mrp.workorder.qty_produced = 1.0
+    - mrp.workorder.state = done
+  Unexpected extra edits:
+    + mrp.production.state = progress
+    + mrp.workorder.state = progress
