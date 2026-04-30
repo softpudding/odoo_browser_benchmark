@@ -1,0 +1,66 @@
+=== Benchmark Evaluation ===
+  Task:   account.update_customer_invoice_terms_post
+  Agent:  command
+  DB:     bench_fr_27898208  (auto-isolated)
+  URL:    http://127.0.0.1:64185
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/account.update_customer_invoice_terms_post__1777524255
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_27898208 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 64185
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=202.3s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 40 calls captured (16 writes, 24 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 5 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      4 edits
+  Extra:        0 edits
+  Wall clock:   202.3s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   40
+  Writes:            16 non-forbidden, 0 forbidden
+  Required ops MISSED: ['account.move.action_post']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/account.update_customer_invoice_terms_post__1777524255/
+
+  Postcondition failures:
+    - Invoice state is 'draft', expected 'posted'
+    - Customer Reference is 'MED-CINV-01', expected 'BRIGHT-READY'
+    - Invoice date is 2026-05-01, expected 2026-05-14
+    - Payment Terms not set
+    - Support Review quantity is 3.0, expected 4
+  Missing expected edits:
+    - account.move.invoice_date = 2026-05-14
+    - account.move.invoice_payment_term_id = 30 Net Days
+    - account.move.ref = BRIGHT-READY
+    - account.move.state = posted
