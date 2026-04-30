@@ -1,0 +1,53 @@
+=== Benchmark Evaluation ===
+  Task:   calendar.edit_single_recurrence_occurrence
+  Agent:  command
+  DB:     bench_fr_d872b06b  (auto-isolated)
+  URL:    http://127.0.0.1:63424
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/calendar.edit_single_recurrence_occurrence__1777521029
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_d872b06b from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 63424
+   Done.
+2. Capturing pre-task state...
+   Captured 4 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 47 calls captured (28 writes, 19 reads)
+   State: 4 records across 1 models
+5. Computing state diff...
+   1 atomic edits observed
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  1.0
+  Precision:    1.0
+  Recall:       1.0
+  Expected:     1 edits
+  Observed:     1 edits
+  Matching:     1 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   600.1s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   47
+  Writes:            28 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/calendar.edit_single_recurrence_occurrence__1777521029/
+
