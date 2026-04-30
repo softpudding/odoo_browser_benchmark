@@ -53,7 +53,12 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
-QUEUE_PATH = REPO_ROOT / "benchmark/reports/formal_run/queue.jsonl"
+# BENCHMARK_QUEUE_PATH lets a worker target a sibling queue file (e.g.,
+# queue_qwen.jsonl for the qwen3.6-plus rerun) without disturbing the
+# original queue.jsonl. Path is repo-relative.
+QUEUE_PATH = REPO_ROOT / os.environ.get(
+    "BENCHMARK_QUEUE_PATH", "benchmark/reports/formal_run/queue.jsonl"
+)
 LOCK_PATH = REPO_ROOT / "benchmark/reports/formal_run/.queue.lock"
 # Honor $BENCHMARK_SYSTEM_PY so each worker can point at the python
 # where their agent packages (notte, skyvern, alumnium, websight) live.

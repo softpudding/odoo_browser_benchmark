@@ -97,14 +97,34 @@ async function main() {
   const llm = buildLlmConfig();
   console.log(`Magnitude: using ${llm.provider}/${llm.options.model}`);
 
+  // Qwen3-VL family (qwen2.5-vl, qwen3-vl, qwen3.6-plus, ...) emits click
+  // coordinates in a fixed 0..1000 normalized space regardless of the input
+  // image's pixel dimensions. Magnitude's webActions feed raw (x, y) into
+  // Playwright as pixel coords, so without a transform every click lands
+  // in the upper-left corner. BrowserConnector's `virtualScreenDimensions`
+  // does exactly the right two things for us:
+  //   1. resizes the screenshot sent to the model to 1000x1000, so what
+  //      Qwen "sees" matches its 1000x1000 output coord system, and
+  //   2. WebHarness.transformCoordinates scales returned (x, y) by
+  //      (viewport / 1000) before clicking.
+  // We only enable this for openai-generic (DashScope/Qwen). Claude is
+  // trained on absolute pixel coords and works without the transform.
+  const useQwenVirtualScreen =
+    llm.provider === "openai-generic" &&
+    /qwen/i.test(llm.options.model || "");
+
+  const browserConnectorOpts = {
+    url: startUrl,
+    browser: { headless: false },
+  };
+  if (useQwenVirtualScreen) {
+    browserConnectorOpts.virtualScreenDimensions = { width: 1000, height: 1000 };
+    console.log("Magnitude: enabled 1000x1000 virtual screen for Qwen coord normalization");
+  }
+
   const agent = new Agent({
     llm,
-    connectors: [
-      new BrowserConnector({
-        url: startUrl,
-        browser: { headless: false },
-      }),
-    ],
+    connectors: [new BrowserConnector(browserConnectorOpts)],
   });
 
   try {
