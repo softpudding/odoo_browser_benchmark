@@ -1,0 +1,60 @@
+=== Benchmark Evaluation ===
+  Task:   event.create_event_tracks_session_schedule
+  Agent:  command
+  DB:     bench_fr_56688c3f  (auto-isolated)
+  URL:    http://127.0.0.1:64315
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/event.create_event_tracks_session_schedule__1777532599
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_56688c3f from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Starting Odoo...
+   Odoo ready on port 64315
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 48 calls captured (18 writes, 30 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   3 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     6 edits
+  Observed:     3 edits
+  Matching:     3 edits
+  Missing:      3 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   48
+  Writes:            18 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/event.create_event_tracks_session_schedule__1777532599/
+
+  Postcondition failures:
+    - Track 'Bench Opening Keynote' date is datetime.datetime(2026, 5, 10, 1, 0), expected '2026-05-10 09:00:00'
+    - Missing track titled 'Bench Closing Panel' on event 'Bench Tech Summit' (found: ['Bench Opening Keynote'])
+  Missing expected edits:
+    - event.track.duration = 1.5
+    - event.track.event_id = Bench Tech Summit
+    - event.track.name = Bench Closing Panel
