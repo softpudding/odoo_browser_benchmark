@@ -1,0 +1,53 @@
+=== Benchmark Evaluation ===
+  Task:   mrp.unreserve_raw_material_on_mo
+  Agent:  command
+  DB:     bench_fr_52c678f8  (auto-isolated)
+  URL:    http://127.0.0.1:57434
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/mrp.unreserve_raw_material_on_mo__1777538313
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_52c678f8 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 57434
+   Done.
+2. Capturing pre-task state...
+   Captured 3 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=630.6s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 116 calls captured (51 writes, 65 reads)
+   State: 3 records across 2 models
+5. Computing state diff...
+   3 atomic edits observed
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  1.0
+  Precision:    1.0
+  Recall:       1.0
+  Expected:     3 edits
+  Observed:     3 edits
+  Matching:     3 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   630.6s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   116
+  Writes:            51 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/mrp.unreserve_raw_material_on_mo__1777538313/
+
