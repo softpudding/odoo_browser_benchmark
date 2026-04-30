@@ -1,0 +1,63 @@
+=== Benchmark Evaluation ===
+  Task:   crm.pivot_view_opportunities_by_stage_revenue
+  Agent:  command
+  DB:     bench_fr_a3211ab4  (auto-isolated)
+  URL:    http://127.0.0.1:62417
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/crm.pivot_view_opportunities_by_stage_revenue__1777527733
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_a3211ab4 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 62417
+   Done.
+2. Capturing pre-task state...
+   Captured 13 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=531.5s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 38 calls captured (22 writes, 16 reads)
+   State: 17 records across 1 models
+5. Computing state diff...
+   8 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     2 edits
+  Observed:     8 edits
+  Matching:     2 edits
+  Missing:      0 edits
+  Extra:        6 edits
+  Wall clock:   531.5s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   38
+  Writes:            22 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/crm.pivot_view_opportunities_by_stage_revenue__1777527733/
+
+  Postcondition failures:
+    - Expected exactly 1 favorite named 'Bench Stage Revenue Pivot', found 2
+  Unexpected extra edits:
+    + ir.filters.model_id = crm.lead
+    + ir.filters.name = Bench Stage Revenue Pivot
+    + ir.filters.model_id = crm.lead
+    + ir.filters.name = Pipeline
+    + ir.filters.model_id = crm.lead
+    + ir.filters.name = Pipeline
