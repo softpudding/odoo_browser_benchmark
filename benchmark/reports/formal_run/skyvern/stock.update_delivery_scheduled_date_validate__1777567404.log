@@ -1,0 +1,60 @@
+=== Benchmark Evaluation ===
+  Task:   stock.update_delivery_scheduled_date_validate
+  Agent:  command
+  DB:     bench_fr_2372bf4b  (auto-isolated)
+  URL:    http://127.0.0.1:51439
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/stock.update_delivery_scheduled_date_validate__1777567404
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_2372bf4b from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 51439
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 41 calls captured (18 writes, 23 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     1 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      1 edits
+  Extra:        0 edits
+  Wall clock:   600.1s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   41
+  Writes:            18 non-forbidden, 0 forbidden
+  Required ops MISSED: ['stock.picking.button_validate']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/stock.update_delivery_scheduled_date_validate__1777567404/
+
+  Postcondition failures:
+    - Target delivery state is 'assigned', expected 'done'
+    - Scheduled date is 2026-05-01, expected 2026-05-27
+  Missing expected edits:
+    - stock.picking.state = done

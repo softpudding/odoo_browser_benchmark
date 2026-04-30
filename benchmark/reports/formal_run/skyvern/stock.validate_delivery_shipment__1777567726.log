@@ -1,0 +1,59 @@
+=== Benchmark Evaluation ===
+  Task:   stock.validate_delivery_shipment
+  Agent:  command
+  DB:     bench_fr_8568622e  (auto-isolated)
+  URL:    http://127.0.0.1:52346
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/stock.validate_delivery_shipment__1777567726
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_8568622e from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 52346
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=176.3s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 14 calls captured (3 writes, 11 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     1 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      1 edits
+  Extra:        0 edits
+  Wall clock:   176.3s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   14
+  Writes:            3 non-forbidden, 0 forbidden
+  Required ops MISSED: ['stock.picking.button_validate']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/stock.validate_delivery_shipment__1777567726/
+
+  Postcondition failures:
+    - Postcondition check failed to return JSON:   File "/Users/yangxiao/odoo_browser_benchmark/.venv/lib/python3.13/site-packages/psycopg2/__init__.py", line 122, in connect |     conn = _connect(dsn, connection_factory=connection_factory, **kwasync) | psycopg2.OperationalError: connection to server on socket "/tmp/.s.PGSQL.5432" failed: FATAL:  sorry, too many clients already
+  Missing expected edits:
+    - stock.picking.state = done
