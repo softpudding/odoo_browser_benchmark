@@ -475,7 +475,8 @@ def run_one(agent: str, task: str, base_env: dict, worker: str) -> dict:
                 start_new_session=True,
             )
             try:
-                rc = proc.wait(timeout=900)  # eval.py already caps at 600s; 900 is our hard outer bound
+                outer_timeout = int(os.environ.get("BENCHMARK_EVAL_TIMEOUT_SEC", "900"))
+                rc = proc.wait(timeout=outer_timeout)
             except subprocess.TimeoutExpired:
                 proc.terminate()
                 try:

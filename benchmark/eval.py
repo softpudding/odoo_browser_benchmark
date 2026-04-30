@@ -1195,7 +1195,9 @@ def cmd_run(args: argparse.Namespace) -> dict | None:
     rpc_login = DEFAULT_LOGIN
     rpc_password = DEFAULT_PASSWORD
     max_steps = args.max_steps if args.max_steps is not None else task.get("step_limit", 200)
-    time_limit_sec = task.get("time_limit_sec", 300)
+    time_limit_sec = int(
+        os.environ.get("BENCHMARK_TIME_LIMIT_SEC", task.get("time_limit_sec", 300))
+    )
 
     if not instruction:
         print(f"ERROR: No instruction found for task {task_id}")
