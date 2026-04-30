@@ -1,0 +1,64 @@
+=== Benchmark Evaluation ===
+  Task:   hr_holidays.request_sick_leave_approve_self
+  Agent:  command
+  DB:     bench_fr_2bbe7ccc  (auto-isolated)
+  URL:    http://127.0.0.1:53991
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/hr_holidays.request_sick_leave_approve_self__1777533460
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_2bbe7ccc from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 53991
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=444.6s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 79 calls captured (34 writes, 45 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   4 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     4 edits
+  Matching:     2 edits
+  Missing:      2 edits
+  Extra:        2 edits
+  Wall clock:   444.6s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   79
+  Writes:            34 non-forbidden, 0 forbidden
+  Required ops MISSED: ['hr.leave.action_approve']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/hr_holidays.request_sick_leave_approve_self__1777533460/
+
+  Postcondition failures:
+    - Leave state is 'confirm', expected 'validate' (must be approved end-to-end)
+    - Leave start date is 2026-04-30, expected 2026-05-11
+  Missing expected edits:
+    - hr.leave.number_of_days = 2.0
+    - hr.leave.state = validate
+  Unexpected extra edits:
+    + hr.leave.number_of_days = 9.0
+    + hr.leave.state = confirm
