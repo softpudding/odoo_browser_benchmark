@@ -1,0 +1,74 @@
+=== Benchmark Evaluation ===
+  Task:   purchase.cancel_reissue_wrong_vendor
+  Agent:  command
+  DB:     bench_fr_e8cf45a7  (auto-isolated)
+  URL:    http://127.0.0.1:51840
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/purchase.cancel_reissue_wrong_vendor__1777540760
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_e8cf45a7 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 51840
+   Done.
+2. Capturing pre-task state...
+   Captured 3 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=702.5s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 95 calls captured (41 writes, 54 reads)
+   State: 8 records across 2 models
+5. Computing state diff...
+   17 atomic edits observed
+   Postconditions: 4 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     10 edits
+  Observed:     17 edits
+  Matching:     9 edits
+  Missing:      1 edits
+  Extra:        8 edits
+  Wall clock:   702.5s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   95
+  Writes:            41 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/purchase.cancel_reissue_wrong_vendor__1777540760/
+
+  Postcondition failures:
+    - New PO has 4 lines, expected 2
+    - New PO line Hydraulic Pump.product_qty: expected 5.0, got 1.0
+    - Unexpected line on new PO: Hydraulic Pump
+    - Unexpected line on new PO: Pressure Gauge
+  Missing expected edits:
+    - purchase.order.state = cancel
+    - purchase.order.state = purchase
+    - purchase.order.line.product_qty = 10.0
+  Unexpected extra edits:
+    + purchase.order.state = cancel
+    + purchase.order.state = purchase
+    + purchase.order.line.price_unit = 340.0
+    + purchase.order.line.product_id = Hydraulic Pump
+    + purchase.order.line.product_qty = 5.0
+    + purchase.order.line.product_qty = 1.0
+    + purchase.order.line.product_qty = 1.0
+    + purchase.order.line.price_unit = 85.0
+    + purchase.order.line.product_id = Pressure Gauge
+    + purchase.order.line.product_qty = 10.0
