@@ -1,0 +1,68 @@
+=== Benchmark Evaluation ===
+  Task:   project_todo.create_three_personal_with_specific_priorities
+  Agent:  command
+  DB:     bench_fr_af1779b4  (auto-isolated)
+  URL:    http://127.0.0.1:55124
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/project_todo.create_three_personal_with_specific_priorities__1777557070
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_af1779b4 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 55124
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 68 calls captured (31 writes, 37 reads)
+   State: 7 records across 1 models
+5. Computing state diff...
+   19 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     9 edits
+  Observed:     19 edits
+  Matching:     9 edits
+  Missing:      0 edits
+  Extra:        10 edits
+  Wall clock:   600.1s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   68
+  Writes:            31 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/project_todo.create_three_personal_with_specific_priorities__1777557070/
+
+  Postcondition failures:
+    - Expected exactly one to-do named 'Plan Sprint', found 3
+    - Expected exactly one to-do named 'Write Docs', found 2
+  Unexpected extra edits:
+    + project.task.active = True
+    + project.task.name = Plan Sprint
+    + project.task.priority = 1
+    + project.task.active = True
+    + project.task.name = Plan Sprint
+    + project.task.priority = 0
+    + project.task.priority = 1
+    + project.task.active = True
+    + project.task.name = Write Docs
+    + project.task.priority = 0
