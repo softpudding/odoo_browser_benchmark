@@ -1,0 +1,58 @@
+=== Benchmark Evaluation ===
+  Task:   website_sale.unpublish_archive_unarchive_publish_cycle
+  Agent:  command
+  DB:     bench_fr_02d8d50f  (auto-isolated)
+  URL:    http://127.0.0.1:51159
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/website_sale.unpublish_archive_unarchive_publish_cycle__1777572211
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_02d8d50f from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 51159
+   Done.
+2. Capturing pre-task state...
+   Captured 14 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 51 calls captured (21 writes, 30 reads)
+   State: 14 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     1 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      1 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   51
+  Writes:            21 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/website_sale.unpublish_archive_unarchive_publish_cycle__1777572211/
+
+  Postcondition failures:
+    - Product 'Bench Cycle Gadget' default_code is 'BCG-INIT', expected 'BCG-RESTORED'
+  Missing expected edits:
+    - product.template.default_code = BCG-RESTORED

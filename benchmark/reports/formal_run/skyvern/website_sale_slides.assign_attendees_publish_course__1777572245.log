@@ -1,0 +1,64 @@
+=== Benchmark Evaluation ===
+  Task:   website_sale_slides.assign_attendees_publish_course
+  Agent:  command
+  DB:     bench_fr_fa5e7637  (auto-isolated)
+  URL:    http://127.0.0.1:51208
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/website_sale_slides.assign_attendees_publish_course__1777572245
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_fa5e7637 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 51208
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.1s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 57 calls captured (29 writes, 28 reads)
+   State: 2 records across 2 models
+5. Computing state diff...
+   4 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     10 edits
+  Observed:     4 edits
+  Matching:     4 edits
+  Missing:      6 edits
+  Extra:        0 edits
+  Wall clock:   600.1s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   57
+  Writes:            29 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/website_sale_slides.assign_attendees_publish_course__1777572245/
+
+  Postcondition failures:
+    - Course 'Bench Onboarding' prerequisite_channel_ids must be exactly ['Bench 101'], got []
+    - Course 'Bench Onboarding' attendees must be exactly ['Alice Attendee', 'Bob Attendee'], got []
+  Missing expected edits:
+    - slide.channel.partner.channel_id = Bench Onboarding
+    - slide.channel.partner.member_status = joined
+    - slide.channel.partner.partner_id = Alice Attendee
+    - slide.channel.partner.channel_id = Bench Onboarding
+    - slide.channel.partner.member_status = joined
+    - slide.channel.partner.partner_id = Bob Attendee
