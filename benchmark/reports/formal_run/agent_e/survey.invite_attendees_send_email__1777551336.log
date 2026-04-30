@@ -1,0 +1,65 @@
+=== Benchmark Evaluation ===
+  Task:   survey.invite_attendees_send_email
+  Agent:  command
+  DB:     bench_fr_11ff16d5  (auto-isolated)
+  URL:    http://127.0.0.1:52154
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/survey.invite_attendees_send_email__1777551336
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_11ff16d5 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 52154
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=465.8s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 51 calls captured (25 writes, 26 reads)
+   State: 1 records across 2 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     6 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      6 edits
+  Extra:        0 edits
+  Wall clock:   465.8s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   51
+  Writes:            25 non-forbidden, 0 forbidden
+  Required ops MISSED: ['survey.invite.action_invite']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/survey.invite_attendees_send_email__1777551336/
+
+  Postcondition failures:
+    - Missing survey.user_input rows for emails: alice@x.com, bob@y.com, carol@z.com. The agent did not press Send after adding all three recipients, or chose the wrong partners.
+    - No mail.mail with subject 'Please complete onboarding' found and no survey.user_input rows created.
+  Missing expected edits:
+    - survey.user_input.email = alice@x.com
+    - survey.user_input.state = new
+    - survey.user_input.email = bob@y.com
+    - survey.user_input.state = new
+    - survey.user_input.email = carol@z.com
+    - survey.user_input.state = new
