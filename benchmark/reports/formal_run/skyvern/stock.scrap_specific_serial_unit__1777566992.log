@@ -1,0 +1,56 @@
+=== Benchmark Evaluation ===
+  Task:   stock.scrap_specific_serial_unit
+  Agent:  command
+  DB:     bench_fr_c7ab7896  (auto-isolated)
+  URL:    http://127.0.0.1:50151
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/stock.scrap_specific_serial_unit__1777566992
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_c7ab7896 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 50151
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=600.0s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 41 calls captured (20 writes, 21 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   4 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     4 edits
+  Matching:     4 edits
+  Missing:      0 edits
+  Extra:        0 edits
+  Wall clock:   600.0s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   41
+  Writes:            20 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/skyvern/stock.scrap_specific_serial_unit__1777566992/
+
+  Postcondition failures:
+    - Postcondition check failed to return JSON:   File "/Users/yangxiao/odoo_browser_benchmark/.venv/lib/python3.13/site-packages/psycopg2/__init__.py", line 122, in connect |     conn = _connect(dsn, connection_factory=connection_factory, **kwasync) | psycopg2.OperationalError: connection to server on socket "/tmp/.s.PGSQL.5432" failed: FATAL:  sorry, too many clients already
