@@ -1,0 +1,70 @@
+=== Benchmark Evaluation ===
+  Task:   hr_holidays.request_allocation_approve_self_book_day_off
+  Agent:  command
+  DB:     bench_fr_09fd135a  (auto-isolated)
+  URL:    http://127.0.0.1:53411
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/hr_holidays.request_allocation_approve_self_book_day_off__1777533390
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_09fd135a from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 53411
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=599.6s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 83 calls captured (42 writes, 41 reads)
+   State: 2 records across 2 models
+5. Computing state diff...
+   6 atomic edits observed
+   Postconditions: 2 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     6 edits
+  Observed:     6 edits
+  Matching:     2 edits
+  Missing:      4 edits
+  Extra:        4 edits
+  Wall clock:   599.6s
+  Steps:        0
+  Gave up:      True
+  --- API Trace ---
+  RequiredOpRecall:  0.5
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   83
+  Writes:            42 non-forbidden, 0 forbidden
+  Required ops MISSED: ['hr.leave.action_approve']
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/hr_holidays.request_allocation_approve_self_book_day_off__1777533390/
+
+  Postcondition failures:
+    - No allocation found with description 'Q2 bonus'
+    - Leave state is 'confirm', expected 'validate'
+  Missing expected edits:
+    - hr.leave.name = Bench day off
+    - hr.leave.state = validate
+    - hr.leave.allocation.name = Q2 bonus
+    - hr.leave.allocation.number_of_days = 5.0
+    - hr.leave.allocation.state = validate
+  Unexpected extra edits:
+    + hr.leave.allocation.name = Bench Bonus Days (5.0 day(s))
+    + hr.leave.allocation.number_of_days = 5.0
+    + hr.leave.allocation.state = validate
+    + hr.leave.name = Bench day off
+    + hr.leave.state = confirm
