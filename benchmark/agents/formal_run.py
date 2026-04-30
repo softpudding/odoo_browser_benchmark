@@ -43,6 +43,7 @@ import hashlib
 import json
 import os
 import re
+import queue
 import socket
 import subprocess
 import sys
@@ -76,6 +77,26 @@ ACTIVE_AGENTS = [
 # DashScope's OpenAI-compat endpoint. Each run gets its own reverse-proxy
 # pointing at the right upstream so token_logger.py captures usage.
 OPENAI_AGENTS = {"stagehand"}
+
+_AGENT_E_URL_POOL: queue.Queue[str] | None = None
+
+
+def get_agent_e_url_pool() -> queue.Queue[str] | None:
+    """Pool of Agent-E servers for safe parallel Agent-E runs.
+
+    Agent-E's FastAPI server keeps browser/orchestrator state in-process and
+    does not reliably handle multiple concurrent /execute_task requests. When
+    AGENT_E_URLS is set, each run checks out one dedicated server URL.
+    """
+    global _AGENT_E_URL_POOL
+    urls = [u.strip() for u in os.environ.get("AGENT_E_URLS", "").split(",") if u.strip()]
+    if not urls:
+        return None
+    if _AGENT_E_URL_POOL is None:
+        _AGENT_E_URL_POOL = queue.Queue()
+        for u in urls:
+            _AGENT_E_URL_POOL.put(u)
+    return _AGENT_E_URL_POOL
 
 
 def alloc_free_port() -> int:
@@ -275,6 +296,7 @@ def build_cmd(agent: str, task: str, db: str, outdir: Path, env: dict) -> list[s
         f"OPENAI_API_KEY={env['DASHSCOPE_API_KEY']} "
         f"OPENAI_BASE_URL={env['DASHSCOPE_BASE_URL']} "
         f"OPENBROWSER_CHROME_UUID={env.get('OPENBROWSER_CHROME_UUID', '')} "
+        f"AGENT_E_URL={env.get('AGENT_E_URL', '')} "
         f"BENCHMARK_MODEL={model} BENCHMARK_MAX_STEPS=60 "
         f"{SYSTEM_PY} benchmark/agents/{wrapper}"
     )
@@ -418,6 +440,8 @@ def run_one(agent: str, task: str, base_env: dict, worker: str) -> dict:
     log = outdir.parent / f"{outdir.name}.log"
     tokens_jsonl = outdir / "tokens.jsonl"
 
+    agent_e_pool = get_agent_e_url_pool() if agent == "agent_e" else None
+    agent_e_url = agent_e_pool.get() if agent_e_pool is not None else None
     # Per-run mitmdump so concurrent runs never share a token log.
     if agent in OPENAI_AGENTS:
         proxy_port, proxy_proc = start_run_proxy(
@@ -431,6 +455,8 @@ def run_one(agent: str, task: str, base_env: dict, worker: str) -> dict:
         )
         env = {**base_env, "DASHSCOPE_BASE_URL":
                f"http://127.0.0.1:{proxy_port}/compatible-mode/v1"}
+    if agent_e_url:
+        env["AGENT_E_URL"] = agent_e_url
     cmd = build_cmd(agent, task, db, outdir, env)
 
     run_start = time.time()
@@ -472,6 +498,8 @@ def run_one(agent: str, task: str, base_env: dict, worker: str) -> dict:
         killed += reap_orphaned_browsers()
     finally:
         stop_run_proxy(proxy_proc)
+        if agent_e_pool is not None and agent_e_url is not None:
+            agent_e_pool.put(agent_e_url)
 
     token_summary = summarize_tokens(tokens_jsonl, outdir / "token_usage.json")
 
