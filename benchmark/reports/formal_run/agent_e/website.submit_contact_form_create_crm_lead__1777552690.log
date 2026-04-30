@@ -1,0 +1,63 @@
+=== Benchmark Evaluation ===
+  Task:   website.submit_contact_form_create_crm_lead
+  Agent:  command
+  DB:     bench_fr_b4a9adba  (auto-isolated)
+  URL:    http://127.0.0.1:58258
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/website.submit_contact_form_create_crm_lead__1777552690
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_b4a9adba from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 58258
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=268.4s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 10 calls captured (6 writes, 4 reads)
+   State: 2 records across 1 models
+5. Computing state diff...
+   12 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     6 edits
+  Observed:     12 edits
+  Matching:     6 edits
+  Missing:      0 edits
+  Extra:        6 edits
+  Wall clock:   268.4s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   10
+  Writes:            6 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/website.submit_contact_form_create_crm_lead__1777552690/
+
+  Postcondition failures:
+    - Expected exactly 1 crm.lead, found 2 (duplicate submissions?)
+  Unexpected extra edits:
+    + crm.lead.contact_name = Bench Test
+    + crm.lead.email_from = prospect@bench.test
+    + crm.lead.name = Bench Prospect Q4
+    + crm.lead.partner_name = Bench Test Inc
+    + crm.lead.phone = +15555551212
+    + crm.lead.type = opportunity
