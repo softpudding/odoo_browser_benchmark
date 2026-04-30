@@ -1,0 +1,54 @@
+=== Benchmark Evaluation ===
+  Task:   account.create_customer_invoice_post
+  Agent:  command
+  DB:     bench_fr_301897f3  (auto-isolated)
+  URL:    http://127.0.0.1:60068
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/account.create_customer_invoice_post__1777518186
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_301897f3 from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 60068
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=0.2s, success=False
+4. Capturing post-task state and API trace...
+   API trace: 0 calls captured (0 writes, 0 reads)
+   State: 0 records across 1 models
+5. Computing state diff...
+   0 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     4 edits
+  Observed:     0 edits
+  Matching:     0 edits
+  Missing:      4 edits
+  Extra:        0 edits
+  Wall clock:   0.2s
+  Steps:        0
+  Gave up:      True
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/account.create_customer_invoice_post__1777518186/
+
+  Postcondition failures:
+    - Expected exactly 1 invoice with ref 'NWA-AR-220', found 0
+  Missing expected edits:
+    - account.move.invoice_date = 2026-06-10
+    - account.move.partner_id = Northwind Advisory
+    - account.move.ref = NWA-AR-220
+    - account.move.state = posted
