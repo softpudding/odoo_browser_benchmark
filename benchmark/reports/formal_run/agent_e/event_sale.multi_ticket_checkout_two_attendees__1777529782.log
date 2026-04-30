@@ -1,0 +1,59 @@
+=== Benchmark Evaluation ===
+  Task:   event_sale.multi_ticket_checkout_two_attendees
+  Agent:  command
+  DB:     bench_fr_d935a41a  (auto-isolated)
+  URL:    http://127.0.0.1:54147
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/event_sale.multi_ticket_checkout_two_attendees__1777529782
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_d935a41a from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 54147
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=344.5s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 29 calls captured (14 writes, 15 reads)
+   State: 3 records across 2 models
+5. Computing state diff...
+   10 atomic edits observed
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.8
+  Precision:    0.8
+  Recall:       0.8
+  Expected:     10 edits
+  Observed:     10 edits
+  Matching:     8 edits
+  Missing:      2 edits
+  Extra:        2 edits
+  Wall clock:   344.5s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   29
+  Writes:            14 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/event_sale.multi_ticket_checkout_two_attendees__1777529782/
+
+  Missing expected edits:
+    - sale.order.amount_total = 200.0
+    - sale.order.partner_id = Administrator
+  Unexpected extra edits:
+    + sale.order.amount_total = 200.0
+    + sale.order.partner_id = Alice Standard
