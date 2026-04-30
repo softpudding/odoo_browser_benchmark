@@ -1,0 +1,62 @@
+=== Benchmark Evaluation ===
+  Task:   website_blog.create_blog_with_two_posts_archive_one
+  Agent:  command
+  DB:     bench_fr_61ba073f  (auto-isolated)
+  URL:    http://127.0.0.1:59062
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/website_blog.create_blog_with_two_posts_archive_one__1777552864
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_61ba073f from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 59062
+   Done.
+2. Capturing pre-task state...
+   Captured 1 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=548.8s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 207 calls captured (89 writes, 118 reads)
+   State: 5 records across 2 models
+5. Computing state diff...
+   17 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     12 edits
+  Observed:     17 edits
+  Matching:     12 edits
+  Missing:      0 edits
+  Extra:        5 edits
+  Wall clock:   548.8s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   207
+  Writes:            89 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/website_blog.create_blog_with_two_posts_archive_one__1777552864/
+
+  Postcondition failures:
+    - Expected exactly 2 posts under blog 'Bench Insights', found 3: ['April Update', 'March Notes', 'May Update']
+  Unexpected extra edits:
+    + blog.post.active = True
+    + blog.post.blog_id = Bench Insights
+    + blog.post.is_published = None
+    + blog.post.name = May Update
+    + blog.post.website_published = None
