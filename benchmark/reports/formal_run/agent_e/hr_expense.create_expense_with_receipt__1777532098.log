@@ -1,0 +1,70 @@
+=== Benchmark Evaluation ===
+  Task:   hr_expense.create_expense_with_receipt
+  Agent:  command
+  DB:     bench_fr_5c45a7fa  (auto-isolated)
+  URL:    http://127.0.0.1:63782
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/hr_expense.create_expense_with_receipt__1777532098
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_5c45a7fa from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 63782
+   Done.
+2. Capturing pre-task state...
+   Captured 0 records across 1 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=238.7s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 35 calls captured (15 writes, 20 reads)
+   State: 1 records across 1 models
+5. Computing state diff...
+   6 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     6 edits
+  Observed:     6 edits
+  Matching:     5 edits
+  Missing:      1 edits
+  Extra:        1 edits
+  Wall clock:   238.7s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   35
+  Writes:            15 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/hr_expense.create_expense_with_receipt__1777532098/
+
+  Postcondition failures:
+    - Vendor is 'False', expected 'Harborview Restaurant Group'
+  Missing expected edits:
+    - hr.expense.name = Client dinner at Harborview
+    - hr.expense.payment_mode = company_account
+    - hr.expense.product_id = Client Meals
+    - hr.expense.state = draft
+    - hr.expense.total_amount = 185.5
+    - hr.expense.vendor_id = Harborview Restaurant Group
+  Unexpected extra edits:
+    + hr.expense.name = Client dinner at Harborview
+    + hr.expense.payment_mode = company_account
+    + hr.expense.product_id = Client Meals
+    + hr.expense.state = draft
+    + hr.expense.total_amount = 185.5
+    + hr.expense.vendor_id = None
