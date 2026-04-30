@@ -1,0 +1,60 @@
+=== Benchmark Evaluation ===
+  Task:   hr.add_resume_line_update_mobile
+  Agent:  command
+  DB:     bench_fr_7c28daab  (auto-isolated)
+  URL:    http://127.0.0.1:58089
+  Output: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/hr.add_resume_line_update_mobile__1777530822
+
+1. Preparing clean database...
+   Stopping Odoo...
+   Restoring bench_fr_7c28daab from snapshot 'benchmark_base'...
+   Clearing asset cache...
+   Running seed script...
+   Cleanup: done
+   Starting Odoo...
+   Odoo ready on port 58089
+   Done.
+2. Capturing pre-task state...
+   Captured 2 records across 2 models
+   API trace recording: STARTED
+3. Running agent (command)...
+
+
+   Agent finished: steps=0, wall_clock=503.1s, success=True
+4. Capturing post-task state and API trace...
+   API trace: 58 calls captured (21 writes, 37 reads)
+   State: 3 records across 2 models
+5. Computing state diff...
+   6 atomic edits observed
+   Postconditions: 1 failure(s)
+6. Scoring...
+
+==================================================
+  RESULT: FAIL  (Strict: FAIL)
+  StateDiffF1:  0.0
+  Precision:    0.0
+  Recall:       0.0
+  Expected:     6 edits
+  Observed:     6 edits
+  Matching:     5 edits
+  Missing:      1 edits
+  Extra:        1 edits
+  Wall clock:   503.1s
+  Steps:        0
+  Gave up:      False
+  --- API Trace ---
+  RequiredOpRecall:  1.0
+  WritePrecision:    1.0
+  HarmfulWriteRate:  0.0
+  StrictClean:       True
+  Total API calls:   58
+  Writes:            21 non-forbidden, 0 forbidden
+==================================================
+  Artifacts: /Users/yangxiao/odoo_browser_benchmark/benchmark/reports/formal_run/agent_e/hr.add_resume_line_update_mobile__1777530822/
+
+  Postcondition failures:
+    - Resume line section is 'Internal Certification', expected 'Certification'
+  Missing expected edits:
+    - hr.resume.line.line_type_id = Certification
+  Unexpected extra edits:
+    + hr.resume.line.line_type_id = Internal Certification
