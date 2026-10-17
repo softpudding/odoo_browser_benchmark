@@ -20,9 +20,16 @@ git-coordinated queue file.
 
 ## Agents and model
 
-All agents run with **qwen3.6-plus** via DashScope's OpenAI-compatible endpoint.
-Active agent set (Stagehand is excluded — see `benchmark/agents/README.md` for
-the DashScope Responses-API bug that blocks it):
+The released runner includes Qwen/DashScope configurations, provider/model
+variants, and Stagehand with OpenAI `gpt-4.1-mini`. See
+`benchmark/agents/README.md` for current adapter configuration.
+
+The manual orchestration examples below are historical development notes
+for the Qwen campaign. For the maintained dispatcher and complete active-agent
+set, inspect `benchmark/agents/formal_run.py --help` and its `ACTIVE_AGENTS`.
+Stagehand and WebSight both have formal-run records covering all 424 tasks.
+
+Adapters in the released repository:
 
 | Agent | Runner |
 |---|---|
@@ -34,9 +41,10 @@ the DashScope Responses-API bug that blocks it):
 | agent_e | `python benchmark/agents/run_agent_e.py` |
 | openbrowser | `python benchmark/agents/run_openbrowser.py` |
 | websight | `python benchmark/agents/run_websight.py` |
+| stagehand | `node benchmark/agents/run_stagehand.mjs` (OpenAI `gpt-4.1-mini`) |
 
 Python wrappers must be invoked with the **system** python where the agent
-package is installed, e.g. `/Users/yangxiao/miniforge3/bin/python3`, **not**
+package is installed, e.g. `python3`, **not**
 `uv run python` (uv isolates its env and the agents aren't there).
 
 ---
@@ -85,7 +93,7 @@ ID_FILE=benchmark/reports/formal_run/.worker_id
 mkdir -p "$(dirname $ID_FILE)"
 if [ ! -f "$ID_FILE" ]; then
   FIRST=$(git config user.name | awk '{print tolower($1)}')
-  SUFFIX=$(/Users/yangxiao/miniforge3/bin/python3 -c "import secrets; print(secrets.token_hex(3))")
+  SUFFIX=$(python3 -c "import secrets; print(secrets.token_hex(3))")
   echo "${FIRST}-${SUFFIX}" > "$ID_FILE"
 fi
 worker=$(cat "$ID_FILE")   # e.g. "xiao-a1b2c3"
@@ -119,7 +127,7 @@ Token capture uses **mitmproxy** in reverse mode with a tiny logging addon
 (`benchmark/agents/token_logger.py`). One-time install:
 
 ```bash
-/Users/yangxiao/miniforge3/bin/python3 -m pip install mitmproxy
+python3 -m pip install mitmproxy
 ```
 
 One proxy per worker. Pick a free port to avoid collisions with sibling
@@ -255,7 +263,7 @@ Per-agent command templates (all set `DASHSCOPE_BASE_URL` so the proxy sees
 traffic). Use a short `--db` name (keep under 63 chars — PostgreSQL limit):
 
 ```bash
-PY=/Users/yangxiao/miniforge3/bin/python3
+PY=python3
 DB=$(python3 -c "import hashlib,sys; print('bench_fr_'+hashlib.md5(sys.argv[1].encode()).hexdigest()[:8])" "${agent}_${task}")
 OUTDIR=benchmark/reports/formal_run/$agent/${task}__$(date +%s)
 LOG=$OUTDIR.log
@@ -300,7 +308,7 @@ awk -v lo=$RUN_START -v hi=$RUN_END '
       if (t+0 >= lo && t+0 <= hi) print
     }
   }' "$PROXY_LOG_DIR/proxy.jsonl" > "$OUTDIR/tokens.jsonl"
-/Users/yangxiao/miniforge3/bin/python3 benchmark/agents/token_logger.py \
+python3 benchmark/agents/token_logger.py \
   summarize "$OUTDIR/tokens.jsonl" --out "$OUTDIR/token_usage.json"
 ```
 
@@ -442,7 +450,7 @@ A per-run slice already exists (`$OUTDIR/tokens.jsonl`); you can also
 check the aggregate worker-wide usage against your DashScope quota:
 
 ```bash
-/Users/yangxiao/miniforge3/bin/python3 benchmark/agents/token_logger.py \
+python3 benchmark/agents/token_logger.py \
   summarize /tmp/token_logs_$worker/proxy.jsonl
 ```
 

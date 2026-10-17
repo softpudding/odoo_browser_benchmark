@@ -12,8 +12,10 @@ to bottom.
 Browser-agent benchmark layered on a real Odoo 19 instance. Each task seeds
 a draft-quote / PO / lead / etc., the agent drives the web UI, and scoring
 compares DB state + RPC trace against an oracle. Harness entry point:
-`uv run benchmark-eval`. Active evaluation is against **qwen3.6-plus** via
-DashScope's OpenAI-compatible endpoint.
+`uv run benchmark-eval`. The released formal runner includes Qwen/DashScope
+configurations and a Stagehand configuration using **gpt-4.1-mini** via OpenAI.
+Provider/model variants are documented in `agents/README.md` and in the run
+artifacts. Start with the repository README for the public installation guide.
 
 Layout:
 
@@ -28,7 +30,8 @@ benchmark/
     README.md            ← per-agent install notes, test results, troubleshooting
   reports/
     formal_run/          ← outputs + queue.jsonl for the distributed run
-    ...                  ← previous run corpora (human_eval, difficulty_tests, ...)
+    human_eval/          ← limited author QA walkthroughs, not a human baseline
+    ...                  ← previous development and validation runs
 skills/
   run-benchmark-agents.md  ← distributed formal-run skill (JSONL queue, mitmproxy, worker IDs)
   validate-benchmark-tasks.md
@@ -60,8 +63,8 @@ If `uv` is missing: `curl -LsSf https://astral.sh/uv/install.sh | sh`.
 The harness calls `odoo-bin` through `.venv/bin/python3`. Create it once:
 
 ```bash
-python3 -m venv .venv
-.venv/bin/pip install -r requirements.txt   # or setup/requirements-check.py
+uv sync --frozen
+uv pip install --python .venv/bin/python -r requirements.txt
 ```
 
 ### 2. Write `.odoorc.local`
@@ -82,7 +85,7 @@ without_demo = True
 ### 3. Install the benchmark package + agent deps
 
 ```bash
-uv sync                              # installs `benchmark-eval` entrypoint
+uv sync --inexact                    # preserves installed Odoo dependencies
 cd benchmark/agents && bash setup.sh # installs Python + Node agents, Agent-E clone
 ```
 
@@ -140,7 +143,8 @@ slots point at qwen3.6-plus via DashScope before starting the server.
 ## Environment variables
 
 ```bash
-export DASHSCOPE_API_KEY=sk-...          # required by every agent
+export DASHSCOPE_API_KEY=your_api_key   # Qwen/DashScope runs
+export OPENAI_API_KEY=your_openai_key   # Stagehand formal-run configuration
 export OPENBROWSER_CHROME_UUID=...       # only if running OpenBrowser
 # Optional:
 export BENCHMARK_MODEL=qwen3.6-plus      # default already qwen3.6-plus
@@ -163,16 +167,18 @@ uv run benchmark-eval run sale.change_validity_date \
   --output-dir /tmp/smoke_browser_use
 ```
 
-Expected: `RESULT: PASS`, `StateDiffF1: 1.0`, wall clock ~250–350s.
-
-If this works, the rest of the pipeline is wired correctly.
+Inspect `score.json` and the saved state/trace artifacts. Model-backed agent
+outcomes and runtime can vary; a completed invocation alone is not a passing
+benchmark result. The repository README also provides an LLM-free oracle check.
 
 ---
 
 ## Formal eval batch
 
-Use the skill `skills/run-benchmark-agents.md`. It handles distributed
-workers via a git-coordinated JSONL queue at
+The maintained dispatcher is `benchmark/agents/formal_run.py`; inspect its
+`--help` and provider configuration before use. The historical manual
+workflow in `skills/run-benchmark-agents.md` describes distributed
+workers with a git-coordinated JSONL queue at
 `benchmark/reports/formal_run/queue.jsonl`, per-machine worker IDs,
 mitmproxy-based token logging, `--parallel K` fan-out with `xargs -P` +
 `flock`, and per-run artifact dirs (score/state-diff/trace/stdout plus
@@ -190,13 +196,14 @@ mitmproxy-based token logging, `--parallel K` fan-out with `xargs -P` +
 - **`createdb: database name too long`** — Postgres caps at 63 chars.
   The skill derives short DB names (`bench_fr_<8hex>`); don't extend.
 - **Task fails instantly with `Snapshot not found`** — you skipped step 4.
-- **Parallel `trace.json` files are byte-identical** — benchmark_trace
-  currently writes to a shared log per host. Run serially per worker, or
-  accept contaminated RPC metrics; see the skill's Parallelism caveats.
+- **Parallel `trace.json` files are byte-identical** — check for legacy shared
+  Odoo processes or `--no-isolate`. Keep the default per-run database/server
+  isolation; do not treat contaminated trace metrics as valid results.
 - **Stagehand dies with "Invalid JSON response"** — known DashScope
   server-side bug (`MMGPT3Item not JSON serializable` on multi-turn tool
-  calls via the Responses API). Stagehand is excluded from current runs;
-  see `benchmark/agents/README.md` for the writeup.
+  calls via the Responses API in early trials). The released Stagehand run
+  uses OpenAI `gpt-4.1-mini`; see `benchmark/agents/README.md` for its explicit
+  provider configuration.
 - **`.worker_id` missing** — the formal-run skill auto-generates it on
   first run. It lives at `benchmark/reports/formal_run/.worker_id` and is
   covered by the root `.gitignore`'s `.*` rule.
@@ -213,12 +220,12 @@ uv run benchmark-eval list
 uv run benchmark-eval run <task> --agent human
 
 # Re-score an existing output dir
-uv run benchmark-eval score <output_dir> --task <task_dir>
+uv run benchmark-eval score <output_dir> --task-dir <task_dir>
 
 # Kill stale benchmark Odoo processes / drop ephemeral DBs
 uv run benchmark-eval cleanup
 
 # Aggregate token usage across a worker's proxy log
-/Users/yangxiao/miniforge3/bin/python3 benchmark/agents/token_logger.py \
+python3 benchmark/agents/token_logger.py \
   summarize /tmp/token_logs_<worker>/proxy.jsonl
 ```

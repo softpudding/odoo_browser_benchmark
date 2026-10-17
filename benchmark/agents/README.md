@@ -1,234 +1,109 @@
-# Benchmark Agent Wrappers
+# Ledger browser-agent wrappers
 
-Thin wrapper scripts that adapt third-party browser agents to the benchmark
-`eval.py --agent command` interface. Each agent receives a natural-language
-task and a URL, navigates the Odoo UI autonomously, and the benchmark scores
-the resulting database state.
+These adapters connect third-party browser agents to `benchmark-eval run
+--agent command`. The harness supplies a task instruction, start URL, and
+synthetic login; it scores the resulting database state and operation trace.
+See the [repository README](../../README.md) for Odoo and dataset setup.
 
-## Quick start
+## Available adapters
+
+| Agent | Runner | Additional setup |
+| --- | --- | --- |
+| browser-use | `--agent browser-use` | Install `browser-use` in the repository `.venv` |
+| Notte | `python benchmark/agents/run_notte.py` | `notte` |
+| Skyvern | `python benchmark/agents/run_skyvern.py` | `skyvern` |
+| Alumnium | `python benchmark/agents/run_alumnium.py` | `alumnium`, `langchain-openai` |
+| Magnitude | `node benchmark/agents/run_magnitude.mjs` | `magnitude-core` |
+| Stagehand | `node benchmark/agents/run_stagehand.mjs` | `@browserbasehq/stagehand` |
+| WebSight | `python benchmark/agents/run_websight.py` | `websight` |
+| Agent-E | `python benchmark/agents/run_agent_e.py` | Agent-E server in its own virtual environment |
+| OpenBrowser | `python benchmark/agents/run_openbrowser.py` | Server, Chrome extension, `OPENBROWSER_CHROME_UUID` |
+
+Stagehand and WebSight are included in the archived formal-run records, each
+with completed entries covering 424 distinct tasks. Inclusion means the adapter
+was evaluated; it does not mean every task succeeded. The old development
+labels “blocked”, “partially working”, and “excluded from current runs” do not
+describe the released evaluation coverage. Use the paper for the definition of
+its reported comparison set, and [reports/README.md](../reports/README.md) for
+the scope of historical runs and retries.
+
+## Installation and execution
+
+`setup.sh` installs the external Python/Node packages and creates an isolated
+Agent-E environment. Run it with the Python environment intended for those
+agents active:
 
 ```bash
-# Install all dependencies
-cd benchmark/agents && bash setup.sh
-
-# Run a task with any agent
-uv run benchmark-eval run <task> --agent command \
-    --cmd "python benchmark/agents/run_<agent>.py"
+(cd benchmark/agents && bash setup.sh)
 ```
 
-## Environment variables (set automatically by eval.py)
+For a single Python wrapper, invoke the interpreter in which that agent is
+installed. For example:
 
-| Variable | Description |
-|---|---|
-| `BENCHMARK_INSTRUCTION` | Natural-language task for the agent |
-| `BENCHMARK_START_URL` | Full URL the agent should open first |
-| `BENCHMARK_BASE_URL` | Odoo base URL (e.g. `http://127.0.0.1:8069`) |
-| `BENCHMARK_DB` | Database name |
-| `BENCHMARK_LOGIN` | Login credential |
-| `BENCHMARK_PASSWORD` | Password credential |
-| `BENCHMARK_MAX_STEPS` | Maximum agent steps |
-
-## Supported agents
-
-### Fully working
-
-| Agent | Wrapper | Language | Install | API Key | Run command |
-|-------|---------|----------|---------|---------|-------------|
-| [Notte](https://github.com/nottelabs/notte) | `run_notte.py` | Python | `pip install notte` | DashScope or OpenAI | `python benchmark/agents/run_notte.py` |
-| [Skyvern](https://github.com/skyvern-ai/skyvern) | `run_skyvern.py` | Python | `pip install skyvern` | DashScope or OpenAI | `python benchmark/agents/run_skyvern.py` |
-| [Alumnium](https://github.com/alumnium-hq/alumnium) | `run_alumnium.py` | Python | `pip install alumnium` | DashScope or OpenAI | `python benchmark/agents/run_alumnium.py` |
-| [Magnitude](https://github.com/magnitudedev/browser-agent) | `run_magnitude.mjs` | Node.js | `npm install magnitude-core` | **Anthropic** (or Google/OpenAI) | `node benchmark/agents/run_magnitude.mjs` |
-
-### Require external setup
-
-| Agent | Wrapper | Requirement | Run command |
-|-------|---------|-------------|-------------|
-| [Agent-E](https://github.com/EmergenceAI/Agent-E) | `run_agent_e.py` | Separate server in own venv (see wrapper header) | `python benchmark/agents/run_agent_e.py` |
-| [OpenBrowser](https://github.com/softpudding/OpenBrowser) | `run_openbrowser.py` | Server + Chrome extension + `OPENBROWSER_CHROME_UUID` | `python benchmark/agents/run_openbrowser.py` |
-
-### Partially working (framework limitations)
-
-| Agent | Wrapper | Issue |
-|-------|---------|-------|
-| [WebSight](https://github.com/SuperAce100/websight) | `run_websight.py` | Hallucinates execution — claims task complete on blank screenshots. VLM response parsing is broken. |
-| [Stagehand](https://github.com/browserbase/stagehand) | `run_stagehand.mjs` | Blocked on DashScope Responses-API bug with qwen3.6-plus — see below. |
-
-### Evaluated but excluded
-
-| Agent | Reason |
-|-------|--------|
-| [Browserable](https://github.com/browserable/browserable) | Requires external browser-as-a-service (Hyperbrowser/Steel) |
-| [Agent-S](https://github.com/simular-ai/agent-s) | Desktop GUI agent (PyAutoGUI), not a browser agent |
-| [AgentOccam](https://github.com/amazon-science/AgentOccam) | Dead research artifact (3 commits), no usable API |
-
-## LLM configuration
-
-All Python wrappers use `_env_setup.py` to auto-detect LLM credentials:
-
-1. `OPENAI_API_KEY` — used directly if set
-2. `DASHSCOPE_API_KEY` — mapped to OpenAI-compatible endpoint automatically
-3. `BAILIAN_API_KEY` — same as DashScope
-
-Node.js wrappers (Magnitude, Stagehand) detect `ANTHROPIC_API_KEY` first,
-then fall back to `OPENAI_API_KEY` / `DASHSCOPE_API_KEY`.
-
-Set `BENCHMARK_MODEL` to override the default model (default: `qwen3.6-plus`
-for Python agents, `claude-sonnet-4` for Magnitude).
-
-## Test results
-
-### Easy: contacts.update_contact_phone (change one field)
-
-| Agent | LLM | F1 | Wall Clock | API Calls | Writes |
-|-------|-----|----|-----------|-----------|--------|
-| Magnitude | Claude Sonnet 4 | **1.0** | 102s | 22 | 9 |
-| Notte | qwen3.6-plus | **1.0** | 129s | 22 | 9 |
-| Agent-E | qwen3.6-plus | **1.0** | 240s | 23 | 9 |
-| OpenBrowser | qwen3.6-plus | **1.0** | 240s | 28 | 13 |
-| Skyvern | qwen3.6-plus | 0.0 | 240s | 18 | 6 |
-| Alumnium | qwen3.6-plus | 0.0 | 110s | 6 | 2 |
-
-### Medium: purchase.duplicate_rfq_change_vendor_confirm (duplicate RFQ, change vendor, confirm)
-
-| Agent | LLM | F1 | Wall Clock | API Calls | Writes | Notes |
-|-------|-----|----|-----------|-----------|--------|-------|
-| Magnitude | Claude Sonnet 4 | 0.0 | 300s | 63 | 24 | Active but didn't complete |
-| Skyvern | qwen3.6-plus | 0.0 | 300s | 39 | 13 | Navigated Purchase app |
-| Notte | qwen3.6-plus | 0.0 | 6s | 1 | 0 | Crashed early |
-| Alumnium | qwen3.6-plus | 0.0 | — | — | — | Crashed |
-| Agent-E | qwen3.6-plus | 0.0 | 0.1s | 0 | 0 | Server down |
-| OpenBrowser | qwen3.6-plus | 0.0 | — | — | — | Crashed |
-
-### Hard: sale.confirm_correct_order (find and confirm correct quotation among 4)
-
-| Agent | LLM | F1 | Wall Clock | API Calls | Writes | Notes |
-|-------|-----|----|-----------|-----------|--------|-------|
-| **Magnitude** | Claude Sonnet 4 | **1.0** | **115s** | 63 | 24 | **PASS — identified correct quotation and confirmed it** |
-| Skyvern | qwen3.6-plus | 0.0 | 300s | 39 | 13 | Navigated Sales app |
-| OpenBrowser | qwen3.6-plus | 0.0 | 300s | 18 | 5 | Connected, navigated |
-| Alumnium | qwen3.6-plus | 0.0 | 28s | 8 | 2 | Minimal interaction |
-| Notte | qwen3.6-plus | 0.0 | 5s | 0 | 0 | Crashed |
-| Agent-E | qwen3.6-plus | 0.0 | 0.2s | 0 | 0 | Server down |
-
-## Root cause analysis
-
-Investigation with isolated super-simple tasks ("just log in to Odoo"):
-
-| Agent | Can log in? | Root cause of task failures |
-|-------|------------|----------------------------|
-| **Magnitude** | Yes | Works well with Claude Sonnet 4. Uses BAML + Patchright. Needs `ANTHROPIC_API_KEY`. |
-| **Agent-E** | Yes | Best performer on complex tasks. AG2 multi-agent framework. Slow but methodical. |
-| **Notte** | Yes | Good on easy tasks but crashes on complex ones (litellm/model config issues). |
-| **OpenBrowser** | Yes | Multimodal (screenshot-based). Works but slow; tied to Chrome extension. |
-| **Skyvern** | Yes | Navigates Odoo (18+ API calls) but can't reliably edit specific form fields. ~90s/step. |
-| **Alumnium** | Yes | DOM-level `do()` works for login but qwen3.6-plus can't map NL to Odoo form edits. Silently claims success. |
-| **WebSight** | No | Hallucinates — claims task complete on blank screenshots. Broken VLM response parsing. |
-| **Stagehand** | Yes (step 1) | Blocked by DashScope server-side bug on multi-turn tool calls, see below. |
-
-## Known-broken agent: Stagehand on DashScope qwen3.6-plus
-
-`run_stagehand.mjs` now routes correctly (v3 takes `model: { modelName, apiKey, baseURL }`
-— not top-level `modelName`, which the old wrapper passed and which was silently ignored,
-letting Stagehand fall back to `openai/gpt-4.1-mini`). With the fix, Stagehand authenticates
-against DashScope and completes **one** tool call (`ariaTree`) cleanly.
-
-On the **second** tool-call round the wrapper observes:
-
-```
-<50004> InternalError.Algo.QwenAgentError: Internal Error during qwen agent.
-The error message is [Object of type MMGPT3Item is not JSON serializable]
+```bash
+uv run benchmark-eval run sale.change_validity_date --agent command \
+  --cmd "/absolute/path/to/agent-venv/bin/python benchmark/agents/run_notte.py" \
+  --output-dir /tmp/ledger-notte
 ```
 
-— a 500 from DashScope's Responses-API implementation. Stagehand v3 routes through
-AI SDK's `openai.responses(model)` (confirmed by response shape: `"object":"response"`,
-`"type":"function_call"`); DashScope's Responses-API pipeline for qwen3.6-plus crashes
-when asked to process a tool-result round trip. Not a Stagehand bug and not a wrapper
-bug — this is a server-side problem with DashScope's qwen agent serialization.
+Node adapters use `node` in place of the Python interpreter. Agent-E and
+OpenBrowser require their separate services; see [benchmark/AGENTS.md](../AGENTS.md).
+Third-party packages installed by `setup.sh` are not all pinned by `uv.lock`.
+Record their installed versions when reproducing an experiment.
 
-**Workarounds** (none tried yet):
-- Force Stagehand onto `chat.completions` instead of the Responses API (requires
-  patching Stagehand or swapping AI SDK's provider call).
-- Use a different qwen variant whose Responses-API path is stable.
-- Wait for DashScope to fix `MMGPT3Item` serialization.
+## Models and credentials
 
-The wrapper retains an `enable_thinking: false` fetch middleware (qwen3.6-plus defaults
-to reasoning mode, which produces `<think>…</think>`-wrapped output that breaks
-Stagehand's strict JSON parse on step 1). Set `STAGEHAND_DEBUG_LLM=1` to dump raw LLM
-response bodies to stderr if you want to re-investigate.
+Python wrappers use `_env_setup.py`: an explicit `OPENAI_API_KEY` takes
+precedence over `DASHSCOPE_API_KEY` or `BAILIAN_API_KEY`. Set the corresponding
+base URL and `BENCHMARK_MODEL` for the intended provider. Avoid leaving an
+unrelated provider's key/base URL set in the same environment.
 
-Stagehand is **excluded from current evaluation runs** until the DashScope issue is
-resolved or a chat-completions workaround is implemented.
+The released formal runner uses **OpenAI `gpt-4.1-mini` for Stagehand**. Earlier
+Qwen/DashScope Responses API trials encountered a multi-turn serialization
+error; that was a provider-specific development failure, not an exclusion of
+Stagehand from the released run. Reproduce its provider configuration explicitly:
+
+```bash
+export OPENAI_API_KEY=your_openai_api_key
+export OPENAI_BASE_URL=https://api.openai.com/v1
+export BENCHMARK_MODEL=gpt-4.1-mini
+uv run benchmark-eval run sale.change_validity_date --agent command \
+  --cmd "node benchmark/agents/run_stagehand.mjs" \
+  --max-steps 60 --output-dir /tmp/ledger-stagehand
+```
+
+WebSight's wrapper includes routing and action-call compatibility fixes used by
+the archived runs. Its early smoke-test observations should not be used as a
+blanket current compatibility claim.
+
+Magnitude can select Anthropic, OpenAI-compatible/DashScope, or Google
+credentials. With an Anthropic key present it prefers Anthropic by default;
+`BENCHMARK_PROVIDER` and `BENCHMARK_MODEL` control the choice. Historical
+Magnitude runs include different provider/model configurations, so consult the
+specific run's metadata before combining results.
+
+## Harness-provided environment
+
+| Variable | Meaning |
+| --- | --- |
+| `BENCHMARK_INSTRUCTION` | Natural-language task |
+| `BENCHMARK_START_URL` | Initial URL |
+| `BENCHMARK_BASE_URL` | Per-episode Odoo URL |
+| `BENCHMARK_DB` | Episode database |
+| `BENCHMARK_LOGIN`, `BENCHMARK_PASSWORD` | Synthetic Odoo credentials |
+| `BENCHMARK_MAX_STEPS` | Agent step limit |
 
 ## Troubleshooting
 
-### Playwright/Patchright browser not found
-
-Agents use different Playwright versions. If you see "Executable doesn't exist":
-```bash
-# For Python agents (skyvern, notte, alumnium, websight)
-python3 -m playwright install chromium
-
-# For Node.js agents (magnitude, stagehand)
-npx playwright install chromium
-```
-
-### DashScope `json_object` errors
-
-DashScope requires "json" in the prompt when using `response_format=json_object`.
-Alumnium's wrapper patches `with_structured_output` to use `method="function_calling"` instead.
-
-### DashScope thinking mode conflicts
-
-`qwen3.6-plus` enables thinking mode by default, which rejects `tool_choice=required`.
-Alumnium's wrapper adds `enable_thinking: False` to the model kwargs.
-
-### Agent-E async event loop crash
-
-Agent-E's AG2 framework calls `loop.run_until_complete()` inside uvicorn's async loop.
-Fix: start with `nest_asyncio` and force `asyncio` loop (not uvloop):
-```bash
-PYTHONPATH=. .venv/bin/python3 -c "
-    import nest_asyncio; nest_asyncio.apply()
-    import asyncio; asyncio.set_event_loop_policy(None)
-    from ae.server.api_routes import app
-    import uvicorn
-    uvicorn.run(app, host='0.0.0.0', port=8000, loop='asyncio')
-"
-```
-
-### Agent-E dependency conflicts
-
-Agent-E pins `pydantic==2.6.2` which breaks notte/alumnium/skyvern (need 2.11+).
-Always install Agent-E in its own venv:
-```bash
-cd Agent-E && python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
-```
-
-### Magnitude BAML `CreatePartialRecipe` error
-
-This happens when `new Agent()` is created without an `llm` config — it defaults
-to Google AI with a missing API key. Pass explicit LLM config:
-```javascript
-const agent = new Agent({
-  llm: {
-    provider: "anthropic",
-    options: { model: "claude-sonnet-4-20250514", apiKey: process.env.ANTHROPIC_API_KEY }
-  },
-  connectors: [new BrowserConnector({ url: startUrl })]
-});
-```
-
-### DB name too long
-
-Tasks with long names (e.g. `sale_project.confirm_quote_and_update_generated_project`)
-exceed PostgreSQL's 63-char limit for auto-generated DB names. Use `--db <short_name>`:
-```bash
-uv run benchmark-eval run <long_task_name> --agent command --cmd "..." --db bench_short
-```
-
-### Environment variables not reaching subprocesses
-
-`uv run` creates an isolated env. Pass API keys explicitly in `--cmd`:
-```bash
---cmd "ANTHROPIC_API_KEY=$ANTHROPIC_API_KEY node benchmark/agents/run_magnitude.mjs"
-```
+- **Browser executable missing:** install Chromium with the same Python or Node
+  Playwright version used by that wrapper (`python -m playwright install
+  chromium` or `npx playwright install chromium`).
+- **Python module missing:** select the interpreter where that package was
+  installed. The Odoo `.venv` and external agent environments may differ.
+- **Agent-E dependency or event-loop errors:** keep its dependencies in its own
+  environment and follow the server startup instructions in `benchmark/AGENTS.md`.
+- **Stagehand provider errors:** verify the explicit model, key, and base URL
+  above; the direct wrapper otherwise defaults to a Qwen-compatible setup.
+- **A task is claimed complete but receives a failure score:** inspect
+  `score.json`, database differences, and operation traces. An agent's own
+  completion message is not the ground-truth verdict.

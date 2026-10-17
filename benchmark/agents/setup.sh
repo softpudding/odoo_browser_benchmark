@@ -12,9 +12,9 @@
 #   - Odoo .venv built and .odoorc.local written (eval.py needs them)
 #
 # LLM key: set DASHSCOPE_API_KEY before running agents (qwen3.6-plus via
-# DashScope OpenAI-compat; same key works for every active agent).
-# Stagehand is currently excluded — see benchmark/agents/README.md for the
-# DashScope Responses-API bug that blocks it.
+# DashScope OpenAI-compat; Stagehand uses a separate OpenAI key).
+# The released Stagehand configuration uses OPENAI_API_KEY with gpt-4.1-mini;
+# see benchmark/agents/README.md for provider-specific configuration.
 
 set -euo pipefail
 
@@ -24,7 +24,7 @@ REPO_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 
 echo "=== Installing the benchmark Python package (uv sync) ==="
 cd "$REPO_ROOT"
-uv sync
+uv sync --inexact
 cd "$SCRIPT_DIR"
 echo
 

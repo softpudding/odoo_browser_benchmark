@@ -5,9 +5,10 @@
  * Setup:
  *     cd benchmark/agents && npm install @browserbasehq/stagehand
  *
- * LIMITATION: Stagehand v2 hardcodes "openai/gpt-4.1-mini" and ignores
- * custom modelName in LOCAL mode. Requires OPENAI_API_KEY with access to
- * gpt-4.1-mini. DashScope/Qwen models are NOT supported.
+ * The released formal runner uses Stagehand v3 with OpenAI gpt-4.1-mini.
+ * Set OPENAI_API_KEY, OPENAI_BASE_URL, and BENCHMARK_MODEL explicitly.
+ * Earlier Qwen/DashScope Responses API trials encountered a multi-turn
+ * serialization error; see README.md for the released configuration.
  *
  * Usage:
  *     uv run benchmark-eval run <task> --agent command \
