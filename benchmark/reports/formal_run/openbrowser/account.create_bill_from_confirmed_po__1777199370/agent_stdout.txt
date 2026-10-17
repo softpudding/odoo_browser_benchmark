@@ -57,12 +57,12 @@ Find the p
 [action] "thought='The login keeps returning to the login page or giving a 400 error. The Odoo website login may be different from the backend login. Let me try using curl to establish a session with the Odoo 
 [action] "command='curl -s -c /tmp/odoo_cookies.txt -X POST http://127.0.0.1:62190/web/session/authenticate -H \"Content-Type: application/json\" -d \\'{\"jsonrpc\":\"2.0\",\"method\":\"call\",\"params\":{\"lo
 [action] "command='curl -s http://127.0.0.1:62190/web/database/list -H \"Content-Type: application/json\" -d \\'{\"jsonrpc\":\"2.0\",\"method\":\"call\",\"params\":{},\"id\":1}\\'' is_input=False timeout=None 
-[action] "command='cat ~/.odoorc 2>/dev/null || cat ~/.odoorcc 2>/dev/null || find /Users/yangxiao/git/odoo -maxdepth 2 -name \"*.conf\" 2>/dev/null | head -5' is_input=False timeout=None reset=False kind='Ter
+[action] "command='cat ~/.odoorc 2>/dev/null || cat ~/.odoorcc 2>/dev/null || find /home/benchmark-user/git/odoo -maxdepth 2 -name \"*.conf\" 2>/dev/null | head -5' is_input=False timeout=None reset=False kind='Ter
 [action] "command='curl -s http://127.0.0.1:62190/web/login 2>&1 | grep -oP \\'name=\"db\"[^>]*value=\"[^\"]*\"\\' | head -5' is_input=False timeout=None reset=False kind='TerminalAction'"
 [action] "command='curl -s http://127.0.0.1:62190/web/login | grep -o \\'name=\"db\"[^>]*value=\"[^\"]*\"\\'' is_input=False timeout=None reset=False kind='TerminalAction'"
 [action] "command=\"curl -s http://127.0.0.1:62190/web/login | grep -i 'db\\\\|database' | head -5\" is_input=False timeout=None reset=False kind='TerminalAction'"
 [action] "command='curl -s -c /tmp/odoo_cookies.txt -X POST http://127.0.0.1:62190/web/session/authenticate -H \"Content-Type: application/json\" -d \\'{\"jsonrpc\":\"2.0\",\"method\":\"call\",\"params\":{\"lo
-[action] "command='psql -l 2>/dev/null | grep -i odoo || echo \"psql not available\" && echo \"---\" && find /Users/yangxiao/git/odoo -maxdepth 3 -name \"*.conf\" -exec grep -l \"db_name\\\\|dbfilter\" {} \\\\
+[action] "command='psql -l 2>/dev/null | grep -i odoo || echo \"psql not available\" && echo \"---\" && find /home/benchmark-user/git/odoo -maxdepth 3 -name \"*.conf\" -exec grep -l \"db_name\\\\|dbfilter\" {} \\\\
 [action] "command='curl -s -c /tmp/odoo_cookies.txt -X POST http://127.0.0.1:62190/web/session/authenticate -H \"Content-Type: application/json\" -d \\'{\"jsonrpc\":\"2.0\",\"method\":\"call\",\"params\":{\"lo
 [action] "thought='The issue is that Odoo is running with a specific database filter (dbfilter). The URL pattern might give me a clue. The URL is http://127.0.0.1:62190/odoo/purchase - \"odoo\" might be the da
 [action] "command='curl -s -c /tmp/odoo_cookies.txt -X POST http://127.0.0.1:62190/web/session/authenticate -H \"Content-Type: application/json\" -d \\'{\"jsonrpc\":\"2.0\",\"method\":\"call\",\"params\":{\"lo
